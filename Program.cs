@@ -9,7 +9,7 @@ namespace Dialog_Generator
     public enum PhraseTypes 
     {
         Exclamation, Greeting, Threat, Retreat, Proposal, Yes, No, RequestCatchup, GiveAffirmation, RequestAffirmation, 
-        GiveDisbelief, GiveRecentHistory, GiveSurprisingStatement,  Ramble, ShutUp, RequestJoke, GiveJoke, PhraseTypesSize
+        GiveDisbelief, GiveRecentHistory, GiveSurprisingStatement,  Ramble, ShutUp, RequestJoke, GiveJoke, Insult, RequestActivity, GiveActivity, PhraseTypesSize
     };
 
     public enum GenderType { Male, Female }
@@ -77,9 +77,16 @@ namespace Dialog_Generator
                 {
                     Character2Num = RandNumGenerator.Next(0, 3);
                 }
+
+                //Test COde
+                Character1Num = 0;
+                Character2Num = 1;
+
             }
             //randomly select a DialogModel.  Eventually use the popularity of each DialogModel to select more popular more often
             CurrentDialogModel = RandNumGenerator.Next(0, ModelDialogTable.Count);
+            //Test code
+            CurrentDialogModel = 4;
             Console.Write("Dialog Model: ");
             Console.WriteLine(ModelDialogTable[CurrentDialogModel].Name);
             int SpeakingCharacter = Character1Num;
@@ -93,11 +100,16 @@ namespace Dialog_Generator
                 foreach (PhraseTableEntry CurrentPhraseTableEntry in CharacterList[SpeakingCharacter].PhraseTable)
                 {
                     AmountOfCurrentPhraseType += CurrentPhraseTableEntry.PhraseProperties[(int)CurrentPhraseType];
+                   // Console.Write(AmountOfCurrentPhraseType);
+                   // Console.Write(" ");
                 }
-
+                Console.Write("AmountOfCurrentPhraseType = ");
+                Console.WriteLine(AmountOfCurrentPhraseType);
                 //Now that we know how much weight of the current phrasetype the character has in their PhraseTable randomly select a phrase of correct Type
                 int PhraseTableIndex = RandNumGenerator.Next(0, (int)(AmountOfCurrentPhraseType * 1000));
-                float PhraseTableWeight = PhraseTableIndex / 1000;
+                float PhraseTableWeight = (float)PhraseTableIndex / 1000;
+                Console.Write("Weight ");
+                Console.WriteLine(PhraseTableWeight);
                 AmountOfCurrentPhraseType = 0;
                 foreach (PhraseTableEntry CurrentPhraseTableEntry in CharacterList[SpeakingCharacter].PhraseTable)
                 {

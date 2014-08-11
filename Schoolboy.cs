@@ -8,7 +8,7 @@ namespace Dialog_Generator
 {
     /*  
         Exclamation, Greeting, Threat, Retreat, Proposal, Yes, No, RequestCatchup, GiveAffirmation, RequestAffirmation, 
-        GiveDisbelief, GiveRecentHistory, GiveSurprisingStatement, Ramble, ShutUp, RequestJoke, GiveJoke, PhraseTypesSize
+        GiveDisbelief, GiveRecentHistory, GiveSurprisingStatement,  Ramble, ShutUp, RequestJoke, GiveJoke, Insult, RequestActivity, GiveActivity, PhraseTypesSize
     */
 
     public static class InitSchoolboy 
@@ -45,7 +45,6 @@ namespace Dialog_Generator
             InObj.PhraseTable[3].PhraseProperties[(int)PhraseTypes.RequestAffirmation] = 0.2f;
             InObj.PhraseTable[3].PhraseProperties[(int)PhraseTypes.Greeting] = 0.1f;
             InObj.PhraseTable[3].PhraseProperties[(int)PhraseTypes.ShutUp] = 0.2f;
-
 
             InObj.PhraseTable.Add(new PhraseTableEntry() { DialogStr = "Wanna buy my little sister?" });
             InObj.PhraseTable[4].PhraseProperties = new float[(int)PhraseTypes.PhraseTypesSize];
@@ -164,6 +163,66 @@ namespace Dialog_Generator
             InObj.PhraseTable[22].PhraseProperties[(int)PhraseTypes.GiveSurprisingStatement] = 0.4f;
             InObj.PhraseTable[22].PhraseProperties[(int)PhraseTypes.ShutUp] = 0.2f;
             InObj.PhraseTable[22].PhraseProperties[(int)PhraseTypes.No] = 0.2f;
+            InObj.PhraseTable[22].PhraseProperties[(int)PhraseTypes.Insult] = 0.4f;
+ 
+            InObj.PhraseTable.Add(new PhraseTableEntry() { DialogStr = "You're a poo poo head" });
+            InObj.PhraseTable[23].PhraseProperties = new float[(int)PhraseTypes.PhraseTypesSize];
+            InObj.PhraseTable[23].PhraseProperties[(int)PhraseTypes.Insult] = 0.4f;
+
+            InObj.PhraseTable.Add(new PhraseTableEntry() { DialogStr = "If you were a triangle you would be obtuse, cause your fat and confusing" });
+            InObj.PhraseTable[24].PhraseProperties = new float[(int)PhraseTypes.PhraseTypesSize];
+            InObj.PhraseTable[24].PhraseProperties[(int)PhraseTypes.Insult] = 0.4f;
+
+            InObj.PhraseTable.Add(new PhraseTableEntry() { DialogStr = "You couldn't find your ass with both hands" });
+            InObj.PhraseTable[25].PhraseProperties = new float[(int)PhraseTypes.PhraseTypesSize];
+            InObj.PhraseTable[25].PhraseProperties[(int)PhraseTypes.Insult] = 0.4f;
+
+            InObj.PhraseTable.Add(new PhraseTableEntry() { DialogStr = "Why are you so dumb?  Did your mommy drop you?" });
+            InObj.PhraseTable[26].PhraseProperties = new float[(int)PhraseTypes.PhraseTypesSize];
+            InObj.PhraseTable[26].PhraseProperties[(int)PhraseTypes.Insult] = 0.4f;
+
+            InObj.PhraseTable.Add(new PhraseTableEntry() { DialogStr = "Your mommas so fat..." });
+            InObj.PhraseTable[27].PhraseProperties = new float[(int)PhraseTypes.PhraseTypesSize];
+            InObj.PhraseTable[27].PhraseProperties[(int)PhraseTypes.Insult] = 0.4f;
+
+
+            InObj.PhraseTable.Add(new PhraseTableEntry() { DialogStr = "Guess what I saw my older sister doing." });
+            InObj.PhraseTable[28].PhraseProperties = new float[(int)PhraseTypes.PhraseTypesSize];
+            InObj.PhraseTable[28].PhraseProperties[(int)PhraseTypes.RequestActivity] = 0.4f;
+
+            InObj.PhraseTable.Add(new PhraseTableEntry() { DialogStr = "Do you know what my favorite thing is?" });
+            InObj.PhraseTable[29].PhraseProperties = new float[(int)PhraseTypes.PhraseTypesSize];
+            InObj.PhraseTable[29].PhraseProperties[(int)PhraseTypes.RequestActivity] = 0.4f;
+
+            InObj.PhraseTable.Add(new PhraseTableEntry() { DialogStr = "You know what my friend and I were doing?" });
+            InObj.PhraseTable[30].PhraseProperties = new float[(int)PhraseTypes.PhraseTypesSize];
+            InObj.PhraseTable[30].PhraseProperties[(int)PhraseTypes.RequestActivity] = 0.4f;
+
+            InObj.PhraseTable.Add(new PhraseTableEntry() { DialogStr = "What were you doing?" });
+            InObj.PhraseTable[31].PhraseProperties = new float[(int)PhraseTypes.PhraseTypesSize];
+            InObj.PhraseTable[31].PhraseProperties[(int)PhraseTypes.RequestActivity] = 0.4f;
+
+            InObj.PhraseTable.Add(new PhraseTableEntry() { DialogStr = "Homework" });
+            InObj.PhraseTable[32].PhraseProperties = new float[(int)PhraseTypes.PhraseTypesSize];
+            InObj.PhraseTable[32].PhraseProperties[(int)PhraseTypes.GiveActivity] = 0.4f;
+
+            InObj.PhraseTable.Add(new PhraseTableEntry() { DialogStr = "Oiling their tricycle" });
+            InObj.PhraseTable[33].PhraseProperties = new float[(int)PhraseTypes.PhraseTypesSize];
+            InObj.PhraseTable[33].PhraseProperties[(int)PhraseTypes.GiveActivity] = 0.4f;
+
+            InObj.PhraseTable.Add(new PhraseTableEntry() { DialogStr = "Picking their nose" });
+            InObj.PhraseTable[34].PhraseProperties = new float[(int)PhraseTypes.PhraseTypesSize];
+            InObj.PhraseTable[34].PhraseProperties[(int)PhraseTypes.GiveActivity] = 0.4f;
+
+            InObj.PhraseTable.Add(new PhraseTableEntry() { DialogStr = "Know any Jokes" });
+            InObj.PhraseTable[35].PhraseProperties = new float[(int)PhraseTypes.PhraseTypesSize];
+            InObj.PhraseTable[35].PhraseProperties[(int)PhraseTypes.RequestJoke] = 0.8f;
+            InObj.PhraseTable[35].PhraseProperties[(int)PhraseTypes.Proposal] = 0.2f;
+
+            InObj.PhraseTable.Add(new PhraseTableEntry() { DialogStr = "You know whats red and green and really fast?  My frog after put him in the blender." });
+            InObj.PhraseTable[36].PhraseProperties = new float[(int)PhraseTypes.PhraseTypesSize];
+            InObj.PhraseTable[36].PhraseProperties[(int)PhraseTypes.GiveJoke] = 0.8f;
+            InObj.PhraseTable[36].PhraseProperties[(int)PhraseTypes.GiveSurprisingStatement] = 0.2f;
         }        
     }
 }

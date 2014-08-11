@@ -67,6 +67,34 @@ namespace Dialog_Generator
             InObj.ModelDialogTable[10].PhraseTypeSequence.Add(PhraseTypes.GiveJoke);
             InObj.ModelDialogTable[10].PhraseTypeSequence.Add(PhraseTypes.GiveDisbelief);
 
+            InObj.ModelDialogTable.Add(new ModelDialog() { Popularity = 0.3f, Name = "Insult, Insult, Insult" });
+            InObj.ModelDialogTable[11].PhraseTypeSequence.Add(PhraseTypes.Insult);
+            InObj.ModelDialogTable[11].PhraseTypeSequence.Add(PhraseTypes.Insult);
+            InObj.ModelDialogTable[11].PhraseTypeSequence.Add(PhraseTypes.Insult);
+
+            InObj.ModelDialogTable.Add(new ModelDialog() { Popularity = 0.3f, Name = "RequestAffirmation, Insult, Insult" });
+            InObj.ModelDialogTable[12].PhraseTypeSequence.Add(PhraseTypes.RequestAffirmation);
+            InObj.ModelDialogTable[12].PhraseTypeSequence.Add(PhraseTypes.Insult);
+            InObj.ModelDialogTable[12].PhraseTypeSequence.Add(PhraseTypes.Insult);
+
+            InObj.ModelDialogTable.Add(new ModelDialog() { Popularity = 0.3f, Name = "Greeting, Proposal, Insult" });
+            InObj.ModelDialogTable[13].PhraseTypeSequence.Add(PhraseTypes.Greeting);
+            InObj.ModelDialogTable[13].PhraseTypeSequence.Add(PhraseTypes.Proposal);
+            InObj.ModelDialogTable[13].PhraseTypeSequence.Add(PhraseTypes.Insult);
+
+            InObj.ModelDialogTable.Add(new ModelDialog() { Popularity = 0.3f, Name = "RequestCatchup, Insult" });
+            InObj.ModelDialogTable[14].PhraseTypeSequence.Add(PhraseTypes.RequestCatchup);
+            InObj.ModelDialogTable[14].PhraseTypeSequence.Add(PhraseTypes.Insult);
+
+            InObj.ModelDialogTable.Add(new ModelDialog() { Popularity = 0.3f, Name = "Guess what They/I did, Guess Activity, Correct Activity " });
+            InObj.ModelDialogTable[15].PhraseTypeSequence.Add(PhraseTypes.RequestActivity);
+            InObj.ModelDialogTable[15].PhraseTypeSequence.Add(PhraseTypes.GiveActivity);
+            InObj.ModelDialogTable[15].PhraseTypeSequence.Add(PhraseTypes.GiveActivity);
+
+            InObj.ModelDialogTable.Add(new ModelDialog() { Popularity = 0.5f, Name = "Greeting, GiveJoke, Insult" });
+            InObj.ModelDialogTable[16].PhraseTypeSequence.Add(PhraseTypes.Greeting);
+            InObj.ModelDialogTable[16].PhraseTypeSequence.Add(PhraseTypes.GiveJoke);
+            InObj.ModelDialogTable[16].PhraseTypeSequence.Add(PhraseTypes.Insult);
         }        
     }
 }

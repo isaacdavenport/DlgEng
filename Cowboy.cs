@@ -8,7 +8,7 @@ namespace Dialog_Generator
 {
     /*  
         Exclamation, Greeting, Threat, Retreat, Proposal, Yes, No, RequestCatchup, GiveAffirmation, RequestAffirmation, 
-        GiveDisbelief, GiveRecentHistory, GiveSurprisingStatement, Ramble, ShutUp, RequestJoke, GiveJoke
+        GiveDisbelief, GiveRecentHistory, GiveSurprisingStatement,  Ramble, ShutUp, RequestJoke, GiveJoke, Insult, RequestActivity, GiveActivity, PhraseTypesSize
     */
 
     public static class InitCowboy 
@@ -25,6 +25,7 @@ namespace Dialog_Generator
             InObj.PhraseTable[0].PhraseProperties[(int)PhraseTypes.Greeting] = 1.0f;
             InObj.PhraseTable[0].PhraseProperties[(int)PhraseTypes.RequestCatchup] = 0.4f;
             InObj.PhraseTable[0].PhraseProperties[(int)PhraseTypes.RequestAffirmation] = 0.2f;
+            InObj.PhraseTable[0].PhraseProperties[(int)PhraseTypes.RequestJoke] = 0.2f;
 
             InObj.PhraseTable.Add(new PhraseTableEntry() { DialogStr = "These spurs ain't afraid to kick up some dust." });
             InObj.PhraseTable[1].PhraseProperties = new float[(int)PhraseTypes.PhraseTypesSize];
@@ -97,6 +98,7 @@ namespace Dialog_Generator
             InObj.PhraseTable[13].PhraseProperties = new float[(int)PhraseTypes.PhraseTypesSize];
             InObj.PhraseTable[13].PhraseProperties[(int)PhraseTypes.Exclamation] = 0.2f;
             InObj.PhraseTable[13].PhraseProperties[(int)PhraseTypes.RequestAffirmation] = 1.0f;
+            InObj.PhraseTable[13].PhraseProperties[(int)PhraseTypes.RequestJoke] = 0.2f;
 
             InObj.PhraseTable.Add(new PhraseTableEntry() { DialogStr = "Yup" });
             InObj.PhraseTable[14].PhraseProperties = new float[(int)PhraseTypes.PhraseTypesSize];
@@ -107,6 +109,7 @@ namespace Dialog_Generator
             InObj.PhraseTable[15].PhraseProperties = new float[(int)PhraseTypes.PhraseTypesSize];
             InObj.PhraseTable[15].PhraseProperties[(int)PhraseTypes.Exclamation] = 0.2f;
             InObj.PhraseTable[15].PhraseProperties[(int)PhraseTypes.Threat] = 1.0f;
+            InObj.PhraseTable[15].PhraseProperties[(int)PhraseTypes.Insult] = 0.4f;
 
             InObj.PhraseTable.Add(new PhraseTableEntry() { DialogStr = "I think my nose was assaulted by a skunk that ate a case of rotten cabbage" });
             InObj.PhraseTable[16].PhraseProperties = new float[(int)PhraseTypes.PhraseTypesSize];
@@ -145,6 +148,7 @@ namespace Dialog_Generator
             InObj.PhraseTable[19].PhraseProperties[(int)PhraseTypes.ShutUp] = 0.1f;
             InObj.PhraseTable[19].PhraseProperties[(int)PhraseTypes.RequestJoke] = 0.1f;
             InObj.PhraseTable[19].PhraseProperties[(int)PhraseTypes.GiveJoke] = 0.1f;
+            InObj.PhraseTable[19].PhraseProperties[(int)PhraseTypes.Insult] = 0.1f;
 
             InObj.PhraseTable.Add(new PhraseTableEntry() { DialogStr = "Ain't that purdy as a pig under a Christmas Tree" });
             InObj.PhraseTable[20].PhraseProperties = new float[(int)PhraseTypes.PhraseTypesSize];
@@ -201,7 +205,7 @@ namespace Dialog_Generator
             InObj.PhraseTable[26].PhraseProperties[(int)PhraseTypes.RequestJoke] = 0.1f;
             InObj.PhraseTable[26].PhraseProperties[(int)PhraseTypes.GiveJoke] = 0.1f;
 
-
+            
             InObj.PhraseTable.Add(new PhraseTableEntry() { DialogStr = "Some days, when the light is just right comin over the hill, \r\nI think I can see ole Bob up the ridge. Bob never was much one for words, \r\nbut he had a knack. Take that time right before the flood on the big Thompson.  \r\nMust have been something he sniffed out in the loweing of the herd, \r\nbut Bob got them doggies up the side of the hill before we knew what was happening.  \r\nWe didn't even manage to break camp and lost two weeks worth of flour and cooking oil, not to mention my favorite knife.  Got that knife of an Injun up in Gold Hill..." 
             });
             InObj.PhraseTable[27].PhraseProperties = new float[(int)PhraseTypes.PhraseTypesSize];
@@ -211,6 +215,48 @@ namespace Dialog_Generator
             InObj.PhraseTable[28].PhraseProperties = new float[(int)PhraseTypes.PhraseTypesSize];
             InObj.PhraseTable[28].PhraseProperties[(int)PhraseTypes.Proposal] = 0.2f;
 
+            InObj.PhraseTable.Add(new PhraseTableEntry() { DialogStr = "You lily livered coward-" });
+            InObj.PhraseTable[29].PhraseProperties = new float[(int)PhraseTypes.PhraseTypesSize];
+            InObj.PhraseTable[29].PhraseProperties[(int)PhraseTypes.Insult] = 0.7f;
+            InObj.PhraseTable[29].PhraseProperties[(int)PhraseTypes.Exclamation] = 0.2f;
+
+            InObj.PhraseTable.Add(new PhraseTableEntry() { DialogStr = "You got shit form brains and your heart pumps pee pee" });
+            InObj.PhraseTable[30].PhraseProperties = new float[(int)PhraseTypes.PhraseTypesSize];
+            InObj.PhraseTable[30].PhraseProperties[(int)PhraseTypes.Insult] = 0.5f;
+
+            InObj.PhraseTable.Add(new PhraseTableEntry() { DialogStr = "Guess what them dogies was up to this afternoon" });
+            InObj.PhraseTable[31].PhraseProperties = new float[(int)PhraseTypes.PhraseTypesSize];
+            InObj.PhraseTable[31].PhraseProperties[(int)PhraseTypes.RequestActivity] = 0.5f;
+
+            InObj.PhraseTable.Add(new PhraseTableEntry() { DialogStr = "You know what my Isabelle been up to?" });
+            InObj.PhraseTable[32].PhraseProperties = new float[(int)PhraseTypes.PhraseTypesSize];
+            InObj.PhraseTable[32].PhraseProperties[(int)PhraseTypes.RequestActivity] = 0.5f;
+            InObj.PhraseTable[32].PhraseProperties[(int)PhraseTypes.RequestCatchup] = 0.2f;
+
+            InObj.PhraseTable.Add(new PhraseTableEntry() { DialogStr = "You know what I been doin with my new spurs" });
+            InObj.PhraseTable[33].PhraseProperties = new float[(int)PhraseTypes.PhraseTypesSize];
+            InObj.PhraseTable[33].PhraseProperties[(int)PhraseTypes.RequestActivity] = 0.5f;
+
+            InObj.PhraseTable.Add(new PhraseTableEntry() { DialogStr = "You will never guess what I did with my hat" });
+            InObj.PhraseTable[34].PhraseProperties = new float[(int)PhraseTypes.PhraseTypesSize];
+            InObj.PhraseTable[34].PhraseProperties[(int)PhraseTypes.RequestActivity] = 0.5f;
+
+            InObj.PhraseTable.Add(new PhraseTableEntry() { DialogStr = "Birthing cattle" });
+            InObj.PhraseTable[35].PhraseProperties = new float[(int)PhraseTypes.PhraseTypesSize];
+            InObj.PhraseTable[35].PhraseProperties[(int)PhraseTypes.GiveActivity] = 0.5f;
+
+            InObj.PhraseTable.Add(new PhraseTableEntry() { DialogStr = "Fornicating" });
+            InObj.PhraseTable[36].PhraseProperties = new float[(int)PhraseTypes.PhraseTypesSize];
+            InObj.PhraseTable[36].PhraseProperties[(int)PhraseTypes.RequestActivity] = 0.5f;
+
+            InObj.PhraseTable.Add(new PhraseTableEntry() { DialogStr = "Branding em with the big L and lazy P" });
+            InObj.PhraseTable[37].PhraseProperties = new float[(int)PhraseTypes.PhraseTypesSize];
+            InObj.PhraseTable[37].PhraseProperties[(int)PhraseTypes.RequestActivity] = 0.5f;
+
+            InObj.PhraseTable.Add(new PhraseTableEntry() { DialogStr = "I could use some cheering up pardner" });
+            InObj.PhraseTable[38].PhraseProperties = new float[(int)PhraseTypes.PhraseTypesSize];
+            InObj.PhraseTable[38].PhraseProperties[(int)PhraseTypes.RequestJoke] = 0.8f;
+            InObj.PhraseTable[38].PhraseProperties[(int)PhraseTypes.RequestAffirmation] = 0.4f;
         }        
     }
 }
