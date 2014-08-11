@@ -1,0 +1,15 @@
+C:\Isaac\Chatterbot\LI_TextAdventure\LI_TextAdventure\obj\x86\Release\Dialog_Generator.csprojResolveAssemblyReference.cache
+C:\Isaac\Chatterbot\LI_TextAdventure\LI_TextAdventure\obj\x86\Release\LI_TextAdventure.exe
+C:\Isaac\Chatterbot\LI_TextAdventure\LI_TextAdventure\bin\Release\LI_TextAdventure.exe
+C:\Isaac\Chatterbot\LI_TextAdventure\LI_TextAdventure\bin\Release\LI_TextAdventure.pdb
+C:\Isaac\Chatterbot\LI_TextAdventure\LI_TextAdventure\obj\x86\Release\LI_TextAdventure.pdb
+C:\Isaac\Chatterbot\DialogEngine\LI_TextAdventure\obj\x86\Release\LI_TextAdventure.exe
+C:\Isaac\Chatterbot\DialogEngine\LI_TextAdventure\obj\x86\Release\LI_TextAdventure.pdb
+C:\Isaac\Chatterbot\DialogEngine\LI_TextAdventure\bin\Release\LI_TextAdventure.exe
+C:\Isaac\Chatterbot\DialogEngine\LI_TextAdventure\bin\Release\LI_TextAdventure.pdb
+C:\Isaac\Chatterbot\DialogEngine\LI_TextAdventure\obj\x86\Release\Dialog_Generator.csprojResolveAssemblyReference.cache
+C:\Users\Isaac\Downloads\DialogEngine\LI_TextAdventure\obj\x86\Release\LI_TextAdventure.exe
+C:\Users\Isaac\Downloads\DialogEngine\LI_TextAdventure\obj\x86\Release\LI_TextAdventure.pdb
+C:\Users\Isaac\Downloads\DialogEngine\LI_TextAdventure\bin\Release\LI_TextAdventure.exe
+C:\Users\Isaac\Downloads\DialogEngine\LI_TextAdventure\bin\Release\LI_TextAdventure.pdb
+C:\Users\Isaac\Downloads\DialogEngine\LI_TextAdventure\obj\x86\Release\Dialog_Generator.csprojResolveAssemblyReference.cache

@@ -1,0 +1,5 @@
+C:\Isaac\Chatterbot\DialogEngine\obj\x86\Debug\LI_TextAdventure.exe
+C:\Isaac\Chatterbot\DialogEngine\obj\x86\Debug\LI_TextAdventure.pdb
+C:\Isaac\Chatterbot\DialogEngine\bin\Debug\LI_TextAdventure.exe
+C:\Isaac\Chatterbot\DialogEngine\bin\Debug\LI_TextAdventure.pdb
+C:\Isaac\Chatterbot\DialogEngine\obj\x86\Debug\Dialog_Generator.csprojResolveAssemblyReference.cache

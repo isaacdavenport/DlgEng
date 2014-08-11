@@ -1,0 +1,18 @@
+C:\Users\Lincoln\Documents\Guildhall\A&S Class\LI_TextAdventure\LI_TextAdventure\bin\Release\LI_TextAdventure.exe
+C:\Users\Lincoln\Documents\Guildhall\A&S Class\LI_TextAdventure\LI_TextAdventure\bin\Release\LI_TextAdventure.pdb
+C:\Users\Lincoln\Documents\Guildhall\A&S Class\LI_TextAdventure\LI_TextAdventure\obj\x86\Release\ResolveAssemblyReference.cache
+C:\Users\Lincoln\Documents\Guildhall\A&S Class\LI_TextAdventure\LI_TextAdventure\obj\x86\Release\LI_TextAdventure.exe
+C:\Users\Lincoln\Documents\Guildhall\A&S Class\LI_TextAdventure\LI_TextAdventure\obj\x86\Release\LI_TextAdventure.pdb
+C:\Users\Lincoln\Desktop\Module Archives\Module 1\Art & Scripting 1\Final Project\LI_TextAdventure\LI_TextAdventure\obj\x86\Release\LI_TextAdventure.exe
+C:\Users\Lincoln\Desktop\Module Archives\Module 1\Art & Scripting 1\Final Project\LI_TextAdventure\LI_TextAdventure\obj\x86\Release\LI_TextAdventure.pdb
+C:\Users\Lincoln\Desktop\Module Archives\Module 1\Art & Scripting 1\Final Project\LI_TextAdventure\LI_TextAdventure\bin\Release\LI_TextAdventure.exe
+C:\Users\Lincoln\Desktop\Module Archives\Module 1\Art & Scripting 1\Final Project\LI_TextAdventure\LI_TextAdventure\bin\Release\LI_TextAdventure.pdb
+C:\Users\Lincoln\Desktop\Module Archives\Module 1\Art & Scripting 1\Final Project\LI_TextAdventure\LI_TextAdventure\obj\x86\Release\ResolveAssemblyReference.cache
+C:\Isaac\Chatterbot\Mr Sprinkles\LI_TextAdventure\LI_TextAdventure\obj\x86\Release\LI_TextAdventure.exe
+C:\Isaac\Chatterbot\Mr Sprinkles\LI_TextAdventure\LI_TextAdventure\obj\x86\Release\LI_TextAdventure.pdb
+C:\Isaac\Chatterbot\Mr Sprinkles\LI_TextAdventure\LI_TextAdventure\bin\Release\LI_TextAdventure.exe
+C:\Isaac\Chatterbot\Mr Sprinkles\LI_TextAdventure\LI_TextAdventure\bin\Release\LI_TextAdventure.pdb
+C:\Isaac\Chatterbot\Mr Sprinkles\LI_TextAdventure\LI_TextAdventure\obj\x86\Release\LI_TextAdventure.csprojResolveAssemblyReference.cache
+C:\Isaac\Chatterbot\LI_TextAdventure\LI_TextAdventure\obj\x86\Release\LI_TextAdventure.exe
+C:\Isaac\Chatterbot\LI_TextAdventure\LI_TextAdventure\obj\x86\Release\LI_TextAdventure.pdb
+C:\Isaac\Chatterbot\LI_TextAdventure\LI_TextAdventure\obj\x86\Release\LI_TextAdventure.csprojResolveAssemblyReference.cache
