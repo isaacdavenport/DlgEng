@@ -50,8 +50,8 @@ namespace Dialog_Generator
 
              InObj.PhraseTable.Add(new PhraseTableEntry() { DialogStr = "You are in need of some discipline young lady." });
              InObj.PhraseTable[5].PhraseProperties = new float[(int)PhraseTypes.PhraseTypesSize];
-             InObj.PhraseTable[5].PhraseProperties[(int)PhraseTypes.Exclamation] = 0.2f;
-             InObj.PhraseTable[5].PhraseProperties[(int)PhraseTypes.Threat] = 0.5f;
+             InObj.PhraseTable[5].PhraseProperties[(int)PhraseTypes.Exclamation] = 0.01f;
+             InObj.PhraseTable[5].PhraseProperties[(int)PhraseTypes.Threat] = 0.01f;
 
              InObj.PhraseTable.Add(new PhraseTableEntry() { DialogStr = "You are in need of some discipline young man." });
              InObj.PhraseTable[6].PhraseProperties = new float[(int)PhraseTypes.PhraseTypesSize];
@@ -87,7 +87,7 @@ namespace Dialog_Generator
              InObj.PhraseTable[9].PhraseProperties = new float[(int)PhraseTypes.PhraseTypesSize];
              InObj.PhraseTable[9].PhraseProperties[(int)PhraseTypes.GiveRecentHistory] = 0.2f;
              InObj.PhraseTable[9].PhraseProperties[(int)PhraseTypes.GiveSurprisingStatement] = 0.4f;
-             InObj.PhraseTable[9].PhraseProperties[(int)PhraseTypes.GiveJoke] = 0.2f;
+             InObj.PhraseTable[9].PhraseProperties[(int)PhraseTypes.GiveJoke] = 0.6f;
              InObj.PhraseTable[8].PhraseProperties[(int)PhraseTypes.GiveDisbelief] = 0.2f;
 
              InObj.PhraseTable.Add(new PhraseTableEntry() { DialogStr = "You are looking handsome today." });
@@ -169,6 +169,14 @@ namespace Dialog_Generator
              InObj.PhraseTable.Add(new PhraseTableEntry() { DialogStr = "It wasn't the panda that eats shoots and leaves, it was the bank robber" });
              InObj.PhraseTable[27].PhraseProperties = new float[(int)PhraseTypes.PhraseTypesSize];
              InObj.PhraseTable[27].PhraseProperties[(int)PhraseTypes.GiveJoke] = 0.4f;
+
+             InObj.PhraseTable.Add(new PhraseTableEntry() { DialogStr = "It isn't really so bad deary." });
+             InObj.PhraseTable[28].PhraseProperties = new float[(int)PhraseTypes.PhraseTypesSize];
+             InObj.PhraseTable[28].PhraseProperties[(int)PhraseTypes.GiveAffirmation] = 0.4f;
+
+             InObj.PhraseTable.Add(new PhraseTableEntry() { DialogStr = "When I'm sad, I stick pins in an effigy of Carlos and shout at the top of my lungs.  It always makes me feel better." });
+             InObj.PhraseTable[29].PhraseProperties = new float[(int)PhraseTypes.PhraseTypesSize];
+             InObj.PhraseTable[29].PhraseProperties[(int)PhraseTypes.GiveAffirmation] = 0.4f;
         }        
     }
 }

@@ -29,7 +29,7 @@ namespace Dialog_Generator
             InObj.PhraseTable[1].PhraseProperties = new float[(int)PhraseTypes.PhraseTypesSize];
             InObj.PhraseTable[1].PhraseProperties[(int)PhraseTypes.Greeting] = 0.2f;
             InObj.PhraseTable[1].PhraseProperties[(int)PhraseTypes.RequestAffirmation] = 0.2f;
-            InObj.PhraseTable[1].PhraseProperties[(int)PhraseTypes.No] = 0.2f;
+            InObj.PhraseTable[1].PhraseProperties[(int)PhraseTypes.No] = 0.1f;
             InObj.PhraseTable[1].PhraseProperties[(int)PhraseTypes.GiveSurprisingStatement] = 0.4f;
             InObj.PhraseTable[1].PhraseProperties[(int)PhraseTypes.GiveJoke] = 0.2f;
             InObj.PhraseTable[1].PhraseProperties[(int)PhraseTypes.Proposal] = 0.6f;
@@ -43,7 +43,7 @@ namespace Dialog_Generator
             InObj.PhraseTable.Add(new PhraseTableEntry() { DialogStr = "Mommy! Mommy!" });
             InObj.PhraseTable[3].PhraseProperties = new float[(int)PhraseTypes.PhraseTypesSize];
             InObj.PhraseTable[3].PhraseProperties[(int)PhraseTypes.RequestAffirmation] = 0.2f;
-            InObj.PhraseTable[3].PhraseProperties[(int)PhraseTypes.Greeting] = 0.1f;
+            InObj.PhraseTable[3].PhraseProperties[(int)PhraseTypes.No] = 0.2f;
             InObj.PhraseTable[3].PhraseProperties[(int)PhraseTypes.ShutUp] = 0.2f;
 
             InObj.PhraseTable.Add(new PhraseTableEntry() { DialogStr = "Wanna buy my little sister?" });
@@ -101,7 +101,7 @@ namespace Dialog_Generator
             InObj.PhraseTable.Add(new PhraseTableEntry() { DialogStr = "I'm telling on you!" });
             InObj.PhraseTable[14].PhraseProperties = new float[(int)PhraseTypes.PhraseTypesSize];
             InObj.PhraseTable[14].PhraseProperties[(int)PhraseTypes.Exclamation] = 0.2f;
-            InObj.PhraseTable[14].PhraseProperties[(int)PhraseTypes.Greeting] = 1.0f;
+            InObj.PhraseTable[14].PhraseProperties[(int)PhraseTypes.Greeting] = 0.2f;
 
             InObj.PhraseTable.Add(new PhraseTableEntry() { DialogStr = "What's that smell?" });
             InObj.PhraseTable[15].PhraseProperties = new float[(int)PhraseTypes.PhraseTypesSize];
@@ -116,8 +116,9 @@ namespace Dialog_Generator
 
             InObj.PhraseTable.Add(new PhraseTableEntry() { DialogStr = "My mom said not to wipe my boogers on people, they don't like it." });
             InObj.PhraseTable[17].PhraseProperties = new float[(int)PhraseTypes.PhraseTypesSize];
-            InObj.PhraseTable[17].PhraseProperties[(int)PhraseTypes.Exclamation] = 0.2f;
-            InObj.PhraseTable[17].PhraseProperties[(int)PhraseTypes.Greeting] = 1.0f;
+            InObj.PhraseTable[17].PhraseProperties[(int)PhraseTypes.Exclamation] = 0.1f;
+            InObj.PhraseTable[17].PhraseProperties[(int)PhraseTypes.Greeting] = 0.1f;
+            InObj.PhraseTable[17].PhraseProperties[(int)PhraseTypes.GiveSurprisingStatement] = 0.4f;
 
             InObj.PhraseTable.Add(new PhraseTableEntry() { DialogStr = " Today I found a frog.  I tried really hard not to hurt him, but I smooshed his leg.  I think thats why he won't eat the flies I caught for him." });
             InObj.PhraseTable[18].PhraseProperties = new float[(int)PhraseTypes.PhraseTypesSize];
@@ -151,7 +152,7 @@ namespace Dialog_Generator
 
             InObj.PhraseTable.Add(new PhraseTableEntry() { DialogStr = "You're lying" });
             InObj.PhraseTable[21].PhraseProperties = new float[(int)PhraseTypes.PhraseTypesSize];
-            InObj.PhraseTable[21].PhraseProperties[(int)PhraseTypes.GiveDisbelief] = 0.2f;
+            InObj.PhraseTable[21].PhraseProperties[(int)PhraseTypes.GiveDisbelief] = 0.6f;
             InObj.PhraseTable[21].PhraseProperties[(int)PhraseTypes.GiveSurprisingStatement] = 0.3f;
             InObj.PhraseTable[21].PhraseProperties[(int)PhraseTypes.ShutUp] = 0.3f;
 
@@ -184,7 +185,6 @@ namespace Dialog_Generator
             InObj.PhraseTable.Add(new PhraseTableEntry() { DialogStr = "Your mommas so fat..." });
             InObj.PhraseTable[27].PhraseProperties = new float[(int)PhraseTypes.PhraseTypesSize];
             InObj.PhraseTable[27].PhraseProperties[(int)PhraseTypes.Insult] = 0.4f;
-
 
             InObj.PhraseTable.Add(new PhraseTableEntry() { DialogStr = "Guess what I saw my older sister doing." });
             InObj.PhraseTable[28].PhraseProperties = new float[(int)PhraseTypes.PhraseTypesSize];
@@ -223,6 +223,12 @@ namespace Dialog_Generator
             InObj.PhraseTable[36].PhraseProperties = new float[(int)PhraseTypes.PhraseTypesSize];
             InObj.PhraseTable[36].PhraseProperties[(int)PhraseTypes.GiveJoke] = 0.8f;
             InObj.PhraseTable[36].PhraseProperties[(int)PhraseTypes.GiveSurprisingStatement] = 0.2f;
+
+            InObj.PhraseTable.Add(new PhraseTableEntry() { DialogStr = "When I experience friction in my life, I oil my tricycle wheels." });
+            InObj.PhraseTable[37].PhraseProperties = new float[(int)PhraseTypes.PhraseTypesSize];
+            InObj.PhraseTable[37].PhraseProperties[(int)PhraseTypes.GiveAffirmation] = 0.8f;
+
+
         }        
     }
 }

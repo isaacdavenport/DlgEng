@@ -1,10 +1,5 @@
-C:\Isaac\Chatterbot\DialogEngine\obj\x86\Debug\LI_TextAdventure.exe
-C:\Isaac\Chatterbot\DialogEngine\obj\x86\Debug\LI_TextAdventure.pdb
-C:\Isaac\Chatterbot\DialogEngine\bin\Debug\LI_TextAdventure.exe
-C:\Isaac\Chatterbot\DialogEngine\bin\Debug\LI_TextAdventure.pdb
+C:\Isaac\Chatterbot\DialogEngine\bin\Debug\DialogEngine.exe
+C:\Isaac\Chatterbot\DialogEngine\bin\Debug\DialogEngine.pdb
+C:\Isaac\Chatterbot\DialogEngine\obj\x86\Debug\DialogEngine.exe
+C:\Isaac\Chatterbot\DialogEngine\obj\x86\Debug\DialogEngine.pdb
 C:\Isaac\Chatterbot\DialogEngine\obj\x86\Debug\Dialog_Generator.csprojResolveAssemblyReference.cache
-C:\Users\admin\Desktop\DialogEngine\obj\x86\Debug\LI_TextAdventure.exe
-C:\Users\admin\Desktop\DialogEngine\obj\x86\Debug\LI_TextAdventure.pdb
-C:\Users\admin\Desktop\DialogEngine\bin\Debug\LI_TextAdventure.exe
-C:\Users\admin\Desktop\DialogEngine\obj\x86\Debug\Dialog_Generator.csprojResolveAssemblyReference.cache
-C:\Users\admin\Desktop\DialogEngine\bin\Debug\LI_TextAdventure.pdb

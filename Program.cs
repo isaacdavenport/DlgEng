@@ -26,7 +26,6 @@ namespace Dialog_Generator
         }
     }
 
-
     public class Character
     {     
         public string CharacterName { get; set; } 
@@ -67,7 +66,7 @@ namespace Dialog_Generator
             InitSchoolmarm.SetDefaults(CharacterList[2]);
         }
 
-        public void GenerateADialog()
+        public void GenerateADialog(params int[] DialogDirectives)
         {
             if (RandNumGenerator.Next(1, 100) > 66)  //third of the time switch up characters
             {
@@ -77,16 +76,22 @@ namespace Dialog_Generator
                 {
                     Character2Num = RandNumGenerator.Next(0, 3);
                 }
-
-                //Test COde
-                Character1Num = 0;
-                Character2Num = 1;
-
             }
+
             //randomly select a DialogModel.  Eventually use the popularity of each DialogModel to select more popular more often
-            CurrentDialogModel = RandNumGenerator.Next(0, ModelDialogTable.Count);
-            //Test code
-            CurrentDialogModel = 4;
+            CurrentDialogModel = RandNumGenerator.Next(0, ModelDialogTable.Count);  //should occasionally pick last one since count is one larger than index from zero
+
+            for (int i = 0; i < DialogDirectives.Length; i++)
+            {
+                if (i > 0)
+                    CurrentDialogModel = DialogDirectives[0];
+                if (i > 1)
+                    Character1Num = DialogDirectives[1];
+                if (i > 2)
+                    Character2Num = DialogDirectives[2];
+            }    
+
+
             Console.Write("Dialog Model: ");
             Console.WriteLine(ModelDialogTable[CurrentDialogModel].Name);
             int SpeakingCharacter = Character1Num;
@@ -100,21 +105,14 @@ namespace Dialog_Generator
                 foreach (PhraseTableEntry CurrentPhraseTableEntry in CharacterList[SpeakingCharacter].PhraseTable)
                 {
                     AmountOfCurrentPhraseType += CurrentPhraseTableEntry.PhraseProperties[(int)CurrentPhraseType];
-                   // Console.Write(AmountOfCurrentPhraseType);
-                   // Console.Write(" ");
                 }
-                Console.Write("AmountOfCurrentPhraseType = ");
-                Console.WriteLine(AmountOfCurrentPhraseType);
                 //Now that we know how much weight of the current phrasetype the character has in their PhraseTable randomly select a phrase of correct Type
-                int PhraseTableIndex = RandNumGenerator.Next(0, (int)(AmountOfCurrentPhraseType * 1000));
-                float PhraseTableWeight = (float)PhraseTableIndex / 1000;
-                Console.Write("Weight ");
-                Console.WriteLine(PhraseTableWeight);
+                float PhraseTableWeightedIndex = ((float)RandNumGenerator.NextDouble())*AmountOfCurrentPhraseType;
                 AmountOfCurrentPhraseType = 0;
                 foreach (PhraseTableEntry CurrentPhraseTableEntry in CharacterList[SpeakingCharacter].PhraseTable)
                 {
                     AmountOfCurrentPhraseType += CurrentPhraseTableEntry.PhraseProperties[(int)CurrentPhraseType];
-                    if (AmountOfCurrentPhraseType > PhraseTableWeight)
+                    if (AmountOfCurrentPhraseType > PhraseTableWeightedIndex)
                     {
                         Console.WriteLine(CurrentPhraseTableEntry.DialogStr);
                         break; 
@@ -140,12 +138,33 @@ namespace Dialog_Generator
             // Console.ReadLine();
             
             DialogTracker TheDialogs = new DialogTracker();
-            InitModelDialogs.SetDefaults(TheDialogs); 
+            InitModelDialogs.SetDefaults(TheDialogs);
+
+            TheDialogs.GenerateADialog();
 
             while (true)
             {
-                TheDialogs.GenerateADialog();
-                Console.ReadLine();
+                string[] keyboardInput = Console.ReadLine().Split(' ');
+                if (keyboardInput.Length == 3)
+                {
+                    int j = 0;
+                    int[] ModelAndCharacters = new int [3];
+                    foreach (string AsciiInt in keyboardInput) 
+                    {
+                        ModelAndCharacters[j] = Int32.Parse(AsciiInt); 
+                        j++;
+                    }
+
+                    TheDialogs.GenerateADialog();
+                }
+                else if (keyboardInput.Length == 0)
+                {
+                    TheDialogs.GenerateADialog();
+                }
+                else
+                {
+                    TheDialogs.GenerateADialog();
+                }
             }  
         }   
     }

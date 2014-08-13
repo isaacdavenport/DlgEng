@@ -8,8 +8,8 @@ namespace Dialog_Generator
 {
     /*  
         Exclamation, Greeting, Threat, Retreat, Proposal, Yes, No, RequestCatchup, GiveAffirmation, RequestAffirmation, 
-        GiveDisbelief, GiveRecentHistory, GiveSurprisingStatement, Ramble, ShutUp, RequestJoke, GiveJoke, PhraseTypesSize
-    */
+        GiveDisbelief, GiveRecentHistory, GiveSurprisingStatement,  Ramble, ShutUp, RequestJoke, GiveJoke, Insult, RequestActivity, GiveActivity, PhraseTypesSize
+   */
 
     public static class InitModelDialogs 
     {
@@ -95,6 +95,13 @@ namespace Dialog_Generator
             InObj.ModelDialogTable[16].PhraseTypeSequence.Add(PhraseTypes.Greeting);
             InObj.ModelDialogTable[16].PhraseTypeSequence.Add(PhraseTypes.GiveJoke);
             InObj.ModelDialogTable[16].PhraseTypeSequence.Add(PhraseTypes.Insult);
+
+            InObj.ModelDialogTable.Add(new ModelDialog() { Popularity = 0.5f, Name = "Request Give affirmation RequestCatchup Give Affirmation" });
+            InObj.ModelDialogTable[17].PhraseTypeSequence.Add(PhraseTypes.RequestAffirmation);
+            InObj.ModelDialogTable[17].PhraseTypeSequence.Add(PhraseTypes.GiveAffirmation);
+            InObj.ModelDialogTable[17].PhraseTypeSequence.Add(PhraseTypes.RequestCatchup);
+            InObj.ModelDialogTable[17].PhraseTypeSequence.Add(PhraseTypes.GiveAffirmation);
+
         }        
     }
 }

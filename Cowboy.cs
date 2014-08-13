@@ -257,6 +257,16 @@ namespace Dialog_Generator
             InObj.PhraseTable[38].PhraseProperties = new float[(int)PhraseTypes.PhraseTypesSize];
             InObj.PhraseTable[38].PhraseProperties[(int)PhraseTypes.RequestJoke] = 0.8f;
             InObj.PhraseTable[38].PhraseProperties[(int)PhraseTypes.RequestAffirmation] = 0.4f;
+
+            InObj.PhraseTable.Add(new PhraseTableEntry() { DialogStr = "Maybe a night out under the stars would make you feel better" });
+            InObj.PhraseTable[39].PhraseProperties = new float[(int)PhraseTypes.PhraseTypesSize];
+            InObj.PhraseTable[39].PhraseProperties[(int)PhraseTypes.GiveAffirmation] = 0.8f;
+
+            InObj.PhraseTable.Add(new PhraseTableEntry() { DialogStr = "When I feel blue, I like a bit of Hank Williams Sr. and some cocaine" });
+            InObj.PhraseTable[40].PhraseProperties = new float[(int)PhraseTypes.PhraseTypesSize];
+            InObj.PhraseTable[40].PhraseProperties[(int)PhraseTypes.GiveAffirmation] = 0.8f;
+
+
         }        
     }
 }

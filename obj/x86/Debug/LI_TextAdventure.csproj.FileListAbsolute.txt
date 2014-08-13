@@ -1,5 +1,0 @@
-C:\Users\Lincoln\Documents\Guildhall\A&S Class\LI_TextAdventure\LI_TextAdventure\bin\Debug\LI_TextAdventure.exe
-C:\Users\Lincoln\Documents\Guildhall\A&S Class\LI_TextAdventure\LI_TextAdventure\bin\Debug\LI_TextAdventure.pdb
-C:\Users\Lincoln\Documents\Guildhall\A&S Class\LI_TextAdventure\LI_TextAdventure\obj\x86\Debug\ResolveAssemblyReference.cache
-C:\Users\Lincoln\Documents\Guildhall\A&S Class\LI_TextAdventure\LI_TextAdventure\obj\x86\Debug\LI_TextAdventure.exe
-C:\Users\Lincoln\Documents\Guildhall\A&S Class\LI_TextAdventure\LI_TextAdventure\obj\x86\Debug\LI_TextAdventure.pdb
