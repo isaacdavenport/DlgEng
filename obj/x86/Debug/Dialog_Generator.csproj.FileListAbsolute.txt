@@ -35,6 +35,7 @@ C:\Isaac\Toys2Life\DavesReview\obj\x86\Debug\Interop.WMPLib.dll
 C:\Isaac\Toys2Life\DavesReview\obj\x86\Debug\Dialog_Generator.csproj.ResolveComReference.cache
 C:\Isaac\Toys2Life\DavesReview\obj\x86\Debug\DialogEngine.exe
 C:\Isaac\Toys2Life\DavesReview\obj\x86\Debug\DialogEngine.pdb
+<<<<<<< HEAD
 C:\Isaac\Toys2Life\DialogEngine\obj\x86\Debug\Interop.WMPLib.dll
 C:\Isaac\Toys2Life\DialogEngine\obj\x86\Debug\Dialog_Generator.csproj.ResolveComReference.cache
 C:\Isaac\Toys2Life\DialogEngine\bin\Debug\DialogEngine.exe
@@ -42,3 +43,5 @@ C:\Isaac\Toys2Life\DialogEngine\bin\Debug\DialogEngine.pdb
 C:\Isaac\Toys2Life\DialogEngine\obj\x86\Debug\Dialog_Generator.csprojResolveAssemblyReference.cache
 C:\Isaac\Toys2Life\DialogEngine\obj\x86\Debug\DialogEngine.exe
 C:\Isaac\Toys2Life\DialogEngine\obj\x86\Debug\DialogEngine.pdb
+=======
+>>>>>>> 2ec7f6216cd1afea90fcb22ab3baa0f62bff2171

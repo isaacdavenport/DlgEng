@@ -1,0 +1,33 @@
+{
+  "name": "dlgeng",
+  "version": "1.0.0",
+  "description": "dialogengine",
+  "publisher": "vscode",
+  "engines": { "vscode": "0.10.x" },
+  "main": "project.lock.json",
+  "activationEvents": [
+		"onLanguage:json",
+		"onCommand:npm-script.install",
+		"onCommand:npm-script.run",
+		"onCommand:npm-script.showOutput",
+		"onCommand:npm-script.rerun-last-script",
+		"onCommand:npm-script.terminate-script",
+		"onCommand:npm-script.test",
+		"onCommand:npm-script.start"
+	],
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/isaacdavenport/DlgEng.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/isaacdavenport/DlgEng/issues"
+  },
+  "homepage": "https://github.com/isaacdavenport/DlgEng#readme"
+}
