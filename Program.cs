@@ -1,171 +1,198 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.IO;
+using System.Threading; // for thread.sleep()
+
+// for count on keyboard inputs to manually force which characters speak
 
 
-namespace Dialog_Generator
+namespace DialogEngine
 {
-    public enum PhraseTypes 
+    public enum PhraseTypes
     {
-        Exclamation, Greeting, Threat, Retreat, Proposal, Yes, No, RequestCatchup, GiveAffirmation, RequestAffirmation, 
-        GiveDisbelief, GiveRecentHistory, GiveSurprisingStatement,  Ramble, ShutUp, RequestJoke, GiveJoke, Insult, RequestActivity, GiveActivity, PhraseTypesSize
-    };
+        Exclamation,
+        Greeting,
+        Threat,
+        Retreat,
+        YesNoQuestion,
+        Yes,
+        No,
+        RequestCatchup,
+        GiveAffirmation,
+        RequestAffirmation,
+        GiveDisbelief,
+        GiveRecentHistory,
+        GiveSurprisingStatement,
+        Ramble,
+        ShutUp,
+        RequestJoke,
+        GiveJoke,
+        Insult,
+        RequestActivity,
+        GiveActivity,
+        RequestAdvice,
+        GiveAdvice,
+        RequestMotivation,
+        GiveMotivation,
+        RequestLocation,
+        GiveLocation,
+        SmCb_01A,
+        SmCb_01B,
+        SmCb_01C,
+        SmCb_01D,
+        SmCb_01E,
+        PhraseTypesSize
+    }
 
-    public enum GenderType { Male, Female }
-    
-    public class PhraseTableEntry
+    public enum ParentalRating
+    {
+        G,
+        PG,
+        PG13,
+        R,
+        X
+    }
+
+     public static class SessionVars
+    {
+        public const bool DebugFlag = true;
+        public const bool ForceCharacterSelection = true;
+        public const bool ShowDupePhrases = false;
+        public const bool HeatMapFullMatrixDispMode = false;
+        public const bool HeatMapSumsMode = false;
+        public const bool HeatMapOnlyMode = false;
+        public const bool WriteSerialLog = false;
+        public const bool NoSerialPort = true;
+        public const bool CheckStuckTransmissions = false;
+        public const bool MonitorReceiveBufferSize = false;
+        public const bool MonitorMessageParseFails = false;
+        public const ParentalRating CurrentParentalRating = ParentalRating.X;
+    }
+
+    public class PhraseEntry
     {
         public string DialogStr;
-        public float [] PhraseProperties {get; set;}
-
-        public PhraseTableEntry()
-        {
-            DialogStr = "UnInitialized";
-            float [] PhraseProperties = new float [(int)PhraseTypes.PhraseTypesSize];
-        }
+        public string FileName;
+        public Dictionary<PhraseTypes, double> PhraseWeights;
+        public ParentalRating PhraseRating;
     }
 
     public class Character
-    {     
-        public string CharacterName { get; set; } 
-        public GenderType Gender { get; set; }
-        public int Age { get; set; }
-        public List<PhraseTableEntry> PhraseTable = new List<PhraseTableEntry>();
-          //a character's PhraseTable holds all the phrases they might say along with heuristics on what parts of a 
-          //model dialog they might use them in.
+    {
+        public string CharacterName { get; protected set; }
+        public string CharacterPrefix { get; protected set; }
+        public PhraseEntry PhraseTotals = new PhraseEntry();
+        public List<PhraseEntry> Phrases = new List<PhraseEntry>();
+        // A character's Phrases list holds all the phrases they might say along with 
+        // heuristic phraseWeights on what parts of a model dialog they might use them in.
+        protected const int RecentPhrasesQueueSize = 4;
+        public Queue<PhraseEntry> RecentPhrases = new Queue<PhraseEntry>();
     }
 
     public class ModelDialog
     {
         // a ModelDialog is a sequence of phrase types that represent an exchange between characters 
         // the model dialog will be filled with randomly selected character phrases of the appropriate phrase type
-        public float Popularity;
-        public string Name; 
-        public List<PhraseTypes> PhraseTypeSequence = new List<PhraseTypes>(); 
+        public string Name;
+        public DateTime AddedOnDateTime = new DateTime(2016, 1, 2, 3, 4, 5);
+        public double Popularity = 1.0;
+        public List<PhraseTypes> PhraseTypeSequence = new List<PhraseTypes>();
     }
 
-    public class DialogTracker
+    public static class RandomNumbers
     {
-        //master list of all the various types of phrase exchanges that could happen to make up a dialog
-        public List<ModelDialog> ModelDialogTable = new List<ModelDialog>();
+        public static Random Gen = new Random();
+    }
 
-        public Random RandNumGenerator = new Random();
-        public List<Character> CharacterList = new List<Character>();
-        int Character1Num = 0; 
-        int Character2Num = 1;
-        int CurrentDialogModel;
+    public class Program
+    {
+        public static DialogTracker theDialogs = new DialogTracker();
 
-        public DialogTracker()
-        {
-            CharacterList.Add(new Character());
-            InitCowboy.SetDefaults(CharacterList[0]);
-            CharacterList.Add(new Character());
-            InitSchoolboy.SetDefaults(CharacterList[1]);
-            CharacterList.Add(new Character());
-            InitSchoolmarm.SetDefaults(CharacterList[2]);
-        }
-
-        public void GenerateADialog(params int[] DialogDirectives)
-        {
-            if (RandNumGenerator.Next(1, 100) > 66)  //third of the time switch up characters
-            {
-                Character1Num = RandNumGenerator.Next(0, 3);
-                Character2Num = RandNumGenerator.Next(0, 3);
-                while (Character1Num == Character2Num)  //ensure we get two different characters talking to one another
+        static void Main(string[] args) {
+            Console.SetBufferSize(Console.BufferWidth, 32766);
+            string versionTimeStr = "Dialog Engine ver 0.30 Isaac, Aria " + DateTime.Now;
+            Console.Write(versionTimeStr);
+            if (SessionVars.WriteSerialLog) {
+                using (StreamWriter serialLog = new StreamWriter(
+                    @"Users/joey/Documents/Coding/Toys2Life/DialogEngine/CapturesAndAnalysis/SerialLog.txt", true)) {
+                    serialLog.WriteLine("");
+                    serialLog.WriteLine("");
+                    serialLog.WriteLine(versionTimeStr);
+                    serialLog.Close();
+                }
+                using (StreamWriter serialLogDec = new StreamWriter(
+                    @"Users/joey/Documents/Coding/Toys2Life/DialogEngine/CapturesAndAnalysis/SerialLogDecimal.txt", true))
                 {
-                    Character2Num = RandNumGenerator.Next(0, 3);
+                    serialLogDec.WriteLine("");
+                    serialLogDec.WriteLine("");
+                    serialLogDec.WriteLine(versionTimeStr);
+                    serialLogDec.Close();
+                }
+                using (StreamWriter serialLogDialog = new StreamWriter(
+                    @"Users/joey/Documents/Coding/Toys2Life/DialogEngine/CapturesAndAnalysis/SerialLogDialog.txt", true))
+                {
+                    serialLogDialog.WriteLine("");
+                    serialLogDialog.WriteLine("");
+                    serialLogDialog.WriteLine(versionTimeStr);
+                    serialLogDialog.Close();
+                }
+            }
+            //SerialComs.InitSerial();
+            InitModelDialogs.SetDefaults(theDialogs);
+
+            //Select Debug Output
+            if (SessionVars.ForceCharacterSelection) {
+                Console.WriteLine("   enter three numbers to set the next: DialogModel, Char1, Char2");
+                Console.WriteLine();
+            }
+
+            if (SessionVars.DebugFlag) {
+                foreach (var character in theDialogs.CharacterList) {
+                    foreach (PhraseEntry phrase in character.Phrases) {
+                        if (!File.Exists(@"/Users/joey/Documents/Coding/Toys2Life/DialogAudio" + character.CharacterPrefix + "_" + phrase.FileName + ".mp3")) {
+                            Console.WriteLine("missing " + character.CharacterPrefix + "_" + phrase.FileName + " " + phrase.DialogStr);
+                        }
+                    }
                 }
             }
 
-            //randomly select a DialogModel.  Eventually use the popularity of each DialogModel to select more popular more often
-            CurrentDialogModel = RandNumGenerator.Next(0, ModelDialogTable.Count);  //should occasionally pick last one since count is one larger than index from zero
+            while (true) {
+                if (SessionVars.ForceCharacterSelection) {
+                    string[] keyboardInput = Console.ReadLine().Split(' ');
 
-            for (int i = 0; i < DialogDirectives.Length; i++)
-            {
-                if (i > 0)
-                    CurrentDialogModel = DialogDirectives[0];
-                if (i > 1)
-                    Character1Num = DialogDirectives[1];
-                if (i > 2)
-                    Character2Num = DialogDirectives[2];
-            }    
-
-
-            Console.Write("Dialog Model: ");
-            Console.WriteLine(ModelDialogTable[CurrentDialogModel].Name);
-            int SpeakingCharacter = Character1Num;
-
-            //step through the current model dialog an select a phrase from each character that matches the prescribed phrase type sequence
-            foreach (PhraseTypes CurrentPhraseType in ModelDialogTable[CurrentDialogModel].PhraseTypeSequence)
-            {
-                Console.Write(CharacterList[SpeakingCharacter].CharacterName + ": ");
-                float AmountOfCurrentPhraseType = 0;
-                //Go through the characters phrasetable and look up how many of the currently desired phrasetype he has, add their property weights
-                foreach (PhraseTableEntry CurrentPhraseTableEntry in CharacterList[SpeakingCharacter].PhraseTable)
-                {
-                    AmountOfCurrentPhraseType += CurrentPhraseTableEntry.PhraseProperties[(int)CurrentPhraseType];
-                }
-                //Now that we know how much weight of the current phrasetype the character has in their PhraseTable randomly select a phrase of correct Type
-                float PhraseTableWeightedIndex = ((float)RandNumGenerator.NextDouble())*AmountOfCurrentPhraseType;
-                AmountOfCurrentPhraseType = 0;
-                foreach (PhraseTableEntry CurrentPhraseTableEntry in CharacterList[SpeakingCharacter].PhraseTable)
-                {
-                    AmountOfCurrentPhraseType += CurrentPhraseTableEntry.PhraseProperties[(int)CurrentPhraseType];
-                    if (AmountOfCurrentPhraseType > PhraseTableWeightedIndex)
-                    {
-                        Console.WriteLine(CurrentPhraseTableEntry.DialogStr);
-                        break; 
+                    //if keyboard input has three numbers for debug mode to force dialog model and characters
+                    if (keyboardInput.Length == 3) {
+                        int j = 0;
+                        int[] ModelAndCharacters = new int[3];
+                        foreach (string AsciiInt in keyboardInput) {
+                            ModelAndCharacters[j] = Int32.Parse(AsciiInt);
+                            j++;
+                        }
+                        theDialogs.GenerateADialog(ModelAndCharacters);
+                    }
+                    else {
+                        Console.WriteLine("Incorrect input, generating random dialog.");
+                        theDialogs.GenerateADialog(); // wrong number of user input select rand dialog and characters
                     }
                 }
-                                
-                if (SpeakingCharacter == Character1Num)
-                    SpeakingCharacter = Character2Num;
-                else
-                    SpeakingCharacter = Character1Num;
+                else {
+                    if (!SessionVars.HeatMapOnlyMode) {
+                        theDialogs.GenerateADialog();  //normal operation
+                        Thread.Sleep(1100);
+                        Thread.Sleep(RandomNumbers.Gen.Next(0, 2000));
+                    }
+                    else {
+                        Console.Clear();
+                        if (SessionVars.HeatMapFullMatrixDispMode) {
+                            SerialComs.PrintHeatMap();
+                        }
+                        if (SessionVars.HeatMapSumsMode) {
+                            SerialComs.PrintHeatMapSums();
+                        }
+                        Thread.Sleep(400);
+                    }
+                }
             }
         }
-    }
-      
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            Console.Write("Dialog Engine Isaac Davenport ");
-            DateTime now = DateTime.Now;
-            Console.WriteLine(now);
-            Console.WriteLine();
-            // Console.ReadLine();
-            
-            DialogTracker TheDialogs = new DialogTracker();
-            InitModelDialogs.SetDefaults(TheDialogs);
-
-            TheDialogs.GenerateADialog();
-
-            while (true)
-            {
-                string[] keyboardInput = Console.ReadLine().Split(' ');
-                if (keyboardInput.Length == 3)
-                {
-                    int j = 0;
-                    int[] ModelAndCharacters = new int [3];
-                    foreach (string AsciiInt in keyboardInput) 
-                    {
-                        ModelAndCharacters[j] = Int32.Parse(AsciiInt); 
-                        j++;
-                    }
-
-                    TheDialogs.GenerateADialog();
-                }
-                else if (keyboardInput.Length == 0)
-                {
-                    TheDialogs.GenerateADialog();
-                }
-                else
-                {
-                    TheDialogs.GenerateADialog();
-                }
-            }  
-        }   
     }
 }

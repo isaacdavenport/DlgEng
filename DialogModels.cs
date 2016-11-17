@@ -1,107 +1,222 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-
-namespace Dialog_Generator
+namespace DialogEngine
 {
-    /*  
-        Exclamation, Greeting, Threat, Retreat, Proposal, Yes, No, RequestCatchup, GiveAffirmation, RequestAffirmation, 
-        GiveDisbelief, GiveRecentHistory, GiveSurprisingStatement,  Ramble, ShutUp, RequestJoke, GiveJoke, Insult, RequestActivity, GiveActivity, PhraseTypesSize
-   */
+    public static class InitModelDialogs  
+    {  //TODO this could be moved to a collection as well like the Character Objects and inheret popularity for statistical selection of elements
+        // TODO add a date that a dialog model or phrase is added so we can probabalistically select more recent phrases / dialogs
+        public static void SetDefaults(DialogTracker inObj) {
 
-    public static class InitModelDialogs 
-    {
-        public static void SetDefaults(DialogTracker InObj) {
+            DateTime firstRound = new DateTime(2016, 5, 18);
+
+            int i = 0;
+            inObj.ModelDialogs.Add(new ModelDialog() { Name = "Greeting, Greeting",
+                AddedOnDateTime = firstRound, Popularity = 0.2 });
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.Greeting);
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.Greeting);
+
+            i++;
+            inObj.ModelDialogs.Add(new ModelDialog() { Name = "Single Greeting",
+                AddedOnDateTime = firstRound, Popularity = 0.2 });
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.Greeting);
+
+            i++;
+            inObj.ModelDialogs.Add(new ModelDialog() { Name = "Exclamation, Exclamation",
+                AddedOnDateTime = firstRound, Popularity = 0.2 });
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.Exclamation);
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.Exclamation);
+
+            i++;
+            inObj.ModelDialogs.Add(new ModelDialog() { Name = "Single Exclamation",
+                AddedOnDateTime = firstRound, Popularity = 0.2 });
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.Exclamation);
+
+            i++;
+            inObj.ModelDialogs.Add(new ModelDialog() { Name = "Threat Retreat",
+                AddedOnDateTime = firstRound, Popularity = 0.2 });
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.Threat);
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.Retreat);
+
+            i++;
+            inObj.ModelDialogs.Add(new ModelDialog() { Name = "RequestAffirmation, Give Affirmation",
+                AddedOnDateTime = firstRound, Popularity = 0.4 });
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.RequestAffirmation);
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.GiveAffirmation);
+
+            i++;
+            inObj.ModelDialogs.Add(new ModelDialog() { Name = "Request Affirmation Give Joke",
+                AddedOnDateTime = firstRound, Popularity = 0.3 });
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.RequestAffirmation);
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.GiveJoke);
+
+            i++;
+            inObj.ModelDialogs.Add(new ModelDialog() { Name = "Request Joke, Give Joke",
+                AddedOnDateTime = firstRound, Popularity = 0.9 });
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.RequestJoke);
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.GiveJoke);
+
+            i++;
+            inObj.ModelDialogs.Add(new ModelDialog() { Name = "GiveSurprisingSt, GiveDisbelief",
+                AddedOnDateTime = firstRound, Popularity = 0.3 });
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.GiveSurprisingStatement);
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.GiveDisbelief);
+
+            i++;
+            inObj.ModelDialogs.Add(new ModelDialog() { Name = "YesNoQuestion, No",
+                AddedOnDateTime = firstRound, Popularity = 0.7 });
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.YesNoQuestion);
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.No);
+
+            i++;
+            inObj.ModelDialogs.Add(new ModelDialog() { Name = "YesNoQuestion, Yes",
+                AddedOnDateTime = firstRound, Popularity = 0.5 });
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.YesNoQuestion);
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.Yes);
+            
+            i++;
+            inObj.ModelDialogs.Add(new ModelDialog() { Name = "GiveSurprisingStatement Exclamation",
+                AddedOnDateTime = firstRound, Popularity = 0.4 });
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.GiveSurprisingStatement);
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.Exclamation);
+
+            i++;
+            inObj.ModelDialogs.Add(new ModelDialog() { Name = "GiveJoke, Disbelief -That wasn't funny",
+                AddedOnDateTime = firstRound, Popularity = 0.3 });
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.GiveJoke);
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.GiveDisbelief);
+
+            i++;
+            inObj.ModelDialogs.Add(new ModelDialog() { Name = "Insult, Insult, Insult",
+                AddedOnDateTime = firstRound, Popularity = 0.2 });
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.Insult);
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.Insult);
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.Insult);
+
+            i++;
+            inObj.ModelDialogs.Add(new ModelDialog() { Name = "RequestAffirmation, Insult, Insult",
+                AddedOnDateTime = firstRound, Popularity = 0.2 });
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.RequestAffirmation);
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.Insult);
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.Insult);
+
+            i++;
+            inObj.ModelDialogs.Add(new ModelDialog() { Name = "YesNoQuestion, Insult",
+                AddedOnDateTime = firstRound, Popularity = 0.2 });
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.YesNoQuestion);
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.Insult);
+
+            i++;
+            inObj.ModelDialogs.Add(new ModelDialog() { Name = "RequestCatchup, Insult, Retreat", AddedOnDateTime = firstRound, Popularity = 0.2 });
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.RequestCatchup);
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.Insult);
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.Retreat);
+
+            i++;
+            inObj.ModelDialogs.Add(new ModelDialog() { Name = 
+                "Guess what They/I did, Guess Activity, Correct Activity ",
+                AddedOnDateTime = firstRound, Popularity = 0.2 });
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.RequestActivity);
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.GiveActivity);
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.GiveActivity);
+
+            i++;
+            inObj.ModelDialogs.Add(new ModelDialog() { Name = "GiveJoke, Insult",
+                AddedOnDateTime = firstRound, Popularity = 0.2 });
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.GiveJoke);
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.Insult);
+
+            i++;
+            inObj.ModelDialogs.Add(new ModelDialog() { Name = "RequestAff GiveAff ReqCat Ramble retreat",
+                AddedOnDateTime = firstRound, Popularity = 0.3 });
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.RequestAffirmation);
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.GiveAffirmation);
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.RequestCatchup);
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.Ramble);
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.Retreat);
+
+            i++;
+            inObj.ModelDialogs.Add(new ModelDialog() { Name = "RequestCatchup GiveRecentHistory",
+                AddedOnDateTime = firstRound, Popularity = 0.6 });
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.RequestCatchup);
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.GiveRecentHistory);
+
+            i++;
+            inObj.ModelDialogs.Add(new ModelDialog() { Name = "RequestCatchup, Ramble, Shutup",
+                AddedOnDateTime = firstRound, Popularity = 0.4 });
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.RequestCatchup);
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.Ramble);
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.ShutUp);
+
+            i++;
+            inObj.ModelDialogs.Add(new ModelDialog() { Name = "Insult, Shutup",
+                AddedOnDateTime = firstRound, Popularity = 0.15 });
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.Insult);
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.ShutUp);
+
+            i++;
+            inObj.ModelDialogs.Add(new ModelDialog() { Name = "Insult, Insult, Insult, Exc",
+                AddedOnDateTime = firstRound, Popularity = 0.1 });
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.Insult);
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.Insult);
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.Insult);
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.Exclamation);
+
+            i++;
+            inObj.ModelDialogs.Add(new ModelDialog() { Name = "Insult, Threat, Retreat",
+                AddedOnDateTime = firstRound, Popularity = 0.1 });
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.Insult);
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.Threat);
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.Retreat);
+            
+            i++;
+            inObj.ModelDialogs.Add(new ModelDialog() { Name = "ReqAct, GuessAct, CorrectAct ",
+                AddedOnDateTime = firstRound, Popularity = 0.2 });
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.RequestActivity);
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.GiveActivity);
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.GiveActivity);
+
+            i++;
+            inObj.ModelDialogs.Add(new ModelDialog() { Name = "ReqMotiv, Givemotiv",
+                AddedOnDateTime = firstRound, Popularity = 0.6 });
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.RequestMotivation);
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.GiveMotivation);
  
+            i++;
+            inObj.ModelDialogs.Add(new ModelDialog() { Name = "ReqAdv,  GiveAdv",
+                AddedOnDateTime = firstRound, Popularity = 1.3 });
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.RequestAdvice);
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.GiveAdvice);
 
-            InObj.ModelDialogTable.Add(new ModelDialog() { Popularity = 0.8f, Name = "Dual Greeting" });
-            InObj.ModelDialogTable[0].PhraseTypeSequence.Add(PhraseTypes.Greeting);
-            InObj.ModelDialogTable[0].PhraseTypeSequence.Add(PhraseTypes.Greeting);
+            i++;
+            inObj.ModelDialogs.Add(new ModelDialog() { Name = "Request location Give location",
+                AddedOnDateTime = firstRound, Popularity = 2.1 });
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.RequestLocation);
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.GiveLocation);
 
-            InObj.ModelDialogTable.Add(new ModelDialog() { Popularity = 0.4f, Name = "Single Exclamation" });
-            InObj.ModelDialogTable[1].PhraseTypeSequence.Add(PhraseTypes.Exclamation);
+            i++;
+            inObj.ModelDialogs.Add(new ModelDialog() { Name = "CB SM Script 1 inuendo",
+                AddedOnDateTime = new DateTime(2016, 6, 18), Popularity = 5.1
+            });
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.SmCb_01A);
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.SmCb_01B);
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.SmCb_01C);
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.SmCb_01D);
+            inObj.ModelDialogs[i].PhraseTypeSequence.Add(PhraseTypes.SmCb_01E);
 
-            InObj.ModelDialogTable.Add(new ModelDialog() { Popularity = 0.3f, Name = "Greeting Threat Retreat" });
-            InObj.ModelDialogTable[2].PhraseTypeSequence.Add(PhraseTypes.Greeting);
-            InObj.ModelDialogTable[2].PhraseTypeSequence.Add(PhraseTypes.Threat);
-            InObj.ModelDialogTable[2].PhraseTypeSequence.Add(PhraseTypes.Retreat);
+            inObj.popularitySum = 0;
+            foreach (var currentDialog in inObj.ModelDialogs) {
+                inObj.popularitySum += currentDialog.Popularity;
+            }
 
-            InObj.ModelDialogTable.Add(new ModelDialog() { Popularity = 0.3f, Name = "Request and Give Affirmation" });
-            InObj.ModelDialogTable[3].PhraseTypeSequence.Add(PhraseTypes.Greeting);
-            InObj.ModelDialogTable[3].PhraseTypeSequence.Add(PhraseTypes.RequestAffirmation);
-            InObj.ModelDialogTable[3].PhraseTypeSequence.Add(PhraseTypes.GiveAffirmation);
-
-            InObj.ModelDialogTable.Add(new ModelDialog() { Popularity = 0.1f, Name = "Request and Give Joke" });
-            InObj.ModelDialogTable[4].PhraseTypeSequence.Add(PhraseTypes.RequestJoke);
-            InObj.ModelDialogTable[4].PhraseTypeSequence.Add(PhraseTypes.GiveJoke);
-
-            InObj.ModelDialogTable.Add(new ModelDialog() { Popularity = 0.2f, Name = "Disbelieve surprising statement" });
-            InObj.ModelDialogTable[5].PhraseTypeSequence.Add(PhraseTypes.Greeting);
-            InObj.ModelDialogTable[5].PhraseTypeSequence.Add(PhraseTypes.GiveSurprisingStatement);
-            InObj.ModelDialogTable[5].PhraseTypeSequence.Add(PhraseTypes.GiveDisbelief);
-
-            InObj.ModelDialogTable.Add(new ModelDialog() { Popularity = 0.3f, Name = "Deny Proposal" });
-            InObj.ModelDialogTable[6].PhraseTypeSequence.Add(PhraseTypes.Greeting);
-            InObj.ModelDialogTable[6].PhraseTypeSequence.Add(PhraseTypes.Proposal);
-            InObj.ModelDialogTable[6].PhraseTypeSequence.Add(PhraseTypes.No);
-
-            InObj.ModelDialogTable.Add(new ModelDialog() { Popularity = 0.1f, Name = "Dual Exclamation" });
-            InObj.ModelDialogTable[7].PhraseTypeSequence.Add(PhraseTypes.Exclamation);
-            InObj.ModelDialogTable[7].PhraseTypeSequence.Add(PhraseTypes.Exclamation);
-
-            InObj.ModelDialogTable.Add(new ModelDialog() { Popularity = 0.3f, Name = "Dual Exclamation Proposal No" });
-            InObj.ModelDialogTable[8].PhraseTypeSequence.Add(PhraseTypes.Exclamation);
-            InObj.ModelDialogTable[8].PhraseTypeSequence.Add(PhraseTypes.Exclamation);
-            InObj.ModelDialogTable[8].PhraseTypeSequence.Add(PhraseTypes.Proposal);
-            InObj.ModelDialogTable[8].PhraseTypeSequence.Add(PhraseTypes.No);
-
-            InObj.ModelDialogTable.Add(new ModelDialog() { Popularity = 0.3f, Name = "Dual Exclamation Proposal Yes" });
-            InObj.ModelDialogTable[9].PhraseTypeSequence.Add(PhraseTypes.Exclamation);
-            InObj.ModelDialogTable[9].PhraseTypeSequence.Add(PhraseTypes.Exclamation);
-            InObj.ModelDialogTable[9].PhraseTypeSequence.Add(PhraseTypes.Proposal);
-            InObj.ModelDialogTable[9].PhraseTypeSequence.Add(PhraseTypes.Yes);
-
-            InObj.ModelDialogTable.Add(new ModelDialog() { Popularity = 0.3f, Name = "That wasn't funny" });
-            InObj.ModelDialogTable[10].PhraseTypeSequence.Add(PhraseTypes.GiveJoke);
-            InObj.ModelDialogTable[10].PhraseTypeSequence.Add(PhraseTypes.GiveDisbelief);
-
-            InObj.ModelDialogTable.Add(new ModelDialog() { Popularity = 0.3f, Name = "Insult, Insult, Insult" });
-            InObj.ModelDialogTable[11].PhraseTypeSequence.Add(PhraseTypes.Insult);
-            InObj.ModelDialogTable[11].PhraseTypeSequence.Add(PhraseTypes.Insult);
-            InObj.ModelDialogTable[11].PhraseTypeSequence.Add(PhraseTypes.Insult);
-
-            InObj.ModelDialogTable.Add(new ModelDialog() { Popularity = 0.3f, Name = "RequestAffirmation, Insult, Insult" });
-            InObj.ModelDialogTable[12].PhraseTypeSequence.Add(PhraseTypes.RequestAffirmation);
-            InObj.ModelDialogTable[12].PhraseTypeSequence.Add(PhraseTypes.Insult);
-            InObj.ModelDialogTable[12].PhraseTypeSequence.Add(PhraseTypes.Insult);
-
-            InObj.ModelDialogTable.Add(new ModelDialog() { Popularity = 0.3f, Name = "Greeting, Proposal, Insult" });
-            InObj.ModelDialogTable[13].PhraseTypeSequence.Add(PhraseTypes.Greeting);
-            InObj.ModelDialogTable[13].PhraseTypeSequence.Add(PhraseTypes.Proposal);
-            InObj.ModelDialogTable[13].PhraseTypeSequence.Add(PhraseTypes.Insult);
-
-            InObj.ModelDialogTable.Add(new ModelDialog() { Popularity = 0.3f, Name = "RequestCatchup, Insult" });
-            InObj.ModelDialogTable[14].PhraseTypeSequence.Add(PhraseTypes.RequestCatchup);
-            InObj.ModelDialogTable[14].PhraseTypeSequence.Add(PhraseTypes.Insult);
-
-            InObj.ModelDialogTable.Add(new ModelDialog() { Popularity = 0.3f, Name = "Guess what They/I did, Guess Activity, Correct Activity " });
-            InObj.ModelDialogTable[15].PhraseTypeSequence.Add(PhraseTypes.RequestActivity);
-            InObj.ModelDialogTable[15].PhraseTypeSequence.Add(PhraseTypes.GiveActivity);
-            InObj.ModelDialogTable[15].PhraseTypeSequence.Add(PhraseTypes.GiveActivity);
-
-            InObj.ModelDialogTable.Add(new ModelDialog() { Popularity = 0.5f, Name = "Greeting, GiveJoke, Insult" });
-            InObj.ModelDialogTable[16].PhraseTypeSequence.Add(PhraseTypes.Greeting);
-            InObj.ModelDialogTable[16].PhraseTypeSequence.Add(PhraseTypes.GiveJoke);
-            InObj.ModelDialogTable[16].PhraseTypeSequence.Add(PhraseTypes.Insult);
-
-            InObj.ModelDialogTable.Add(new ModelDialog() { Popularity = 0.5f, Name = "Request Give affirmation RequestCatchup Give Affirmation" });
-            InObj.ModelDialogTable[17].PhraseTypeSequence.Add(PhraseTypes.RequestAffirmation);
-            InObj.ModelDialogTable[17].PhraseTypeSequence.Add(PhraseTypes.GiveAffirmation);
-            InObj.ModelDialogTable[17].PhraseTypeSequence.Add(PhraseTypes.RequestCatchup);
-            InObj.ModelDialogTable[17].PhraseTypeSequence.Add(PhraseTypes.GiveAffirmation);
-
+            /*
+             * bodily noises
+             * char1 burp,fart,sneeze,etc
+             * char1 excuse,pardon,etc
+             * chr2 excuse,pardon,insult,etc
+             * let me introduce myself 
+             * add a situational (all too close or too close to house) "Its getting crowded over here" line set tag
+             * add dialogs with voice of the narrator
+             */ 
         }        
     }
 }
