@@ -12,7 +12,7 @@ namespace DialogEngine
             DateTime adventureRound = new DateTime(2016, 9, 17);
 
             inObj.ModelDialogs.Add(new ModelDialog{
-                Name = "Greeting, Greeting",
+                Name = "Greeting, Greeting" ,
                 AddedOnDateTime = firstRound, Popularity = 0.2,
                 PhraseTypeSequence = new List<PhraseTypes> {
                     PhraseTypes.Greeting,

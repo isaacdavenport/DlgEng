@@ -160,7 +160,7 @@ namespace DialogEngine
                     }
                     if (SessionVars.WriteSerialLog) {
                         using (StreamWriter serialLog = new StreamWriter(
-                            @"c:\Isaac\Toys2LifeResources\CapturesAndAnalysis\SerialLog.txt", true)) {
+                            SessionVars.LogsDirectory + SessionVars.SerialLogFileName, true)) {
                             serialLog.Write(DateTime.Now.ToString("mm.ss.fff") + "  ");
                             serialLog.Write(message);
                             serialLog.Close();
@@ -259,7 +259,7 @@ namespace DialogEngine
             if (SessionVars.WriteSerialLog)
             {
                 using (StreamWriter serialLogDecimal = new StreamWriter(
-                    @"c:\Isaac\Toys2LifeResources\CapturesAndAnalysis\SerialLogDecimal.txt", true))
+                    (SessionVars.LogsDirectory + SessionVars.DecimalSerialLogFileName), true))
                 {
                     serialLogDecimal.Write(ReceivedMessages[ReceivedMessages.Count - 1].CharacterPrefix + "  ");
                     serialLogDecimal.Write(ReceivedMessages[ReceivedMessages.Count - 1].ReceivedTime.ToString("mm.ss.fff") + "  ");

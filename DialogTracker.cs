@@ -98,7 +98,7 @@ namespace DialogEngine
             Console.WriteLine(dialogModelString);
             if (SessionVars.WriteSerialLog) {
                 using (StreamWriter serialLogDialogModels = new StreamWriter(
-                    @"c:\Isaac\Toys2LifeResources\CapturesAndAnalysis\SerialLogDialog.txt", true)) {
+                    (SessionVars.LogsDirectory + SessionVars.DialogSerialLogFileName), true)) {
                     serialLogDialogModels.WriteLine(dialogModelString);
                     serialLogDialogModels.Close();
                 }
@@ -301,7 +301,7 @@ namespace DialogEngine
                     var ch1RetreatPhrase = PickAWeightedPhrase(Character1Num, PhraseTypes.Retreat);
                     Console.Write(CharacterList[Character1Num].CharacterName + " Wait3 : ");
                     Console.WriteLine(ch1RetreatPhrase.DialogStr);
-                    PlayAudio(@"c:\DialogAudio\" + CharacterList[Character1Num].CharacterPrefix +
+                    PlayAudio(SessionVars.AudioDirectory + CharacterList[Character1Num].CharacterPrefix +
                               "_" + ch1RetreatPhrase.FileName + ".mp3");
                     return true;
                 }
@@ -310,7 +310,7 @@ namespace DialogEngine
                     var ch2RetreatPhrase = PickAWeightedPhrase(Character2Num, PhraseTypes.Retreat);
                     Console.Write(CharacterList[Character2Num].CharacterName + " Wait5 : ");
                     Console.WriteLine(ch2RetreatPhrase.DialogStr);
-                    PlayAudio(@"c:\DialogAudio\" + CharacterList[Character2Num].CharacterPrefix +
+                    PlayAudio(SessionVars.AudioDirectory + CharacterList[Character2Num].CharacterPrefix +
                               "_" + ch2RetreatPhrase.FileName + ".mp3");
                     return true;
                 }
@@ -378,7 +378,7 @@ namespace DialogEngine
 
             if (SessionVars.WriteSerialLog) {
                 using (StreamWriter serialLogDialogLines = new StreamWriter(
-                    @"c:\Isaac\Toys2LifeResources\CapturesAndAnalysis\SerialLogDialog.txt", true)) {
+                    (SessionVars.LogsDirectory + SessionVars.DialogSerialLogFileName), true)) {
                     serialLogDialogLines.WriteLine(CharacterList[speakingCharacter].CharacterName + ": " + selectedPhrase.DialogStr);
                     serialLogDialogLines.Close();
                 }
@@ -411,7 +411,7 @@ namespace DialogEngine
 
                 AddPhraseToHistory(selectedPhrase, speakingCharacter);
 
-                var pathAndFileName = @"c:\DialogAudio\" + CharacterList[speakingCharacter].CharacterPrefix +
+                var pathAndFileName = SessionVars.AudioDirectory + CharacterList[speakingCharacter].CharacterPrefix +
                                       "_" + selectedPhrase.FileName + ".mp3";
                 PlayAudio(pathAndFileName);
 

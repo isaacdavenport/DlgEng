@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Configuration;
 using System.Threading; // for thread.sleep()
 // ReSharper disable ConditionIsAlwaysTrueOrFalse
 
@@ -41,7 +42,7 @@ namespace DialogEngine
         ImListening,
         SeriousYes,
         SeriousNo,
-        LM,  //TODO remove me
+        LM,  //TODO remove me 
         SmCb_01A,SmCb_01B,SmCb_01C,SmCb_01D,SmCb_01E,
         SHSilence,
         LM01A,LM01B,LM01C,LM01D,LM01E,LM01F,LM02A,LM02B,LM02C,LM02D,LM02E,LM02F,LM02G,LM02H,LM02I,LM03A,LM03B,LM03C,LM03D,LM03E,LM03F,
@@ -62,18 +63,24 @@ namespace DialogEngine
 
     public static class SessionVars
     {
-        public const bool DebugFlag = true;
-        public const bool ForceCharacterSelection = true;
-        public const bool ShowDupePhrases = false;
-        public const bool HeatMapFullMatrixDispMode = false;
-        public const bool HeatMapSumsMode = false;
-        public const bool HeatMapOnlyMode = false;
-        public const bool WriteSerialLog = true;
-        public const bool NoSerialPort = true;
-        public const bool CheckStuckTransmissions = false;
-        public const bool MonitorReceiveBufferSize = false;
-        public const bool MonitorMessageParseFails = false;
-        public const ParentalRating CurrentParentalRating = ParentalRating.X;
+        public static readonly bool DebugFlag = Convert.ToBoolean(AppSet.ReadSetting("DebugFlag"));
+        public static readonly bool ForceCharacterSelection = Convert.ToBoolean(AppSet.ReadSetting("ForceCharacterSelection"));
+        public static readonly bool ShowDupePhrases = Convert.ToBoolean(AppSet.ReadSetting("ShowDupePhrases"));
+        public static readonly bool HeatMapFullMatrixDispMode = Convert.ToBoolean(AppSet.ReadSetting("HeatMapFullMatrixDispMode"));
+        public static readonly bool HeatMapSumsMode = Convert.ToBoolean(AppSet.ReadSetting("HeatMapSumsMode"));
+        public static readonly bool HeatMapOnlyMode = Convert.ToBoolean(AppSet.ReadSetting("HeatMapOnlyMode"));
+        public static readonly bool WriteSerialLog = Convert.ToBoolean(AppSet.ReadSetting("WriteSerialLog"));
+        public static readonly bool NoSerialPort = Convert.ToBoolean(AppSet.ReadSetting("NoSerialPort"));
+        public static readonly bool CheckStuckTransmissions = Convert.ToBoolean(AppSet.ReadSetting("CheckStuckTransmissions"));
+        public static readonly bool MonitorReceiveBufferSize = Convert.ToBoolean(AppSet.ReadSetting("MonitorReceiveBufferSize"));
+        public static readonly bool MonitorMessageParseFails = Convert.ToBoolean(AppSet.ReadSetting("MonitorMessageParseFails"));
+        public static readonly ParentalRating CurrentParentalRating = 
+            (ParentalRating)Enum.Parse(typeof(ParentalRating), AppSet.ReadSetting("CurrentParentalRating"));
+        public static readonly string LogsDirectory = AppSet.ReadSetting("LogsDirectory");
+        public static readonly string AudioDirectory = AppSet.ReadSetting("AudioDirectory");
+        public static readonly string DecimalSerialLogFileName = AppSet.ReadSetting("DecimalSerialLogFileName");
+        public static readonly string SerialLogFileName = AppSet.ReadSetting("SerialLogFileName");
+        public static readonly string DialogSerialLogFileName = AppSet.ReadSetting("DialogSerialLogFileName");
     }
 
     public class PhraseEntry
@@ -93,7 +100,7 @@ namespace DialogEngine
         // A character's Phrases list holds all the phrases they might say along with 
         // heuristic phraseWeights on what parts of a model dialog they might use them in.
         protected const int RecentPhrasesQueueSize = 4;
-        public Queue<PhraseEntry> RecentPhrases = new Queue<PhraseEntry>();
+        public Queue<PhraseEntry> RecentPhrases = new Queue<PhraseEntry>();  //TODO make this a method that runs over the history
     }
 
     public class ModelDialog
@@ -123,8 +130,9 @@ namespace DialogEngine
             Console.Write(versionTimeStr);
             if (SessionVars.WriteSerialLog)
             {
+
                 using (StreamWriter serialLog = new StreamWriter(
-                    @"c:\Isaac\Toys2LifeResources\CapturesAndAnalysis\SerialLog.txt", true))
+                    (SessionVars.LogsDirectory + SessionVars.SerialLogFileName), true))
                 {
                     serialLog.WriteLine("");
                     serialLog.WriteLine("");
@@ -132,7 +140,7 @@ namespace DialogEngine
                     serialLog.Close();
                 }
                 using (StreamWriter serialLogDec = new StreamWriter(
-                    @"c:\Isaac\Toys2LifeResources\CapturesAndAnalysis\SerialLogDecimal.txt", true))
+                    (SessionVars.LogsDirectory + SessionVars.DecimalSerialLogFileName), true))
                 {
                     serialLogDec.WriteLine("");
                     serialLogDec.WriteLine("");
@@ -140,8 +148,8 @@ namespace DialogEngine
                     serialLogDec.Close();
                 }
                 using (StreamWriter serialLogDialog = new StreamWriter(
-                    @"c:\Isaac\Toys2LifeResources\CapturesAndAnalysis\SerialLogDialog.txt", true))
-                {
+                    (SessionVars.LogsDirectory + SessionVars.DialogSerialLogFileName), true))
+{
                     serialLogDialog.WriteLine("");
                     serialLogDialog.WriteLine("");
                     serialLogDialog.WriteLine(versionTimeStr);
@@ -155,14 +163,13 @@ namespace DialogEngine
             {
                 foreach (PhraseEntry phrase in character.Phrases)
                 {
-                    if (!File.Exists(@"c:\DialogAudio\" + character.CharacterPrefix + "_" + phrase.FileName + ".mp3"))
+                    if (!File.Exists(SessionVars.AudioDirectory + character.CharacterPrefix + "_" + phrase.FileName + ".mp3"))
                     {
                         Console.WriteLine("missing " + character.CharacterPrefix + "_" + phrase.FileName + " " + phrase.DialogStr);
                     }
                 }
             }
-            //TODO check that all dialg models have unique names
-
+            //TODO check that all dialog models have unique names
         }
 
         static void Main(string[] args) {
