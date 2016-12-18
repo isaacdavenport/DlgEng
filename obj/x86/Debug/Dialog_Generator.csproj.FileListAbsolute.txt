@@ -6,3 +6,5 @@ C:\Users\Joseph\Toys2LifeResources\DialogEngine.2016.11.22.WithConfigFile\Dialog
 C:\Users\Joseph\Toys2LifeResources\DialogEngine.2016.11.22.WithConfigFile\DialogEngine\obj\x86\Debug\Dialog_Generator.csprojResolveAssemblyReference.cache
 C:\Users\Joseph\Toys2LifeResources\DialogEngine.2016.11.22.WithConfigFile\DialogEngine\obj\x86\Debug\DialogEngine.exe
 C:\Users\Joseph\Toys2LifeResources\DialogEngine.2016.11.22.WithConfigFile\DialogEngine\obj\x86\Debug\DialogEngine.pdb
+C:\Isaac\Toys2Life\DialogEngine\obj\x86\Debug\DialogEngine.exe
+C:\Isaac\Toys2Life\DialogEngine\obj\x86\Debug\DialogEngine.pdb

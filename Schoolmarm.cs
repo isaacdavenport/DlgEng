@@ -429,7 +429,7 @@ namespace DialogEngine
                 PhraseRating = ParentalRating.G,
                 DialogStr = "It isn't really so bad deary.",
                 FileName = "ItIsntReallySo",
-                PhraseWeights = new Dictionary<PhraseTypes, double>{
+                PhraseWeights = new Dictionary<PhraseTypes, double>{  
                     { PhraseTypes.GiveAffirmation, 0.4 },
                     { PhraseTypes.SmCb_01E, 1.0 }
                 }
