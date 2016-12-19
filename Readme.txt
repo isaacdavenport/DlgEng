@@ -2,15 +2,39 @@ From the SBIR proposal for this project
 
 Talking Toys Children Create Which Promote Emotional, Scientific, and Communication Learning
 by Isaac Davenport PhD
-  303-859-5773
+  303.859.5773
   isaac@isaacdavenport.com 
 
 Elevator Pitch
-Toys2Life is creating an artificial intelligence enabled platform that allow dolls and action figures to talk to one another.  Children can control the conversation by moving dolls closer and farther from one another to select who talks to whom.  A low cost, Bluetooth Low Energy (BLE) based real time proximity matrix is used to track the dolls.  A tablet, laptop, or smartphone provides the intelligence and audio database.  
-Educators and therapists will be the first customers, eventually tech forward parents and kids where the children have access to hand me down smart phones or tablets, and finally a majority of kids as access to computational power trickles down to the younger children of lower middle class and even poorer families.  
-The benefits to kids and hence society will be twofold:  the first is FUN; the second an outlet for creative, intrinsically-motivated learning.  These benefits come from Toys2Life’s innovation in artificial intelligence.  By working at a sentence level, rather than a word level, and using emotion and intent extraction and a probabilistically generated combinatoric dialog space.  Significantly unique interactions can be had between characters with a much more limited supply of phrases.
-Early play tests with the prototype have shown promise.  Even though kids may not know what the “Internet of Things” is, they enjoy playing on it.  Patents on the artificial intelligence (AI) and BLE innovations have been filed.  This far, children have showed great interest in creating their own characters where they can learn about the mechanics of language, the emotional content of language, and the process of programming.  
-Minecraft, like Legos, tinker toys, and erector sets before, has shown that when kids are given a good platform to create learning can be fun (Junco 2014).  Toys2Life takes the concept of a child writing a story to the next level of creating a character, that can interact with other characters, both those provided by Toys2Life and those created by other children.  
+Toys2Life is creating an artificial intelligence enabled platform that allow dolls and action 
+figures to talk to one another.  Children can control the conversation by moving dolls closer 
+and farther from one another to select who talks to whom.  A low cost, Bluetooth Low Energy 
+(BLE) based real time proximity matrix is used to track the dolls.  A tablet, laptop, or 
+smartphone provides the intelligence and audio database.  
+
+Educators and therapists will be the first customers, eventually tech forward parents and kids 
+where the children have access to hand me down smart phones or tablets, and finally most kids 
+as access to computational power trickles down to the younger children of lower middle class 
+and even poorer families. 
+ 
+The benefits to kids and hence society will be twofold:  the first is FUN; the second an outlet 
+for creative, intrinsically-motivated learning.  These benefits come from Toys2Life’s innovation 
+in artificial intelligence.  By working at a sentence level, rather than a word level, and using 
+emotion and intent extraction and a probabilistically generated combinatoric dialog space.  
+Significantly unique interactions can be had between characters with a much more limited supply of 
+phrases.
+
+Early play tests with the prototype have shown promise.  Even though kids may not know what the 
+“Internet of Things” is, they enjoy playing on it.  Patents on the artificial intelligence (AI) 
+and BLE innovations have been filed.  This far, children have showed great interest in creating 
+their own characters where they can learn about the mechanics of language, the emotional content 
+of language, and the process of programming.  
+
+Minecraft, like Legos, tinker toys, and erector sets before, has shown that when kids are given a 
+good platform to create learning can be fun (Junco 2014).  Toys2Life takes the concept of a child 
+writing a story to the next level of creating a character, that can interact with other characters, 
+both those provided by Toys2Life and those created by other children.  
+
 Commercial Opportunity
 Too many educational toys fall into the no man’s land between fun enough for playing and educational enough for learning.  Toys2Life is an infinite game where players adjust the rules to continue play as opposed to a finite game with winners and losers who are working toward an end goal like most modern video games (Carse 1987).  Toys2Life seeks to fulfill a long existing desire on the part of children to have their toys talk and to leverage that desire and magic to generate intrinsic motivation to learn (Dweck 1986)(Ryan 2000).
 The promise of the Toys2Life platform is the experience of the movie “Toy Story” on a kid’s bedroom floor.  Before Toy Story, there was Pinocchio, and before that The Nutcracker.  Kids have dreamed of their toys coming to life and talking to one another for a very long time.  The desire and demand are there.  
