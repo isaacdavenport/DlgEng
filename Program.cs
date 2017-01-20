@@ -63,7 +63,7 @@ namespace DialogEngine
     public static class SessionVars
     {
         public static readonly bool DebugFlag = Convert.ToBoolean(AppSet.ReadSetting("DebugFlag"));
-        public static readonly bool ForceCharacterSelection = Convert.ToBoolean(AppSet.ReadSetting("ForceCharacterSelection"));
+        public static readonly bool ForceCharactersAndDialogModel = Convert.ToBoolean(AppSet.ReadSetting("ForceCharactersAndDialogModel"));
         public static readonly bool ShowDupePhrases = Convert.ToBoolean(AppSet.ReadSetting("ShowDupePhrases"));
         public static readonly bool HeatMapFullMatrixDispMode = Convert.ToBoolean(AppSet.ReadSetting("HeatMapFullMatrixDispMode"));
         public static readonly bool HeatMapSumsMode = Convert.ToBoolean(AppSet.ReadSetting("HeatMapSumsMode"));
@@ -125,7 +125,7 @@ namespace DialogEngine
         public static DialogTracker TheDialogs = new DialogTracker();
 
         static void WriteStartupInfo() {
-            string versionTimeStr = "Dialog Engine ver 0.30 Isaac, Aria " + DateTime.Now;
+            string versionTimeStr = "Dialog Engine ver 0.31 Isaac, Aria, Joe, Brielle " + DateTime.Now;
             Console.Write(versionTimeStr);
             if (SessionVars.WriteSerialLog)
             {
@@ -178,7 +178,7 @@ namespace DialogEngine
             InitModelDialogs.SetDefaults(TheDialogs);
 
             //Select Debug Output
-            if (SessionVars.ForceCharacterSelection) {
+            if (SessionVars.ForceCharactersAndDialogModel) {
                 Console.WriteLine("   enter three numbers to set the next: DialogModel, Char1, Char2");
                 Console.WriteLine();
             }
@@ -188,7 +188,7 @@ namespace DialogEngine
             }
 
             while (true) {
-                if (SessionVars.ForceCharacterSelection) {
+                if (SessionVars.ForceCharactersAndDialogModel) {
                     string[] keyboardInput = Console.ReadLine().Split(' ');
 
                     //if keyboard input has three numbers for debug mode to force dialog model and characters

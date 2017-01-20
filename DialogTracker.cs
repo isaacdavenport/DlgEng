@@ -48,13 +48,14 @@ namespace DialogEngine
         public double DialogModelPopularitySum;
 
         public DialogTracker() {
-            //CharacterList.Add(new Cowboy());
-            CharacterList.Add(new Witch());
+            //TODO move active character list to config file so they can be changed without compiling
+            CharacterList.Add(new Cowboy());  
+            //CharacterList.Add(new Witch());
             CharacterList.Add(new SchoolMarm());
             CharacterList.Add(new ReOrgLead());
             CharacterList.Add(new SchoolBoy());
             CharacterList.Add(new Cartman());
-            CharacterList.Add(new SchoolHouse());
+            //CharacterList.Add(new SchoolHouse());
             for (int i = 0; i < RecentDialogsQueSize; i++) {
                 RecentDialogs.Enqueue(0); // Fill the que with greeting dialogs
             }
@@ -440,7 +441,7 @@ namespace DialogEngine
                                       "_" + selectedPhrase.FileName + ".mp3";
                 PlayAudio(pathAndFileName);
 
-                if (!SessionVars.ForceCharacterSelection &&
+                if (!SessionVars.ForceCharactersAndDialogModel &&
                     !DialogTrackerAndSerialComsCharactersSame()) {
                     SameCharactersAsLast = false;
                     return; // the characters have moved  TODO break into charactersSame() and use also with prior

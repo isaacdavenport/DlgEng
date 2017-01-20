@@ -211,8 +211,8 @@ namespace DialogEngine
         }
 
         static void AssignNextCharacters(int tempCh1, int tempCh2) {
-            if ((_bigRssi | 0x00000001) != 0 && _rssiStable)
-            {  //quasi random selection of which character is first
+            if ((RandomNumbers.Gen.NextDouble() > 0.5) && _rssiStable)
+            {  
                 NextCharacter1 = tempCh1;
                 NextCharacter2 = tempCh2;
             }
@@ -328,7 +328,7 @@ namespace DialogEngine
         public static void DontReadAndParse()
         {  // used for computers with no serial input radio for random, or forceCharacter mode
             while (Continue) {
-                NextCharacter1 = RandomNumbers.Gen.Next(0, NUM_RADIOS - 1); //lower bound inclusing upper exclusive
+                NextCharacter1 = RandomNumbers.Gen.Next(0, NUM_RADIOS - 1); //lower bound inclusive upper exclusive
                 while (NextCharacter1 == NextCharacter2) {
                     NextCharacter2 = RandomNumbers.Gen.Next(0, NUM_RADIOS - 1);  
                 }
