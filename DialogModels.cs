@@ -298,7 +298,7 @@ namespace DialogEngine
             inObj.ModelDialogs.Add(new ModelDialog {
                 Name = "LM01_CM+SB_Fight",
                 AddedOnDateTime = adventureRound,
-                Popularity = 2.2,
+                Popularity = 42.2,
                 Adventure = "LM",
                 Provides =  new List<string> { "LM01_CM+SB_Fight" },
                 PhraseTypeSequence = new List<PhraseTypes> {

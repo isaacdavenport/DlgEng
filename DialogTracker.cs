@@ -31,7 +31,7 @@ namespace DialogEngine
     {
         //Here we decide what to say next
         protected const int RecentDialogsQueSize = 4;
-        public List<ModelDialog> ModelDialogs = new List<ModelDialog>();
+        public List<ModelDialog> ModelDialogs = new List<ModelDialog>();  //TODO should these be collections not Lists???
         public List<HistoricalDialog> HistoricalDialogs = new List<HistoricalDialog>();
         public List<HistoricalPhrase> HistoricalPhrases = new List<HistoricalPhrase>();
         public Queue<int> RecentDialogs = new Queue<int>();
@@ -49,7 +49,7 @@ namespace DialogEngine
 
         public DialogTracker() {
             //CharacterList.Add(new Cowboy());
-            CharacterList.Add(new Skylar());
+            CharacterList.Add(new Witch());
             CharacterList.Add(new SchoolMarm());
             CharacterList.Add(new ReOrgLead());
             CharacterList.Add(new SchoolBoy());
@@ -79,6 +79,13 @@ namespace DialogEngine
             }
         }
 
+        void SwapCharactersOneAndTwo() {
+            var tempCh1 = Character1Num;
+            Character1Num = Character2Num;
+            Character2Num = tempCh1;
+            // it doesn't appear we should update prior characters 1 and 2 here
+        }
+
         void AddDialogModelToHistory(int dialogModelIndex, int ch1, int ch2) {
             HistoricalDialogs.Add(new HistoricalDialog(){
                 DialogIndex = dialogModelIndex,
@@ -98,15 +105,16 @@ namespace DialogEngine
             Console.WriteLine(dialogModelString);
             if (SessionVars.WriteSerialLog) {
                 using (StreamWriter serialLogDialogModels = new StreamWriter(
-                    (SessionVars.LogsDirectory + SessionVars.DialogSerialLogFileName), true)) {
+                    (SessionVars.LogsDirectory + SessionVars.LogTheDialogFileName), true)) {
                     serialLogDialogModels.WriteLine(dialogModelString);
                     serialLogDialogModels.Close();
                 }
             }
         }
 
-        List<int> FindMostRecentAdventures() {
+        List<int> FindMostRecentAdventureDialogIndexes() {
             List<int> mostRecentAdventureDialogs = new List<int>();
+            // most recent will be in the 0 index of list
             List<string> foundAdventures = new List<string>();
             int j = 0;
             for (int i = HistoricalDialogs.Count - 1; i >= 0; i--) {
@@ -150,7 +158,7 @@ namespace DialogEngine
                     currentCharacter = character1Num;
                 }
             }
-            return true;
+            return true;   
         }
 
         bool CheckIfDialogPreRequirementMet(int dialogModel) {
@@ -164,7 +172,7 @@ namespace DialogEngine
             var lastHistoricalDialog = HistoricalDialogs.Last();
             foreach (var requiredTag in ModelDialogs[dialogModel].Requires) {
                 var currentRequiredTagSatisfied = false;
-                foreach (var histDialog in HistoricalDialogs) { // could speed by only going through unique historical dialog index #s
+                foreach (var histDialog in HistoricalDialogs) { //speed by only looking at unique hist dialog index #s
                     if (ModelDialogs[histDialog.DialogIndex].Adventure == ModelDialogs[dialogModel].Adventure) {
                         foreach (var providedTag in ModelDialogs[histDialog.DialogIndex].Provides) {
                             if (providedTag == requiredTag) {
@@ -189,18 +197,30 @@ namespace DialogEngine
             //TODO check that all characters/phrasetypes required for adventure are included before starting adventure?
             int dialogModel = 0;
 
-            var mostRecentAdventureDialogs = FindMostRecentAdventures();
-            if (mostRecentAdventureDialogs.Count > 0) {
-                //if we have recently done adventures give priority to adventures check them first
-                foreach (var recentAdventure in mostRecentAdventureDialogs) {  //given recent adventures
+            var mostRecentAdventureDialogIndexes = FindMostRecentAdventureDialogIndexes();
+              // most recent will be in the 0 index of list which will be hit first in foreach
+            if (mostRecentAdventureDialogIndexes.Count > 0) {
+                bool ch1First = new bool();
+                bool ch2First = new bool();
+                bool currentDialogIsPossible = new bool();
+                //if we have recently done adventures give priority to adventure dialogs check them first
+                foreach (var recentAdventureIdx in mostRecentAdventureDialogIndexes) {  //given recent adventures
                     foreach (var possibleDialog in ModelDialogs) {  //look for follow on adventure possibilities
                         var possibleDialogIdx = ModelDialogs.IndexOf(possibleDialog);
-                        if (ModelDialogs[recentAdventure].Adventure == possibleDialog.Adventure &&
-                            ModelDialogs[recentAdventure].Provides == possibleDialog.Requires &&  
-                            //if a the most recent adventure dialog in the adventure provides what we require we won't go backwards in adventures
-                            CheckIfCharactersHavePhrasesForDialog(possibleDialogIdx, character1Num, character2Num))
-                        {
-                            return dialogModel;
+                        if (ModelDialogs[recentAdventureIdx].Adventure == possibleDialog.Adventure &&
+                            ModelDialogs[recentAdventureIdx].Provides == possibleDialog.Requires) {
+                            //if a the most recent adventure dialog in the adventure provides what we require we won't 
+                            //go backwards in adventures
+                            ch1First = CheckIfCharactersHavePhrasesForDialog(possibleDialogIdx,
+                                character1Num, character2Num);
+                            ch2First = CheckIfCharactersHavePhrasesForDialog(possibleDialogIdx, 
+                                character2Num, character1Num);
+                            if (ch1First || ch2First) {
+                                if (ch2First) {  //swap character one and two
+                                    SwapCharactersOneAndTwo();
+                                }
+                                return possibleDialogIdx;
+                            }
                         }
                     }
                 }
@@ -229,6 +249,12 @@ namespace DialogEngine
                         break;
                     }
                 }
+
+/*               var listLM01Dialogs = from diag in ModelDialogs where diag.Name == 
+                                     "LM01_CM+SB_Fight" select diag;
+
+                dialogModel = ModelDialogs.IndexOf(listLM01Dialogs.First());  // TODO debug code
+                */
                 var dialogModelUsedRecently = CheckIfDialogModelUsedRecently(dialogModel);
                 var charactersHavePhrases = CheckIfCharactersHavePhrasesForDialog(dialogModel, Character1Num, Character2Num);
                 var dialogPreRequirementsMet = CheckIfDialogPreRequirementMet(dialogModel);
@@ -285,7 +311,6 @@ namespace DialogEngine
             SameCharactersAsLast =
                 (tempChar1 == _priorCharacter1Num || tempChar1 == _priorCharacter2Num) &&
                 (tempChar2 == _priorCharacter1Num || tempChar2 == _priorCharacter2Num);
-
             Character1Num = tempChar1;
             Character2Num = tempChar2;
             _priorCharacter1Num = Character1Num;
@@ -378,7 +403,7 @@ namespace DialogEngine
 
             if (SessionVars.WriteSerialLog) {
                 using (StreamWriter serialLogDialogLines = new StreamWriter(
-                    (SessionVars.LogsDirectory + SessionVars.DialogSerialLogFileName), true)) {
+                    (SessionVars.LogsDirectory + SessionVars.LogTheDialogFileName), true)) {
                     serialLogDialogLines.WriteLine(CharacterList[speakingCharacter].CharacterName + ": " + selectedPhrase.DialogStr);
                     serialLogDialogLines.Close();
                 }

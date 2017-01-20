@@ -1771,7 +1771,8 @@ namespace DialogEngine
             Phrases.Add(new PhraseEntry
             {
                 PhraseRating = ParentalRating.G,
-                DialogStr = "I see you aren't out telling people how cool I am, well two dollars is better than that anyway.",
+                DialogStr = "I see you aren't out telling people how cool I am, well two dollars is " +
+                "better than that anyway.",
                 FileName = "CM_ISeeYouArent",
                 PhraseWeights = new Dictionary<PhraseTypes, double>{
                     { PhraseTypes.LM16B, 0.2 }
@@ -1792,13 +1793,15 @@ namespace DialogEngine
 
             foreach (PhraseEntry currentPhrase in Phrases) {
                 foreach (var currentPhraseType in currentPhrase.PhraseWeights) {
-                    // for a given phrase of a character add all the associated phrase weights for the phrase to the proper PhraseTotals
+                    // for a given phrase of a character add all the associated phrase weights for the phrase 
+                    //  to the proper PhraseTotals
                     PhraseTotals.PhraseWeights[currentPhraseType.Key] += currentPhraseType.Value;
                 }
             }
 
-            // initialize  RecentPhrases with the 0 phrase uninitialized so initial phrases aren't blocked while 
-            //que fills since there is no way to prevent que from growing and dump old phrases into oblivion we must manually trim
+            // initialize  RecentPhrases with the 0 phrase uninitialized so initial phrases aren't blocked while       
+            //que fills since there is no way to prevent que from growing and dump old phrases into oblivion we 
+            //must manually trim
             for (int k = 0; k < RecentPhrasesQueueSize; k++)
                 RecentPhrases.Enqueue(Phrases[0]);
         }

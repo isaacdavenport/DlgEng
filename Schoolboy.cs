@@ -930,8 +930,8 @@ namespace DialogEngine
             Phrases.Add(new PhraseEntry{
                 PhraseRating = ParentalRating.PG13,
                 DialogStr = "I wanted to play with Billy and Ashley in the tree house but the door was locked" +
-                            " and when I said I wanted to play too, Billy threw some underwear at me and said I should get a " +
-                            "clue.  I want to play too.  Do you know where I can get a clue?",
+                            " and when I said I wanted to play too, Billy threw some underwear at me and said " +
+                            "I should get a clue.  I want to play too.  Do you know where I can get a clue?",
                 FileName = "IWantedToPlay",
                 PhraseWeights = new Dictionary<PhraseTypes, double>{
                     { PhraseTypes.RequestLocation, 0.2 },

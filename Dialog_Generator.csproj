@@ -92,6 +92,7 @@
     <Compile Include="ReOrgLead.cs" />
     <Compile Include="Schoolmarm.cs" />
     <Compile Include="Skylar.cs" />
+    <Compile Include="Witch.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
@@ -130,7 +131,9 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Dialog_Generator_TemporaryKey.pfx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

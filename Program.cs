@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Configuration;
 using System.Threading; // for thread.sleep()
 // ReSharper disable ConditionIsAlwaysTrueOrFalse
 
 
-// for count on keyboard inputs to manually force which characters speak
+// for count on keyboard inputs to manually force which characters speak 
 
 
 namespace DialogEngine
@@ -79,8 +78,8 @@ namespace DialogEngine
         public static readonly string LogsDirectory = AppSet.ReadSetting("LogsDirectory");
         public static readonly string AudioDirectory = AppSet.ReadSetting("AudioDirectory");
         public static readonly string DecimalSerialLogFileName = AppSet.ReadSetting("DecimalSerialLogFileName");
-        public static readonly string SerialLogFileName = AppSet.ReadSetting("SerialLogFileName");
-        public static readonly string DialogSerialLogFileName = AppSet.ReadSetting("DialogSerialLogFileName");
+        public static readonly string HexSerialLogFileName = AppSet.ReadSetting("HexSerialLogFileName");
+        public static readonly string LogTheDialogFileName = AppSet.ReadSetting("LogTheDialogFileName");
     }
 
     public class PhraseEntry
@@ -132,7 +131,7 @@ namespace DialogEngine
             {
 
                 using (StreamWriter serialLog = new StreamWriter(
-                    (SessionVars.LogsDirectory + SessionVars.SerialLogFileName), true))
+                    (SessionVars.LogsDirectory + SessionVars.HexSerialLogFileName), true))
                 {
                     serialLog.WriteLine("");
                     serialLog.WriteLine("");
@@ -148,7 +147,7 @@ namespace DialogEngine
                     serialLogDec.Close();
                 }
                 using (StreamWriter serialLogDialog = new StreamWriter(
-                    (SessionVars.LogsDirectory + SessionVars.DialogSerialLogFileName), true))
+                    (SessionVars.LogsDirectory + SessionVars.LogTheDialogFileName), true))
 {
                     serialLogDialog.WriteLine("");
                     serialLogDialog.WriteLine("");

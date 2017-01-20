@@ -160,7 +160,7 @@ namespace DialogEngine
                     }
                     if (SessionVars.WriteSerialLog) {
                         using (StreamWriter serialLog = new StreamWriter(
-                            SessionVars.LogsDirectory + SessionVars.SerialLogFileName, true)) {
+                            SessionVars.LogsDirectory + SessionVars.HexSerialLogFileName, true)) {
                             serialLog.Write(DateTime.Now.ToString("mm.ss.fff") + "  ");
                             serialLog.Write(message);
                             serialLog.Close();
@@ -327,8 +327,7 @@ namespace DialogEngine
 
         public static void DontReadAndParse()
         {  // used for computers with no serial input radio for random, or forceCharacter mode
-            while (Continue)
-            {
+            while (Continue) {
                 NextCharacter1 = RandomNumbers.Gen.Next(0, NUM_RADIOS - 1); //lower bound inclusing upper exclusive
                 while (NextCharacter1 == NextCharacter2) {
                     NextCharacter2 = RandomNumbers.Gen.Next(0, NUM_RADIOS - 1);  
