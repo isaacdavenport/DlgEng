@@ -194,6 +194,42 @@ namespace DialogEngine
             return true;
         }
 
+        int FindNextAdventureDialogForCharacters(int character1Num, int character2Num, List<int> mostRecentAdventureDialogIndexes) {
+            bool ch1First = new bool();
+            bool ch2First = new bool();
+
+            //if we have recently done adventures give priority to adventure dialogs check them first
+            foreach (var recentAdventureIdx in mostRecentAdventureDialogIndexes)
+            {  //given recent adventures
+                foreach (var possibleDialog in ModelDialogs)  //TODO probably a cleaner way to do this with Linq and lamda expressions
+                {  //look for follow on adventure possibilities
+                    var possibleDialogIdx = ModelDialogs.IndexOf(possibleDialog);
+                    if (ModelDialogs[recentAdventureIdx].Adventure == possibleDialog.Adventure)
+                    {
+                        foreach (var providedStringKey in ModelDialogs[recentAdventureIdx].Provides)
+                        {
+                            if (possibleDialog.Requires.Contains(providedStringKey))
+                            {   //if a the most recent adventure dialog in the adventure provides what we require we won't 
+                                //go backwards in adventures
+                                ch1First = CheckIfCharactersHavePhrasesForDialog(possibleDialogIdx,
+                                    character1Num, character2Num);
+                                ch2First = CheckIfCharactersHavePhrasesForDialog(possibleDialogIdx,
+                                    character2Num, character1Num);
+                                if (ch1First || ch2First) {
+                                    if (ch2First) {
+                                        //swap character one and two
+                                        SwapCharactersOneAndTwo();
+                                    }
+                                    return possibleDialogIdx;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return -1;  // code for no next adventure continuance found
+        }
+
         int PickAWeightedDialog(int character1Num, int character2Num, bool sameCharactersAsLast) {
             //TODO check that all characters/phrasetypes required for adventure are included before starting adventure?
             int dialogModel = 0;
@@ -201,29 +237,9 @@ namespace DialogEngine
             var mostRecentAdventureDialogIndexes = FindMostRecentAdventureDialogIndexes();
               // most recent will be in the 0 index of list which will be hit first in foreach
             if (mostRecentAdventureDialogIndexes.Count > 0) {
-                bool ch1First = new bool();
-                bool ch2First = new bool();
-                bool currentDialogIsPossible = new bool();
-                //if we have recently done adventures give priority to adventure dialogs check them first
-                foreach (var recentAdventureIdx in mostRecentAdventureDialogIndexes) {  //given recent adventures
-                    foreach (var possibleDialog in ModelDialogs) {  //look for follow on adventure possibilities
-                        var possibleDialogIdx = ModelDialogs.IndexOf(possibleDialog);
-                        if (ModelDialogs[recentAdventureIdx].Adventure == possibleDialog.Adventure &&
-                            ModelDialogs[recentAdventureIdx].Provides == possibleDialog.Requires) {
-                            //if a the most recent adventure dialog in the adventure provides what we require we won't 
-                            //go backwards in adventures
-                            ch1First = CheckIfCharactersHavePhrasesForDialog(possibleDialogIdx,
-                                character1Num, character2Num);
-                            ch2First = CheckIfCharactersHavePhrasesForDialog(possibleDialogIdx, 
-                                character2Num, character1Num);
-                            if (ch1First || ch2First) {
-                                if (ch2First) {  //swap character one and two
-                                    SwapCharactersOneAndTwo();
-                                }
-                                return possibleDialogIdx;
-                            }
-                        }
-                    }
+                var nextAdventureDialogIdx = FindNextAdventureDialogForCharacters(character1Num, character2Num, mostRecentAdventureDialogIndexes);
+                if (nextAdventureDialogIdx > 0 && nextAdventureDialogIdx < ModelDialogs.Count) {
+                    return nextAdventureDialogIdx;  // we have an adventure dialog for these characters go with it
                 }
             }
 

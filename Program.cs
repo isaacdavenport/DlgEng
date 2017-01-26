@@ -113,6 +113,11 @@ namespace DialogEngine
         public List<string> Requires = new List<string>();
         public List<string> Provides = new List<string>();
         public List<PhraseTypes> PhraseTypeSequence = new List<PhraseTypes>();
+
+        public bool AreDialogsRequirementsMet() {
+
+            return true;
+        }
     }
 
     public static class RandomNumbers
