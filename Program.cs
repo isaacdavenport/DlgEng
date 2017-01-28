@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading; // for thread.sleep()
 // ReSharper disable ConditionIsAlwaysTrueOrFalse
 
@@ -38,10 +39,6 @@ namespace DialogEngine
         GiveMotivation,
         RequestLocation,
         GiveLocation,
-        ImListening,
-        SeriousYes,
-        SeriousNo,
-        LM,  //TODO remove me 
         SmCb_01A,SmCb_01B,SmCb_01C,SmCb_01D,SmCb_01E,
         SHSilence,
         LM01A,LM01B,LM01C,LM01D,LM01E,LM01F,LM02A,LM02B,LM02C,LM02D,LM02E,LM02F,LM02G,LM02H,LM02I,LM03A,LM03B,LM03C,LM03D,LM03E,LM03F,
@@ -130,8 +127,8 @@ namespace DialogEngine
         public static DialogTracker TheDialogs = new DialogTracker();
 
         static void WriteStartupInfo() {
-            string versionTimeStr = "Dialog Engine ver 0.31 Isaac, Aria, Joe, Brielle " + DateTime.Now;
-            Console.Write(versionTimeStr);
+            string versionTimeStr = "Dialog Engine ver 0.32 Isaac, Aria, Joe, Brielle " + DateTime.Now + "\r\n";
+            Console.WriteLine(versionTimeStr);
             if (SessionVars.WriteSerialLog)
             {
 
@@ -162,7 +159,7 @@ namespace DialogEngine
             }
         }
 
-        static void CheckForMissingPhrases() {
+        static void CheckForMissingAudioFiles() {
             foreach (var character in TheDialogs.CharacterList)
             {
                 foreach (PhraseEntry phrase in character.Phrases)
@@ -175,6 +172,27 @@ namespace DialogEngine
             }
             //TODO check that all dialog models have unique names
         }
+
+        static void CheckAdventurePhrasesUsed() {
+            for (PhraseTypes i = PhraseTypes.LM01A; i < PhraseTypes.PhraseTypesSize; i++) {
+                int j = 0;
+                foreach (var character in TheDialogs.CharacterList) {
+                    foreach (var phrase in character.Phrases) {
+                        if (phrase.PhraseWeights.ContainsKey(i)) {
+                            j++;
+                        }
+                    }
+                }
+                if (j != 1) {
+                    Console.WriteLine("Adventure PhraseType {0} used " + j + " times.", i.ToString());
+                }
+            }
+        }
+
+        static void CheckEachCharacterHasEachPhraseType() {
+            //TODO create a unit test that ensure each character is minimally complete similar to CheckAdventurePhrasesUsed() and CheckForMissingAudioFiles()
+        }
+
 
         static void Main(string[] args) {
             Console.SetBufferSize(Console.BufferWidth, 32766);
@@ -189,7 +207,9 @@ namespace DialogEngine
             }
 
             if (SessionVars.DebugFlag) {
-                CheckForMissingPhrases();
+                CheckForMissingAudioFiles();
+                CheckAdventurePhrasesUsed();
+                CheckEachCharacterHasEachPhraseType();
             }
 
             while (true) {

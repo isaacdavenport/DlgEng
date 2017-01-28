@@ -49,8 +49,9 @@ namespace DialogEngine
 
         public DialogTracker() {
             //TODO move active character list to config file so they can be changed without compiling
-            CharacterList.Add(new Cowboy());  
+            //CharacterList.Add(new Cowboy());  
             //CharacterList.Add(new Witch());
+            CharacterList.Add(new Skylar());
             CharacterList.Add(new SchoolMarm());
             CharacterList.Add(new ReOrgLead());
             CharacterList.Add(new SchoolBoy());

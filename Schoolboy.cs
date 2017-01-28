@@ -1249,7 +1249,7 @@ namespace DialogEngine
             {
                 PhraseRating = ParentalRating.G,
                 DialogStr = "He likes his kitty.  He REALLY likes his kitty.",
-                FileName = "SB_HeLikesHisKitty",
+                FileName = "HeLikesHisKitty",
                 PhraseWeights = new Dictionary<PhraseTypes, double>{
                     { PhraseTypes.LM13G, 0.2 }
                 }

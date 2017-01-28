@@ -516,7 +516,7 @@ namespace DialogEngine
                 DialogStr = "You overthink something it is going to get hard.  If you underthink" +
                             "it could get worse.  You need to think it just right.  How do you know if" +
                             "it is just right?  I have no idea.",
-                FileName = "YouUnderthink",
+                FileName = "youUnderthinkSomthing",
                 PhraseWeights = new Dictionary<PhraseTypes, double>{
                     { PhraseTypes.GiveAdvice, 0.5 }
                 }
@@ -599,7 +599,7 @@ namespace DialogEngine
             {
                 PhraseRating = ParentalRating.G,
                 DialogStr = "I Think I Here My",
-                FileName = "IThinkIHereMy",
+                FileName = "IThinkIHearMy",
                 PhraseWeights = new Dictionary<PhraseTypes, double>{
                     { PhraseTypes.Retreat, 0.2 }
                 }
@@ -821,7 +821,7 @@ namespace DialogEngine
             {
                 PhraseRating = ParentalRating.G,
                 DialogStr = "Sometimes it is better to forgive.",
-                FileName = "",
+                FileName = "SomeTimesItIs",
                 PhraseWeights = new Dictionary<PhraseTypes, double>{
                     { PhraseTypes.LM06B, 0.2 } }
             });
@@ -829,72 +829,69 @@ namespace DialogEngine
             {
                 Phrases.RemoveAt(Phrases.Count - 1);
             }
+
             Phrases.Add(new PhraseEntry
             {
                 PhraseRating = ParentalRating.G,
-                DialogStr = "",
-                FileName = "",
+                DialogStr = "I sense that kitty may be absorbing the finer points of Victorian etiquette",
+                FileName = "ISenseThatKitty",
                 PhraseWeights = new Dictionary<PhraseTypes, double>{
-                    { PhraseTypes.LM, 0.2 } }
-            });
-            if (Phrases[Phrases.Count - 1].PhraseRating > SessionVars.CurrentParentalRating)
-            {
-                Phrases.RemoveAt(Phrases.Count - 1);
-            }
-            Phrases.Add(new PhraseEntry
-            {
-                PhraseRating = ParentalRating.G,
-                DialogStr = "",
-                FileName = "",
-                PhraseWeights = new Dictionary<PhraseTypes, double>{
-                    { PhraseTypes.LM, 0.2 } }
-            });
-            if (Phrases[Phrases.Count - 1].PhraseRating > SessionVars.CurrentParentalRating)
-            {
-                Phrases.RemoveAt(Phrases.Count - 1);
-            }
-            Phrases.Add(new PhraseEntry
-            {
-                PhraseRating = ParentalRating.G,
-                DialogStr = "",
-                FileName = "",
-                PhraseWeights = new Dictionary<PhraseTypes, double>{
-                    { PhraseTypes.LM, 0.2 } }
-            });
-            if (Phrases[Phrases.Count - 1].PhraseRating > SessionVars.CurrentParentalRating)
-            {
-                Phrases.RemoveAt(Phrases.Count - 1);
-            }
-            Phrases.Add(new PhraseEntry
-            {
-                PhraseRating = ParentalRating.G,
-                DialogStr = "",
-                FileName = "",
-                PhraseWeights = new Dictionary<PhraseTypes, double>{
-                    { PhraseTypes.LM, 0.2 } }
-            });
-            if (Phrases[Phrases.Count - 1].PhraseRating > SessionVars.CurrentParentalRating)
-            {
-                Phrases.RemoveAt(Phrases.Count - 1);
-            }
-            Phrases.Add(new PhraseEntry
-            {
-                PhraseRating = ParentalRating.G,
-                DialogStr = "",
-                FileName = "",
-                PhraseWeights = new Dictionary<PhraseTypes, double>{
-                    { PhraseTypes.LM, 0.2 } }
+                    { PhraseTypes.LM11A, 0.2 } }
             });
             if (Phrases[Phrases.Count - 1].PhraseRating > SessionVars.CurrentParentalRating)
             {
                 Phrases.RemoveAt(Phrases.Count - 1);
             }
 
+            Phrases.Add(new PhraseEntry
+            {
+                PhraseRating = ParentalRating.G,
+                DialogStr = "Well maybe there is something else that would make Eric happy",
+                FileName = "WellMaybeThereIs",
+                PhraseWeights = new Dictionary<PhraseTypes, double>{
+                    { PhraseTypes.LM13B, 0.2 } }
+            });
+            if (Phrases[Phrases.Count - 1].PhraseRating > SessionVars.CurrentParentalRating)
+            {
+                Phrases.RemoveAt(Phrases.Count - 1);
+            }
 
+            Phrases.Add(new PhraseEntry
+            {
+                PhraseRating = ParentalRating.G,
+                DialogStr = "Well, there are things Eric likes.",
+                FileName = "WellThereAreThings",
+                PhraseWeights = new Dictionary<PhraseTypes, double>{
+                    { PhraseTypes.LM13D, 0.2 } }
+            });
+            if (Phrases[Phrases.Count - 1].PhraseRating > SessionVars.CurrentParentalRating)
+            {
+                Phrases.RemoveAt(Phrases.Count - 1);
+            }
 
+            Phrases.Add(new PhraseEntry
+            {
+                PhraseRating = ParentalRating.G,
+                DialogStr = "Good, what else?",
+                FileName = "GoodWhatElse",
+                PhraseWeights = new Dictionary<PhraseTypes, double>{
+                    { PhraseTypes.LM13F, 0.2 } }
+            });
+            if (Phrases[Phrases.Count - 1].PhraseRating > SessionVars.CurrentParentalRating)
+            {
+                Phrases.RemoveAt(Phrases.Count - 1);
+            }
 
-
-            if (Phrases[Phrases.Count - 1].PhraseRating > SessionVars.CurrentParentalRating) {
+            Phrases.Add(new PhraseEntry
+            {
+                PhraseRating = ParentalRating.G,
+                DialogStr = "Good, now you have ideas.  Ideas can be valuable, and so can the change you find in the sandbox.",
+                FileName = "GoodNowYouHave",
+                PhraseWeights = new Dictionary<PhraseTypes, double>{
+                    { PhraseTypes.LM13H, 0.2 } }
+            });
+            if (Phrases[Phrases.Count - 1].PhraseRating > SessionVars.CurrentParentalRating)
+            {
                 Phrases.RemoveAt(Phrases.Count - 1);
             }
 

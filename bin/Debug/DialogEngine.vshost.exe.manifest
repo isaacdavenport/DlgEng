@@ -42,14 +42,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DialogEngine.exe" size="246696">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DialogEngine.exe" size="251816">
       <assemblyIdentity name="DialogEngine" version="0.0.1.3" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>4EekmqWswc/4LMU3gW9e2Uswfkw=</dsig:DigestValue>
+        <dsig:DigestValue>hDgAEKmCPiap7bhzDlEfn17IX90=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

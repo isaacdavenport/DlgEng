@@ -311,7 +311,7 @@ namespace DialogEngine
                 }
             });
 
-            inObj.ModelDialogs.Add(item: new ModelDialog {
+            inObj.ModelDialogs.Add(new ModelDialog {
                 Name = "LM02_SM+SB_Why_Fight_Corroberate",
                 AddedOnDateTime = adventureRound,
                 Popularity = 2.2,
@@ -351,7 +351,7 @@ namespace DialogEngine
                 }
             });
 
-            inObj.ModelDialogs.Add(new ModelDialog()
+            inObj.ModelDialogs.Add(new ModelDialog
             {
                 Name = "LM04_SB+CM_What_Else_Besides_2Dollars",
                 AddedOnDateTime = adventureRound,

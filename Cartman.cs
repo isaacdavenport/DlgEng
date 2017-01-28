@@ -1610,7 +1610,7 @@ namespace DialogEngine
             {
                 PhraseRating = ParentalRating.G,
                 DialogStr = "I'm not sure that works for me.",
-                FileName = "CM_ImNotSureThat",
+                FileName = "ImNotSureThat",
                 PhraseWeights = new Dictionary<PhraseTypes, double>{
                     { PhraseTypes.LM06C, 0.2 },
                     { PhraseTypes.Retreat, 0.1 },
@@ -1654,7 +1654,7 @@ namespace DialogEngine
                 PhraseRating = ParentalRating.G,
                 DialogStr = "Fortunately I have an endless supply of stories about kitty.  " +
                             "She thought that was pretty cool.",
-                FileName = "CM_FortuneatelyIHaveAn",
+                FileName = "FortuneatelyIHaveAn",
                 PhraseWeights = new Dictionary<PhraseTypes, double>{
                     { PhraseTypes.LM09D, 0.2 }
                 }
@@ -1732,7 +1732,7 @@ namespace DialogEngine
             {
                 PhraseRating = ParentalRating.G,
                 DialogStr = "Hey.  How did you get Kitty?",
-                FileName = "CM_HeyHowDidYou",
+                FileName = "HeyHowDidYou",
                 PhraseWeights = new Dictionary<PhraseTypes, double>{
                     { PhraseTypes.LM15A, 0.2 }
                 }
@@ -1745,7 +1745,7 @@ namespace DialogEngine
             {
                 PhraseRating = ParentalRating.G,
                 DialogStr = "Kitty's not a furry little beast, she's my kitty.",
-                FileName = "CM_KittysNotAFurry",
+                FileName = "KittysNotAFurry",
                 PhraseWeights = new Dictionary<PhraseTypes, double>{
                     { PhraseTypes.LM15C, 0.2 }
                 }
@@ -1773,7 +1773,7 @@ namespace DialogEngine
                 PhraseRating = ParentalRating.G,
                 DialogStr = "I see you aren't out telling people how cool I am, well two dollars is " +
                 "better than that anyway.",
-                FileName = "CM_ISeeYouArent",
+                FileName = "ISeeYouArent",
                 PhraseWeights = new Dictionary<PhraseTypes, double>{
                     { PhraseTypes.LM16B, 0.2 }
                 }
