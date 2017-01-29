@@ -127,7 +127,7 @@ namespace DialogEngine
         public static DialogTracker TheDialogs = new DialogTracker();
 
         static void WriteStartupInfo() {
-            string versionTimeStr = "Dialog Engine ver 0.32 Isaac, Aria, Joe, Brielle " + DateTime.Now + "\r\n";
+            string versionTimeStr = "Dialog Engine ver 0.33 Isaac, Aria, Joe, Brielle " + DateTime.Now + "\r\n";
             Console.WriteLine(versionTimeStr);
             if (SessionVars.WriteSerialLog)
             {

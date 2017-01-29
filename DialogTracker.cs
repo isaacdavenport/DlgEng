@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading;
-
 // ReSharper disable ConditionIsAlwaysTrueOrFalse
 
 namespace DialogEngine
@@ -41,7 +41,8 @@ namespace DialogEngine
         int _priorCharacter1Num = 100;
         int _priorCharacter2Num = 100;
         int _currentDialogModel = 1;
-        public Mp3Player Player = new Mp3Player();
+        // public Mp3Player Player = new Mp3Player();
+        public WindowsMediaPlayerMp3 Audio = new WindowsMediaPlayerMp3();
         public bool SameCharactersAsLast = false;
         public bool LastPhraseImpliedMovement = false;
         private static int _movementWaitCount = 0;
@@ -63,18 +64,27 @@ namespace DialogEngine
         }
 
         public void PlayAudio(string pathAndFileName) {
-            if (File.Exists(pathAndFileName)) {
+            if (File.Exists(pathAndFileName)) {  
                 FileInfo fileInfo = new FileInfo(pathAndFileName);
+
+
                 //empirical hack to wait reasonable time since Play() has no return to know when playing is complete
                 long songMilliSeconds = fileInfo.Length/14;
-                var playSuccess = Player.Play(pathAndFileName);
+                //var playSuccess = Player.Play(pathAndFileName);
+                var playSuccess = Audio.PlayMp3(pathAndFileName);
+               
                 if (playSuccess != 0) {
                     Console.WriteLine("");
                     Console.WriteLine("   MP3 Play Error  ---  " + playSuccess);
                     Console.WriteLine("");
                 }
-                Thread.Sleep((int)songMilliSeconds);
-                Thread.Sleep(20);
+                int i = 0;
+                Thread.Sleep(600);
+                while (Audio.IsPlaying() && i < 250) {  // 20 seconds is max
+                    //Thread.Sleep((int)songMilliSeconds);
+                    Thread.Sleep(100);
+                }
+                Thread.Sleep(1200);  // wait around a second after the audio is done for between phrase pause
             }
             else {
                 Console.WriteLine("Could not find: " + pathAndFileName);
