@@ -42,24 +42,24 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DialogEngine.exe" size="253864">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DialogEngine.exe" size="255400">
       <assemblyIdentity name="DialogEngine" version="0.0.1.3" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>WUwtdUuoEgFPTztO/CtGZrq4toc=</dsig:DigestValue>
+        <dsig:DigestValue>Il1vI+P8QxkCtQYWS8hnqry3KVU=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="DialogEngine.exe.config" size="1691">
+  <file name="DialogEngine.exe.config" size="1692">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>0tGIe/N6GKgC3Jjy9wRabkE300s=</dsig:DigestValue>
+      <dsig:DigestValue>SgfaQODBWimulIDiKdtQsOGkcaU=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>

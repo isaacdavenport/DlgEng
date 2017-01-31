@@ -820,6 +820,20 @@ namespace DialogEngine
             Phrases.Add(new PhraseEntry
             {
                 PhraseRating = ParentalRating.G,
+                DialogStr = "I wonder if there are any mice in this school?",
+                FileName = "IWonderIfThere",
+                PhraseWeights = new Dictionary<PhraseTypes, double>{
+                    { PhraseTypes.AtSchoolhouse, 0.2 }
+                }
+            });
+            if (Phrases[Phrases.Count - 1].PhraseRating > SessionVars.CurrentParentalRating)
+            {
+                Phrases.RemoveAt(Phrases.Count - 1);
+            }
+
+            Phrases.Add(new PhraseEntry
+            {
+                PhraseRating = ParentalRating.G,
                 DialogStr = "Sometimes it is better to forgive.",
                 FileName = "SomeTimesItIs",
                 PhraseWeights = new Dictionary<PhraseTypes, double>{

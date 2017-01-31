@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -57,7 +56,7 @@ namespace DialogEngine
             CharacterList.Add(new ReOrgLead());
             CharacterList.Add(new SchoolBoy());
             CharacterList.Add(new Cartman());
-            //CharacterList.Add(new SchoolHouse());
+            CharacterList.Add(new SchoolHouse());
             for (int i = 0; i < RecentDialogsQueSize; i++) {
                 RecentDialogs.Enqueue(0); // Fill the que with greeting dialogs
             }
@@ -333,7 +332,7 @@ namespace DialogEngine
         bool ImportClosestSerialComsCharacters() {
             var tempChar1 = SerialComs.NextCharacter1;
             var tempChar2 = SerialComs.NextCharacter2;
-            if (tempChar1 == tempChar2 || tempChar1 > 4 || tempChar2 > 4) {
+            if (tempChar1 == tempChar2 || tempChar1 > SerialComs.NUM_RADIOS - 1 || tempChar2 > SerialComs.NUM_RADIOS - 1) {
                 return false;
             }
             SameCharactersAsLast =

@@ -219,7 +219,7 @@ namespace DialogEngine
                 FileName = "IveBeenTurningThis",
                 PhraseWeights = new Dictionary<PhraseTypes, double>{
                     { PhraseTypes.RequestAffirmation, 0.2 },
-                    { PhraseTypes.GiveSurprisingStatement, 0.1 }
+                    { PhraseTypes.GiveSurprisingStatement, 0.1 } 
                 }
             });
             if (Phrases[Phrases.Count - 1].PhraseRating > SessionVars.CurrentParentalRating)
@@ -873,7 +873,7 @@ namespace DialogEngine
                 Phrases.RemoveAt(Phrases.Count - 1);
             }
             Phrases.Add(new PhraseEntry{
-                PhraseRating = ParentalRating.PG,
+                PhraseRating = ParentalRating.PG13,
                 DialogStr = "Playing death metal to hippies.",
                 FileName = "PlayingDeathMetalTo",
                 PhraseWeights = new Dictionary<PhraseTypes, double>{
@@ -1011,7 +1011,7 @@ namespace DialogEngine
             }
             Phrases.Add(new PhraseEntry
             {
-                PhraseRating = ParentalRating.PG,
+                PhraseRating = ParentalRating.G,
                 DialogStr = "You will make me laugh, ... right now.",
                 FileName = "YouWillMakeMeLaugh",
                 PhraseWeights = new Dictionary<PhraseTypes, double>{
@@ -1069,7 +1069,7 @@ namespace DialogEngine
             }
             Phrases.Add(new PhraseEntry
             {
-                PhraseRating = ParentalRating.PG,
+                PhraseRating = ParentalRating.G,
                 DialogStr = "Is it just me, or does a lot of crazy stuff go on in this town?",
                 FileName = "IsItJustMeStuff",
                 PhraseWeights = new Dictionary<PhraseTypes, double>{
@@ -1473,6 +1473,21 @@ namespace DialogEngine
             if (Phrases[Phrases.Count - 1].PhraseRating > SessionVars.CurrentParentalRating) {
                 Phrases.RemoveAt(Phrases.Count - 1);
             }
+
+            Phrases.Add(new PhraseEntry
+            {
+                PhraseRating = ParentalRating.G,
+                DialogStr = "Hey!  Its the school.",
+                FileName = "HeyItsTheSchool",
+                PhraseWeights = new Dictionary<PhraseTypes, double>{
+                    { PhraseTypes.AtSchoolhouse, 0.2 }
+                }
+            });
+            if (Phrases[Phrases.Count - 1].PhraseRating > SessionVars.CurrentParentalRating)
+            {
+                Phrases.RemoveAt(Phrases.Count - 1);
+            }
+
             Phrases.Add(new PhraseEntry
             {
                 PhraseRating = ParentalRating.G,

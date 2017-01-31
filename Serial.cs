@@ -4,8 +4,6 @@ using System.IO;
 using System.Threading;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-
 
 namespace DialogEngine
 {
@@ -20,7 +18,7 @@ namespace DialogEngine
     public static class SerialComs
     {
         public static List<ReceivedMessage> ReceivedMessages = new List<ReceivedMessage>();
-        public const int NUM_RADIOS = 6;
+        public const int NUM_RADIOS = 6;  //includes dongle
         private static bool _rssiStable = false;
         private static int _bigRssi = 0;
         public const int STRONG_RSSI_BUF_DEPTH = 12;
@@ -53,12 +51,12 @@ namespace DialogEngine
         public static void PrintHeatMap() {
             int i, l, m;
 
-            for (i = 0; i < NUM_RADIOS - 1; i++) {
+            for (i = 0; i < NUM_RADIOS; i++) {
                 Console.Write(_charactersLastHeatMapUpdateTime[i].ToString("mm.ss.fff") + " ");
             }
             Console.WriteLine();
-            for (l = 0; l < NUM_RADIOS - 1; l++) {
-                for (m = 0; m < NUM_RADIOS - 1; m++) {
+            for (l = 0; l < NUM_RADIOS; l++) {
+                for (m = 0; m < NUM_RADIOS; m++) {
                     Console.Write("{0:D3}", _heatMap[l,m]);
                     Console.Write(" ");
                 }
@@ -74,14 +72,14 @@ namespace DialogEngine
         {
             int i, l, m;
 
-            for (i = 0; i < NUM_RADIOS - 1; i++)
+            for (i = 0; i < NUM_RADIOS; i++)
             {
                 Console.Write(_charactersLastHeatMapUpdateTime[i].ToString("mm.ss.fff") + " ");
             }
             Console.WriteLine();
-            for (l = 0; l < NUM_RADIOS - 2; l++)
+            for (l = 0; l < NUM_RADIOS; l++)
             {
-                for (m = 1; m < NUM_RADIOS - 1; m++)
+                for (m = 1; m < NUM_RADIOS; m++)
                 {
                     if (m > l) {
                         Console.Write("{0:D3}", (_heatMap[l, m] + _heatMap[m, l]));
@@ -308,7 +306,7 @@ namespace DialogEngine
                 } else {
                     processCurrentMessage = false;  //we are in here a great deal
                 }
-                if (rowNum > -1 && rowNum < NUM_RADIOS - 1 && processCurrentMessage) {
+                if (rowNum > -1 && rowNum < NUM_RADIOS && processCurrentMessage) {
                     cycleCount++;
                     for (int k = 0; k < NUM_RADIOS; k++) {
                         _heatMap[rowNum, k] = newRow[k];
@@ -327,6 +325,7 @@ namespace DialogEngine
 
         public static void DontReadAndParse()
         {  // used for computers with no serial input radio for random, or forceCharacter mode
+            // does not include final character the silent schoolhouse, not useful in noSerial mode
             while (Continue) {
                 NextCharacter1 = RandomNumbers.Gen.Next(0, NUM_RADIOS - 1); //lower bound inclusive upper exclusive
                 while (NextCharacter1 == NextCharacter2) {

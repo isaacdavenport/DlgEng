@@ -282,7 +282,18 @@ namespace DialogEngine
                     PhraseTypes.GiveLocation
                 }
             });
-            
+
+            inObj.ModelDialogs.Add(new ModelDialog
+            {
+                Name = "At Schoolhouse, Silent SH",
+                AddedOnDateTime = adventureRound,
+                Popularity = 3.2,
+                PhraseTypeSequence = new List<PhraseTypes> {
+                    PhraseTypes.AtSchoolhouse,
+                    PhraseTypes.SHSilence
+                }
+            });
+
             inObj.ModelDialogs.Add(new ModelDialog{
                 Name = "CB SM Script 1 innuendo",
                 AddedOnDateTime = new DateTime(2016, 6, 18), Popularity = 3.1,

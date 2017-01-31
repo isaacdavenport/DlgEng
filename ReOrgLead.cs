@@ -985,6 +985,20 @@ namespace DialogEngine
 
             Phrases.Add(new PhraseEntry
             {
+                PhraseRating = ParentalRating.G,
+                DialogStr = "Here I am at the schoolhouse.",
+                FileName = "HereIAmAt",
+                PhraseWeights = new Dictionary<PhraseTypes, double>{
+                    { PhraseTypes.AtSchoolhouse, 0.2 }
+                }
+            });
+            if (Phrases[Phrases.Count - 1].PhraseRating > SessionVars.CurrentParentalRating)
+            {
+                Phrases.RemoveAt(Phrases.Count - 1);
+            }
+
+            Phrases.Add(new PhraseEntry
+            {
                 PhraseRating = ParentalRating.PG,
                 DialogStr = "How did Johnny get your two dollars?  You probably have twenty five pounds on the kid.",
                 FileName = "HowDidJohnnyGet",

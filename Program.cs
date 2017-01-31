@@ -39,6 +39,7 @@ namespace DialogEngine
         GiveMotivation,
         RequestLocation,
         GiveLocation,
+        AtSchoolhouse,
         SmCb_01A,SmCb_01B,SmCb_01C,SmCb_01D,SmCb_01E,
         SHSilence,
         LM01A,LM01B,LM01C,LM01D,LM01E,LM01F,LM02A,LM02B,LM02C,LM02D,LM02E,LM02F,LM02G,LM02H,LM02I,LM03A,LM03B,LM03C,LM03D,LM03E,LM03F,
@@ -95,7 +96,7 @@ namespace DialogEngine
         public List<PhraseEntry> Phrases = new List<PhraseEntry>();
         // A character's Phrases list holds all the phrases they might say along with 
         // heuristic phraseWeights on what parts of a model dialog they might use them in.
-        protected const int RecentPhrasesQueueSize = 4;
+        protected const int RecentPhrasesQueueSize = 8;
         public Queue<PhraseEntry> RecentPhrases = new Queue<PhraseEntry>();  //TODO make this a method that runs over the history
     }
 
