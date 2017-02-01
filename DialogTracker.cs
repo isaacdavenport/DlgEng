@@ -8,7 +8,7 @@ using System.Threading;
 namespace DialogEngine
 {
     public class HistoricalDialog
-    {
+    {  //TODO move to a paradigm where all state is method extracted from HistoricalDialog and HistoricalPhrase
         public int DialogIndex;
         public string DialogName = "";
         public DateTime StartedTime = DateTime.MinValue;
@@ -240,7 +240,7 @@ namespace DialogEngine
             return -1;  // code for no next adventure continuance found
         }
 
-        int PickAWeightedDialog(int character1Num, int character2Num, bool sameCharactersAsLast) {
+        int PickAWeightedDialog(int character1Num, int character2Num) {
             //TODO check that all characters/phrasetypes required for adventure are included before starting adventure?
             int dialogModel = 0;
 
@@ -253,7 +253,7 @@ namespace DialogEngine
                 }
             }
 
-            if (!sameCharactersAsLast) {  //give next priority to greetings
+            if (!SameCharactersAsLast && !SessionVars.WaitIndefinatelyForMove) {  //give next priority to greetings
                 dialogModel = RandomNumbers.Gen.Next(0, 9); //increase odds of starting with greeting
                 if (dialogModel < 2) // TODO need a better way to call out greeting dialog models than 0 and 1 in list
                     return dialogModel;
@@ -277,11 +277,6 @@ namespace DialogEngine
                     }
                 }
 
-/*               var listLM01Dialogs = from diag in ModelDialogs where diag.Name == 
-                                     "LM01_CM+SB_Fight" select diag;
-
-                dialogModel = ModelDialogs.IndexOf(listLM01Dialogs.First());  // TODO debug code
-                */
                 var dialogModelUsedRecently = CheckIfDialogModelUsedRecently(dialogModel);
                 var charactersHavePhrases = CheckIfCharactersHavePhrasesForDialog(dialogModel, Character1Num, Character2Num);
                 var dialogPreRequirementsMet = CheckIfDialogPreRequirementMet(dialogModel);
@@ -441,8 +436,8 @@ namespace DialogEngine
             if (!ImportClosestSerialComsCharacters()) {
                 return;
             }
-            _currentDialogModel = PickAWeightedDialog(Character1Num, Character2Num, SameCharactersAsLast);
-            if (WaitingForMovement()) {
+            _currentDialogModel = PickAWeightedDialog(Character1Num, Character2Num);
+            if (WaitingForMovement()  || (SameCharactersAsLast && SessionVars.WaitIndefinatelyForMove)) {
                 return;
             }
             ProcessDebugFlags(dialogDirectives);

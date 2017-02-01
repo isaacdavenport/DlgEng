@@ -23,9 +23,7 @@ namespace DialogEngine
                     || currentPlayState == WMPPlayState.wmppsTransitioning) {
                 return true;
             }
-            else {
-                return false;
-            }
+            return false;
         }
 
         public int Status() {
