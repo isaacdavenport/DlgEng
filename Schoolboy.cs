@@ -811,7 +811,7 @@ namespace DialogEngine
                 Phrases.RemoveAt(Phrases.Count - 1);
             }
             Phrases.Add(new PhraseEntry{
-                PhraseRating = ParentalRating.PG,
+                PhraseRating = ParentalRating.PG13,
                 DialogStr = "Why does mommy and dady's bed sound like a pogo stick sometimes?",
                 FileName = "WhyDoesMommyAnd",
                 PhraseWeights = new Dictionary<PhraseTypes, double>{

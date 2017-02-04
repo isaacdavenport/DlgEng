@@ -588,7 +588,7 @@ namespace DialogEngine
                 Phrases.RemoveAt(Phrases.Count - 1);
             }
             Phrases.Add(new PhraseEntry{
-                PhraseRating = ParentalRating.PG,
+                PhraseRating = ParentalRating.PG13,
                 DialogStr = "Sounds like someone wants to get donkey-punched.",
                 FileName = "SoundsLikeSomeoneWants",
                 PhraseWeights = new Dictionary<PhraseTypes, double>{
