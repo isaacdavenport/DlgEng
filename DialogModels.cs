@@ -282,7 +282,18 @@ namespace DialogEngine
                     PhraseTypes.GiveLocation
                 }
             });
-            
+
+            inObj.ModelDialogs.Add(new ModelDialog
+            {
+                Name = "At Schoolhouse, Silent SH",
+                AddedOnDateTime = adventureRound,
+                Popularity = 3.2,
+                PhraseTypeSequence = new List<PhraseTypes> {
+                    PhraseTypes.AtSchoolhouse,
+                    PhraseTypes.SHSilence
+                }
+            });
+
             inObj.ModelDialogs.Add(new ModelDialog{
                 Name = "CB SM Script 1 innuendo",
                 AddedOnDateTime = new DateTime(2016, 6, 18), Popularity = 3.1,
@@ -311,7 +322,7 @@ namespace DialogEngine
                 }
             });
 
-            inObj.ModelDialogs.Add(item: new ModelDialog {
+            inObj.ModelDialogs.Add(new ModelDialog {
                 Name = "LM02_SM+SB_Why_Fight_Corroberate",
                 AddedOnDateTime = adventureRound,
                 Popularity = 2.2,
@@ -351,7 +362,7 @@ namespace DialogEngine
                 }
             });
 
-            inObj.ModelDialogs.Add(new ModelDialog()
+            inObj.ModelDialogs.Add(new ModelDialog
             {
                 Name = "LM04_SB+CM_What_Else_Besides_2Dollars",
                 AddedOnDateTime = adventureRound,

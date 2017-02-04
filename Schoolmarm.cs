@@ -1117,6 +1117,20 @@ namespace DialogEngine
             Phrases.Add(new PhraseEntry
             {
                 PhraseRating = ParentalRating.G,
+                DialogStr = "Ahh, the schoolhouse.  The Mecca of learning.",
+                FileName = "AhhTheSchoolHouse",
+                PhraseWeights = new Dictionary<PhraseTypes, double>{
+                    { PhraseTypes.AtSchoolhouse, 0.2 }
+                }
+            });
+            if (Phrases[Phrases.Count - 1].PhraseRating > SessionVars.CurrentParentalRating)
+            {
+                Phrases.RemoveAt(Phrases.Count - 1);
+            }
+            
+            Phrases.Add(new PhraseEntry
+            {
+                PhraseRating = ParentalRating.G,
                 DialogStr = "What is the matter Johny?",
                 FileName = "WhatIsTheMatter",
                 PhraseWeights = new Dictionary<PhraseTypes, double>{

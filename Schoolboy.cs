@@ -811,7 +811,7 @@ namespace DialogEngine
                 Phrases.RemoveAt(Phrases.Count - 1);
             }
             Phrases.Add(new PhraseEntry{
-                PhraseRating = ParentalRating.PG,
+                PhraseRating = ParentalRating.PG13,
                 DialogStr = "Why does mommy and dady's bed sound like a pogo stick sometimes?",
                 FileName = "WhyDoesMommyAnd",
                 PhraseWeights = new Dictionary<PhraseTypes, double>{
@@ -941,6 +941,21 @@ namespace DialogEngine
             if (Phrases[Phrases.Count - 1].PhraseRating > SessionVars.CurrentParentalRating) {
                 Phrases.RemoveAt(Phrases.Count - 1);
             }
+
+            Phrases.Add(new PhraseEntry
+            {
+                PhraseRating = ParentalRating.G,
+                DialogStr = "I don't think I should be at school alone.",
+                FileName = "IDontThinkI",
+                PhraseWeights = new Dictionary<PhraseTypes, double>{
+                    { PhraseTypes.AtSchoolhouse, 0.2 }
+                }                           
+            }); 
+            if (Phrases[Phrases.Count - 1].PhraseRating > SessionVars.CurrentParentalRating)
+            {
+                Phrases.RemoveAt(Phrases.Count - 1);
+            }
+
             Phrases.Add(new PhraseEntry
             {
                 PhraseRating = ParentalRating.G,
@@ -1249,7 +1264,7 @@ namespace DialogEngine
             {
                 PhraseRating = ParentalRating.G,
                 DialogStr = "He likes his kitty.  He REALLY likes his kitty.",
-                FileName = "SB_HeLikesHisKitty",
+                FileName = "HeLikesHisKitty",
                 PhraseWeights = new Dictionary<PhraseTypes, double>{
                     { PhraseTypes.LM13G, 0.2 }
                 }

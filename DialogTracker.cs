@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
-
 // ReSharper disable ConditionIsAlwaysTrueOrFalse
 
 namespace DialogEngine
 {
     public class HistoricalDialog
-    {
+    {  //TODO move to a paradigm where all state is method extracted from HistoricalDialog and HistoricalPhrase
         public int DialogIndex;
         public string DialogName = "";
         public DateTime StartedTime = DateTime.MinValue;
@@ -41,15 +40,18 @@ namespace DialogEngine
         int _priorCharacter1Num = 100;
         int _priorCharacter2Num = 100;
         int _currentDialogModel = 1;
-        public Mp3Player Player = new Mp3Player();
+        // public Mp3Player Player = new Mp3Player();
+        public WindowsMediaPlayerMp3 Audio = new WindowsMediaPlayerMp3();
         public bool SameCharactersAsLast = false;
         public bool LastPhraseImpliedMovement = false;
         private static int _movementWaitCount = 0;
         public double DialogModelPopularitySum;
 
         public DialogTracker() {
-            //CharacterList.Add(new Cowboy());
-            CharacterList.Add(new Witch());
+            //TODO move active character list to config file so they can be changed without compiling
+            //CharacterList.Add(new Cowboy());  
+            //CharacterList.Add(new Witch());
+            CharacterList.Add(new Skylar());
             CharacterList.Add(new SchoolMarm());
             CharacterList.Add(new ReOrgLead());
             CharacterList.Add(new SchoolBoy());
@@ -61,18 +63,27 @@ namespace DialogEngine
         }
 
         public void PlayAudio(string pathAndFileName) {
-            if (File.Exists(pathAndFileName)) {
+            if (File.Exists(pathAndFileName)) {  
                 FileInfo fileInfo = new FileInfo(pathAndFileName);
+
+
                 //empirical hack to wait reasonable time since Play() has no return to know when playing is complete
                 long songMilliSeconds = fileInfo.Length/14;
-                var playSuccess = Player.Play(pathAndFileName);
+                //var playSuccess = Player.Play(pathAndFileName);
+                var playSuccess = Audio.PlayMp3(pathAndFileName);
+               
                 if (playSuccess != 0) {
                     Console.WriteLine("");
                     Console.WriteLine("   MP3 Play Error  ---  " + playSuccess);
                     Console.WriteLine("");
                 }
-                Thread.Sleep((int)songMilliSeconds);
-                Thread.Sleep(20);
+                int i = 0;
+                Thread.Sleep(600);
+                while (Audio.IsPlaying() && i < 250) {  // 20 seconds is max
+                    //Thread.Sleep((int)songMilliSeconds);
+                    Thread.Sleep(100);
+                }
+                Thread.Sleep(1200);  // wait around a second after the audio is done for between phrase pause
             }
             else {
                 Console.WriteLine("Could not find: " + pathAndFileName);
@@ -193,40 +204,56 @@ namespace DialogEngine
             return true;
         }
 
-        int PickAWeightedDialog(int character1Num, int character2Num, bool sameCharactersAsLast) {
+        int FindNextAdventureDialogForCharacters(int character1Num, int character2Num, List<int> mostRecentAdventureDialogIndexes) {
+            bool ch1First = new bool();
+            bool ch2First = new bool();
+
+            //if we have recently done adventures give priority to adventure dialogs check them first
+            foreach (var recentAdventureIdx in mostRecentAdventureDialogIndexes)
+            {  //given recent adventures
+                foreach (var possibleDialog in ModelDialogs)  //TODO probably a cleaner way to do this with Linq and lamda expressions
+                {  //look for follow on adventure possibilities
+                    var possibleDialogIdx = ModelDialogs.IndexOf(possibleDialog);
+                    if (ModelDialogs[recentAdventureIdx].Adventure == possibleDialog.Adventure)
+                    {
+                        foreach (var providedStringKey in ModelDialogs[recentAdventureIdx].Provides)
+                        {
+                            if (possibleDialog.Requires.Contains(providedStringKey))
+                            {   //if a the most recent adventure dialog in the adventure provides what we require we won't 
+                                //go backwards in adventures
+                                ch1First = CheckIfCharactersHavePhrasesForDialog(possibleDialogIdx,
+                                    character1Num, character2Num);
+                                ch2First = CheckIfCharactersHavePhrasesForDialog(possibleDialogIdx,
+                                    character2Num, character1Num);
+                                if (ch1First || ch2First) {
+                                    if (ch2First) {
+                                        //swap character one and two
+                                        SwapCharactersOneAndTwo();
+                                    }
+                                    return possibleDialogIdx;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return -1;  // code for no next adventure continuance found
+        }
+
+        int PickAWeightedDialog(int character1Num, int character2Num) {
             //TODO check that all characters/phrasetypes required for adventure are included before starting adventure?
             int dialogModel = 0;
 
             var mostRecentAdventureDialogIndexes = FindMostRecentAdventureDialogIndexes();
               // most recent will be in the 0 index of list which will be hit first in foreach
             if (mostRecentAdventureDialogIndexes.Count > 0) {
-                bool ch1First = new bool();
-                bool ch2First = new bool();
-                bool currentDialogIsPossible = new bool();
-                //if we have recently done adventures give priority to adventure dialogs check them first
-                foreach (var recentAdventureIdx in mostRecentAdventureDialogIndexes) {  //given recent adventures
-                    foreach (var possibleDialog in ModelDialogs) {  //look for follow on adventure possibilities
-                        var possibleDialogIdx = ModelDialogs.IndexOf(possibleDialog);
-                        if (ModelDialogs[recentAdventureIdx].Adventure == possibleDialog.Adventure &&
-                            ModelDialogs[recentAdventureIdx].Provides == possibleDialog.Requires) {
-                            //if a the most recent adventure dialog in the adventure provides what we require we won't 
-                            //go backwards in adventures
-                            ch1First = CheckIfCharactersHavePhrasesForDialog(possibleDialogIdx,
-                                character1Num, character2Num);
-                            ch2First = CheckIfCharactersHavePhrasesForDialog(possibleDialogIdx, 
-                                character2Num, character1Num);
-                            if (ch1First || ch2First) {
-                                if (ch2First) {  //swap character one and two
-                                    SwapCharactersOneAndTwo();
-                                }
-                                return possibleDialogIdx;
-                            }
-                        }
-                    }
+                var nextAdventureDialogIdx = FindNextAdventureDialogForCharacters(character1Num, character2Num, mostRecentAdventureDialogIndexes);
+                if (nextAdventureDialogIdx > 0 && nextAdventureDialogIdx < ModelDialogs.Count) {
+                    return nextAdventureDialogIdx;  // we have an adventure dialog for these characters go with it
                 }
             }
 
-            if (!sameCharactersAsLast) {  //give next priority to greetings
+            if (!SameCharactersAsLast && !SessionVars.WaitIndefinatelyForMove) {  //give next priority to greetings
                 dialogModel = RandomNumbers.Gen.Next(0, 9); //increase odds of starting with greeting
                 if (dialogModel < 2) // TODO need a better way to call out greeting dialog models than 0 and 1 in list
                     return dialogModel;
@@ -250,11 +277,6 @@ namespace DialogEngine
                     }
                 }
 
-/*               var listLM01Dialogs = from diag in ModelDialogs where diag.Name == 
-                                     "LM01_CM+SB_Fight" select diag;
-
-                dialogModel = ModelDialogs.IndexOf(listLM01Dialogs.First());  // TODO debug code
-                */
                 var dialogModelUsedRecently = CheckIfDialogModelUsedRecently(dialogModel);
                 var charactersHavePhrases = CheckIfCharactersHavePhrasesForDialog(dialogModel, Character1Num, Character2Num);
                 var dialogPreRequirementsMet = CheckIfDialogPreRequirementMet(dialogModel);
@@ -305,7 +327,7 @@ namespace DialogEngine
         bool ImportClosestSerialComsCharacters() {
             var tempChar1 = SerialComs.NextCharacter1;
             var tempChar2 = SerialComs.NextCharacter2;
-            if (tempChar1 == tempChar2 || tempChar1 > 4 || tempChar2 > 4) {
+            if (tempChar1 == tempChar2 || tempChar1 > SerialComs.NUM_RADIOS - 1 || tempChar2 > SerialComs.NUM_RADIOS - 1) {
                 return false;
             }
             SameCharactersAsLast =
@@ -414,8 +436,8 @@ namespace DialogEngine
             if (!ImportClosestSerialComsCharacters()) {
                 return;
             }
-            _currentDialogModel = PickAWeightedDialog(Character1Num, Character2Num, SameCharactersAsLast);
-            if (WaitingForMovement()) {
+            _currentDialogModel = PickAWeightedDialog(Character1Num, Character2Num);
+            if (WaitingForMovement()  || (SameCharactersAsLast && SessionVars.WaitIndefinatelyForMove)) {
                 return;
             }
             ProcessDebugFlags(dialogDirectives);
@@ -440,7 +462,7 @@ namespace DialogEngine
                                       "_" + selectedPhrase.FileName + ".mp3";
                 PlayAudio(pathAndFileName);
 
-                if (!SessionVars.ForceCharacterSelection &&
+                if (!SessionVars.ForceCharactersAndDialogModel &&
                     !DialogTrackerAndSerialComsCharactersSame()) {
                     SameCharactersAsLast = false;
                     return; // the characters have moved  TODO break into charactersSame() and use also with prior

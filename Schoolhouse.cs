@@ -15,8 +15,7 @@ namespace DialogEngine
                 DialogStr = "Silence",
                 FileName = "silence",
                 PhraseWeights = new Dictionary<PhraseTypes, double>{
-                    { PhraseTypes.Greeting, 0.1 },
-                    { PhraseTypes.SHSilence, 0.1 }
+                    { PhraseTypes.SHSilence, 3.5 }
                 }
             });
 

@@ -1,11 +1,11 @@
 C:\Isaac\Toys2Life\DlgEng\bin\Debug\DialogEngine.exe.config
-C:\Isaac\Toys2Life\DlgEng\obj\x86\Debug\Interop.WMPLib.dll
-C:\Isaac\Toys2Life\DlgEng\obj\x86\Debug\Dialog_Generator.csproj.ResolveComReference.cache
 C:\Isaac\Toys2Life\DlgEng\bin\Debug\DialogEngine.exe.manifest
 C:\Isaac\Toys2Life\DlgEng\bin\Debug\DialogEngine.application
 C:\Isaac\Toys2Life\DlgEng\bin\Debug\DialogEngine.exe
 C:\Isaac\Toys2Life\DlgEng\bin\Debug\DialogEngine.pdb
 C:\Isaac\Toys2Life\DlgEng\obj\x86\Debug\Dialog_Generator.csprojResolveAssemblyReference.cache
+C:\Isaac\Toys2Life\DlgEng\obj\x86\Debug\Interop.WMPLib.dll
+C:\Isaac\Toys2Life\DlgEng\obj\x86\Debug\Dialog_Generator.csproj.ResolveComReference.cache
 C:\Isaac\Toys2Life\DlgEng\obj\x86\Debug\DialogEngine.exe.manifest
 C:\Isaac\Toys2Life\DlgEng\obj\x86\Debug\DialogEngine.application
 C:\Isaac\Toys2Life\DlgEng\obj\x86\Debug\DialogEngine.exe

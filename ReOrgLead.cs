@@ -588,7 +588,7 @@ namespace DialogEngine
                 Phrases.RemoveAt(Phrases.Count - 1);
             }
             Phrases.Add(new PhraseEntry{
-                PhraseRating = ParentalRating.PG,
+                PhraseRating = ParentalRating.PG13,
                 DialogStr = "Sounds like someone wants to get donkey-punched.",
                 FileName = "SoundsLikeSomeoneWants",
                 PhraseWeights = new Dictionary<PhraseTypes, double>{
@@ -735,7 +735,8 @@ namespace DialogEngine
                 DialogStr = "That funny smell from the ladies room is still there.  Speaking of funny...",
                 FileName = "ThatFunnySmellFrom",
                 PhraseWeights = new Dictionary<PhraseTypes, double>{
-                    { PhraseTypes.RequestJoke, 0.2 }
+                    { PhraseTypes.RequestJoke, 0.2 },
+                    { PhraseTypes.GiveSurprisingStatement, 0.2 }
                 }
             });
             if (Phrases[Phrases.Count - 1].PhraseRating > SessionVars.CurrentParentalRating) {
@@ -959,7 +960,8 @@ namespace DialogEngine
             }
             Phrases.Add(new PhraseEntry{
                 PhraseRating = ParentalRating.PG,
-                DialogStr = "Sometimes it is hard to divine someone's motivations.  I mean we can't necessarily fathom just how far a fear of public speaking or love of Jusin Bieber will take a person.",
+                DialogStr = "Sometimes it is hard to divine someone's motivations.  I mean we can't necessarily fathom "
+                + "just how far a fear of public speaking or love of Jusin Bieber will take a person.",
                 FileName = "SometimesItsHardTo",
                 PhraseWeights = new Dictionary<PhraseTypes, double>{
                     { PhraseTypes.GiveMotivation, 0.2 }
@@ -978,6 +980,179 @@ namespace DialogEngine
                 }
             });
             if (Phrases[Phrases.Count - 1].PhraseRating > SessionVars.CurrentParentalRating) {
+                Phrases.RemoveAt(Phrases.Count - 1);
+            }
+
+            Phrases.Add(new PhraseEntry
+            {
+                PhraseRating = ParentalRating.G,
+                DialogStr = "Here I am at the schoolhouse.",
+                FileName = "HereIAmAt",
+                PhraseWeights = new Dictionary<PhraseTypes, double>{
+                    { PhraseTypes.AtSchoolhouse, 0.2 }
+                }
+            });
+            if (Phrases[Phrases.Count - 1].PhraseRating > SessionVars.CurrentParentalRating)
+            {
+                Phrases.RemoveAt(Phrases.Count - 1);
+            }
+
+            Phrases.Add(new PhraseEntry
+            {
+                PhraseRating = ParentalRating.PG,
+                DialogStr = "How did Johnny get your two dollars?  You probably have twenty five pounds on the kid.",
+                FileName = "HowDidJohnnyGet",
+                PhraseWeights = new Dictionary<PhraseTypes, double>{
+                    { PhraseTypes.LM03B, 0.2 }
+                }
+            });
+            if (Phrases[Phrases.Count - 1].PhraseRating > SessionVars.CurrentParentalRating)
+            {
+                Phrases.RemoveAt(Phrases.Count - 1);
+            }
+
+            Phrases.Add(new PhraseEntry
+            {
+                PhraseRating = ParentalRating.PG,
+                DialogStr = "Does Johnny agree he owes you two dollars?",
+                FileName = "DoesJohnnyAgreeHe",
+                PhraseWeights = new Dictionary<PhraseTypes, double>{
+                    { PhraseTypes.LM03D, 0.2 }
+                }
+            });
+            if (Phrases[Phrases.Count - 1].PhraseRating > SessionVars.CurrentParentalRating)
+            {
+                Phrases.RemoveAt(Phrases.Count - 1);
+            }
+
+            Phrases.Add(new PhraseEntry
+            {
+                PhraseRating = ParentalRating.PG,
+                DialogStr = "Yes, thats not much of a challenge.  But I am busy looking for Billy, have you seen him?",
+                FileName = "YesThatsNotMuch",
+                PhraseWeights = new Dictionary<PhraseTypes, double>{
+                    { PhraseTypes.LM03F, 0.2 }
+                }
+            });
+            if (Phrases[Phrases.Count - 1].PhraseRating > SessionVars.CurrentParentalRating)
+            {
+                Phrases.RemoveAt(Phrases.Count - 1);
+            }
+
+            Phrases.Add(new PhraseEntry
+            {
+                PhraseRating = ParentalRating.PG,
+                DialogStr = "Well you are welcome to go with me to the school house and help me find Billy.  Have you " + 
+                  "looked for kitty there yet?    Or I suppose you could go ask Skylar the cat about your problem with Johnny.",
+                FileName = "WellYouAreWelcome",
+                PhraseWeights = new Dictionary<PhraseTypes, double>{
+                    { PhraseTypes.LM03H, 0.2 }
+                }
+            });
+            if (Phrases[Phrases.Count - 1].PhraseRating > SessionVars.CurrentParentalRating)
+            {
+                Phrases.RemoveAt(Phrases.Count - 1);
+            }
+
+            Phrases.Add(new PhraseEntry
+            {
+                PhraseRating = ParentalRating.PG,
+                DialogStr = "Whats up Johnny?",
+                FileName = "WhatsUpJohnny",
+                PhraseWeights = new Dictionary<PhraseTypes, double>{
+                    { PhraseTypes.LM05B, 0.2 }
+                }
+            });
+            if (Phrases[Phrases.Count - 1].PhraseRating > SessionVars.CurrentParentalRating)
+            {
+                Phrases.RemoveAt(Phrases.Count - 1);
+            }
+
+            Phrases.Add(new PhraseEntry
+            {
+                PhraseRating = ParentalRating.PG,
+                DialogStr = "It looked like you guys were playing a bit rough over there.",
+                FileName = "ItLookedLikeYou",
+                PhraseWeights = new Dictionary<PhraseTypes, double>{
+                    { PhraseTypes.LM05D, 0.2 }
+                }
+            });
+            if (Phrases[Phrases.Count - 1].PhraseRating > SessionVars.CurrentParentalRating)
+            {
+                Phrases.RemoveAt(Phrases.Count - 1);
+            }
+
+            Phrases.Add(new PhraseEntry
+            {
+                PhraseRating = ParentalRating.PG,
+                DialogStr = "Right.  Well I don't know what you two were up to, so I can't verify anything.  Have you tried " +
+                    "working things out with Eric ? Otherwise you could talk to Skylar the cat.He sometimes has good insights " +
+                    "on such matters.Or you could give me a hand trying to find Billy, he was supposed to be here 20 minutes ago.",
+                FileName = "RightWellIDont",
+                PhraseWeights = new Dictionary<PhraseTypes, double>{
+                    { PhraseTypes.LM05F, 0.2 }
+                }
+            });
+            if (Phrases[Phrases.Count - 1].PhraseRating > SessionVars.CurrentParentalRating)
+            {
+                Phrases.RemoveAt(Phrases.Count - 1);
+            }
+
+            Phrases.Add(new PhraseEntry
+            {
+                PhraseRating = ParentalRating.PG,
+                DialogStr = "Where is that kid?",
+                FileName = "WhereIsThatKid",
+                PhraseWeights = new Dictionary<PhraseTypes, double>{
+                    { PhraseTypes.LM14B, 0.2 }
+                }
+            });
+            if (Phrases[Phrases.Count - 1].PhraseRating > SessionVars.CurrentParentalRating)
+            {
+                Phrases.RemoveAt(Phrases.Count - 1);
+            }
+
+            Phrases.Add(new PhraseEntry
+            {
+                PhraseRating = ParentalRating.PG,
+                DialogStr = "Billy is to young to be working out.  He won't be needing abs of steel for at least seven or eight years.",
+                FileName = "BillyIsTooYoung",
+                PhraseWeights = new Dictionary<PhraseTypes, double>{
+                    { PhraseTypes.LM14D, 0.2 }
+                }
+            });
+            if (Phrases[Phrases.Count - 1].PhraseRating > SessionVars.CurrentParentalRating)
+            {
+                Phrases.RemoveAt(Phrases.Count - 1);
+            }
+
+            Phrases.Add(new PhraseEntry
+            {
+                PhraseRating = ParentalRating.PG,
+                DialogStr = "What are you talking about?",
+                FileName = "WhatAreYouTalking",
+                PhraseWeights = new Dictionary<PhraseTypes, double>{
+                    { PhraseTypes.LM14F, 0.2 }
+                }
+            });
+            if (Phrases[Phrases.Count - 1].PhraseRating > SessionVars.CurrentParentalRating)
+            {
+                Phrases.RemoveAt(Phrases.Count - 1);
+            }
+
+            Phrases.Add(new PhraseEntry
+            {
+                PhraseRating = ParentalRating.PG,
+                DialogStr = "Billy what are you doing back at school.  It doesn't look like you are studying.  " +
+                    "Put down that phone when I am talking to you young man.  " +
+                    "Your phone has nothing to do with evolution, devolution is more like it.",
+                FileName = "BillyWhatAreYou",
+                PhraseWeights = new Dictionary<PhraseTypes, double>{
+                    { PhraseTypes.LM18A, 0.2 }
+                }
+            });
+            if (Phrases[Phrases.Count - 1].PhraseRating > SessionVars.CurrentParentalRating)
+            {
                 Phrases.RemoveAt(Phrases.Count - 1);
             }
 
