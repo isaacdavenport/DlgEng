@@ -61,6 +61,7 @@ namespace DialogEngine
     public static class SessionVars
     {
         public static readonly bool DebugFlag = Convert.ToBoolean(AppSet.ReadSetting("DebugFlag"));
+        public static readonly bool NoAudio = Convert.ToBoolean(AppSet.ReadSetting("NoAudio"));
         public static readonly bool ForceCharactersAndDialogModel = Convert.ToBoolean(AppSet.ReadSetting("ForceCharactersAndDialogModel"));
         public static readonly bool WaitIndefinatelyForMove = Convert.ToBoolean(AppSet.ReadSetting("WaitIndefinatelyForMove"));
         public static readonly bool ShowDupePhrases = Convert.ToBoolean(AppSet.ReadSetting("ShowDupePhrases"));
@@ -129,7 +130,7 @@ namespace DialogEngine
         public static DialogTracker TheDialogs = new DialogTracker();
 
         static void WriteStartupInfo() {
-            string versionTimeStr = "Dialog Engine ver 0.33 Isaac, Aria, Joe, Brielle " + DateTime.Now + "\r\n";
+            string versionTimeStr = "Dialog Engine ver 0.34 Isaac, Aria, Joe, Brielle " + DateTime.Now + "\r\n";
             Console.WriteLine(versionTimeStr);
             if (SessionVars.WriteSerialLog)
             {
@@ -162,6 +163,9 @@ namespace DialogEngine
         }
 
         static void CheckForMissingAudioFiles() {
+            if (SessionVars.NoAudio) {
+                return;
+            }
             foreach (var character in TheDialogs.CharacterList)
             {
                 foreach (PhraseEntry phrase in character.Phrases)

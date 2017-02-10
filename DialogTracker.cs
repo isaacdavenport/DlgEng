@@ -41,7 +41,7 @@ namespace DialogEngine
         int _priorCharacter2Num = 100;
         int _currentDialogModel = 1;
         // public Mp3Player Player = new Mp3Player();
-        public WindowsMediaPlayerMp3 Audio = new WindowsMediaPlayerMp3();
+        public WindowsMediaPlayerMp3 Audio = new WindowsMediaPlayerMp3();  
         public bool SameCharactersAsLast = false;
         public bool LastPhraseImpliedMovement = false;
         private static int _movementWaitCount = 0;
@@ -63,6 +63,10 @@ namespace DialogEngine
         }
 
         public void PlayAudio(string pathAndFileName) {
+            if (SessionVars.NoAudio) {
+                Thread.Sleep(2200);
+                return;
+            }
             if (File.Exists(pathAndFileName)) {  
                 FileInfo fileInfo = new FileInfo(pathAndFileName);
 
