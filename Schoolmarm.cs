@@ -981,7 +981,7 @@ namespace DialogEngine
                 Phrases.RemoveAt(Phrases.Count - 1);
             }
             Phrases.Add(new PhraseEntry{
-                PhraseRating = ParentalRating.PG,
+                PhraseRating = ParentalRating.PG13,
                 DialogStr = "Could be the old green eyed Jealousy.  Or it could be the glassy eyed reefer madness.  Hard to say.",
                 FileName = "CouldBeTheOld",
                 PhraseWeights = new Dictionary<PhraseTypes, double>{

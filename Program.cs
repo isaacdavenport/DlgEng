@@ -1,13 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading; // for thread.sleep()
-// ReSharper disable ConditionIsAlwaysTrueOrFalse
-
-
-// for count on keyboard inputs to manually force which characters speak 
-
 
 namespace DialogEngine
 {
