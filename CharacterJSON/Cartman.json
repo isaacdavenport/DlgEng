@@ -1,0 +1,1518 @@
+{
+	"CharacterName": "Cartman",
+  "CharacterPrefix": "CM",
+  "Phrases": [
+    {
+      "DialogStr": "Cartman has not been initialized.",
+      "FileName": "CartmanHasNotBeen",
+      "PhraseWeights": {
+        "Exclamation": 0.01
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "I'm Eric but everyone calls me Cartman.",
+      "FileName": "ImEricButEveryone",
+      "PhraseWeights": {
+        "Greeting": 0.7
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "You will respect my authoritah!",
+      "FileName": "YouWillRespectMy",
+      "PhraseWeights": {
+        "Exclamation": 1.2,
+        "ShutUp": 0.3,
+        "Threat": 1.0,
+        "GiveAdvice": 0.05
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "You killed Kenny!",
+      "FileName": "YouKilledKenny",
+      "PhraseWeights": {
+        "Exclamation": 0.2,
+        "ShutUp": 0.1,
+        "GiveSurprisingStatement": 0.3
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Eating cheesy poofs.",
+      "FileName": "EatingCheesyPoofs",
+      "PhraseWeights": {
+        "GiveActivity": 0.7
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "No!  This is my pie.",
+      "FileName": "NoThisIsMy",
+      "PhraseWeights": {
+        "Exclamation": 0.2,
+        "GiveSurprisingStatement": 0.5,
+        "No": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Eating pie.",
+      "FileName": "EatingPie",
+      "PhraseWeights": {
+        "GiveActivity": 1.1
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "What do you want to do after school?",
+      "FileName": "WhatDoYouWant",
+      "PhraseWeights": {
+        "RequestActivity": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "I have dry balls.",
+      "FileName": "IHaveDryBalls",
+      "PhraseWeights": {
+        "Exclamation": 0.2,
+        "GiveSurprisingStatement": 0.5,
+        "RequestAffirmation": 0.5
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 2
+    },
+    {
+      "DialogStr": "I have an itch in a bad place!",
+      "FileName": "IHaveAnItch",
+      "PhraseWeights": {
+        "Exclamation": 0.2,
+        "GiveSurprisingStatement": 0.5,
+        "RequestAffirmation": 0.5
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 1
+    },
+    {
+      "DialogStr": "I hope you get amoebic dysentery. I'm going home.",
+      "FileName": "IHopeYouGet",
+      "PhraseWeights": {
+        "Exclamation": 0.2,
+        "Retreat": 0.5,
+        "GiveDisbelief": 0.5
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 1
+    },
+    {
+      "DialogStr": "Screw you. I'm going home.",
+      "FileName": "ScrewYouImGoing",
+      "PhraseWeights": {
+        "Exclamation": 0.2,
+        "Retreat": 0.5,
+        "GiveDisbelief": 0.5
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 2
+    },
+    {
+      "DialogStr": "Whatever.  I'll do what I want.",
+      "FileName": "WhateverIllDoWhat",
+      "PhraseWeights": {
+        "Exclamation": 0.3,
+        "Retreat": 0.1,
+        "ShutUp": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 1
+    },
+    {
+      "DialogStr": "Dang",
+      "FileName": "Dang",
+      "PhraseWeights": {
+        "Exclamation": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 1
+    },
+    {
+      "DialogStr": "Goddammit",
+      "FileName": "Goddammit",
+      "PhraseWeights": {
+        "Exclamation": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 2
+    },
+    {
+      "DialogStr": "Hippies. They're everywhere. They wanna save the earth, but all they do is smoke pot and smell bad..",
+      "FileName": "HippiesTheyreEverywhereThey",
+      "PhraseWeights": {
+        "GiveSurprisingStatement": 0.1
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 1
+    },
+    {
+      "DialogStr": "I've been turning this steering wheel for three whole hours but I still don't feel like a race car driver.",
+      "FileName": "IveBeenTurningThis",
+      "PhraseWeights": {
+        "RequestAffirmation": 0.2,
+        "GiveSurprisingStatement": 0.1
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 1
+    },
+    {
+      "DialogStr": "I've been licking this carpet for three whole hours and I still don't feel like a lesbian",
+      "FileName": "IveBeenLickingThis",
+      "PhraseWeights": {
+        "RequestAffirmation": 0.2,
+        "GiveSurprisingStatement": 0.1
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 2
+    },
+    {
+      "DialogStr": "You so much as TOUCH my ass, and I'll put a firecracker in your nutsack and blow your balls all over your pants",
+      "FileName": "YouSoMuchAs",
+      "PhraseWeights": {
+        "Threat": 0.6,
+        "GiveSurprisingStatement": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 3
+    },
+    {
+      "DialogStr": "Why is it that everything today has to do with things going into our or coming out of my ass?",
+      "FileName": "WhyIsItThat",
+      "PhraseWeights": {
+        "GiveSurprisingStatement": 0.4,
+        "RequestAffirmation": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 3
+    },
+    {
+      "DialogStr": "Dolphins, Eskimos, Who cares?  Its all a bunch of tree hugging hippie crap.",
+      "FileName": "DolphinsEskimosWhoCares",
+      "PhraseWeights": {
+        "GiveDisbelief": 0.4,
+        "GiveSurprisingStatement": 0.4,
+        "Ramble": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 2
+    },
+    {
+      "DialogStr": "You so much as TOUCH me and I will blow you up!",
+      "FileName": "YouSoMuchAsUp",
+      "PhraseWeights": {
+        "Threat": 0.6,
+        "GiveSurprisingStatement": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 1
+    },
+    {
+      "DialogStr": "Why is it that everything today has to do with things going into or out of my body?",
+      "FileName": "WhyIsItThatBody",
+      "PhraseWeights": {
+        "GiveSurprisingStatement": 0.4,
+        "RequestAffirmation": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 1
+    },
+    {
+      "DialogStr": "Dolphins, Eskimos, Who cares?  Its all about tree hugging hippies.",
+      "FileName": "DolphinsEskimosWhoCaresHippies",
+      "PhraseWeights": {
+        "GiveDisbelief": 0.4,
+        "GiveSurprisingStatement": 0.4,
+        "Ramble": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 1
+    },
+    {
+      "DialogStr": "I'm not fat.  I'm festively plump.",
+      "FileName": "ImNotFatIm",
+      "PhraseWeights": {
+        "Exclamation": 0.4,
+        "GiveSurprisingStatement": 0.4,
+        "RequestAffirmation": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 1
+    },
+    {
+      "DialogStr": "I'm outa here.",
+      "FileName": "ImOutaHere",
+      "PhraseWeights": {
+        "Retreat": 0.8
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Don't you know the first law of physics? Anything that's fun costs at least eight dollars",
+      "FileName": "DontYouKnowThe",
+      "PhraseWeights": {
+        "YesNoQuestion": 0.2,
+        "GiveSurprisingStatement": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Hippies can't stand death metal",
+      "FileName": "HippiesCantStandDeath",
+      "PhraseWeights": {
+        "Exclamation": 0.4,
+        "GiveSurprisingStatement": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "I'd bet a hundred dollars on it.",
+      "FileName": "IdBetAHundred",
+      "PhraseWeights": {
+        "Yes": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "AHHHHH!!",
+      "FileName": "Ahhhhh",
+      "PhraseWeights": {
+        "Exclamation": 0.4,
+        "GiveSurprisingStatement": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "It hurts, goddamnit!",
+      "FileName": "ItHurtsGoddamnit",
+      "PhraseWeights": {
+        "RequestAffirmation": 0.4,
+        "Exclamation": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 3
+    },
+    {
+      "DialogStr": "It hurts, Ow.  It hurts!",
+      "FileName": "ItHurtsOwIt",
+      "PhraseWeights": {
+        "RequestAffirmation": 0.4,
+        "Exclamation": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Would you grind someone's parents into chili meat if you really hated him and wanted to make him suffer?",
+      "FileName": "WouldYouGrindSomeones",
+      "PhraseWeights": {
+        "YesNoQuestion": 0.4,
+        "GiveSurprisingStatement": 0.3,
+        "RequestAdvice": 0.3
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 2
+    },
+    {
+      "DialogStr": "What do you do if you really hate someone and want to make him suffer?",
+      "FileName": "WhatDoYouDo",
+      "PhraseWeights": {
+        "YesNoQuestion": 0.4,
+        "GiveSurprisingStatement": 0.3,
+        "RequestAdvice": 0.3
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 1
+    },
+    {
+      "DialogStr": "Trying to train a pony to bite someone's wiener off.",
+      "FileName": "TryingToTrainA",
+      "PhraseWeights": {
+        "GiveActivity": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 2
+    },
+    {
+      "DialogStr": "Trying to train a pony to bite someone.",
+      "FileName": "TryingToTrainASomeone",
+      "PhraseWeights": {
+        "GiveActivity": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 1
+    },
+    {
+      "DialogStr": "Why the fuck not?",
+      "FileName": "WhyTheFuckNot",
+      "PhraseWeights": {
+        "Yes": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 3
+    },
+    {
+      "DialogStr": "Why not?",
+      "FileName": "WhyNot",
+      "PhraseWeights": {
+        "Yes": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Sucking balls.",
+      "FileName": "SuckingBalls",
+      "PhraseWeights": {
+        "GiveActivity": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 3
+    },
+    {
+      "DialogStr": "Sucking on rotten eggs.",
+      "FileName": "SuckingOnRottenEggs",
+      "PhraseWeights": {
+        "GiveActivity": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Taking people's jobs.",
+      "FileName": "TakingPeoplesJobs",
+      "PhraseWeights": {
+        "GiveActivity": 0.3
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Sometimes they are just out to take our jobs.",
+      "FileName": "SometimesTheyAreJust",
+      "PhraseWeights": {
+        "GiveMotivation": 0.3
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "You're a fucking faggot, dude.",
+      "FileName": "YoureAFuckingFaggot",
+      "PhraseWeights": {
+        "Insult": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 3
+    },
+    {
+      "DialogStr": "You're a booger head.",
+      "FileName": "YoureABoogerHead",
+      "PhraseWeights": {
+        "Insult": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 1
+    },
+    {
+      "DialogStr": "You don't even have two brain cells to rub together.",
+      "FileName": "YouDontEvenHave",
+      "PhraseWeights": {
+        "Insult": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 1
+    },
+    {
+      "DialogStr": "I don't like you.",
+      "FileName": "IDontLikeYou",
+      "PhraseWeights": {
+        "Insult": 0.4,
+        "GiveSurprisingStatement": 0.1
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "You bet your last dime",
+      "FileName": "YouBetYourLast",
+      "PhraseWeights": {
+        "Yes": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Back off you big ape!",
+      "FileName": "BackOffYouBig",
+      "PhraseWeights": {
+        "Insult": 0.4,
+        "No": 0.4,
+        "Threat": 0.1
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "You bet your fuckin' ass!",
+      "FileName": "YouBetYourFuckin",
+      "PhraseWeights": {
+        "Yes": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 3
+    },
+    {
+      "DialogStr": "Fuck off, you donkey-raping shit eater.",
+      "FileName": "FuckOffYouDonkey",
+      "PhraseWeights": {
+        "Insult": 0.4,
+        "No": 0.4,
+        "Threat": 0.1
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 3
+    },
+    {
+      "DialogStr": "Would you like to have some tea poured by my friend Polly Prissy Pants?",
+      "FileName": "WouldYouLikeTo",
+      "PhraseWeights": {
+        "YesNoQuestion": 0.4,
+        "Ramble": 0.6
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "This is  weak... ",
+      "FileName": "ThisIsWeak",
+      "PhraseWeights": {
+        "No": 0.4,
+        "Exclamation": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Pretty sweet huh?",
+      "FileName": "PrettySweetHuh",
+      "PhraseWeights": {
+        "YesNoQuestion": 0.4,
+        "Yes": 0.4,
+        "Exclamation": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 3
+    },
+    {
+      "DialogStr": "Granola makes me mad.",
+      "FileName": "GranolaMakesMeMad",
+      "PhraseWeights": {
+        "Exclamation": 0.2,
+        "GiveSurprisingStatement": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 2
+    },
+    {
+      "DialogStr": "This is fucking weak... ",
+      "FileName": "ThisIsFuckingWeak",
+      "PhraseWeights": {
+        "No": 0.4,
+        "Exclamation": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 3
+    },
+    {
+      "DialogStr": "Pretty fucking sweet huh?",
+      "FileName": "PrettyFuckingSweetHuh",
+      "PhraseWeights": {
+        "YesNoQuestion": 0.4,
+        "Yes": 0.4,
+        "Exclamation": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 3
+    },
+    {
+      "DialogStr": "Granola pisses me off.",
+      "FileName": "GranolaPissesMeOff",
+      "PhraseWeights": {
+        "Exclamation": 0.2,
+        "GiveSurprisingStatement": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 2
+    },
+    {
+      "DialogStr": "Of course.",
+      "FileName": "OfCourse",
+      "PhraseWeights": {
+        "Yes": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "I dreamed I was standing out in a field, and there was this huge satellite dish stickin' out of my butt. And there were hundreds of cows and aliens, and then I went up on the ship, and Scott Baio gave me pinkeye.",
+      "FileName": "IDreamedIWas",
+      "PhraseWeights": {
+        "Ramble": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 2
+    },
+    {
+      "DialogStr": "Would I let the kitty eat my pot pie?",
+      "FileName": "WouldILetThe",
+      "PhraseWeights": {
+        "No": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Don't be such a negative Nancy.  Tell me whats going on.",
+      "FileName": "DontBeSuchA",
+      "PhraseWeights": {
+        "RequestCatchup": 0.4,
+        "RequestJoke": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "They took our jobs.",
+      "FileName": "TheyTookOurJobs",
+      "PhraseWeights": {
+        "Exclamation": 0.4,
+        "RequestAffirmation": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Suck my balls.",
+      "FileName": "SuckMyBalls",
+      "PhraseWeights": {
+        "No": 0.4,
+        "GiveSurprisingStatement": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 3
+    },
+    {
+      "DialogStr": "Sweet.",
+      "FileName": "Sweet",
+      "PhraseWeights": {
+        "Yes": 0.4,
+        "Exclamation": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "My mom is so poor she can't even pay attention.",
+      "FileName": "MyMomIsSoPoorShe",
+      "PhraseWeights": {
+        "GiveJoke": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 1
+    },
+    {
+      "DialogStr": "My mom is so poor that when she goes to KFC she has to lick other people's fingers.",
+      "FileName": "MyMomIsSoPoorThat",
+      "PhraseWeights": {
+        "GiveJoke": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 1
+    },
+    {
+      "DialogStr": "My mom is so poor the ducks throw bread at her.",
+      "FileName": "MyMomIsSoPoorThe",
+      "PhraseWeights": {
+        "GiveJoke": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 1
+    },
+    {
+      "DialogStr": "My mom is so poor she opened a gmail account just so she can eat the spam.",
+      "FileName": "MyMomIsSoPoorSheOpened",
+      "PhraseWeights": {
+        "GiveJoke": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 1
+    },
+    {
+      "DialogStr": "Want some cheesy poofs?",
+      "FileName": "WantSomeCheesyPoofs",
+      "PhraseWeights": {
+        "YesNoQuestion": 0.2,
+        "Greeting": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Playing death metal to hippies.",
+      "FileName": "PlayingDeathMetalTo",
+      "PhraseWeights": {
+        "GiveActivity": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 1
+    },
+    {
+      "DialogStr": "Whats up hippie.",
+      "FileName": "WhatsUpHippie",
+      "PhraseWeights": {
+        "Greeting": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 1
+    },
+    {
+      "DialogStr": "Hey.",
+      "FileName": "Hey",
+      "PhraseWeights": {
+        "Greeting": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "So why are you so cool?  What have you done.",
+      "FileName": "SoWhyAreYou",
+      "PhraseWeights": {
+        "RequestCatchup": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "It's OK.  Have some pie.",
+      "FileName": "ItsOkHaveSome",
+      "PhraseWeights": {
+        "GiveAffirmation": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Don't worry.  At least you aren't as poor as my mom.",
+      "FileName": "DontWorryAtLeast",
+      "PhraseWeights": {
+        "GiveAffirmation": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 1
+    },
+    {
+      "DialogStr": "Everything's gonna be okay! Life isn't so crappy after all!",
+      "FileName": "EverythingsGonnaBeOkay",
+      "PhraseWeights": {
+        "GiveAffirmation": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 2
+    },
+    {
+      "DialogStr": "Everything's gonna be okay! Life isn't so bad after all!",
+      "FileName": "EverythingsGonnaBeSoBad",
+      "PhraseWeights": {
+        "GiveAffirmation": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 1
+    },
+    {
+      "DialogStr": "Well, you won't believe this. But Stan's parents sent me on a quest to get a magical video back.  It was obviously evil.  So we had to return it all the way to the video rental store.  Then these sixth graders started chasing us on bicycles.  But we finally got it into the return slot, but, Butters went down with it.",
+      "FileName": "WellYouWontBelieve",
+      "PhraseWeights": {
+        "GiveRecentHistory": 0.4,
+        "Ramble": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 1
+    },
+    {
+      "DialogStr": "I was just negotiating for some weapons and an escape route.",
+      "FileName": "IWasJustNegotiating",
+      "PhraseWeights": {
+        "GiveRecentHistory": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 1
+    },
+    {
+      "DialogStr": "What have you been up to?",
+      "FileName": "WhatHaveYouBeen",
+      "PhraseWeights": {
+        "RequestCatchup": 0.3,
+        "RequestActivity": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "You will make me laugh, right now.  Or I will ensure there is a laxative in your next meal.",
+      "FileName": "YouWillMakeMe",
+      "PhraseWeights": {
+        "RequestJoke": 0.4,
+        "Threat": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 2
+    },
+    {
+      "DialogStr": "You will make me laugh, ... right now.",
+      "FileName": "YouWillMakeMeLaugh",
+      "PhraseWeights": {
+        "RequestJoke": 0.4,
+        "Threat": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 1
+    },
+    {
+      "DialogStr": "Hi.",
+      "FileName": "Hi",
+      "PhraseWeights": {
+        "Greeting": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "I will explode your head with my telekinetic powers!",
+      "FileName": "IWillExplodeYour",
+      "PhraseWeights": {
+        "Threat": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 1
+    },
+    {
+      "DialogStr": "Lets go.",
+      "FileName": "LetsGo",
+      "PhraseWeights": {
+        "Retreat": 0.6
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Is it just me, or does a lot of crazy shit go on in this town?",
+      "FileName": "IsItJustMe",
+      "PhraseWeights": {
+        "YesNoQuestion": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 3
+    },
+    {
+      "DialogStr": "Is it just me, or does a lot of crazy stuff go on in this town?",
+      "FileName": "IsItJustMeStuff",
+      "PhraseWeights": {
+        "YesNoQuestion": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 1
+    },
+    {
+      "DialogStr": "Absolutely.",
+      "FileName": "Absolutely",
+      "PhraseWeights": {
+        "Yes": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "No.",
+      "FileName": "No",
+      "PhraseWeights": {
+        "No": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Did you bring me some cheesy poofs?",
+      "FileName": "DidYouBringMe",
+      "PhraseWeights": {
+        "RequestCatchup": 0.02,
+        "YesNoQuestion": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "It isn't so bad.  Kitty still loves us.",
+      "FileName": "ItIsntSoBad",
+      "PhraseWeights": {
+        "GiveAffirmation": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "How come nobody wants to be my friend.",
+      "FileName": "HowComeNobodyWants",
+      "PhraseWeights": {
+        "RequestAffirmation": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "You don't know what the hell you are talking about.",
+      "FileName": "YouDontKnowWhat",
+      "PhraseWeights": {
+        "GiveDisbelief": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 2
+    },
+    {
+      "DialogStr": "You don't know what you are talking about.",
+      "FileName": "YouDontKnowWhatYou",
+      "PhraseWeights": {
+        "GiveDisbelief": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 1
+    },
+    {
+      "DialogStr": "I was playing lambs with Polly Prissypants when Peter Panda suggested we play a new game, but then my mom spoiled it all.",
+      "FileName": "IWasPlayingLambs",
+      "PhraseWeights": {
+        "GiveRecentHistory": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 1
+    },
+    {
+      "DialogStr": "I know what I am getting for my birthday.  I snuck around in my mom's closet and saw the box for the Ultravibe Pleasure 2000.",
+      "FileName": "IKnowWhatI",
+      "PhraseWeights": {
+        "GiveSurprisingStatement": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 2
+    },
+    {
+      "DialogStr": "So we ordered the magical seamen from a magazine and put it in an aquarium.  We thought they would just play basketball and ride around on turtles.  But, the sea pepole started building little cities.",
+      "FileName": "SoWeOrderedThe",
+      "PhraseWeights": {
+        "Ramble": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 1
+    },
+    {
+      "DialogStr": "Shut the fuck up.",
+      "FileName": "ShutTheFuckUp",
+      "PhraseWeights": {
+        "ShutUp": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 3
+    },
+    {
+      "DialogStr": "Shut up.",
+      "FileName": "ShutUp",
+      "PhraseWeights": {
+        "ShutUp": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 1
+    },
+    {
+      "DialogStr": "You think your so talented.  Why don't you entertain us?",
+      "FileName": "YouThinkYourSo",
+      "PhraseWeights": {
+        "RequestJoke": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 1
+    },
+    {
+      "DialogStr": "I was explaining why I don't like rainbows.  Cause, well, you know. You'll just be sitting there, minding your own business, and they'll come marching in, and crawl up your leg, and start biting the inside of your ass, and you'll be all like, \"Hey. Get out of my ass you stupid rainbows.\" Then they explained that rainbows are those little arches of color that show up during a rainstorm.",
+      "FileName": "IWasExplainingWhy",
+      "PhraseWeights": {
+        "Ramble": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 2
+    },
+    {
+      "DialogStr": "Follow your dreams. You can reach your goals. I'm living proof. I'm Beefcake.",
+      "FileName": "FollowYourDreamsYou",
+      "PhraseWeights": {
+        "GiveAffirmation": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "I hate you guys.",
+      "FileName": "IHateYouGuys",
+      "PhraseWeights": {
+        "Exclamation": 0.1,
+        "Retreat": 0.2,
+        "No": 0.1
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Well, what would you rather be doing?",
+      "FileName": "WellWhatWouldYou",
+      "PhraseWeights": {
+        "RequestActivity": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Bulking up with some \"Weight Gain 4000\"",
+      "FileName": "BulkingUpWithSome",
+      "PhraseWeights": {
+        "GiveActivity": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "They are coming for me.  What should I do?",
+      "FileName": "TheyAreComingFor",
+      "PhraseWeights": {
+        "RequestAdvice": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "I don't think Peter Panda and Polly Prissypants are getting along.",
+      "FileName": "IDontThinkPeter",
+      "PhraseWeights": {
+        "RequestAdvice": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 1
+    },
+    {
+      "DialogStr": "Sometimes all you have to do is stop and think \"What would Brian Boytano do?\"",
+      "FileName": "SometimesAllYouHave",
+      "PhraseWeights": {
+        "GiveAdvice": 0.1
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 1
+    },
+    {
+      "DialogStr": "Sometimes swearing loudly doesn't help a situation, but usually it does.",
+      "FileName": "SometimesSwearingLoudlyDoesnt",
+      "PhraseWeights": {
+        "GiveAdvice": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 1
+    },
+    {
+      "DialogStr": "Why would they say I was fat?",
+      "FileName": "WhyWouldTheySay",
+      "PhraseWeights": {
+        "RequestMotivation": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Why would aliens be so curious about the inside of my butt?",
+      "FileName": "WhyWouldAliensBe",
+      "PhraseWeights": {
+        "RequestMotivation": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 2
+    },
+    {
+      "DialogStr": "Why would aliens be so curious about my insides?",
+      "FileName": "WhyWouldAliensBeInsides",
+      "PhraseWeights": {
+        "RequestMotivation": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 1
+    },
+    {
+      "DialogStr": "Well of course, some people just want to be king of the world.",
+      "FileName": "WellOfCourseSome",
+      "PhraseWeights": {
+        "GiveMotivation": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Perhaps it is the same reason we must sometimes put on our crown of invisibility and our boots of levitation and accept our quest.",
+      "FileName": "PerhapsItIsThe",
+      "PhraseWeights": {
+        "GiveMotivation": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 1
+    },
+    {
+      "DialogStr": "In your ass.",
+      "FileName": "InYourAss",
+      "PhraseWeights": {
+        "GiveLocation": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 3
+    },
+    {
+      "DialogStr": "Have you considered somewhere very far away?",
+      "FileName": "HaveYouConsideredSomewhere",
+      "PhraseWeights": {
+        "GiveLocation": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Where is my hemoriod cream?",
+      "FileName": "WhereIsMyHemoroid",
+      "PhraseWeights": {
+        "RequestLocation": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 2
+    },
+    {
+      "DialogStr": "Where is my cream?",
+      "FileName": "WhereIsMyCream",
+      "PhraseWeights": {
+        "RequestLocation": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 1
+    },
+    {
+      "DialogStr": "Damnit, where did she come from?  She could spoil my plan.",
+      "FileName": "DamnitWhereDidShe",
+      "PhraseWeights": {
+        "RequestLocation": 0.3,
+        "GiveDisbelief": 0.1
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 2
+    },
+    {
+      "DialogStr": "Where did she come from?  She could spoil my plan.",
+      "FileName": "WhereDidSheCome",
+      "PhraseWeights": {
+        "RequestLocation": 0.3,
+        "GiveDisbelief": 0.1
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 1
+    },
+    {
+      "DialogStr": "Is there a whorehouse around here?  My nuts are going to explode.",
+      "FileName": "IsThereAWhorehouse",
+      "PhraseWeights": {
+        "RequestLocation": 0.2,
+        "GiveSurprisingStatement": 0.1
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 3
+    },
+    {
+      "DialogStr": "Give me my two dollars!",
+      "FileName": "GiveMeMyTwo",
+      "PhraseWeights": {
+        "LM01A": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "You do too have two dollars, I see you buy lunch at the cafeteria every day!",
+      "FileName": "YouDoTooHave",
+      "PhraseWeights": {
+        "LM01C": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "I'm going to get Billy's dad, he will make you give me my two dollars.",
+      "FileName": "ImGoingToGet",
+      "PhraseWeights": {
+        "LM01E": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Excuse me mister Lumbergh.  Johnny won't give me my two dollars.",
+      "FileName": "ExcuseMeMrLumberg",
+      "PhraseWeights": {
+        "LM03A": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Well, he owes me two dollars, and I know he has it, but he won't give it to me.",
+      "FileName": "WellHeOwesMe",
+      "PhraseWeights": {
+        "LM03C": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "He knows that a bet is a bet.  He said I couldn't prove that the government lies to us, but I proved it.  Three times!",
+      "FileName": "HeKnowsThatABet",
+      "PhraseWeights": {
+        "LM03E": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Nope.  Haven't seen him.  I can't find kitty either.",
+      "FileName": "NopeIhaventSeenHim",
+      "PhraseWeights": {
+        "LM03G": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "It is easy to work out.  Give me my two dollars!",
+      "FileName": "ItIsEasyTo",
+      "PhraseWeights": {
+        "LM04B": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "What can you do?  You can't pass my history test for me, or get Gretchen to sit by me at lunch.  Maybe you should just dig in the sand around the playground till you collect enough loose change... To give me my two dollars!",
+      "FileName": "WhatCanYouDo",
+      "PhraseWeights": {
+        "LM04D": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Skylar, Johny won't pay me the two dollars he owes me, and my kitty is lost!",
+      "FileName": "SkylarJohnnyWontPay",
+      "PhraseWeights": {
+        "LM06A": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "I'm not sure that works for me.",
+      "FileName": "CM_ImNotSureThat",
+      "PhraseWeights": {
+        "LM06C": 0.2,
+        "Retreat": 0.1,
+        "GiveDisbelief": 0.2,
+        "No": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Maybe Kitty is around here.  There you are Kitty.  What were you doing with Billy?  Was he trying to get you to play Pokemon go?",
+      "FileName": "MaybeKittyIsAround",
+      "PhraseWeights": {
+        "LM07A": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "It seems like someone convinced her I was pretty cool.",
+      "FileName": "ItSeemsLikeSomeone",
+      "PhraseWeights": {
+        "LM09B": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Fortunately I have an endless supply of stories about kitty.  She thought that was pretty cool.",
+      "FileName": "CM_FortuneatelyIHaveAn",
+      "PhraseWeights": {
+        "LM09D": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "I am",
+      "FileName": "IAm",
+      "PhraseWeights": {
+        "LM09F": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Don't worry.  You don't have to give me two dollars.  If you will be my friend.",
+      "FileName": "DontWorryYouDont",
+      "PhraseWeights": {
+        "LM10B": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Yeah.",
+      "FileName": "Yeah",
+      "PhraseWeights": {
+        "LM10D": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "No Way!  How did Kitty get there?  That is awesome news.  Thanks Johnny!",
+      "FileName": "NoWayHowDid",
+      "PhraseWeights": {
+        "LM10F": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "What is that supposed to mean?",
+      "FileName": "WhatIsThatSupposed",
+      "PhraseWeights": {
+        "LM11B": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Hey.  How did you get Kitty?",
+      "FileName": "CM_HeyHowDidYou",
+      "PhraseWeights": {
+        "LM15A": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Kitty's not a furry little beast, she's my kitty.",
+      "FileName": "CM_KittysNotAFurry",
+      "PhraseWeights": {
+        "LM15C": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Come on kitty, were going home.  We can have some tea with polly prissy pants and peter panda.",
+      "FileName": "ComeOnKittyWere",
+      "PhraseWeights": {
+        "LM15E": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "I see you aren't out telling people how cool I am, well two dollars is better than that anyway.",
+      "FileName": "CM_ISeeYouArent",
+      "PhraseWeights": {
+        "LM16B": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    }
+  ],
+  "testPhraseTotals": {
+    "tags": {
+      "LM09B": 0.2,
+      "LM09D": 0.2,
+      "LM09F": 0.2,
+      "LM10B": 0.2,
+      "LM10D": 0.2,
+      "LM10f": 0.2,
+      "LM11b": 0.2,
+      "LM15A": 0.2,
+      "LM15C": 0.2,
+      "LM15E": 0.2,
+      "LM16B": 0.2
+    },
+    "DialogStr": "PhraseTotals",
+    "FileName": "No Audio Filename Associated with PhraseTotals",
+    "PhraseRating": 0
+  },
+  "testPhrases": [
+    {
+      "tags": {
+        "LM09B": 0.2
+      },
+      "DialogStr": "It seems like someone convinced her I was pretty cool.",
+      "FileName": "ItSeemsLikeSomeone",
+      "PhraseRating": 0
+    },
+    {
+      "tags": {
+        "LM09D": 0.2
+      },
+      "DialogStr": "Fortunately I have an endless supply of stories about kitty.  She thought that was pretty cool.",
+      "FileName": "CM_FortuneatelyIHaveAn",
+      "PhraseRating": 0
+    },
+    {
+      "tags": {
+        "LM09F": 0.2
+      },
+      "DialogStr": "I am",
+      "FileName": "IAm",
+      "PhraseRating": 0
+    },
+    {
+      "tags": {
+        "LM10B": 0.2
+      },
+      "DialogStr": "Don't worry.  You don't have to give me two dollars.  If you will be my friend.",
+      "FileName": "DontWorryYouDont",
+      "PhraseRating": 0
+    },
+    {
+      "tags": {
+        "LM10D": 0.2
+      },
+      "DialogStr": "Yeah.",
+      "FileName": "Yeah",
+      "PhraseRating": 0
+    },
+    {
+      "tags": {
+        "LM10f": 0.2
+      },
+      "DialogStr": "No Way!  How did Kitty get there?  That is awesome news.  Thanks Johnny!",
+      "FileName": "NoWayHowDid",
+      "PhraseRating": 0
+    },
+    {
+      "tags": {
+        "LM11b": 0.2
+      },
+      "DialogStr": "What is that supposed to mean?",
+      "FileName": "WhatIsThatSupposed",
+      "PhraseRating": 0
+    },
+    {
+      "tags": {
+        "LM15A": 0.2
+      },
+      "DialogStr": "Hey.  How did you get Kitty?",
+      "FileName": "CM_HeyHowDidYou",
+      "PhraseRating": 0
+    },
+    {
+      "tags": {
+        "LM15C": 0.2
+      },
+      "DialogStr": "Kitty's not a furry little beast, she's my kitty.",
+      "FileName": "CM_KittysNotAFurry",
+      "PhraseRating": 0
+    },
+    {
+      "tags": {
+        "LM15E": 0.2
+      },
+      "DialogStr": "Come on kitty, were going home.  We can have some tea with polly prissy pants and peter panda.",
+      "FileName": "ComeOnKittyWere",
+      "PhraseRating": 0
+    },
+    {
+      "tags": {
+        "LM16B": 0.2
+      },
+      "DialogStr": "I see you aren't out telling people how cool I am, well two dollars is better than that anyway.",
+      "FileName": "CM_ISeeYouArent",
+      "PhraseRating": 0
+    }
+  ],
+  "RecentPhrases": [
+    {
+      "DialogStr": "Cartman has not been initialized.",
+      "FileName": "CartmanHasNotBeen",
+      "PhraseWeights": {
+        "Exclamation": 0.01
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Cartman has not been initialized.",
+      "FileName": "CartmanHasNotBeen",
+      "PhraseWeights": {
+        "Exclamation": 0.01
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Cartman has not been initialized.",
+      "FileName": "CartmanHasNotBeen",
+      "PhraseWeights": {
+        "Exclamation": 0.01
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Cartman has not been initialized.",
+      "FileName": "CartmanHasNotBeen",
+      "PhraseWeights": {
+        "Exclamation": 0.01
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    }
+  ],
+}

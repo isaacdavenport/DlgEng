@@ -1,0 +1,1104 @@
+{
+  "Phrases": [
+    {
+      "DialogStr": "The SchoolBoy has not been initialized.",
+      "FileName": "TheSchoolboyHasNot",
+      "PhraseWeights": {
+        "Exclamation": 0.01
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Hi, I'm Johnny",
+      "FileName": "HiImJohnny",
+      "PhraseWeights": {
+        "Greeting": 1.0,
+        "RequestAffirmation": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Do you know where babies come from?",
+      "FileName": "DoYouKnowWhereBabies",
+      "PhraseWeights": {
+        "GiveSurprisingStatement": 0.3,
+        "GiveJoke": 0.2,
+        "YesNoQuestion": 0.4,
+        "RequestAdvice": 0.1
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 2
+    },
+    {
+      "DialogStr": "Have you seen my mommy?",
+      "FileName": "HaveYouSeenMy",
+      "PhraseWeights": {
+        "RequestAffirmation": 0.2,
+        "YesNoQuestion": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Mommy! Mommy!",
+      "FileName": "MommyMommy",
+      "PhraseWeights": {
+        "RequestAffirmation": 0.2,
+        "No": 0.2,
+        "ShutUp": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Wanna buy my little sister?",
+      "FileName": "WannaBuyMyLittle",
+      "PhraseWeights": {
+        "YesNoQuestion": 0.2,
+        "GiveSurprisingStatement": 0.6
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Golly!",
+      "FileName": "Golly",
+      "PhraseWeights": {
+        "Exclamation": 0.7,
+        "GiveDisbelief": 0.3,
+        "Yes": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Really?",
+      "FileName": "Really",
+      "PhraseWeights": {
+        "GiveDisbelief": 0.8,
+        "No": 0.4,
+        "LM10C": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "I have a spider",
+      "FileName": "IHaveASpider",
+      "PhraseWeights": {
+        "GiveSurprisingStatement": 0.2,
+        "Greeting": 0.1
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "My dad can beat up your dad",
+      "FileName": "MyDadCanBeat",
+      "PhraseWeights": {
+        "GiveSurprisingStatement": 0.1,
+        "Threat": 1.0,
+        "Retreat": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 1
+    },
+    {
+      "DialogStr": "Its OK",
+      "FileName": "ItsOk",
+      "PhraseWeights": {
+        "GiveAffirmation": 0.5,
+        "Yes": 1.0
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "You won't get a spanking",
+      "FileName": "YouWontGetA",
+      "PhraseWeights": {
+        "GiveAffirmation": 0.4,
+        "GiveSurprisingStatement": 0.2,
+        "GiveAdvice": 0.1
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Does that hurt?",
+      "FileName": "DoesThatHurt",
+      "PhraseWeights": {
+        "RequestCatchup": 0.2,
+        "YesNoQuestion": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Cut it out!",
+      "FileName": "CutItOut",
+      "PhraseWeights": {
+        "Threat": 0.4,
+        "No": 0.3,
+        "GiveDisbelief": 0.3
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "You're going to get it!",
+      "FileName": "YoureGonnaGetIt",
+      "PhraseWeights": {
+        "Threat": 1.0
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "I'm telling on you!",
+      "FileName": "ImTellingOnYou",
+      "PhraseWeights": {
+        "Threat": 0.2,
+        "Exclamation": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "What's that smell?",
+      "FileName": "WhatsThatSmell",
+      "PhraseWeights": {
+        "Exclamation": 0.2,
+        "GiveSurprisingStatement": 0.3
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Johnny has been temporarily disabled by the NSA",
+      "FileName": "JohnnyHasBeenTemporarily",
+      "PhraseWeights": {
+        "Yes": 0.2,
+        "GiveSurprisingStatement": 0.3
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 1
+    },
+    {
+      "DialogStr": "My mom said not to wipe my boogers on people, they don't like it.",
+      "FileName": "MyMomSaidNot",
+      "PhraseWeights": {
+        "Exclamation": 0.1,
+        "Greeting": 0.1,
+        "GiveSurprisingStatement": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": " Today I found a frog.  I tried really hard not to hurt him, but I smooshed his leg.  I think thats why he won't eat the flies I caught for him.",
+      "FileName": "TodayIFoundA",
+      "PhraseWeights": {
+        "YesNoQuestion": 0.2,
+        "Ramble": 0.4,
+        "GiveRecentHistory": 0.3
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Are there any mud puddles around here?",
+      "FileName": "AreThereAnyMud",
+      "PhraseWeights": {
+        "YesNoQuestion": 0.2,
+        "GiveSurprisingStatement": 0.3
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "I don't know what to say.",
+      "FileName": "IDontKnowWhat",
+      "PhraseWeights": {
+        "Exclamation": 0.01,
+        "Retreat": 0.01,
+        "Yes": 0.01,
+        "No": 0.01,
+        "GiveAffirmation": 0.01,
+        "GiveDisbelief": 0.01,
+        "GiveSurprisingStatement": 0.01
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "You're lying.",
+      "FileName": "YoureLying",
+      "PhraseWeights": {
+        "GiveDisbelief": 0.6,
+        "GiveSurprisingStatement": 0.3
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "You have bad breath.",
+      "FileName": "YouHaveBadBreath",
+      "PhraseWeights": {
+        "Greeting": 0.02,
+        "Retreat": 0.2,
+        "GiveSurprisingStatement": 0.4,
+        "ShutUp": 0.2,
+        "Insult": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "You're a poo poo head",
+      "FileName": "YoureAPooPoo",
+      "PhraseWeights": {
+        "Insult": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 2
+    },
+    {
+      "DialogStr": "If you were a triangle you would be obtuse, cause your fat and confusing",
+      "FileName": "IfYouWereA",
+      "PhraseWeights": {
+        "Insult": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 1
+    },
+    {
+      "DialogStr": "You couldn't find your ass with both hands",
+      "FileName": "YouCouldntFindYour",
+      "PhraseWeights": {
+        "Insult": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 2
+    },
+    {
+      "DialogStr": "Why are you so dumb?  Did your mommy drop you?",
+      "FileName": "WhyAreYouSo",
+      "PhraseWeights": {
+        "Insult": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 1
+    },
+    {
+      "DialogStr": "Your mommas so fat...",
+      "FileName": "YourMommasSoFat",
+      "PhraseWeights": {
+        "Insult": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 1
+    },
+    {
+      "DialogStr": "Guess what I saw my older sister doing.",
+      "FileName": "GuessWhatISaw",
+      "PhraseWeights": {
+        "RequestActivity": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Do you know what my favorite thing is?",
+      "FileName": "DoYouKnowWhat",
+      "PhraseWeights": {
+        "RequestActivity": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "You know what my friend and I were doing?",
+      "FileName": "YouKnowWhatMy",
+      "PhraseWeights": {
+        "RequestActivity": 0.4,
+        "YesNoQuestion": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "What were you doing?",
+      "FileName": "WhatWereYouDoing",
+      "PhraseWeights": {
+        "RequestActivity": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Homework",
+      "FileName": "Homework",
+      "PhraseWeights": {
+        "GiveActivity": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Oiling a tricycle",
+      "FileName": "OilingATricycle",
+      "PhraseWeights": {
+        "GiveActivity": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Nose picking",
+      "FileName": "NosePicking",
+      "PhraseWeights": {
+        "GiveActivity": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Know any Jokes",
+      "FileName": "KnowAnyJokes",
+      "PhraseWeights": {
+        "RequestJoke": 0.8,
+        "YesNoQuestion": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "You know whats red and green and really fast?  My frog after I put him in the blender.",
+      "FileName": "YouKnowWhatsRed",
+      "PhraseWeights": {
+        "GiveJoke": 0.5,
+        "GiveSurprisingStatement": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 1
+    },
+    {
+      "DialogStr": "When I experience friction in my life, I oil my tricycle wheels.",
+      "FileName": "WhenIExperienceFriction",
+      "PhraseWeights": {
+        "GiveAffirmation": 0.6,
+        "RequestAdvice": 0.1
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 1
+    },
+    {
+      "DialogStr": "Sure.",
+      "FileName": "Sure",
+      "PhraseWeights": {
+        "Yes": 0.8
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Making babies.",
+      "FileName": "MakingBabies",
+      "PhraseWeights": {
+        "GiveActivity": 0.3
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 2
+    },
+    {
+      "DialogStr": "Awww man.",
+      "FileName": "AwwwMan",
+      "PhraseWeights": {
+        "Exclamation": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "I know you.",
+      "FileName": "IKnowYou",
+      "PhraseWeights": {
+        "Greeting": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "You better stand back.",
+      "FileName": "YouBetterStandBack",
+      "PhraseWeights": {
+        "Threat": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "I hope your next game fails to save.",
+      "FileName": "IHopeYourNext",
+      "PhraseWeights": {
+        "Threat": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "OK.  Bye.",
+      "FileName": "OKBye",
+      "PhraseWeights": {
+        "Retreat": 0.8
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "I gotta go home now.",
+      "FileName": "IGottaGoHome",
+      "PhraseWeights": {
+        "Retreat": 0.8
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Does it hurt to have such a big nose?",
+      "FileName": "DoesItHurtTo",
+      "PhraseWeights": {
+        "YesNoQuestion": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "I can't say no to that.",
+      "FileName": "ICantSayNo",
+      "PhraseWeights": {
+        "Yes": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Does it look like it to you, you big jerk?",
+      "FileName": "DoesItLookLike",
+      "PhraseWeights": {
+        "No": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 1
+    },
+    {
+      "DialogStr": "Does a dog have five legs?",
+      "FileName": "DoesADogHave",
+      "PhraseWeights": {
+        "No": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 1
+    },
+    {
+      "DialogStr": "What's going on?",
+      "FileName": "WhatsGoingOn",
+      "PhraseWeights": {
+        "RequestCatchup": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Maybe your mom can make it better?",
+      "FileName": "MaybeYourMom",
+      "PhraseWeights": {
+        "GiveAffirmation": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "I don't feel so good.",
+      "FileName": "IDontFeelSo",
+      "PhraseWeights": {
+        "RequestAffirmation": 0.2,
+        "RequestAdvice": 0.1
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "I don't think thats right.",
+      "FileName": "IDontThinkThats",
+      "PhraseWeights": {
+        "GiveDisbelief": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Mostly I've been been trying to see up Cindy's skirt, but it ain't easy.",
+      "FileName": "MostlyIveBeenTrying",
+      "PhraseWeights": {
+        "GiveRecentHistory": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 2
+    },
+    {
+      "DialogStr": "Do you know what color my boogers have been this week?",
+      "FileName": "DoYouKnowWhatColor",
+      "PhraseWeights": {
+        "GiveSurprisingStatement": 0.2,
+        "YesNoQuestion": 0.2,
+        "RequestAdvice": 0.1
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "He had a big gun, and it was in his holster, but he couldn't get it out, and the bad guys was comin, and then the robbers jumped off the roof,but his leg got hurt, and then they all ran in the street and the one guy was draggin his leg and gettin behind, and then...",
+      "FileName": "HeHadABig",
+      "PhraseWeights": {
+        "Ramble": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 1
+    },
+    {
+      "DialogStr": "This is the part where if your lips keep movin, you're gonna get in trouble.",
+      "FileName": "ThisIsThePart",
+      "PhraseWeights": {
+        "ShutUp": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 1
+    },
+    {
+      "DialogStr": "I like Billy, he knows lots of funny stories.  Do you?",
+      "FileName": "ILikeBillyHe",
+      "PhraseWeights": {
+        "RequestJoke": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "I made my dad's handkerchief dance today, I put some boogey in it.",
+      "FileName": "IMadeMyDads",
+      "PhraseWeights": {
+        "GiveJoke": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "My little brother knows more than you, and he's three.",
+      "FileName": "MyLittleBrotherKnows",
+      "PhraseWeights": {
+        "Insult": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 1
+    },
+    {
+      "DialogStr": "Know what my dad told me to do after I went outside?",
+      "FileName": "KnowWhatMyDad",
+      "PhraseWeights": {
+        "RequestActivity": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "What should I do?",
+      "FileName": "WhatShouldIDo",
+      "PhraseWeights": {
+        "RequestAdvice": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "My mom is mad at me.",
+      "FileName": "MyMomIsMad",
+      "PhraseWeights": {
+        "RequestAdvice": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Sometimes people get mad.  And they just yell.  Then they are quiet for a while.  Then they say they are sorry.",
+      "FileName": "SometimesPeopleGetMad",
+      "PhraseWeights": {
+        "GiveAdvice": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Always tell the truth.",
+      "FileName": "AlwaysTellTheTruth",
+      "PhraseWeights": {
+        "GiveAdvice": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "What would make Billy give all his ninja throwing stars to his little sister?",
+      "FileName": "WhatWouldMakeBilly",
+      "PhraseWeights": {
+        "RequestMotivation": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Why does mommy and dady's bed sound like a pogo stick sometimes?",
+      "FileName": "WhyDoesMommyAnd",
+      "PhraseWeights": {
+        "RequestMotivation": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 1
+    },
+    {
+      "DialogStr": "Maybe they just wanted to.",
+      "FileName": "MaybeTheyJustWanted",
+      "PhraseWeights": {
+        "GiveMotivation": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Maybe it was painful gas pressure.",
+      "FileName": "MaybeItWasPainful",
+      "PhraseWeights": {
+        "GiveMotivation": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 1
+    },
+    {
+      "DialogStr": "Maybe its the smell.",
+      "FileName": "MaybeItsTheSmell",
+      "PhraseWeights": {
+        "GiveMotivation": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "I bet they was afraid of gettin a spankin.",
+      "FileName": "IBetTheyWas",
+      "PhraseWeights": {
+        "RequestActivity": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "I thought I had to fart, but it was more than that.  Now I need to go home.",
+      "FileName": "IThoughtIHad",
+      "PhraseWeights": {
+        "GiveSurprisingStatement": 0.2,
+        "Retreat": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 1
+    },
+    {
+      "DialogStr": "Try under the bed with the monsters.",
+      "FileName": "TryUnderTheBed",
+      "PhraseWeights": {
+        "GiveLocation": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "I dug a hole in front of my sisters playhouse and covered it with newspapers.",
+      "FileName": "IDugAHole",
+      "PhraseWeights": {
+        "GiveLocation": 0.2,
+        "GiveRecentHistory": 0.2,
+        "GiveSurprisingStatement": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 1
+    },
+    {
+      "DialogStr": "Do you know where my tricycle is?",
+      "FileName": "DoYouKnowWhereMy",
+      "PhraseWeights": {
+        "RequestLocation": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "You can find lots of things under the ocean.",
+      "FileName": "YouCanFindLots",
+      "PhraseWeights": {
+        "GiveLocation": 0.2,
+        "GiveAdvice": 0.1
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "I wanted to play with Billy and Ashley in the tree house but the door was locked and when I said I wanted to play too, Billy threw some underwear at me and said I should get a clue.  I want to play too.  Do you know where I can get a clue?",
+      "FileName": "IWantedToPlay",
+      "PhraseWeights": {
+        "RequestLocation": 0.2,
+        "YesNoQuestion": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 2
+    },
+    {
+      "DialogStr": "I don't have two dollars.",
+      "FileName": "IDontHaveTwo",
+      "PhraseWeights": {
+        "LM01B": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Don't push me you big bully.",
+      "FileName": "DontPushMeYou",
+      "PhraseWeights": {
+        "LM01D": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "I'm telling miss Eunice on you, you hit me!",
+      "FileName": "ImTellingMissEunice",
+      "PhraseWeights": {
+        "LM01F": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Eric tried to steal my lunch money.",
+      "FileName": "EricTriedToSteal",
+      "PhraseWeights": {
+        "LM02B": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "He says I owe him two dollars.",
+      "FileName": "HeSaysIOwe",
+      "PhraseWeights": {
+        "LM02D": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Kind of.  I bet him that he couldn't prove the government lied to us, he said it was easy.",
+      "FileName": "KindOfIBet",
+      "PhraseWeights": {
+        "LM02F": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "I think Billy's dad saw part of it.",
+      "FileName": "IThinkBillysDad",
+      "PhraseWeights": {
+        "LM02H": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "I'm supposed to try to work things out with you Eric.",
+      "FileName": "ImSupposedToTry",
+      "PhraseWeights": {
+        "LM04A": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "I can't give you my lunch money, isn't there something else?",
+      "FileName": "ICantGiveYou",
+      "PhraseWeights": {
+        "LM04C": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Maybe I could tell Gretchen how cool you are and she would sit with you.",
+      "FileName": "MaybeICouldTell",
+      "PhraseWeights": {
+        "LM04E": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Hi mister Lumbergh.",
+      "FileName": "HiMrLumbergh",
+      "PhraseWeights": {
+        "LM05A": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Did you see Eric push me in the dirt and try to take my money?",
+      "FileName": "DidYouSeeEric",
+      "PhraseWeights": {
+        "LM05C": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Eric tried to take my lunch money and Miss Eunice said I should ask you to corloberlate him.",
+      "FileName": "EricTriedToTake",
+      "PhraseWeights": {
+        "LM05E": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Nothing here.  Digging in the sand for money doesn't seem like a very good plan.  I have found five cents so far.  I'm never going to find enough change to pay Eric his two dollars.  Hey!  It looks like the lunch lady just dropped ten dollars!  I could pay Eric and get new wheels for my tricycle!  Or maybe I should tell miss Eunice the lunch lady lost her money.",
+      "FileName": "NothingHereDiggingIn",
+      "PhraseWeights": {
+        "LM08A": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "I saw Gretchen sitting next to you at lunch.",
+      "FileName": "ISawGretchenSitting",
+      "PhraseWeights": {
+        "LM09A": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "It wasn't easy.  I may have stretched the truth about how you rescue animals.",
+      "FileName": "ItWasntEasyI",
+      "PhraseWeights": {
+        "LM09C": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Are you going to take her to meet kitty?",
+      "FileName": "AreYouGoingTo",
+      "PhraseWeights": {
+        "LM09E": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Oh no.  Its Eric.  Don't hit me.  I don't have two dollars.",
+      "FileName": "OhNoItsEric",
+      "PhraseWeights": {
+        "LM10A": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "I'll be your friend.  As a friend, the first thing you probably want to know is that Miss Eunice has your kitty at the schoolhouse.",
+      "FileName": "IllBeYourFriend",
+      "PhraseWeights": {
+        "LM10E": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "That is what friends are for.",
+      "FileName": "ThatIsWhatFriends",
+      "PhraseWeights": {
+        "LM10G": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Skylar, Eric says I owe him two dollars, but I don't have two dollars.",
+      "FileName": "SkylarEricSaysI",
+      "PhraseWeights": {
+        "LM13A": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Most of the things that make Eric happy are scary.",
+      "FileName": "MostOfTheThings",
+      "PhraseWeights": {
+        "LM13C": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "He likes Gretchen.",
+      "FileName": "HeLikesGretchen",
+      "PhraseWeights": {
+        "LM13E": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "He likes his kitty.  He REALLY likes his kitty.",
+      "FileName": "SB_HeLikesHisKitty",
+      "PhraseWeights": {
+        "LM13G": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Billy.",
+      "FileName": "Billy",
+      "PhraseWeights": {
+        "LM14A": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Did you check for Billy at the gym?",
+      "FileName": "DidYouCheckFor",
+      "PhraseWeights": {
+        "LM14C": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "No, the pokemon gym.",
+      "FileName": "NoThePokemonGym",
+      "PhraseWeights": {
+        "LM14E": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "At the schoolhouse there is a gym and depending on his level Billy might want to go there.",
+      "FileName": "AtTheSchoolhouseThere",
+      "PhraseWeights": {
+        "LM14G": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Here is your stupid two dollars, you big jerk.",
+      "FileName": "HereIsYourStupid",
+      "PhraseWeights": {
+        "LM16A": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Miss Eunice, I saw the lunch lady drop this ten dollar bill.",
+      "FileName": "MissEuniceISaw",
+      "PhraseWeights": {
+        "LM17A": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "Well, I am over halfway there.",
+      "FileName": "WellIAmOver",
+      "PhraseWeights": {
+        "LM17C": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    }
+  ],
+  "testPhraseTotals": {
+    "tags": {
+      "LM17C": 0.2
+    },
+    "DialogStr": "PhraseTotals",
+    "FileName": "No Audio Filename Associated with PhraseTotals",
+    "PhraseRating": 0
+  },
+  "testPhrases": [
+    {
+      "tags": {
+        "LM17C": 0.2
+      },
+      "DialogStr": "Well, I am over halfway there.",
+      "FileName": "WellIAmOver",
+      "PhraseRating": 1
+    }
+  ],
+  "RecentPhrases": [
+    {
+      "DialogStr": "The SchoolBoy has not been initialized.",
+      "FileName": "TheSchoolboyHasNot",
+      "PhraseWeights": {
+        "Exclamation": 0.01
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "The SchoolBoy has not been initialized.",
+      "FileName": "TheSchoolboyHasNot",
+      "PhraseWeights": {
+        "Exclamation": 0.01
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "The SchoolBoy has not been initialized.",
+      "FileName": "TheSchoolboyHasNot",
+      "PhraseWeights": {
+        "Exclamation": 0.01
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    },
+    {
+      "DialogStr": "The SchoolBoy has not been initialized.",
+      "FileName": "TheSchoolboyHasNot",
+      "PhraseWeights": {
+        "Exclamation": 0.01
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": 0
+    }
+  ],
+  "CharacterName": "SchoolBoy",
+  "CharacterPrefix": "SB"
+}
