@@ -180,7 +180,7 @@ namespace DialogEngine
                 Phrases.RemoveAt(Phrases.Count - 1);
             }
             Phrases.Add(new PhraseEntry{
-                PhraseRating = ParentalRating.G,
+                PhraseRating = ParentalRating.PG13,
                 DialogStr = "Today I read from the unabridged works of deSade.",
                 FileName = "TodayIReadFrom",
                 PhraseWeights = new Dictionary<PhraseTypes, double>{
