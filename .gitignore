@@ -3,6 +3,10 @@
 *.DS_Store
 
 #Visual Studio files
+*.exe
+*.manifest
+*.dll
+*.pdb
 *.config
 *.[Oo]bj
 *.user
