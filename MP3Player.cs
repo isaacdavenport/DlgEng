@@ -1,41 +1,31 @@
 ﻿using System;
-using WMPLib;
+using System.Runtime.InteropServices;
+using System.Text;
 
 namespace DialogEngine
 {
-    public class WindowsMediaPlayerMp3
+    public class Mp3Player
     {
-        public WMPLib.WindowsMediaPlayer Player;
-        public WindowsMediaPlayerMp3() {
-             Player = new WMPLib.WindowsMediaPlayer();
+        [DllImport("winmm.dll")]
+
+        static extern int mciSendString(string mciCommand, StringBuilder buffer, int bufferSize, IntPtr callback);
+        string _fileName;
+        public int Send(string mciCommand)
+        {
+            int returnCode = mciSendString(mciCommand, null, 0, IntPtr.Zero);
+            return returnCode;
         }
 
-        public int PlayMp3(string path) {
-            Player.URL = path;
-            Player.controls.play();
-            return 0;  //TODO add error handling
+   /*     static MP3Player()
+        {
+            
         }
-
-        public bool IsPlaying() {
-            WMPPlayState currentPlayState = Player.playState;
-
-            if (currentPlayState == WMPPlayState.wmppsPlaying || currentPlayState == WMPPlayState.wmppsBuffering 
-                    || currentPlayState == WMPPlayState.wmppsTransitioning) {
-                return true;
-            }
-            return false;
+        */
+        public int Play(string fileLocation) {
+            int returnCodePlay = 0;
+            _fileName = fileLocation;
+            returnCodePlay = Send("play " + _fileName);
+            return returnCodePlay;
         }
-
-        public int Status() {
-            int code = 1000;
-            try {
-                code = (int)Player.playState;
-            }
-            catch {
-               Console.WriteLine("MP3 Player Status not readable"); 
-            }
-            return code;
-        }
-
     }
 }

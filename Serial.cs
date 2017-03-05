@@ -4,6 +4,8 @@ using System.IO;
 using System.Threading;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
+
 
 namespace DialogEngine
 {
@@ -18,7 +20,7 @@ namespace DialogEngine
     public static class SerialComs
     {
         public static List<ReceivedMessage> ReceivedMessages = new List<ReceivedMessage>();
-        public const int NUM_RADIOS = 6;  //includes dongle
+        public const int NUM_RADIOS = 6;
         private static bool _rssiStable = false;
         private static int _bigRssi = 0;
         public const int STRONG_RSSI_BUF_DEPTH = 12;
@@ -34,7 +36,7 @@ namespace DialogEngine
             if (!SessionVars.NoSerialPort) {
                 _serialPort = new SerialPort();
                 Thread readThread = new Thread(ReadAndParse);
-                _serialPort.PortName = "COM4";
+                _serialPort.PortName = "COM5";
                 _serialPort.BaudRate = 460800;
                 _serialPort.ReadTimeout = 500;
                 _serialPort.Open();
@@ -51,12 +53,12 @@ namespace DialogEngine
         public static void PrintHeatMap() {
             int i, l, m;
 
-            for (i = 0; i < NUM_RADIOS; i++) {
+            for (i = 0; i < NUM_RADIOS - 1; i++) {
                 Console.Write(_charactersLastHeatMapUpdateTime[i].ToString("mm.ss.fff") + " ");
             }
             Console.WriteLine();
-            for (l = 0; l < NUM_RADIOS; l++) {
-                for (m = 0; m < NUM_RADIOS; m++) {
+            for (l = 0; l < NUM_RADIOS - 1; l++) {
+                for (m = 0; m < NUM_RADIOS - 1; m++) {
                     Console.Write("{0:D3}", _heatMap[l,m]);
                     Console.Write(" ");
                 }
@@ -72,14 +74,14 @@ namespace DialogEngine
         {
             int i, l, m;
 
-            for (i = 0; i < NUM_RADIOS; i++)
+            for (i = 0; i < NUM_RADIOS - 1; i++)
             {
                 Console.Write(_charactersLastHeatMapUpdateTime[i].ToString("mm.ss.fff") + " ");
             }
             Console.WriteLine();
-            for (l = 0; l < NUM_RADIOS; l++)
+            for (l = 0; l < NUM_RADIOS - 2; l++)
             {
-                for (m = 1; m < NUM_RADIOS; m++)
+                for (m = 1; m < NUM_RADIOS - 1; m++)
                 {
                     if (m > l) {
                         Console.Write("{0:D3}", (_heatMap[l, m] + _heatMap[m, l]));
@@ -158,7 +160,7 @@ namespace DialogEngine
                     }
                     if (SessionVars.WriteSerialLog) {
                         using (StreamWriter serialLog = new StreamWriter(
-                            SessionVars.LogsDirectory + SessionVars.HexSerialLogFileName, true)) {
+                            SessionVars.LogsDirectory + SessionVars.SerialLogFileName, true)) {
                             serialLog.Write(DateTime.Now.ToString("mm.ss.fff") + "  ");
                             serialLog.Write(message);
                             serialLog.Close();
@@ -209,8 +211,8 @@ namespace DialogEngine
         }
 
         static void AssignNextCharacters(int tempCh1, int tempCh2) {
-            if ((RandomNumbers.Gen.NextDouble() > 0.5) && _rssiStable)
-            {  
+            if ((_bigRssi | 0x00000001) != 0 && _rssiStable)
+            {  //quasi random selection of which character is first
                 NextCharacter1 = tempCh1;
                 NextCharacter2 = tempCh2;
             }
@@ -306,7 +308,7 @@ namespace DialogEngine
                 } else {
                     processCurrentMessage = false;  //we are in here a great deal
                 }
-                if (rowNum > -1 && rowNum < NUM_RADIOS && processCurrentMessage) {
+                if (rowNum > -1 && rowNum < NUM_RADIOS - 1 && processCurrentMessage) {
                     cycleCount++;
                     for (int k = 0; k < NUM_RADIOS; k++) {
                         _heatMap[rowNum, k] = newRow[k];
@@ -325,9 +327,9 @@ namespace DialogEngine
 
         public static void DontReadAndParse()
         {  // used for computers with no serial input radio for random, or forceCharacter mode
-            // does not include final character the silent schoolhouse, not useful in noSerial mode
-            while (Continue) {
-                NextCharacter1 = RandomNumbers.Gen.Next(0, NUM_RADIOS - 1); //lower bound inclusive upper exclusive
+            while (Continue)
+            {
+                NextCharacter1 = RandomNumbers.Gen.Next(0, NUM_RADIOS - 1); //lower bound inclusing upper exclusive
                 while (NextCharacter1 == NextCharacter2) {
                     NextCharacter2 = RandomNumbers.Gen.Next(0, NUM_RADIOS - 1);  
                 }

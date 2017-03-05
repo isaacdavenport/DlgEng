@@ -1,48 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Configuration;
 using System.Threading; // for thread.sleep()
+using Newtonsoft.Json;
+
+
+// TODO: JSON Input
+//       Cleanup Character class for strings
+//       Vectorize RSSI to see movement over proximity. (increased prox most recently, center of mass.)
 
 namespace DialogEngine
 {
-    public enum PhraseTypes
-    {  //TODO make these strings instead of an enumeration for model dialogs and character phrase tags
-        Exclamation,
-        Greeting,
-        Threat,
-        Retreat,
-        YesNoQuestion,
-        Yes,
-        No,
-        RequestCatchup,
-        GiveAffirmation,
-        RequestAffirmation,
-        GiveDisbelief,
-        GiveRecentHistory,
-        GiveSurprisingStatement,
-        Ramble,
-        ShutUp,
-        RequestJoke,
-        GiveJoke,
-        Insult,
-        RequestActivity,
-        GiveActivity,
-        RequestAdvice,
-        GiveAdvice,
-        RequestMotivation,
-        GiveMotivation,
-        RequestLocation,
-        GiveLocation,
-        AtSchoolhouse,
-        SmCb_01A,SmCb_01B,SmCb_01C,SmCb_01D,SmCb_01E,
-        SHSilence,
-        LM01A,LM01B,LM01C,LM01D,LM01E,LM01F,LM02A,LM02B,LM02C,LM02D,LM02E,LM02F,LM02G,LM02H,LM02I,LM03A,LM03B,LM03C,LM03D,LM03E,LM03F,
-        LM03G,LM03H,LM04A,LM04B,LM04C,LM04D,LM04E,LM05A,LM05B,LM05C,LM05D,LM05E,LM05F,LM06A,LM06B,LM06C,LM07A,LM08A,LM09A,
-        LM09B,LM09C,LM09D,LM09E,LM09F,LM10A,LM10B,LM10C,LM10D,LM10E,LM10F,LM10G, LM11A, LM11B, LM13A,LM13B,LM13C,LM13D,LM13E,LM13F,
-        LM13G,LM13H,LM14A,LM14B,LM14C,LM14D,LM14E,LM14F,LM14G,LM15A,LM15B,LM15C,LM15D,LM15E,LM16A,LM16B,LM17A,LM17B,LM17C,LM18A,
-        PhraseTypesSize
+    //list of strings that will contain all Phrase Types after character initialization.
+    public static class GlobalPhraseTypes
+    {
+        public static List<string> TestPhraseTypes = new List<String> { };
     }
-
+    
     public enum ParentalRating
     {
         G,
@@ -55,9 +30,7 @@ namespace DialogEngine
     public static class SessionVars
     {
         public static readonly bool DebugFlag = Convert.ToBoolean(AppSet.ReadSetting("DebugFlag"));
-        public static readonly bool NoAudio = Convert.ToBoolean(AppSet.ReadSetting("NoAudio"));
-        public static readonly bool ForceCharactersAndDialogModel = Convert.ToBoolean(AppSet.ReadSetting("ForceCharactersAndDialogModel"));
-        public static readonly bool WaitIndefinatelyForMove = Convert.ToBoolean(AppSet.ReadSetting("WaitIndefinatelyForMove"));
+        public static readonly bool ForceCharacterSelection = Convert.ToBoolean(AppSet.ReadSetting("ForceCharacterSelection"));
         public static readonly bool ShowDupePhrases = Convert.ToBoolean(AppSet.ReadSetting("ShowDupePhrases"));
         public static readonly bool HeatMapFullMatrixDispMode = Convert.ToBoolean(AppSet.ReadSetting("HeatMapFullMatrixDispMode"));
         public static readonly bool HeatMapSumsMode = Convert.ToBoolean(AppSet.ReadSetting("HeatMapSumsMode"));
@@ -70,32 +43,39 @@ namespace DialogEngine
         public static readonly ParentalRating CurrentParentalRating = 
             (ParentalRating)Enum.Parse(typeof(ParentalRating), AppSet.ReadSetting("CurrentParentalRating"));
         public static readonly string LogsDirectory = AppSet.ReadSetting("LogsDirectory");
+        public static readonly string CharactersDirectory = AppSet.ReadSetting("CharactersDirectory");
         public static readonly string AudioDirectory = AppSet.ReadSetting("AudioDirectory");
         public static readonly string DecimalSerialLogFileName = AppSet.ReadSetting("DecimalSerialLogFileName");
-        public static readonly string HexSerialLogFileName = AppSet.ReadSetting("HexSerialLogFileName");
-        public static readonly string LogTheDialogFileName = AppSet.ReadSetting("LogTheDialogFileName");
+        public static readonly string SerialLogFileName = AppSet.ReadSetting("SerialLogFileName");
+        public static readonly string DialogSerialLogFileName = AppSet.ReadSetting("DialogSerialLogFileName");
     }
 
     public class PhraseEntry
     {
         public string DialogStr;
         public string FileName;
-        public Dictionary<PhraseTypes, double> PhraseWeights;
+        public Dictionary<string, double> phraseWeights;    //to replace PhraseWeights, uses string tags.
         public ParentalRating PhraseRating;
     }
 
+    //[JsonObject(MemberSerialization.OptIn)]
     public class Character
     {
+        [JsonProperty("CharacterName")]
         public string CharacterName { get; protected set; }
+        [JsonProperty("CharacterPrefix")]
         public string CharacterPrefix { get; protected set; }
+        [JsonProperty("PhraseTotals")]
         public PhraseEntry PhraseTotals = new PhraseEntry();
-        public List<PhraseEntry> Phrases = new List<PhraseEntry>();
+        [JsonProperty("Phrases")]
+        public List<PhraseEntry> Phrases = new List<PhraseEntry>(); //entry now has string phraseweight tags.
         // A character's Phrases list holds all the phrases they might say along with 
         // heuristic phraseWeights on what parts of a model dialog they might use them in.
-        protected const int RecentPhrasesQueueSize = 8;
+
+        protected const int RecentPhrasesQueueSize = 4;
         public Queue<PhraseEntry> RecentPhrases = new Queue<PhraseEntry>();  //TODO make this a method that runs over the history
     }
-
+    
     public class ModelDialog
     {
         // a ModelDialog is a sequence of phrase types that represent an exchange between characters 
@@ -106,12 +86,7 @@ namespace DialogEngine
         public string Adventure = "";
         public List<string> Requires = new List<string>();
         public List<string> Provides = new List<string>();
-        public List<PhraseTypes> PhraseTypeSequence = new List<PhraseTypes>();
-
-        public bool AreDialogsRequirementsMet() {
-
-            return true;
-        }
+        public List<string> PhraseTypeSequence = new List<string>();
     }
 
     public static class RandomNumbers
@@ -124,13 +99,16 @@ namespace DialogEngine
         public static DialogTracker TheDialogs = new DialogTracker();
 
         static void WriteStartupInfo() {
-            string versionTimeStr = "Dialog Engine ver 0.34 Isaac, Aria, Joe, Brielle " + DateTime.Now + "\r\n";
-            Console.WriteLine(versionTimeStr);
+            string versionTimeStr = "Dialog Engine ver 0.30 Isaac, Aria " + DateTime.Now;
+            Console.Write(versionTimeStr);
+            Console.Write("\n");
+            GlobalPhraseTypes.TestPhraseTypes.ForEach (Console.WriteLine) ;
+            Console.Read();
             if (SessionVars.WriteSerialLog)
             {
 
                 using (StreamWriter serialLog = new StreamWriter(
-                    (SessionVars.LogsDirectory + SessionVars.HexSerialLogFileName), true))
+                    (SessionVars.LogsDirectory + SessionVars.SerialLogFileName), true))
                 {
                     serialLog.WriteLine("");
                     serialLog.WriteLine("");
@@ -146,7 +124,7 @@ namespace DialogEngine
                     serialLogDec.Close();
                 }
                 using (StreamWriter serialLogDialog = new StreamWriter(
-                    (SessionVars.LogsDirectory + SessionVars.LogTheDialogFileName), true))
+                    (SessionVars.LogsDirectory + SessionVars.DialogSerialLogFileName), true))
 {
                     serialLogDialog.WriteLine("");
                     serialLogDialog.WriteLine("");
@@ -156,43 +134,19 @@ namespace DialogEngine
             }
         }
 
-        static void CheckForMissingAudioFiles() {
-            if (SessionVars.NoAudio) {
-                return;
-            }
+        static void CheckForMissingPhrases() {
             foreach (var character in TheDialogs.CharacterList)
             {
                 foreach (PhraseEntry phrase in character.Phrases)
                 {
-                    if (!File.Exists(SessionVars.AudioDirectory + character.CharacterPrefix + "_" + phrase.FileName + ".mp3"))
+                    if (!File.Exists(SessionVars.AudioDirectory + character.CharacterPrefix + "_" + phrase.FileName + ".mp3"))  //Char name and prefix are being left blank...
                     {
-                        Console.WriteLine("missing " + character.CharacterPrefix + "_" + phrase.FileName + " " + phrase.DialogStr);
+                        Console.WriteLine("missing " + character.CharacterPrefix + "_" + phrase.FileName + " " + phrase.DialogStr);//these are being checked with JSON input.
                     }
                 }
             }
             //TODO check that all dialog models have unique names
         }
-
-        static void CheckAdventurePhrasesUsed() {
-            for (PhraseTypes i = PhraseTypes.LM01A; i < PhraseTypes.PhraseTypesSize; i++) {
-                int j = 0;
-                foreach (var character in TheDialogs.CharacterList) {
-                    foreach (var phrase in character.Phrases) {
-                        if (phrase.PhraseWeights.ContainsKey(i)) {
-                            j++;
-                        }
-                    }
-                }
-                if (j != 1) {
-                    Console.WriteLine("Adventure PhraseType {0} used " + j + " times.", i.ToString());
-                }
-            }
-        }
-
-        static void CheckEachCharacterHasEachPhraseType() {
-            //TODO create a unit test that ensure each character is minimally complete similar to CheckAdventurePhrasesUsed() and CheckForMissingAudioFiles()
-        }
-
 
         static void Main(string[] args) {
             Console.SetBufferSize(Console.BufferWidth, 32766);
@@ -201,19 +155,17 @@ namespace DialogEngine
             InitModelDialogs.SetDefaults(TheDialogs);
 
             //Select Debug Output
-            if (SessionVars.ForceCharactersAndDialogModel) {
+            if (SessionVars.ForceCharacterSelection) {
                 Console.WriteLine("   enter three numbers to set the next: DialogModel, Char1, Char2");
                 Console.WriteLine();
             }
 
             if (SessionVars.DebugFlag) {
-                CheckForMissingAudioFiles();
-                CheckAdventurePhrasesUsed();
-                CheckEachCharacterHasEachPhraseType();
+                CheckForMissingPhrases();
             }
 
             while (true) {
-                if (SessionVars.ForceCharactersAndDialogModel) {
+                if (SessionVars.ForceCharacterSelection) {
                     string[] keyboardInput = Console.ReadLine().Split(' ');
 
                     //if keyboard input has three numbers for debug mode to force dialog model and characters

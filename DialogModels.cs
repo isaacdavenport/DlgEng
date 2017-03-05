@@ -11,157 +11,162 @@ namespace DialogEngine
             DateTime firstRound = new DateTime(2016, 5, 18);
             DateTime adventureRound = new DateTime(2016, 9, 17);
 
-            inObj.ModelDialogs.Add(new ModelDialog{
-                Name = "Greeting, Greeting" ,
-                AddedOnDateTime = firstRound, Popularity = 0.2,
-                PhraseTypeSequence = new List<PhraseTypes> {
-                    PhraseTypes.Greeting,
-                    PhraseTypes.Greeting
+            inObj.ModelDialogs.Add(new ModelDialog
+            {
+                Name = "Greeting, Greeting",
+                AddedOnDateTime = firstRound,
+                Popularity = 0.2,
+                PhraseTypeSequence = new List<string> {
+                    "Greeting",
+                    "Greeting"
                 }
-                });
+            });
 
-            inObj.ModelDialogs.Add(new ModelDialog{
+            inObj.ModelDialogs.Add(new ModelDialog
+            {
                 Name = "Greeting",
-                AddedOnDateTime = firstRound, Popularity = 0.2,
-                PhraseTypeSequence = new List<PhraseTypes> {
-                    PhraseTypes.Greeting
+                AddedOnDateTime = firstRound,
+                Popularity = 0.2,
+                PhraseTypeSequence = new List<string> {
+                    "Greeting"
                 }
             });
-            
-            inObj.ModelDialogs.Add(new ModelDialog{
+
+            inObj.ModelDialogs.Add(new ModelDialog
+            {
                 Name = "Exclamation, Exclamation",
-                AddedOnDateTime = firstRound, Popularity = 0.2,
-                PhraseTypeSequence = new List<PhraseTypes> {
-                    PhraseTypes.Exclamation,
-                    PhraseTypes.Exclamation
+                AddedOnDateTime = firstRound,
+                Popularity = 0.2,
+                PhraseTypeSequence = new List<string> {
+                    "Exclamation",
+                    "Exclamation"
                 }
             });
             
-            inObj.ModelDialogs.Add(new ModelDialog{
-                Name = "Single Exclamation",
-                AddedOnDateTime = firstRound, Popularity = 0.2,
-                PhraseTypeSequence = new List<PhraseTypes> {
-                    PhraseTypes.Exclamation
+            inObj.ModelDialogs.Add(new ModelDialog
+            {
+                Name = "Exclamation",
+                AddedOnDateTime = firstRound,
+                Popularity = 0.2,
+                PhraseTypeSequence = new List<string> {
+                    "Exclamation"
                 }
             });
 
-            inObj.ModelDialogs.Add(new ModelDialog{
+            inObj.ModelDialogs.Add(new ModelDialog
+            {
                 Name = "Threat Retreat",
-                AddedOnDateTime = firstRound, Popularity = 0.9,
-                PhraseTypeSequence = new List<PhraseTypes> {
-                    PhraseTypes.Threat,
-                    PhraseTypes.Retreat
-                }
-            });
-
-            inObj.ModelDialogs.Add(new ModelDialog{
-                Name = "RequestAffirmation, Give Affirmation",
-                AddedOnDateTime = firstRound, Popularity = 0.4,
-                PhraseTypeSequence = new List<PhraseTypes> {
-                    PhraseTypes.RequestAffirmation,
-                    PhraseTypes.GiveAffirmation
-                }
-            });
-
-            inObj.ModelDialogs.Add(new ModelDialog{
-                Name = "Request Affirmation Give Joke",
-                AddedOnDateTime = firstRound, Popularity = 0.5,
-                PhraseTypeSequence = new List<PhraseTypes> {
-                    PhraseTypes.RequestAffirmation,
-                    PhraseTypes.GiveJoke
+                AddedOnDateTime = firstRound,
+                Popularity = 0.2,
+                PhraseTypeSequence = new List<string> {
+                    "Threat",
+                    "Retreat"
                 }
             });
             
-            inObj.ModelDialogs.Add(new ModelDialog{
-                Name = "Request Joke, Give Joke",
-                AddedOnDateTime = firstRound, Popularity = 0.9,
-                PhraseTypeSequence = new List<PhraseTypes> {
-                    PhraseTypes.RequestJoke,
-                    PhraseTypes.GiveJoke
+            inObj.ModelDialogs.Add(new ModelDialog
+            {
+                Name = "RequestAffirmation, GiveAffirmation",
+                AddedOnDateTime = firstRound,
+                Popularity = 0.2,
+                PhraseTypeSequence = new List<string> {
+                    "RequestAffirmation",
+                    "GiveAffirmation"
                 }
             });
             
+            inObj.ModelDialogs.Add(new ModelDialog
+            {
+                Name = "RequestAffirmation, GiveJoke",
+                AddedOnDateTime = firstRound,
+                Popularity = 0.9,
+                PhraseTypeSequence = new List<string> {
+                    "RequestJoke",
+                    "GiveJoke"
+                }
+            });
+        
             inObj.ModelDialogs.Add(new ModelDialog{
                 Name = "GiveSurprisingSt, GiveDisbelief",
                 AddedOnDateTime = firstRound, Popularity = 0.3,
-                PhraseTypeSequence = new List<PhraseTypes> {
-                    PhraseTypes.GiveSurprisingStatement,
-                    PhraseTypes.GiveDisbelief
+                PhraseTypeSequence = new List<string> {
+                    "GiveSurprisingStatement",
+                    "GiveDisbelief"
                 }
             });
             
             inObj.ModelDialogs.Add(new ModelDialog{
                 Name = "YesNoQuestion, No",
                 AddedOnDateTime = firstRound, Popularity = 0.7,
-                PhraseTypeSequence = new List<PhraseTypes> {
-                    PhraseTypes.YesNoQuestion,
-                    PhraseTypes.No
+                PhraseTypeSequence = new List<string> {
+                    "YesNoQuestion",
+                    "No"
                 }
             });
             
             inObj.ModelDialogs.Add(new ModelDialog{
                 Name = "YesNoQuestion, Yes",
                 AddedOnDateTime = firstRound, Popularity = 0.5,
-                PhraseTypeSequence = new List<PhraseTypes> {
-                    PhraseTypes.YesNoQuestion,
-                    PhraseTypes.Yes
+                PhraseTypeSequence = new List<string> {
+                    "YesNoQuestion",
+                    "Yes"
                 }
             });
             
             inObj.ModelDialogs.Add(new ModelDialog{
                 Name = "GiveSurprisingStatement Exclamation",
                 AddedOnDateTime = firstRound, Popularity = 0.4,
-                PhraseTypeSequence = new List<PhraseTypes> {
-                    PhraseTypes.GiveSurprisingStatement,
-                    PhraseTypes.Exclamation
+                PhraseTypeSequence = new List<string> {
+                    "GiveSurprisingStatement",
+                    "Exclamation"
                 }
             });
             
             inObj.ModelDialogs.Add(new ModelDialog{
                 Name = "GiveJoke, Disbelief -That wasn't funny",
                 AddedOnDateTime = firstRound, Popularity = 0.3,
-                PhraseTypeSequence = new List<PhraseTypes> {
-                    PhraseTypes.GiveJoke,
-                    PhraseTypes.GiveDisbelief
+                PhraseTypeSequence = new List<string> {
+                    "GiveJoke",
+                    "GiveDisbelief"
                 }
             });
             
             inObj.ModelDialogs.Add(new ModelDialog{
                 Name = "Insult, Insult, Insult",
                 AddedOnDateTime = firstRound, Popularity = 0.2,
-                PhraseTypeSequence = new List<PhraseTypes> {
-                    PhraseTypes.Insult,
-                    PhraseTypes.Insult,
-                    PhraseTypes.Insult
+                PhraseTypeSequence = new List<string> {
+                    "Insult",
+                    "Insult",
+                    "Insult"
                 }
             });
             
             inObj.ModelDialogs.Add(new ModelDialog{
                 Name = "RequestAffirmation, Insult, Insult",
                 AddedOnDateTime = firstRound, Popularity = 0.2,
-                PhraseTypeSequence = new List<PhraseTypes> {
-                    PhraseTypes.RequestAffirmation,
-                    PhraseTypes.Insult,
-                    PhraseTypes.Insult
+                PhraseTypeSequence = new List<string> {
+                    "RequestAffirmation",
+                    "Insult",
+                    "Insult"
                 }
             });
             
             inObj.ModelDialogs.Add(new ModelDialog{
                 Name = "YesNoQuestion, Insult",
                 AddedOnDateTime = firstRound, Popularity = 0.2,
-                PhraseTypeSequence = new List<PhraseTypes> {
-                    PhraseTypes.YesNoQuestion,
-                    PhraseTypes.Insult
+                PhraseTypeSequence = new List<string> {
+                    "YesNoQuestion",
+                    "Insult"
                 }
             });
 
             inObj.ModelDialogs.Add(new ModelDialog{
                 Name = "RequestCatchup, Insult, Retreat",
                 AddedOnDateTime = firstRound, Popularity = 0.2,
-                PhraseTypeSequence = new List<PhraseTypes> {
-                    PhraseTypes.RequestCatchup,
-                    PhraseTypes.Insult,
-                    PhraseTypes.Retreat
+                PhraseTypeSequence = new List<string> {
+                    "RequestCatchup",
+                    "Insult",
+                    "Retreat"
                 }
             });
 
@@ -169,176 +174,165 @@ namespace DialogEngine
                 Name =
                     "Guess what They/I did, Guess Activity, Correct Activity ",
                 AddedOnDateTime = firstRound, Popularity = 0.8,
-                PhraseTypeSequence = new List<PhraseTypes> {
-                    PhraseTypes.RequestActivity,
-                    PhraseTypes.GiveActivity,
-                    PhraseTypes.GiveActivity
+                PhraseTypeSequence = new List<string> {
+                    "RequestActivity",
+                    "GiveActivity",
+                    "GiveActivity"
                 }
             });
             
             inObj.ModelDialogs.Add(new ModelDialog{
                 Name = "GiveJoke, Insult",
                 AddedOnDateTime = firstRound, Popularity = 0.2,
-                PhraseTypeSequence = new List<PhraseTypes> {
-                    PhraseTypes.GiveJoke,
-                    PhraseTypes.Insult
+                PhraseTypeSequence = new List<string> {
+                    "GiveJoke",
+                    "Insult"
                 }
             });
             
             inObj.ModelDialogs.Add(new ModelDialog{
                 Name = "RequestAff GiveAff ReqCat Ramble retreat",
                 AddedOnDateTime = firstRound, Popularity = 0.3,
-                PhraseTypeSequence = new List<PhraseTypes> {
-                    PhraseTypes.RequestAffirmation,
-                    PhraseTypes.GiveAffirmation,
-                    PhraseTypes.RequestCatchup,
-                    PhraseTypes.Ramble,
-                    PhraseTypes.Retreat
+                PhraseTypeSequence = new List<string> {
+                    "RequestAffirmation",
+                    "GiveAffirmation",
+                    "RequestCatchup",
+                    "Ramble",
+                    "Retreat"
                 }
             });
 
             inObj.ModelDialogs.Add(new ModelDialog{
                 Name = "RequestCatchup GiveRecentHistory",
                 AddedOnDateTime = firstRound, Popularity = 1.6,
-                PhraseTypeSequence = new List<PhraseTypes> {
-                    PhraseTypes.RequestCatchup,
-                    PhraseTypes.GiveRecentHistory
+                PhraseTypeSequence = new List<string> {
+                    "RequestCatchup",
+                    "GiveRecentHistory"
                 }
             });
             
             inObj.ModelDialogs.Add(new ModelDialog{
                 Name = "RequestCatchup, Ramble, Shutup",
                 AddedOnDateTime = firstRound, Popularity = 0.7,
-                PhraseTypeSequence = new List<PhraseTypes> {
-                    PhraseTypes.RequestActivity,
-                    PhraseTypes.Ramble,
-                    PhraseTypes.ShutUp
+                PhraseTypeSequence = new List<string> {
+                    "RequestActivity",
+                    "Ramble",
+                    "ShutUp"
                 }
             });
             
             inObj.ModelDialogs.Add(new ModelDialog{
                 Name = "Insult, Shutup",
                 AddedOnDateTime = firstRound, Popularity = 0.15,
-                PhraseTypeSequence = new List<PhraseTypes> {
-                    PhraseTypes.Insult,
-                    PhraseTypes.ShutUp
+                PhraseTypeSequence = new List<string> {
+                    "Insult",
+                    "ShutUp"
                 }
             });
             
             inObj.ModelDialogs.Add(new ModelDialog{
                 Name = "Insult, Insult, Insult, Exc",
                 AddedOnDateTime = firstRound, Popularity = 0.1,
-                PhraseTypeSequence = new List<PhraseTypes> {
-                    PhraseTypes.Insult,
-                    PhraseTypes.Insult,
-                    PhraseTypes.Insult,
-                    PhraseTypes.Exclamation
+                PhraseTypeSequence = new List<string> {
+                    "Insult",
+                    "Insult",
+                    "Insult",
+                    "Exclamation"
                 }
             });
             
             inObj.ModelDialogs.Add(new ModelDialog{
                 Name = "Insult, Threat, Retreat",
                 AddedOnDateTime = firstRound, Popularity = 0.1,
-                PhraseTypeSequence = new List<PhraseTypes> {
-                    PhraseTypes.Insult,
-                    PhraseTypes.Threat,
-                    PhraseTypes.Retreat
+                PhraseTypeSequence = new List<string> {
+                    "Insult",
+                    "Threat",
+                    "Retreat"
                 }
             });
             
             inObj.ModelDialogs.Add(new ModelDialog{
                 Name = "ReqAct, GuessAct, CorrectAct ",
                 AddedOnDateTime = firstRound, Popularity = 0.2,
-                PhraseTypeSequence = new List<PhraseTypes> {
-                    PhraseTypes.RequestActivity,
-                    PhraseTypes.GiveActivity,
-                    PhraseTypes.GiveActivity
+                PhraseTypeSequence = new List<string> {
+                    "RequestActivity",
+                    "GiveActivity",
+                    "GiveActivity"
                 }
             });
             
             inObj.ModelDialogs.Add(new ModelDialog{
                 Name = "ReqMotiv, Givemotiv",
                 AddedOnDateTime = firstRound, Popularity = 1.2,
-                PhraseTypeSequence = new List<PhraseTypes> {
-                    PhraseTypes.RequestMotivation,
-                    PhraseTypes.GiveMotivation
+                PhraseTypeSequence = new List<string> {
+                    "RequestMotivation",
+                    "GiveMotivation"
                 }
             });
             
             inObj.ModelDialogs.Add(new ModelDialog{
                 Name = "ReqAdv,  GiveAdv",
                 AddedOnDateTime = firstRound, Popularity = 1.3,
-                PhraseTypeSequence = new List<PhraseTypes> {
-                    PhraseTypes.RequestAdvice,
-                    PhraseTypes.GiveAdvice
+                PhraseTypeSequence = new List<string> {
+                    "RequestAdvice",
+                    "GiveAdvice"
                 }
             });
             
             inObj.ModelDialogs.Add(new ModelDialog{
                 Name = "Request location Give location",
                 AddedOnDateTime = firstRound, Popularity = 2.1,
-                PhraseTypeSequence = new List<PhraseTypes> {
-                    PhraseTypes.RequestLocation,
-                    PhraseTypes.GiveLocation
+                PhraseTypeSequence = new List<string> {
+                    "RequestLocation",
+                    "GiveLocation"
                 }
             });
-
-            inObj.ModelDialogs.Add(new ModelDialog
-            {
-                Name = "At Schoolhouse, Silent SH",
-                AddedOnDateTime = adventureRound,
-                Popularity = 3.2,
-                PhraseTypeSequence = new List<PhraseTypes> {
-                    PhraseTypes.AtSchoolhouse,
-                    PhraseTypes.SHSilence
-                }
-            });
-
+            
             inObj.ModelDialogs.Add(new ModelDialog{
                 Name = "CB SM Script 1 innuendo",
                 AddedOnDateTime = new DateTime(2016, 6, 18), Popularity = 3.1,
-                PhraseTypeSequence = new List<PhraseTypes> {
-                    PhraseTypes.SmCb_01A,
-                    PhraseTypes.SmCb_01B,
-                    PhraseTypes.SmCb_01C,
-                    PhraseTypes.SmCb_01D,
-                    PhraseTypes.SmCb_01E
+                PhraseTypeSequence = new List<string> {
+                    "SmCb_01A",
+                    "SmCb_01B",
+                    "SmCb_01C",
+                    "SmCb_01D",
+                    "SmCb_01E"
                 }
             });
 
             inObj.ModelDialogs.Add(new ModelDialog {
                 Name = "LM01_CM+SB_Fight",
                 AddedOnDateTime = adventureRound,
-                Popularity = 42.2,
+                Popularity = 2.2,
                 Adventure = "LM",
                 Provides =  new List<string> { "LM01_CM+SB_Fight" },
-                PhraseTypeSequence = new List<PhraseTypes> {
-                    PhraseTypes.LM01A,
-                    PhraseTypes.LM01B,
-                    PhraseTypes.LM01C,
-                    PhraseTypes.LM01D,
-                    PhraseTypes.LM01E,
-                    PhraseTypes.LM01F
+                PhraseTypeSequence = new List<string> {
+                    "LM01A",
+                    "LM01B",
+                    "LM01C",
+                    "LM01D",
+                    "LM01E",
+                    "LM01F"
                 }
             });
 
-            inObj.ModelDialogs.Add(new ModelDialog {
+            inObj.ModelDialogs.Add(item: new ModelDialog {
                 Name = "LM02_SM+SB_Why_Fight_Corroberate",
                 AddedOnDateTime = adventureRound,
                 Popularity = 2.2,
                 Adventure = "LM",
                 Requires = new List<string> { "LM01_CM+SB_Fight"},
                 Provides = new List<string>{ "LM02_SM+SB_Why_Fight_Corroberate", "LM4_Enabled"},
-                PhraseTypeSequence = new List<PhraseTypes>{
-                   PhraseTypes.LM02A,
-                   PhraseTypes.LM02B,
-                   PhraseTypes.LM02C,
-                   PhraseTypes.LM02D,
-                   PhraseTypes.LM02E,
-                   PhraseTypes.LM02F,
-                   PhraseTypes.LM02G,
-                   PhraseTypes.LM02H,
-                   PhraseTypes.LM02I
+                PhraseTypeSequence = new List<string>{
+                   "LM02A",
+                   "LM02B",
+                   "LM02C",
+                   "LM02D",
+                   "LM02E",
+                   "LM02F",
+                   "LM02G",
+                   "LM02H",
+                   "LM02I"
                 }
             });
 
@@ -350,19 +344,19 @@ namespace DialogEngine
                 Adventure = "LM",
                 Requires = new List<string> { "LM01_CM+SB_Fight" },
                 Provides = new List<string> { "LM03_CM+RL_Why_Fight" },
-                PhraseTypeSequence = new List<PhraseTypes>{
-                   PhraseTypes.LM03A,
-                   PhraseTypes.LM03B,
-                   PhraseTypes.LM03C,
-                   PhraseTypes.LM03D,
-                   PhraseTypes.LM03E,
-                   PhraseTypes.LM03F,
-                   PhraseTypes.LM03G,
-                   PhraseTypes.LM03H
+                PhraseTypeSequence = new List<string>{
+                   "LM03A",
+                   "LM03B",
+                   "LM03C",
+                   "LM03D",
+                   "LM03E",
+                   "LM03F",
+                   "LM03G",
+                   "LM03H"
                 }
             });
 
-            inObj.ModelDialogs.Add(new ModelDialog
+            inObj.ModelDialogs.Add(new ModelDialog()
             {
                 Name = "LM04_SB+CM_What_Else_Besides_2Dollars",
                 AddedOnDateTime = adventureRound,
@@ -370,12 +364,12 @@ namespace DialogEngine
                 Adventure = "LM",
                 Requires = new List<string> { "LM4_Enabled" },
                 Provides = new List<string> { "LM9_Enabled", "LM8_Enabled" },
-                PhraseTypeSequence = new List<PhraseTypes>{
-                   PhraseTypes.LM04A,
-                   PhraseTypes.LM04B,
-                   PhraseTypes.LM04C,
-                   PhraseTypes.LM04D,
-                   PhraseTypes.LM04E
+                PhraseTypeSequence = new List<string>{
+                   "LM04A",
+                   "LM04B",
+                   "LM04C",
+                   "LM04D",
+                   "LM04E"
                 }
             });
 
@@ -387,13 +381,13 @@ namespace DialogEngine
                 Adventure = "LM",
                 Requires = new List<string> { "LM02_SM+SB_Why_Fight_Corroberate" },
                 Provides = new List<string> { "LM05_SB+RL_Can_You_Corroberate", "LM4_Enabled" },
-                PhraseTypeSequence = new List<PhraseTypes>{
-                   PhraseTypes.LM05A,
-                   PhraseTypes.LM05B,
-                   PhraseTypes.LM05C,
-                   PhraseTypes.LM05D,
-                   PhraseTypes.LM05E,
-                   PhraseTypes.LM05F
+                PhraseTypeSequence = new List<string>{
+                   "LM05A",
+                   "LM05B",
+                   "LM05C",
+                   "LM05D",
+                   "LM05E",
+                   "LM05F"
                 }
             });
 
@@ -405,10 +399,10 @@ namespace DialogEngine
                 Adventure = "LM",
                 Requires = new List<string> { "LM03_CM+RL_Why_Fight" },
                 Provides = new List<string> { "LM10_Enabled", "LM06_CM+SC_Better_To_Forgive" },
-                PhraseTypeSequence = new List<PhraseTypes>{
-                   PhraseTypes.LM06A,
-                   PhraseTypes.LM06B,
-                   PhraseTypes.LM06C
+                PhraseTypeSequence = new List<string>{
+                   "LM06A",
+                   "LM06B",
+                   "LM06C"
                 }
             });
 
@@ -420,9 +414,9 @@ namespace DialogEngine
                 Adventure = "LM",
                 Requires = new List<string> { "LM03_CM+RL_Why_Fight" },
                 Provides = new List<string> { "LM_END" },
-                PhraseTypeSequence = new List<PhraseTypes>{
-                   PhraseTypes.LM07A,
-                   PhraseTypes.SHSilence
+                PhraseTypeSequence = new List<string>{
+                   "LM07A",
+                   "SHSilence"
                 }
             });
 
@@ -434,9 +428,9 @@ namespace DialogEngine
                 Adventure = "LM",
                 Requires = new List<string> { "LM8_Enabled" },
                 Provides = new List<string> { "LM08_SB+SH_Digging_Bad_Dropped_Money" },
-                PhraseTypeSequence = new List<PhraseTypes>{
-                   PhraseTypes.LM08A,
-                   PhraseTypes.SHSilence
+                PhraseTypeSequence = new List<string>{
+                   "LM08A",
+                   "SHSilence"
                 }
             });
 
@@ -448,13 +442,13 @@ namespace DialogEngine
                 Adventure = "LM",
                 Requires = new List<string> { "LM9_Enabled" },
                 Provides = new List<string> { "LM_END" },
-                PhraseTypeSequence = new List<PhraseTypes>{
-                   PhraseTypes.LM09A,
-                   PhraseTypes.LM09B,
-                   PhraseTypes.LM09C,
-                   PhraseTypes.LM09D,
-                   PhraseTypes.LM09E,
-                   PhraseTypes.LM09F
+                PhraseTypeSequence = new List<string>{
+                   "LM09A",
+                   "LM09B",
+                   "LM09C",
+                   "LM09D",
+                   "LM09E",
+                   "LM09F"
                 }
             });
 
@@ -466,14 +460,14 @@ namespace DialogEngine
                 Adventure = "LM",
                 Requires = new List<string> { "LM10_Enabled" },
                 Provides = new List<string> { "LM_END" },
-                PhraseTypeSequence = new List<PhraseTypes>{
-                   PhraseTypes.LM10A,
-                   PhraseTypes.LM10B,
-                   PhraseTypes.LM10C,
-                   PhraseTypes.LM10D,
-                   PhraseTypes.LM10E,
-                   PhraseTypes.LM10F,
-                   PhraseTypes.LM10G
+                PhraseTypeSequence = new List<string>{
+                   "LM10A",
+                   "LM10B",
+                   "LM10C",
+                   "LM10D",
+                   "LM10E",
+                   "LM10F",
+                   "LM10G"
                 }
             });
 
@@ -485,9 +479,9 @@ namespace DialogEngine
                 Adventure = "LM",
                 Requires = new List<string> { "LM06_CM+SC_Better_To_Forgive" },
                 Provides = new List<string> { "LM11_SC+CM_I_Sense_Kitty", "LM10_Enabled" },
-                PhraseTypeSequence = new List<PhraseTypes>{
-                   PhraseTypes.LM11A,
-                   PhraseTypes.LM11B
+                PhraseTypeSequence = new List<string>{
+                   "LM11A",
+                   "LM11B"
                 }
             });
 
@@ -499,15 +493,15 @@ namespace DialogEngine
                 Adventure = "LM",
                 Requires = new List<string> { "LM05_SB+RL_Can_You_Corroberate" },
                 Provides = new List<string> { "LM9_Enabled", "LM8_Enabled" },
-                PhraseTypeSequence = new List<PhraseTypes>{
-                   PhraseTypes.LM13A,
-                   PhraseTypes.LM13B,
-                   PhraseTypes.LM13C,
-                   PhraseTypes.LM13D,
-                   PhraseTypes.LM13E,
-                   PhraseTypes.LM13F,
-                   PhraseTypes.LM13G,
-                   PhraseTypes.LM13H
+                PhraseTypeSequence = new List<string>{
+                   "LM13A",
+                   "LM13B",
+                   "LM13C",
+                   "LM13D",
+                   "LM13E",
+                   "LM13F",
+                   "LM13G",
+                   "LM13H"
                 }
             });
 
@@ -519,14 +513,14 @@ namespace DialogEngine
                 Adventure = "LM",
                 Requires = new List<string> { "LM05_SB+RL_Can_You_Corroberate" },
                 Provides = new List<string> { "LM14_SB+SC_Eric_likes_Gretchen_Kitty" },
-                PhraseTypeSequence = new List<PhraseTypes>{
-                   PhraseTypes.LM14A,
-                   PhraseTypes.LM14B,
-                   PhraseTypes.LM14C,
-                   PhraseTypes.LM14D,
-                   PhraseTypes.LM14E,
-                   PhraseTypes.LM14F,
-                   PhraseTypes.LM14G
+                PhraseTypeSequence = new List<string>{
+                   "LM14A",
+                   "LM14B",
+                   "LM14C",
+                   "LM14D",
+                   "LM14E",
+                   "LM14F",
+                   "LM14G"
                 }
             });
 
@@ -538,12 +532,12 @@ namespace DialogEngine
                 Adventure = "LM",
                 Requires = new List<string> { "LM11_SC+CM_I_Sense_Kitty" },
                 Provides = new List<string> { "LM_END" },
-                PhraseTypeSequence = new List<PhraseTypes>{
-                   PhraseTypes.LM15A,
-                   PhraseTypes.LM15B,
-                   PhraseTypes.LM15C,
-                   PhraseTypes.LM15D,
-                   PhraseTypes.LM15E
+                PhraseTypeSequence = new List<string>{
+                   "LM15A",
+                   "LM15B",
+                   "LM15C",
+                   "LM15D",
+                   "LM15E"
                 }
             });
 
@@ -555,9 +549,9 @@ namespace DialogEngine
                 Adventure = "LM",
                 Requires = new List<string> { "LM08_SB+SH_Digging_Bad_Dropped_Money" },
                 Provides = new List<string> { "LM_END" },
-                PhraseTypeSequence = new List<PhraseTypes>{
-                   PhraseTypes.LM16A,
-                   PhraseTypes.LM16B
+                PhraseTypeSequence = new List<string>{
+                   "LM16A",
+                   "LM16B"
                 }
             });
 
@@ -569,10 +563,10 @@ namespace DialogEngine
                 Adventure = "LM",
                 Requires = new List<string> { "LM08_SB+SH_Digging_Bad_Dropped_Money" },
                 Provides = new List<string> { "LM_END" },
-                PhraseTypeSequence = new List<PhraseTypes>{
-                   PhraseTypes.LM17A,
-                   PhraseTypes.LM17B,
-                   PhraseTypes.LM17C
+                PhraseTypeSequence = new List<string>{
+                   "LM17A",
+                   "LM17B",
+                   "LM17C"
                 }
             });
 
@@ -584,9 +578,9 @@ namespace DialogEngine
                 Adventure = "LM",
                 Requires = new List<string> { "LM14_SB+SC_Eric_likes_Gretchen_Kitty" },
                 Provides = new List<string> { "LM_END" },
-                PhraseTypeSequence = new List<PhraseTypes>{
-                   PhraseTypes.LM18A,
-                   PhraseTypes.SHSilence                }
+                PhraseTypeSequence = new List<string>{
+                   "LM18A",
+                   "SHSilence"                }
             });
 
 
@@ -594,7 +588,7 @@ namespace DialogEngine
             foreach (var currentDialog in inObj.ModelDialogs) {
                 inObj.DialogModelPopularitySum += currentDialog.Popularity;
             }
-
+            
             /*
              * bodily noises
              * char1 burp,fart,sneeze,etc

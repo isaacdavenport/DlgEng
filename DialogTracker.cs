@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using Newtonsoft.Json;
+
 // ReSharper disable ConditionIsAlwaysTrueOrFalse
 
 namespace DialogEngine
 {
     public class HistoricalDialog
-    {  //TODO move to a paradigm where all state is method extracted from HistoricalDialog and HistoricalPhrase
+    {
         public int DialogIndex;
         public string DialogName = "";
         public DateTime StartedTime = DateTime.MinValue;
@@ -30,8 +32,8 @@ namespace DialogEngine
     {
         //Here we decide what to say next
         protected const int RecentDialogsQueSize = 4;
-        public List<ModelDialog> ModelDialogs = new List<ModelDialog>();  //TODO should these be collections not Lists???
-        public List<HistoricalDialog> HistoricalDialogs = new List<HistoricalDialog>();
+        public List<ModelDialog> ModelDialogs = new List<ModelDialog>();
+        public List<HistoricalDialog> testHistoricalDialogs = new List<HistoricalDialog>();
         public List<HistoricalPhrase> HistoricalPhrases = new List<HistoricalPhrase>();
         public Queue<int> RecentDialogs = new Queue<int>();
         public List<Character> CharacterList = new List<Character>();
@@ -39,70 +41,85 @@ namespace DialogEngine
         public int Character2Num = 1;
         int _priorCharacter1Num = 100;
         int _priorCharacter2Num = 100;
-        int _currentDialogModel = 1;
-        // public Mp3Player Player = new Mp3Player();
-        public WindowsMediaPlayerMp3 Audio = new WindowsMediaPlayerMp3();  
+        int _testCurrentDialogModel = 1;
+        public Mp3Player Player = new Mp3Player();
         public bool SameCharactersAsLast = false;
         public bool LastPhraseImpliedMovement = false;
         private static int _movementWaitCount = 0;
         public double DialogModelPopularitySum;
+        public double testDialogModelPopularitySum;
+
+        public Character ParseCharJSON(FileInfo CharFile)
+        {
+            using (StreamReader fi = File.OpenText(CharFile.FullName))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                Character CharObj = (Character)serializer.Deserialize(fi, typeof(Character));
+                return CharObj;
+            }
+        }
 
         public DialogTracker() {
-            //TODO move active character list to config file so they can be changed without compiling
-            //CharacterList.Add(new Cowboy());  
-            //CharacterList.Add(new Witch());
-            CharacterList.Add(new Skylar());
-            CharacterList.Add(new SchoolMarm());
-            CharacterList.Add(new ReOrgLead());
-            CharacterList.Add(new SchoolBoy());
-            CharacterList.Add(new Cartman());
-            CharacterList.Add(new SchoolHouse());
+            //JSON parse here.
+            DirectoryInfo d = new DirectoryInfo(SessionVars.CharactersDirectory);
+            foreach (FileInfo file in d.GetFiles("*.json")) //file of type FileInfo for each .json in directory
+            {
+                string inChar;
+                FileStream fs = file.OpenRead();    //open a read-only FileStream
+                using (StreamReader reader = new StreamReader(fs))   //creates new streamerader for fs stream. Could also construct with filename...
+                {
+                    inChar = reader.ReadToEnd();//working to here.
+                    Character deserializedCharacterJSON = JsonConvert.DeserializeObject<Character>(inChar);
+                    
+                    //Calculate Phrase Weight Totals here.
+                    foreach (PhraseEntry _curPhrase in deserializedCharacterJSON.Phrases)
+                    {
+                        foreach (string tag in _curPhrase.phraseWeights.Keys)
+                        {
+                            if(deserializedCharacterJSON.PhraseTotals.phraseWeights.Keys.Contains(tag))
+                            {
+                                deserializedCharacterJSON.PhraseTotals.phraseWeights[tag] += _curPhrase.phraseWeights[tag];
+                            }
+                            else
+                            {
+                                deserializedCharacterJSON.PhraseTotals.phraseWeights.Add(tag, _curPhrase.phraseWeights[tag]);
+                            }
+                        }
+                    }   
+
+                    //Add to Char List
+                    CharacterList.Add(deserializedCharacterJSON);
+                }
+            }
+            // Fill the queue with greeting dialogs
             for (int i = 0; i < RecentDialogsQueSize; i++) {
-                RecentDialogs.Enqueue(0); // Fill the que with greeting dialogs
+                RecentDialogs.Enqueue(0); 
             }
         }
 
         public void PlayAudio(string pathAndFileName) {
-            if (SessionVars.NoAudio) {
-                Thread.Sleep(2200);
-                return;
-            }
-            if (File.Exists(pathAndFileName)) {  
+            if (File.Exists(pathAndFileName)) {
                 FileInfo fileInfo = new FileInfo(pathAndFileName);
-
-
                 //empirical hack to wait reasonable time since Play() has no return to know when playing is complete
                 long songMilliSeconds = fileInfo.Length/14;
-                //var playSuccess = Player.Play(pathAndFileName);
-                var playSuccess = Audio.PlayMp3(pathAndFileName);
-               
+                var playSuccess = Player.Play(pathAndFileName);
                 if (playSuccess != 0) {
                     Console.WriteLine("");
                     Console.WriteLine("   MP3 Play Error  ---  " + playSuccess);
                     Console.WriteLine("");
                 }
-                int i = 0;
-                Thread.Sleep(600);
-                while (Audio.IsPlaying() && i < 250) {  // 20 seconds is max
-                    //Thread.Sleep((int)songMilliSeconds);
-                    Thread.Sleep(100);
-                }
-                Thread.Sleep(1200);  // wait around a second after the audio is done for between phrase pause
+                Thread.Sleep((int)songMilliSeconds);
+                Thread.Sleep(20);
             }
             else {
                 Console.WriteLine("Could not find: " + pathAndFileName);
             }
         }
-
-        void SwapCharactersOneAndTwo() {
-            var tempCh1 = Character1Num;
-            Character1Num = Character2Num;
-            Character2Num = tempCh1;
-            // it doesn't appear we should update prior characters 1 and 2 here
-        }
-
-        void AddDialogModelToHistory(int dialogModelIndex, int ch1, int ch2) {
-            HistoricalDialogs.Add(new HistoricalDialog(){
+        
+        void testAddDialogModelToHistory(int dialogModelIndex, int ch1, int ch2)
+        {
+            testHistoricalDialogs.Add(new HistoricalDialog()
+            {
                 DialogIndex = dialogModelIndex,
                 DialogName = ModelDialogs[dialogModelIndex].Name,
                 StartedTime = DateTime.Now,
@@ -120,25 +137,24 @@ namespace DialogEngine
             Console.WriteLine(dialogModelString);
             if (SessionVars.WriteSerialLog) {
                 using (StreamWriter serialLogDialogModels = new StreamWriter(
-                    (SessionVars.LogsDirectory + SessionVars.LogTheDialogFileName), true)) {
+                    (SessionVars.LogsDirectory + SessionVars.DialogSerialLogFileName), true)) {
                     serialLogDialogModels.WriteLine(dialogModelString);
                     serialLogDialogModels.Close();
                 }
             }
         }
 
-        List<int> FindMostRecentAdventureDialogIndexes() {
+        List<int> FindMostRecentAdventures() {
             List<int> mostRecentAdventureDialogs = new List<int>();
-            // most recent will be in the 0 index of list
             List<string> foundAdventures = new List<string>();
             int j = 0;
-            for (int i = HistoricalDialogs.Count - 1; i >= 0; i--) {
-                var dialog = ModelDialogs[HistoricalDialogs[i].DialogIndex];
+            for (int i = testHistoricalDialogs.Count - 1; i >= 0; i--) {
+                var dialog = ModelDialogs[testHistoricalDialogs[i].DialogIndex];
                 if (dialog.Adventure.Length > 0 && !foundAdventures.Contains(dialog.Adventure)) {
                     //if the dialog was part of an adventure and we haven't already found the most recent 
                     //from that adventure add the dialog to the most recent adventure list
                     foundAdventures.Add(dialog.Adventure);
-                    mostRecentAdventureDialogs.Add(HistoricalDialogs[i].DialogIndex);
+                    mostRecentAdventureDialogs.Add(testHistoricalDialogs[i].DialogIndex);
                 }
                 j++;
                 if (j > 400) break; //don't go through all of time looking for active adventures
@@ -161,19 +177,27 @@ namespace DialogEngine
 
         bool CheckIfCharactersHavePhrasesForDialog(int dialogModel, int character1Num, int character2Num) {
             int currentCharacter = character1Num;
-            foreach (var phraseType in ModelDialogs[dialogModel].PhraseTypeSequence) {
+            foreach (string element in ModelDialogs[dialogModel].PhraseTypeSequence)
+            {
                 //try again if characters lack phrases for this model
-                if (CharacterList[currentCharacter].PhraseTotals.PhraseWeights[phraseType] < 0.015f) {
+                if (CharacterList[currentCharacter].PhraseTotals.phraseWeights.ContainsKey(element))
+                {
+                    if (CharacterList[currentCharacter].PhraseTotals.phraseWeights[element] < 0.015f) {
+                        return false;
+                    }
+                    if (currentCharacter == character1Num) {
+                        currentCharacter = character2Num;
+                    }
+                    else {
+                        currentCharacter = character1Num;
+                    }
+                }
+                else
+                {
                     return false;
                 }
-                if (currentCharacter == character1Num) {
-                    currentCharacter = character2Num;
-                }
-                else {
-                    currentCharacter = character1Num;
-                }
             }
-            return true;   
+            return true;
         }
 
         bool CheckIfDialogPreRequirementMet(int dialogModel) {
@@ -181,13 +205,13 @@ namespace DialogEngine
             {    //this dialog model requires nothing, so its requirements are met
                 return true;
             }
-            if (!HistoricalDialogs.Any()) {
+            if (!testHistoricalDialogs.Any()) {
                 return false;
             }
-            var lastHistoricalDialog = HistoricalDialogs.Last();
+            var lastHistoricalDialog = testHistoricalDialogs.Last();
             foreach (var requiredTag in ModelDialogs[dialogModel].Requires) {
                 var currentRequiredTagSatisfied = false;
-                foreach (var histDialog in HistoricalDialogs) { //speed by only looking at unique hist dialog index #s
+                foreach (var histDialog in testHistoricalDialogs) { // could speed by only going through unique historical dialog index #s
                     if (ModelDialogs[histDialog.DialogIndex].Adventure == ModelDialogs[dialogModel].Adventure) {
                         foreach (var providedTag in ModelDialogs[histDialog.DialogIndex].Provides) {
                             if (providedTag == requiredTag) {
@@ -207,70 +231,42 @@ namespace DialogEngine
             }
             return true;
         }
-
-        int FindNextAdventureDialogForCharacters(int character1Num, int character2Num, List<int> mostRecentAdventureDialogIndexes) {
-            bool ch1First = new bool();
-            bool ch2First = new bool();
-
-            //if we have recently done adventures give priority to adventure dialogs check them first
-            foreach (var recentAdventureIdx in mostRecentAdventureDialogIndexes)
-            {  //given recent adventures
-                foreach (var possibleDialog in ModelDialogs)  //TODO probably a cleaner way to do this with Linq and lamda expressions
-                {  //look for follow on adventure possibilities
-                    var possibleDialogIdx = ModelDialogs.IndexOf(possibleDialog);
-                    if (ModelDialogs[recentAdventureIdx].Adventure == possibleDialog.Adventure)
-                    {
-                        foreach (var providedStringKey in ModelDialogs[recentAdventureIdx].Provides)
-                        {
-                            if (possibleDialog.Requires.Contains(providedStringKey))
-                            {   //if a the most recent adventure dialog in the adventure provides what we require we won't 
-                                //go backwards in adventures
-                                ch1First = CheckIfCharactersHavePhrasesForDialog(possibleDialogIdx,
-                                    character1Num, character2Num);
-                                ch2First = CheckIfCharactersHavePhrasesForDialog(possibleDialogIdx,
-                                    character2Num, character1Num);
-                                if (ch1First || ch2First) {
-                                    if (ch2First) {
-                                        //swap character one and two
-                                        SwapCharactersOneAndTwo();
-                                    }
-                                    return possibleDialogIdx;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            return -1;  // code for no next adventure continuance found
-        }
-
-        int PickAWeightedDialog(int character1Num, int character2Num) {
+        //  SANDBOX
+        int testPickAWeightedDialog(int character1Num, int character2Num, bool sameCharactersAsLast)
+        {
             //TODO check that all characters/phrasetypes required for adventure are included before starting adventure?
             int dialogModel = 0;
-
-            var mostRecentAdventureDialogIndexes = FindMostRecentAdventureDialogIndexes();
-              // most recent will be in the 0 index of list which will be hit first in foreach
-            if (mostRecentAdventureDialogIndexes.Count > 0) {
-                var nextAdventureDialogIdx = FindNextAdventureDialogForCharacters(character1Num, character2Num, mostRecentAdventureDialogIndexes);
-                if (nextAdventureDialogIdx > 0 && nextAdventureDialogIdx < ModelDialogs.Count) {
-                    return nextAdventureDialogIdx;  // we have an adventure dialog for these characters go with it
+            var mostRecentAdventureDialogs = FindMostRecentAdventures();
+            if (mostRecentAdventureDialogs.Count > 0)
+            {
+                //if we have recently done adventures give priority to adventures check them first
+                foreach (var recentAdventure in mostRecentAdventureDialogs)
+                {  //given recent adventures
+                    foreach (var possibleDialog in ModelDialogs)
+                    {
+                        var possibleDialogIndex = ModelDialogs.IndexOf(possibleDialog);
+                        if (ModelDialogs[recentAdventure].Adventure == possibleDialog.Adventure
+                            && ModelDialogs[recentAdventure].Provides == possibleDialog.Requires
+                            && CheckIfCharactersHavePhrasesForDialog(possibleDialogIndex, character1Num, character2Num))
+                        {
+                            return dialogModel;
+                        }
+                    }   
                 }
             }
-
-            if (!SameCharactersAsLast && !SessionVars.WaitIndefinatelyForMove) {  //give next priority to greetings
+            if (!sameCharactersAsLast) {  //give next priority to greetings
                 dialogModel = RandomNumbers.Gen.Next(0, 9); //increase odds of starting with greeting
-                if (dialogModel < 2) // TODO need a better way to call out greeting dialog models than 0 and 1 in list
+                if (dialogModel< 2) // TODO need a better way to call out greeting dialog models than 0 and 1 in list
                     return dialogModel;
             }
-
             double dialogWeightIndex = 0.0;
             int attempts = 0;
             bool dialogModelFits = false;
-            while (!dialogModelFits && attempts < 4000) {
+            while (!dialogModelFits && attempts< 4000) {
                 attempts++;
                 // exclude greetings at 0 and 1 TODO use .Greeting instead of hard coded const
                 dialogWeightIndex = RandomNumbers.Gen.NextDouble();
-                dialogWeightIndex *= (DialogModelPopularitySum - 0.4);
+                dialogWeightIndex *= (testDialogModelPopularitySum - 0.4);
                 dialogWeightIndex += 0.4; // TODO better way to avoid greetings than by weight 0.2 each
                 double currentDialogWeightSum = 0;
                 foreach (var dialog in ModelDialogs) {
@@ -280,19 +276,17 @@ namespace DialogEngine
                         break;
                     }
                 }
-
                 var dialogModelUsedRecently = CheckIfDialogModelUsedRecently(dialogModel);
                 var charactersHavePhrases = CheckIfCharactersHavePhrasesForDialog(dialogModel, Character1Num, Character2Num);
                 var dialogPreRequirementsMet = CheckIfDialogPreRequirementMet(dialogModel);
-
                 if (dialogPreRequirementsMet && charactersHavePhrases && !dialogModelUsedRecently) { 
                     dialogModelFits = true;
                 }
             }
             return dialogModel;
         }
-
-        public PhraseEntry PickAWeightedPhrase(int speakingCharacter, PhraseTypes currentPhraseType) {
+        
+        public PhraseEntry PickAWeightedPhrase(int speakingCharacter, string currentPhraseType) {
             PhraseEntry selectedPhrase = CharacterList[speakingCharacter].Phrases[0]; //initialize to unused phrase
             //Randomly select a phrase of correct Type
             bool phraseIsDuplicate = true;
@@ -300,11 +294,11 @@ namespace DialogEngine
             {
                 phraseIsDuplicate = false;
                 var phraseTableWeightedIndex = RandomNumbers.Gen.NextDouble(); // rand 0.0 - 1.0
-                phraseTableWeightedIndex *= CharacterList[speakingCharacter].PhraseTotals.PhraseWeights[currentPhraseType];
+                phraseTableWeightedIndex *= CharacterList[speakingCharacter].PhraseTotals.phraseWeights[currentPhraseType];
                 double amountOfCurrentPhraseType = 0;
                 foreach (var currentPhraseTableEntry in CharacterList[speakingCharacter].Phrases) {
-                    if (currentPhraseTableEntry.PhraseWeights.ContainsKey(currentPhraseType))
-                        amountOfCurrentPhraseType += currentPhraseTableEntry.PhraseWeights[currentPhraseType];
+                    if (currentPhraseTableEntry.phraseWeights.ContainsKey(currentPhraseType))
+                        amountOfCurrentPhraseType += currentPhraseTableEntry.phraseWeights[currentPhraseType];
 
                     if (amountOfCurrentPhraseType > phraseTableWeightedIndex) {
                         selectedPhrase = currentPhraseTableEntry;
@@ -331,12 +325,13 @@ namespace DialogEngine
         bool ImportClosestSerialComsCharacters() {
             var tempChar1 = SerialComs.NextCharacter1;
             var tempChar2 = SerialComs.NextCharacter2;
-            if (tempChar1 == tempChar2 || tempChar1 > SerialComs.NUM_RADIOS - 1 || tempChar2 > SerialComs.NUM_RADIOS - 1) {
+            if (tempChar1 == tempChar2 || tempChar1 > 4 || tempChar2 > 4) {
                 return false;
             }
             SameCharactersAsLast =
                 (tempChar1 == _priorCharacter1Num || tempChar1 == _priorCharacter2Num) &&
                 (tempChar2 == _priorCharacter1Num || tempChar2 == _priorCharacter2Num);
+
             Character1Num = tempChar1;
             Character2Num = tempChar2;
             _priorCharacter1Num = Character1Num;
@@ -349,7 +344,7 @@ namespace DialogEngine
                 Thread.Sleep(RandomNumbers.Gen.Next(0, 3000));
                 _movementWaitCount++;
                 if (_movementWaitCount == 3) {
-                    var ch1RetreatPhrase = PickAWeightedPhrase(Character1Num, PhraseTypes.Retreat);
+                    var ch1RetreatPhrase = PickAWeightedPhrase(Character1Num, "Retreat");
                     Console.Write(CharacterList[Character1Num].CharacterName + " Wait3 : ");
                     Console.WriteLine(ch1RetreatPhrase.DialogStr);
                     PlayAudio(SessionVars.AudioDirectory + CharacterList[Character1Num].CharacterPrefix +
@@ -358,7 +353,7 @@ namespace DialogEngine
                 }
                 if (_movementWaitCount == 7) {
                     LastPhraseImpliedMovement = false;
-                    var ch2RetreatPhrase = PickAWeightedPhrase(Character2Num, PhraseTypes.Retreat);
+                    var ch2RetreatPhrase = PickAWeightedPhrase(Character2Num, "Retreat");
                     Console.Write(CharacterList[Character2Num].CharacterName + " Wait5 : ");
                     Console.WriteLine(ch2RetreatPhrase.DialogStr);
                     PlayAudio(SessionVars.AudioDirectory + CharacterList[Character2Num].CharacterPrefix +
@@ -378,10 +373,10 @@ namespace DialogEngine
 
         bool DetermineIfMovementImplied(PhraseEntry selectedPhrase) {
             double insultWeight, retrWeight, threatWeight, shutUpWeight;
-            selectedPhrase.PhraseWeights.TryGetValue(PhraseTypes.Insult, out insultWeight);
-            selectedPhrase.PhraseWeights.TryGetValue(PhraseTypes.Retreat, out retrWeight);
-            selectedPhrase.PhraseWeights.TryGetValue(PhraseTypes.Threat, out threatWeight);
-            selectedPhrase.PhraseWeights.TryGetValue(PhraseTypes.ShutUp, out shutUpWeight);
+            selectedPhrase.phraseWeights.TryGetValue("Insult", out insultWeight);
+            selectedPhrase.phraseWeights.TryGetValue("Retreat", out retrWeight);
+            selectedPhrase.phraseWeights.TryGetValue("Threat", out threatWeight);
+            selectedPhrase.phraseWeights.TryGetValue("ShutUp", out shutUpWeight);
             if (insultWeight + retrWeight + threatWeight + shutUpWeight > 0.1) {
                 return true;
             }
@@ -392,7 +387,7 @@ namespace DialogEngine
             if (dialogDirectives.Count() == 3) //if the array input is correct size and inputs don't exceed bounds set dialog parameters 
             {
                 if (dialogDirectives[0] < ModelDialogs.Count)
-                    _currentDialogModel = dialogDirectives[0];
+                    _testCurrentDialogModel = dialogDirectives[0];
                 if (dialogDirectives[1] < CharacterList.Count)
                     Character1Num = dialogDirectives[1];
                 if (dialogDirectives[2] < CharacterList.Count)
@@ -400,7 +395,7 @@ namespace DialogEngine
             }
 
             if (SessionVars.DebugFlag) {
-                WriteDialogInfo(_currentDialogModel, Character1Num, Character2Num);
+                WriteDialogInfo(_testCurrentDialogModel, Character1Num, Character2Num);
             }
             if (SessionVars.HeatMapFullMatrixDispMode) {
                 SerialComs.PrintHeatMap();
@@ -429,64 +424,70 @@ namespace DialogEngine
 
             if (SessionVars.WriteSerialLog) {
                 using (StreamWriter serialLogDialogLines = new StreamWriter(
-                    (SessionVars.LogsDirectory + SessionVars.LogTheDialogFileName), true)) {
+                    (SessionVars.LogsDirectory + SessionVars.DialogSerialLogFileName), true)) {
                     serialLogDialogLines.WriteLine(CharacterList[speakingCharacter].CharacterName + ": " + selectedPhrase.DialogStr);
                     serialLogDialogLines.Close();
                 }
             }
         }
 
+        // TODO generate parallel dialogs, using string tags.
         public void GenerateADialog(params int[] dialogDirectives) {
             if (!ImportClosestSerialComsCharacters()) {
                 return;
             }
-            _currentDialogModel = PickAWeightedDialog(Character1Num, Character2Num);
-            if (WaitingForMovement()  || (SameCharactersAsLast && SessionVars.WaitIndefinatelyForMove)) {
+            _testCurrentDialogModel = testPickAWeightedDialog(Character1Num, Character2Num, SameCharactersAsLast);
+            if (WaitingForMovement()) {
                 return;
             }
             ProcessDebugFlags(dialogDirectives);
-            AddDialogModelToHistory(_currentDialogModel, Character1Num, Character2Num);
+            testAddDialogModelToHistory(_testCurrentDialogModel, Character1Num, Character2Num);
 
             int speakingCharacter = Character1Num;
             PhraseEntry selectedPhrase = CharacterList[speakingCharacter].Phrases[0]; //initialize to unused placeholder phrase
 
-            //step through the current model dialog an select a phrase from each character 
-            //  that matches the prescribed phrase type sequence
-            foreach (var currentPhraseType in ModelDialogs[_currentDialogModel].PhraseTypeSequence) {
-                Console.Write(CharacterList[speakingCharacter].CharacterName + ": ");
-                if (CharacterList[speakingCharacter].PhraseTotals.PhraseWeights[currentPhraseType] < 0.01f)
-                    Console.WriteLine("   Missing PhraseType: " + currentPhraseType + "\r\n");
+            foreach (var currentPhraseType in ModelDialogs[_testCurrentDialogModel].PhraseTypeSequence)
+            {
+                if(CharacterList[speakingCharacter].PhraseTotals.phraseWeights.ContainsKey(currentPhraseType))
+                {
+                    Console.Write(CharacterList[speakingCharacter].CharacterName + ": ");
+                    if (CharacterList[speakingCharacter].PhraseTotals.phraseWeights[currentPhraseType] < 0.01f)
+                        Console.WriteLine("   Missing PhraseType: " + currentPhraseType + "\r\n");
 
-                selectedPhrase = PickAWeightedPhrase(speakingCharacter, currentPhraseType);
-                Console.WriteLine(selectedPhrase.DialogStr);
+                    selectedPhrase = PickAWeightedPhrase(speakingCharacter, currentPhraseType);
+                    Console.Write("Strings: ");
+                    Console.WriteLine(selectedPhrase.DialogStr);
 
-                AddPhraseToHistory(selectedPhrase, speakingCharacter);
+                    AddPhraseToHistory(selectedPhrase, speakingCharacter);
 
-                var pathAndFileName = SessionVars.AudioDirectory + CharacterList[speakingCharacter].CharacterPrefix +
-                                      "_" + selectedPhrase.FileName + ".mp3";
-                PlayAudio(pathAndFileName);
+                    var pathAndFileName = SessionVars.AudioDirectory + CharacterList[speakingCharacter].CharacterPrefix +
+                                          "_" + selectedPhrase.FileName + ".mp3";
+                    PlayAudio(pathAndFileName);
 
-                if (!SessionVars.ForceCharactersAndDialogModel &&
-                    !DialogTrackerAndSerialComsCharactersSame()) {
-                    SameCharactersAsLast = false;
-                    return; // the characters have moved  TODO break into charactersSame() and use also with prior
+                    if (!SessionVars.ForceCharacterSelection &&
+                        !DialogTrackerAndSerialComsCharactersSame())
+                    {
+                        SameCharactersAsLast = false;
+                        return; // the characters have moved  TODO break into charactersSame() and use also with prior
+                    }
+                    //Toggle character
+                    if (speakingCharacter == Character1Num) //toggle which character is speaking next
+                        speakingCharacter = Character2Num;
+                    else
+                        speakingCharacter = Character1Num;
                 }
-                //Toggle character
-                if (speakingCharacter == Character1Num) //toggle which character is speaking next
-                    speakingCharacter = Character2Num;
-                else
-                    speakingCharacter = Character1Num;
             }
-            HistoricalDialogs[HistoricalDialogs.Count - 1].Completed = true;
-            if (HistoricalDialogs.Count > 2000) {
-                HistoricalDialogs.RemoveRange(0, 100);
+            
+            testHistoricalDialogs[testHistoricalDialogs.Count - 1].Completed = true;
+            if (testHistoricalDialogs.Count > 2000) {
+                testHistoricalDialogs.RemoveRange(0, 100);
             }
             if (HistoricalPhrases.Count > 8000) {
                 HistoricalPhrases.RemoveRange(0, 100);
             }
 
             RecentDialogs.Dequeue(); //move to use HistoricalDialogs
-            RecentDialogs.Enqueue(_currentDialogModel);
+            RecentDialogs.Enqueue(_testCurrentDialogModel);
             LastPhraseImpliedMovement = DetermineIfMovementImplied(selectedPhrase);
         }
     }
