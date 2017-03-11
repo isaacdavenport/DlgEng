@@ -85,10 +85,13 @@ namespace DialogEngine
                                 deserializedCharacterJSON.PhraseTotals.phraseWeights.Add(tag, _curPhrase.phraseWeights[tag]);
                             }
                         }
-                    }   
+                    }
+                    //list Chars as they come in.
+                    Console.WriteLine(deserializedCharacterJSON.CharacterName);
 
                     //Add to Char List
                     CharacterList.Add(deserializedCharacterJSON);
+
                 }
             }
             // Fill the queue with greeting dialogs
