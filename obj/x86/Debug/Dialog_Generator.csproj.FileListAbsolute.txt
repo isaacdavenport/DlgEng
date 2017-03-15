@@ -22,3 +22,13 @@ C:\Isaac\Toys2Life\DlgEngRecentPull\bin\Debug\DialogEngine.exe
 C:\Isaac\Toys2Life\DlgEngRecentPull\bin\Debug\DialogEngine.pdb
 C:\Isaac\Toys2Life\DlgEngRecentPull\obj\x86\Debug\DialogEngine.exe.manifest
 C:\Isaac\Toys2Life\DlgEngRecentPull\obj\x86\Debug\DialogEngine.application
+C:\Users\Joseph\Documents\Toys2Life\DlgEng\bin\Debug\DialogEngine.exe.config
+C:\Users\Joseph\Documents\Toys2Life\DlgEng\bin\Debug\DialogEngine.exe
+C:\Users\Joseph\Documents\Toys2Life\DlgEng\bin\Debug\DialogEngine.pdb
+C:\Users\Joseph\Documents\Toys2Life\DlgEng\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Joseph\Documents\Toys2Life\DlgEng\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Joseph\Documents\Toys2Life\DlgEng\obj\x86\Debug\Dialog_Generator.csprojResolveAssemblyReference.cache
+C:\Users\Joseph\Documents\Toys2Life\DlgEng\obj\x86\Debug\Interop.WMPLib.dll
+C:\Users\Joseph\Documents\Toys2Life\DlgEng\obj\x86\Debug\Dialog_Generator.csproj.ResolveComReference.cache
+C:\Users\Joseph\Documents\Toys2Life\DlgEng\obj\x86\Debug\DialogEngine.exe
+C:\Users\Joseph\Documents\Toys2Life\DlgEng\obj\x86\Debug\DialogEngine.pdb
