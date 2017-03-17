@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using Newtonsoft.Json;
-
 // ReSharper disable ConditionIsAlwaysTrueOrFalse
 
 namespace DialogEngine
@@ -33,7 +32,7 @@ namespace DialogEngine
         //Here we decide what to say next
         protected const int RecentDialogsQueSize = 4;
         public List<ModelDialog> ModelDialogs = new List<ModelDialog>();
-        public List<HistoricalDialog> testHistoricalDialogs = new List<HistoricalDialog>();
+        public List<HistoricalDialog> historicalDialogs = new List<HistoricalDialog>();
         public List<HistoricalPhrase> HistoricalPhrases = new List<HistoricalPhrase>();
         public Queue<int> RecentDialogs = new Queue<int>();
         public List<Character> CharacterList = new List<Character>();
@@ -41,13 +40,13 @@ namespace DialogEngine
         public int Character2Num = 1;
         int _priorCharacter1Num = 100;
         int _priorCharacter2Num = 100;
-        int _testCurrentDialogModel = 1;
+        int _currentDialogModel = 1;
         public Mp3Player Player = new Mp3Player();
         public bool SameCharactersAsLast = false;
         public bool LastPhraseImpliedMovement = false;
         private static int _movementWaitCount = 0;
         public double DialogModelPopularitySum;
-        public double testDialogModelPopularitySum;
+        public double dialogModelPopularitySum;
 
         public Character ParseCharJSON(FileInfo CharFile)
         {
@@ -119,9 +118,9 @@ namespace DialogEngine
             }
         }
         
-        void testAddDialogModelToHistory(int dialogModelIndex, int ch1, int ch2)
+        void AddDialogModelToHistory(int dialogModelIndex, int ch1, int ch2)
         {
-            testHistoricalDialogs.Add(new HistoricalDialog()
+            historicalDialogs.Add(new HistoricalDialog()
             {
                 DialogIndex = dialogModelIndex,
                 DialogName = ModelDialogs[dialogModelIndex].Name,
@@ -151,13 +150,13 @@ namespace DialogEngine
             List<int> mostRecentAdventureDialogs = new List<int>();
             List<string> foundAdventures = new List<string>();
             int j = 0;
-            for (int i = testHistoricalDialogs.Count - 1; i >= 0; i--) {
-                var dialog = ModelDialogs[testHistoricalDialogs[i].DialogIndex];
+            for (int i = historicalDialogs.Count - 1; i >= 0; i--) {
+                var dialog = ModelDialogs[historicalDialogs[i].DialogIndex];
                 if (dialog.Adventure.Length > 0 && !foundAdventures.Contains(dialog.Adventure)) {
                     //if the dialog was part of an adventure and we haven't already found the most recent 
                     //from that adventure add the dialog to the most recent adventure list
                     foundAdventures.Add(dialog.Adventure);
-                    mostRecentAdventureDialogs.Add(testHistoricalDialogs[i].DialogIndex);
+                    mostRecentAdventureDialogs.Add(historicalDialogs[i].DialogIndex);
                 }
                 j++;
                 if (j > 400) break; //don't go through all of time looking for active adventures
@@ -208,13 +207,13 @@ namespace DialogEngine
             {    //this dialog model requires nothing, so its requirements are met
                 return true;
             }
-            if (!testHistoricalDialogs.Any()) {
+            if (!historicalDialogs.Any()) {
                 return false;
             }
-            var lastHistoricalDialog = testHistoricalDialogs.Last();
+            var lastHistoricalDialog = historicalDialogs.Last();
             foreach (var requiredTag in ModelDialogs[dialogModel].Requires) {
                 var currentRequiredTagSatisfied = false;
-                foreach (var histDialog in testHistoricalDialogs) { // could speed by only going through unique historical dialog index #s
+                foreach (var histDialog in historicalDialogs) { // could speed by only going through unique historical dialog index #s
                     if (ModelDialogs[histDialog.DialogIndex].Adventure == ModelDialogs[dialogModel].Adventure) {
                         foreach (var providedTag in ModelDialogs[histDialog.DialogIndex].Provides) {
                             if (providedTag == requiredTag) {
@@ -235,7 +234,7 @@ namespace DialogEngine
             return true;
         }
         //  SANDBOX
-        int testPickAWeightedDialog(int character1Num, int character2Num, bool sameCharactersAsLast)
+        int PickAWeightedDialog(int character1Num, int character2Num, bool sameCharactersAsLast)
         {
             //TODO check that all characters/phrasetypes required for adventure are included before starting adventure?
             int dialogModel = 0;
@@ -269,7 +268,7 @@ namespace DialogEngine
                 attempts++;
                 // exclude greetings at 0 and 1 TODO use .Greeting instead of hard coded const
                 dialogWeightIndex = RandomNumbers.Gen.NextDouble();
-                dialogWeightIndex *= (testDialogModelPopularitySum - 0.4);
+                dialogWeightIndex *= (dialogModelPopularitySum - 0.4);
                 dialogWeightIndex += 0.4; // TODO better way to avoid greetings than by weight 0.2 each
                 double currentDialogWeightSum = 0;
                 foreach (var dialog in ModelDialogs) {
@@ -390,7 +389,7 @@ namespace DialogEngine
             if (dialogDirectives.Count() == 3) //if the array input is correct size and inputs don't exceed bounds set dialog parameters 
             {
                 if (dialogDirectives[0] < ModelDialogs.Count)
-                    _testCurrentDialogModel = dialogDirectives[0];
+                    _currentDialogModel = dialogDirectives[0];
                 if (dialogDirectives[1] < CharacterList.Count)
                     Character1Num = dialogDirectives[1];
                 if (dialogDirectives[2] < CharacterList.Count)
@@ -398,7 +397,7 @@ namespace DialogEngine
             }
 
             if (SessionVars.DebugFlag) {
-                WriteDialogInfo(_testCurrentDialogModel, Character1Num, Character2Num);
+                WriteDialogInfo(_currentDialogModel, Character1Num, Character2Num);
             }
             if (SessionVars.HeatMapFullMatrixDispMode) {
                 SerialComs.PrintHeatMap();
@@ -439,17 +438,17 @@ namespace DialogEngine
             if (!ImportClosestSerialComsCharacters()) {
                 return;
             }
-            _testCurrentDialogModel = testPickAWeightedDialog(Character1Num, Character2Num, SameCharactersAsLast);
+            _currentDialogModel = PickAWeightedDialog(Character1Num, Character2Num, SameCharactersAsLast);
             if (WaitingForMovement()) {
                 return;
             }
             ProcessDebugFlags(dialogDirectives);
-            testAddDialogModelToHistory(_testCurrentDialogModel, Character1Num, Character2Num);
+            AddDialogModelToHistory(_currentDialogModel, Character1Num, Character2Num);
 
             int speakingCharacter = Character1Num;
             PhraseEntry selectedPhrase = CharacterList[speakingCharacter].Phrases[0]; //initialize to unused placeholder phrase
 
-            foreach (var currentPhraseType in ModelDialogs[_testCurrentDialogModel].PhraseTypeSequence)
+            foreach (var currentPhraseType in ModelDialogs[_currentDialogModel].PhraseTypeSequence)
             {
                 if(CharacterList[speakingCharacter].PhraseTotals.phraseWeights.ContainsKey(currentPhraseType))
                 {
@@ -481,16 +480,16 @@ namespace DialogEngine
                 }
             }
             
-            testHistoricalDialogs[testHistoricalDialogs.Count - 1].Completed = true;
-            if (testHistoricalDialogs.Count > 2000) {
-                testHistoricalDialogs.RemoveRange(0, 100);
+            historicalDialogs[historicalDialogs.Count - 1].Completed = true;
+            if (historicalDialogs.Count > 2000) {
+                historicalDialogs.RemoveRange(0, 100);
             }
             if (HistoricalPhrases.Count > 8000) {
                 HistoricalPhrases.RemoveRange(0, 100);
             }
 
             RecentDialogs.Dequeue(); //move to use HistoricalDialogs
-            RecentDialogs.Enqueue(_testCurrentDialogModel);
+            RecentDialogs.Enqueue(_currentDialogModel);
             LastPhraseImpliedMovement = DetermineIfMovementImplied(selectedPhrase);
         }
     }
