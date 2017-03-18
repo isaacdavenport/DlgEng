@@ -1,7 +1,14 @@
 {
-	"CharacterName": "Cartman",
-  "CharacterPrefix": "CM",
-  "Phrases": [
+	"PhraseTotals": 
+	{
+    "DialogStr": "PhraseTotals",
+    "FileName": "No Audio Filename Associated with PhraseTotals",
+    "PhraseWeights": {},
+    "testPhraseWeights": null,
+    "PhraseRating": 0
+  },
+  "Phrases": 
+  [
     {
       "DialogStr": "Cartman has not been initialized.",
       "FileName": "CartmanHasNotBeen",
@@ -12,6 +19,7 @@
       "PhraseRating": 0
     },
     {
+
       "DialogStr": "I'm Eric but everyone calls me Cartman.",
       "FileName": "ImEricButEveryone",
       "PhraseWeights": {
@@ -1515,4 +1523,6 @@
       "PhraseRating": 0
     }
   ],
+  "CharacterName": "Cartman",
+  "CharacterPrefix": "CM"
 }

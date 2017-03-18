@@ -1,5 +1,8 @@
 {
-  "Phrases": [
+  "CharacterName": "SchoolBoy",
+  "CharacterPrefix": "SB",
+  "Phrases": 
+  [
     {
       "DialogStr": "The SchoolBoy has not been initialized.",
       "FileName": "TheSchoolboyHasNot",
@@ -1099,6 +1102,12 @@
       "PhraseRating": 0
     }
   ],
-  "CharacterName": "SchoolBoy",
-  "CharacterPrefix": "SB"
+  "PhraseTotals": 
+  {
+    "DialogStr": "PhraseTotals",
+    "FileName": "No Audio Filename Associated with PhraseTotals",
+    "PhraseWeights": {},
+    "testPhraseWeights": null,
+    "PhraseRating": 0
+  }
 }

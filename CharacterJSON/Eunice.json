@@ -1,6 +1,14 @@
 {
-  
-  "Phrases": [
+	"PhraseTotals": 
+	{
+    "DialogStr": "PhraseTotals",
+    "FileName": "No Audio Filename Associated with PhraseTotals",
+    "PhraseWeights": {},
+    "testPhraseWeights": null,
+    "PhraseRating": 0
+  },
+  "Phrases": 
+  [
     {
       "DialogStr": "UnInitSchoolmarm",
       "FileName": "UnInitSchoolMarm",
