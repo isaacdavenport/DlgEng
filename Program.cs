@@ -99,7 +99,7 @@ namespace DialogEngine
         public static DialogTracker TheDialogs = new DialogTracker();
 
         static void WriteStartupInfo() {
-            string versionTimeStr = "Dialog Engine ver 0.30 Isaac, Aria " + DateTime.Now;
+            string versionTimeStr = "Dialog Engine ver 0.40 Isaac, Aria, Joe " + DateTime.Now;
             Console.Write(versionTimeStr);
             Console.Write("\n");
             GlobalPhraseTypes.TestPhraseTypes.ForEach (Console.WriteLine) ;
