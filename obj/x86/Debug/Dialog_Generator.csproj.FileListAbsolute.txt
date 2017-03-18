@@ -20,12 +20,3 @@ C:\Users\Joseph\Documents\Toys2Life\DlgEng\obj\x86\Debug\Interop.WMPLib.dll
 C:\Users\Joseph\Documents\Toys2Life\DlgEng\obj\x86\Debug\Dialog_Generator.csproj.ResolveComReference.cache
 C:\Users\Joseph\Documents\Toys2Life\DlgEng\obj\x86\Debug\DialogEngine.exe
 C:\Users\Joseph\Documents\Toys2Life\DlgEng\obj\x86\Debug\DialogEngine.pdb
-C:\Isaac\Toys2Life\DlgEng\bin\Debug\DialogEngine.exe.config
-C:\Isaac\Toys2Life\DlgEng\bin\Debug\DialogEngine.exe
-C:\Isaac\Toys2Life\DlgEng\bin\Debug\DialogEngine.pdb
-C:\Isaac\Toys2Life\DlgEng\bin\Debug\Newtonsoft.Json.dll
-C:\Isaac\Toys2Life\DlgEng\bin\Debug\Newtonsoft.Json.xml
-C:\Isaac\Toys2Life\DlgEng\obj\x86\Debug\Interop.WMPLib.dll
-C:\Isaac\Toys2Life\DlgEng\obj\x86\Debug\Dialog_Generator.csproj.ResolveComReference.cache
-C:\Isaac\Toys2Life\DlgEng\obj\x86\Debug\DialogEngine.exe
-C:\Isaac\Toys2Life\DlgEng\obj\x86\Debug\DialogEngine.pdb
