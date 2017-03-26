@@ -44,6 +44,7 @@ namespace DialogEngine
             (ParentalRating)Enum.Parse(typeof(ParentalRating), AppSet.ReadSetting("CurrentParentalRating"));
         public static readonly string LogsDirectory = AppSet.ReadSetting("LogsDirectory");
         public static readonly string CharactersDirectory = AppSet.ReadSetting("CharactersDirectory");
+        public static readonly string DialogsDirectory = AppSet.ReadSetting("DialogsDirectory");
         public static readonly string AudioDirectory = AppSet.ReadSetting("AudioDirectory");
         public static readonly string DecimalSerialLogFileName = AppSet.ReadSetting("DecimalSerialLogFileName");
         public static readonly string SerialLogFileName = AppSet.ReadSetting("SerialLogFileName");
@@ -63,10 +64,13 @@ namespace DialogEngine
     {
         [JsonProperty("CharacterName")]
         public string CharacterName { get; protected set; }
+
         [JsonProperty("CharacterPrefix")]
         public string CharacterPrefix { get; protected set; }
+
         [JsonProperty("PhraseTotals")]
         public PhraseEntry PhraseTotals = new PhraseEntry();
+
         [JsonProperty("Phrases")]
         public List<PhraseEntry> Phrases = new List<PhraseEntry>(); //entry now has string phraseweight tags.
         // A character's Phrases list holds all the phrases they might say along with 
@@ -75,17 +79,36 @@ namespace DialogEngine
         protected const int RecentPhrasesQueueSize = 4;
         public Queue<PhraseEntry> RecentPhrases = new Queue<PhraseEntry>();  //TODO make this a method that runs over the history
     }
-    
+
+    //[JsonObject(MemberSerialization.OptIn)]
+    public class ModelDialogInput
+    {
+        public List<ModelDialog> inList;
+    }
+
     public class ModelDialog
     {
         // a ModelDialog is a sequence of phrase types that represent an exchange between characters 
         // the model dialog will be filled with randomly selected character phrases of the appropriate phrase type
+        [JsonProperty("DialogName")]
         public string Name;
+
+        [JsonProperty("AddedOnDateTime")]
         public DateTime AddedOnDateTime = new DateTime(2016, 1, 2, 3, 4, 5);
+
+        [JsonProperty("Popularity")]
         public double Popularity = 1.0;
+
+        [JsonProperty("Adventure")]
         public string Adventure = "";
+
+        [JsonProperty("Requires")]
         public List<string> Requires = new List<string>();
+
+        [JsonProperty("Provides")]
         public List<string> Provides = new List<string>();
+
+        [JsonProperty("PhraseTypeSequence")]
         public List<string> PhraseTypeSequence = new List<string>();
     }
 
@@ -152,8 +175,9 @@ namespace DialogEngine
             Console.SetBufferSize(Console.BufferWidth, 32766);
             WriteStartupInfo();
             SerialComs.InitSerial();
+            //done in DialogTracker before char intake.
             InitModelDialogs.SetDefaults(TheDialogs);
-
+           
             //Select Debug Output
             if (SessionVars.ForceCharacterSelection) {
                 Console.WriteLine("   enter three numbers to set the next: DialogModel, Char1, Char2");

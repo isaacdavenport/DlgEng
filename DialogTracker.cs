@@ -33,6 +33,7 @@ namespace DialogEngine
         //Here we decide what to say next
         protected const int RecentDialogsQueSize = 4;
         public List<ModelDialog> ModelDialogs = new List<ModelDialog>();
+        //print dialogs to json
         public List<HistoricalDialog> testHistoricalDialogs = new List<HistoricalDialog>();
         public List<HistoricalPhrase> HistoricalPhrases = new List<HistoricalPhrase>();
         public Queue<int> RecentDialogs = new Queue<int>();
@@ -49,28 +50,20 @@ namespace DialogEngine
         public double DialogModelPopularitySum;
         public double testDialogModelPopularitySum;
 
-        public Character ParseCharJSON(FileInfo CharFile)
-        {
-            using (StreamReader fi = File.OpenText(CharFile.FullName))
-            {
-                JsonSerializer serializer = new JsonSerializer();
-                Character CharObj = (Character)serializer.Deserialize(fi, typeof(Character));
-                return CharObj;
-            }
-        }
-
         public DialogTracker() {
-            //JSON parse here.
-            DirectoryInfo d = new DirectoryInfo(SessionVars.CharactersDirectory);
-            foreach (FileInfo file in d.GetFiles("*.json")) //file of type FileInfo for each .json in directory
+            
+            //Character JSON parse here.
+
+            DirectoryInfo chars_d = new DirectoryInfo(SessionVars.CharactersDirectory);
+            foreach (FileInfo file in chars_d.GetFiles("*.json")) //file of type FileInfo for each .json in directory
             {
                 string inChar;
                 FileStream fs = file.OpenRead();    //open a read-only FileStream
                 using (StreamReader reader = new StreamReader(fs))   //creates new streamerader for fs stream. Could also construct with filename...
                 {
-                    inChar = reader.ReadToEnd();//working to here.
-                    Character deserializedCharacterJSON = JsonConvert.DeserializeObject<Character>(inChar);
-                    
+                    inChar = reader.ReadToEnd();//create string of JSON file
+                    Character deserializedCharacterJSON = JsonConvert.DeserializeObject<Character>(inChar); //string to Object.
+
                     //Calculate Phrase Weight Totals here.
                     foreach (PhraseEntry _curPhrase in deserializedCharacterJSON.Phrases)
                     {
@@ -86,6 +79,7 @@ namespace DialogEngine
                             }
                         }
                     }
+
                     //list Chars as they come in.
                     Console.WriteLine(deserializedCharacterJSON.CharacterName);
 
