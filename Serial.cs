@@ -329,9 +329,9 @@ namespace DialogEngine
         {  // used for computers with no serial input radio for random, or forceCharacter mode
             while (Continue)
             {
-                NextCharacter1 = RandomNumbers.Gen.Next(0, NUM_RADIOS - 1); //lower bound inclusing upper exclusive
+                NextCharacter1 = RandomNumbers.Gen.Next(0, Program.TheDialogs.CharacterList.Count); //lower bound inclusive, upper exclusive
                 while (NextCharacter1 == NextCharacter2) {
-                    NextCharacter2 = RandomNumbers.Gen.Next(0, NUM_RADIOS - 1);  
+                    NextCharacter2 = RandomNumbers.Gen.Next(0, Program.TheDialogs.CharacterList.Count);  
                 }
                 Thread.Sleep(8000 + RandomNumbers.Gen.Next(0, 34000));
             }
