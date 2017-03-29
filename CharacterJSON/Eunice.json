@@ -1,12 +1,6 @@
 {
-	"PhraseTotals": 
-	{
-    "DialogStr": "PhraseTotals",
-    "FileName": "No Audio Filename Associated with PhraseTotals",
-    "PhraseWeights": {},
-    "testPhraseWeights": null,
-    "PhraseRating": 0
-  },
+  "CharacterName": "Eunice",
+  "CharacterPrefix": "SM",
   "Phrases": 
   [
     {
@@ -986,52 +980,5 @@
       "testPhraseWeights": null,
       "PhraseRating": 0
     }
-  ],
-  "testPhraseTotals": {
-    "tags": {},
-    "DialogStr": "PhraseTotals",
-    "FileName": "No Audio Filename Associated with PhraseTotals",
-    "PhraseRating": 0
-  },
-  "testPhrases": [],
-  "RecentPhrases": [
-    {
-      "DialogStr": "UnInitSchoolmarm",
-      "FileName": "UnInitSchoolMarm",
-      "PhraseWeights": {
-        "Exclamation": 0.01
-      },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
-    },
-    {
-      "DialogStr": "UnInitSchoolmarm",
-      "FileName": "UnInitSchoolMarm",
-      "PhraseWeights": {
-        "Exclamation": 0.01
-      },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
-    },
-    {
-      "DialogStr": "UnInitSchoolmarm",
-      "FileName": "UnInitSchoolMarm",
-      "PhraseWeights": {
-        "Exclamation": 0.01
-      },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
-    },
-    {
-      "DialogStr": "UnInitSchoolmarm",
-      "FileName": "UnInitSchoolMarm",
-      "PhraseWeights": {
-        "Exclamation": 0.01
-      },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
-    }
-  ],
-  "CharacterName": "Eunice",
-  "CharacterPrefix": "SM"
+  ]
 }

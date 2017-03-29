@@ -1,12 +1,6 @@
 {
-  "PhraseTotals": 
-  {
-    "DialogStr": "PhraseTotals",
-    "FileName": "No Audio Filename Associated with PhraseTotals",
-    "PhraseWeights": {},
-    "testPhraseWeights": null,
-    "PhraseRating": 0
-  },
+  "CharacterName": "ReOrgLead",
+  "CharacterPrefix": "RL",
   "Phrases": 
   [
     {
@@ -799,71 +793,5 @@
       "testPhraseWeights": null,
       "PhraseRating": 1
     }
-  ],
-  "testPhraseTotals": {
-    "tags": {
-      "GiveMotivation": 0.4
-    },
-    "DialogStr": "PhraseTotals",
-    "FileName": "No Audio Filename Associated with PhraseTotals",
-    "PhraseRating": 0
-  },
-  "testPhrases": [
-    {
-      "tags": {
-        "GiveMotivation": 0.2
-      },
-      "DialogStr": "Sometimes it is hard to divine someone's motivations.  I mean we can't necessarily fathom just how far a fear of public speaking or love of Jusin Bieber will take a person.",
-      "FileName": "SometimesItsHardTo",
-      "PhraseRating": 1
-    },
-    {
-      "tags": {
-        "GiveMotivation": 0.2
-      },
-      "DialogStr": "Sometimes people are just responding to the incentives they are presented with.",
-      "FileName": "SometimesPeopleAreJust",
-      "PhraseRating": 0
-    }
-  ],
-  "RecentPhrases": [
-    {
-      "DialogStr": "The ReOrgLead has not been initialized.",
-      "FileName": "TheReOrgLeadHasNot",
-      "PhraseWeights": {
-        "Exclamation": 0.01
-      },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
-    },
-    {
-      "DialogStr": "The ReOrgLead has not been initialized.",
-      "FileName": "TheReOrgLeadHasNot",
-      "PhraseWeights": {
-        "Exclamation": 0.01
-      },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
-    },
-    {
-      "DialogStr": "The ReOrgLead has not been initialized.",
-      "FileName": "TheReOrgLeadHasNot",
-      "PhraseWeights": {
-        "Exclamation": 0.01
-      },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
-    },
-    {
-      "DialogStr": "The ReOrgLead has not been initialized.",
-      "FileName": "TheReOrgLeadHasNot",
-      "PhraseWeights": {
-        "Exclamation": 0.01
-      },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
-    }
-  ],
-  "CharacterName": "ReOrgLead",
-  "CharacterPrefix": "RL"
+  ]
 }

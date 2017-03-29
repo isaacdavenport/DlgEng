@@ -1,13 +1,7 @@
 {
-	"PhraseTotals": 
-	{
-    "DialogStr": "PhraseTotals",
-    "FileName": "No Audio Filename Associated with PhraseTotals",
-    "PhraseWeights": {},
-    "testPhraseWeights": null,
-    "PhraseRating": 0
-  },
-  "Phrases": 
+  "CharacterName": "Cowboy Bill",
+  "CharacterPrefix": "CB",
+ "Phrases": 
   [
     {
       "DialogStr": "The Cowboy has not been initialized.",
@@ -917,45 +911,5 @@
       "FileName": "SomewhereUnderThatSmilin",
       "PhraseRating": 1
     }
-  ],
-  "RecentPhrases": [
-    {
-      "DialogStr": "The Cowboy has not been initialized.",
-      "FileName": "TheCowboyHasNot",
-      "PhraseWeights": {
-        "Exclamation": 0.01
-      },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
-    },
-    {
-      "DialogStr": "The Cowboy has not been initialized.",
-      "FileName": "TheCowboyHasNot",
-      "PhraseWeights": {
-        "Exclamation": 0.01
-      },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
-    },
-    {
-      "DialogStr": "The Cowboy has not been initialized.",
-      "FileName": "TheCowboyHasNot",
-      "PhraseWeights": {
-        "Exclamation": 0.01
-      },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
-    },
-    {
-      "DialogStr": "The Cowboy has not been initialized.",
-      "FileName": "TheCowboyHasNot",
-      "PhraseWeights": {
-        "Exclamation": 0.01
-      },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
-    }
-  ],
-  "CharacterName": "Cowboy Bill",
-  "CharacterPrefix": "CB"
+  ]
 }

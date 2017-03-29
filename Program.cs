@@ -12,13 +12,13 @@ using Newtonsoft.Json;
 namespace DialogEngine
 {
     //list of strings that will contain all Phrase Types after character initialization.
-    public static class GlobalPhraseTypes
+    /*public static class GlobalPhraseTypes
     {
         public static List<string> TestPhraseTypes = new List<String> { };
     }
-    
+    */
     public enum ParentalRating
-    {
+    {  //TODO re-enact parental ratings, perhaps based on strings in JSON rather than enum
         G,
         PG,
         PG13,
@@ -75,7 +75,7 @@ namespace DialogEngine
         // A character's Phrases list holds all the phrases they might say along with 
         // heuristic phraseWeights on what parts of a model dialog they might use them in.
 
-        protected const int RecentPhrasesQueueSize = 4;
+        public const int RecentPhrasesQueueSize = 4;
         public Queue<PhraseEntry> RecentPhrases = new Queue<PhraseEntry>();  //TODO make this a method that runs over the history
     }
     
@@ -90,10 +90,7 @@ namespace DialogEngine
         public List<string> Requires = new List<string>();
         public List<string> Provides = new List<string>();
         public List<string> PhraseTypeSequence = new List<string>();
-        public bool AreDialogsRequirementsMet() {
-
-            return true;
-        }
+        public bool AreDialogsRequirementsMet() {return true;}
     }
 
     public static class RandomNumbers
@@ -109,7 +106,7 @@ namespace DialogEngine
             string versionTimeStr = "Dialog Engine ver 0.43 Isaac, Aria, Joe " + DateTime.Now;
             Console.WriteLine(""); 
             Console.WriteLine(versionTimeStr);
-            GlobalPhraseTypes.TestPhraseTypes.ForEach (Console.WriteLine) ;
+            //GlobalPhraseTypes.TestPhraseTypes.ForEach (Console.WriteLine) ;
             Console.Read();
             if (SessionVars.WriteSerialLog)
             {
@@ -209,7 +206,7 @@ namespace DialogEngine
                 else {
                     if (!SessionVars.HeatMapOnlyMode) {
                         TheDialogs.GenerateADialog();  //normal operation
-                        Thread.Sleep(1100);
+                        Thread.Sleep(1100);  
                         Thread.Sleep(RandomNumbers.Gen.Next(0, 2000));
                     }
                     else {

@@ -1,12 +1,6 @@
 {
-	"PhraseTotals": 
-	{
-    "DialogStr": "PhraseTotals",
-    "FileName": "No Audio Filename Associated with PhraseTotals",
-    "PhraseWeights": {},
-    "testPhraseWeights": null,
-    "PhraseRating": 0
-  },
+  "CharacterName": "Cartman",
+  "CharacterPrefix": "CM",
   "Phrases": 
   [
     {
@@ -1484,45 +1478,5 @@
       "FileName": "ISeeYouArent",
       "PhraseRating": 0
     }
-  ],
-  "RecentPhrases": [
-    {
-      "DialogStr": "Cartman has not been initialized.",
-      "FileName": "CartmanHasNotBeen",
-      "PhraseWeights": {
-        "Exclamation": 0.01
-      },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
-    },
-    {
-      "DialogStr": "Cartman has not been initialized.",
-      "FileName": "CartmanHasNotBeen",
-      "PhraseWeights": {
-        "Exclamation": 0.01
-      },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
-    },
-    {
-      "DialogStr": "Cartman has not been initialized.",
-      "FileName": "CartmanHasNotBeen",
-      "PhraseWeights": {
-        "Exclamation": 0.01
-      },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
-    },
-    {
-      "DialogStr": "Cartman has not been initialized.",
-      "FileName": "CartmanHasNotBeen",
-      "PhraseWeights": {
-        "Exclamation": 0.01
-      },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
-    }
-  ],
-  "CharacterName": "Cartman",
-  "CharacterPrefix": "CM"
+  ]
 }

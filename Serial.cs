@@ -5,6 +5,8 @@ using System.Threading;
 using System.Collections.Generic;
 using System.Linq;
 
+//TODO pull stuff out of here that is not serial and create a CharacterSelection.cs with pieces from DialogTracker
+
 namespace DialogEngine
 {
     public class ReceivedMessage
@@ -332,7 +334,7 @@ namespace DialogEngine
                 while (NextCharacter1 == NextCharacter2) {
                     NextCharacter2 = RandomNumbers.Gen.Next(0, Program.TheDialogs.CharacterList.Count);  
                 }
-                Thread.Sleep(8000 + RandomNumbers.Gen.Next(0, 34000));
+                Thread.Sleep(8000 + RandomNumbers.Gen.Next(0, 34000));  
             }
         }
     }

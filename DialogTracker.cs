@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
-using Newtonsoft.Json;
+using Newtonsoft.Json; 
 
 // ReSharper disable ConditionIsAlwaysTrueOrFalse
 
@@ -59,18 +59,38 @@ namespace DialogEngine
             }
         }
 
+        public void HandleDeserializationError(object sender, Newtonsoft.Json.Serialization.ErrorEventArgs errorArgs) {
+            Console.WriteLine(errorArgs.ErrorContext.Error.Message);
+            Console.WriteLine("Please correct your JSON file and restart the program. Control-C will exit.");
+            Console.ReadLine();
+            errorArgs.ErrorContext.Handled = true;
+        }
+
         public DialogTracker() {
             //JSON parse here.
             DirectoryInfo d = new DirectoryInfo(SessionVars.CharactersDirectory);
             foreach (FileInfo file in d.GetFiles("*.json")) //file of type FileInfo for each .json in directory
             {
+                Console.WriteLine("Beggining read of " + file);
                 string inChar;
                 FileStream fs = file.OpenRead();    //open a read-only FileStream
                 using (StreamReader reader = new StreamReader(fs))   //creates new streamerader for fs stream. Could also construct with filename...
                 {
-                    inChar = reader.ReadToEnd();//working to here.
-                    Character deserializedCharacterJSON = JsonConvert.DeserializeObject<Character>(inChar);
-                    
+                    inChar = reader.ReadToEnd();
+                    Character deserializedCharacterJSON = JsonConvert.DeserializeObject<Character>(inChar,
+                        new JsonSerializerSettings
+                        {
+                            Error = HandleDeserializationError
+
+                        });
+
+                    deserializedCharacterJSON.PhraseTotals = new PhraseEntry();  //init PhraseTotals
+                    deserializedCharacterJSON.PhraseTotals.DialogStr = "phrase weights";
+                    deserializedCharacterJSON.PhraseTotals.FileName = "silence";
+                    deserializedCharacterJSON.PhraseTotals.PhraseRating  = ParentalRating.G;
+                    deserializedCharacterJSON.PhraseTotals.phraseWeights = new Dictionary<string, double>();
+                    deserializedCharacterJSON.PhraseTotals.phraseWeights.Add("Greeting", 0.0f);
+
                     //Calculate Phrase Weight Totals here.
                     foreach (PhraseEntry _curPhrase in deserializedCharacterJSON.Phrases)
                     {
@@ -86,12 +106,14 @@ namespace DialogEngine
                             }
                         }
                     }
+                    for (var i = 0; i < Character.RecentPhrasesQueueSize; i++) {  // we always deque after enque so this sets que size
+                        deserializedCharacterJSON.RecentPhrases.Enqueue(deserializedCharacterJSON.Phrases[0]);
+                    }
                     //list Chars as they come in.
-                    Console.WriteLine(deserializedCharacterJSON.CharacterName);
+                    Console.WriteLine("Finish read of " + deserializedCharacterJSON.CharacterName);
 
                     //Add to Char List
                     CharacterList.Add(deserializedCharacterJSON);
-
                 }
             }
             // Fill the queue with greeting dialogs
@@ -102,14 +124,10 @@ namespace DialogEngine
 
         public void PlayAudio(string pathAndFileName) {
             if (!SessionVars.AudioDialogsOn) {
-                Thread.Sleep(2200);
+                //Thread.Sleep(2200);
                 return;
             }
             if (File.Exists(pathAndFileName)) {
-                FileInfo fileInfo = new FileInfo(pathAndFileName);
-                //empirical hack to wait reasonable time since Play() has no return to know when playing is complete
-                long songMilliSeconds = fileInfo.Length/14;
-                //var playSuccess = Player.Play(pathAndFileName);
                 var playSuccess = Audio.PlayMp3(pathAndFileName);
                
                 if (playSuccess != 0) {
@@ -156,7 +174,7 @@ namespace DialogEngine
             Console.WriteLine(dialogModelString);
             if (SessionVars.WriteSerialLog) {
                 using (StreamWriter serialLogDialogModels = new StreamWriter(
-                    (SessionVars.LogsDirectory + SessionVars.SerialLogFileName), true)) {
+                    (SessionVars.LogsDirectory + SessionVars.DialogSerialLogFileName), true)) {
                     serialLogDialogModels.WriteLine(dialogModelString);
                     serialLogDialogModels.Close();
                 }

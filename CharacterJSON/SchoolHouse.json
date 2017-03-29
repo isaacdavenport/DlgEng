@@ -1,12 +1,6 @@
 {
-	"PhraseTotals": 
-	{
-    "DialogStr": "PhraseTotals",
-    "FileName": "No Audio Filename Associated with PhraseTotals",
-    "PhraseWeights": {},
-    "testPhraseWeights": null,
-    "PhraseRating": 0
-  },
+  "CharacterName": "SchoolHouse",
+  "CharacterPrefix": "SH",
   "Phrases": 
   [
     {
@@ -29,7 +23,5 @@
       "testPhraseWeights": null,
       "PhraseRating": 0
     }
-  ],
-  "CharacterName": "SchoolHouse",
-  "CharacterPrefix": "SH"
+  ]
 }

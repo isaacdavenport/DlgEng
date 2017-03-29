@@ -1,0 +1,944 @@
+{
+  "CharacterName": "Rarity",
+  "CharacterPrefix": "RY",
+  "Phrases": [
+    {
+      "DialogStr": "Rarity has not been initialized.",
+      "FileName": "Rarityhasnotbeen",
+      "PhraseWeights": {
+        "Exclamation": 0.01
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Hi, I'm Rarity",
+      "FileName": "HiImRarity",
+      "PhraseWeights": {
+        "Greeting": 1,
+        "RequestAffirmation": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Have you seen the glitter?",
+      "FileName": "HaveYouSeenTheGlitter",
+      "PhraseWeights": {
+        "RequestAffirmation": 0.2,
+        "YesNoQuestion": 0.2,
+        "RequestLocation": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Justin Bieber is a favorite of many ponies.",
+      "FileName": "JustinBieberIsA",
+      "PhraseWeights": {
+        "GiveWho": 0.2,
+        "GiveSuprisingStatement": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "I am trying to picture who would look most splendid in this new dress I made.",
+      "FileName": "IAmTryingTo",
+      "PhraseWeights": {
+        "RequestWho": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Have you seen my gown?",
+      "FileName": "HaveYouSeenMy",
+      "PhraseWeights": {
+        "RequestAffirmation": 0.2,
+        "YesNoQuestion": 0.2,
+        "RequestLocation": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "These dresses are my responsibility!",
+      "FileName": "TheseDressesAreMy",
+      "PhraseWeights": {
+        "Ramble": 0.2,
+        "GiveSurprisingStatement": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "This I can assure!",
+      "FileName": "ThisICanAssure",
+      "PhraseWeights": {
+        "GiveSurprisingStatement": 0.2,
+        "Exclamation": 0.5,
+        "Yes": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "You're in style!",
+      "FileName": "YoureInStyle",
+      "PhraseWeights": {
+        "Exclamation": 0.5,
+        "GiveAffirmation": 0.3,
+        "Yes": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Makes my heart just soar!",
+      "FileName": "MakesMyHeartSoar",
+      "PhraseWeights": {
+        "Exclamation": 0.5,
+        "GoOnJoyful": 0.2,
+        "Yes": 0.6
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Makes my heart just break!",
+      "FileName": "MakesMyHeartBreak",
+      "PhraseWeights": {
+        "Exclamation": 0.5,
+        "GiveDisbelief": 0.3,
+        "GoOnSad": 0.2,
+        "No": 0.6
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "I vow to give finesse.",
+      "FileName": "IVowToGive",
+      "PhraseWeights": {
+        "Yes": 0.6,
+        "GiveAffirmation": 0.6
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "These new gems add such flair",
+      "FileName": "TheseNewGemsAdd",
+      "PhraseWeights": {
+        "GiveSurprisingStatement": 0.2,
+        "GiveAffirmation": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Hard work's all worthwhile!",
+      "FileName": "HardWorksAllWorthwhile",
+      "PhraseWeights": {
+        "GiveRecentHistory": 0.2,
+        "GiveAdvice": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "They need to be spectacular!",
+      "FileName": "TheyNeedToBe",
+      "PhraseWeights": {
+        "GiveDisbelief": 0.3,
+        "GiveSurprisingStatement": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Dumb rock!",
+      "FileName": "DumbRock",
+      "PhraseWeights": {
+        "GiveSurprisingStatement": 0.2,
+        "Insult": 0.5,
+        "ShutUp": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "I am a lady. Address me as such!",
+      "FileName": "IAmALady",
+      "PhraseWeights": {
+        "ShutUp": 0.2,
+        "Threat": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "I beg your pardon!",
+      "FileName": "IBegYourPardon",
+      "PhraseWeights": {
+        "Threat": 0.2,
+        "No": 0.2,
+        "GiveDisbelief": 0.3,
+        "Retreat": 0.3
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Get a manicure!",
+      "FileName": "GetAManicure",
+      "PhraseWeights": {
+        "Threat": 0.4,
+        "Insult": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Good heavens! Your breath smells simply dreadful!",
+      "FileName": "YourBreathSmell",
+      "PhraseWeights": {
+        "Insult": 0.4,
+        "Exclamation": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "This air is simply suffocating!",
+      "FileName": "ThisAirIsSuffocating",
+      "PhraseWeights": {
+        "Exclamation": 0.2,
+        "GiveSurprisingStatement": 0.3,
+        "Insult": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Your stench nauseates me!",
+      "FileName": "YourStench",
+      "PhraseWeights": {
+        "No": 0.2,
+        "GoOnDisgust": 0.3,
+        "Insult": 0.3
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "I am not ugly!",
+      "FileName": "ImNotUgly",
+      "PhraseWeights": {
+        "Exclamation": 0.2,
+        "GiveSurprisingStatement": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Don't I look beautiful?",
+      "FileName": "AmIBeautiful",
+      "PhraseWeights": {
+        "YesNoQuestion": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "You've never liked me!",
+      "FileName": "NeverLikedMe",
+      "PhraseWeights": {
+        "ShutUp": 0.2,
+        "Retreat": 0.3
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "That gives me motivation!",
+      "FileName": "GivesMeMotivation",
+      "PhraseWeights": {
+        "GoOnJoyful": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "That sounds sublime!",
+      "FileName": "SoundsSublime",
+      "PhraseWeights": {
+        "Exclamation": 0.2,
+        "GoOnJoyful": 0.2,
+        "Yes": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "That's quite terrifying!",
+      "FileName": "ThatsQuiteTerrifying",
+      "PhraseWeights": {
+        "Retreat": 0.2,
+        "GoOnFear": 0.4,
+        "ShutUp": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+	    {
+      "DialogStr": "I'm so excited!",
+      "FileName": "ImSoExcited",
+      "PhraseWeights": {
+        "GoOnSurprise": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "We're friends!",
+      "FileName": "WereFriends",
+      "PhraseWeights": {
+        "GiveMotivation": 0.3,
+        "GoOnNeutral": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Friendship is magic!",
+      "FileName": "FriendshipIsMagic",
+      "PhraseWeights": {
+        "GiveAffirmation": 0.1,
+        "Exclamation": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "I just finished five cartons of vanilla oat swirl. I don't think I'm interested.",
+      "FileName": "NotInterested",
+      "PhraseWeights": {
+        "GoOnDisgust": 0.2,
+        "GiveRecentHistory": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Here's some inspiration magic!",
+      "FileName": "InspirationMagic",
+      "PhraseWeights": {
+        "GiveAffirmation": 0.4,
+        "GoOnUnderstanding": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "You can always speak your true words!",
+      "FileName": "SpeakTrueWords",
+      "PhraseWeights": {
+        "GoOnUnderstanding": 0.4,
+        "GoOnNeutral": 0.2,
+        "GiveMotivation": 0.2,
+        "GiveAdvice": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "There's only one way to find out!",
+      "FileName": "OneWayToFindOut",
+      "PhraseWeights": {
+        "GiveAdvice": 0.2,
+        "GiveActivity": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Like a true friend, you've inspired me to do this with flying colors!",
+      "FileName": "LikeATrueFriend",
+      "PhraseWeights": {
+        "GiveMotivation": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "A designer never reveals her tricks!",
+      "FileName": "DesignerNeverReveals",
+      "PhraseWeights": {
+        "GiveAdvice": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Leave me be!",
+      "FileName": "LeaveMeBe",
+      "PhraseWeights": {
+        "ShutUp": 0.2,
+        "No": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Why, yes of course!",
+      "FileName": "WhyYesOfCourse",
+      "PhraseWeights": {
+        "Yes": 0.2,
+        "GiveAffirmation": 0.4,
+        "GoOnNeutral": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Let's go look fabulous!",
+      "FileName": "LetsGoLookFabulous",
+      "PhraseWeights": {
+        "RequestActivity": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Near the precious stones!",
+      "FileName": "NearPreciousStones",
+      "PhraseWeights": {
+        "GiveLocation": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Oh! Goodness!",
+      "FileName": "OhGoodness",
+      "PhraseWeights": {
+        "Exclamation": 0.2,
+        "GoOnSurprise": 0.2,
+        "GoOnFear": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Do you want to look nice or not?",
+      "FileName": "DoYouWantToLookNice",
+      "PhraseWeights": {
+        "YesNoQuestion": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Right by the cake!",
+      "FileName": "ByTheCake",
+      "PhraseWeights": {
+        "GiveLocation": 0.5
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "You're adorable, but you're also quite useful!",
+      "FileName": "AdorableAndUseful",
+      "PhraseWeights": {
+        "GiveAffirmation": 0.4,
+        "GoOnUnderstanding": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Gross! Gross! Gross",
+      "FileName": "Gross",
+      "PhraseWeights": {
+        "GoOnDisgust": 0.4,
+        "GoOnDisapproval": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "So revolting!",
+      "FileName": "SoRevolting",
+      "PhraseWeights": {
+        "GoOnDisgust": 0.3,
+        "GoOnAngry": 0.2,
+        "GoOnDisapproval": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG" 
+    },
+    {
+      "DialogStr": "Spectacularly ruining it!",
+      "FileName": "RuiningIt",
+      "PhraseWeights": {
+        "GoOnDisapproval": 0.2,
+        "GiveActivity": 0.2,
+        "GoOnAngry": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "I'm Rarity of Carousel Boutique!",
+      "FileName": "RarityOfCarouselBoutique",
+      "PhraseWeights": {
+        "Greeting": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Oh woe is me! Whatever shall I do?",
+      "FileName": "WoeIsMe",
+      "PhraseWeights": {
+        "RequestActivity": 0.2,
+        "RequestMotivation": 0.2,
+        "Retreat": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Filthy disgusting dirt!",
+      "FileName": "DisgustingDirt",
+      "PhraseWeights": {
+        "Threat": 0.2,
+        "GoOnDisgust": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Onwards!",
+      "FileName": "Onwards",
+      "PhraseWeights": {
+        "GoOnNeutral": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "You may call me Ms or Rarity or Ms. Rarity.",
+      "FileName": "YouMayCallMe",
+      "PhraseWeights": {
+        "Greeting": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Obviously, this siutation just calls for a little pony charm.",
+      "FileName": "PonyCharm",
+      "PhraseWeights": {
+        "GiveAdvice": 0.2,
+        "GoOnUnderstanding": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "I used to be respected.",
+      "FileName": "UsedToBeRespected",
+      "PhraseWeights": {
+        "RequestAdvice": 0.4,
+        "RequestAffirmation": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Every pony is laughing at me!",
+      "FileName": "LaughingAtMe",
+      "PhraseWeights": {
+        "Retreat": 0.4,
+        "RequestAffirmation": 0.2,
+        "RequestAdvice": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "I don't want to be a laughingstock!",
+      "FileName": "AmALaughingstock",
+      "PhraseWeights": {
+        "RequestAdvice": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "What am I supposed to wallow in?",
+      "FileName": "WhatsGoingOn",
+      "PhraseWeights": {
+        "RequestAdvice": 0.4,
+        "RequestJoke": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "How divine",
+      "FileName": "HowDivine",
+      "PhraseWeights": {
+        "GiveAffirmation": 0.2,
+        "GoOnSurprise": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Who doesn't like the smell of cake frosting?",
+      "FileName": "CakeFrosting",
+      "PhraseWeights": {
+        "Exclamation": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Don't you just love it here?",
+      "FileName": "LoveItHere",
+      "PhraseWeights": {
+        "RequestLocation": 0.2,
+        "YesNoQuestion": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Oh my stars, darling!",
+      "FileName": "OhMyStarsDarling",
+      "PhraseWeights": {
+        "GoOnSurprise": 0.2,
+        "Exclamation": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Oh you're simply darling!",
+      "FileName": "SimplyDarling",
+      "PhraseWeights": {
+        "GiveAffirmation": 0.2,
+        "GoOnUnderstanding": 0.2
+    },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Don't be a pushover, darling. You've got to stand up for yourself!",
+      "FileName": "StandUpForYourself",
+      "PhraseWeights": {
+        "GiveAdvice": 0.3,
+        "GoOnUnderstanding": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "I don't find that funny at all.",
+      "FileName": "NotFunny",
+      "PhraseWeights": {
+        "ShutUp": 0.2,
+        "RequestJoke": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "What a royal pain!",
+      "FileName": "RoyalPain",
+      "PhraseWeights": {
+        "RequestJoke": 0.2,
+        "GoOnDisgust": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Perhaps underneath all that frosting!",
+      "FileName": "UnderneathFrosting",
+      "PhraseWeights": {
+        "GiveLocation": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Oh what have I done?",
+      "FileName": "WhatHaveIDone",
+      "PhraseWeights": {
+        "Exclamation": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Beautifying their manes",
+      "FileName": "BeautifyManes",
+      "PhraseWeights": {
+        "GiveActivity": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Why do you have to be so good? It makes me look so bad.",
+      "FileName": "MakesMeLookBad",
+      "PhraseWeights": {
+        "RequestAdvice": 0.2,
+        "GiveJoke": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Generosity is ruined!",
+      "FileName": "GenerosityIsRuined",
+      "PhraseWeights": {
+        "Exclamation": 0.2,
+        "GoOnSad": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Marvelous!",
+      "FileName": "Marvelous",
+      "PhraseWeights": {
+        "GoOnJoyful": 0.2,
+        "Exclamation": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Don't fret!",
+      "FileName": "DontFret",
+      "PhraseWeights": {
+        "GiveAdvice": 0.2,
+        "GoOnSad": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "I'm going down in flames! That will be more entertainment!",
+      "FileName": "Entertainment",
+      "PhraseWeights": {
+        "GiveJoke": 0.2,
+        "Exclamation": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Congratu-pony-lations!",
+      "FileName": "Congratulations",
+      "PhraseWeights": {
+        "GiveAffirmation": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Oh, my ribbon and threads!",
+      "FileName": "RibbonAndThreads",
+      "PhraseWeights": {
+        "GoOnSurprise": 0.2,
+        "GoOnFear": 0.2,
+        "Exclamation": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Shimmery but not showy",
+      "FileName": "ShimmeryButNotShowy",
+      "PhraseWeights": {
+        "Exclamation": 0.2,
+        "GoOnJoyful": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "LEAVE ME ALONE! I *want* to be alone! I want to wallow in... whatever it is that ponies are supposed to wallow in!... Do ponies wallow in pity?... Oh, listen to me! I don't even know what I'm supposed to wallow in! I'm so PATHETIIIIIC!",
+      "FileName": "LeaveMeAlone",
+      "PhraseWeights": {
+        "Ramble": 0.4,
+        "RequestAffirmation": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Yard by yard, fussing on the details. Jewel neckline, don't you know a stitch in time saves nine? Make her something perfect to inspire. Even though she hates formal attire. Gotta mind those intimate details.",
+      "FileName": "YardByYard",
+      "PhraseWeights": {
+        "Ramble": 0.4,
+        "RequestAffirmation": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Piece by piece, snip by snip. Croup, dock, haunch, shoulders, hip. Bolt by bolt, primmed and pressed. Yard by yard, always stressed. And that's the art of the dress!",
+      "FileName": "PieceByPiece",
+      "PhraseWeights": {
+        "Ramble": 0.4,
+        "RequestAffirmation": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Just because I'm a lady doesn't mean I cannot handle myself in a sticky situation. I had them wrapped around my hoof the entire time.",
+      "FileName": "StickySitch",
+      "PhraseWeights": {
+        "Exclamation": 0.2,
+        "Ramble": 0.4
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "I've just got so many bags and I was trying to get back to my suite at the castle and...",
+      "FileName": "GotManyBags",
+      "PhraseWeights": {
+        "GiveRecentHistory": 0.2,
+        "RequestCatchup": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "You don't know how upset it makes me to hear you say that!",
+      "FileName": "MakesMeUpset",
+      "PhraseWeights": {
+        "GoOnAngry": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "I'll be the toast of the town, the girl on the go. I'm the type of pony everypony, everypony should know. I'll be the one to watch, the girl in the flow. I'm the type of pony everypony, everypony should know.",
+      "FileName": "ToastOfTheTown",
+      "PhraseWeights": {
+        "Ramble": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Becoming popular, as popular can be!",
+      "FileName": "BecomingPopular",
+      "PhraseWeights": {
+        "GiveActivity": 0.2,
+        "GiveJoke": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Becoming popular, as popular can be!",
+      "FileName": "BecomingPopular",
+      "PhraseWeights": {
+        "GiveActivity": 0.2,
+        "GiveJoke": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Why, yes. Hello.",
+      "FileName": "YesHello",
+      "PhraseWeights": {
+        "RequestCatchup": 0.2,
+        "Greeting": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "You don't know how glad I am to hear you say that!",
+      "FileName": "HowGlad",
+      "PhraseWeights": {
+        "GoOnJoyful": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "I learned that no matter where you go in life, you should never forget that you are the product of your home and your friends. And that is something always to be proud of, no matter what.",
+      "FileName": "ILearnedThat",
+      "PhraseWeights": {
+        "Ramble": 0.2,
+        "GiveAdvice": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "What can they do?",
+      "FileName": "WhatCanTheyDo",
+      "PhraseWeights": {
+        "RequestActivity": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Oh darling, what happened?",
+      "FileName": "WhatCanWeDo",
+      "PhraseWeights": {
+        "RequestCatchup": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Why would Gabby Gums reprint my private diary?",
+      "FileName": "WhyWouldGabbyGums",
+      "PhraseWeights": {
+        "RequestMotivation": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Why wouldn't Sweetie Belle wear that beautiful gown I made for her?",
+      "FileName": "WhyWouldntSweetieBelle",
+      "PhraseWeights": {
+        "RequestMotivation": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Why didn't Applejack want to help us fix the rainbow?",
+      "FileName": "WhyDidntApplejack",
+      "PhraseWeights": {
+        "RequestMotivation": 0.2
+      },
+      "testPhraseWeights": null,
+      "PhraseRating": "PG"
+    }
+  ]
+}
+
+	
+	
