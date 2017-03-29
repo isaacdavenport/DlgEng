@@ -260,13 +260,67 @@ namespace DialogEngine
                     "GiveActivity"
                 }
             });
-            
-            inObj.ModelDialogs.Add(new ModelDialog{
+            inObj.ModelDialogs.Add(new ModelDialog
+            {
                 Name = "ReqMotiv, Givemotiv",
-                AddedOnDateTime = firstRound, Popularity = 1.2,
+                AddedOnDateTime = firstRound,
+                Popularity = 1.2,
                 PhraseTypeSequence = new List<string> {
                     "RequestMotivation",
                     "GiveMotivation"
+                }
+            });
+
+            inObj.ModelDialogs.Add(new ModelDialog
+            {
+                Name = "ReqAdv,  GiveAdv",
+                AddedOnDateTime = firstRound,
+                Popularity = 1.3,
+                PhraseTypeSequence = new List<string> {
+                    "RequestAdvice",
+                    "GiveAdvice"
+                }
+            });
+
+            inObj.ModelDialogs.Add(new ModelDialog
+            {
+                Name = "Request location Give location",
+                AddedOnDateTime = firstRound,
+                Popularity = 2.1,
+                PhraseTypeSequence = new List<string> {
+                    "RequestLocation",
+                    "GiveLocation"
+                }
+            });
+
+            inObj.ModelDialogs.Add(new ModelDialog
+            {
+                Name = "Request who Give who",
+                AddedOnDateTime = firstRound,
+                Popularity = 2.1,
+                PhraseTypeSequence = new List<string> {
+                    "RequestWho",
+                    "GiveWho"
+                }
+            });
+
+            inObj.ModelDialogs.Add(new ModelDialog
+            {
+                Name = "Request who insult",
+                AddedOnDateTime = firstRound,
+                Popularity = 2.1,
+                PhraseTypeSequence = new List<string> {
+                    "RequestWho",
+                    "Insult"
+                }
+            });
+            
+            inObj.ModelDialogs.Add(new ModelDialog{
+                Name = "RequestMotivation, Insult",
+                AddedOnDateTime = firstRound, Popularity = 1.2,
+                PhraseTypeSequence = new List<string> {
+                    "RequestMotivation",
+                    "Insult"
                 }
             });
             
@@ -275,16 +329,16 @@ namespace DialogEngine
                 AddedOnDateTime = firstRound, Popularity = 1.3,
                 PhraseTypeSequence = new List<string> {
                     "RequestAdvice",
-                    "GiveAdvice"
+                    "Insult"
                 }
             });
             
             inObj.ModelDialogs.Add(new ModelDialog{
-                Name = "Request location Give location",
+                Name = "Request location, Insult",
                 AddedOnDateTime = firstRound, Popularity = 2.1,
                 PhraseTypeSequence = new List<string> {
                     "RequestLocation",
-                    "GiveLocation"
+                    "Insult"
                 }
             });
             
@@ -301,7 +355,7 @@ namespace DialogEngine
             });
 
             inObj.ModelDialogs.Add(new ModelDialog {
-                Name = "LM01_CM+SB_Fight",
+                Name = "Lunch Money Adventure LM01 CM+SB Start Fight",
                 AddedOnDateTime = adventureRound,
                 Popularity = 2.2,
                 Adventure = "LM",

@@ -46,6 +46,7 @@ namespace DialogEngine
             (ParentalRating)Enum.Parse(typeof(ParentalRating), AppSet.ReadSetting("CurrentParentalRating"));
         public static readonly string LogsDirectory = AppSet.ReadSetting("LogsDirectory");
         public static readonly string CharactersDirectory = AppSet.ReadSetting("CharactersDirectory");
+        public static readonly string DialogsDirectory = AppSet.ReadSetting("DialogsDirectory");
         public static readonly string AudioDirectory = AppSet.ReadSetting("AudioDirectory");
         public static readonly string DecimalSerialLogFileName = AppSet.ReadSetting("DecimalSerialLogFileName");
         public static readonly string SerialLogFileName = AppSet.ReadSetting("SerialLogFileName");
@@ -101,7 +102,7 @@ namespace DialogEngine
         public static DialogTracker TheDialogs = new DialogTracker();
 
         static void WriteStartupInfo() {
-            string versionTimeStr = "Dialog Engine ver 0.42 Isaac, Aria, Joe " + DateTime.Now;
+            string versionTimeStr = "Dialog Engine ver 0.43 Isaac, Aria, Joe " + DateTime.Now;
             Console.WriteLine(""); 
             Console.WriteLine(versionTimeStr);
             GlobalPhraseTypes.TestPhraseTypes.ForEach (Console.WriteLine) ;
