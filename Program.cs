@@ -31,7 +31,6 @@ namespace DialogEngine
         public static readonly bool DebugFlag = Convert.ToBoolean(AppSet.ReadSetting("DebugFlag"));
         public static readonly bool AudioDialogsOn = Convert.ToBoolean(AppSet.ReadSetting("AudioDialogsOn"));
         public static readonly bool TextDialogsOn = Convert.ToBoolean(AppSet.ReadSetting("TextDialogsOn"));
-        public static readonly bool ForceCharacterSelection = Convert.ToBoolean(AppSet.ReadSetting("ForceCharacterSelection"));
         public static readonly bool ForceCharactersAndDialogModel = Convert.ToBoolean(AppSet.ReadSetting("ForceCharactersAndDialogModel"));
         public static readonly bool WaitIndefinatelyForMove = Convert.ToBoolean(AppSet.ReadSetting("WaitIndefinatelyForMove"));
         public static readonly bool ShowDupePhrases = Convert.ToBoolean(AppSet.ReadSetting("ShowDupePhrases"));
@@ -177,7 +176,7 @@ namespace DialogEngine
             InitModelDialogs.SetDefaults(TheDialogs);
 
             //Select Debug Output
-            if (SessionVars.ForceCharacterSelection) {
+            if (SessionVars.ForceCharactersAndDialogModel) {
                 Console.WriteLine("   enter three numbers to set the next: DialogModel, Char1, Char2");
                 Console.WriteLine();
             }

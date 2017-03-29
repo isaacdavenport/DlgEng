@@ -514,7 +514,7 @@ namespace DialogEngine
                                           "_" + selectedPhrase.FileName + ".mp3";
                     PlayAudio(pathAndFileName);
 
-                    if (!SessionVars.ForceCharacterSelection &&
+                    if (!SessionVars.ForceCharactersAndDialogModel &&
                         !DialogTrackerAndSerialComsCharactersSame())
                     {
                         SameCharactersAsLast = false;
