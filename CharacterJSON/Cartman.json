@@ -1258,7 +1258,7 @@
     },
     {
       "DialogStr": "I'm not sure that works for me.",
-      "FileName": "CM_ImNotSureThat",
+      "FileName": "ImNotSureThat",
       "PhraseWeights": {
         "LM06C": 0.2,
         "Retreat": 0.1,
@@ -1288,7 +1288,7 @@
     },
     {
       "DialogStr": "Fortunately I have an endless supply of stories about kitty.  She thought that was pretty cool.",
-      "FileName": "CM_FortuneatelyIHaveAn",
+      "FileName": "FortuneatelyIHaveAn",
       "PhraseWeights": {
         "LM09D": 0.2
       },
@@ -1342,7 +1342,7 @@
     },
     {
       "DialogStr": "Hey.  How did you get Kitty?",
-      "FileName": "CM_HeyHowDidYou",
+      "FileName": "HeyHowDidYou",
       "PhraseWeights": {
         "LM15A": 0.2
       },
@@ -1351,7 +1351,7 @@
     },
     {
       "DialogStr": "Kitty's not a furry little beast, she's my kitty.",
-      "FileName": "CM_KittysNotAFurry",
+      "FileName": "KittysNotAFurry",
       "PhraseWeights": {
         "LM15C": 0.2
       },
@@ -1369,7 +1369,7 @@
     },
     {
       "DialogStr": "I see you aren't out telling people how cool I am, well two dollars is better than that anyway.",
-      "FileName": "CM_ISeeYouArent",
+      "FileName": "ISeeYouArent",
       "PhraseWeights": {
         "LM16B": 0.2
       },
@@ -1409,7 +1409,7 @@
         "LM09D": 0.2
       },
       "DialogStr": "Fortunately I have an endless supply of stories about kitty.  She thought that was pretty cool.",
-      "FileName": "CM_FortuneatelyIHaveAn",
+      "FileName": "FortuneatelyIHaveAn",
       "PhraseRating": 0
     },
     {
@@ -1457,7 +1457,7 @@
         "LM15A": 0.2
       },
       "DialogStr": "Hey.  How did you get Kitty?",
-      "FileName": "CM_HeyHowDidYou",
+      "FileName": "HeyHowDidYou",
       "PhraseRating": 0
     },
     {
@@ -1465,7 +1465,7 @@
         "LM15C": 0.2
       },
       "DialogStr": "Kitty's not a furry little beast, she's my kitty.",
-      "FileName": "CM_KittysNotAFurry",
+      "FileName": "KittysNotAFurry",
       "PhraseRating": 0
     },
     {
@@ -1481,7 +1481,7 @@
         "LM16B": 0.2
       },
       "DialogStr": "I see you aren't out telling people how cool I am, well two dollars is better than that anyway.",
-      "FileName": "CM_ISeeYouArent",
+      "FileName": "ISeeYouArent",
       "PhraseRating": 0
     }
   ],

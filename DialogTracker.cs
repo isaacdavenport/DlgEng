@@ -452,14 +452,17 @@ namespace DialogEngine
             {
                 if(CharacterList[speakingCharacter].PhraseTotals.phraseWeights.ContainsKey(currentPhraseType))
                 {
-                    Console.Write(CharacterList[speakingCharacter].CharacterName + ": ");
+                    if (SessionVars.TextDialogsOn) {
+                        Console.Write(CharacterList[speakingCharacter].CharacterName + ": ");
+                    }
+                    
                     if (CharacterList[speakingCharacter].PhraseTotals.phraseWeights[currentPhraseType] < 0.01f)
                         Console.WriteLine("   Missing PhraseType: " + currentPhraseType + "\r\n");
 
                     selectedPhrase = PickAWeightedPhrase(speakingCharacter, currentPhraseType);
-                    Console.Write("Strings: ");
-                    Console.WriteLine(selectedPhrase.DialogStr);
-
+                    if (SessionVars.TextDialogsOn) {
+                        Console.WriteLine(selectedPhrase.DialogStr);
+                    }
                     AddPhraseToHistory(selectedPhrase, speakingCharacter);
 
                     var pathAndFileName = SessionVars.AudioDirectory + CharacterList[speakingCharacter].CharacterPrefix +

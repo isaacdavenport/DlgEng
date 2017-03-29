@@ -415,7 +415,7 @@
     },
     {
       "DialogStr": "You overthink something it is going to get hard.  If you underthinkit could get worse.  You need to think it just right.  How do you know ifit is just right?  I have no idea.",
-      "FileName": "YouUnderthink",
+      "FileName": "YouUnderThinkSomething",
       "PhraseWeights": {
         "GiveAdvice": 0.5
       },
@@ -480,8 +480,8 @@
       "PhraseRating": 0
     },
     {
-      "DialogStr": "I Think I Here My",
-      "FileName": "IThinkIHereMy",
+      "DialogStr": "I Think I Hear My",
+      "FileName": "IThinkIHearMy",
       "PhraseWeights": {
         "Retreat": 0.2
       },
@@ -660,58 +660,13 @@
     },
     {
       "DialogStr": "Sometimes it is better to forgive.",
-      "FileName": "",
+      "FileName": "SomeTimesItIs",
       "PhraseWeights": {
         "LM06B": 0.2
       },
       "testPhraseWeights": null,
       "PhraseRating": 0
     },
-    {
-      "DialogStr": "",
-      "FileName": "",
-      "PhraseWeights": {
-        "LM": 0.2
-      },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
-    },
-    {
-      "DialogStr": "",
-      "FileName": "",
-      "PhraseWeights": {
-        "LM": 0.2
-      },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
-    },
-    {
-      "DialogStr": "",
-      "FileName": "",
-      "PhraseWeights": {
-        "LM": 0.2
-      },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
-    },
-    {
-      "DialogStr": "",
-      "FileName": "",
-      "PhraseWeights": {
-        "LM": 0.2
-      },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
-    },
-    {
-      "DialogStr": "",
-      "FileName": "",
-      "PhraseWeights": {
-        "LM": 0.2
-      },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
-    }
   ],
   "testPhraseTotals": {
     "tags": {},

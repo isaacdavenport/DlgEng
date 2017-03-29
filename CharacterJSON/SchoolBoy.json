@@ -975,7 +975,7 @@
     },
     {
       "DialogStr": "He likes his kitty.  He REALLY likes his kitty.",
-      "FileName": "SB_HeLikesHisKitty",
+      "FileName": "HeLikesHisKitty",
       "PhraseWeights": {
         "LM13G": 0.2
       },

@@ -30,6 +30,8 @@ namespace DialogEngine
     public static class SessionVars
     {
         public static readonly bool DebugFlag = Convert.ToBoolean(AppSet.ReadSetting("DebugFlag"));
+        public static readonly bool AudioDialogsOn = Convert.ToBoolean(AppSet.ReadSetting("AudioDialogsOn"));
+        public static readonly bool TextDialogsOn = Convert.ToBoolean(AppSet.ReadSetting("TextDialogsOn"));
         public static readonly bool ForceCharacterSelection = Convert.ToBoolean(AppSet.ReadSetting("ForceCharacterSelection"));
         public static readonly bool ShowDupePhrases = Convert.ToBoolean(AppSet.ReadSetting("ShowDupePhrases"));
         public static readonly bool HeatMapFullMatrixDispMode = Convert.ToBoolean(AppSet.ReadSetting("HeatMapFullMatrixDispMode"));
@@ -99,9 +101,9 @@ namespace DialogEngine
         public static DialogTracker TheDialogs = new DialogTracker();
 
         static void WriteStartupInfo() {
-            string versionTimeStr = "Dialog Engine ver 0.41 Isaac, Aria, Joe " + DateTime.Now;
-            Console.Write(versionTimeStr);
-            Console.Write("\n");
+            string versionTimeStr = "Dialog Engine ver 0.42 Isaac, Aria, Joe " + DateTime.Now;
+            Console.WriteLine(""); 
+            Console.WriteLine(versionTimeStr);
             GlobalPhraseTypes.TestPhraseTypes.ForEach (Console.WriteLine) ;
             Console.Read();
             if (SessionVars.WriteSerialLog)
@@ -144,6 +146,7 @@ namespace DialogEngine
                         Console.WriteLine("missing " + character.CharacterPrefix + "_" + phrase.FileName + " " + phrase.DialogStr);//these are being checked with JSON input.
                     }
                 }
+                Console.WriteLine();
             }
             //TODO check that all dialog models have unique names
         }
