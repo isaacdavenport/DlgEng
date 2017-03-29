@@ -13,20 +13,35 @@ namespace DialogEngine
 
             inObj.ModelDialogs.Add(new ModelDialog
             {
-                Name = "Greeting, Greeting",
+                Name = "Greeting,Greeting,RequestCatchup,GiveRecentHistory,GiveSurprisingStatementGiveRecentHistory,GiveDisbelief,RequestAdvice,GiveJoke,Threat",
                 AddedOnDateTime = firstRound,
                 Popularity = 0.2,
                 PhraseTypeSequence = new List<string> {
                     "Greeting",
-                    "Greeting"
+                    "Greeting",
+                    "RequestCatchup",
+                    "GiveRecentHistory",
+                    "GiveSurprisingStatement",
+                    "GiveRecentHistory",
+                    "GiveDisbelief",
+                    "RequestAdvice",
+                    "GiveJoke",
+                    "Threat"
                 }
             });
 
-            inObj.ModelDialogs.Add(new ModelDialog
-            {
+            inObj.ModelDialogs.Add(new ModelDialog{
+                Name = "Greeting, Greeting" ,
+                AddedOnDateTime = firstRound, Popularity = 0.2,
+                PhraseTypeSequence = new List<string> {
+                    "Greeting",
+                    "Greeting"
+                }
+                });
+
+            inObj.ModelDialogs.Add(new ModelDialog{
                 Name = "Greeting",
-                AddedOnDateTime = firstRound,
-                Popularity = 0.2,
+                AddedOnDateTime = firstRound, Popularity = 0.2,
                 PhraseTypeSequence = new List<string> {
                     "Greeting"
                 }
@@ -35,8 +50,7 @@ namespace DialogEngine
             inObj.ModelDialogs.Add(new ModelDialog
             {
                 Name = "Exclamation, Exclamation",
-                AddedOnDateTime = firstRound,
-                Popularity = 0.2,
+                AddedOnDateTime = firstRound, Popularity = 0.2,
                 PhraseTypeSequence = new List<string> {
                     "Exclamation",
                     "Exclamation"
@@ -45,9 +59,8 @@ namespace DialogEngine
             
             inObj.ModelDialogs.Add(new ModelDialog
             {
-                Name = "Exclamation",
-                AddedOnDateTime = firstRound,
-                Popularity = 0.2,
+                Name = "Single Exclamation",
+                AddedOnDateTime = firstRound, Popularity = 0.2,
                 PhraseTypeSequence = new List<string> {
                     "Exclamation"
                 }
@@ -67,8 +80,7 @@ namespace DialogEngine
             inObj.ModelDialogs.Add(new ModelDialog
             {
                 Name = "RequestAffirmation, GiveAffirmation",
-                AddedOnDateTime = firstRound,
-                Popularity = 0.2,
+                AddedOnDateTime = firstRound, Popularity = 0.2,
                 PhraseTypeSequence = new List<string> {
                     "RequestAffirmation",
                     "GiveAffirmation"
@@ -78,8 +90,7 @@ namespace DialogEngine
             inObj.ModelDialogs.Add(new ModelDialog
             {
                 Name = "RequestAffirmation, GiveJoke",
-                AddedOnDateTime = firstRound,
-                Popularity = 0.9,
+                AddedOnDateTime = firstRound, Popularity = 0.9,
                 PhraseTypeSequence = new List<string> {
                     "RequestJoke",
                     "GiveJoke"
@@ -274,8 +285,7 @@ namespace DialogEngine
             inObj.ModelDialogs.Add(new ModelDialog
             {
                 Name = "ReqAdv,  GiveAdv",
-                AddedOnDateTime = firstRound,
-                Popularity = 1.3,
+                AddedOnDateTime = firstRound, Popularity = 1.3,
                 PhraseTypeSequence = new List<string> {
                     "RequestAdvice",
                     "GiveAdvice"
@@ -285,8 +295,7 @@ namespace DialogEngine
             inObj.ModelDialogs.Add(new ModelDialog
             {
                 Name = "Request location Give location",
-                AddedOnDateTime = firstRound,
-                Popularity = 2.1,
+                AddedOnDateTime = firstRound, Popularity = 2.1,
                 PhraseTypeSequence = new List<string> {
                     "RequestLocation",
                     "GiveLocation"
@@ -296,8 +305,7 @@ namespace DialogEngine
             inObj.ModelDialogs.Add(new ModelDialog
             {
                 Name = "Request who Give who",
-                AddedOnDateTime = firstRound,
-                Popularity = 2.1,
+                AddedOnDateTime = firstRound, Popularity = 2.1,
                 PhraseTypeSequence = new List<string> {
                     "RequestWho",
                     "GiveWho"
@@ -307,8 +315,7 @@ namespace DialogEngine
             inObj.ModelDialogs.Add(new ModelDialog
             {
                 Name = "Request who insult",
-                AddedOnDateTime = firstRound,
-                Popularity = 2.1,
+                AddedOnDateTime = firstRound, Popularity = 2.1,
                 PhraseTypeSequence = new List<string> {
                     "RequestWho",
                     "Insult"
@@ -356,8 +363,7 @@ namespace DialogEngine
 
             inObj.ModelDialogs.Add(new ModelDialog {
                 Name = "Lunch Money Adventure LM01 CM+SB Start Fight",
-                AddedOnDateTime = adventureRound,
-                Popularity = 2.2,
+                AddedOnDateTime = adventureRound, Popularity = 32.2,
                 Adventure = "LM",
                 Provides =  new List<string> { "LM01_CM+SB_Fight" },
                 PhraseTypeSequence = new List<string> {
@@ -372,8 +378,7 @@ namespace DialogEngine
 
             inObj.ModelDialogs.Add(item: new ModelDialog {
                 Name = "LM02_SM+SB_Why_Fight_Corroberate",
-                AddedOnDateTime = adventureRound,
-                Popularity = 2.2,
+                AddedOnDateTime = adventureRound, Popularity = 2.2,
                 Adventure = "LM",
                 Requires = new List<string> { "LM01_CM+SB_Fight"},
                 Provides = new List<string>{ "LM02_SM+SB_Why_Fight_Corroberate", "LM4_Enabled"},
@@ -413,8 +418,7 @@ namespace DialogEngine
             inObj.ModelDialogs.Add(new ModelDialog()
             {
                 Name = "LM04_SB+CM_What_Else_Besides_2Dollars",
-                AddedOnDateTime = adventureRound,
-                Popularity = 2.2,
+                AddedOnDateTime = adventureRound, Popularity = 2.2,
                 Adventure = "LM",
                 Requires = new List<string> { "LM4_Enabled" },
                 Provides = new List<string> { "LM9_Enabled", "LM8_Enabled" },
@@ -430,8 +434,7 @@ namespace DialogEngine
             inObj.ModelDialogs.Add(new ModelDialog
             {
                 Name = "LM05_SB+RL_Can_You_Corroberate",
-                AddedOnDateTime = adventureRound,
-                Popularity = 2.2,
+                AddedOnDateTime = adventureRound, Popularity = 2.2,
                 Adventure = "LM",
                 Requires = new List<string> { "LM02_SM+SB_Why_Fight_Corroberate" },
                 Provides = new List<string> { "LM05_SB+RL_Can_You_Corroberate", "LM4_Enabled" },

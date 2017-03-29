@@ -42,7 +42,8 @@ namespace DialogEngine
         int _priorCharacter1Num = 100;
         int _priorCharacter2Num = 100;
         int CurrentDialogModel = 1;
-        public Mp3Player Player = new Mp3Player();
+        // public Mp3Player Player = new Mp3Player();
+        public WindowsMediaPlayerMp3 Audio = new WindowsMediaPlayerMp3();  
         public bool SameCharactersAsLast = false;
         public bool LastPhraseImpliedMovement = false;
         private static int _movementWaitCount = 0;
@@ -95,33 +96,49 @@ namespace DialogEngine
             }
             // Fill the queue with greeting dialogs
             for (int i = 0; i < RecentDialogsQueSize; i++) {
-                RecentDialogs.Enqueue(0); 
+                RecentDialogs.Enqueue(0); // Fill the que with greeting dialogs
             }
         }
 
         public void PlayAudio(string pathAndFileName) {
+            if (!SessionVars.AudioDialogsOn) {
+                Thread.Sleep(2200);
+                return;
+            }
             if (File.Exists(pathAndFileName)) {
                 FileInfo fileInfo = new FileInfo(pathAndFileName);
                 //empirical hack to wait reasonable time since Play() has no return to know when playing is complete
                 long songMilliSeconds = fileInfo.Length/14;
-                var playSuccess = Player.Play(pathAndFileName);
+                //var playSuccess = Player.Play(pathAndFileName);
+                var playSuccess = Audio.PlayMp3(pathAndFileName);
+               
                 if (playSuccess != 0) {
                     Console.WriteLine("");
                     Console.WriteLine("   MP3 Play Error  ---  " + playSuccess);
                     Console.WriteLine("");
                 }
-                Thread.Sleep((int)songMilliSeconds);
-                Thread.Sleep(20);
+                int i = 0;
+                Thread.Sleep(600);
+                while (Audio.IsPlaying() && i < 250) {  // 20 seconds is max
+                    //Thread.Sleep((int)songMilliSeconds);
+                    Thread.Sleep(100);
+                }
+                Thread.Sleep(1200);  // wait around a second after the audio is done for between phrase pause
             }
             else {
                 Console.WriteLine("Could not find: " + pathAndFileName);
             }
         }
         
-        void AddDialogModelToHistory(int dialogModelIndex, int ch1, int ch2)
-        {
-            HistoricalDialogs.Add(new HistoricalDialog()
-            {
+        void SwapCharactersOneAndTwo() {
+            var tempCh1 = Character1Num;
+            Character1Num = Character2Num;
+            Character2Num = tempCh1;
+            // it doesn't appear we should update prior characters 1 and 2 here
+        }
+
+        void AddDialogModelToHistory(int dialogModelIndex, int ch1, int ch2) {
+            HistoricalDialogs.Add(new HistoricalDialog(){
                 DialogIndex = dialogModelIndex,
                 DialogName = ModelDialogs[dialogModelIndex].Name,
                 StartedTime = DateTime.Now,
@@ -131,23 +148,24 @@ namespace DialogEngine
             });
         }
 
-        public void WriteDialogInfo(int currentDialogModel, int character1Num, int character2Num) {
-            string dialogModelString = "  --DiMod " + currentDialogModel + " " + ModelDialogs[currentDialogModel].Name +
+        public void WriteDialogInfo(int character1Num, int character2Num) {
+            string dialogModelString = "  --DiMod " + CurrentDialogModel + " " + ModelDialogs[CurrentDialogModel].Name +
                                        " NextChars: " + CharacterList[character1Num].CharacterPrefix + " " +
                                        CharacterList[character2Num].CharacterPrefix + " " + DateTime.Now;
 
             Console.WriteLine(dialogModelString);
             if (SessionVars.WriteSerialLog) {
                 using (StreamWriter serialLogDialogModels = new StreamWriter(
-                    (SessionVars.LogsDirectory + SessionVars.DialogSerialLogFileName), true)) {
+                    (SessionVars.LogsDirectory + SessionVars.SerialLogFileName), true)) {
                     serialLogDialogModels.WriteLine(dialogModelString);
                     serialLogDialogModels.Close();
                 }
             }
         }
 
-        List<int> FindMostRecentAdventures() {
+        List<int> FindMostRecentAdventureDialogIndexes() {
             List<int> mostRecentAdventureDialogs = new List<int>();
+            // most recent will be in the 0 index of list
             List<string> foundAdventures = new List<string>();
             int j = 0;
             for (int i = HistoricalDialogs.Count - 1; i >= 0; i--) {
@@ -233,30 +251,57 @@ namespace DialogEngine
             }
             return true;
         }
-        //  SANDBOX
-        int PickAWeightedDialog(int character1Num, int character2Num, bool sameCharactersAsLast)
-        {
-            //TODO check that all characters/phrasetypes required for adventure are included before starting adventure?
-            int dialogModel = 0;
-            var mostRecentAdventureDialogs = FindMostRecentAdventures();
-            if (mostRecentAdventureDialogs.Count > 0)
-            {
-                //if we have recently done adventures give priority to adventures check them first
-                foreach (var recentAdventure in mostRecentAdventureDialogs)
+
+        int FindNextAdventureDialogForCharacters(int character1Num, int character2Num, List<int> mostRecentAdventureDialogIndexes) {
+            bool ch1First = new bool();
+            bool ch2First = new bool();
+
+            //if we have recently done adventures give priority to adventure dialogs check them first
+            foreach (var recentAdventureIdx in mostRecentAdventureDialogIndexes)
                 {  //given recent adventures
-                    foreach (var possibleDialog in ModelDialogs)
+                foreach (var possibleDialog in ModelDialogs)  //TODO probably a cleaner way to do this with Linq and lamda expressions
+                {  //look for follow on adventure possibilities
+                    var possibleDialogIdx = ModelDialogs.IndexOf(possibleDialog);
+                    if (ModelDialogs[recentAdventureIdx].Adventure == possibleDialog.Adventure)
                     {
-                        var possibleDialogIndex = ModelDialogs.IndexOf(possibleDialog);
-                        if (ModelDialogs[recentAdventure].Adventure == possibleDialog.Adventure
-                            && ModelDialogs[recentAdventure].Provides == possibleDialog.Requires
-                            && CheckIfCharactersHavePhrasesForDialog(possibleDialogIndex, character1Num, character2Num))
+                        foreach (var providedStringKey in ModelDialogs[recentAdventureIdx].Provides)
                         {
-                            return dialogModel;
+                            if (possibleDialog.Requires.Contains(providedStringKey))
+                            {   //if a the most recent adventure dialog in the adventure provides what we require we won't 
+                                //go backwards in adventures
+                                ch1First = CheckIfCharactersHavePhrasesForDialog(possibleDialogIdx,
+                                    character1Num, character2Num);
+                                ch2First = CheckIfCharactersHavePhrasesForDialog(possibleDialogIdx,
+                                    character2Num, character1Num);
+                                if (ch1First || ch2First) {
+                                    if (ch2First) {
+                                        //swap character one and two
+                                        SwapCharactersOneAndTwo();
+                                    }
+                                    return possibleDialogIdx;
+                                }
+                            }
+                        }
                         }
                     }   
                 }
+            return -1;  // code for no next adventure continuance found
             }
-            if (!sameCharactersAsLast) {  //give next priority to greetings
+
+        int PickAWeightedDialog(int character1Num, int character2Num) {
+            //TODO check that all characters/phrasetypes required for adventure are included before starting adventure?
+            int dialogModel = 0;
+
+            var mostRecentAdventureDialogIndexes = FindMostRecentAdventureDialogIndexes();
+              // most recent will be in the 0 index of list which will be hit first in foreach
+            if (mostRecentAdventureDialogIndexes.Count > 0) {
+                var nextAdventureDialogIdx = FindNextAdventureDialogForCharacters(character1Num, character2Num, mostRecentAdventureDialogIndexes);
+                if (nextAdventureDialogIdx > 0 && nextAdventureDialogIdx < ModelDialogs.Count) {
+                    return nextAdventureDialogIdx;  // we have an adventure dialog for these characters go with it
+                }
+            }
+
+            if (!SameCharactersAsLast && !SessionVars.WaitIndefinatelyForMove) {  //give next priority to greetings
                 dialogModel = RandomNumbers.Gen.Next(0, 9); //increase odds of starting with greeting
                 if (dialogModel< 2) // TODO need a better way to call out greeting dialog models than 0 and 1 in list
                     return dialogModel;
@@ -327,7 +372,7 @@ namespace DialogEngine
         bool ImportClosestSerialComsCharacters() {
             var tempChar1 = SerialComs.NextCharacter1;
             var tempChar2 = SerialComs.NextCharacter2;
-            if (tempChar1 == tempChar2 || tempChar1 > 4 || tempChar2 > 4) {
+            if (tempChar1 == tempChar2 || tempChar1 > SerialComs.NUM_RADIOS - 1 || tempChar2 > SerialComs.NUM_RADIOS - 1) {
                 return false;
             }
             SameCharactersAsLast =
@@ -397,7 +442,7 @@ namespace DialogEngine
             }
 
             if (SessionVars.DebugFlag) {
-                WriteDialogInfo(CurrentDialogModel, Character1Num, Character2Num);
+                WriteDialogInfo(Character1Num, Character2Num);
             }
             if (SessionVars.HeatMapFullMatrixDispMode) {
                 SerialComs.PrintHeatMap();
@@ -438,8 +483,8 @@ namespace DialogEngine
             if (!ImportClosestSerialComsCharacters()) {
                 return;
             }
-            CurrentDialogModel = PickAWeightedDialog(Character1Num, Character2Num, SameCharactersAsLast);
-            if (WaitingForMovement()) {
+            CurrentDialogModel = PickAWeightedDialog(Character1Num, Character2Num);
+            if (WaitingForMovement()  || (SameCharactersAsLast && SessionVars.WaitIndefinatelyForMove)) {
                 return;
             }
             ProcessDebugFlags(dialogDirectives);

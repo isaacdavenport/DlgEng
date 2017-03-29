@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Configuration;
 using System.Threading; // for thread.sleep()
 using Newtonsoft.Json;
 
@@ -33,6 +32,8 @@ namespace DialogEngine
         public static readonly bool AudioDialogsOn = Convert.ToBoolean(AppSet.ReadSetting("AudioDialogsOn"));
         public static readonly bool TextDialogsOn = Convert.ToBoolean(AppSet.ReadSetting("TextDialogsOn"));
         public static readonly bool ForceCharacterSelection = Convert.ToBoolean(AppSet.ReadSetting("ForceCharacterSelection"));
+        public static readonly bool ForceCharactersAndDialogModel = Convert.ToBoolean(AppSet.ReadSetting("ForceCharactersAndDialogModel"));
+        public static readonly bool WaitIndefinatelyForMove = Convert.ToBoolean(AppSet.ReadSetting("WaitIndefinatelyForMove"));
         public static readonly bool ShowDupePhrases = Convert.ToBoolean(AppSet.ReadSetting("ShowDupePhrases"));
         public static readonly bool HeatMapFullMatrixDispMode = Convert.ToBoolean(AppSet.ReadSetting("HeatMapFullMatrixDispMode"));
         public static readonly bool HeatMapSumsMode = Convert.ToBoolean(AppSet.ReadSetting("HeatMapSumsMode"));
@@ -90,6 +91,10 @@ namespace DialogEngine
         public List<string> Requires = new List<string>();
         public List<string> Provides = new List<string>();
         public List<string> PhraseTypeSequence = new List<string>();
+        public bool AreDialogsRequirementsMet() {
+
+            return true;
+        }
     }
 
     public static class RandomNumbers
@@ -138,6 +143,9 @@ namespace DialogEngine
         }
 
         static void CheckForMissingPhrases() {
+            if (!SessionVars.AudioDialogsOn) {
+                return;
+            }
             foreach (var character in TheDialogs.CharacterList)
             {
                 foreach (PhraseEntry phrase in character.Phrases)
@@ -150,6 +158,16 @@ namespace DialogEngine
                 Console.WriteLine();
             }
             //TODO check that all dialog models have unique names
+        }
+
+
+        static void CheckAdventurePhrasesUsed() {
+            //TODO string match adventures in DialogModels.cs or incoming JSON to strings in character JSON
+            return;
+        }
+
+        static void CheckEachCharacterHasEachPhraseType() {
+            //TODO create a unit test that ensure each character is minimally complete similar to CheckAdventurePhrasesUsed() and CheckForMissingAudioFiles()
         }
 
         static void Main(string[] args) {
@@ -166,10 +184,12 @@ namespace DialogEngine
 
             if (SessionVars.DebugFlag) {
                 CheckForMissingPhrases();
+                CheckAdventurePhrasesUsed();
+                CheckEachCharacterHasEachPhraseType();
             }
 
             while (true) {
-                if (SessionVars.ForceCharacterSelection) {
+                if (SessionVars.ForceCharactersAndDialogModel) {
                     string[] keyboardInput = Console.ReadLine().Split(' ');
 
                     //if keyboard input has three numbers for debug mode to force dialog model and characters
