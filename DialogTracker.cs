@@ -71,7 +71,7 @@ namespace DialogEngine
             DirectoryInfo d = new DirectoryInfo(SessionVars.CharactersDirectory);
             foreach (FileInfo file in d.GetFiles("*.json")) //file of type FileInfo for each .json in directory
             {
-                Console.WriteLine("Beggining read of " + file);
+                Console.WriteLine("Begin read of " + file);
                 string inChar;
                 FileStream fs = file.OpenRead();    //open a read-only FileStream
                 using (StreamReader reader = new StreamReader(fs))   //creates new streamerader for fs stream. Could also construct with filename...

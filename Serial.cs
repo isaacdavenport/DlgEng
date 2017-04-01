@@ -36,7 +36,7 @@ namespace DialogEngine
             if (!SessionVars.NoSerialPort) {
                 _serialPort = new SerialPort();
                 Thread readThread = new Thread(ReadAndParse);
-                _serialPort.PortName = "COM5";
+                _serialPort.PortName = SessionVars.ComPortName;
                 _serialPort.BaudRate = 460800;
                 _serialPort.ReadTimeout = 500;
                 _serialPort.Open();

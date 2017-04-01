@@ -51,6 +51,7 @@ namespace DialogEngine
         public static readonly string DecimalSerialLogFileName = AppSet.ReadSetting("DecimalSerialLogFileName");
         public static readonly string SerialLogFileName = AppSet.ReadSetting("SerialLogFileName");
         public static readonly string DialogSerialLogFileName = AppSet.ReadSetting("DialogSerialLogFileName");
+        public static readonly string ComPortName = AppSet.ReadSetting("ComPortName");
     }
 
     public class PhraseEntry
@@ -103,7 +104,7 @@ namespace DialogEngine
         public static DialogTracker TheDialogs = new DialogTracker();
 
         static void WriteStartupInfo() {
-            string versionTimeStr = "Dialog Engine ver 0.43 Isaac, Aria, Joe " + DateTime.Now;
+            string versionTimeStr = "Dialog Engine ver 0.44 " + DateTime.Now;
             Console.WriteLine(""); 
             Console.WriteLine(versionTimeStr);
             //GlobalPhraseTypes.TestPhraseTypes.ForEach (Console.WriteLine) ;

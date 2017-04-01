@@ -406,7 +406,10 @@
       "DialogStr": "Let's go look fabulous!",
       "FileName": "LetsGoLookFabulous",
       "PhraseWeights": {
-        "RequestActivity": 0.2
+        "GiveActivity": 0.1,
+        "GiveAdvice": 0.1,
+        "GoOnJoyful": 0.1,
+        "GiveSurprisingStatement": 0.2
       },
       "testPhraseWeights": null,
       "PhraseRating": "PG"
@@ -839,16 +842,6 @@
       "FileName": "ToastOfTheTown",
       "PhraseWeights": {
         "Ramble": 0.2
-      },
-      "testPhraseWeights": null,
-      "PhraseRating": "PG"
-    },
-    {
-      "DialogStr": "Becoming popular, as popular can be!",
-      "FileName": "BecomingPopular",
-      "PhraseWeights": {
-        "GiveActivity": 0.2,
-        "GiveJoke": 0.2
       },
       "testPhraseWeights": null,
       "PhraseRating": "PG"
