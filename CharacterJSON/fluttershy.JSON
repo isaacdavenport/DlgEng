@@ -8,7 +8,7 @@
       "PhraseWeights": {
         "Exclamation": 0.01
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -18,7 +18,7 @@
         "Threat": 0.3,
 	  "Insult": 0.3
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -27,7 +27,7 @@
       "PhraseWeights": {
         "No": 0.3
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -37,7 +37,7 @@
         "Yes": 1,
 		"Yes/NoQuestion": 0.3
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -46,7 +46,7 @@
       "PhraseWeights": {
         "GiveDisbelief": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -55,7 +55,7 @@
       "PhraseWeights": {
         "GiveDisbelief": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -65,7 +65,7 @@
         "GoOnDisapproval": 0.6,
         "GoOnDisgust": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -75,7 +75,7 @@
         "GoOnDisapproval": 0.6,
         "GoOnDisgust": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -86,7 +86,7 @@
         "GoOnDisgust": 0.6,
         "GoOnAngry": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -95,7 +95,7 @@
       "PhraseWeights": {
         "GiveAffirmation": 0.3
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -104,7 +104,7 @@
       "PhraseWeights": {
         "GiveAffirmation": 0.3
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -114,7 +114,7 @@
         "Ramble": 0.6,
         "RequestAffirmation": 0.3
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -124,7 +124,7 @@
         "Ramble": 0.3,
         "RequestAffirmation": 0.3
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -133,7 +133,7 @@
       "PhraseWeights": {
         "GiveJoke": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -143,7 +143,7 @@
         "GiveJoke": 0.6,
         "GiveSurprisingStatement": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -153,7 +153,7 @@
         "GiveJoke": 0.6,
         "GiveSurprisingStatement": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -162,7 +162,7 @@
       "PhraseWeights": {
         "Threat": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -174,7 +174,7 @@
         "RequestAffirmation": 0.6,
         "RequestAdvice": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -183,7 +183,7 @@
       "PhraseWeights": {
         "Retreat": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -192,7 +192,7 @@
       "PhraseWeights": {
         "Retreat": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -202,7 +202,7 @@
         "Retreat": 0.6,
         "GiveSurprisingStatement": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -211,7 +211,7 @@
       "PhraseWeights": {
         "YesNoQuestion": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -220,7 +220,7 @@
       "PhraseWeights": {
         "YesNoQuestion": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -230,7 +230,7 @@
         "YesNoQuestion": 0.6,
         "RequestAffirmation": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -240,7 +240,7 @@
         "YesNoQuestion": 0.6,
         "RequestAffirmation": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -249,7 +249,7 @@
       "PhraseWeights": {
         "Yes": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -258,7 +258,7 @@
       "PhraseWeights": {
         "Yes": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -267,7 +267,7 @@
       "PhraseWeights": {
         "Yes": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -276,7 +276,7 @@
       "PhraseWeights": {
         "No": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -285,7 +285,7 @@
       "PhraseWeights": {
         "No": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -294,7 +294,7 @@
       "PhraseWeights": {
         "No": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -303,7 +303,7 @@
       "PhraseWeights": {
         "RequestCatchup": 0.3
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -313,7 +313,7 @@
         "RequestCatchup": 0.6,
         "RequestJoke": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -324,7 +324,7 @@
         "RequestAffirmation": 0.3,
         "RequestAdvice": 0.3
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -333,7 +333,7 @@
       "PhraseWeights": {
         "Greeting": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -344,7 +344,7 @@
         "RequestAffirmation": 0.3,
         "RequestAdvice": 0.3
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -354,7 +354,7 @@
         "RequestLocation": 1,
         "RequestAffirmation": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -365,7 +365,7 @@
         "GoOnFear": 0.6,
         "GoOnDisgust": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -374,7 +374,7 @@
       "PhraseWeights": {
         "GiveRecentHistory": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -385,7 +385,7 @@
         "GiveRecentHistory": 0.6,
         "RequestAdvice": 0.3
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -394,7 +394,7 @@
       "PhraseWeights": {
         "GiveRecentHistory": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -403,7 +403,7 @@
       "PhraseWeights": {
         "GiveSurprisingStatement": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -412,7 +412,7 @@
       "PhraseWeights": {
         "GiveSurprisingStatement": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -422,7 +422,7 @@
         "Exclamation": 0.6,
         "GiveAffirmation": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -432,7 +432,7 @@
         "GiveSurprisingStatement": 0.6,
         "RequestAffirmation": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -442,7 +442,7 @@
         "GiveSurprisingStatement": 0.6,
         "GiveAffirmation": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -451,7 +451,7 @@
       "PhraseWeights": {
         "Ramble": 1
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -460,7 +460,7 @@
       "PhraseWeights": {
         "ShutUp": 0.3
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -469,7 +469,7 @@
       "PhraseWeights": {
         "RequestJoke": 0.3
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -478,7 +478,7 @@
       "PhraseWeights": {
         "RequestJoke": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -488,7 +488,7 @@
         "RequestJoke": 0.6,
         "YesNoQuestion": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -497,7 +497,7 @@
       "PhraseWeights": {
         "Insult": 0.3
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -506,7 +506,7 @@
       "PhraseWeights": {
         "RequestActivity": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -515,7 +515,7 @@
       "PhraseWeights": {
         "RequestActivity": 1
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
 {
@@ -526,7 +526,7 @@
         "Yes/NoQuestion": 0.6,
         "GiveAffirmation": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -536,7 +536,7 @@
         "RequestActivity": 0.6,
         "YesNoQuestion": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -545,7 +545,7 @@
       "PhraseWeights": {
         "GiveActivity": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -554,7 +554,7 @@
       "PhraseWeights": {
         "GiveActivity": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -563,7 +563,7 @@
       "PhraseWeights": {
         "GiveActivity": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -572,7 +572,7 @@
       "PhraseWeights": {
         "GiveAdvice": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -581,7 +581,7 @@
       "PhraseWeights": {
         "GiveAdvice": 1
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -590,7 +590,7 @@
       "PhraseWeights": {
         "GiveAdvice": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -599,7 +599,7 @@
       "PhraseWeights": {
         "RequestMotivation": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -608,7 +608,7 @@
       "PhraseWeights": {
         "RequestMotivation": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -617,7 +617,7 @@
       "PhraseWeights": {
         "GiveMotivation": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -626,7 +626,7 @@
       "PhraseWeights": {
         "GiveMotivation": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -635,7 +635,7 @@
       "PhraseWeights": {
         "GiveMotivation": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -645,7 +645,7 @@
         "RequestLocation": 0.6,
         "RequestAffirmation": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -654,7 +654,7 @@
       "PhraseWeights": {
         "RequestLocation": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -663,7 +663,7 @@
       "PhraseWeights": {
         "RequestLocation": 1
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -672,7 +672,7 @@
       "PhraseWeights": {
         "GiveLocation": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -681,7 +681,7 @@
       "PhraseWeights": {
         "GiveLocation": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -690,7 +690,7 @@
       "PhraseWeights": {
         "GiveLocation": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -701,7 +701,7 @@
         "GoOnSurprise": 0.6,
         "GoOnUnderstanding": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -710,7 +710,7 @@
       "PhraseWeights": {
         "GoOnUnderstanding": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -719,7 +719,7 @@
       "PhraseWeights": {
         "GoOnUnderstanding": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -731,7 +731,7 @@
         "GoOnSad": 0.6,
         "Exclamation": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -740,7 +740,7 @@
       "PhraseWeights": {
         "GoOnSad": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -749,7 +749,7 @@
       "PhraseWeights": {
         "GoOnSad": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -758,7 +758,7 @@
       "PhraseWeights": {
         "GoOnSurprise": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -767,7 +767,7 @@
       "PhraseWeights": {
         "GoOnAngry": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -776,7 +776,7 @@
       "PhraseWeights": {
         "GoOnAngry": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -785,7 +785,7 @@
       "PhraseWeights": {
         "GoOnSad": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -794,7 +794,7 @@
       "PhraseWeights": {
         "GoOnJoyful": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -803,7 +803,7 @@
       "PhraseWeights": {
         "GoOnJoyful": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -812,7 +812,7 @@
       "PhraseWeights": {
         "GoOnJoyful": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -821,7 +821,7 @@
       "PhraseWeights": {
         "GoOnDisgust": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -830,7 +830,7 @@
       "PhraseWeights": {
         "GoOnFear": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -839,7 +839,7 @@
       "PhraseWeights": {
         "GoOnFear": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -849,7 +849,7 @@
         "Exclamation": 0.3,
         "GoOnSurprise": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -858,7 +858,7 @@
       "PhraseWeights": {
         "Exclamation": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -867,7 +867,7 @@
       "PhraseWeights": {
         "Greeting": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -877,7 +877,7 @@
         "Greeting": 0.6,
         "Exclamation": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     },
     {
@@ -886,7 +886,7 @@
       "PhraseWeights": {
         "Greeting": 0.6
       },
-      "testPhraseWeights": null,
+ 
       "PhraseRating": "PG"
     }
   ]

@@ -43,16 +43,14 @@ namespace DialogEngine
         int _priorCharacter2Num = 100;
         int CurrentDialogModel = 1;
         // public Mp3Player Player = new Mp3Player();
-        public WindowsMediaPlayerMp3 Audio = new WindowsMediaPlayerMp3();  
+        public WindowsMediaPlayerMp3 Audio = new WindowsMediaPlayerMp3();
         public bool SameCharactersAsLast = false;
         public bool LastPhraseImpliedMovement = false;
         private static int _movementWaitCount = 0;
         public double DialogModelPopularitySum;
 
-        public Character ParseCharJSON(FileInfo CharFile)
-        {
-            using (StreamReader fi = File.OpenText(CharFile.FullName))
-            {
+        public Character ParseCharJSON(FileInfo CharFile) {
+            using (StreamReader fi = File.OpenText(CharFile.FullName)) {
                 JsonSerializer serializer = new JsonSerializer();
                 Character CharObj = (Character)serializer.Deserialize(fi, typeof(Character));
                 return CharObj;
@@ -73,45 +71,41 @@ namespace DialogEngine
             {
                 Console.WriteLine("Begin read of " + file);
                 string inChar;
-                FileStream fs = file.OpenRead();    //open a read-only FileStream
-                using (StreamReader reader = new StreamReader(fs))   //creates new streamerader for fs stream. Could also construct with filename...
+                FileStream fs = file.OpenRead(); //open a read-only FileStream
+                using (StreamReader reader = new StreamReader(fs)) //creates new streamerader for fs stream. Could also construct with filename...
                 {
                     inChar = reader.ReadToEnd();
                     Character deserializedCharacterJSON = JsonConvert.DeserializeObject<Character>(inChar,
-                        new JsonSerializerSettings
-                        {
+                        new JsonSerializerSettings{
                             Error = HandleDeserializationError
 
                         });
 
-                    deserializedCharacterJSON.PhraseTotals = new PhraseEntry();  //init PhraseTotals
+                    deserializedCharacterJSON.PhraseTotals = new PhraseEntry(); //init PhraseTotals
                     deserializedCharacterJSON.PhraseTotals.DialogStr = "phrase weights";
                     deserializedCharacterJSON.PhraseTotals.FileName = "silence";
-                    deserializedCharacterJSON.PhraseTotals.PhraseRating  = ParentalRating.G;
+                    deserializedCharacterJSON.PhraseTotals.PhraseRating = "G";
                     deserializedCharacterJSON.PhraseTotals.phraseWeights = new Dictionary<string, double>();
                     deserializedCharacterJSON.PhraseTotals.phraseWeights.Add("Greeting", 0.0f);
 
                     //Calculate Phrase Weight Totals here.
-                    foreach (PhraseEntry _curPhrase in deserializedCharacterJSON.Phrases)
-                    {
-                        foreach (string tag in _curPhrase.phraseWeights.Keys)
-                        {
-                            if(deserializedCharacterJSON.PhraseTotals.phraseWeights.Keys.Contains(tag))
-                            {
+                    foreach (PhraseEntry _curPhrase in deserializedCharacterJSON.Phrases) {
+                        foreach (string tag in _curPhrase.phraseWeights.Keys) {
+                            if (deserializedCharacterJSON.PhraseTotals.phraseWeights.Keys.Contains(tag)) {
                                 deserializedCharacterJSON.PhraseTotals.phraseWeights[tag] += _curPhrase.phraseWeights[tag];
                             }
-                            else
-                            {
+                            else {
                                 deserializedCharacterJSON.PhraseTotals.phraseWeights.Add(tag, _curPhrase.phraseWeights[tag]);
                             }
                         }
                     }
-                    for (var i = 0; i < Character.RecentPhrasesQueueSize; i++) {  // we always deque after enque so this sets que size
+                    for (var i = 0; i < Character.RecentPhrasesQueueSize; i++) {
+                        // we always deque after enque so this sets que size
                         deserializedCharacterJSON.RecentPhrases.Enqueue(deserializedCharacterJSON.Phrases[0]);
                     }
                     //list Chars as they come in.
                     Console.WriteLine("Finish read of " + deserializedCharacterJSON.CharacterName);
-
+                    RemovePhrasesOverParentalRating(deserializedCharacterJSON);
                     //Add to Char List
                     CharacterList.Add(deserializedCharacterJSON);
                 }
@@ -120,6 +114,14 @@ namespace DialogEngine
             for (int i = 0; i < RecentDialogsQueSize; i++) {
                 RecentDialogs.Enqueue(0); // Fill the que with greeting dialogs
             }
+        }
+
+        private static void RemovePhrasesOverParentalRating(Character inCharacter) {
+            int maxParentalRating = ParentalRatings.GetNumeric(SessionVars.CurrentParentalRating);
+            int minParentalRating = ParentalRatings.GetNumeric("G");
+            inCharacter.Phrases.RemoveAll(item => 
+               ParentalRatings.GetNumeric(item.PhraseRating) > maxParentalRating ||
+               ParentalRatings.GetNumeric(item.PhraseRating) < minParentalRating);
         }
 
         public void PlayAudio(string pathAndFileName) {

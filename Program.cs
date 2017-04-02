@@ -17,13 +17,35 @@ namespace DialogEngine
         public static List<string> TestPhraseTypes = new List<String> { };
     }
     */
-    public enum ParentalRating
-    {  //TODO re-enact parental ratings, perhaps based on strings in JSON rather than enum
-        G,
-        PG,
-        PG13,
-        R,
-        X
+
+
+
+    static class ParentalRatings
+    {
+        /// <summary>
+        /// Static string Dictionary example
+        /// </summary>
+        static Dictionary<string, int> _dict = new Dictionary<string, int>
+        {
+            {"G", 1},
+            {"PG", 2},
+            {"PG13", 3},
+            {"R", 4}
+        };
+
+        public static int GetNumeric(string ratingString)
+        {
+            // Try to get the result in the static Dictionary
+            int result;
+            if (_dict.TryGetValue(ratingString, out result))
+            {
+                return result;
+            }
+            else
+            {
+                return -1;
+            }
+        }
     }
 
     public static class SessionVars
@@ -42,8 +64,7 @@ namespace DialogEngine
         public static readonly bool CheckStuckTransmissions = Convert.ToBoolean(AppSet.ReadSetting("CheckStuckTransmissions"));
         public static readonly bool MonitorReceiveBufferSize = Convert.ToBoolean(AppSet.ReadSetting("MonitorReceiveBufferSize"));
         public static readonly bool MonitorMessageParseFails = Convert.ToBoolean(AppSet.ReadSetting("MonitorMessageParseFails"));
-        public static readonly ParentalRating CurrentParentalRating = 
-            (ParentalRating)Enum.Parse(typeof(ParentalRating), AppSet.ReadSetting("CurrentParentalRating"));
+        public static readonly string CurrentParentalRating = AppSet.ReadSetting("CurrentParentalRating");
         public static readonly string LogsDirectory = AppSet.ReadSetting("LogsDirectory");
         public static readonly string CharactersDirectory = AppSet.ReadSetting("CharactersDirectory");
         public static readonly string DialogsDirectory = AppSet.ReadSetting("DialogsDirectory");
@@ -59,7 +80,7 @@ namespace DialogEngine
         public string DialogStr;
         public string FileName;
         public Dictionary<string, double> phraseWeights;    //to replace PhraseWeights, uses string tags.
-        public ParentalRating PhraseRating;
+        public string PhraseRating;
     }
 
     //[JsonObject(MemberSerialization.OptIn)]

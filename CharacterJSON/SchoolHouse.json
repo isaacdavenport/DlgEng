@@ -10,8 +10,8 @@
         "Greeting": 0.1,
         "SHSilence": 0.1
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "Hey, I can hear you out there.  Help me out.  I'm locked in the bathroom!",
@@ -20,8 +20,8 @@
         "Exclamation": 0.1,
         "RequestAffirmation": 0.1
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     }
   ]
 }

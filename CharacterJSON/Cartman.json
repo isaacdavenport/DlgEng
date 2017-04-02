@@ -9,8 +9,8 @@
       "PhraseWeights": {
         "Exclamation": 0.01
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
 
@@ -19,8 +19,8 @@
       "PhraseWeights": {
         "Greeting": 0.7
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "You will respect my authoritah!",
@@ -31,8 +31,8 @@
         "Threat": 1.0,
         "GiveAdvice": 0.05
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "You killed Kenny!",
@@ -42,8 +42,8 @@
         "ShutUp": 0.1,
         "GiveSurprisingStatement": 0.3
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "Eating cheesy poofs.",
@@ -51,8 +51,8 @@
       "PhraseWeights": {
         "GiveActivity": 0.7
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "No!  This is my pie.",
@@ -62,8 +62,8 @@
         "GiveSurprisingStatement": 0.5,
         "No": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "Eating pie.",
@@ -71,8 +71,8 @@
       "PhraseWeights": {
         "GiveActivity": 1.1
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "What do you want to do after school?",
@@ -80,8 +80,8 @@
       "PhraseWeights": {
         "RequestActivity": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "I have dry balls.",
@@ -91,8 +91,8 @@
         "GiveSurprisingStatement": 0.5,
         "RequestAffirmation": 0.5
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 2
+ 
+      "PhraseRating": "PG13"
     },
     {
       "DialogStr": "I have an itch in a bad place!",
@@ -102,8 +102,8 @@
         "GiveSurprisingStatement": 0.5,
         "RequestAffirmation": 0.5
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 1
+ 
+      "PhraseRating": "PG"
     },
     {
       "DialogStr": "I hope you get amoebic dysentery. I'm going home.",
@@ -113,8 +113,8 @@
         "Retreat": 0.5,
         "GiveDisbelief": 0.5
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 1
+ 
+      "PhraseRating": "PG"
     },
     {
       "DialogStr": "Screw you. I'm going home.",
@@ -124,8 +124,8 @@
         "Retreat": 0.5,
         "GiveDisbelief": 0.5
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 2
+ 
+      "PhraseRating": "PG13"
     },
     {
       "DialogStr": "Whatever.  I'll do what I want.",
@@ -135,8 +135,8 @@
         "Retreat": 0.1,
         "ShutUp": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 1
+ 
+      "PhraseRating": "PG"
     },
     {
       "DialogStr": "Dang",
@@ -144,8 +144,8 @@
       "PhraseWeights": {
         "Exclamation": 0.4
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 1
+ 
+      "PhraseRating": "PG"
     },
     {
       "DialogStr": "Goddammit",
@@ -153,8 +153,8 @@
       "PhraseWeights": {
         "Exclamation": 0.4
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 2
+ 
+      "PhraseRating": "PG13"
     },
     {
       "DialogStr": "Hippies. They're everywhere. They wanna save the earth, but all they do is smoke pot and smell bad..",
@@ -162,8 +162,8 @@
       "PhraseWeights": {
         "GiveSurprisingStatement": 0.1
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 1
+ 
+      "PhraseRating": "PG"
     },
     {
       "DialogStr": "I've been turning this steering wheel for three whole hours but I still don't feel like a race car driver.",
@@ -172,8 +172,8 @@
         "RequestAffirmation": 0.2,
         "GiveSurprisingStatement": 0.1
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 1
+ 
+      "PhraseRating": "PG"
     },
     {
       "DialogStr": "I've been licking this carpet for three whole hours and I still don't feel like a lesbian",
@@ -182,8 +182,8 @@
         "RequestAffirmation": 0.2,
         "GiveSurprisingStatement": 0.1
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 2
+ 
+      "PhraseRating": "PG13"
     },
     {
       "DialogStr": "You so much as TOUCH my ass, and I'll put a firecracker in your nutsack and blow your balls all over your pants",
@@ -192,8 +192,8 @@
         "Threat": 0.6,
         "GiveSurprisingStatement": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 3
+ 
+      "PhraseRating": "R"
     },
     {
       "DialogStr": "Why is it that everything today has to do with things going into our or coming out of my ass?",
@@ -202,8 +202,8 @@
         "GiveSurprisingStatement": 0.4,
         "RequestAffirmation": 0.4
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 3
+ 
+      "PhraseRating": "R"
     },
     {
       "DialogStr": "Dolphins, Eskimos, Who cares?  Its all a bunch of tree hugging hippie crap.",
@@ -213,8 +213,8 @@
         "GiveSurprisingStatement": 0.4,
         "Ramble": 0.4
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 2
+ 
+      "PhraseRating": "PG13"
     },
     {
       "DialogStr": "You so much as TOUCH me and I will blow you up!",
@@ -223,8 +223,8 @@
         "Threat": 0.6,
         "GiveSurprisingStatement": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 1
+ 
+      "PhraseRating": "PG"
     },
     {
       "DialogStr": "Why is it that everything today has to do with things going into or out of my body?",
@@ -233,8 +233,8 @@
         "GiveSurprisingStatement": 0.4,
         "RequestAffirmation": 0.4
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 1
+ 
+      "PhraseRating": "PG"
     },
     {
       "DialogStr": "Dolphins, Eskimos, Who cares?  Its all about tree hugging hippies.",
@@ -244,8 +244,8 @@
         "GiveSurprisingStatement": 0.4,
         "Ramble": 0.4
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 1
+ 
+      "PhraseRating": "PG"
     },
     {
       "DialogStr": "I'm not fat.  I'm festively plump.",
@@ -255,8 +255,8 @@
         "GiveSurprisingStatement": 0.4,
         "RequestAffirmation": 0.4
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 1
+ 
+      "PhraseRating": "PG"
     },
     {
       "DialogStr": "I'm outa here.",
@@ -264,8 +264,8 @@
       "PhraseWeights": {
         "Retreat": 0.8
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "Don't you know the first law of physics? Anything that's fun costs at least eight dollars",
@@ -274,8 +274,8 @@
         "YesNoQuestion": 0.2,
         "GiveSurprisingStatement": 0.4
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "Hippies can't stand death metal",
@@ -284,8 +284,8 @@
         "Exclamation": 0.4,
         "GiveSurprisingStatement": 0.4
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "I'd bet a hundred dollars on it.",
@@ -293,8 +293,8 @@
       "PhraseWeights": {
         "Yes": 0.4
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "AHHHHH!!",
@@ -303,8 +303,8 @@
         "Exclamation": 0.4,
         "GiveSurprisingStatement": 0.4
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "It hurts, goddamnit!",
@@ -313,8 +313,8 @@
         "RequestAffirmation": 0.4,
         "Exclamation": 0.4
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 3
+ 
+      "PhraseRating": "R"
     },
     {
       "DialogStr": "It hurts, Ow.  It hurts!",
@@ -323,8 +323,8 @@
         "RequestAffirmation": 0.4,
         "Exclamation": 0.4
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "Would you grind someone's parents into chili meat if you really hated him and wanted to make him suffer?",
@@ -334,8 +334,8 @@
         "GiveSurprisingStatement": 0.3,
         "RequestAdvice": 0.3
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 2
+ 
+      "PhraseRating": "PG13"
     },
     {
       "DialogStr": "What do you do if you really hate someone and want to make him suffer?",
@@ -345,8 +345,8 @@
         "GiveSurprisingStatement": 0.3,
         "RequestAdvice": 0.3
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 1
+ 
+      "PhraseRating": "PG"
     },
     {
       "DialogStr": "Trying to train a pony to bite someone's wiener off.",
@@ -354,8 +354,8 @@
       "PhraseWeights": {
         "GiveActivity": 0.4
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 2
+ 
+      "PhraseRating": "PG13"
     },
     {
       "DialogStr": "Trying to train a pony to bite someone.",
@@ -363,8 +363,8 @@
       "PhraseWeights": {
         "GiveActivity": 0.4
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 1
+ 
+      "PhraseRating": "PG"
     },
     {
       "DialogStr": "Why the fuck not?",
@@ -372,8 +372,8 @@
       "PhraseWeights": {
         "Yes": 0.4
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 3
+ 
+      "PhraseRating": "R"
     },
     {
       "DialogStr": "Why not?",
@@ -381,8 +381,8 @@
       "PhraseWeights": {
         "Yes": 0.4
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "Sucking balls.",
@@ -390,8 +390,8 @@
       "PhraseWeights": {
         "GiveActivity": 0.4
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 3
+ 
+      "PhraseRating": "R"
     },
     {
       "DialogStr": "Sucking on rotten eggs.",
@@ -399,8 +399,8 @@
       "PhraseWeights": {
         "GiveActivity": 0.4
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "Taking people's jobs.",
@@ -408,8 +408,8 @@
       "PhraseWeights": {
         "GiveActivity": 0.3
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "Sometimes they are just out to take our jobs.",
@@ -417,8 +417,8 @@
       "PhraseWeights": {
         "GiveMotivation": 0.3
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "You're a fucking faggot, dude.",
@@ -426,8 +426,8 @@
       "PhraseWeights": {
         "Insult": 0.4
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 3
+ 
+      "PhraseRating": "R"
     },
     {
       "DialogStr": "You're a booger head.",
@@ -435,8 +435,8 @@
       "PhraseWeights": {
         "Insult": 0.4
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 1
+ 
+      "PhraseRating": "PG"
     },
     {
       "DialogStr": "You don't even have two brain cells to rub together.",
@@ -444,8 +444,8 @@
       "PhraseWeights": {
         "Insult": 0.4
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 1
+ 
+      "PhraseRating": "PG"
     },
     {
       "DialogStr": "I don't like you.",
@@ -454,8 +454,8 @@
         "Insult": 0.4,
         "GiveSurprisingStatement": 0.1
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "You bet your last dime",
@@ -463,8 +463,8 @@
       "PhraseWeights": {
         "Yes": 0.4
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "Back off you big ape!",
@@ -474,8 +474,8 @@
         "No": 0.4,
         "Threat": 0.1
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "You bet your fuckin' ass!",
@@ -483,8 +483,8 @@
       "PhraseWeights": {
         "Yes": 0.4
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 3
+ 
+      "PhraseRating": "R"
     },
     {
       "DialogStr": "Fuck off, you donkey-raping shit eater.",
@@ -494,8 +494,8 @@
         "No": 0.4,
         "Threat": 0.1
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 3
+ 
+      "PhraseRating": "R"
     },
     {
       "DialogStr": "Would you like to have some tea poured by my friend Polly Prissy Pants?",
@@ -504,8 +504,8 @@
         "YesNoQuestion": 0.4,
         "Ramble": 0.6
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "This is  weak... ",
@@ -514,8 +514,8 @@
         "No": 0.4,
         "Exclamation": 0.4
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "Pretty sweet huh?",
@@ -525,8 +525,8 @@
         "Yes": 0.4,
         "Exclamation": 0.4
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 3
+ 
+      "PhraseRating": "R"
     },
     {
       "DialogStr": "Granola makes me mad.",
@@ -535,8 +535,8 @@
         "Exclamation": 0.2,
         "GiveSurprisingStatement": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 2
+ 
+      "PhraseRating": "PG13"
     },
     {
       "DialogStr": "This is fucking weak... ",
@@ -545,8 +545,8 @@
         "No": 0.4,
         "Exclamation": 0.4
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 3
+ 
+      "PhraseRating": "R"
     },
     {
       "DialogStr": "Pretty fucking sweet huh?",
@@ -556,8 +556,8 @@
         "Yes": 0.4,
         "Exclamation": 0.4
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 3
+ 
+      "PhraseRating": "R"
     },
     {
       "DialogStr": "Granola pisses me off.",
@@ -566,8 +566,8 @@
         "Exclamation": 0.2,
         "GiveSurprisingStatement": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 2
+ 
+      "PhraseRating": "PG13"
     },
     {
       "DialogStr": "Of course.",
@@ -575,8 +575,8 @@
       "PhraseWeights": {
         "Yes": 0.4
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "I dreamed I was standing out in a field, and there was this huge satellite dish stickin' out of my butt. And there were hundreds of cows and aliens, and then I went up on the ship, and Scott Baio gave me pinkeye.",
@@ -584,8 +584,8 @@
       "PhraseWeights": {
         "Ramble": 0.4
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 2
+ 
+      "PhraseRating": "PG13"
     },
     {
       "DialogStr": "Would I let the kitty eat my pot pie?",
@@ -593,8 +593,8 @@
       "PhraseWeights": {
         "No": 0.4
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "Don't be such a negative Nancy.  Tell me whats going on.",
@@ -603,8 +603,8 @@
         "RequestCatchup": 0.4,
         "RequestJoke": 0.4
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "They took our jobs.",
@@ -613,8 +613,8 @@
         "Exclamation": 0.4,
         "RequestAffirmation": 0.4
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "Suck my balls.",
@@ -623,8 +623,8 @@
         "No": 0.4,
         "GiveSurprisingStatement": 0.4
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 3
+ 
+      "PhraseRating": "R"
     },
     {
       "DialogStr": "Sweet.",
@@ -633,8 +633,8 @@
         "Yes": 0.4,
         "Exclamation": 0.4
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "My mom is so poor she can't even pay attention.",
@@ -642,8 +642,8 @@
       "PhraseWeights": {
         "GiveJoke": 0.4
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 1
+ 
+      "PhraseRating": "PG"
     },
     {
       "DialogStr": "My mom is so poor that when she goes to KFC she has to lick other people's fingers.",
@@ -651,8 +651,8 @@
       "PhraseWeights": {
         "GiveJoke": 0.4
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 1
+ 
+      "PhraseRating": "PG"
     },
     {
       "DialogStr": "My mom is so poor the ducks throw bread at her.",
@@ -660,8 +660,8 @@
       "PhraseWeights": {
         "GiveJoke": 0.4
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 1
+ 
+      "PhraseRating": "PG"
     },
     {
       "DialogStr": "My mom is so poor she opened a gmail account just so she can eat the spam.",
@@ -669,8 +669,8 @@
       "PhraseWeights": {
         "GiveJoke": 0.4
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 1
+ 
+      "PhraseRating": "PG"
     },
     {
       "DialogStr": "Want some cheesy poofs?",
@@ -679,8 +679,8 @@
         "YesNoQuestion": 0.2,
         "Greeting": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "Playing death metal to hippies.",
@@ -688,8 +688,8 @@
       "PhraseWeights": {
         "GiveActivity": 0.4
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 1
+ 
+      "PhraseRating": "PG"
     },
     {
       "DialogStr": "Whats up hippie.",
@@ -697,8 +697,8 @@
       "PhraseWeights": {
         "Greeting": 0.4
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 1
+ 
+      "PhraseRating": "PG"
     },
     {
       "DialogStr": "Hey.",
@@ -706,8 +706,8 @@
       "PhraseWeights": {
         "Greeting": 0.4
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "So why are you so cool?  What have you done.",
@@ -715,8 +715,8 @@
       "PhraseWeights": {
         "RequestCatchup": 0.4
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "It's OK.  Have some pie.",
@@ -724,8 +724,8 @@
       "PhraseWeights": {
         "GiveAffirmation": 0.4
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "Don't worry.  At least you aren't as poor as my mom.",
@@ -733,8 +733,8 @@
       "PhraseWeights": {
         "GiveAffirmation": 0.4
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 1
+ 
+      "PhraseRating": "PG"
     },
     {
       "DialogStr": "Everything's gonna be okay! Life isn't so crappy after all!",
@@ -742,8 +742,8 @@
       "PhraseWeights": {
         "GiveAffirmation": 0.4
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 2
+ 
+      "PhraseRating": "PG13"
     },
     {
       "DialogStr": "Everything's gonna be okay! Life isn't so bad after all!",
@@ -751,8 +751,8 @@
       "PhraseWeights": {
         "GiveAffirmation": 0.4
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 1
+ 
+      "PhraseRating": "PG"
     },
     {
       "DialogStr": "Well, you won't believe this. But Stan's parents sent me on a quest to get a magical video back.  It was obviously evil.  So we had to return it all the way to the video rental store.  Then these sixth graders started chasing us on bicycles.  But we finally got it into the return slot, but, Butters went down with it.",
@@ -761,8 +761,8 @@
         "GiveRecentHistory": 0.4,
         "Ramble": 0.4
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 1
+ 
+      "PhraseRating": "PG"
     },
     {
       "DialogStr": "I was just negotiating for some weapons and an escape route.",
@@ -770,8 +770,8 @@
       "PhraseWeights": {
         "GiveRecentHistory": 0.4
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 1
+ 
+      "PhraseRating": "PG"
     },
     {
       "DialogStr": "What have you been up to?",
@@ -780,8 +780,8 @@
         "RequestCatchup": 0.3,
         "RequestActivity": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "You will make me laugh, right now.  Or I will ensure there is a laxative in your next meal.",
@@ -790,8 +790,8 @@
         "RequestJoke": 0.4,
         "Threat": 0.4
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 2
+ 
+      "PhraseRating": "PG13"
     },
     {
       "DialogStr": "You will make me laugh, ... right now.",
@@ -800,8 +800,8 @@
         "RequestJoke": 0.4,
         "Threat": 0.4
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 1
+ 
+      "PhraseRating": "PG"
     },
     {
       "DialogStr": "Hi.",
@@ -809,8 +809,8 @@
       "PhraseWeights": {
         "Greeting": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "I will explode your head with my telekinetic powers!",
@@ -818,8 +818,8 @@
       "PhraseWeights": {
         "Threat": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 1
+ 
+      "PhraseRating": "PG"
     },
     {
       "DialogStr": "Lets go.",
@@ -827,8 +827,8 @@
       "PhraseWeights": {
         "Retreat": 0.6
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "Is it just me, or does a lot of crazy shit go on in this town?",
@@ -836,8 +836,8 @@
       "PhraseWeights": {
         "YesNoQuestion": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 3
+ 
+      "PhraseRating": "R"
     },
     {
       "DialogStr": "Is it just me, or does a lot of crazy stuff go on in this town?",
@@ -845,8 +845,8 @@
       "PhraseWeights": {
         "YesNoQuestion": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 1
+ 
+      "PhraseRating": "PG"
     },
     {
       "DialogStr": "Absolutely.",
@@ -854,8 +854,8 @@
       "PhraseWeights": {
         "Yes": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "No.",
@@ -863,8 +863,8 @@
       "PhraseWeights": {
         "No": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "Did you bring me some cheesy poofs?",
@@ -873,8 +873,8 @@
         "RequestCatchup": 0.02,
         "YesNoQuestion": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "It isn't so bad.  Kitty still loves us.",
@@ -882,8 +882,8 @@
       "PhraseWeights": {
         "GiveAffirmation": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "How come nobody wants to be my friend.",
@@ -891,8 +891,8 @@
       "PhraseWeights": {
         "RequestAffirmation": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "You don't know what the hell you are talking about.",
@@ -900,8 +900,8 @@
       "PhraseWeights": {
         "GiveDisbelief": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 2
+ 
+      "PhraseRating": "PG13"
     },
     {
       "DialogStr": "You don't know what you are talking about.",
@@ -909,8 +909,8 @@
       "PhraseWeights": {
         "GiveDisbelief": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 1
+ 
+      "PhraseRating": "PG"
     },
     {
       "DialogStr": "I was playing lambs with Polly Prissypants when Peter Panda suggested we play a new game, but then my mom spoiled it all.",
@@ -918,8 +918,8 @@
       "PhraseWeights": {
         "GiveRecentHistory": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 1
+ 
+      "PhraseRating": "PG"
     },
     {
       "DialogStr": "I know what I am getting for my birthday.  I snuck around in my mom's closet and saw the box for the Ultravibe Pleasure 2000.",
@@ -927,8 +927,8 @@
       "PhraseWeights": {
         "GiveSurprisingStatement": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 2
+ 
+      "PhraseRating": "PG13"
     },
     {
       "DialogStr": "So we ordered the magical seamen from a magazine and put it in an aquarium.  We thought they would just play basketball and ride around on turtles.  But, the sea pepole started building little cities.",
@@ -936,8 +936,8 @@
       "PhraseWeights": {
         "Ramble": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 1
+ 
+      "PhraseRating": "PG"
     },
     {
       "DialogStr": "Shut the fuck up.",
@@ -945,8 +945,8 @@
       "PhraseWeights": {
         "ShutUp": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 3
+ 
+      "PhraseRating": "R"
     },
     {
       "DialogStr": "Shut up.",
@@ -954,8 +954,8 @@
       "PhraseWeights": {
         "ShutUp": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 1
+ 
+      "PhraseRating": "PG"
     },
     {
       "DialogStr": "You think your so talented.  Why don't you entertain us?",
@@ -963,8 +963,8 @@
       "PhraseWeights": {
         "RequestJoke": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 1
+ 
+      "PhraseRating": "PG"
     },
     {
       "DialogStr": "I was explaining why I don't like rainbows.  Cause, well, you know. You'll just be sitting there, minding your own business, and they'll come marching in, and crawl up your leg, and start biting the inside of your ass, and you'll be all like, \"Hey. Get out of my ass you stupid rainbows.\" Then they explained that rainbows are those little arches of color that show up during a rainstorm.",
@@ -972,8 +972,8 @@
       "PhraseWeights": {
         "Ramble": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 2
+ 
+      "PhraseRating": "PG13"
     },
     {
       "DialogStr": "Follow your dreams. You can reach your goals. I'm living proof. I'm Beefcake.",
@@ -981,8 +981,8 @@
       "PhraseWeights": {
         "GiveAffirmation": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "I hate you guys.",
@@ -992,8 +992,8 @@
         "Retreat": 0.2,
         "No": 0.1
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "Well, what would you rather be doing?",
@@ -1001,8 +1001,8 @@
       "PhraseWeights": {
         "RequestActivity": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "Bulking up with some \"Weight Gain 4000\"",
@@ -1010,8 +1010,8 @@
       "PhraseWeights": {
         "GiveActivity": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "They are coming for me.  What should I do?",
@@ -1019,8 +1019,8 @@
       "PhraseWeights": {
         "RequestAdvice": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "I don't think Peter Panda and Polly Prissypants are getting along.",
@@ -1028,8 +1028,8 @@
       "PhraseWeights": {
         "RequestAdvice": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 1
+ 
+      "PhraseRating": "PG"
     },
     {
       "DialogStr": "Sometimes all you have to do is stop and think \"What would Brian Boytano do?\"",
@@ -1037,8 +1037,8 @@
       "PhraseWeights": {
         "GiveAdvice": 0.1
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 1
+ 
+      "PhraseRating": "PG"
     },
     {
       "DialogStr": "Sometimes swearing loudly doesn't help a situation, but usually it does.",
@@ -1046,8 +1046,8 @@
       "PhraseWeights": {
         "GiveAdvice": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 1
+ 
+      "PhraseRating": "PG"
     },
     {
       "DialogStr": "Why would they say I was fat?",
@@ -1055,8 +1055,8 @@
       "PhraseWeights": {
         "RequestMotivation": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "Why would aliens be so curious about the inside of my butt?",
@@ -1064,8 +1064,8 @@
       "PhraseWeights": {
         "RequestMotivation": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 2
+ 
+      "PhraseRating": "PG13"
     },
     {
       "DialogStr": "Why would aliens be so curious about my insides?",
@@ -1073,8 +1073,8 @@
       "PhraseWeights": {
         "RequestMotivation": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 1
+ 
+      "PhraseRating": "PG"
     },
     {
       "DialogStr": "Well of course, some people just want to be king of the world.",
@@ -1082,8 +1082,8 @@
       "PhraseWeights": {
         "GiveMotivation": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "Perhaps it is the same reason we must sometimes put on our crown of invisibility and our boots of levitation and accept our quest.",
@@ -1091,8 +1091,8 @@
       "PhraseWeights": {
         "GiveMotivation": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 1
+ 
+      "PhraseRating": "PG"
     },
     {
       "DialogStr": "In your ass.",
@@ -1100,8 +1100,8 @@
       "PhraseWeights": {
         "GiveLocation": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 3
+ 
+      "PhraseRating": "R"
     },
     {
       "DialogStr": "Have you considered somewhere very far away?",
@@ -1109,8 +1109,8 @@
       "PhraseWeights": {
         "GiveLocation": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "Where is my hemoriod cream?",
@@ -1118,8 +1118,8 @@
       "PhraseWeights": {
         "RequestLocation": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 2
+ 
+      "PhraseRating": "PG13"
     },
     {
       "DialogStr": "Where is my cream?",
@@ -1127,8 +1127,8 @@
       "PhraseWeights": {
         "RequestLocation": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 1
+ 
+      "PhraseRating": "PG"
     },
     {
       "DialogStr": "Damnit, where did she come from?  She could spoil my plan.",
@@ -1137,8 +1137,8 @@
         "RequestLocation": 0.3,
         "GiveDisbelief": 0.1
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 2
+ 
+      "PhraseRating": "PG13"
     },
     {
       "DialogStr": "Where did she come from?  She could spoil my plan.",
@@ -1147,8 +1147,8 @@
         "RequestLocation": 0.3,
         "GiveDisbelief": 0.1
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 1
+ 
+      "PhraseRating": "PG"
     },
     {
       "DialogStr": "Is there a whorehouse around here?  My nuts are going to explode.",
@@ -1157,8 +1157,8 @@
         "RequestLocation": 0.2,
         "GiveSurprisingStatement": 0.1
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 3
+ 
+      "PhraseRating": "R"
     },
     {
       "DialogStr": "Give me my two dollars!",
@@ -1166,8 +1166,8 @@
       "PhraseWeights": {
         "LM01A": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "You do too have two dollars, I see you buy lunch at the cafeteria every day!",
@@ -1175,8 +1175,8 @@
       "PhraseWeights": {
         "LM01C": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "I'm going to get Billy's dad, he will make you give me my two dollars.",
@@ -1184,8 +1184,8 @@
       "PhraseWeights": {
         "LM01E": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "Excuse me mister Lumbergh.  Johnny won't give me my two dollars.",
@@ -1193,8 +1193,8 @@
       "PhraseWeights": {
         "LM03A": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "Well, he owes me two dollars, and I know he has it, but he won't give it to me.",
@@ -1202,8 +1202,8 @@
       "PhraseWeights": {
         "LM03C": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "He knows that a bet is a bet.  He said I couldn't prove that the government lies to us, but I proved it.  Three times!",
@@ -1211,8 +1211,8 @@
       "PhraseWeights": {
         "LM03E": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "Nope.  Haven't seen him.  I can't find kitty either.",
@@ -1220,8 +1220,8 @@
       "PhraseWeights": {
         "LM03G": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "It is easy to work out.  Give me my two dollars!",
@@ -1229,8 +1229,8 @@
       "PhraseWeights": {
         "LM04B": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "What can you do?  You can't pass my history test for me, or get Gretchen to sit by me at lunch.  Maybe you should just dig in the sand around the playground till you collect enough loose change... To give me my two dollars!",
@@ -1238,8 +1238,8 @@
       "PhraseWeights": {
         "LM04D": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "Skylar, Johny won't pay me the two dollars he owes me, and my kitty is lost!",
@@ -1247,8 +1247,8 @@
       "PhraseWeights": {
         "LM06A": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "I'm not sure that works for me.",
@@ -1259,8 +1259,8 @@
         "GiveDisbelief": 0.2,
         "No": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "Maybe Kitty is around here.  There you are Kitty.  What were you doing with Billy?  Was he trying to get you to play Pokemon go?",
@@ -1268,8 +1268,8 @@
       "PhraseWeights": {
         "LM07A": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "It seems like someone convinced her I was pretty cool.",
@@ -1277,8 +1277,8 @@
       "PhraseWeights": {
         "LM09B": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "Fortunately I have an endless supply of stories about kitty.  She thought that was pretty cool.",
@@ -1286,8 +1286,8 @@
       "PhraseWeights": {
         "LM09D": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "I am",
@@ -1295,8 +1295,8 @@
       "PhraseWeights": {
         "LM09F": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "Don't worry.  You don't have to give me two dollars.  If you will be my friend.",
@@ -1304,8 +1304,8 @@
       "PhraseWeights": {
         "LM10B": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "Yeah.",
@@ -1313,8 +1313,8 @@
       "PhraseWeights": {
         "LM10D": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "No Way!  How did Kitty get there?  That is awesome news.  Thanks Johnny!",
@@ -1322,8 +1322,8 @@
       "PhraseWeights": {
         "LM10F": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "What is that supposed to mean?",
@@ -1331,8 +1331,8 @@
       "PhraseWeights": {
         "LM11B": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "Hey.  How did you get Kitty?",
@@ -1340,8 +1340,8 @@
       "PhraseWeights": {
         "LM15A": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "Kitty's not a furry little beast, she's my kitty.",
@@ -1349,8 +1349,8 @@
       "PhraseWeights": {
         "LM15C": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "Come on kitty, were going home.  We can have some tea with polly prissy pants and peter panda.",
@@ -1358,8 +1358,8 @@
       "PhraseWeights": {
         "LM15E": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     },
     {
       "DialogStr": "I see you aren't out telling people how cool I am, well two dollars is better than that anyway.",
@@ -1367,8 +1367,8 @@
       "PhraseWeights": {
         "LM16B": 0.2
       },
-      "testPhraseWeights": null,
-      "PhraseRating": 0
+ 
+      "PhraseRating": "G"
     }
   ],
   "testPhraseTotals": {
@@ -1387,7 +1387,7 @@
     },
     "DialogStr": "PhraseTotals",
     "FileName": "No Audio Filename Associated with PhraseTotals",
-    "PhraseRating": 0
+    "PhraseRating": "G"
   },
   "testPhrases": [
     {
@@ -1396,7 +1396,7 @@
       },
       "DialogStr": "It seems like someone convinced her I was pretty cool.",
       "FileName": "ItSeemsLikeSomeone",
-      "PhraseRating": 0
+      "PhraseRating": "G"
     },
     {
       "tags": {
@@ -1404,7 +1404,7 @@
       },
       "DialogStr": "Fortunately I have an endless supply of stories about kitty.  She thought that was pretty cool.",
       "FileName": "FortuneatelyIHaveAn",
-      "PhraseRating": 0
+      "PhraseRating": "G"
     },
     {
       "tags": {
@@ -1412,7 +1412,7 @@
       },
       "DialogStr": "I am",
       "FileName": "IAm",
-      "PhraseRating": 0
+      "PhraseRating": "G"
     },
     {
       "tags": {
@@ -1420,7 +1420,7 @@
       },
       "DialogStr": "Don't worry.  You don't have to give me two dollars.  If you will be my friend.",
       "FileName": "DontWorryYouDont",
-      "PhraseRating": 0
+      "PhraseRating": "G"
     },
     {
       "tags": {
@@ -1428,7 +1428,7 @@
       },
       "DialogStr": "Yeah.",
       "FileName": "Yeah",
-      "PhraseRating": 0
+      "PhraseRating": "G"
     },
     {
       "tags": {
@@ -1436,7 +1436,7 @@
       },
       "DialogStr": "No Way!  How did Kitty get there?  That is awesome news.  Thanks Johnny!",
       "FileName": "NoWayHowDid",
-      "PhraseRating": 0
+      "PhraseRating": "G"
     },
     {
       "tags": {
@@ -1444,7 +1444,7 @@
       },
       "DialogStr": "What is that supposed to mean?",
       "FileName": "WhatIsThatSupposed",
-      "PhraseRating": 0
+      "PhraseRating": "G"
     },
     {
       "tags": {
@@ -1452,7 +1452,7 @@
       },
       "DialogStr": "Hey.  How did you get Kitty?",
       "FileName": "HeyHowDidYou",
-      "PhraseRating": 0
+      "PhraseRating": "G"
     },
     {
       "tags": {
@@ -1460,7 +1460,7 @@
       },
       "DialogStr": "Kitty's not a furry little beast, she's my kitty.",
       "FileName": "KittysNotAFurry",
-      "PhraseRating": 0
+      "PhraseRating": "G"
     },
     {
       "tags": {
@@ -1468,7 +1468,7 @@
       },
       "DialogStr": "Come on kitty, were going home.  We can have some tea with polly prissy pants and peter panda.",
       "FileName": "ComeOnKittyWere",
-      "PhraseRating": 0
+      "PhraseRating": "G"
     },
     {
       "tags": {
@@ -1476,7 +1476,7 @@
       },
       "DialogStr": "I see you aren't out telling people how cool I am, well two dollars is better than that anyway.",
       "FileName": "ISeeYouArent",
-      "PhraseRating": 0
+      "PhraseRating": "G"
     }
   ]
 }
