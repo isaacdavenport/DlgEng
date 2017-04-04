@@ -126,7 +126,7 @@ namespace DialogEngine
 
         public void PlayAudio(string pathAndFileName) {
             if (!SessionVars.AudioDialogsOn) {
-                //Thread.Sleep(2200);
+                Thread.Sleep(2200);
                 return;
             }
             if (File.Exists(pathAndFileName)) {
@@ -140,10 +140,9 @@ namespace DialogEngine
                 int i = 0;
                 Thread.Sleep(600);
                 while (Audio.IsPlaying() && i < 250) {  // 20 seconds is max
-                    //Thread.Sleep((int)songMilliSeconds);
                     Thread.Sleep(100);
                 }
-                Thread.Sleep(1200);  // wait around a second after the audio is done for between phrase pause
+                Thread.Sleep(1600);  // wait around a second after the audio is done for between phrase pause
             }
             else {
                 Console.WriteLine("Could not find: " + pathAndFileName);
