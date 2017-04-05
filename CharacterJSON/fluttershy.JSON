@@ -4,7 +4,7 @@
   "Phrases": [
     {
       "DialogStr": "Fluttershy has not been initialized.",
-      "FileName": "FluttershyHasNot",
+      "FileName": "FluttershyHasNotBeen",
       "PhraseWeights": {
         "Exclamation": 0.01
       },
@@ -32,7 +32,7 @@
     },
     {
       "DialogStr": "Are bunnies cute?",
-      "FileName": "AreBunniesCute",
+      "FileName": "AreBunnysCute",
       "PhraseWeights": {
         "Yes": 1,
 		"Yes/NoQuestion": 0.3
@@ -100,7 +100,7 @@
     },
     {
       "DialogStr": "Oh, you're just as sweet as Pinky Pie.",
-      "FileName": "OhYoureJustASweetAsPinkyPie",
+      "FileName": "OhYoureJustAsSweetAsPinkyPie",
       "PhraseWeights": {
         "GiveAffirmation": 0.3
       },
@@ -399,7 +399,7 @@
     },
     {
       "DialogStr": "Oh my, my cutie mark is glowing!",
-      "FileName": "OhMyMyMyCutie",
+      "FileName": "OhMyMyCutie",
       "PhraseWeights": {
         "GiveSurprisingStatement": 0.6
       },
@@ -421,18 +421,16 @@
       "PhraseWeights": {
         "Exclamation": 0.6,
         "GiveAffirmation": 0.6
-      },
- 
+      }, 
       "PhraseRating": "PG"
     },
     {
       "DialogStr": "I just knew that you would make a great friend.",
-      "FileName": "IJustKnewThatyYouWouldMake",
+      "FileName": "IJustKnewThatYouWouldMake",
       "PhraseWeights": {
         "GiveSurprisingStatement": 0.6,
         "RequestAffirmation": 0.6
-      },
- 
+      }, 
       "PhraseRating": "PG"
     },
     {
@@ -511,7 +509,7 @@
     },
     {
       "DialogStr": "What should I be doing to keep my mind off of dragons?",
-      "FileName": "WhatShouldIBeDoingToKeep",
+      "FileName": "WhatShouldIBeingDoingToKeep",
       "PhraseWeights": {
         "RequestActivity": 1
       },
@@ -604,7 +602,7 @@
     },
     {
       "DialogStr": "Discord is a dear friend...but I do wonder why he turned my hut into bubblegum.",
-      "FileName": "DiscordIsADearFriend",
+      "FileName": "DsicordIsADearFriend",
       "PhraseWeights": {
         "RequestMotivation": 0.6
       },
@@ -613,7 +611,7 @@
     },
     {
       "DialogStr": "They probably just needed somepony to be their friend!",
-      "FileName": "TheyProbablyJustNeedSomePony",
+      "FileName": "TheyProbablyJustNeededSomePony",
       "PhraseWeights": {
         "GiveMotivation": 0.6
       },
@@ -736,7 +734,7 @@
     },
     {
       "DialogStr": "I'm so very sorry to hear that.",
-      "FileName": "ImVerySorryToHear",
+      "FileName": "ImSoVerySorryToHear",
       "PhraseWeights": {
         "GoOnSad": 0.6
       },
@@ -763,7 +761,7 @@
     },
     {
       "DialogStr": "Oh, that's almost enough to make me raise my voice.",
-      "FileName": "OhThatsAlmostEnough",
+      "FileName": "OhThatsAlmostEnoughToMake",
       "PhraseWeights": {
         "GoOnAngry": 0.6
       },
@@ -781,7 +779,7 @@
     },
     {
       "DialogStr": "Please don't say this ends badly.",
-      "FileName": "PleaseDontsSayThisEnds",
+      "FileName": "PleaseDontSayThisEnds",
       "PhraseWeights": {
         "GoOnSad": 0.6
       },
@@ -817,7 +815,7 @@
     },
     {
       "DialogStr": "Goodness, how yucky.",
-      "FileName": "GoodnessHowLucky",
+      "FileName": "GoodnessHowYucky",
       "PhraseWeights": {
         "GoOnDisgust": 0.6
       },
@@ -826,7 +824,7 @@
     },
     {
       "DialogStr": "You're giving me goosefeathers.",
-      "FileName": "YoureGivingMeGooseFeathers",
+      "FileName": "YoureGivingMeGoose",
       "PhraseWeights": {
         "GoOnFear": 0.6
       },

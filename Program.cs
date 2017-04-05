@@ -11,15 +11,6 @@ using Newtonsoft.Json;
 
 namespace DialogEngine
 {
-    //list of strings that will contain all Phrase Types after character initialization.
-    /*public static class GlobalPhraseTypes
-    {
-        public static List<string> TestPhraseTypes = new List<String> { };
-    }
-    */
-
-
-
     static class ParentalRatings
     {
         /// <summary>
@@ -125,11 +116,9 @@ namespace DialogEngine
         public static DialogTracker TheDialogs = new DialogTracker();
 
         static void WriteStartupInfo() {
-            string versionTimeStr = "Dialog Engine ver 0.44 " + DateTime.Now;
+            string versionTimeStr = "Dialog Engine ver 0.45 " + DateTime.Now;
             Console.WriteLine(""); 
             Console.WriteLine(versionTimeStr);
-            //GlobalPhraseTypes.TestPhraseTypes.ForEach (Console.WriteLine) ;
-            Console.Read();
             if (SessionVars.WriteSerialLog)
             {
 
@@ -205,6 +194,7 @@ namespace DialogEngine
                 CheckAdventurePhrasesUsed();
                 CheckEachCharacterHasEachPhraseType();
             }
+            Console.Read();
 
             while (true) {
                 if (SessionVars.ForceCharactersAndDialogModel) {

@@ -155,16 +155,6 @@
       "PhraseRating": "PG"
     },
     {
-      "DialogStr": "Chrysalis, why are you doing this?",
-      "FileName": "ChrysalisWhyAreYou",
-      "PhraseWeights": {
-        "RequestCatchup": 0.1,
-        "Exclamation": 0.3
-      },
- 
-      "PhraseRating": "PG"
-    },
-    {
       "DialogStr": "Why are you doing this?",
       "FileName": "WhyAreYouDoing",
       "PhraseWeights": {
@@ -174,8 +164,8 @@
       "PhraseRating": "PG"
     },
     {
-      "DialogStr": "Why!?",
-      "FileName": "Why",
+      "DialogStr": "Whyyyyy!?",
+      "FileName": "Whyyyyy",
       "PhraseWeights": {
         "RequestCatchup": 0.1,
         "Exclamation": 0.3
@@ -425,7 +415,7 @@
     },
     {
       "DialogStr": "I'm not sure if your magic will work here",
-      "FileName": "ImNotSure",
+      "FileName": "ImNotSureIfYourMagic",
       "PhraseWeights": {
         "GiveAdvice": 0.2,
         "GiveDisbelief": 0.1
@@ -958,7 +948,7 @@
     },
     {
       "DialogStr": "Where?",
-      "FileName": "Where?",
+      "FileName": "Where",
       "PhraseWeights": {
         "RequestAdvice": 0.3,
         "RequestLocation": 0.4
@@ -988,7 +978,7 @@
     },
     {
       "DialogStr": "What should we do now",
-      "FileName": "TwilightWhatShouldWe",
+      "FileName": "WhatShouldWeDo",
       "PhraseWeights": {
         "RequestAdvice": 0.2,
         "RequestMotivation": 0.3
@@ -1038,7 +1028,7 @@
     },
     {
       "DialogStr": "How did that happen??",
-      "FileName": "HowDiThatHappen",
+      "FileName": "HowDidThatHappen",
       "PhraseWeights": {
         "RequestCatchup": 0.2,
         "Exclamation": 0.3
@@ -1129,7 +1119,7 @@
     },
     {
       "DialogStr": "Are you sure?",
-      "FileName": "Are you sure?",
+      "FileName": "AreYouSure?",
       "PhraseWeights": {
         "RequestMotivation": 0.2,
         "YesNoQuestion": 0.3

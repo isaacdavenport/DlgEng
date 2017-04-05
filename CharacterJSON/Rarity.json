@@ -202,7 +202,7 @@
     },
     {
       "DialogStr": "Good heavens! Your breath smells simply dreadful!",
-      "FileName": "YourBreathSmell",
+      "FileName": "YourBreathSmells",
       "PhraseWeights": {
         "Insult": 0.4,
         "Exclamation": 0.2
@@ -244,7 +244,7 @@
     },
     {
       "DialogStr": "Don't I look beautiful?",
-      "FileName": "AmIBeautiful",
+      "FileName": "DontILookBeautiful",
       "PhraseWeights": {
         "YesNoQuestion": 0.2
       },
@@ -272,7 +272,7 @@
     },
     {
       "DialogStr": "That sounds sublime!",
-      "FileName": "SoundsSublime",
+      "FileName": "SoundSublime",
       "PhraseWeights": {
         "Exclamation": 0.2,
         "GoOnJoyful": 0.2,
@@ -584,7 +584,7 @@
     },
     {
       "DialogStr": "What am I supposed to wallow in?",
-      "FileName": "WhatsGoingOn",
+      "FileName": "SupposedToWallowIn",
       "PhraseWeights": {
         "RequestAdvice": 0.4,
         "RequestJoke": 0.2
@@ -691,7 +691,7 @@
     },
     {
       "DialogStr": "Beautifying their manes",
-      "FileName": "BeautifyManes",
+      "FileName": "BeautifyingManes",
       "PhraseWeights": {
         "GiveActivity": 0.2
       },
@@ -896,7 +896,7 @@
     },
     {
       "DialogStr": "Oh darling, what happened?",
-      "FileName": "WhatCanWeDo",
+      "FileName": "WhatHappened",
       "PhraseWeights": {
         "RequestCatchup": 0.2
       },
