@@ -63,7 +63,7 @@
         "GiveSurprisingStatement": 0.6
       },
  
-      "PhraseRating": "G"
+      "PhraseRating": "PG13"
     },
     {
       "DialogStr": "Golly!",
@@ -302,7 +302,7 @@
         "Insult": 0.4
       },
  
-      "PhraseRating": "PG"
+      "PhraseRating": "PG13"
     },
     {
       "DialogStr": "Guess what I saw my older sister doing.",
@@ -669,7 +669,7 @@
         "RequestMotivation": 0.2
       },
  
-      "PhraseRating": "PG"
+      "PhraseRating": "PG13"
     },
     {
       "DialogStr": "Maybe they just wanted to.",
@@ -715,7 +715,7 @@
         "Retreat": 0.2
       },
  
-      "PhraseRating": "PG"
+      "PhraseRating": "PG13"
     },
     {
       "DialogStr": "Try under the bed with the monsters.",
@@ -735,7 +735,7 @@
         "GiveSurprisingStatement": 0.2
       },
  
-      "PhraseRating": "PG"
+      "PhraseRating": "PG13"
     },
     {
       "DialogStr": "Do you know where my tricycle is?",

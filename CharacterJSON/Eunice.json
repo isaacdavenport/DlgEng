@@ -30,7 +30,7 @@
         "Exclamation": 0.4
       },
  
-      "PhraseRating": "PG"
+      "PhraseRating": "PG13"
     },
     {
       "DialogStr": "Mark my words, I will send a toddler with a perment marker to your home!",
@@ -153,7 +153,7 @@
         "GiveJoke": 0.3
       },
  
-      "PhraseRating": "G"
+      "PhraseRating": "PG13"
     },
     {
       "DialogStr": "You are looking handsome today.",
@@ -195,7 +195,7 @@
         "SmCb_01A": 1.0
       },
  
-      "PhraseRating": "PG"
+      "PhraseRating": "PG13"
     },
     {
       "DialogStr": "In a battle of wits you would be unarmed",
@@ -367,7 +367,7 @@
         "GiveSurprisingStatement": 0.4
       },
  
-      "PhraseRating": "PG"
+      "PhraseRating": "PG13"
     },
     {
       "DialogStr": "Let's take a walk, shall we.",
