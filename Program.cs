@@ -183,18 +183,21 @@ namespace DialogEngine
             SerialComs.InitSerial();
             InitModelDialogs.SetDefaults(TheDialogs);
 
-            //Select Debug Output
-            if (SessionVars.ForceCharactersAndDialogModel) {
-                Console.WriteLine("   enter three numbers to set the next: DialogModel, Char1, Char2");
-                Console.WriteLine();
-            }
 
             if (SessionVars.DebugFlag) {
                 CheckForMissingPhrases();
                 CheckAdventurePhrasesUsed();
                 CheckEachCharacterHasEachPhraseType();
+                Console.WriteLine("   press enter to continue");
+                Console.ReadLine();
             }
-            Console.Read();
+
+            //Select Debug Output
+            if (SessionVars.ForceCharactersAndDialogModel)
+            {
+                Console.WriteLine("   enter three numbers to set the next: DialogModel, Char1, Char2");
+                Console.WriteLine();
+            }
 
             while (true) {
                 if (SessionVars.ForceCharactersAndDialogModel) {
