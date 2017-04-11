@@ -241,11 +241,16 @@ namespace DialogEngine
                     }
                 }
             }
-            EnqueLatestCharacters(tempCh1, tempCh2);
-            AssignNextCharacters(tempCh1, tempCh2);
+            if (tempCh1 <= Program.TheDialogs.CharacterList.Count && tempCh2 <= Program.TheDialogs.CharacterList.Count) {
+                EnqueLatestCharacters(tempCh1, tempCh2);
+                AssignNextCharacters(tempCh1, tempCh2);
+            }
         }
 
         static void AddMessageToReceivedBuffer(int characterRowNum, int[] rw, DateTime timeStamp) {
+            if (characterRowNum > Program.TheDialogs.CharacterList.Count - 2) {
+                return;
+            }
             ReceivedMessages.Add(new ReceivedMessage() {
             ReceivedTime = timeStamp,               
             SequenceNum = rw[NUM_RADIOS],
