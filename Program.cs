@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Configuration;
 using System.Threading; // for thread.sleep()
 using Newtonsoft.Json;
 
@@ -11,6 +12,12 @@ using Newtonsoft.Json;
 
 namespace DialogEngine
 {
+    //list of strings that will contain all Phrase Types after character initialization.
+    public static class GlobalPhraseTypes
+    {
+        public static List<string> TestPhraseTypes = new List<String> { };
+    }
+    
     static class ParentalRatings
     {
         /// <summary>
@@ -92,16 +99,35 @@ namespace DialogEngine
         public Queue<PhraseEntry> RecentPhrases = new Queue<PhraseEntry>();  //TODO make this a method that runs over the history
     }
     
+    //[JsonObject(MemberSerialization.OptIn)]
+    public class ModelDialogInput
+    {
+        public List<ModelDialog> inList;
+    }
+
     public class ModelDialog
     {
         // a ModelDialog is a sequence of phrase types that represent an exchange between characters 
         // the model dialog will be filled with randomly selected character phrases of the appropriate phrase type
+        [JsonProperty("DialogName")]
         public string Name;
+
+        [JsonProperty("AddedOnDateTime")]
         public DateTime AddedOnDateTime = new DateTime(2016, 1, 2, 3, 4, 5);
+
+        [JsonProperty("Popularity")]
         public double Popularity = 1.0;
+
+        [JsonProperty("Adventure")]
         public string Adventure = "";
+
+        [JsonProperty("Requires")]
         public List<string> Requires = new List<string>();
+
+        [JsonProperty("Provides")]
         public List<string> Provides = new List<string>();
+
+        [JsonProperty("PhraseTypeSequence")]
         public List<string> PhraseTypeSequence = new List<string>();
         public bool AreDialogsRequirementsMet() {return true;}
     }
@@ -116,7 +142,7 @@ namespace DialogEngine
         public static DialogTracker TheDialogs = new DialogTracker();
 
         static void WriteStartupInfo() {
-            string versionTimeStr = "Dialog Engine ver 0.45 " + DateTime.Now;
+            string versionTimeStr = "Dialog Engine ver 0.46 " + DateTime.Now;
             Console.WriteLine(""); 
             Console.WriteLine(versionTimeStr);
             if (SessionVars.WriteSerialLog)
@@ -167,16 +193,6 @@ namespace DialogEngine
             //TODO check that all dialog models have unique names
         }
 
-
-        static void CheckAdventurePhrasesUsed() {
-            //TODO string match adventures in DialogModels.cs or incoming JSON to strings in character JSON
-            return;
-        }
-
-        static void CheckEachCharacterHasEachPhraseType() {
-            //TODO create a unit test that ensure each character is minimally complete similar to CheckAdventurePhrasesUsed() and CheckForMissingAudioFiles()
-        }
-
         static void Main(string[] args) {
             Console.SetBufferSize(Console.BufferWidth, 32766);
             WriteStartupInfo();
@@ -186,8 +202,6 @@ namespace DialogEngine
 
             if (SessionVars.DebugFlag) {
                 CheckForMissingPhrases();
-                CheckAdventurePhrasesUsed();
-                CheckEachCharacterHasEachPhraseType();
                 Console.WriteLine("   press enter to continue");
                 Console.ReadLine();
             }

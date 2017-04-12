@@ -33,6 +33,7 @@ namespace DialogEngine
         //Here we decide what to say next
         protected const int RecentDialogsQueSize = 4;
         public List<ModelDialog> ModelDialogs = new List<ModelDialog>();
+        //print dialogs to json
         public List<HistoricalDialog> HistoricalDialogs = new List<HistoricalDialog>();
         public List<HistoricalPhrase> HistoricalPhrases = new List<HistoricalPhrase>();
         public Queue<int> RecentDialogs = new Queue<int>();
@@ -42,7 +43,6 @@ namespace DialogEngine
         int _priorCharacter1Num = 100;
         int _priorCharacter2Num = 100;
         int CurrentDialogModel = 1;
-        // public Mp3Player Player = new Mp3Player();
         public WindowsMediaPlayerMp3 Audio = new WindowsMediaPlayerMp3();
         public bool SameCharactersAsLast = false;
         public bool LastPhraseImpliedMovement = false;
@@ -392,7 +392,7 @@ namespace DialogEngine
             var tempChar1 = SerialComs.NextCharacter1;
             var tempChar2 = SerialComs.NextCharacter2;
             if (tempChar1 == tempChar2 || tempChar1 > SerialComs.NUM_RADIOS - 1 || tempChar2 > SerialComs.NUM_RADIOS - 1) {
-                return false;
+                return false;  //TODO add a check against Character.Count()?
             }
             SameCharactersAsLast =
                 (tempChar1 == _priorCharacter1Num || tempChar1 == _priorCharacter2Num) &&
