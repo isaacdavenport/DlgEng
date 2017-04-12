@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Configuration;
 using System.Threading; // for thread.sleep()
 using Newtonsoft.Json;
-
 
 // TODO: JSON Input
 //       Cleanup Character class for strings
@@ -142,7 +140,7 @@ namespace DialogEngine
         public static DialogTracker TheDialogs = new DialogTracker();
 
         static void WriteStartupInfo() {
-            string versionTimeStr = "Dialog Engine ver 0.46 " + DateTime.Now;
+            string versionTimeStr = "Dialog Engine ver 0.50 " + DateTime.Now;
             Console.WriteLine(""); 
             Console.WriteLine(versionTimeStr);
             if (SessionVars.WriteSerialLog)
@@ -185,7 +183,7 @@ namespace DialogEngine
                 {
                     if (!File.Exists(SessionVars.AudioDirectory + character.CharacterPrefix + "_" + phrase.FileName + ".mp3"))  //Char name and prefix are being left blank...
                     {
-                        Console.WriteLine("missing " + character.CharacterPrefix + "_" + phrase.FileName + " " + phrase.DialogStr);//these are being checked with JSON input.
+                        Console.WriteLine("missing " + character.CharacterPrefix + "_" + phrase.FileName + ".mp3 " + phrase.DialogStr);//these are being checked with JSON input.
                     }
                 }
                 Console.WriteLine();

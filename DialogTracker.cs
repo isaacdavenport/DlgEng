@@ -88,6 +88,8 @@ namespace DialogEngine
                     deserializedCharacterJSON.PhraseTotals.phraseWeights = new Dictionary<string, double>();
                     deserializedCharacterJSON.PhraseTotals.phraseWeights.Add("Greeting", 0.0f);
 
+                    RemovePhrasesOverParentalRating(deserializedCharacterJSON);
+
                     //Calculate Phrase Weight Totals here.
                     foreach (PhraseEntry _curPhrase in deserializedCharacterJSON.Phrases) {
                         foreach (string tag in _curPhrase.phraseWeights.Keys) {
@@ -105,11 +107,18 @@ namespace DialogEngine
                     }
                     //list Chars as they come in.
                     Console.WriteLine("Finish read of " + deserializedCharacterJSON.CharacterName);
-                    RemovePhrasesOverParentalRating(deserializedCharacterJSON);
                     //Add to Char List
                     CharacterList.Add(deserializedCharacterJSON);
                 }
             }
+            if (CharacterList.Count < 2)
+            {
+                Console.WriteLine("  Insufficient readable character json files found in " 
+                    + SessionVars.CharactersDirectory + " .  Exiting.");
+                Console.ReadLine();
+                Environment.Exit(0);
+            }
+
             // Fill the queue with greeting dialogs
             for (int i = 0; i < RecentDialogsQueSize; i++) {
                 RecentDialogs.Enqueue(0); // Fill the que with greeting dialogs
@@ -391,8 +400,8 @@ namespace DialogEngine
         bool ImportClosestSerialComsCharacters() {
             var tempChar1 = SerialComs.NextCharacter1;
             var tempChar2 = SerialComs.NextCharacter2;
-            if (tempChar1 == tempChar2 || tempChar1 > SerialComs.NUM_RADIOS - 1 || tempChar2 > SerialComs.NUM_RADIOS - 1) {
-                return false;  //TODO add a check against Character.Count()?
+            if (tempChar1 == tempChar2 || tempChar1 >= CharacterList.Count || tempChar2 > CharacterList.Count) {
+                return false;  
             }
             SameCharactersAsLast =
                 (tempChar1 == _priorCharacter1Num || tempChar1 == _priorCharacter2Num) &&

@@ -24,7 +24,7 @@ namespace DialogEngine
         private static bool _rssiStable = false;
         private static int _bigRssi = 0;
         public const int STRONG_RSSI_BUF_DEPTH = 12;
-        public static int NextCharacter1 = 1, NextCharacter2 = 2; 
+        public static int NextCharacter1 = 0, NextCharacter2 = 1; 
         static SerialPort _serialPort;
         public static bool Continue = true;
         static int[,] _heatMap = new int[NUM_RADIOS, NUM_RADIOS];
@@ -336,6 +336,7 @@ namespace DialogEngine
             while (Continue)
             {
                 NextCharacter1 = RandomNumbers.Gen.Next(0, Program.TheDialogs.CharacterList.Count); //lower bound inclusive, upper exclusive
+                NextCharacter2 = RandomNumbers.Gen.Next(0, Program.TheDialogs.CharacterList.Count); //lower bound inclusive, upper exclusive
                 while (NextCharacter1 == NextCharacter2) {
                     NextCharacter2 = RandomNumbers.Gen.Next(0, Program.TheDialogs.CharacterList.Count);  
                 }
