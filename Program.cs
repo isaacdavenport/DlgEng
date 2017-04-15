@@ -10,12 +10,6 @@ using Newtonsoft.Json;
 
 namespace DialogEngine
 {
-    //list of strings that will contain all Phrase Types after character initialization.
-    public static class GlobalPhraseTypes
-    {
-        public static List<string> TestPhraseTypes = new List<String> { };
-    }
-    
     static class ParentalRatings
     {
         /// <summary>
@@ -46,6 +40,15 @@ namespace DialogEngine
 
     public static class SessionVars
     {
+        //private static string exePath = System.Reflection.Assembly.GetExecutingAssembly().Location;
+        // TODO work this so that if BaseDirectory doesn't exist, or CharactersDirectory, we use the 
+        // directory the .exe originally ran from with the default subdirectories for LogsDirectory 
+        //  of Logs and CharacterDirectory of CharacterJSON and dialogsDirectory of DialogJSON
+        //Typically for imaged machines for play tests, the base directory will be ..\Desktop\T2L\ 
+        //  with subdirectories like ..\Desktop\T2L\CharacterJSON and ..\Desktop\T2L\Logs as seen on
+        // the install directory in google drive
+
+        public static string exeDir = "e"; //System.IO.Path.GetDirectoryName(exePath);
         public static readonly bool DebugFlag = Convert.ToBoolean(AppSet.ReadSetting("DebugFlag"));
         public static readonly bool AudioDialogsOn = Convert.ToBoolean(AppSet.ReadSetting("AudioDialogsOn"));
         public static readonly bool TextDialogsOn = Convert.ToBoolean(AppSet.ReadSetting("TextDialogsOn"));
@@ -61,10 +64,11 @@ namespace DialogEngine
         public static readonly bool MonitorReceiveBufferSize = Convert.ToBoolean(AppSet.ReadSetting("MonitorReceiveBufferSize"));
         public static readonly bool MonitorMessageParseFails = Convert.ToBoolean(AppSet.ReadSetting("MonitorMessageParseFails"));
         public static readonly string CurrentParentalRating = AppSet.ReadSetting("CurrentParentalRating");
-        public static readonly string LogsDirectory = AppSet.ReadSetting("LogsDirectory");
-        public static readonly string CharactersDirectory = AppSet.ReadSetting("CharactersDirectory");
-        public static readonly string DialogsDirectory = AppSet.ReadSetting("DialogsDirectory");
-        public static readonly string AudioDirectory = AppSet.ReadSetting("AudioDirectory");
+        public static          string LogsDirectory = AppSet.ReadSetting("LogsDirectory");
+        public static          string BaseDirectory = AppSet.ReadSetting("BaseDirectory");
+        public static          string CharactersDirectory = AppSet.ReadSetting("CharactersDirectory");
+        public static          string DialogsDirectory = AppSet.ReadSetting("DialogsDirectory");
+        public static          string AudioDirectory = AppSet.ReadSetting("AudioDirectory");
         public static readonly string DecimalSerialLogFileName = AppSet.ReadSetting("DecimalSerialLogFileName");
         public static readonly string SerialLogFileName = AppSet.ReadSetting("SerialLogFileName");
         public static readonly string DialogSerialLogFileName = AppSet.ReadSetting("DialogSerialLogFileName");
@@ -140,9 +144,10 @@ namespace DialogEngine
         public static DialogTracker TheDialogs = new DialogTracker();
 
         static void WriteStartupInfo() {
-            string versionTimeStr = "Dialog Engine ver 0.50 " + DateTime.Now;
+            string versionTimeStr = "Dialog Engine ver 0.80 " + DateTime.Now;
             Console.WriteLine(""); 
             Console.WriteLine(versionTimeStr);
+            Console.WriteLine(SessionVars.exeDir);
             if (SessionVars.WriteSerialLog)
             {
 
@@ -152,6 +157,7 @@ namespace DialogEngine
                     serialLog.WriteLine("");
                     serialLog.WriteLine("");
                     serialLog.WriteLine(versionTimeStr);
+                    serialLog.WriteLine(SessionVars.exeDir);
                     serialLog.Close();
                 }
                 using (StreamWriter serialLogDec = new StreamWriter(
@@ -160,6 +166,7 @@ namespace DialogEngine
                     serialLogDec.WriteLine("");
                     serialLogDec.WriteLine("");
                     serialLogDec.WriteLine(versionTimeStr);
+                    serialLogDec.WriteLine(SessionVars.exeDir);
                     serialLogDec.Close();
                 }
                 using (StreamWriter serialLogDialog = new StreamWriter(
@@ -168,6 +175,7 @@ namespace DialogEngine
                     serialLogDialog.WriteLine("");
                     serialLogDialog.WriteLine("");
                     serialLogDialog.WriteLine(versionTimeStr);
+                    serialLogDialog.WriteLine(SessionVars.exeDir);
                     serialLogDialog.Close();
                 }
             }
@@ -191,9 +199,22 @@ namespace DialogEngine
             //TODO check that all dialog models have unique names
         }
 
+
+
+        static void NormalizeDataPaths() {
+            if (SessionVars.BaseDirectory == "") {
+                SessionVars.BaseDirectory = SessionVars.exeDir;
+            }
+            SessionVars.LogsDirectory = SessionVars.BaseDirectory + SessionVars.LogsDirectory + @"\";
+            SessionVars.CharactersDirectory = SessionVars.BaseDirectory + SessionVars.CharactersDirectory + @"\";
+            SessionVars.DialogsDirectory = SessionVars.BaseDirectory + SessionVars.DialogsDirectory + @"\";
+            SessionVars.AudioDirectory = SessionVars.BaseDirectory + SessionVars.AudioDirectory + @"\";
+        }
+
         static void Main(string[] args) {
             Console.SetBufferSize(Console.BufferWidth, 32766);
             WriteStartupInfo();
+            NormalizeDataPaths();
             SerialComs.InitSerial();
             InitModelDialogs.SetDefaults(TheDialogs);
 
