@@ -33,7 +33,6 @@ namespace DialogEngine
         //Here we decide what to say next
         protected const int RecentDialogsQueSize = 4;
         public List<ModelDialog> ModelDialogs = new List<ModelDialog>();
-        //print dialogs to json
         public List<HistoricalDialog> HistoricalDialogs = new List<HistoricalDialog>();
         public List<HistoricalPhrase> HistoricalPhrases = new List<HistoricalPhrase>();
         public Queue<int> RecentDialogs = new Queue<int>();
@@ -111,6 +110,8 @@ namespace DialogEngine
                     CharacterList.Add(deserializedCharacterJSON);
                 }
             }
+            
+
             if (CharacterList.Count < 2)
             {
                 Console.WriteLine("  Insufficient readable character json files found in " 

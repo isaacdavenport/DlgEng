@@ -47,6 +47,7 @@ namespace DialogEngine
     public static class SessionVars
     {
         public static readonly bool DebugFlag = Convert.ToBoolean(AppSet.ReadSetting("DebugFlag"));
+        public static readonly bool tagUsageCheck = Convert.ToBoolean(AppSet.ReadSetting("tagUsageCheck"));
         public static readonly bool AudioDialogsOn = Convert.ToBoolean(AppSet.ReadSetting("AudioDialogsOn"));
         public static readonly bool TextDialogsOn = Convert.ToBoolean(AppSet.ReadSetting("TextDialogsOn"));
         public static readonly bool ForceCharactersAndDialogModel = Convert.ToBoolean(AppSet.ReadSetting("ForceCharactersAndDialogModel"));
@@ -164,7 +165,7 @@ namespace DialogEngine
                 }
                 using (StreamWriter serialLogDialog = new StreamWriter(
                     (SessionVars.LogsDirectory + SessionVars.DialogSerialLogFileName), true))
-{
+                {
                     serialLogDialog.WriteLine("");
                     serialLogDialog.WriteLine("");
                     serialLogDialog.WriteLine(versionTimeStr);
@@ -191,12 +192,92 @@ namespace DialogEngine
             //TODO check that all dialog models have unique names
         }
 
+        static void checkTagsUsed()
+        {
+            //spit out all dialog model names and associated number.
+            Console.WriteLine(" Dialogs Index: ");
+            Console.ReadLine();
+            foreach(ModelDialog _dialog in TheDialogs.ModelDialogs)
+            {
+                Console.WriteLine(TheDialogs.ModelDialogs.IndexOf(_dialog) + " : " + _dialog.Name);
+            }
+            Console.ReadLine();
+
+            //test that all character tags are used by a dialog model.
+            Console.WriteLine(" check characters tags are used ");
+            Console.ReadLine();
+            Boolean usedFlag = false;
+            foreach (Character _character in TheDialogs.CharacterList)
+            {
+                foreach (PhraseEntry _phrase in _character.Phrases)
+                {
+                    foreach (string _phrasetag in _phrase.phraseWeights.Keys)
+                    {
+                        usedFlag = false;
+                        foreach (ModelDialog _dialog in TheDialogs.ModelDialogs)
+                        {
+                            foreach (string _dialogtag in _dialog.PhraseTypeSequence)
+                            {
+                                if (_phrasetag == _dialogtag)
+                                {
+                                    usedFlag = true;
+                                    break;
+                                }
+                            }
+                            if (usedFlag)
+                            { break; }
+                        }
+                        if (!usedFlag)
+                        {
+                            Console.WriteLine(_phrasetag + " is not used.");
+                        }
+                    }
+                }
+            }
+            Console.ReadLine();
+
+            //test that all dialogs have character tags to use them
+            //bad runtime, NxM for N and M phrases and dialogs worst case.
+            Console.WriteLine(" check dialogs tags are used ");
+            Console.ReadLine();
+            foreach (ModelDialog _dialog in TheDialogs.ModelDialogs)
+            {
+                foreach (string _dialogtag in _dialog.PhraseTypeSequence)//each dialog model tag
+                {
+                    usedFlag = false;
+                    foreach(Character _character in TheDialogs.CharacterList)
+                    {
+                        foreach(PhraseEntry _characterPhrase in _character.Phrases)
+                        {
+                            foreach(string _phraseTag in _characterPhrase.phraseWeights.Keys)//each character phrase tag
+                            {
+                                if (_dialogtag == _phraseTag)
+                                {
+                                    usedFlag = true;
+                                    break;
+                                }
+                            }
+                            if(usedFlag)
+                            { break; }
+                        }
+                        if(usedFlag)
+                        { break; }
+                    }
+                    if(!usedFlag)
+                    { Console.WriteLine(_dialogtag + " not used in " + _dialog.Name); }
+                }
+            }
+            Console.ReadLine();
+        }
+
         static void Main(string[] args) {
             Console.SetBufferSize(Console.BufferWidth, 32766);
             WriteStartupInfo();
             SerialComs.InitSerial();
             InitModelDialogs.SetDefaults(TheDialogs);
 
+            if(SessionVars.tagUsageCheck)
+            {   checkTagsUsed();    }
 
             if (SessionVars.DebugFlag) {
                 CheckForMissingPhrases();
