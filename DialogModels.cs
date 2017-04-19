@@ -5,13 +5,14 @@ using System.IO;
 
 namespace DialogEngine
 {
-    public static class InitModelDialogs
+    public static class InitModelDialogs    //TODO lets get some graceful failures here. recovery from single file failures.
     {
-        public static void SetDefaults(DialogTracker inObj)
+        public static void SetDefaults(DialogTracker inObj) //TODO is there a good way to identify orphaned tags? (dialog lines)
         {
             //Dialogs JSON parse here.
-            DirectoryInfo dialogs_d = new DirectoryInfo(SessionVars.DialogsDirectory);
-            foreach (FileInfo file in dialogs_d.GetFiles("*.json")) //file of type FileInfo for each .json in directory
+            try { DirectoryInfo dialogs_d = new DirectoryInfo(SessionVars.DialogsDirectory);
+            var _inFiles = dialogs_d.GetFiles("*.json"); 
+            foreach (FileInfo file in _inFiles) //file of type FileInfo for each .json in directory
             {
                 Console.WriteLine(" opening dialog models in " + file.FullName);
                 string inDialog;
@@ -24,11 +25,32 @@ namespace DialogEngine
                     {
                         //Add to dialog List
                         inObj.ModelDialogs.Add(curDialog);
-                        //pop sum
+                        //population sums
                         inObj.DialogModelPopularitySum += curDialog.Popularity;
                     }
                 }
                 Console.WriteLine(" completed " + file.FullName);
+            }
+            }
+            catch (ArgumentException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            catch (DirectoryNotFoundException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            catch (UnauthorizedAccessException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            catch (OutOfMemoryException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine(e.Message);
             }
             if (inObj.ModelDialogs.Count < 2)
             {
