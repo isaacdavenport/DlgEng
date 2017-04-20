@@ -8,7 +8,7 @@
       "PhraseWeights": {
         "NH1": 1,
         "Greeting": 1,
-        "RequestJoke": 0.2,
+        "RequestJoke": 0.1,
         "RequestCatchup": 0.2,
         "RequestAffirmation": "0.1"
       },
@@ -19,7 +19,7 @@
       "FileName": "HiImStarlightGlimmer",
       "PhraseWeights": {
         "Greeting": 1,
-        "RequestJoke": 0.2,
+        "RequestJoke": 0.1,
         "RequestCatchup": 0.2,
         "RequestAffirmation": "0.1"
       },
@@ -29,10 +29,7 @@
       "DialogStr": "Starlight Glimmer has not been initialized",
       "FileName": "StarlightGlimmerHasNot",
       "PhraseWeights": {
-        "Greeting": 0.01,
-        "RequestJoke": 0.02,
-        "RequestCatchup": 0.02,
-        "RequestAffirmation": "0.01"
+        "Greeting": 0.01
       },
  
       "PhraseRating": "PG"
@@ -41,8 +38,8 @@
       "DialogStr": "I'm not ready to lead at the festival!",
       "FileName": "ImNotReadyTo",
       "PhraseWeights": {
-        "RequestAdvice": 0.3,
-        "RequestAffirmation": 0.2
+        "RequestAdvice": 0.4,
+        "RequestAffirmation": 0.4
       },
  
       "PhraseRating": "PG"
@@ -59,20 +56,10 @@
     },
     {
       "DialogStr": "I don't want to lose you as a friend because of what I did in the past",
-      "FileName": "IGuessIllHave",
+      "FileName": "LoseYouAsA",
       "PhraseWeights": {
-        "GiveRecentHistory": 0.3,
-        "RequestAffirmation": 0.2
-      },
- 
-      "PhraseRating": "PG"
-    },
-    {
-      "DialogStr": "Why is this happening?",
-      "FileName": "WhyIsThisHappening",
-      "PhraseWeights": {
-        "Exclamation": 0.4,
-        "RequestAffirmation": 0.2
+        "RequestAffirmation": 0.2,
+        "Admit": 0.1
       },
  
       "PhraseRating": "PG"
@@ -81,8 +68,8 @@
       "DialogStr": "klutzy draconequus",
       "FileName": "KlutzyDraconequus",
       "PhraseWeights": {
-        "GiveAffirmation": 0.3,
-        "Exclamation": 1
+        "Exclamation": 1,
+        "GiveSurprisingStatement": 1
       },
  
       "PhraseRating": "PG"
@@ -100,13 +87,15 @@
       "DialogStr": "Do you see what happens when you give instead of take?",
       "FileName": "DoYouSeeWhat",
       "PhraseWeights": {
-        "YesNoQuestion": 0.3
+        "YesNoQuestion": 0.3,
+        "GiveAdvice": 0.2,
+        "YoureWelcome": 0.1
       },
  
       "PhraseRating": "PG"
     },
     {
-      "DialogStr": "I removed every pony's QT marks to try and make every pony equal",
+      "DialogStr": "I removed every pony's cutie marks to try and make every pony equal",
       "FileName": "IRemovedEveryPonys",
       "PhraseWeights": {
         "GiveRecentHistory": 0.3,
@@ -119,8 +108,7 @@
       "DialogStr": "I'm not sure how to get rid of the throne of ancient dark stone",
       "FileName": "ImNotSureHow",
       "PhraseWeights": {
-        "GiveDisbelief": 0.4,
-        "Retreat": 0.2
+        "RequestAdvice": 0.2
       },
  
       "PhraseRating": "PG"
@@ -129,15 +117,14 @@
       "DialogStr": "Lead the way through the changeling hive!",
       "FileName": "LeadTheWayThrough",
       "PhraseWeights": {
-        "GiveMotivation": 1.0,
-        "GiveAdvice": 0.3
+        "GiveSurprisingStatement": 0.3
       },
  
       "PhraseRating": "PG"
     },
     {
-      "DialogStr": "Do not leave the group or I'll set a dragon on you!",
-      "FileName": "DoNotLeaveThe",
+      "DialogStr": "I'll set a dragon on you!",
+      "FileName": "IllSetADragon",
       "PhraseWeights": {
         "Threat": 1.0
       },
@@ -149,16 +136,8 @@
       "FileName": "WhoaWhoaaa",
       "PhraseWeights": {
         "GiveDisbelief": 0.4,
-        "Exclamation": 0.5
-      },
- 
-      "PhraseRating": "PG"
-    },
-    {
-      "DialogStr": "Why are you doing this?",
-      "FileName": "WhyAreYouDoing",
-      "PhraseWeights": {
-        "RequestMotivation": 0.31
+        "Exclamation": 0.2,
+        "GoOnSurprise": 0.5
       },
  
       "PhraseRating": "PG"
@@ -167,18 +146,8 @@
       "DialogStr": "Whyyyyy!?",
       "FileName": "Whyyyyy",
       "PhraseWeights": {
-        "RequestCatchup": 0.1,
-        "Exclamation": 0.3
-      },
- 
-      "PhraseRating": "PG"
-    },
-    {
-      "DialogStr": "Will they let Thorax go if I give myself up?",
-      "FileName": "WillTheyLetThorax",
-      "PhraseWeights": {
-        "YesNoQuestion": 0.4,
-        "No": 0.3
+        "GoOnDisapproval": 0.3,
+        "GoOnDisgust": 0.1
       },
  
       "PhraseRating": "PG"
@@ -188,7 +157,7 @@
       "FileName": "ThoraxIsNotA",
       "PhraseWeights": {
         "Exclamation": 0.1,
-        "GiveRecentHistory": 0.15
+        "GiveSurprisingStatement": 0.2
       },
  
       "PhraseRating": "PG"
@@ -197,7 +166,6 @@
       "DialogStr": "I promise that I won't leave you here",
       "FileName": "IPromiseThatI",
       "PhraseWeights": {
-        "RequestAffirmation": 0.1,
         "GiveAffirmation": 0.3
       },
  
@@ -214,31 +182,14 @@
       "PhraseRating": "PG"
     },
     {
-      "DialogStr": "You have to wake up, changelings are here!",
-      "FileName": "YouHaveToWake",
+      "DialogStr": "Twilight Sparkle is the smartest pony I know. Maybe you should talk to her about that",
+      "FileName": "MaybeTwilight",
       "PhraseWeights": {
-        "RequestCatchup": 1,
-        "GiveRecentHistory": 0.3
-      },
- 
-      "PhraseRating": "PG"
-    },
-    {
-      "DialogStr": "What kind of apples have you been eating?",
-      "FileName": "WhatKindOfApples",
-      "PhraseWeights": {
-        "RequestJoke": 1,
-        "GiveJoke": 0.2
-      },
- 
-      "PhraseRating": "PG"
-    },
-    {
-      "DialogStr": "We need to go and talk to the princess",
-      "FileName": "WeNeedToGo",
-      "PhraseWeights": {
-        "GiveLocation": 0.4,
-        "GiveAdvice": 0.3
+        "GiveAdvice": 0.3,
+        "GiveLocation": 0.2,
+        "GiveWho": 0.2,
+        "GiveActivity": 0.2,
+        "GiveMotivation": 0.2
       },
  
       "PhraseRating": "PG"
@@ -259,7 +210,7 @@
       "FileName": "ARealLeaderDoesnt",
       "PhraseWeights": {
         "GiveAdvice": 1,
-        "GiveAffirmation": 0.4
+        "GiveAffirmation": 0.1
       },
  
       "PhraseRating": "PG"
@@ -269,7 +220,7 @@
       "FileName": "CelebratesWhatMakesYou",
       "PhraseWeights": {
         "GiveAdvice": 1,
-        "GiveMotivation": 0.4
+        "GiveAffirmation": 0.1
       },
  
       "PhraseRating": "PG"
@@ -279,16 +230,6 @@
       "FileName": "PerhapsTheyWereJust",
       "PhraseWeights": {
         "GiveMotivation": 1
-      },
- 
-      "PhraseRating": "PG"
-    },
-    {
-      "DialogStr": "Where are we going, the castle is that way?",
-      "FileName": "WhereAreWeGoing",
-      "PhraseWeights": {
-        "RequestLocation": 0.5,
-        "ImListening": 0.3
       },
  
       "PhraseRating": "PG"
@@ -308,7 +249,9 @@
       "FileName": "DoYouAlwaysPoke",
       "PhraseWeights": {
         "YesNoQuestion": 1,
-        "Insult": 0.3
+        "Insult": 0.3,
+        "ShutUp": 0.3,
+        "Retreat": 0.1
       },
  
       "PhraseRating": "PG"
@@ -319,8 +262,9 @@
       "PhraseWeights": {
         "Exclamation": 0.3,
         "RequestAffirmation": 0.3,
-        "RequestJoke": 0.3,
-        "GiveSurprisingStatement": 0.2
+        "RequestJoke": 0.1,
+        "GiveSurprisingStatement": 0.2,
+        "GoOnFear": 0.1
       },
  
       "PhraseRating": "PG"
@@ -329,36 +273,26 @@
       "DialogStr": "What's next on our adventure?",
       "FileName": "WhatsNextOnOur",
       "PhraseWeights": {
-        "RequestMotivation": 0.2,
         "RequestActivity": 0.4
       },
  
       "PhraseRating": "PG"
     },
     {
-      "DialogStr": "I brought along a few friends, if that's okay",
-      "FileName": "IBroughtAlongA",
+      "DialogStr": "I hope it's okay to bring along some friends",
+      "FileName": "BringAlongSome",
       "PhraseWeights": {
-        "GiveActivity": 0.3,
         "RequestAffirmation": 1
       },
  
       "PhraseRating": "PG"
     },
     {
-      "DialogStr": "Spike has been worrying about what you are up to",
-      "FileName": "SpikeHasBeenWorrying",
+      "DialogStr": "Spike has been wondering about what you are up to",
+      "FileName": "SpikeHasBeenWondering",
       "PhraseWeights": {
-        "RequestCatchup": 0.2
-      },
- 
-      "PhraseRating": "PG"
-    },
-    {
-      "DialogStr": "Are you sure that's what we should do?",
-      "FileName": "AreYouSureThats",
-      "PhraseWeights": {
-        "YesNoQuestion": 0.3
+        "RequestCatchup": 0.8,
+        "RequestActivity": 0.8
       },
  
       "PhraseRating": "PG"
@@ -375,7 +309,7 @@
     },
     {
       "DialogStr": "Is friendship important?",
-      "FileName": "ItsImportantToGive",
+      "FileName": "IsFriendshipImportant",
       "PhraseWeights": {
         "YesNoQuestion": 0.21,
         "Yes": 1.3
@@ -384,21 +318,14 @@
       "PhraseRating": "PG"
     },
     {
-      "DialogStr": "FriendshipIsMagic",
+      "DialogStr": "Friendship Is Magic",
       "FileName": "FriendshipIsMagic",
       "PhraseWeights": {
-        "GiveAffirmation": 0.21,
-        "Exclamation": 1.3
-      },
- 
-      "PhraseRating": "PG"
-    },
-    {
-      "DialogStr": "What do we do?",
-      "FileName": "WhatDoWeDo",
-      "PhraseWeights": {
-        "RequestMotivation": 0.3,
-        "RequestAdvice": 0.2
+        "Exclamation": 0.6,
+        "GiveAffirmation": 0.3,
+        "ThankYou": 0.3,
+        "YoureWelcome": 0.3,
+        "GoOnJoyful": 0.1
       },
  
       "PhraseRating": "PG"
@@ -408,21 +335,15 @@
       "FileName": "OhNo",
       "PhraseWeights": {
         "Exclamation": 0.3,
-        "GiveDisbelief": 0.2
+        "GiveDisbelief": 0.2,
+        "GoOnDisgust": 0.2,
+        "GoOnAngry": 0.2,
+        "GiveDisapproval": 0.2
       },
  
       "PhraseRating": "PG"
     },
     {
-      "DialogStr": "I'm not sure if your magic will work here",
-      "FileName": "ImNotSureIfYourMagic",
-      "PhraseWeights": {
-        "GiveAdvice": 0.2,
-        "GiveDisbelief": 0.1
-      },
- 
-      "PhraseRating": "PG"
-    },    {
       "DialogStr": "Every pony should be welcomed",
       "FileName": "EveryPonyShouldBe",
       "PhraseWeights": {
@@ -433,12 +354,11 @@
       "PhraseRating": "PG"
     },
     {
-      "DialogStr": "There are two paths to go down, which one do we take?",
-      "FileName": "ThereAreTwoPaths",
+      "DialogStr": "It's hard to decide which path to take",
+      "FileName": "HardToDecide",
       "PhraseWeights": {
-        "RequestMotivation": 0.3,
         "RequestAdvice": 0.2,
-        "RequestLocation": 0.1
+        "RequestAffirmation": 0.2
       },
  
       "PhraseRating": "PG"
@@ -448,16 +368,15 @@
       "FileName": "WhatsHappeningInPonyville",
       "PhraseWeights": {
         "RequestCatchup": 1,
-        "RequestAdvice": 0.3
+        "Greeting": 0.3
       },
  
       "PhraseRating": "PG"
     },
     {
-      "DialogStr": "There's a changling in the Crystal Empire?",
+      "DialogStr": "There's a changeling in the Crystal Empire?",
       "FileName": "TheresAChanglingIn",
       "PhraseWeights": {
-        "GiveDisbelief": 0.3,
         "YesNoQuestion": 0.3
       },
  
@@ -467,18 +386,7 @@
       "DialogStr": "Are you okay?",
       "FileName": "AreYouOkay",
       "PhraseWeights": {
-        "RequestCatchup": 0.3,
         "YesNoQuestion": 0.3
-      },
- 
-      "PhraseRating": "PG"
-    },
-    {
-      "DialogStr": "What's wrong?",
-      "FileName": "WhatsWrong",
-      "PhraseWeights": {
-        "RequestCatchup": 0.3,
-        "ImListening": 0.2
       },
  
       "PhraseRating": "PG"
@@ -487,8 +395,7 @@
       "DialogStr": "I'm not sure how to lead",
       "FileName": "ImNotSureHow",
       "PhraseWeights": {
-        "RequestAffirmation": 0.3,
-        "RequestMotivation": 0.2
+        "RequestAffirmation": 0.3
       },
  
       "PhraseRating": "PG"
@@ -497,18 +404,7 @@
       "DialogStr": "It's important to learn from the past",
       "FileName": "ItsImportantToLearn",
       "PhraseWeights": {
-        "GiveRecentHistory": 0.3,
-        "GiveActivity": 0.2
-      },
- 
-      "PhraseRating": "PG"
-    },
-    {
-      "DialogStr": "How can I help?",
-      "FileName": "HowCanIHelp",
-      "PhraseWeights": {
-        "GiveAffirmation": 0.2,
-        "GiveActivity": 0.2
+        "GiveAdvice": 0.3
       },
  
       "PhraseRating": "PG"
@@ -517,8 +413,8 @@
       "DialogStr": "Hmmm",
       "FileName": "Hmmm",
       "PhraseWeights": {
-        "Exclamation": 0.2,
-        "ImListening": 0.2
+        "GoOnNeutral": 0.2,
+        "GiveDisbelief": 0.2
       },
  
       "PhraseRating": "PG"
@@ -527,9 +423,7 @@
       "DialogStr": "I wonder if the cutie mark crusaders can help",
       "FileName": "IWonderIfThe",
       "PhraseWeights": {
-        "PC6": 0.2,
-        "YesNoQuestion": 0.2,
-        "RequestActivity": 0.2
+        "PC6": 0.2
       },
  
       "PhraseRating": "PG"
@@ -538,9 +432,7 @@
       "DialogStr": "What do we do without magic?",
       "FileName": "WhatDoWeDo",
       "PhraseWeights": {
-        "NH3": 0.2,
-        "GoOnSad": 0.1,
-        "RequestAdvice": 0.4
+        "NH3": 0.2
       },
  
       "PhraseRating": "PG"
@@ -559,7 +451,6 @@
       "DialogStr": "With the princesses missing, it's up to us!",
       "FileName": "WithThePrincessesMissing",
       "PhraseWeights": {
-        "GiveAdvice": 0.4,
         "NH5": 0.3
       },
  
@@ -570,7 +461,8 @@
       "FileName": "IThinkYourHorn",
       "PhraseWeights": {
         "Insult": 0.4,
-        "ShutUp": 0.3
+        "ShutUp": 0.3,
+        "Retreat": 0.3
       },
  
       "PhraseRating": "PG"
@@ -580,8 +472,7 @@
       "FileName": "OhhhMyyy",
       "PhraseWeights": {
         "GoOnJoyful": 0.4,
-        "Exclamation": 1,
-        "Yes": 0.1
+        "Exclamation": 1
       },
  
       "PhraseRating": "PG"
@@ -591,8 +482,8 @@
       "FileName": "IDontKnowAbout",
       "PhraseWeights": {
         "FP5": 0.4,
-        "GoOnSurprise": 0.4,
-        "RequestAdvice": 0.3
+        "GiveDisbelief": 0.4,
+        "GoOnDisapproval": 0.2
       },
  
       "PhraseRating": "PG"
@@ -601,8 +492,8 @@
       "DialogStr": "Huh",
       "FileName": "Huh",
       "PhraseWeights": {
-        "ImListening": 0.3,
-        "GiveDisbelief": 0.3
+        "GiveDisbelief": 0.3,
+        "GoOnNeutral": 0.3
       },
  
       "PhraseRating": "PG"
@@ -622,7 +513,7 @@
       "FileName": "ImNotSureAbout",
       "PhraseWeights": {
         "GiveDisbelief": 0.3,
-        "Exclamation": 0.3
+        "GoOnDisapproval": 0.3
       },
  
       "PhraseRating": "PG"
@@ -631,8 +522,7 @@
       "DialogStr": "We'll see each other again",
       "FileName": "WellSeeEachOther",
       "PhraseWeights": {
-        "GiveAffirmation": 0.3,
-        "GiveMotivation": 0.3
+        "Retreat": 0.3
       },
  
       "PhraseRating": "PG"
@@ -641,8 +531,8 @@
       "DialogStr": "Who else can help us?",
       "FileName": "WhoElseCanHelp",
       "PhraseWeights": {
-        "RequestAffirmation": 0.3,
-        "RequestWho": 0.3
+        "RequestAffirmation": 0.1,
+        "RequestWho": 0.5
       },
  
       "PhraseRating": "PG"
@@ -660,8 +550,8 @@
       "DialogStr": "What??",
       "FileName": "What",
       "PhraseWeights": {
-        "Threat": 0.3,
-        "ImListening": 0.3
+        "GoOnAngry": 0.3,
+        "GoOnDisgust": 0.3
       },
  
       "PhraseRating": "PG"
@@ -670,7 +560,6 @@
       "DialogStr": "I'm not sure I can help you after all",
       "FileName": "ImNotSureI",
       "PhraseWeights": {
-        "RequestMotivation": 0.2,
         "RequestAffirmation": 0.3
       },
  
@@ -687,20 +576,10 @@
       "PhraseRating": "PG"
     },
     {
-      "DialogStr": "That doesn't sound like you.",
-      "FileName": "ThatDoesntSoundLike",
-      "PhraseWeights": {
-        "GiveDisbelief": 0.4,
-        "RequestAffirmation": 0.3
-      },
- 
-      "PhraseRating": "PG"
-    },
-    {
       "DialogStr": "What is happening",
       "FileName": "WhatIsHappening",
       "PhraseWeights": {
-        "RequestActivity": 0.3,
+        "RequestActivity": 0.1,
         "RequestCatchup": 0.3
       },
  
@@ -710,18 +589,8 @@
       "DialogStr": "You are now under my spell",
       "FileName": "YouAreNowUnder",
       "PhraseWeights": {
-        "GiveSurprisingStatement": 0.3
-      },
- 
-      "PhraseRating": "PG"
-    },
-    {
-      "DialogStr": "Why are you acting this way?",
-      "FileName": "WhyAreYouActing",
-      "PhraseWeights": {
-        "GiveSurprisingStatement": 0.1,
-        "RequestMotivation": 0.3,
-        "RequestActivity": 0.1
+        "GiveSurprisingStatement": 0.3,
+        "Threat": 0.3
       },
  
       "PhraseRating": "PG"
@@ -730,7 +599,7 @@
       "DialogStr": "Are you sure I'm doing a good job?",
       "FileName": "AreYouSureIm",
       "PhraseWeights": {
-        "RequestJoke": 0.3,
+        "YesNoQuestion": 0.1,
         "PC5": 0.3
       },
  
@@ -740,18 +609,8 @@
       "DialogStr": "These pretzels are making me thirsty",
       "FileName": "ThesePretzelsAreMaking",
       "PhraseWeights": {
-        "RequestJoke": 0.3,
-        "GiveJoke": 0.3
-      },
- 
-      "PhraseRating": "PG"
-    },
-    {
-      "DialogStr": "That's why your wings sparkle",
-      "FileName": "IsThatWhyYour",
-      "PhraseWeights": {
-        "GiveAdvice": 0.3,
-        "YesNoQuestion": 0.3
+        "RequestJoke": 0.1,
+        "GiveJoke": 0.1
       },
  
       "PhraseRating": "PG"
@@ -760,28 +619,16 @@
       "DialogStr": "Hearth's Warming Eve is important!",
       "FileName": "HearthsWarmingEveIs",
       "PhraseWeights": {
-        "GiveAffirmation": 0.3,
-        "GiveMotivation": 0.3
+        "GiveSuprisingStatement": 0.3
       },
  
       "PhraseRating": "PG"
     },
     {
-      "DialogStr": "How far is the palace?",
-      "FileName": "HowFarIsThe",
+      "DialogStr": "Where is Queen Chrysalis's hive?",
+      "FileName": "WhereIsQueen",
       "PhraseWeights": {
-        "RequestLocation": 0.3,
         "NH2": 0.3
-      },
- 
-      "PhraseRating": "PG"
-    },
-    {
-      "DialogStr": "Where are we?",
-      "FileName": "WhereAreWe",
-      "PhraseWeights": {
-        "RequestLocation": 0.3,
-        "RequestAffirmation": 0.2
       },
  
       "PhraseRating": "PG"
@@ -790,18 +637,8 @@
       "DialogStr": "Really?",
       "FileName": "Really",
       "PhraseWeights": {
-        "RequestLocation": 0.3,
-        "RequestAffirmation": 0.2
-      },
- 
-      "PhraseRating": "PG"
-    },
-    {
-      "DialogStr": "What can I do to make things better?",
-      "FileName": "WhatCanIDo",
-      "PhraseWeights": {
-        "RequestMotivation": 0.3,
-        "RequestAffirmation": 0.2
+        "GoOnUnderstanding": 0.3,
+        "GoOnNeutral": 0.3
       },
  
       "PhraseRating": "PG"
@@ -810,8 +647,8 @@
       "DialogStr": "Yes!",
       "FileName": "Yes",
       "PhraseWeights": {
-        "Exclamation": 0.3,
-        "Yes": 0.2
+        "Yes": 0.8,
+        "GoOnJoyful": 0.2
       },
  
       "PhraseRating": "PG"
@@ -820,8 +657,8 @@
       "DialogStr": "No!",
       "FileName": "No",
       "PhraseWeights": {
-        "Exclamation": 0.3,
-        "No": 0.2
+        "No": 0.2,
+        "GoOnAngry": 0.1
       },
  
       "PhraseRating": "PG"
@@ -830,7 +667,6 @@
       "DialogStr": "Is the Cutie Map working?",
       "FileName": "IsTheCutieMap",
       "PhraseWeights": {
-        "RequestAffirmation": 0.3,
         "YesNoQuestion": 0.2
       },
  
@@ -840,8 +676,7 @@
       "DialogStr": "Yes, my cutie mark is painted on..",
       "FileName": "YesMyCutieMark",
       "PhraseWeights": {
-        "GiveAffirmation": 0.3,
-        "YesNoQuestion": 0.2
+        "GiveSuprisingStatement": 0.3
       },
  
       "PhraseRating": "PG"
@@ -850,7 +685,7 @@
       "DialogStr": "We all have equal signs to show we are all equal",
       "FileName": "WeAllHaveEqual",
       "PhraseWeights": {
-        "GiveAdvice": 0.3,
+        "GiveAdvice": 0.1,
         "GiveSurprisingStatement": 0.2
       },
  
@@ -858,9 +693,8 @@
     },
     {
       "DialogStr": "The Staff of Sameness will make us all equal!",
-      "FileName": "TheStaffOfSamenes",
+      "FileName": "TheStaffOfSamenesWill",
       "PhraseWeights": {
-        "GiveAdvice": 0.3,
         "Exclamation": 0.2
       },
  
@@ -868,7 +702,7 @@
     },
     {
       "DialogStr": "Using the Staff of Sameness to make us all equal?",
-      "FileName": "TheStaffOfSamenes",
+      "FileName": "UsingTheStaffOfSamenes",
       "PhraseWeights": {
         "GiveActivity": 0.3
       },
@@ -880,7 +714,8 @@
       "FileName": "ImSoSorry",
       "PhraseWeights": {
         "GoOnSad": 0.3,
-        "RequestAffirmation": 0.4
+        "RequestAffirmation": 0.4,
+        "Admit": 0.2
       },
  
       "PhraseRating": "PG"
@@ -889,8 +724,7 @@
       "DialogStr": "I wasn't ready for all of those questions",
       "FileName": "IWasntReadyFor",
       "PhraseWeights": {
-        "RequestAdvice": 0.3,
-		"No": 0.1,		
+        "RequestAdvice": 0.3,		
         "RequestAffirmation": 0.4
       },
  
@@ -920,18 +754,7 @@
       "DialogStr": "We have to keep going",
       "FileName": "WeHaveToKeep",
       "PhraseWeights": {
-        "Exclamation": 0.3,
-        "GiveMotivation": 0.3
-      },
- 
-      "PhraseRating": "PG"
-    },
-    {
-      "DialogStr": "Where do I get those apples?",
-      "FileName": "WeCanDoThis",
-      "PhraseWeights": {
-        "RequestAdvice": 0.3,
-        "RequestLocation": 0.3
+        "Exclamation": 0.3
       },
  
       "PhraseRating": "PG"
@@ -940,28 +763,8 @@
       "DialogStr": "Why did Sunburst leave?",
       "FileName": "WhyDidSunburstLeave",
       "PhraseWeights": {
-        "RequestAdvice": 0.3,
-        "RequestAffirmation": 0.4
-      },
- 
-      "PhraseRating": "PG"
-    },
-    {
-      "DialogStr": "Where?",
-      "FileName": "Where",
-      "PhraseWeights": {
-        "RequestAdvice": 0.3,
-        "RequestLocation": 0.4
-      },
- 
-      "PhraseRating": "PG"
-    },
-    {
-      "DialogStr": "Will you two stop it?",
-      "FileName": "WillYouTwoStop",
-      "PhraseWeights": {
-        "RequestAffirmation": 0.3,
-        "YesNoQuestion": 0.4
+        "RequestMotivation": 0.8,
+        "RequestAffirmation": 0.2
       },
  
       "PhraseRating": "PG"
@@ -970,18 +773,7 @@
       "DialogStr": "You don't have to feed off of love like Chrysalis, you can share it.",
       "FileName": "YouDontHaveTo",
       "PhraseWeights": {
-        "GiveAdvice": 0.2,
-        "GiveMotivation": 0.3
-      },
- 
-      "PhraseRating": "PG"
-    },
-    {
-      "DialogStr": "What should we do now",
-      "FileName": "WhatShouldWeDo",
-      "PhraseWeights": {
-        "RequestAdvice": 0.2,
-        "RequestMotivation": 0.3
+        "GiveAdvice": 0.2
       },
  
       "PhraseRating": "PG"
@@ -990,8 +782,8 @@
       "DialogStr": "We know that's not the real Discord, right?",
       "FileName": "WeKnowThatsNot",
       "PhraseWeights": {
-        "RequestAffirmation": 0.2,
-        "RequestActivity": 0.3
+        "YesNoQuestion": 0.2,
+       "GiveSurprisingStatement": 0.2
       },
  
       "PhraseRating": "PG"
@@ -1001,7 +793,8 @@
       "FileName": "WouldYouPutAn",
       "PhraseWeights": {
         "Insult": 0.2,
-        "GiveJoke": 0.3
+        "GiveJoke": 0.3,
+        "ShutUp": 0.3
       },
  
       "PhraseRating": "PG"
@@ -1010,8 +803,8 @@
       "DialogStr": "Rotten apples!",
       "FileName": "RottenApples",
       "PhraseWeights": {
-        "Exclamation": 0.2,
-        "Retreat": 0.3
+        "Exclamation": 0.1,
+        "Retreat": 0.1
       },
  
       "PhraseRating": "PG"
@@ -1020,38 +813,7 @@
       "DialogStr": "Apple sauce cross!",
       "FileName": "AppleSauceCross",
       "PhraseWeights": {
-        "Exclamation": 0.2,
-        "RequestMotivation": 0.3
-      },
- 
-      "PhraseRating": "PG"
-    },
-    {
-      "DialogStr": "How did that happen??",
-      "FileName": "HowDidThatHappen",
-      "PhraseWeights": {
-        "RequestCatchup": 0.2,
-        "Exclamation": 0.3
-      },
- 
-      "PhraseRating": "PG"
-    },
-    {
-      "DialogStr": "Awww",
-      "FileName": "Awww",
-      "PhraseWeights": {
-        "RequestActivity": 0.2,
-        "Exclamation": 0.3
-      },
- 
-      "PhraseRating": "PG"
-    },
-    {
-      "DialogStr": "What did you hear last night?",
-      "FileName": "WhatDidYouHear",
-      "PhraseWeights": {
-        "RequestAdvice": 0.2,
-        "ImListening": 0.3
+        "Exclamation": 0.1
       },
  
       "PhraseRating": "PG"
@@ -1061,7 +823,8 @@
       "FileName": "Hooray",
       "PhraseWeights": {
         "Exclamation": 0.2,
-        "GiveAffirmation": 0.3
+        "GiveAffirmation": 0.3,
+        "GoOnJoyful": 0.3
       },
  
       "PhraseRating": "PG"
@@ -1070,8 +833,7 @@
       "DialogStr": "This can't be a dead end",
       "FileName": "ThisCantBeA",
       "PhraseWeights": {
-        "FP3": 0.2,
-        "GoOnNeutral": 0.3
+        "FP3": 0.2
       },
  
       "PhraseRating": "PG"
@@ -1091,18 +853,7 @@
       "DialogStr": "Why is the castle locked?",
       "FileName": "WhyIsTheCastle",
       "PhraseWeights": {
-        "RequestMotivation": 0.2,
         "PC1": 0.3
-      },
- 
-      "PhraseRating": "PG"
-    },
-    {
-      "DialogStr": "I'm not sure I'm ready to go back",
-      "FileName": "ImNotSureIm",
-      "PhraseWeights": {
-        "RequestMotivation": 0.2,
-        "RequestActivity": 0.3
       },
  
       "PhraseRating": "PG"
@@ -1121,17 +872,6 @@
       "DialogStr": "Are you sure?",
       "FileName": "AreYouSure?",
       "PhraseWeights": {
-        "RequestMotivation": 0.2,
-        "YesNoQuestion": 0.3
-      },
- 
-      "PhraseRating": "PG"
-    },
-    {
-      "DialogStr": "We did it!",
-      "FileName": "WeDidIt",
-      "PhraseWeights": {
-        "RequestMotivation": 0.2,
         "YesNoQuestion": 0.3
       },
  
@@ -1141,8 +881,7 @@
       "DialogStr": "Perhaps it would be easier to understand if I gave you a tour",
       "FileName": "PerhapsItWouldBe",
       "PhraseWeights": {
-        "GiveAdvice": 0.3,
-        "RequestAffirmation": 0.2
+        "GiveAdvice": 0.2
       },
  
       "PhraseRating": "PG"
@@ -1158,8 +897,8 @@
       "PhraseRating": "PG"
     },
     {
-      "DialogStr": " All together now, every one of you! No pony left behind! ",
-      "FileName": "AllTogetherNowEvery",
+      "DialogStr": " All together now! Every one of you! No pony left behind!",
+      "FileName": "AllTogetherNow",
       "PhraseWeights": {
         "Exclamation": 0.3,
         "GiveAffirmation": 0.2
@@ -1171,18 +910,17 @@
       "DialogStr": "Life is so grand in our town/We're always filled with cheer",
       "FileName": "LifeIsSoGrand",
       "PhraseWeights": {
-        "Exclamation": 0.3,
-        "GiveMotivation": 0.2
+        "Exclamation": 0.3
       },
  
       "PhraseRating": "PG"
     },
     {
-      "DialogStr": "We never have to look around/To know that we're all here! ",
+      "DialogStr": "We never have to look around/To know that we're all here!",
       "FileName": "WeNeverHaveTo",
       "PhraseWeights": {
         "Exclamation": 0.3,
-        "GiveMotivation": 0.2
+        "GiveMotivation": 0.1
       },
  
       "PhraseRating": "PG"
@@ -1191,7 +929,6 @@
       "DialogStr": "Let's see those big happy smiles! ",
       "FileName": "LetsSeeThoseBig",
       "PhraseWeights": {
-        "RequestMotivation": 0.3,
         "Exclamation": 0.2
       },
  
@@ -1201,8 +938,8 @@
       "DialogStr": "Life is a smile in our town/We're all equal here/No-one is superior/And no-one shakes in fear",
       "FileName": "LifeIsASmile",
       "PhraseWeights": {
-        "GiveAffirmation": 1,
-        "Exclamation": 0.2
+        "GiveAffirmation": 0.1,
+        "Ramble": 0.2
       },
  
       "PhraseRating": "PG"
@@ -1212,7 +949,7 @@
       "FileName": "WelcomeImSoPleased",
       "PhraseWeights": {
         "Greeting": 1,
-        "Exclamation": 0.2
+        "RequestCatchup": 0.1
       },
  
       "PhraseRating": "PG"
@@ -1231,8 +968,7 @@
       "DialogStr": "New friends? Hey! ",
       "FileName": "NewFriendsHey",
       "PhraseWeights": {
-        "Exclamation": 0.4,
-        "GiveJoke": 0.2
+        "Exclamation": 0.4
       },
  
       "PhraseRating": "PG"
@@ -1241,16 +977,8 @@
       "DialogStr": "Been having too much apple sauce, I see! ",
       "FileName": "BeenHavingTooMuch",
       "PhraseWeights": {
-        "GiveJoke": 0.4
-      },
- 
-      "PhraseRating": "PG"
-    },
-    {
-      "DialogStr": "If that's what it takes, then I'm game!",
-      "FileName": "IfThatsWhatIt",
-      "PhraseWeights": {
-        "GiveAffirmation": 0.3
+        "GiveJoke": 0.1,
+       "Insult": 0.6
       },
  
       "PhraseRating": "PG"
@@ -1259,16 +987,9 @@
       "DialogStr": "Wait a minute",
       "FileName": "WaitAMinute",
       "PhraseWeights": {
-        "RequestCatchup": 0.3
-      },
- 
-      "PhraseRating": "PG"
-    },
-    {
-      "DialogStr": "I can't choose, I like all your friends",
-      "FileName": "ICantChooseI",
-      "PhraseWeights": {
-        "RequestMotivation": 0.3
+        "GiveDisbelief": 0.3,
+        "GoOnDisapproval": 0.3,
+        "Deny": 0.3
       },
  
       "PhraseRating": "PG"
@@ -1292,28 +1013,11 @@
       "PhraseRating": "PG"
     },
     {
-      "DialogStr": " I guess I'm not exactly thrilled with the options.",
-      "FileName": "IGuessImNot",
-      "PhraseWeights": {
-        "GiveRecentHistory": 0.3
-      },
- 
-      "PhraseRating": "PG"
-    },
-    {
-      "DialogStr": "Sounds like a fair trade to me! ",
-      "FileName": "SoundsLikeAFair",
-      "PhraseWeights": {
-        "Exclamation": 0.3
-      },
- 
-      "PhraseRating": "PG"
-    },
-    {
       "DialogStr": "I created that spell to send myself back in time",
       "FileName": "ICreatedThatSpell",
       "PhraseWeights": {
-        "GiveRecentHistory": 0.5
+        "GiveRecentHistory": 0.5,
+        "GiveSurprisingStatement": 0.5
       },
  
       "PhraseRating": "PG"
@@ -1322,7 +1026,9 @@
       "DialogStr": " I knew you'd try to stop me! You're *so* predictable.",
       "FileName": "IKnewYoudTry",
       "PhraseWeights": {
-        "Insult": 0.3
+        "Insult": 0.3,
+        "ShutUp": 0.1,
+        "Accuse": 0.1
       },
  
       "PhraseRating": "PG"
@@ -1341,7 +1047,8 @@
       "FileName": "ISeeWhatYou",
       "PhraseWeights": {
         "NH4": 0.3,
-        "GoOnUnderstanding": 0.3
+        "GoOnUnderstanding": 0.3,
+        "GoOnNeutral": 0.3
       },
  
       "PhraseRating": "PG"
@@ -1350,7 +1057,7 @@
       "DialogStr": "How awful!",
       "FileName": "HowAwful",
       "PhraseWeights": {
-        "GoSad": 0.3
+        "GoOnSad": 0.3
       },
  
       "PhraseRating": "PG"
@@ -1369,7 +1076,9 @@
       "FileName": "AreYouSerious",
       "PhraseWeights": {
         "PC4": 0.3,
-        "GoOnSurprise": 0.3
+        "GoOnSurprise": 0.3,
+        "GiveDisbelief": 0.3,
+        "Deny": 0.2
       },
  
       "PhraseRating": "PG"
@@ -1378,18 +1087,7 @@
       "DialogStr": "What made some pony do that?!?",
       "FileName": "WhatMadeSomePony",
       "PhraseWeights": {
-        "FP1": 0.3,
-        "RequestMotivation": 0.3,
-        "GoOnAngry": 0.3
-      },
- 
-      "PhraseRating": "PG"
-    },
-    {
-      "DialogStr": "I guess we did it!",
-      "FileName": "IGuessWeDid",
-      "PhraseWeights": {
-        "GoOnJoyful": 0.3
+        "FP1": 0.3
       },
  
       "PhraseRating": "PG"
@@ -1399,7 +1097,9 @@
       "FileName": "ICantBelieveThis",
       "PhraseWeights": {
         "FP4": 0.3,
-        "GoOnSurprise": 0.3
+        "GoOnSurprise": 0.3,
+        "GiveDisbelief": 0.3,
+        "Deny": 0.2
       },
  
       "PhraseRating": "PG"
@@ -1447,7 +1147,8 @@
       "FileName": "NoWay",
       "PhraseWeights": {
         "PC7": 1.3,
-        "GoOnSurprise": 0.3
+        "GoOnSurprise": 0.3,
+        "GiveDisbelief": 0.3
       },
  
       "PhraseRating": "G"
@@ -1474,17 +1175,7 @@
       "DialogStr": "Awesome job ponies!",
       "FileName": "AwesomeJobPonies",
       "PhraseWeights": {
-        "PC8": 0.3,
-        "GoOnJoyful": 0.3
-      },
- 
-      "PhraseRating": "G"
-    },
-    {
-      "DialogStr": "Whyyyyy",
-      "FileName": "Whyyyyy",
-      "PhraseWeights": {
-        "GoOnDisgust": 0.3
+        "PC8": 0.3
       },
  
       "PhraseRating": "G"
@@ -1494,7 +1185,8 @@
       "FileName": "Yeah",
       "PhraseWeights": {
         "GoOnNeutral": 0.3,
-        "GoOnUnderstanding": 0.3
+        "GoOnUnderstanding": 0.3,
+        "Yes": 0.3
       },
  
       "PhraseRating": "G"
@@ -1503,20 +1195,324 @@
       "DialogStr": "Help!",
       "FileName": "Help",
       "PhraseWeights": {
-        "GoOnFear": 0.3,
         "RequestAffirmation": 0.3
       },
  
       "PhraseRating": "G"
     },
     {
-      "DialogStr": "I think that's the best way to spend a day",
-      "FileName": "IThinkThatsThe",
+      "DialogStr": "Pony, that would be a no",
+      "FileName": "ThatWouldBe",
       "PhraseWeights": {
-        "GoOnJoyful": 0.3
+        "No": 1
       },
  
       "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "QUIET! I created harmony!",
+      "FileName": "ICreatedHarmony",
+      "PhraseWeights": {
+        "ShutUp": 1,
+        "Threat": 0.8,
+        "Retreat": 0.1
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "When we were foals, Sunburst knew everything there was to know about magic. I wonder what he's doing now",
+      "FileName": "WhenWeWereFoals",
+      "PhraseWeights": {
+        "RequestActivity": 1
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "I've been magically commanding ponies to do what I want them to. Maybe that's not the best first instinct",
+      "FileName": "MagicallyCommanding",
+      "PhraseWeights": {
+        "GiveRecentHistory": 1,
+        "RequestAdvice": 0.6,
+        "RequestAffirmation": 0.1
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "I was just so worked up that I started acting out. I don't blame you if you're mad at me. Nopony wants to be friends with a total stress case",
+      "FileName": "TotalStressCase",
+      "PhraseWeights": {
+        "Admit": 1
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "My friend Trixie shot herself out of a cannon and into the mouth of a hungry manticore. Then she disappeared. I wonder where she ended up after?",
+      "FileName": "HungryManticore",
+      "PhraseWeights": {
+        "RequestLocation": 1,
+        "GiveSurprisingStatement": 0.6,
+        "Ramble": 0.1
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "In a dream, Princess Luna told me that things get better. Wait, was it Princess Luna? Maybe it was somepony else",
+      "FileName": "InADream",
+      "PhraseWeights": {
+        "RequestWho": 1,
+        "GiveSurprisingStatement": 0.6,
+        "Ramble": 0.1
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "If I cast accelero, I'll be able to visit Canterlot and Manhehattan and maybe one other place",
+      "FileName": "IfICastAccelero",
+      "PhraseWeights": {
+        "RequestLocation": 1
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "Maybe Applejack would have a place for that at Sweet Apple Acres",
+      "FileName": "MaybeApplejack",
+      "PhraseWeights": {
+        "GiveLocation": 0.5
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "You're welcome!",
+      "FileName": "YoureWelcome",
+      "PhraseWeights": {
+        "YoureWelcome": 1
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "Thank you",
+      "FileName": "ThankYou",
+      "PhraseWeights": {
+        "ThankYou": 1
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "After all I've done, I wonder why Twilight Sparkle would let me be her apprentice",
+      "FileName": "HerApprentice",
+      "PhraseWeights": {
+        "RequestMotivation": 1,
+        "RequestAffirmation": 0.6
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "You're a changeling impersonating my friend, and you just did something Princess Celestia would not approve of!",
+      "FileName": "ImpersonatingMyFriend",
+      "PhraseWeights": {
+        "Accuse": 0.9,
+        "Insult": 0.3
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "I didn't think Rainbow Dash would talk to me again after I magically controlled her mind, but she forgave me! I have a feeling that you talked to her for me,",
+      "FileName": "RainbowDashWouldTalk",
+      "PhraseWeights": {
+        "GiveCredit": 1
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "We never would have defeated Queen Chrysallis, if you hadn't believed in me",
+      "FileName": "NeverHaveDefeated",
+      "PhraseWeights": {
+        "GiveCredit": 1,
+        "GiveAffirmation": 0.1
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "Did you tell Twlight Sparkle that I wouldn't make a good apprentice?",
+      "FileName": "DidYouTell",
+      "PhraseWeights": {
+        "Accuse": 1,
+        "YesNoQuestion": 0.6
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "Truthicus Polygraphioso! You're magically compelled to tell the truth!",
+      "FileName": "TruthicusSGMC1",
+      "PhraseWeights": {
+        "SGMC1": 1,
+        "GiveSurprisingStatement": 0.1
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "You'd better believe it, pony! Tell me about the place you dreamed of last night.",
+      "FileName": "BetterBelieveItSGMC2",
+      "PhraseWeights": {
+        "SGMC2": 1,
+        "RequestLocation": 0.1
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "Typical. Tell me about who you were with.",
+      "FileName": "TypicalSGMC3",
+      "PhraseWeights": {
+        "SGMC3": 1,
+        "RequestWho": 0.1
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "No, really? What were you both doing?",
+      "FileName": "NoReallySGMC4",
+      "PhraseWeights": {
+        "SGMC4": 1
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "You know what? I REALLY didn't need to hear that. I need to stop magically compelling ponies to do my bidding. It's among my less endearing qualities. You're free, now.",
+      "FileName": "YouKnowWhatSGMC5",
+      "PhraseWeights": {
+        "SGMC5": 1
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "I probably deserved that.",
+      "FileName": "ProbablyDeservedSGMC6",
+      "PhraseWeights": {
+        "SGMC6": 1
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "Listen, no pony is perfect, but I feel like I'm even less perfect than most. I'm not super eager to talk about it.",
+      "FileName": "SGLS1",
+      "PhraseWeights": {
+        "SGLS1": 1,
+        "RequestAffirmation": 0.1
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "Well, thanks, I guess. On the other hoof, I nearly missed out on becoming friends with Sunburst again, all because I was too embarrased to admit what I did in the past. Maybe I SHOULD talk about it more. I just don't think you'll understand.",
+      "FileName": "OnTheOtherHoofSGLS2",
+      "PhraseWeights": {
+        "SGLS2": 1
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "Well, you don't know what it was like to be left behind! And then getting so bitter that you steal the cutie marks from an entire village and then get defeated by Twilight and her friends, so you travel through time to get back at them, but they beat you again and teach you about friendship, but you're so terrified ponies will find out what you did that you can't make any friends! ",
+      "FileName": "MakeAnyFriendsSGLS3",
+      "PhraseWeights": {
+        "SGLS3": 1,
+        "Ramble": 0.1
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "You know what? I do feel a little better. Thanks for listening.",
+      "FileName": "ThanksForListeningSGLS4",
+      "PhraseWeights": {
+        "SGLS4": 1
+      },
+ 
+      "PhraseRating": "G"
+   },
+    {
+      "DialogStr": "...",
+      "FileName": "XX_HalfSecSilence",
+      "PhraseWeights": {
+        "GiveSilence": 1
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "I don't think those are drapes, Rarity. Those are stalactites. Or maybe stalagmites. I always get those mixed up. ",
+      "FileName": "QET1B",
+      "PhraseWeights": {
+        "QET1B": 1
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "(sound of the bear growling)",
+      "FileName": "QET1D",
+      "PhraseWeights": {
+        "QET1D": 1
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "I could try using forbidden magic to rewind time to when we were fillies, and...",
+      "FileName": "QET1F",
+      "PhraseWeights": {
+        "QET1F": 1
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "You should probably ask Fluttershy. She's the bear expert. Or maybe you could try Pinkie Pie. She's great at making friends.",
+      "FileName": "QET1H",
+      "PhraseWeights": {
+        "QET1H": 1
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Still sure that forbidden time travel magic is off the table?",
+      "FileName": "QET4B",
+      "PhraseWeights": {
+        "QET4B": 1
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "I think he liked it.",
+      "FileName": "QET6B",
+      "PhraseWeights": {
+        "QET6B": 1
+      },
+ 
+      "PhraseRating": "PG"
     }
   ]
 }

@@ -1,0 +1,14 @@
+{
+  "CharacterName": "Canterlot",
+  "CharacterPrefix": "CL",
+  "Phrases": [
+    {
+      "DialogStr": "...",
+      "FileName": "CL_HalfSecSilence",
+      "PhraseWeights": {
+        "CL_HalfSecSilence": 1
+      },
+      "PhraseRating": "PG"
+    }
+  ]
+}
