@@ -63,6 +63,9 @@
   <ItemGroup>
     <Compile Include="AppSettings.cs" />
     <Compile Include="DialogTracker.cs" />
+    <Compile Include="FirmwareDebuggingTools.cs" />
+    <Compile Include="ParseMessage.cs" />
+    <Compile Include="SelectNextCharacters.cs" />
     <Compile Include="Serial.cs" />
     <Compile Include="MP3Player.cs" />
     <Compile Include="DialogModels.cs" />

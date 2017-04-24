@@ -401,8 +401,8 @@ namespace DialogEngine
         }
 
         bool ImportClosestSerialComsCharacters() {
-            var tempChar1 = SerialComs.NextCharacter1;
-            var tempChar2 = SerialComs.NextCharacter2;
+            var tempChar1 = SelectNextCharacters.NextCharacter1;
+            var tempChar2 = SelectNextCharacters.NextCharacter2;
             if (tempChar1 == tempChar2 || tempChar1 >= CharacterList.Count || tempChar2 >= CharacterList.Count) {
                 return false;  
             }
@@ -476,16 +476,16 @@ namespace DialogEngine
                 WriteDialogInfo(Character1Num, Character2Num);
             }
             if (SessionVars.HeatMapFullMatrixDispMode) {
-                SerialComs.PrintHeatMap();
+                FirmwareDebuggingTools.PrintHeatMap();
             }
             if (SessionVars.HeatMapSumsMode) {
-                SerialComs.PrintHeatMapSums();
+                FirmwareDebuggingTools.PrintHeatMapSums();
             }
         }
 
         public bool DialogTrackerAndSerialComsCharactersSame() {
-            if ((Character1Num == SerialComs.NextCharacter1 || Character1Num == SerialComs.NextCharacter2)
-                && (Character2Num == SerialComs.NextCharacter2 || Character2Num == SerialComs.NextCharacter1)) {
+            if ((Character1Num == SelectNextCharacters.NextCharacter1 || Character1Num == SelectNextCharacters.NextCharacter2)
+                && (Character2Num == SelectNextCharacters.NextCharacter2 || Character2Num == SelectNextCharacters.NextCharacter1)) {
                 return true;
             }
             return false;
