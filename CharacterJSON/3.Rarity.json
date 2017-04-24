@@ -38,7 +38,7 @@
       "FileName": "JustinBieberIsA",
       "PhraseWeights": {
         "GiveWho": 0.2,
-        "GiveSuprisingStatement": 0.2
+        "GiveSurprisingStatement": 0.2
       },
  
       "PhraseRating": "PG"
@@ -912,15 +912,6 @@
       "PhraseRating": "PG"
     },
     {
-      "DialogStr": "Why would Gabby Gums reprint my private diary?",
-      "FileName": "WhyWouldGabbyGums",
-      "PhraseWeights": {
-        "RequestMotivation": 0.2
-      },
- 
-      "PhraseRating": "PG"
-    },
-    {
       "DialogStr": "Why wouldn't Sweetie Belle wear that beautiful gown I made for her?",
       "FileName": "WhyWouldntSweetieBelle",
       "PhraseWeights": {
@@ -1038,7 +1029,7 @@
       },
     {
       "DialogStr": "Yes.",
-      "FileName": "YesRarity",
+      "FileName": "Yes",
       "PhraseWeights": {
         "Yes": 0.6
       },
@@ -1047,7 +1038,7 @@
       },
     {
       "DialogStr": "No.",
-      "FileName": "NoRarity",
+      "FileName": "No",
       "PhraseWeights": {
         "No": 0.6
       },
@@ -1384,6 +1375,22 @@
       "FileName": "QET6C",
       "PhraseWeights": {
         "QET6C": 1
+   },
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Darling, your whiskers are simply divine. Love your fur length, too--very fashionable for this season.",
+      "FileName": "DarlingYourWhiskers",
+      "PhraseWeights": {
+        "RYSC1A": 1
+   },
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "There's no need to be rude.",
+      "FileName": "NoNeed",
+      "PhraseWeights": {
+        "RYSC1C": 1
    },
       "PhraseRating": "PG"
     }

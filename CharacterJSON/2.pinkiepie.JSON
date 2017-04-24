@@ -613,7 +613,7 @@
       "PhraseWeights": {
         "GiveLocation": 1,
 	  "Ramble": 0.2,
-		"GiveSuprisingStatement": 0.1
+		"GiveSurprisingStatement": 0.1
       },
  
       "PhraseRating": "PG"
@@ -630,7 +630,7 @@
       "PhraseRating": "PG"
     },
     {
-      "DialogStr": "In the same place I keep my party cannon! Wherever that is!",
+      "DialogStr": "The same place I keep my party cannon! Wherever that is!",
       "FileName": "SamePlaceIKeep",
       "PhraseWeights": {
         "GiveLocation": 0.5
@@ -1188,6 +1188,24 @@
       "FileName": "QET5H",
       "PhraseWeights": {
         "QET5H": 1
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Happy birthday, Skylar! I've filled my party cannon with soap bubbles just for you.",
+      "FileName": "HappyBirthdaySkylar",
+      "PhraseWeights": {
+        "PPSC1A": 1
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "I've got....let's see....how about shoelace confetti?",
+      "FileName": "ShoelaceConfetti",
+      "PhraseWeights": {
+        "PPSC1C": 1
       },
  
       "PhraseRating": "PG"

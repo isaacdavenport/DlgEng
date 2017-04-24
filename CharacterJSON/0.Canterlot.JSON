@@ -4,9 +4,10 @@
   "Phrases": [
     {
       "DialogStr": "...",
-      "FileName": "CL_HalfSecSilence",
+      "FileName": "HalfSecSilence",
       "PhraseWeights": {
-        "CL_HalfSecSilence": 1
+        "CL_HalfSecSilence": 1,
+        "GiveSilence": 1		
       },
       "PhraseRating": "PG"
     }

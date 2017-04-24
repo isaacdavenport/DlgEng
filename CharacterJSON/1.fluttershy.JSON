@@ -36,7 +36,7 @@
       "FileName": "AreBunnysCute",
       "PhraseWeights": {
         "Yes": 1,
-		"Yes/NoQuestion": 0.3
+		"YesNoQuestion": 0.3
       },
  
       "PhraseRating": "PG"
@@ -58,7 +58,7 @@
       "FileName": "IWonderIfTwilight",
       "PhraseWeights": {
         "GiveDisbelief": 0.6,
-        "GiveSurprise": 0.1
+        "GoOnSurprise": 0.1
       },
  
       "PhraseRating": "PG"
@@ -130,7 +130,7 @@
     },
     {
       "DialogStr": "Rarity wanted me to be a model, but it makes me so nervous to get up in front of everypony.",
-      "FileName": "RarityModel",
+      "FileName": "RarityWantedMeToBeAModel",
       "PhraseWeights": {
         "RequestAdvice": 0.2,
         "RequestAffirmation": 0.3,
@@ -554,7 +554,7 @@
       "FileName": "CouldYouUseAFriend",
       "PhraseWeights": {
         "RequestCatchup": 0.1,
-        "Yes/NoQuestion": 0.6,
+        "YesNoQuestion": 0.6,
         "GiveAffirmation": 0.6
       },
  
@@ -1254,6 +1254,42 @@
       "FileName": "QEET2B",
       "PhraseWeights": {
         "QET2B": 1
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Oh, aren't you just the cutest little kitty!",
+      "FileName": "TheCutestLittleKitty",
+      "PhraseWeights": {
+        "FSSC1A": 1
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Oh, um, you're just like Angel. He likes me to get him foods, too.",
+      "FileName": "JustLikeAngel",
+      "PhraseWeights": {
+        "FSSC1C": 1
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "He's my cute little bunny friend.",
+      "FileName": "CuteLittleBunny",
+      "PhraseWeights": {
+        "FSSC1E": 1
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Okay, but, um, instead of taking you to the bus, maybe I could just fly you where you want to go? ",
+      "FileName": "ToTheBus",
+      "PhraseWeights": {
+        "FSSC2B": 1
       },
  
       "PhraseRating": "PG"

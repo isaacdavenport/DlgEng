@@ -1,3 +1,5 @@
+//Confidential Source Code Property Toys2Life LLC Colorado 2017
+//www.toys2life.org
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -68,7 +70,7 @@ namespace DialogEngine
             DirectoryInfo d = new DirectoryInfo(SessionVars.CharactersDirectory);
             foreach (FileInfo file in d.GetFiles("*.json")) //file of type FileInfo for each .json in directory
             {
-                Console.WriteLine("Begin read of " + file);
+                Console.WriteLine("Begin read of " + file.FullName);
                 string inChar;
                 FileStream fs = file.OpenRead(); //open a read-only FileStream
                 using (StreamReader reader = new StreamReader(fs)) //creates new streamerader for fs stream. Could also construct with filename...
@@ -401,7 +403,7 @@ namespace DialogEngine
         bool ImportClosestSerialComsCharacters() {
             var tempChar1 = SerialComs.NextCharacter1;
             var tempChar2 = SerialComs.NextCharacter2;
-            if (tempChar1 == tempChar2 || tempChar1 >= CharacterList.Count || tempChar2 > CharacterList.Count) {
+            if (tempChar1 == tempChar2 || tempChar1 >= CharacterList.Count || tempChar2 >= CharacterList.Count) {
                 return false;  
             }
             SameCharactersAsLast =

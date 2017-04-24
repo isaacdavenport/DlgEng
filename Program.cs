@@ -1,5 +1,9 @@
-﻿using System;
+﻿//Confidential Source Code Property Toys2Life LLC Colorado 2017
+//www.toys2life.org
+
+using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Threading; // for thread.sleep()
 using Newtonsoft.Json;
@@ -44,33 +48,6 @@ namespace DialogEngine
         }
     }
 
-    public static class SessionVars
-    {
-        public static readonly bool DebugFlag = Convert.ToBoolean(AppSet.ReadSetting("DebugFlag"));
-        public static readonly bool tagUsageCheck = Convert.ToBoolean(AppSet.ReadSetting("tagUsageCheck"));
-        public static readonly bool AudioDialogsOn = Convert.ToBoolean(AppSet.ReadSetting("AudioDialogsOn"));
-        public static readonly bool TextDialogsOn = Convert.ToBoolean(AppSet.ReadSetting("TextDialogsOn"));
-        public static readonly bool ForceCharactersAndDialogModel = Convert.ToBoolean(AppSet.ReadSetting("ForceCharactersAndDialogModel"));
-        public static readonly bool WaitIndefinatelyForMove = Convert.ToBoolean(AppSet.ReadSetting("WaitIndefinatelyForMove"));
-        public static readonly bool ShowDupePhrases = Convert.ToBoolean(AppSet.ReadSetting("ShowDupePhrases"));
-        public static readonly bool HeatMapFullMatrixDispMode = Convert.ToBoolean(AppSet.ReadSetting("HeatMapFullMatrixDispMode"));
-        public static readonly bool HeatMapSumsMode = Convert.ToBoolean(AppSet.ReadSetting("HeatMapSumsMode"));
-        public static readonly bool HeatMapOnlyMode = Convert.ToBoolean(AppSet.ReadSetting("HeatMapOnlyMode"));
-        public static readonly bool WriteSerialLog = Convert.ToBoolean(AppSet.ReadSetting("WriteSerialLog"));
-        public static readonly bool NoSerialPort = Convert.ToBoolean(AppSet.ReadSetting("NoSerialPort"));
-        public static readonly bool CheckStuckTransmissions = Convert.ToBoolean(AppSet.ReadSetting("CheckStuckTransmissions"));
-        public static readonly bool MonitorReceiveBufferSize = Convert.ToBoolean(AppSet.ReadSetting("MonitorReceiveBufferSize"));
-        public static readonly bool MonitorMessageParseFails = Convert.ToBoolean(AppSet.ReadSetting("MonitorMessageParseFails"));
-        public static readonly string CurrentParentalRating = AppSet.ReadSetting("CurrentParentalRating");
-        public static readonly string LogsDirectory = AppSet.ReadSetting("LogsDirectory");
-        public static readonly string CharactersDirectory = AppSet.ReadSetting("CharactersDirectory");
-        public static readonly string DialogsDirectory = AppSet.ReadSetting("DialogsDirectory");
-        public static readonly string AudioDirectory = AppSet.ReadSetting("AudioDirectory");
-        public static readonly string DecimalSerialLogFileName = AppSet.ReadSetting("DecimalSerialLogFileName");
-        public static readonly string SerialLogFileName = AppSet.ReadSetting("SerialLogFileName");
-        public static readonly string DialogSerialLogFileName = AppSet.ReadSetting("DialogSerialLogFileName");
-        public static readonly string ComPortName = AppSet.ReadSetting("ComPortName");
-    }
 
     public class PhraseEntry
     {
@@ -138,14 +115,16 @@ namespace DialogEngine
 
     public class Program
     {
+
         public static DialogTracker TheDialogs = new DialogTracker();
 
         static void WriteStartupInfo() {
-            string versionTimeStr = "Dialog Engine ver 0.53 " + DateTime.Now;
-            Console.WriteLine(""); 
-            Console.WriteLine(versionTimeStr);
             if (SessionVars.WriteSerialLog)
             {
+                string versionTimeStr = "Dialog Engine ver 0.55 " + DateTime.Now;
+                Console.WriteLine("");
+                Console.WriteLine(versionTimeStr);
+                Console.WriteLine("");
 
                 using (StreamWriter serialLog = new StreamWriter(
                     (SessionVars.LogsDirectory + SessionVars.SerialLogFileName), true))
@@ -195,6 +174,7 @@ namespace DialogEngine
         static void checkTagsUsed()
         {
             //spit out all dialog model names and associated number.
+            Console.WriteLine("");
             Console.WriteLine(" Dialogs Index: ");
             Console.ReadLine();
             foreach(ModelDialog _dialog in TheDialogs.ModelDialogs)
@@ -276,7 +256,7 @@ namespace DialogEngine
             SerialComs.InitSerial();
             InitModelDialogs.SetDefaults(TheDialogs);
 
-            if(SessionVars.tagUsageCheck)
+            if(SessionVars.TagUsageCheck)
             {   checkTagsUsed();    }
 
             if (SessionVars.DebugFlag) {

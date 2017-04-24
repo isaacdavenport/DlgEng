@@ -1,4 +1,7 @@
-﻿using System.IO.Ports;
+﻿//Confidential Source Code Property Toys2Life LLC Colorado 2017
+//www.toys2life.org
+
+using System.IO.Ports;
 using System;
 using System.IO;
 using System.Threading;
