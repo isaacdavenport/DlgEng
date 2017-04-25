@@ -1,0 +1,646 @@
+
+{"inList" : 
+[
+{
+  "DialogName": "Greeting, Greeting",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 1.4,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "Greeting",
+    "Greeting"
+  ]
+},{
+  "DialogName": "Greeting",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 0.3,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "Greeting"
+  ]
+},{
+  "DialogName": "Exclamation, Exclamation",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 1.4,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "Exclamation",
+    "Exclamation"
+  ]
+},{
+  "DialogName": "Exclamation",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 0.5,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "Exclamation"
+  ]
+},{
+  "DialogName": "Threat Retreat",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 2.2,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "Threat",
+    "Retreat"
+  ]
+},{
+  "DialogName": "RequestAffirmation, GiveAffirmation",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 6.2,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "RequestAffirmation",
+    "GiveAffirmation"
+  ]
+},{
+  "DialogName": "RequestAffirmation, GiveJoke",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 0.9,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "RequestJoke",
+    "GiveJoke"
+  ]
+},{
+  "DialogName": "GiveSurprisingSt, GiveDisbelief",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 2.8,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "GiveSurprisingStatement",
+    "GiveDisbelief"
+  ]
+},{
+  "DialogName": "YesNoQuestion, No",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 1.2,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "YesNoQuestion",
+    "No"
+  ]
+},{
+  "DialogName": "YesNoQuestion, Yes",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 1.8,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "YesNoQuestion",
+    "Yes"
+  ]
+},{
+  "DialogName": "GiveSurprisingStatement Exclamation",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 3.4,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "GiveSurprisingStatement",
+    "Exclamation"
+  ]
+},{
+  "DialogName": "GiveJoke, Disbelief -That wasn't funny",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 1.3,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "GiveJoke",
+    "GiveDisbelief"
+  ]
+},{
+  "DialogName": "Insult, Insult, Insult",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 0.4,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "Insult",
+    "Insult",
+    "Insult"
+  ]
+},{
+  "DialogName": "RequestAffirmation, Insult, Insult",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 0.3,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "RequestAffirmation",
+    "Insult",
+    "Insult"
+  ]
+},{
+  "DialogName": "YesNoQuestion, Insult",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 0.2,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "YesNoQuestion",
+    "Insult"
+  ]
+},{
+  "DialogName": "RequestCatchup, Insult, Retreat",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 0.4,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "RequestCatchup",
+    "Insult",
+    "Retreat"
+  ]
+},{
+  "DialogName": "Guess what They/I did, Guess Activity, Correct Activity ",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 3.8,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "RequestActivity",
+    "GiveActivity",
+    "GiveActivity"
+  ]
+},{
+  "DialogName": "GiveJoke, Insult",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 0.2,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "GiveJoke",
+    "Insult"
+  ]
+},{
+  "DialogName": "RequestAff GiveAff ReqCat Ramble retreat",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 1.8,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "RequestAffirmation",
+    "GiveAffirmation",
+    "RequestCatchup",
+    "Ramble",
+    "Retreat"
+  ]
+},{
+  "DialogName": "RequestCatchup GiveRecentHistory",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 2.6,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "RequestCatchup",
+    "GiveRecentHistory"
+  ]
+},{
+  "DialogName": "RequestCatchup, Ramble, Shutup",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 2.7,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "RequestActivity",
+    "Ramble",
+    "ShutUp"
+  ]
+},{
+  "DialogName": "Insult, Shutup",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 0.35,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "Insult",
+    "ShutUp"
+  ]
+},{
+  "DialogName": "Insult, Insult, Insult, Exc",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 0.2,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "Insult",
+    "Insult",
+    "Insult",
+    "Exclamation"
+  ]
+},{
+  "DialogName": "Insult, Threat, Retreat",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 0.2,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "Insult",
+    "Threat",
+    "Retreat"
+  ]
+},{
+  "DialogName": "ReqAct, GuessAct, CorrectAct ",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 3.2,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "RequestActivity",
+    "GiveActivity",
+    "GiveActivity"
+  ]
+},{
+  "DialogName": "ReqMotiv, Givemotiv",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 4.2,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "RequestMotivation",
+    "GiveMotivation"
+  ]
+},{
+  "DialogName": "ReqAdv,  GiveAdv",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 3.3,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "RequestAdvice",
+    "GiveAdvice"
+  ]
+},{
+  "DialogName": "Request location Give location",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 4.1,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "RequestLocation",
+    "GiveLocation"
+  ]
+},{
+  "DialogName": "CB SM Script 1 innuendo",
+  "AddedOnDateTime": "2016-06-18T00:00:00",
+  "Popularity": 3.1,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "SmCb_01A",
+    "SmCb_01B",
+    "SmCb_01C",
+    "SmCb_01D",
+    "SmCb_01E"
+  ]
+},{
+  "DialogName": "LM01_CM+SB_Fight",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 2.2,
+  "Adventure": "LM",
+  "Requires": [],
+  "Provides": [
+    "LM01_CM+SB_Fight"
+  ],
+  "PhraseTypeSequence": [
+    "LM01A",
+    "LM01B",
+    "LM01C",
+    "LM01D",
+    "LM01E",
+    "LM01F"
+  ]
+},{
+  "DialogName": "LM02_SM+SB_Why_Fight_Corroberate",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 2.2,
+  "Adventure": "LM",
+  "Requires": [
+    "LM01_CM+SB_Fight"
+  ],
+  "Provides": [
+    "LM02_SM+SB_Why_Fight_Corroberate",
+    "LM4_Enabled"
+  ],
+  "PhraseTypeSequence": [
+    "LM02A",
+    "LM02B",
+    "LM02C",
+    "LM02D",
+    "LM02E",
+    "LM02F",
+    "LM02G",
+    "LM02H",
+    "LM02I"
+  ]
+},{
+  "DialogName": "LM03_CM+RL_Why_Fight",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 2.2,
+  "Adventure": "LM",
+  "Requires": [
+    "LM01_CM+SB_Fight"
+  ],
+  "Provides": [
+    "LM03_CM+RL_Why_Fight"
+  ],
+  "PhraseTypeSequence": [
+    "LM03A",
+    "LM03B",
+    "LM03C",
+    "LM03D",
+    "LM03E",
+    "LM03F",
+    "LM03G",
+    "LM03H"
+  ]
+},{
+  "DialogName": "LM04_SB+CM_What_Else_Besides_2Dollars",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 2.2,
+  "Adventure": "LM",
+  "Requires": [
+    "LM4_Enabled"
+  ],
+  "Provides": [
+    "LM9_Enabled",
+    "LM8_Enabled"
+  ],
+  "PhraseTypeSequence": [
+    "LM04A",
+    "LM04B",
+    "LM04C",
+    "LM04D",
+    "LM04E"
+  ]
+},{
+  "DialogName": "LM05_SB+RL_Can_You_Corroberate",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 2.2,
+  "Adventure": "LM",
+  "Requires": [
+    "LM02_SM+SB_Why_Fight_Corroberate"
+  ],
+  "Provides": [
+    "LM05_SB+RL_Can_You_Corroberate",
+    "LM4_Enabled"
+  ],
+  "PhraseTypeSequence": [
+    "LM05A",
+    "LM05B",
+    "LM05C",
+    "LM05D",
+    "LM05E",
+    "LM05F"
+  ]
+},{
+  "DialogName": "LM06_CM+SC_Better_To_Forgive",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 2.2,
+  "Adventure": "LM",
+  "Requires": [
+    "LM03_CM+RL_Why_Fight"
+  ],
+  "Provides": [
+    "LM10_Enabled",
+    "LM06_CM+SC_Better_To_Forgive"
+  ],
+  "PhraseTypeSequence": [
+    "LM06A",
+    "LM06B",
+    "LM06C"
+  ]
+},{
+  "DialogName": "LM07_CM+SH_Kitty_Found",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 2.2,
+  "Adventure": "LM",
+  "Requires": [
+    "LM03_CM+RL_Why_Fight"
+  ],
+  "Provides": [
+    "LM_END"
+  ],
+  "PhraseTypeSequence": [
+    "LM07A",
+    "SHSilence"
+  ]
+},{
+  "DialogName": "LM08_SB+SH_Digging_Bad_Dropped_Money",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 2.2,
+  "Adventure": "LM",
+  "Requires": [
+    "LM8_Enabled"
+  ],
+  "Provides": [
+    "LM08_SB+SH_Digging_Bad_Dropped_Money"
+  ],
+  "PhraseTypeSequence": [
+    "LM08A",
+    "SHSilence"
+  ]
+},{
+  "DialogName": "LM09_SB+CM_Gretchen_Win",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 2.2,
+  "Adventure": "LM",
+  "Requires": [
+    "LM9_Enabled"
+  ],
+  "Provides": [
+    "LM_END"
+  ],
+  "PhraseTypeSequence": [
+    "LM09A",
+    "LM09B",
+    "LM09C",
+    "LM09D",
+    "LM09E",
+    "LM09F"
+  ]
+},{
+  "DialogName": "LM10_SB+CM_Forgiven_Kitty_Located",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 2.2,
+  "Adventure": "LM",
+  "Requires": [
+    "LM10_Enabled"
+  ],
+  "Provides": [
+    "LM_END"
+  ],
+  "PhraseTypeSequence": [
+    "LM10A",
+    "LM10B",
+    "LM10C",
+    "LM10D",
+    "LM10E",
+    "LM10F",
+    "LM10G"
+  ]
+},{
+  "DialogName": "LM11_SC+CM_I_Sense_Kitty",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 2.2,
+  "Adventure": "LM",
+  "Requires": [
+    "LM06_CM+SC_Better_To_Forgive"
+  ],
+  "Provides": [
+    "LM11_SC+CM_I_Sense_Kitty",
+    "LM10_Enabled"
+  ],
+  "PhraseTypeSequence": [
+    "LM11A",
+    "LM11B"
+  ]
+},{
+  "DialogName": "LM13_SB+SC_Eric_likes_Gretchen_Kitty",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 2.2,
+  "Adventure": "LM",
+  "Requires": [
+    "LM05_SB+RL_Can_You_Corroberate"
+  ],
+  "Provides": [
+    "LM9_Enabled",
+    "LM8_Enabled"
+  ],
+  "PhraseTypeSequence": [
+    "LM13A",
+    "LM13B",
+    "LM13C",
+    "LM13D",
+    "LM13E",
+    "LM13F",
+    "LM13G",
+    "LM13H"
+  ]
+},{
+  "DialogName": "LM14_SB+SC_Eric_likes_Gretchen_Kitty",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 2.2,
+  "Adventure": "LM",
+  "Requires": [
+    "LM05_SB+RL_Can_You_Corroberate"
+  ],
+  "Provides": [
+    "LM14_SB+SC_Eric_likes_Gretchen_Kitty"
+  ],
+  "PhraseTypeSequence": [
+    "LM14A",
+    "LM14B",
+    "LM14C",
+    "LM14D",
+    "LM14E",
+    "LM14F",
+    "LM14G"
+  ]
+},{
+  "DialogName": "LM15_CM+SM_Kittys_Not_A_Beast",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 2.2,
+  "Adventure": "LM",
+  "Requires": [
+    "LM11_SC+CM_I_Sense_Kitty"
+  ],
+  "Provides": [
+    "LM_END"
+  ],
+  "PhraseTypeSequence": [
+    "LM15A",
+    "LM15B",
+    "LM15C",
+    "LM15D",
+    "LM15E"
+  ]
+},{
+  "DialogName": "LM16_SB+CM_Heres_Your_2Dollars",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 2.2,
+  "Adventure": "LM",
+  "Requires": [
+    "LM08_SB+SH_Digging_Bad_Dropped_Money"
+  ],
+  "Provides": [
+    "LM_END"
+  ],
+  "PhraseTypeSequence": [
+    "LM16A",
+    "LM16B"
+  ]
+},{
+  "DialogName": "LM17_SB+SM_Lunchlady_Dropped_Dollars",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 2.2,
+  "Adventure": "LM",
+  "Requires": [
+    "LM08_SB+SH_Digging_Bad_Dropped_Money"
+  ],
+  "Provides": [
+    "LM_END"
+  ],
+  "PhraseTypeSequence": [
+    "LM17A",
+    "LM17B",
+    "LM17C"
+  ]
+},{
+  "DialogName": "LM18_RL+SH_Found_Billy",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 2.2,
+  "Adventure": "LM",
+  "Requires": [
+    "LM14_SB+SC_Eric_likes_Gretchen_Kitty"
+  ],
+  "Provides": [
+    "LM_END"
+  ],
+  "PhraseTypeSequence": [
+    "LM18A",
+    "SHSilence"
+  ]
+}
+]
+}

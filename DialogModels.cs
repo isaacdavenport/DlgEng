@@ -10,27 +10,38 @@ namespace DialogEngine
         public static void SetDefaults(DialogTracker inObj) //TODO is there a good way to identify orphaned tags? (dialog lines)
         {
             //Dialogs JSON parse here.
-            try { DirectoryInfo dialogs_d = new DirectoryInfo(SessionVars.DialogsDirectory);
-            var _inFiles = dialogs_d.GetFiles("*.json"); 
-            foreach (FileInfo file in _inFiles) //file of type FileInfo for each .json in directory
+            try
             {
-                Console.WriteLine(" opening dialog models in " + file.FullName);
-                string inDialog;
-                FileStream fs = file.OpenRead();    //open a read-only FileStream
-                using (StreamReader reader = new StreamReader(fs))   //creates new streamerader for fs stream. Could also construct with filename...
+                DirectoryInfo dialogs_d = new DirectoryInfo(SessionVars.DialogsDirectory);
+                var _inFiles = dialogs_d.GetFiles("*.json"); 
+                foreach (FileInfo file in _inFiles) //file of type FileInfo for each .json in directory
                 {
-                    inDialog = reader.ReadToEnd();//create string of JSON file
-                    ModelDialogInput dialogsInClass = JsonConvert.DeserializeObject<ModelDialogInput>(inDialog);  //string to Object.
-                    foreach (ModelDialog curDialog in dialogsInClass.inList)
+                    Console.WriteLine(" opening dialog models in " + file.FullName);
+                    string inDialog;
+                    FileStream fs = file.OpenRead();    //open a read-only FileStream
+                    using (StreamReader reader = new StreamReader(fs))   //creates new streamerader for fs stream. Could also construct with filename...
                     {
-                        //Add to dialog List
-                        inObj.ModelDialogs.Add(curDialog);
-                        //population sums
-                        inObj.DialogModelPopularitySum += curDialog.Popularity;
+                        try
+                        {
+                            inDialog = reader.ReadToEnd();//create string of JSON file
+                            ModelDialogInput dialogsInClass = JsonConvert.DeserializeObject<ModelDialogInput>(inDialog);  //string to Object.
+                            foreach (ModelDialog curDialog in dialogsInClass.inList)
+                            {
+                                //Add to dialog List
+                                inObj.ModelDialogs.Add(curDialog);
+                                //population sums
+                                inObj.DialogModelPopularitySum += curDialog.Popularity;
+                            }
+                        }
+                        catch (Newtonsoft.Json.JsonReaderException e)
+                        {
+                            Console.WriteLine("Error reading " + file.FullName);
+                            Console.WriteLine("JSON Parse error at " + e.LineNumber + ", " + e.LinePosition);
+                            Console.ReadLine();
+                        }
                     }
+                    Console.WriteLine(" completed " + file.FullName);
                 }
-                Console.WriteLine(" completed " + file.FullName);
-            }
             }
             catch (ArgumentException e)
             {
