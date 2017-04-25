@@ -88,7 +88,7 @@ namespace DialogEngine
                     ParseMessage.ProcessMessage(rowNum, newRow);
                     SelectNextCharacters.FindBiggestRssiPair();
                 }
-                if (cycleCount > 70)
+                if (cycleCount > 110)
                 {
                     FirmwareDebuggingTools.ProcessDebugFlags();
                     cycleCount = 0;

@@ -332,11 +332,6 @@ namespace DialogEngine
                 }
             }
 
-            if (!SameCharactersAsLast && !SessionVars.WaitIndefinatelyForMove) {  //give next priority to greetings
-                dialogModel = RandomNumbers.Gen.Next(0, 9); //increase odds of starting with greeting
-                if (dialogModel< 2) // TODO need a better way to call out greeting dialog models than 0 and 1 in list
-                    return dialogModel;
-            }
             double dialogWeightIndex = 0.0;
             int attempts = 0;
             bool dialogModelFits = false;
@@ -355,9 +350,13 @@ namespace DialogEngine
                     }
                 }
                 var dialogModelUsedRecently = CheckIfDialogModelUsedRecently(dialogModel);
-                var charactersHavePhrases = CheckIfCharactersHavePhrasesForDialog(dialogModel, Character1Num, Character2Num);
+                var charactersHavePhrases = 
+                    CheckIfCharactersHavePhrasesForDialog(dialogModel, Character1Num, Character2Num);
                 var dialogPreRequirementsMet = CheckIfDialogPreRequirementMet(dialogModel);
-                if (dialogPreRequirementsMet && charactersHavePhrases && !dialogModelUsedRecently) { 
+                bool greetingAppropriate = !((ModelDialogs[dialogModel].PhraseTypeSequence[0] == "Greeting")
+                                             && SameCharactersAsLast); // don't want a greeting with same characters as last
+                if (dialogPreRequirementsMet && charactersHavePhrases 
+                    && greetingAppropriate && !dialogModelUsedRecently) { 
                     dialogModelFits = true;
                 }
             }

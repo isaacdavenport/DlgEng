@@ -121,7 +121,7 @@ namespace DialogEngine
         static void WriteStartupInfo() {
             if (SessionVars.WriteSerialLog)
             {
-                string versionTimeStr = "Dialog Engine ver 0.56 " + DateTime.Now;
+                string versionTimeStr = "Dialog Engine ver 0.57 " + DateTime.Now;
                 Console.WriteLine("");
                 Console.WriteLine(versionTimeStr);
                 Console.WriteLine("");
