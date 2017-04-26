@@ -179,6 +179,55 @@
     "Deny",
 	"GiveDisbelief"
   ]
+},{
+  "DialogName": "RequestWho, GiveWho, GiveAgreement, ThankYou",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 0.2,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "RequestWho",
+    "GiveWho",
+    "GiveAgreement",
+    "ThankYou"
+  ]
+},{
+  "DialogName": "RequestAdvice, GiveAdvice, GiveAgreement, YourWelcome",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 0.2,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "RequestAdvice",
+    "GiveAdvice",
+    "GiveAgreement",
+	"YoureWelcome"
+  ]
+},{
+  "DialogName": "GiveSurprisingStatement, GiveAgreement, ThankYou",
+  "AddedOnDateTime": "2017-04-24T18:00:00",
+  "Popularity": 0.2,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "GiveSurprisingStatement",
+    "GiveAgreement",
+	"ThankYou"
+  ]
+},{
+  "DialogName": "GiveSilence, GiveSilence --For Non Speaking Radios",
+  "AddedOnDateTime": "2017-04-24T18:00:00",
+  "Popularity": 1.2,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "GiveSilence",
+	"GiveSilence"
+  ]
 }
 ]
 }
