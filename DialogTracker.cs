@@ -57,14 +57,7 @@ namespace DialogEngine
                 return CharObj;
             }
         }
-
-        public void HandleDeserializationError(object sender, Newtonsoft.Json.Serialization.ErrorEventArgs errorArgs) {
-            Console.WriteLine(errorArgs.ErrorContext.Error.Message);
-            Console.WriteLine("Please correct your JSON file and restart the program. Control-C will exit.");
-            Console.ReadLine();
-            errorArgs.ErrorContext.Handled = true;
-        }
-
+        
         public DialogTracker() {
             //JSON parse here.
             DirectoryInfo d = new DirectoryInfo(SessionVars.CharactersDirectory);
@@ -75,41 +68,50 @@ namespace DialogEngine
                 FileStream fs = file.OpenRead(); //open a read-only FileStream
                 using (StreamReader reader = new StreamReader(fs)) //creates new streamerader for fs stream. Could also construct with filename...
                 {
-                    inChar = reader.ReadToEnd();
-                    Character deserializedCharacterJSON = JsonConvert.DeserializeObject<Character>(inChar,
-                        new JsonSerializerSettings{
-                            Error = HandleDeserializationError
+                    try
+                    {
+                        inChar = reader.ReadToEnd();
+                        Character deserializedCharacterJSON = JsonConvert.DeserializeObject<Character>(inChar);
+                        deserializedCharacterJSON.PhraseTotals = new PhraseEntry(); //init PhraseTotals
+                        deserializedCharacterJSON.PhraseTotals.DialogStr = "phrase weights";
+                        deserializedCharacterJSON.PhraseTotals.FileName = "silence";
+                        deserializedCharacterJSON.PhraseTotals.PhraseRating = "G";
+                        deserializedCharacterJSON.PhraseTotals.phraseWeights = new Dictionary<string, double>();
+                        deserializedCharacterJSON.PhraseTotals.phraseWeights.Add("Greeting", 0.0f);
 
-                        });
+                        RemovePhrasesOverParentalRating(deserializedCharacterJSON);
 
-                    deserializedCharacterJSON.PhraseTotals = new PhraseEntry(); //init PhraseTotals
-                    deserializedCharacterJSON.PhraseTotals.DialogStr = "phrase weights";
-                    deserializedCharacterJSON.PhraseTotals.FileName = "silence";
-                    deserializedCharacterJSON.PhraseTotals.PhraseRating = "G";
-                    deserializedCharacterJSON.PhraseTotals.phraseWeights = new Dictionary<string, double>();
-                    deserializedCharacterJSON.PhraseTotals.phraseWeights.Add("Greeting", 0.0f);
-
-                    RemovePhrasesOverParentalRating(deserializedCharacterJSON);
-
-                    //Calculate Phrase Weight Totals here.
-                    foreach (PhraseEntry _curPhrase in deserializedCharacterJSON.Phrases) {
-                        foreach (string tag in _curPhrase.phraseWeights.Keys) {
-                            if (deserializedCharacterJSON.PhraseTotals.phraseWeights.Keys.Contains(tag)) {
-                                deserializedCharacterJSON.PhraseTotals.phraseWeights[tag] += _curPhrase.phraseWeights[tag];
-                            }
-                            else {
-                                deserializedCharacterJSON.PhraseTotals.phraseWeights.Add(tag, _curPhrase.phraseWeights[tag]);
+                        //Calculate Phrase Weight Totals here.
+                        foreach (PhraseEntry _curPhrase in deserializedCharacterJSON.Phrases)
+                        {
+                            foreach (string tag in _curPhrase.phraseWeights.Keys)
+                            {
+                                if (deserializedCharacterJSON.PhraseTotals.phraseWeights.Keys.Contains(tag))
+                                {
+                                    deserializedCharacterJSON.PhraseTotals.phraseWeights[tag] += _curPhrase.phraseWeights[tag];
+                                }
+                                else
+                                {
+                                    deserializedCharacterJSON.PhraseTotals.phraseWeights.Add(tag, _curPhrase.phraseWeights[tag]);
+                                }
                             }
                         }
+                        for (var i = 0; i < Character.RecentPhrasesQueueSize; i++)
+                        {
+                            // we always deque after enque so this sets que size
+                            deserializedCharacterJSON.RecentPhrases.Enqueue(deserializedCharacterJSON.Phrases[0]);
+                        }
+                        //list Chars as they come in.
+                        Console.WriteLine("Finish read of " + deserializedCharacterJSON.CharacterName);
+                        //Add to Char List
+                        CharacterList.Add(deserializedCharacterJSON);
                     }
-                    for (var i = 0; i < Character.RecentPhrasesQueueSize; i++) {
-                        // we always deque after enque so this sets que size
-                        deserializedCharacterJSON.RecentPhrases.Enqueue(deserializedCharacterJSON.Phrases[0]);
+                    catch(Newtonsoft.Json.JsonReaderException e)
+                    {
+                        Console.WriteLine("Error reading " + file.FullName);
+                        Console.WriteLine("JSON Parse error at " + e.LineNumber + ", " + e.LinePosition);
+                        Console.ReadLine();
                     }
-                    //list Chars as they come in.
-                    Console.WriteLine("Finish read of " + deserializedCharacterJSON.CharacterName);
-                    //Add to Char List
-                    CharacterList.Add(deserializedCharacterJSON);
                 }
             }
             
