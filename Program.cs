@@ -175,16 +175,16 @@ namespace DialogEngine
         {
             //spit out all dialog model names and associated number.
             Console.WriteLine("");
-            Console.WriteLine(" Dialogs Index: ");
+            Console.WriteLine("Dialogs Index: ");
             Console.ReadLine();
             foreach(ModelDialog _dialog in TheDialogs.ModelDialogs)
             {
-                Console.WriteLine(TheDialogs.ModelDialogs.IndexOf(_dialog) + " : " + _dialog.Name);
+                Console.WriteLine(" " + TheDialogs.ModelDialogs.IndexOf(_dialog) + " : " + _dialog.Name);
             }
             Console.ReadLine();
 
             //test that all character tags are used by a dialog model.
-            Console.WriteLine(" check characters tags are used ");
+            Console.WriteLine("Check characters tags are used ");
             Console.ReadLine();
             Boolean usedFlag = false;
             foreach (Character _character in TheDialogs.CharacterList)
@@ -209,7 +209,7 @@ namespace DialogEngine
                         }
                         if (!usedFlag)
                         {
-                            Console.WriteLine(_phrasetag + " is not used.");
+                            Console.WriteLine(" " + _phrasetag + " is not used.");
                         }
                     }
                 }
@@ -218,7 +218,7 @@ namespace DialogEngine
 
             //test that all dialogs have character tags to use them
             //bad runtime, NxM for N and M phrases and dialogs worst case.
-            Console.WriteLine(" check dialogs tags are used ");
+            Console.WriteLine("Check dialogs tags are used ");
             Console.ReadLine();
             foreach (ModelDialog _dialog in TheDialogs.ModelDialogs)
             {
@@ -244,7 +244,7 @@ namespace DialogEngine
                         { break; }
                     }
                     if(!usedFlag)
-                    { Console.WriteLine(_dialogtag + " not used in " + _dialog.Name); }
+                    { Console.WriteLine(" " + _dialogtag + " not used in " + _dialog.Name); }
                 }
             }
             Console.ReadLine();
