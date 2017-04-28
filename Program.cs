@@ -261,7 +261,7 @@ namespace DialogEngine
 
             if (SessionVars.DebugFlag) {
                 CheckForMissingPhrases();
-                Console.WriteLine("   press enter to continue");
+                Console.WriteLine("  press enter to continue");
                 Console.ReadLine();
             }
 
