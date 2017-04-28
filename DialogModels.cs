@@ -13,55 +13,60 @@ namespace DialogEngine
             try
             {
                 DirectoryInfo dialogs_d = new DirectoryInfo(SessionVars.DialogsDirectory);
+                Console.WriteLine("Dialog JSON in: " + SessionVars.DialogsDirectory);
                 var _inFiles = dialogs_d.GetFiles("*.json"); 
                 foreach (FileInfo file in _inFiles) //file of type FileInfo for each .json in directory
                 {
-                    Console.WriteLine(" opening dialog models in " + file.FullName);
+                    Console.WriteLine(" opening dialog models in " + file.Name);
                     string inDialog;
-                    FileStream fs = file.OpenRead();    //open a read-only FileStream
-                    using (StreamReader reader = new StreamReader(fs))   //creates new streamerader for fs stream. Could also construct with filename...
+                    try
                     {
-                        try
+                        FileStream fs = file.OpenRead();    //open a read-only FileStream
+                        using (StreamReader reader = new StreamReader(fs))   //creates new streamerader for fs stream. Could also construct with filename...
                         {
-                            inDialog = reader.ReadToEnd();//create string of JSON file
-                            ModelDialogInput dialogsInClass = JsonConvert.DeserializeObject<ModelDialogInput>(inDialog);  //string to Object.
-                            foreach (ModelDialog curDialog in dialogsInClass.inList)
+                            try
                             {
-                                //Add to dialog List
-                                inObj.ModelDialogs.Add(curDialog);
-                                //population sums
-                                inObj.DialogModelPopularitySum += curDialog.Popularity;
+                                inDialog = reader.ReadToEnd();//create string of JSON file
+                                ModelDialogInput dialogsInClass = JsonConvert.DeserializeObject<ModelDialogInput>(inDialog);  //string to Object.
+                                foreach (ModelDialog curDialog in dialogsInClass.inList)
+                                {
+                                    //Add to dialog List
+                                    inObj.ModelDialogs.Add(curDialog);
+                                    //population sums
+                                    inObj.DialogModelPopularitySum += curDialog.Popularity;
+                                }
+                            }
+                            catch (Newtonsoft.Json.JsonReaderException e)
+                            {
+                                Console.WriteLine("Error reading " + file.Name);
+                                Console.WriteLine("JSON Parse error at " + e.LineNumber + ", " + e.LinePosition);
+                                Console.ReadLine();
                             }
                         }
-                        catch (Newtonsoft.Json.JsonReaderException e)
-                        {
-                            Console.WriteLine("Error reading " + file.FullName);
-                            Console.WriteLine("JSON Parse error at " + e.LineNumber + ", " + e.LinePosition);
-                            Console.ReadLine();
-                        }
+                        Console.WriteLine(" completed " + file.Name);
                     }
-                    Console.WriteLine(" completed " + file.FullName);
+                    catch (UnauthorizedAccessException e)
+                    {
+                        Console.WriteLine(e.Message);
+                        Console.WriteLine("Unauthorized access exception while reading: " + file.FullName);
+                        Console.WriteLine("Check file and directory permissions");
+                        Console.ReadLine();
+
+                    }
+                    catch (DirectoryNotFoundException e)
+                    {
+                        Console.WriteLine(e.Message);
+                        Console.WriteLine("Directory not found exception while reading: " + file.FullName);
+                        Console.WriteLine("check the Dialog JSON path in your config file");
+                        Console.ReadLine();
+                    }
                 }
-            }
-            catch (ArgumentException e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            catch (DirectoryNotFoundException e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            catch (UnauthorizedAccessException e)
-            {
-                Console.WriteLine(e.Message);
             }
             catch (OutOfMemoryException e)
             {
                 Console.WriteLine(e.Message);
-            }
-            catch (IOException e)
-            {
-                Console.WriteLine(e.Message);
+                Console.WriteLine("You probably need to restart your computer...");
+                Console.ReadLine();
             }
             if (inObj.ModelDialogs.Count < 2)
             {

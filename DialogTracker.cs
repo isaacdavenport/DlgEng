@@ -61,60 +61,84 @@ namespace DialogEngine
         public DialogTracker() {
             //JSON parse here.
             DirectoryInfo d = new DirectoryInfo(SessionVars.CharactersDirectory);
+            Console.WriteLine("Character JSON in: " + SessionVars.CharactersDirectory);
             foreach (FileInfo file in d.GetFiles("*.json")) //file of type FileInfo for each .json in directory
             {
-                Console.WriteLine("Begin read of " + file.FullName);
+                Console.WriteLine(" Begin read of " + file.Name);
                 string inChar;
-                FileStream fs = file.OpenRead(); //open a read-only FileStream
-                using (StreamReader reader = new StreamReader(fs)) //creates new streamerader for fs stream. Could also construct with filename...
+                try
                 {
-                    try
+                    FileStream fs = file.OpenRead(); //open a read-only FileStream
+                    using (StreamReader reader = new StreamReader(fs)) //creates new streamerader for fs stream. Could also construct with filename...
                     {
-                        inChar = reader.ReadToEnd();
-                        Character deserializedCharacterJSON = JsonConvert.DeserializeObject<Character>(inChar);
-                        deserializedCharacterJSON.PhraseTotals = new PhraseEntry(); //init PhraseTotals
-                        deserializedCharacterJSON.PhraseTotals.DialogStr = "phrase weights";
-                        deserializedCharacterJSON.PhraseTotals.FileName = "silence";
-                        deserializedCharacterJSON.PhraseTotals.PhraseRating = "G";
-                        deserializedCharacterJSON.PhraseTotals.phraseWeights = new Dictionary<string, double>();
-                        deserializedCharacterJSON.PhraseTotals.phraseWeights.Add("Greeting", 0.0f);
-
-                        RemovePhrasesOverParentalRating(deserializedCharacterJSON);
-
-                        //Calculate Phrase Weight Totals here.
-                        foreach (PhraseEntry _curPhrase in deserializedCharacterJSON.Phrases)
+                        try
                         {
-                            foreach (string tag in _curPhrase.phraseWeights.Keys)
+                            inChar = reader.ReadToEnd();
+                            Character deserializedCharacterJSON = JsonConvert.DeserializeObject<Character>(inChar);
+                            deserializedCharacterJSON.PhraseTotals = new PhraseEntry(); //init PhraseTotals
+                            deserializedCharacterJSON.PhraseTotals.DialogStr = "phrase weights";
+                            deserializedCharacterJSON.PhraseTotals.FileName = "silence";
+                            deserializedCharacterJSON.PhraseTotals.PhraseRating = "G";
+                            deserializedCharacterJSON.PhraseTotals.phraseWeights = new Dictionary<string, double>();
+                            deserializedCharacterJSON.PhraseTotals.phraseWeights.Add("Greeting", 0.0f);
+
+                            RemovePhrasesOverParentalRating(deserializedCharacterJSON);
+
+                            //Calculate Phrase Weight Totals here.
+                            foreach (PhraseEntry _curPhrase in deserializedCharacterJSON.Phrases)
                             {
-                                if (deserializedCharacterJSON.PhraseTotals.phraseWeights.Keys.Contains(tag))
+                                foreach (string tag in _curPhrase.phraseWeights.Keys)
                                 {
-                                    deserializedCharacterJSON.PhraseTotals.phraseWeights[tag] += _curPhrase.phraseWeights[tag];
-                                }
-                                else
-                                {
-                                    deserializedCharacterJSON.PhraseTotals.phraseWeights.Add(tag, _curPhrase.phraseWeights[tag]);
+                                    if (deserializedCharacterJSON.PhraseTotals.phraseWeights.Keys.Contains(tag))
+                                    {
+                                        deserializedCharacterJSON.PhraseTotals.phraseWeights[tag] += _curPhrase.phraseWeights[tag];
+                                    }
+                                    else
+                                    {
+                                        deserializedCharacterJSON.PhraseTotals.phraseWeights.Add(tag, _curPhrase.phraseWeights[tag]);
+                                    }
                                 }
                             }
+                            for (var i = 0; i < Character.RecentPhrasesQueueSize; i++)
+                            {
+                                // we always deque after enque so this sets que size
+                                deserializedCharacterJSON.RecentPhrases.Enqueue(deserializedCharacterJSON.Phrases[0]);
+                            }
+                            //list Chars as they come in.
+                            Console.WriteLine(" Finish read of " + deserializedCharacterJSON.CharacterName);
+                            //Add to Char List
+                            CharacterList.Add(deserializedCharacterJSON);
                         }
-                        for (var i = 0; i < Character.RecentPhrasesQueueSize; i++)
+                        catch (Newtonsoft.Json.JsonReaderException e)
                         {
-                            // we always deque after enque so this sets que size
-                            deserializedCharacterJSON.RecentPhrases.Enqueue(deserializedCharacterJSON.Phrases[0]);
+                            Console.WriteLine("Error reading " + file.Name);
+                            Console.WriteLine("JSON Parse error at " + e.LineNumber + ", " + e.LinePosition);
+                            Console.ReadLine();
                         }
-                        //list Chars as they come in.
-                        Console.WriteLine("Finish read of " + deserializedCharacterJSON.CharacterName);
-                        //Add to Char List
-                        CharacterList.Add(deserializedCharacterJSON);
-                    }
-                    catch(Newtonsoft.Json.JsonReaderException e)
-                    {
-                        Console.WriteLine("Error reading " + file.FullName);
-                        Console.WriteLine("JSON Parse error at " + e.LineNumber + ", " + e.LinePosition);
-                        Console.ReadLine();
                     }
                 }
+                catch(UnauthorizedAccessException e)
+                {
+                    Console.WriteLine(e.Message);
+                    Console.WriteLine("Unauthorized access exception while reading: " + file.FullName);
+                    Console.WriteLine("Check file and directory permissions");
+                    Console.ReadLine();
+
+                }
+                catch (DirectoryNotFoundException e)
+                {
+                    Console.WriteLine(e.Message);
+                    Console.WriteLine("Directory not found exception while reading: " + file.FullName);
+                    Console.WriteLine("check the Character JSON path in your config file");
+                    Console.ReadLine();
+                }
+                catch (OutOfMemoryException e)
+                {
+                    Console.WriteLine(e.Message);
+                    Console.WriteLine("You probably need to restart your computer...");
+                }
             }
-            
+
 
             if (CharacterList.Count < 2)
             {

@@ -9,7 +9,7 @@ using System.Threading; // for thread.sleep()
 using Newtonsoft.Json;
 
 // TODO: JSON Input
-//       Cleanup Character class for strings
+//       Clean error recovery and handling when non-recoverable.
 //       Vectorize RSSI to see movement over proximity. (increased prox most recently, center of mass.)
 
 namespace DialogEngine
