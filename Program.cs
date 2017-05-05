@@ -9,6 +9,7 @@ using System.Threading; // for thread.sleep()
 using Newtonsoft.Json;
 
 // TODO: JSON Input
+//       Import Char JSON in Method near Dialogs
 //       Clean error recovery and handling when non-recoverable.
 //       Vectorize RSSI to see movement over proximity. (increased prox most recently, center of mass.)
 
@@ -253,6 +254,8 @@ namespace DialogEngine
         static void Main(string[] args) {
             Console.SetBufferSize(Console.BufferWidth, 32766);
             WriteStartupInfo();
+            Console.WriteLine();
+            TheDialogs.intakeCharacters();
             SerialComs.InitSerial();
             InitModelDialogs.SetDefaults(TheDialogs);
 

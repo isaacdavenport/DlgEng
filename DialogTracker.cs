@@ -59,7 +59,10 @@ namespace DialogEngine
         }
         
         public DialogTracker() {
-            //JSON parse here.
+            
+        }
+        public void intakeCharacters()
+        {
             DirectoryInfo d = new DirectoryInfo(SessionVars.CharactersDirectory);
             Console.WriteLine("Character JSON in: " + SessionVars.CharactersDirectory);
             foreach (FileInfo file in d.GetFiles("*.json")) //file of type FileInfo for each .json in directory
@@ -117,7 +120,7 @@ namespace DialogEngine
                         }
                     }
                 }
-                catch(UnauthorizedAccessException e)
+                catch (UnauthorizedAccessException e)
                 {
                     Console.WriteLine(e.Message);
                     Console.WriteLine("Unauthorized access exception while reading: " + file.FullName);
@@ -142,16 +145,19 @@ namespace DialogEngine
 
             if (CharacterList.Count < 2)
             {
-                Console.WriteLine("  Insufficient readable character json files found in " 
+                Console.WriteLine("  Insufficient readable character json files found in "
                     + SessionVars.CharactersDirectory + " .  Exiting.");
                 Console.ReadLine();
                 Environment.Exit(0);
             }
 
             // Fill the queue with greeting dialogs
-            for (int i = 0; i < RecentDialogsQueSize; i++) {
+            for (int i = 0; i < RecentDialogsQueSize; i++)
+            {
                 RecentDialogs.Enqueue(0); // Fill the que with greeting dialogs
             }
+
+            Console.WriteLine();    //for break beofer dialogs intake in console.
         }
 
         private static void RemovePhrasesOverParentalRating(Character inCharacter) {
