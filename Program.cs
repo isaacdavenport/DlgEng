@@ -3,13 +3,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.IO;
 using System.Threading; // for thread.sleep()
 using Newtonsoft.Json;
 
 // TODO: JSON Input
-//       Import Char JSON in Method near Dialogs
+//       build unit tests around json imports
 //       Clean error recovery and handling when non-recoverable.
 //       Vectorize RSSI to see movement over proximity. (increased prox most recently, center of mass.)
 
@@ -164,7 +163,15 @@ namespace DialogEngine
                 {
                     if (!File.Exists(SessionVars.AudioDirectory + character.CharacterPrefix + "_" + phrase.FileName + ".mp3"))  //Char name and prefix are being left blank...
                     {
-                        Console.WriteLine("missing " + character.CharacterPrefix + "_" + phrase.FileName + ".mp3 " + phrase.DialogStr);//these are being checked with JSON input.
+                        Console.WriteLine("missing " + character.CharacterPrefix + "_" + phrase.FileName + ".mp3 " + phrase.DialogStr);
+                        if (SessionVars.WriteSerialLog)
+                        {
+                            using (StreamWriter JSONLog = new StreamWriter(
+                            (SessionVars.LogsDirectory + SessionVars.DialogSerialLogFileName), true))
+                            {
+                                JSONLog.WriteLine("missing " + character.CharacterPrefix + "_" + phrase.FileName + ".mp3 " + phrase.DialogStr);
+                            }
+                        }
                     }
                 }
                 Console.WriteLine();
@@ -178,9 +185,17 @@ namespace DialogEngine
             Console.WriteLine("");
             Console.WriteLine("Dialogs Index: ");
             Console.ReadLine();
-            foreach(ModelDialog _dialog in TheDialogs.ModelDialogs)
+            foreach (ModelDialog _dialog in TheDialogs.ModelDialogs)
             {
                 Console.WriteLine(" " + TheDialogs.ModelDialogs.IndexOf(_dialog) + " : " + _dialog.Name);
+                if (SessionVars.WriteSerialLog)
+                {
+                    using (StreamWriter JSONLog = new StreamWriter(
+                    (SessionVars.LogsDirectory + SessionVars.DialogSerialLogFileName), true))
+                    {
+                        JSONLog.WriteLine(" " + TheDialogs.ModelDialogs.IndexOf(_dialog) + " : " + _dialog.Name);
+                    }
+                }
             }
             Console.ReadLine();
 
@@ -211,6 +226,14 @@ namespace DialogEngine
                         if (!usedFlag)
                         {
                             Console.WriteLine(" " + _phrasetag + " is not used.");
+                            if (SessionVars.WriteSerialLog)
+                            {
+                                using (StreamWriter JSONLog = new StreamWriter(
+                                (SessionVars.LogsDirectory + SessionVars.DialogSerialLogFileName), true))
+                                {
+                                    JSONLog.WriteLine(" " + _phrasetag + " is not used.");
+                                }
+                            }
                         }
                     }
                 }
@@ -226,11 +249,11 @@ namespace DialogEngine
                 foreach (string _dialogtag in _dialog.PhraseTypeSequence)//each dialog model tag
                 {
                     usedFlag = false;
-                    foreach(Character _character in TheDialogs.CharacterList)
+                    foreach (Character _character in TheDialogs.CharacterList)
                     {
-                        foreach(PhraseEntry _characterPhrase in _character.Phrases)
+                        foreach (PhraseEntry _characterPhrase in _character.Phrases)
                         {
-                            foreach(string _phraseTag in _characterPhrase.phraseWeights.Keys)//each character phrase tag
+                            foreach (string _phraseTag in _characterPhrase.phraseWeights.Keys)//each character phrase tag
                             {
                                 if (_dialogtag == _phraseTag)
                                 {
@@ -238,14 +261,24 @@ namespace DialogEngine
                                     break;
                                 }
                             }
-                            if(usedFlag)
+                            if (usedFlag)
                             { break; }
                         }
-                        if(usedFlag)
+                        if (usedFlag)
                         { break; }
                     }
-                    if(!usedFlag)
-                    { Console.WriteLine(" " + _dialogtag + " not used in " + _dialog.Name); }
+                    if (!usedFlag)
+                    {
+                        Console.WriteLine(" " + _dialogtag + " not used in " + _dialog.Name);
+                        if (SessionVars.WriteSerialLog)
+                        {
+                            using (StreamWriter JSONLog = new StreamWriter(
+                            (SessionVars.LogsDirectory + SessionVars.DialogSerialLogFileName), true))
+                            {
+                                JSONLog.WriteLine(" " + _dialogtag + " not used in " + _dialog.Name);
+                            }
+                        }
+                    }
                 }
             }
             Console.ReadLine();

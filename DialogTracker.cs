@@ -68,6 +68,14 @@ namespace DialogEngine
             foreach (FileInfo file in d.GetFiles("*.json")) //file of type FileInfo for each .json in directory
             {
                 Console.WriteLine(" Begin read of " + file.Name);
+                if (SessionVars.WriteSerialLog)
+                {
+                    using (StreamWriter JSONLog = new StreamWriter(
+                    (SessionVars.LogsDirectory + SessionVars.DialogSerialLogFileName), true))
+                    {
+                        JSONLog.WriteLine(" Begin read of " + file.Name);
+                    }
+                }
                 string inChar;
                 try
                 {
@@ -109,6 +117,14 @@ namespace DialogEngine
                             }
                             //list Chars as they come in.
                             Console.WriteLine(" Finish read of " + deserializedCharacterJSON.CharacterName);
+                            if (SessionVars.WriteSerialLog)
+                            {
+                                using (StreamWriter JSONLog = new StreamWriter(
+                                (SessionVars.LogsDirectory + SessionVars.DialogSerialLogFileName), true))
+                                {
+                                    JSONLog.WriteLine(" Finish read of " + deserializedCharacterJSON.CharacterName);
+                                }
+                            }
                             //Add to Char List
                             CharacterList.Add(deserializedCharacterJSON);
                         }

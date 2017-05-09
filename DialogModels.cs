@@ -14,10 +14,26 @@ namespace DialogEngine
             {
                 DirectoryInfo dialogs_d = new DirectoryInfo(SessionVars.DialogsDirectory);
                 Console.WriteLine("Dialog JSON in: " + SessionVars.DialogsDirectory);
+                if (SessionVars.WriteSerialLog)
+                {
+                    using (StreamWriter JSONLog = new StreamWriter(
+                    (SessionVars.LogsDirectory + SessionVars.DialogSerialLogFileName), true))
+                    {
+                        JSONLog.WriteLine("Dialog JSON in: " + SessionVars.DialogsDirectory);
+                    }
+                }
                 var _inFiles = dialogs_d.GetFiles("*.json"); 
                 foreach (FileInfo file in _inFiles) //file of type FileInfo for each .json in directory
                 {
                     Console.WriteLine(" opening dialog models in " + file.Name);
+                    if (SessionVars.WriteSerialLog)
+                    {
+                        using (StreamWriter JSONLog = new StreamWriter(
+                        (SessionVars.LogsDirectory + SessionVars.DialogSerialLogFileName), true))
+                        {
+                            JSONLog.WriteLine(" opening dialog models in " + file.Name);
+                        }
+                    }
                     string inDialog;
                     try
                     {
@@ -44,6 +60,14 @@ namespace DialogEngine
                             }
                         }
                         Console.WriteLine(" completed " + file.Name);
+                        if (SessionVars.WriteSerialLog)
+                        {
+                            using (StreamWriter JSONLog = new StreamWriter(
+                            (SessionVars.LogsDirectory + SessionVars.DialogSerialLogFileName), true))
+                            {
+                                JSONLog.WriteLine(" completed " + file.Name);
+                            }
+                        }
                     }
                     catch (UnauthorizedAccessException e)
                     {
