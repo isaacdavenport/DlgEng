@@ -4,7 +4,7 @@
 {
   "DialogName": "Starlight Glimmer New Home story (NH)",
   "AddedOnDateTime": "2016-05-18T00:00:00",
-  "Popularity": 0.3,
+  "Popularity": 1.3,
   "Adventure": "",
   "Requires": [],
   "Provides": [],
@@ -24,7 +24,7 @@
 },{
   "DialogName": "Starlight Glimmer Runaway Pony story (FP)",
   "AddedOnDateTime": "2016-05-18T00:00:00",
-  "Popularity": 0.3,
+  "Popularity": 1.3,
   "Adventure": "",
   "Requires": [],
   "Provides": [],
@@ -248,7 +248,7 @@
 },{
   "DialogName": "QET2--RY+FS_Discuss_Bears",
   "AddedOnDateTime": "2016-09-17T00:00:00",
-  "Popularity": 2.2,
+  "Popularity": 4.2,
   "Adventure": "QET",
   "Requires": ["QET1--RY+SG_Discuss_Geology"],
   "Provides": [

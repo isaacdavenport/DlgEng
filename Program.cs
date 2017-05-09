@@ -10,6 +10,8 @@ using Newtonsoft.Json;
 // TODO: JSON Input
 //       build unit tests around json imports
 //       Clean error recovery and handling when non-recoverable.
+//       Import Char JSON in Method near Dialogs
+//       Clean error recovery and handling when non-recoverable. 
 //       Vectorize RSSI to see movement over proximity. (increased prox most recently, center of mass.)
 
 namespace DialogEngine
@@ -121,7 +123,7 @@ namespace DialogEngine
         static void WriteStartupInfo() {
             if (SessionVars.WriteSerialLog)
             {
-                string versionTimeStr = "Dialog Engine ver 0.59 " + DateTime.Now;
+                string versionTimeStr = "Dialog Engine ver 0.60 " + DateTime.Now;
                 Console.WriteLine("");
                 Console.WriteLine(versionTimeStr);
                 Console.WriteLine("");

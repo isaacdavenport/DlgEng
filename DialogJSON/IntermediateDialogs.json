@@ -4,7 +4,7 @@
 {
   "DialogName": "Greeting, GiveSilence",
   "AddedOnDateTime": "2016-05-18T00:00:00",
-  "Popularity": 2.3,
+  "Popularity": 0.3,
   "Adventure": "",
   "Requires": [],
   "Provides": [],
@@ -15,7 +15,7 @@
 },{
   "DialogName": "GiveSilence, Greeting --For non-speaking characters",
   "AddedOnDateTime": "2016-05-18T00:00:00",
-  "Popularity": 2.3,
+  "Popularity": 0.3,
   "Adventure": "",
   "Requires": [],
   "Provides": [],
@@ -254,7 +254,7 @@
 },{
   "DialogName": "Request Who Give Who Correct",
   "AddedOnDateTime": "2016-05-18T00:00:00",
-  "Popularity": 0.8,
+  "Popularity": 2.8,
   "Adventure": "",
   "Requires": [],
   "Provides": [],

@@ -67,7 +67,7 @@
 			"PhraseRating": "G"
 		}, {
 			"DialogStr": "Wow",
-			"FileName": "wow",
+			"FileName": "Wow",
 			"PhraseWeights": {
 				"Exclamation": 0.2,
 				"GoOnSurprise": 0.6,
@@ -122,7 +122,7 @@
 			"PhraseRating": "G"
 		}, {
 			"DialogStr": "Don't wash those socks, they smell just right!",
-			"FileName": "Don'tWashThoesSocksThay",
+			"FileName": "DontWashThoseSocksThey",
 			"PhraseWeights": {
 				"GiveSurprisingStatement": 0.4,
 				"Exclamation": 0.3
@@ -206,7 +206,7 @@
 			},
 			"PhraseRating": "G"
 		}, {
-			"DialogStr": "I was begging for food.  They finally set down the bowl.  Fancy feast.It is the most delicious thing in the world except for fresh couch.",
+			"DialogStr": "I was begging for food.  They finally set down the bowl.  Fancy feast.It is the most delicious thing in the world... except for fresh couch.",
 			"FileName": "IWasBeggingForFood",
 			"PhraseWeights": {
 				"Ramble": 0.6,
@@ -215,7 +215,7 @@
 			"PhraseRating": "G"
 		}, {
 			"DialogStr": "I don't mind eating stale couch.  Its almost as good as that new couch flavor.",
-			"FileName": "IDon'tMindStaleCouch",
+			"FileName": "IDontMindStaleCouch",
 			"PhraseWeights": {
 				"Ramble": 0.6,
 				"GiveSurprisingStatement": 0.6
@@ -254,7 +254,7 @@
 			"PhraseRating": "G"
 		}, {
 			"DialogStr": "Do you know what my favorite thing is?",
-			"FileName": "DoYouKnowWhat",
+			"FileName": "WhatMyFavoriteThingIs",
 			"PhraseWeights": {
 				"RequestActivity": 0.4
 			},
@@ -319,7 +319,7 @@
 			"PhraseRating": "PG"
 		}, {
 			"DialogStr": "I would watch where you step.  It might not end well.",
-			"FileName": "watch",
+			"FileName": "Watch",
 			"PhraseWeights": {
 				"GiveAdvice": 0.6,
 				"Threat": 0.1,
@@ -405,7 +405,7 @@
 			"PhraseRating": "G"
 		}, {
 			"DialogStr": "I've lost a few mice.",
-			"FileName": "I'vLostAFew",
+			"FileName": "IveLostAFew",
 			"PhraseWeights": {
 				"RequestAdvice": 0.6,
 				"RequestAffirmation": 0.6,
@@ -414,16 +414,16 @@
 			"PhraseRating": "G"
 		}, {
 			"DialogStr": "Always watch where you step if you want to avoid unpleasantness in this world.",
-			"FileName": "AlwaysWachWereYou",
+			"FileName": "AlwaysWatchWhereYou",
 			"PhraseWeights": {
 				"GiveAdvice": 0.8
 			},
 			"PhraseRating": "PG"
 		}, {
 			"DialogStr": "Does a cat have five legs?",
-			"FileName": "DoseACatHave",
+			"FileName": "DoesACatHave",
 			"PhraseWeights": {
-				"No": 0.2
+				"No": 0.5
 			},
 			"PhraseRating": "PG"
 		}, {
@@ -442,7 +442,7 @@
 			"PhraseRating": "G"
 		}, {
 			"DialogStr": "Do cats waste their time chasing dogs?",
-			"FileName": "DOCatsWastethere",
+			"FileName": "DoCatsWasteTheir",
 			"PhraseWeights": {
 				"No": 0.2,
 				"RequestAdvice": 0.1
@@ -450,7 +450,7 @@
 			"PhraseRating": "G"
 		}, {
 			"DialogStr": "Naps fix everything.  Except for stomach aches.",
-			"FileName": "NapsFixEverythingExeprdFor",
+			"FileName": "NapsFixEverythingExceptFor",
 			"PhraseWeights": {
 				"GiveAdvice": 0.2
 			},
@@ -472,14 +472,14 @@
 			"PhraseRating": "G"
 		}, {
 			"DialogStr": "They were probably angry from being awakened from their nap.",
-			"FileName": "ThayWherProblyAngryFrom",
+			"FileName": "TheyWereProbablyAngryFrom",
 			"PhraseWeights": {
 				"GiveMotivation": 0.4
 			},
 			"PhraseRating": "PG"
 		}, {
 			"DialogStr": "Maybe someone stepped on their paw.",
-			"FileName": "MabySomeOneStepedOnThair",
+			"FileName": "MaybeSomeoneSteppedOnTheir",
 			"PhraseWeights": {
 				"GiveMotivation": 0.4
 			},
@@ -768,8 +768,8 @@
 			},
 			"PhraseRating": "G"
 		}, {
-			"DialogStr": "Do cats like sprinklers?",
-			"FileName": "XX_HalfSecSilence",
+			"DialogStr": "Do cats enjoy sprinklers?",
+			"FileName": "DoCatsEnjoySprinklers",
 			"PhraseWeights": {
 				"No": 1,
 				"GiveRecentHistory": 0.2,
@@ -778,35 +778,35 @@
 			"PhraseRating": "G"
 		}, {
 			"DialogStr": "Your wearing black, let me change it.  I have a lot of white fur I can spare.",
-			"FileName": "XX_HalfSecSilence",
+			"FileName": "YoureWearingBlack",
 			"PhraseWeights": {
 				"GiveSilence": 1  
 			},
 			"PhraseRating": "G"
 		}, {
 			"DialogStr": "I agree.",
-			"FileName": "XX_HalfSecSilence",
+			"FileName": "IAgree",
 			"PhraseWeights": {
 				"GiveAgreement": 1
 			},
 			"PhraseRating": "G"
 		}, {
 			"DialogStr": "I meow in agreement...  Meow.",
-			"FileName": "XX_HalfSecSilence",
+			"FileName": "MeowInAgreement",
 			"PhraseWeights": {
 				"GiveAgreement": 1
 			},
 			"PhraseRating": "G"
 		}, {
 			"DialogStr": "I think I might have to admit you are right on that one.",
-			"FileName": "XX_HalfSecSilence",
+			"FileName": "MightHaveToAdmit",
 			"PhraseWeights": {
 				"GiveAgreement": 1
 			},
 			"PhraseRating": "G"
 		}, {
 			"DialogStr": "This is the paw of disagreement.",
-			"FileName": "XX_HalfSecSilence",
+			"FileName": "PawOfDisagreement",
 			"PhraseWeights": {
 				"No": 0.2,
 				"GoOnDisapproval": 1
@@ -814,14 +814,14 @@
 			"PhraseRating": "G"
 		}, {
 			"DialogStr": "The horrors!",
-			"FileName": "XX_HalfSecSilence",
+			"FileName": "TheHorrors",
 			"PhraseWeights": {
 				"GoOnFear": 1
 			},
 			"PhraseRating": "G"
 		}, {
 			"DialogStr": "Thats as scary as when my owners tried to take me to the vet.",
-			"FileName": "XX_HalfSecSilence",
+			"FileName": "ThatsAsScaryAs",
 			"PhraseWeights": {
 				"Exclamation": 0.2,
 				"GoOnFear": 1
@@ -829,7 +829,7 @@
 			"PhraseRating": "G"
 		}, {
 			"DialogStr": "I feel like hacking up a hairball.",
-			"FileName": "XX_HalfSecSilence",
+			"FileName": "IFeelLikeHackingUp",
 			"PhraseWeights": {
 				"GoOnDisapproval": 1,
 				"GoOnDisgust": 1
@@ -837,7 +837,7 @@
 			"PhraseRating": "G"
 		}, {
 			"DialogStr": "That like not having to go the vet.",
-			"FileName": "XX_HalfSecSilence",
+			"FileName": "ThatsLikeNotHaving",
 			"PhraseWeights": {
 				"GoOnJoyful": 1,
 				"ThankYou": 0.2
@@ -845,14 +845,14 @@
 			"PhraseRating": "G"
 		}, {
 			"DialogStr": "Name them and I'll claw them.",
-			"FileName": "XX_HalfSecSilence",
+			"FileName": "IllClawThem",
 			"PhraseWeights": {
 				"GoOnAngry": 1
 			},
 			"PhraseRating": "G"
 		}, {
 			"DialogStr": "Ahh that came out of nowhere.",
-			"FileName": "XX_HalfSecSilence",
+			"FileName": "CameOutOfNowhere",
 			"PhraseWeights": {
 				"Retreat": 0.2,
 				"GiveSurprisingStatement": 0.2,
@@ -862,7 +862,7 @@
 			"PhraseRating": "G"
 		}, {
 			"DialogStr": "Whaaaat???",
-			"FileName": "XX_HalfSecSilence",
+			"FileName": "Whaaaat",
 			"PhraseWeights": {
 				"GiveDisbelief": 1,
 				"GoOnSurprise": 1
@@ -870,14 +870,14 @@
 			"PhraseRating": "G"
 		}, {
 			"DialogStr": "Thats as sad as the day I didn't get my fancy feast.",
-			"FileName": "XX_HalfSecSilence",
+			"FileName": "DidntGetMyFancyFeast",
 			"PhraseWeights": {
 				"GoOnSad": 1
 			},
 			"PhraseRating": "G"
 		}, {
 			"DialogStr": "Oh I get it.",
-			"FileName": "XX_HalfSecSilence",
+			"FileName": "OhIGetIt",
 			"PhraseWeights": {
 				"Accuse": 1,
 				"GoOnUnderstanding": 1
@@ -885,21 +885,21 @@
 			"PhraseRating": "G"
 		}, {
 			"DialogStr": "Its like you just gave me tuna.",
-			"FileName": "XX_HalfSecSilence",
+			"FileName": "JustGaveMeTuna",
 			"PhraseWeights": {
 				"ThankYou": 1
 			},
 			"PhraseRating": "G"
 		}, {
 			"DialogStr": "I only helped with one third, the rest was you.",
-			"FileName": "XX_HalfSecSilence",
+			"FileName": "HelpedWithOneThird",
 			"PhraseWeights": {
 				"GiveCredit": 1
 			},
 			"PhraseRating": "G"
 		}, {
 			"DialogStr": "I was caught red pawed.",
-			"FileName": "XX_HalfSecSilence",
+			"FileName": "CaughtRedPawed",
 			"PhraseWeights": {
 				"GiveRecentHistory": 0.2,
 				"RequestAdvice": 0.2,
@@ -908,7 +908,7 @@
 			"PhraseRating": "G"
 		}, {
 			"DialogStr": "I didn't do anything.",
-			"FileName": "XX_HalfSecSilence",
+			"FileName": "IDidntDoAnything",
 			"PhraseWeights": {
 				"GiveCredit": 0.2,
 				"Deny": 1
@@ -916,7 +916,7 @@
 			"PhraseRating": "G"
 		}, {
 			"DialogStr": "You finished off my leftover tuna!",
-			"FileName": "XX_HalfSecSilence",
+			"FileName": "YouFinishedOffMy",
 			"PhraseWeights": {
 				"GiveSurprisingStatement": 0.2,
 				"RequestMotivation": 0.2,
@@ -926,21 +926,21 @@
 			"PhraseRating": "G"
 		}, {
 			"DialogStr": "Out of all my owners the smallest one is horryifying.",
-			"FileName": "XX_HalfSecSilence",
+			"FileName": "OutOfAllMyOwners",
 			"PhraseWeights": {
 				"GiveWho": 1
 			},
 			"PhraseRating": "G"
 		}, {
 			"DialogStr": "Who found the mice?",
-			"FileName": "XX_HalfSecSilence",
+			"FileName": "WhoFoundTheMice",
 			"PhraseWeights": {
 				"RequestWho": 1
 			},
 			"PhraseRating": "G"
 		}, {
 			"DialogStr": "Did my house fly away?",
-			"FileName": "XX_HalfSecSilence",
+			"FileName": "DidMyHouseFlyAway",
 			"PhraseWeights": {
 				"RequestLocation": 0.2,
 				"YesNoQuestion": 0.2,
@@ -949,14 +949,14 @@
 			"PhraseRating": "G"
 		}, {
 			"DialogStr": "Perhaps under a bush?",
-			"FileName": "XX_HalfSecSilence",
+			"FileName": "PerhapsUnderABush",
 			"PhraseWeights": {
 				"GiveLocation": 1
 			},
 			"PhraseRating": "G"
 		}, {
 			"DialogStr": "Why would someone not fish for tuna?",
-			"FileName": "XX_HalfSecSilence",
+			"FileName": "WhyWouldSomeone",
 			"PhraseWeights": {
 				"RequestMotivation": 1,
 				"RequestAdvice": 0.2
@@ -964,28 +964,28 @@
 			"PhraseRating": "G"
 		}, {
 			"DialogStr": "Perhaps they felt they couldn't prepare in time?",
-			"FileName": "XX_HalfSecSilence",
+			"FileName": "CouldntPrepareInTime",
 			"PhraseWeights": {
 				"GiveMotivation": 1
 			},
 			"PhraseRating": "G"
 		}, {
 			"DialogStr": "Perhaps they didn't have the urge to.",
-			"FileName": "XX_HalfSecSilence",
+			"FileName": "PerhapsTheyDidntHave",
 			"PhraseWeights": {
 				"GiveMotivation": 1
 			},
 			"PhraseRating": "G"
 		}, {
 			"DialogStr": "You smell like rotten tuna.",
-			"FileName": "XX_HalfSecSilence",
+			"FileName": "YouSmellLikeRottenTuna",
 			"PhraseWeights": {
 				"Insult": 1
 			},
 			"PhraseRating": "G"
 		}, {
 			"DialogStr": "Someone told me to go fish.  But I didn't have a fishing rod.  So I didn't.",
-			"FileName": "XX_HalfSecSilence",
+			"FileName": "SomeoneToldMe",
 			"PhraseWeights": {
 				"GiveJoke": 1,
 				"GiveSurprisingStatement": 1

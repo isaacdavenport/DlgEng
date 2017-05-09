@@ -47,7 +47,7 @@
 			"PhraseRating": "PG"
 		}, {
 			"DialogStr": "I don't want to lose you as a friend because of what I did in the past",
-			"FileName": "LoseYouAsA",
+			"FileName": "DontWantToLoseYou",
 			"PhraseWeights": {
 				"RequestAffirmation": 0.2,
 				"Admit": 0.1
@@ -557,7 +557,7 @@
 			"PhraseRating": "PG"
 		}, {
 			"DialogStr": "The Staff of Sameness will make us all equal!",
-			"FileName": "TheStaffOfSamenesWill",
+			"FileName": "TheStaffOfSamenes",
 			"PhraseWeights": {
 				"Exclamation": 0.2
 			},
@@ -700,7 +700,7 @@
 			"PhraseRating": "PG"
 		}, {
 			"DialogStr": "Are you sure?",
-			"FileName": "AreYouSure?",
+			"FileName": "AreYouSure",
 			"PhraseWeights": {
 				"YesNoQuestion": 0.3
 			},
@@ -722,7 +722,7 @@
 			"PhraseRating": "PG"
 		}, {
 			"DialogStr": " All together now! Every one of you! No pony left behind!",
-			"FileName": "AllTogetherNow",
+			"FileName": "AllTogetherNowEvery",
 			"PhraseWeights": {
 				"Exclamation": 0.3,
 				"GiveAffirmation": 0.2

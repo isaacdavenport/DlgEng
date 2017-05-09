@@ -83,7 +83,7 @@ namespace DialogEngine
         }
 
         public static void OccasionallyChangeToRandNewCharacter()
-        {  // used for computers with no serial input radio for random, or forceCharacter mode
+        {   // used for computers with no serial input radio for random, or forceCharacter mode
             // does not include final character the silent schoolhouse, not useful in noSerial mode
             while (true)
             {
