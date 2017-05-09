@@ -212,7 +212,7 @@ namespace DialogEngine
         }
 
         public void WriteDialogInfo(int character1Num, int character2Num) {
-            string dialogModelString = "  --DiMod " + CurrentDialogModel + " " + ModelDialogs[CurrentDialogModel].Name +
+            string dialogModelString = "\r\n  --DiMod " + CurrentDialogModel + " " + ModelDialogs[CurrentDialogModel].Name +
                                        " NextChars: " + CharacterList[character1Num].CharacterPrefix + " " +
                                        CharacterList[character2Num].CharacterPrefix + " " + DateTime.Now;
 

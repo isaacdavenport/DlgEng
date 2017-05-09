@@ -423,7 +423,7 @@
 			"DialogStr": "Does a cat have five legs?",
 			"FileName": "DoesACatHave",
 			"PhraseWeights": {
-				"No": 0.2
+				"No": 0.5
 			},
 			"PhraseRating": "PG"
 		}, {
