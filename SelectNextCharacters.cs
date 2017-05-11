@@ -11,7 +11,7 @@ namespace DialogEngine
         public static int BigRssi = 0;
         public static bool RssiStable = false;
         public const int STRONG_RSSI_BUF_DEPTH = 12;
-        public static int NextCharacter1 = 0, NextCharacter2 = 1;
+        public static int NextCharacter1 = 1, NextCharacter2 = 2;
         public static int[,] HeatMap = new int[SerialComs.NUM_RADIOS, SerialComs.NUM_RADIOS];
         public static DateTime[] CharactersLastHeatMapUpdateTime = new DateTime[SerialComs.NUM_RADIOS];
         public static readonly TimeSpan MaxLastSeenInterval = new TimeSpan(0, 0, 0, 2, 100);
