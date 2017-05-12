@@ -10,9 +10,13 @@ using Newtonsoft.Json;
 // TODO: JSON Input
 //       build unit tests around json imports
 //       Clean error recovery and handling when non-recoverable.
-//       Import Char JSON in Method near Dialogs
-//       Clean error recovery and handling when non-recoverable. 
 //       Vectorize RSSI to see movement over proximity. (increased prox most recently, center of mass.)
+//          vector should be method calculated when needed to select new chars.
+//          (who became closer most recently?)
+
+//  before tue 5/16
+    //unit tests on 3-4 easy methods
+    //unit test on generateADialog in dialogtracker.cs
 
 namespace DialogEngine
 {
