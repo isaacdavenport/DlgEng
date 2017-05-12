@@ -45,8 +45,16 @@ namespace UnitTests
         {
             DialogTracker instanceForTests = new DialogTracker();
             instanceForTests.intakeCharacters();
-            //characters are swapped?
-            
+            //initial state. Vals are not equal
+            Assert.IsTrue(instanceForTests.Character1Num != instanceForTests.Character2Num);
+            int Char1Num = instanceForTests.Character1Num;
+            int Char2Num = instanceForTests.Character2Num;
+            //try swap
+            instanceForTests.SwapCharactersOneAndTwo();
+            //verify vals were swapped and are still not equal.
+            Assert.IsTrue(instanceForTests.Character1Num != instanceForTests.Character2Num);
+            Assert.IsTrue(instanceForTests.Character1Num == Char2Num);
+            Assert.IsTrue(instanceForTests.Character2Num == Char1Num);
         }
 
         [TestMethod]
