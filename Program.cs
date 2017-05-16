@@ -20,12 +20,6 @@ using Newtonsoft.Json;
 
 namespace DialogEngine
 {
-    //list of strings that will contain all Phrase Types after character initialization.
-    public static class GlobalPhraseTypes
-    {
-        public static List<string> TestPhraseTypes = new List<String> { };
-    }
-    
     static class ParentalRatings
     {
         /// <summary>
@@ -127,7 +121,7 @@ namespace DialogEngine
         static void WriteStartupInfo() {
             if (SessionVars.WriteSerialLog)
             {
-                string versionTimeStr = "Dialog Engine ver 0.62 " + DateTime.Now;
+                string versionTimeStr = "Dialog Engine ver 0.63 " + DateTime.Now;
                 Console.WriteLine("");
                 Console.WriteLine(versionTimeStr);
                 Console.WriteLine("");
