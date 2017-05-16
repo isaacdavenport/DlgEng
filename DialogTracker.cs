@@ -209,7 +209,7 @@ namespace DialogEngine
             }
         }
         
-        void SwapCharactersOneAndTwo() {
+        public void SwapCharactersOneAndTwo() {
             var tempCh1 = Character1Num;
             Character1Num = Character2Num;
             Character2Num = tempCh1;
