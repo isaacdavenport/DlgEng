@@ -22,25 +22,5 @@ namespace TestEngine
             Thread.Sleep(8500);
             Assert.IsFalse(player.IsPlaying());
         }
-
-        [TestMethod]
-        public void TestNegativeDamageDoesNotChangeCurrentHitPoints()
-        {
-            Player player = new Player(10);
-            player.ReceiveDamage(-3);
-
-            Assert.AreEqual(10, player.CurrentHitPoints);
-        }
-
-        [TestMethod]
-        public void TestMoreDamageThanCurrentHitPointsEqualsZero()
-        {
-            Player player = new Player(10);
-            player.ReceiveDamage(13);
-
-            Assert.AreEqual(0, player.CurrentHitPoints);
-        }
-
-
     }
 }
