@@ -58,9 +58,6 @@ namespace DialogEngine
             }
         }
         
-        public DialogTracker() {
-            
-        }
         public void intakeCharacters()
         {
             DirectoryInfo d = new DirectoryInfo(SessionVars.CharactersDirectory);
