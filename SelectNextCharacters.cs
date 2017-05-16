@@ -112,9 +112,6 @@ namespace DialogEngine
                     NextCharacter2 = RandomNumbers.Gen.Next(0, Program.TheDialogs.CharacterList.Count); //lower bound inclusive, upper exclusive
                     nextCharacterSwapTime = DateTime.Now;
                     nextCharacterSwapTime = nextCharacterSwapTime.AddSeconds(8 + RandomNumbers.Gen.Next(0, 34));
-                    Console.WriteLine();
-                    Console.WriteLine("nextCharacterSwapTime = " + nextCharacterSwapTime);
-                    Console.WriteLine();
                 }
                 while (NextCharacter1 == NextCharacter2)
                 {
