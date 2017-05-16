@@ -121,7 +121,7 @@ namespace DialogEngine
         static void WriteStartupInfo() {
             if (SessionVars.WriteSerialLog)
             {
-                string versionTimeStr = "Dialog Engine ver 0.63 " + DateTime.Now;
+                string versionTimeStr = "Dialog Engine ver 0.64 " + DateTime.Now;
                 Console.WriteLine("");
                 Console.WriteLine(versionTimeStr);
                 Console.WriteLine("");
@@ -299,6 +299,8 @@ namespace DialogEngine
                 CheckForMissingPhrases();
                 Console.WriteLine("  press enter to continue");
                 Console.ReadLine();
+                if(!SessionVars.ForceCharactersAndDialogModel)
+                { Console.WriteLine("   you may enter two characters initials to make them talk"); }
             }
 
             //Select Debug Output

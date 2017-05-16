@@ -2,6 +2,7 @@
 //www.toys2life.org
 
 using System;
+using System.Timers;
 using System.Threading;
 
 namespace DialogEngine
@@ -84,16 +85,41 @@ namespace DialogEngine
 
         public static void OccasionallyChangeToRandNewCharacter()
         {   // used for computers with no serial input radio for random, or forceCharacter mode
-            // does not include final character the silent schoolhouse, not useful in noSerial mode
+            // does not include final character the silent schoolhouse, not useful in noSerial mode 
+            bool userHasForcedCharacters = false;
+            DateTime nextCharacterSwapTime = new DateTime();
+            nextCharacterSwapTime = DateTime.Now;
+            nextCharacterSwapTime.AddSeconds(12);
             while (true)
             {
-                NextCharacter1 = RandomNumbers.Gen.Next(0, Program.TheDialogs.CharacterList.Count); //lower bound inclusive, upper exclusive
-                NextCharacter2 = RandomNumbers.Gen.Next(0, Program.TheDialogs.CharacterList.Count); //lower bound inclusive, upper exclusive
+                if (SessionVars.DebugFlag && Console.KeyAvailable) {
+                    var userInput = Console.ReadLine();
+                    String[] CharactersInitials = userInput.Split(' ');
+                    if (CharactersInitials.Length == 2 && CharactersInitials.Length < 15) {  //two three letter inital sets should be less than7 w space
+                        userHasForcedCharacters = true;
+                        foreach (var character in Program.TheDialogs.CharacterList) {
+                            if (CharactersInitials[0] == character.CharacterPrefix) 
+                                { NextCharacter1 = Program.TheDialogs.CharacterList.IndexOf(character); }
+                            if (CharactersInitials[1] == character.CharacterPrefix)
+                                { NextCharacter2 = Program.TheDialogs.CharacterList.IndexOf(character); }
+                        }
+                    }
+                }
+                Thread.Sleep(1000);
+                if (!userHasForcedCharacters && nextCharacterSwapTime.CompareTo(DateTime.Now) < 0)
+                {
+                    NextCharacter1 = RandomNumbers.Gen.Next(0, Program.TheDialogs.CharacterList.Count); //lower bound inclusive, upper exclusive
+                    NextCharacter2 = RandomNumbers.Gen.Next(0, Program.TheDialogs.CharacterList.Count); //lower bound inclusive, upper exclusive
+                    nextCharacterSwapTime = DateTime.Now;
+                    nextCharacterSwapTime = nextCharacterSwapTime.AddSeconds(8 + RandomNumbers.Gen.Next(0, 34));
+                    Console.WriteLine();
+                    Console.WriteLine("nextCharacterSwapTime = " + nextCharacterSwapTime);
+                    Console.WriteLine();
+                }
                 while (NextCharacter1 == NextCharacter2)
                 {
                     NextCharacter2 = RandomNumbers.Gen.Next(0, Program.TheDialogs.CharacterList.Count);
                 }
-                Thread.Sleep(8000 + RandomNumbers.Gen.Next(0, 34000));
             }
         }
     }
