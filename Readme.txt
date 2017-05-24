@@ -5,8 +5,6 @@ If you download the T2L install directory, you can add phrasetypes and dialog mo
 The files required to run with audio are all found here:
 https://drive.google.com/open?id=0B9370bkq17nvcTRPWmhfY1VkV00
 
-The backup directory has backup JSON files for characters and dialogModels in it so you can get back to what is saved in the code repository.
-
 The logs directory is where the logs of things are saved, if you want to point out something strange, or run it over night and do statistical analysis on all that was said, or look at the raw data that was streaming in from the dolls if you have radios connected.
 
 The CharacterJSON and DialogJSON directories are where you copy the JSON files you want the program to read in at startup.

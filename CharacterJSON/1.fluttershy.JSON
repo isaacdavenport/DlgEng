@@ -263,7 +263,8 @@
       "DialogStr": "Yes.",
       "FileName": "Yes",
       "PhraseWeights": {
-        "Yes": 0.6
+        "Yes": 0.6,
+        "GiveAgreement": 0.5
       },
  
       "PhraseRating": "PG"
@@ -281,7 +282,8 @@
       "DialogStr": "How thoughtful of you to ask! Yes!",
       "FileName": "HowThoughtfulOfYou",
       "PhraseWeights": {
-        "Yes": 0.6
+        "Yes": 0.6,
+        "GiveAgreement": 0.5
       },
  
       "PhraseRating": "PG"
@@ -1293,6 +1295,355 @@
       },
  
       "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Actually, um, Pinkie Pie, I didn't finish...",
+      "FileName": "PPC4BActuallyUmPinkie",
+      "PhraseWeights": {
+        "PPC4B": 1
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "I didn't, um, ah, finish my confidence lessons. The minotaur says I still have to work on confronting problems head on.",
+      "FileName": "PPC4DFinishMyConfidence",
+      "PhraseWeights": {
+        "PPC4D": 1
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "But I don't want to waste it. It looks really really tasty.",
+      "FileName": "PPC4FWantToWaste",
+      "PhraseWeights": {
+        "PPC4F": 1
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Ohh, thank you, Pinkie Pie. I'll feel even more confident with a nice clean mane. ",
+      "FileName": "PPC7BMoreConfident",
+      "PhraseWeights": {
+        "PPC7B": 1
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Ha ha. Ha ha. You kidder. There is surely nothing odd about the way that Pinkie Pie is behaving, fellow pony.",
+      "FileName": "SGMSA2BYouKidderSoundingRobotic",
+      "PhraseWeights": {
+        "SGMSA2B": 1
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Ha ha. There is nothing odd about the way that I am behaving either. Are you aware of any useful secret tunnels under Ponyville? Ha ha.",
+      "FileName": "SGMSA2DNothingOddSoundingRobotic",
+      "PhraseWeights": {
+        "SGMSA2D": 1
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Fellow Pony. Would you discuss something animal-related? And then give me more detail on any secret passages connecting Ponyville to other parts of Equestria?",
+      "FileName": "SGMSA5ASomthingAnimalSoundingRobotic",
+      "PhraseWeights": {
+        "SGMSA5A": 1
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Oh, um, oh dear, oh my. What happened, Starlight? I'm feeling just a little woozy. Why was I so interested in tunnels? ",
+      "FileName": "SGMSA5CLittleWoozy",
+      "PhraseWeights": {
+        "SGMSA5C": 1
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "I think, um, Queen Chrysallis must have cast a spell on me, so that I'd gather information for her about Ponyville. How embarrasing. Thanks for fixing me, Starlight. You're a good friend.",
+      "FileName": "SGMSA5ECastASpell",
+      "PhraseWeights": {
+        "SGMSA5E": 1
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Um, maybe some of my catterpillar friends could come live in the dresses and spin cocoons. When they hatch into butterflies, it'll be so pretty. Don't you think?",
+      "FileName": "RYBA4BCaterpillarFriends",
+      "PhraseWeights": {
+        "RYBA4B": 1
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Or, I could just, um, invite my friends who are already butterflies. They could sit on your dresses too.",
+      "FileName": "RYBA4DAlreadyButterflies",
+      "PhraseWeights": {
+        "RYBA4D": 1
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "I, um, I like trees.",
+      "FileName": "SGQF2BLikeTrees",
+      "PhraseWeights": {
+        "SGQF2B": 1
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Oh, Starlight Glimmer, I forgive you. Maybe tomorrow, we can both be trees for a while. As long as you ask first.",
+      "FileName": "SGQF2DForgiveYou",
+      "PhraseWeights": {
+        "SGQF2D": 1
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Just not pine trees, please. The needles make me sneezey.",
+      "FileName": "SGQF2FPineTrees",
+      "PhraseWeights": {
+        "SGQF2F": 1
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Lola the sloth loved my animal sanctuary so much that she invited all her cousins to come stay.",
+      "FileName": "FSSA1ALola",
+      "PhraseWeights": {
+        "FSSA1A": 1
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Um, about eight months ago. They just showed up.",
+      "FileName": "FSSA1CEightMonths",
+      "PhraseWeights": {
+        "FSSA1C": 1
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "It took them a while to crawl here.  Every critter goes at its own pace.",
+      "FileName": "FSSA1ECrawlHere",
+      "PhraseWeights": {
+        "FSSA1E": 1
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "But now you're great at it!",
+      "FileName": "FSSA1GGreat",
+      "PhraseWeights": {
+        "FSSA1G": 1
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Oh dear, well, you see, that's just the thing. It turns out Lola has a whole lot of cousins, and things are getting a little crowded. I wonder if somepony would help keep some of them as guests for a while.",
+      "FileName": "FSSA1ILotOfCousins",
+      "PhraseWeights": {
+        "FSSA1I": 1
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Those are great ideas. I could see if there's extra room at Canterlot, too.",
+      "FileName": "FSSA1KGreatIdeas",
+      "PhraseWeights": {
+        "FSSA1K": 1
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Pinkie, do you think you could help take care of some of these cute little sloths?",
+      "FileName": "FSSA2ACuteLittle",
+      "PhraseWeights": {
+        "FSSA2A": 1
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Pinkie, that's very nice, but, um, sloths don't like to bounce so much. Maybe you could take it slow? Imagine that they're babies and you're putting them down for naps.",
+      "FileName": "FSSA2CDownForNaps",
+      "PhraseWeights": {
+        "FSSA2C": 1
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "I knew I could count on you, Pinkie. ",
+      "FileName": "FSSA2ECountOnYou",
+      "PhraseWeights": {
+        "FSSA2E": 1
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Rarity, if it's not too much trouble, could you help me take care of these cute little sloths?",
+      "FileName": "FSSA3ATooMuchTrouble",
+      "PhraseWeights": {
+        "FSSA3A": 1
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "What do you think, sloths? ... Rarity, I think they'd like that a whole lot.",
+      "FileName": "FSSA3CWholeLot",
+      "PhraseWeights": {
+        "FSSA3C": 1
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "What do you think, sloths? Princess Celestia said you could have a whole wing of the castle to yourselves! ... Hmm, maybe it would be a little lonely. Would you like to stay with my friend Rarity, or Pinkie Pie?",
+      "FileName": "FSSA4AThinkSloths",
+      "PhraseWeights": {
+        "FSSA4A": 1
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "What a nice, calm, peaceful day. Bunnies munching on clover. Bubbles in the stream. Even Angel looks sleepy after that carrotcake brunch. I might just nod off myself. I...might...just... (sleeping noises)",
+      "FileName": "PPBC1ACalmPeaceful",
+      "PhraseWeights": {
+        "PPBC1A": 1
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Ahhhh!",
+      "FileName": "PPBC1CAhh",
+      "PhraseWeights": {
+        "PPBC1C": 1
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "I thought you were, um, a dragon.",
+      "FileName": "PPBC3BADragon",
+      "PhraseWeights": {
+        "PPBC3B": 1
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "I thought you were a bouncy pink dragon.",
+      "FileName": "PPBC3DBouncyPinkDragon",
+      "PhraseWeights": {
+        "PPBC3D": 1
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Ohhh, the poor kitty! I'll do my best.",
+      "FileName": "PPBC3F",
+      "PhraseWeights": {
+        "PPBC3F": 1
+      }, 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "A fluffy white kitty! I'll fly up and save you.",
+      "FileName": "PPBC4AFluffyWhite",
+      "PhraseWeights": {
+        "PPBC4A": 1
+      }, 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Don't be scared, little one. I'll get you down safe and sound.",
+      "FileName": "PPBC5BBeScared",
+      "PhraseWeights": {
+        "PPBC5B": 1
+      },
+      "PhraseRating": "PG"
+    },{
+      "DialogStr": "You've got it.",
+      "FileName": "PPBC5DGotIt",
+      "PhraseWeights": {
+        "PPBC5D": 1,
+        "GiveAgreement": 1
+      },
+      "PhraseRating": "PG"
+    },{
+      "DialogStr": "Twinkle, twinkle, little star",
+      "FileName": "TwinkleTwinkleLittleStar_A",
+      "PhraseWeights": {
+        "Twinkle1": 1
+      },
+      "PhraseRating": "PG"
+    },{
+      "DialogStr": "How I wonder what you are",
+      "FileName": "HowIWonderWhat_A",
+      "PhraseWeights": {
+        "Twinkle2": 1
+      },
+      "PhraseRating": "PG"
+    },{
+      "DialogStr": "Up above the world so high",
+      "FileName": "UpAboveTheWorld",
+      "PhraseWeights": {
+        "Twinkle3": 1
+      },
+      "PhraseRating": "PG"
+    },{
+      "DialogStr": "Like a diamond in the sky",
+      "FileName": "LikeADiamondIn",
+      "PhraseWeights": {
+        "Twinkle4": 1
+      },
+      "PhraseRating": "PG"
+    },{
+      "DialogStr": "Twinkle, twinkle, little star",
+      "FileName": "TwinkleTwinkleLittleStar_B",
+      "PhraseWeights": {
+        "Twinkle5": 1
+      },
+      "PhraseRating": "PG"
+    },{
+      "DialogStr": "How I wonder what you are",
+      "FileName": "HowIWonderWhat_B",
+      "PhraseWeights": {
+        "Twinkle6": 1
+      },
+      "PhraseRating": "PG"
     }
   ]
 }
+
+
+
+
+
