@@ -44,7 +44,7 @@ namespace DialogEngine
 
         static void AddMessageToReceivedBuffer(int characterRowNum, int[] rw, DateTime timeStamp)
         {
-            if (characterRowNum > Program.TheDialogs.CharacterList.Count - 2)
+            if (characterRowNum > Program.TheDialogs.CharacterList.Count - 1)  //was omiting character 5 from log when it was Count - 2
             {
                 return;
             }
@@ -63,7 +63,7 @@ namespace DialogEngine
             if (SessionVars.WriteSerialLog)
             {
                 using (StreamWriter serialLogDecimal = new StreamWriter(
-                    (SessionVars.LogsDirectory + SessionVars.DecimalSerialLogFileName), true))
+                    (SessionVars.LogsDirectory + SessionVars.DecimalLogFileName), true))
                 {
                     serialLogDecimal.Write(ReceivedMessages[ReceivedMessages.Count - 1].CharacterPrefix + "  ");
                     serialLogDecimal.Write(ReceivedMessages[ReceivedMessages.Count - 1].ReceivedTime.ToString("mm.ss.fff") + "  ");

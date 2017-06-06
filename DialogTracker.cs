@@ -68,7 +68,7 @@ namespace DialogEngine
                 if (SessionVars.WriteSerialLog)
                 {
                     using (StreamWriter JSONLog = new StreamWriter(
-                    (SessionVars.LogsDirectory + SessionVars.DialogSerialLogFileName), true))
+                    (SessionVars.LogsDirectory + SessionVars.DialogLogFileName), true))
                     {
                         JSONLog.WriteLine(" Begin read of " + file.Name);
                     }
@@ -117,7 +117,7 @@ namespace DialogEngine
                             if (SessionVars.WriteSerialLog)
                             {
                                 using (StreamWriter JSONLog = new StreamWriter(
-                                (SessionVars.LogsDirectory + SessionVars.DialogSerialLogFileName), true))
+                                (SessionVars.LogsDirectory + SessionVars.DialogLogFileName), true))
                                 {
                                     JSONLog.WriteLine(" Finish read of " + deserializedCharacterJSON.CharacterName);
                                 }
@@ -232,7 +232,7 @@ namespace DialogEngine
             Console.WriteLine(dialogModelString);
             if (SessionVars.WriteSerialLog) {
                 using (StreamWriter serialLogDialogModels = new StreamWriter(
-                    (SessionVars.LogsDirectory + SessionVars.DialogSerialLogFileName), true)) {
+                    (SessionVars.LogsDirectory + SessionVars.DialogLogFileName), true)) {
                     serialLogDialogModels.WriteLine(dialogModelString);
                     serialLogDialogModels.Close();
                 }
@@ -546,7 +546,7 @@ namespace DialogEngine
 
             if (SessionVars.WriteSerialLog) {
                 using (StreamWriter serialLogDialogLines = new StreamWriter(
-                    (SessionVars.LogsDirectory + SessionVars.DialogSerialLogFileName), true)) {
+                    (SessionVars.LogsDirectory + SessionVars.DialogLogFileName), true)) {
                     serialLogDialogLines.WriteLine(CharacterList[speakingCharacter].CharacterName + ": " + selectedPhrase.DialogStr);
                     serialLogDialogLines.Close();
                 }

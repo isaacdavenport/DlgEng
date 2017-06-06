@@ -51,7 +51,7 @@ namespace DialogEngine
                     }
                     if (SessionVars.WriteSerialLog) {
                         using (StreamWriter serialLog = new StreamWriter(
-                            SessionVars.LogsDirectory + SessionVars.SerialLogFileName, true)) {
+                            SessionVars.LogsDirectory + SessionVars.HexLogFileName, true)) {
                             serialLog.Write(DateTime.Now.ToString("mm.ss.fff") + "  ");
                             serialLog.Write(message);
                             serialLog.Close();

@@ -385,7 +385,8 @@
       "DialogStr": "Why, yes of course!",
       "FileName": "WhyYesOfCourse",
       "PhraseWeights": {
-        "Yes": 0.2
+        "Yes": 0.2,
+        "GiveAgreement": 0.5
       },
  
       "PhraseRating": "PG"
@@ -1031,7 +1032,8 @@
       "DialogStr": "Yes.",
       "FileName": "Yes",
       "PhraseWeights": {
-        "Yes": 0.6
+        "Yes": 0.6,
+        "GiveAgreement": 0.5
       },
  
       "PhraseRating": "PG"
@@ -1392,6 +1394,272 @@
       "PhraseWeights": {
         "RYSC1C": 1
    },
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Darling, that's not frosting, that's mane shampoo.",
+      "FileName": "PPC5BNotFrosting",
+      "PhraseWeights": {
+        "PPC5B": 1
+   },
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "It's always a pleasure to see you, Starlight, but if you could please be a dear and wipe your hooves before getting them on the carpet...",
+      "FileName": "SGMSA6BAlwaysAPleasure",
+      "PhraseWeights": {
+        "SGMSA6B": 1
+   },
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "A changeling? Darling, I personally saw Pinkie bake three Chariots of Fudge this morning, and then eat two and a half of them. That would make anypony a bit drowsy--even Pinkie. Give her an hour and she'll be back to her old self.",
+      "FileName": "SGMSA6DPersonallySaw",
+      "PhraseWeights": {
+        "SGMSA6D": 1
+   },
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Hello, fellow pony. Ha ha. Do not be silly. Would you care to talk about fashion, and then discuss Princess Celestia's plans for defending Ponyville?",
+      "FileName": "SGMSA7BDefendingPonyvilleSoundingRobotic",
+      "PhraseWeights": {
+        "SGMSA7B": 1
+   },
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Fellow Pony. I enjoy clothing and beauty products. Have you brought me more information on Princess Celestia's plans to defend Ponyville?",
+      "FileName": "SGMSA9AFellowPonySoundingRobotic",
+      "PhraseWeights": {
+        "SGMSA9A": 1
+   },
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Oh, my stars, Starlight Glimmer. I have a dreadful horn-ache. Did you remember to wipe your hooves on the rug? ",
+      "FileName": "SGMSA5COhMyStars",
+      "PhraseWeights": {
+        "SGMSA9C": 1
+   },
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "I fear Queen Chrysallis may have cast a spell on me. But it seems you've fixed me right as rain. Well done!",
+      "FileName": "SGMSA5EIFear",
+      "PhraseWeights": {
+        "SGMSA9E": 1
+   },
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Oh, I'm simply up to my mane in preparations to open the boutique, but this window display is missing a certain...something. I wonder if anypony could help with the finishing touches?",
+      "FileName": "RYBA1AUpToMy",
+      "PhraseWeights": {
+        "RYBA1A": 1
+   },
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "As edgy and modern as that sounds, Skylar, I'd hate to trouble you. Perhaps I'll ask somepony else for help. But who...?",
+      "FileName": "RYBA1CAsEdgy",
+      "PhraseWeights": {
+        "RYBA1C": 1
+   },
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Any ideas for beautifying this window display, Starlight?",
+      "FileName": "RYBA2AAnyIdeas",
+      "PhraseWeights": {
+        "RYBA2A": 1
+   },
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "That sounds a bit dishonest, don't you think? And anyway, I really have made the most beautiful dresses ever.",
+      "FileName": "RYBA2CSoundsABit",
+      "PhraseWeights": {
+        "RYBA2C": 1
+   },
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Smashing. Thanks, Starlight.",
+      "FileName": "RYBA2ESmashing",
+      "PhraseWeights": {
+        "RYBA2E": 1
+   },
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Any ideas for beautifying this window display, Pinkie?",
+      "FileName": "RYBA3AAnyIdeas",
+      "PhraseWeights": {
+        "RYBA3A": 1
+   },
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "How could a hot air balloon made of taffy ever fly?",
+      "FileName": "RYBA3CHowCould",
+      "PhraseWeights": {
+        "RYBA3C": 1
+   },
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "I...can't think of any reason that wouldn't work. Thank you kindly, Pinkie! ",
+      "FileName": "RYBA3EAnyReason",
+      "PhraseWeights": {
+        "RYBA3E": 1
+   },
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Any ideas for beautifying this window display, Fluttershy?",
+      "FileName": "RYBA4AAnyIdeasFluttershy",
+      "PhraseWeights": {
+        "RYBA4A": 1
+   },
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "I appreciate the thought, but I'm afraid we haven't time for that.",
+      "FileName": "RYBA4CTheThought",
+      "PhraseWeights": {
+        "RYBA4C": 1
+   },
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "How delightfully retro! You've saved me. Well done.",
+      "FileName": "RYBA4EHowRetro",
+      "PhraseWeights": {
+        "RYBA4E": 1
+   },
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Yes it was, darling, only it wasn't purple. It was the most ghastly shade of periwinkle. I've never felt so tacky in all my life.",
+      "FileName": "SGQF3BMostGhastly",
+      "PhraseWeights": {
+        "SGQF3B": 1
+   },
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Darling, we're friends, and friends don't wear each other as accessories. You don't have to do a thing.",
+      "FileName": "SGQF3DWearEachOther",
+      "PhraseWeights": {
+        "SGQF3D": 1
+   },
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Ohhh, how simply precious! Sloths are very trendy right now. I'll keep them in the lap of luxury for their whole stay. Do you think they'd like a bubble bath? I've got a new jacuzzi with extra slow bubbles. ",
+      "FileName": "FSSA3BSlowBubbles",
+      "PhraseWeights": {
+        "FSSA3B": 1
+   },
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "A few moons ago, I was without creative inspiration. Spike found me a spell to fix the problem. Whatever I imagined immediately became real!",
+      "FileName": "RYISA",
+      "PhraseWeights": {
+        "RYISA": 1
+   },
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "I couldn't see it at the time, but this only made things worse. I gave Rainbow Dash a dress so large and extravagent that it kept her from flying properly. I made Fluttershy's bird house into a bird mansion so large that her flying friends got lost in it.  ",
+      "FileName": "RYISB",
+      "PhraseWeights": {
+        "RYISB": 1
+   },
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "The spell wasn't broken until Spike told me I'd been making a dreadful mess of things. He was so nervous to tell me the truth, the poor dragon! And the way he follows me from place to place... Sometimes I wonder what goes through that head of his. ",
+      "FileName": "RYISC",
+      "PhraseWeights": {
+        "RYISC": 1
+   },
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "In any event, I simply don't know what would have happened if he hadn't put me back on the right hoof. Sometimes a pony needs to listen to her friends.",
+      "FileName": "RYISD",
+      "PhraseWeights": {
+        "RYISD": 1
+   },
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "The girls and I once had to cross a river, only to discover a sea serpent was blocking our way.",
+      "FileName": "RYSSA",
+      "PhraseWeights": {
+        "RYSSA": 1
+   },
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "He had such lovely luminescent scales. An expertly coiffed mane. A fabulous manicure. But it was all ruined, because Nightmare Moon had torn his beautiful mustache off! I couldn't let such a crime against fabulosity to go uncorrected. I cut my tailhair, to use as a replacement mustache for him.",
+      "FileName": "RYSSB",
+      "PhraseWeights": {
+        "RYSSB": 1
+   },
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Never fear! My tail grew back, and short tails were in that season, anyway.",
+      "FileName": "RYSSC",
+      "PhraseWeights": {
+        "RYSSC": 1
+   },
+      "PhraseRating": "PG"
+    },{
+      "DialogStr": "Twinkle, twinkle, little star",
+      "FileName": "TwinkleTwinkleLittleStar_A",
+      "PhraseWeights": {
+        "Twinkle1": 1
+      },
+      "PhraseRating": "PG"
+    },{
+      "DialogStr": "How I wonder what you are",
+      "FileName": "HowIWonderWhat_A",
+      "PhraseWeights": {
+        "Twinkle2": 1
+      },
+      "PhraseRating": "PG"
+    },{
+      "DialogStr": "Up above the world so high",
+      "FileName": "UpAboveTheWorld",
+      "PhraseWeights": {
+        "Twinkle3": 1
+      },
+      "PhraseRating": "PG"
+    },{
+      "DialogStr": "Like a diamond in the sky",
+      "FileName": "LikeADiamondIn",
+      "PhraseWeights": {
+        "Twinkle4": 1
+      },
+      "PhraseRating": "PG"
+    },{
+      "DialogStr": "Twinkle, twinkle, little star",
+      "FileName": "TwinkleTwinkleLittleStar_B",
+      "PhraseWeights": {
+        "Twinkle5": 1
+      },
+      "PhraseRating": "PG"
+    },{
+      "DialogStr": "How I wonder what you are",
+      "FileName": "HowIWonderWhat_B",
+      "PhraseWeights": {
+        "Twinkle6": 1
+      },
       "PhraseRating": "PG"
     }
   ]

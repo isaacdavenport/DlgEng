@@ -121,13 +121,13 @@ namespace DialogEngine
         static void WriteStartupInfo() {
             if (SessionVars.WriteSerialLog)
             {
-                string versionTimeStr = "Dialog Engine ver 0.64 " + DateTime.Now;
+                string versionTimeStr = "Dialog Engine ver 0.65 " + DateTime.Now;
                 Console.WriteLine("");
                 Console.WriteLine(versionTimeStr);
                 Console.WriteLine("");
 
                 using (StreamWriter serialLog = new StreamWriter(
-                    (SessionVars.LogsDirectory + SessionVars.SerialLogFileName), true))
+                    (SessionVars.LogsDirectory + SessionVars.HexLogFileName), true))
                 {
                     serialLog.WriteLine("");
                     serialLog.WriteLine("");
@@ -135,7 +135,7 @@ namespace DialogEngine
                     serialLog.Close();
                 }
                 using (StreamWriter serialLogDec = new StreamWriter(
-                    (SessionVars.LogsDirectory + SessionVars.DecimalSerialLogFileName), true))
+                    (SessionVars.LogsDirectory + SessionVars.DecimalLogFileName), true))
                 {
                     serialLogDec.WriteLine("");
                     serialLogDec.WriteLine("");
@@ -143,7 +143,7 @@ namespace DialogEngine
                     serialLogDec.Close();
                 }
                 using (StreamWriter serialLogDialog = new StreamWriter(
-                    (SessionVars.LogsDirectory + SessionVars.DialogSerialLogFileName), true))
+                    (SessionVars.LogsDirectory + SessionVars.DialogLogFileName), true))
                 {
                     serialLogDialog.WriteLine("");
                     serialLogDialog.WriteLine("");
@@ -167,7 +167,7 @@ namespace DialogEngine
                         if (SessionVars.WriteSerialLog)
                         {
                             using (StreamWriter JSONLog = new StreamWriter(
-                            (SessionVars.LogsDirectory + SessionVars.DialogSerialLogFileName), true))
+                            (SessionVars.LogsDirectory + SessionVars.DialogLogFileName), true))
                             {
                                 JSONLog.WriteLine("missing " + character.CharacterPrefix + "_" + phrase.FileName + ".mp3 " + phrase.DialogStr);
                             }
@@ -191,7 +191,7 @@ namespace DialogEngine
                 if (SessionVars.WriteSerialLog)
                 {
                     using (StreamWriter JSONLog = new StreamWriter(
-                    (SessionVars.LogsDirectory + SessionVars.DialogSerialLogFileName), true))
+                    (SessionVars.LogsDirectory + SessionVars.DialogLogFileName), true))
                     {
                         JSONLog.WriteLine(" " + TheDialogs.ModelDialogs.IndexOf(_dialog) + " : " + _dialog.Name);
                     }
@@ -229,7 +229,7 @@ namespace DialogEngine
                             if (SessionVars.WriteSerialLog)
                             {
                                 using (StreamWriter JSONLog = new StreamWriter(
-                                (SessionVars.LogsDirectory + SessionVars.DialogSerialLogFileName), true))
+                                (SessionVars.LogsDirectory + SessionVars.DialogLogFileName), true))
                                 {
                                     JSONLog.WriteLine(" " + _phrasetag + " is not used.");
                                 }
@@ -273,7 +273,7 @@ namespace DialogEngine
                         if (SessionVars.WriteSerialLog)
                         {
                             using (StreamWriter JSONLog = new StreamWriter(
-                            (SessionVars.LogsDirectory + SessionVars.DialogSerialLogFileName), true))
+                            (SessionVars.LogsDirectory + SessionVars.DialogLogFileName), true))
                             {
                                 JSONLog.WriteLine(" " + _dialogtag + " not used in " + _dialog.Name);
                             }

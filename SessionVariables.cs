@@ -29,9 +29,9 @@ namespace DialogEngine
         public static readonly string CharactersDirectory;
         public static readonly string DialogsDirectory;
         public static readonly string AudioDirectory;
-        public static readonly string DecimalSerialLogFileName = "DecimalSerialLog.txt";
-        public static readonly string SerialLogFileName = "HexSerialLog.txt";
-        public static readonly string DialogSerialLogFileName = "LogDialog.txt";
+        public static readonly string DecimalLogFileName = "DecimalSerialLog.txt";
+        public static readonly string HexLogFileName = "HexSerialLog.txt";
+        public static readonly string DialogLogFileName = "LogDialog.txt";
         public static readonly string ComPortName;
 
         static SessionVars() {
@@ -169,9 +169,9 @@ namespace DialogEngine
             else
                 ComPortName = "";  //serial not used based on check above
 
-            DecimalSerialLogFileName = "DecimalSerialLog.txt";
-            SerialLogFileName = "HexSerialLog.txt";
-            DialogSerialLogFileName = "LogDialog.txt";
+            DecimalLogFileName = "DecimalSerialLog.txt";  //TODO are these redundant?
+            HexLogFileName = "HexSerialLog.txt";
+            DialogLogFileName = "LogDialog.txt";
         }
     }
 }

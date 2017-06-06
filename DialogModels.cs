@@ -17,7 +17,7 @@ namespace DialogEngine
                 if (SessionVars.WriteSerialLog)
                 {
                     using (StreamWriter JSONLog = new StreamWriter(
-                    (SessionVars.LogsDirectory + SessionVars.DialogSerialLogFileName), true))
+                    (SessionVars.LogsDirectory + SessionVars.DialogLogFileName), true))
                     {
                         JSONLog.WriteLine("Dialog JSON in: " + SessionVars.DialogsDirectory);
                     }
@@ -29,7 +29,7 @@ namespace DialogEngine
                     if (SessionVars.WriteSerialLog)
                     {
                         using (StreamWriter JSONLog = new StreamWriter(
-                        (SessionVars.LogsDirectory + SessionVars.DialogSerialLogFileName), true))
+                        (SessionVars.LogsDirectory + SessionVars.DialogLogFileName), true))
                         {
                             JSONLog.WriteLine(" opening dialog models in " + file.Name);
                         }
@@ -63,7 +63,7 @@ namespace DialogEngine
                         if (SessionVars.WriteSerialLog)
                         {
                             using (StreamWriter JSONLog = new StreamWriter(
-                            (SessionVars.LogsDirectory + SessionVars.DialogSerialLogFileName), true))
+                            (SessionVars.LogsDirectory + SessionVars.DialogLogFileName), true))
                             {
                                 JSONLog.WriteLine(" completed " + file.Name);
                             }
