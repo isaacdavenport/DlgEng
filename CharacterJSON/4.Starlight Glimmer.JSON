@@ -701,7 +701,7 @@
 			"PhraseRating": "PG"
 		}, {
 			"DialogStr": "Are you sure?",
-			"FileName": "AreYouSure?",
+			"FileName": "AreYouSure",
 			"PhraseWeights": {
 				"YesNoQuestion": 0.3
 			},
@@ -1295,7 +1295,7 @@
 		},
 {
 	"DialogStr": "Pinkie, you're back!",
-	"FileName": "SGMSA4EPinkieBank",
+	"FileName": "SGMSA4EPinkieBack",
 	"PhraseWeights": {
 		"SGMSA4E": 1
 	},
