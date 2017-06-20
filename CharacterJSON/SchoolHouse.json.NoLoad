@@ -1,0 +1,27 @@
+{
+  "CharacterName": "SchoolHouse",
+  "CharacterPrefix": "SH",
+  "Phrases": 
+  [
+    {
+      "DialogStr": "Silence",
+      "FileName": "silence",
+      "PhraseWeights": {
+        "Greeting": 0.1,
+        "SHSilence": 0.1
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "Hey, I can hear you out there.  Help me out.  I'm locked in the bathroom!",
+      "FileName": "HeyICanHear",
+      "PhraseWeights": {
+        "Exclamation": 0.1,
+        "RequestAffirmation": 0.1
+      },
+ 
+      "PhraseRating": "G"
+    }
+  ]
+}

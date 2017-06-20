@@ -1,0 +1,270 @@
+
+{"inList" : 
+[
+{
+  "DialogName": "Greeting, GiveSilence",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 0.3,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "Greeting",
+	"GiveSilence"
+  ]
+},{
+  "DialogName": "GiveSilence, Greeting --For non-speaking characters",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 0.3,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+	"GiveSilence",
+    "Greeting"
+  ]
+},{
+  "DialogName": "Exclamation, Exclamation",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 0.4,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "Exclamation",
+    "Exclamation"
+  ]
+},{
+  "DialogName": "Exclamation, GiveSilence",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 0.7,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "Exclamation",
+	"GiveSilence"
+  ]
+},{
+  "DialogName": "GiveSilence, Exclamation",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 0.8,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+	"GiveSilence",
+    "Exclamation"
+  ]
+},{
+  "DialogName": "RequestJoke, GiveJoke",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 3,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "RequestJoke",
+    "GiveJoke"
+  ]
+},{
+  "DialogName": "RequestAffirmation, GiveJoke",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 0.6,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "RequestAffirmation",
+    "GiveJoke"
+  ]
+},{
+  "DialogName": "GiveSurprisingSt, GiveDisbelief",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 2.8,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "GiveSurprisingStatement",
+    "GiveDisbelief"
+  ]
+},{
+  "DialogName": "GiveSurprisingStatement Exclamation",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 2,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "GiveSurprisingStatement",
+    "Exclamation"
+  ]
+},{
+  "DialogName": "GiveSurprisingStatement ShutUp",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 2,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "GiveSurprisingStatement",
+    "ShutUp"
+  ]
+},{
+  "DialogName": "GiveJoke, Disbelief -That wasn't funny",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 1.3,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "GiveJoke",
+    "GiveDisbelief"
+  ]
+},{
+  "DialogName": "Guess what They/I did, Guess Activity, Correct Activity ",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 3.8,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "RequestActivity",
+    "GiveActivity",
+	"No",
+	"GiveSilence",
+    "GiveActivity"
+  ]
+},{
+  "DialogName": "RequestCatchup GiveRecentHistory",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 3,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "RequestCatchup",
+    "GiveRecentHistory"
+  ]
+},{
+  "DialogName": "Greeting RequestCatchup GiveRecentHistory",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 3,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "Greeting",
+    "RequestCatchup",
+    "GiveRecentHistory"
+  ]
+},{
+  "DialogName": "RequestCatchup, Ramble, Shutup",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 2.7,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "RequestCatchup",
+    "Ramble",
+    "ShutUp"
+  ]
+},{
+  "DialogName": "ReqMotiv, Givemotiv",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 4.2,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "RequestMotivation",
+    "GiveMotivation"
+  ]
+},{
+  "DialogName": "ReqAdv,  GiveAdv",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 2.3,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "RequestAdvice",
+    "GiveAdvice"
+  ]
+},{
+  "DialogName": "ReqAff,  GiveAdv",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 2.3,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "RequestAffirmation",
+    "GiveAdvice"
+  ]
+},{
+  "DialogName": "ReqAdv,  GiveAff",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 2.3,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "RequestAdvice",
+    "GiveAffirmation"
+  ]
+},{
+  "DialogName": "Request location Give location",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 4.1,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "RequestLocation",
+    "GiveLocation"
+  ]
+},{
+  "DialogName": "Request location Give location Correct Location",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 1,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "RequestLocation",
+    "GiveLocation",
+	"No",
+	"GiveSilence",
+    "GiveLocation"
+  ]
+},{
+  "DialogName": "Request Who Give Who",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 4.1,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "RequestWho",
+    "GiveWho"
+  ]
+},{
+  "DialogName": "Request Who Give Who Correct",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 2.8,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "RequestWho",
+    "GiveWho",
+	"No",
+	"GiveSilence",
+    "GiveWho"
+  ]
+}
+]
+}

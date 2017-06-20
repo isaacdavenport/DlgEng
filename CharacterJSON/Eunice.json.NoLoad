@@ -1,0 +1,984 @@
+{
+  "CharacterName": "Eunice",
+  "CharacterPrefix": "SM",
+  "Phrases": 
+  [
+    {
+      "DialogStr": "UnInitSchoolmarm",
+      "FileName": "UnInitSchoolMarm",
+      "PhraseWeights": {
+        "Exclamation": 0.01
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "Good day",
+      "FileName": "GoodDay",
+      "PhraseWeights": {
+        "Greeting": 0.3,
+        "Exclamation": 0.2
+      },
+ 
+      "PhraseRating": "PG13"
+    },
+    {
+      "DialogStr": "It brings a flush to the cheeks, and one's face may get red too.",
+      "FileName": "ItBringsAFlush",
+      "PhraseWeights": {
+        "GiveSurprisingStatement": 0.4,
+        "Exclamation": 0.4
+      },
+ 
+      "PhraseRating": "PG13"
+    },
+    {
+      "DialogStr": "Mark my words, I will send a toddler with a perment marker to your home!",
+      "FileName": "MarkMyWordsI",
+      "PhraseWeights": {
+        "Threat": 0.4
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "This too shall pass.",
+      "FileName": "ThisTooShallPass",
+      "PhraseWeights": {
+        "GiveAffirmation": 0.2,
+        "GiveAdvice": 0.2
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "Your behavior is intolerable!",
+      "FileName": "YourBehaviorIsIntolerable",
+      "PhraseWeights": {
+        "Exclamation": 0.1,
+        "Retreat": 0.2,
+        "No": 0.2,
+        "ShutUp": 0.1
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "I saw Tracy in the garden yesterday.  She exhibited her normal state of pique but her tomatos were distressingly picturesque.  At any rate an unhappy woman with access to weed killer must be watched closely.  So I follwed her to shoe store.  She came out with a pair of saddle shoes and red stilleto heels.  I fear her disquite has blossomed into full multiple personality disorder.",
+      "FileName": "ISawTracyInThe",
+      "PhraseWeights": {
+        "Ramble": 0.2
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Have you completed your assignments?",
+      "FileName": "HaveYouCompletedYour",
+      "PhraseWeights": {
+        "YesNoQuestion": 0.2
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "Boys will be boys.",
+      "FileName": "BoysWillBeBoys",
+      "PhraseWeights": {
+        "GiveMotivation": 0.2
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "And what, pray tell, have you been up to?",
+      "FileName": "AndWhatPrayTell",
+      "PhraseWeights": {
+        "RequestCatchup": 0.4
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "I fear my Cassenova will never arrive.",
+      "FileName": "IFearMyCassenova",
+      "PhraseWeights": {
+        "RequestAffirmation": 0.4,
+        "GiveRecentHistory": 0.1
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "You are in need of some discipline young man.",
+      "FileName": "YouAreInNeed",
+      "PhraseWeights": {
+        "Exclamation": 0.2,
+        "Threat": 0.3
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "Well sir, we shall be on our way.",
+      "FileName": "WellSirWeShall",
+      "PhraseWeights": {
+        "Exclamation": 0.2,
+        "Retreat": 0.5
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "I am at a loss for words.",
+      "FileName": "IAmAtA",
+      "PhraseWeights": {
+        "Exclamation": 0.01,
+        "Retreat": 0.01,
+        "Yes": 0.01,
+        "No": 0.01,
+        "GiveAffirmation": 0.01,
+        "RequestAffirmation": 0.01,
+        "GiveDisbelief": 0.01
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "Today I read from the unabridged works of deSade.",
+      "FileName": "TodayIReadFrom",
+      "PhraseWeights": {
+        "GiveRecentHistory": 0.1,
+        "GiveSurprisingStatement": 0.2,
+        "GiveJoke": 0.3
+      },
+ 
+      "PhraseRating": "PG13"
+    },
+    {
+      "DialogStr": "You are looking handsome today.",
+      "FileName": "YouAreLookingHandsome",
+      "PhraseWeights": {
+        "GiveAffirmation": 0.2,
+        "GiveSurprisingStatement": 0.1
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "You get an A+ today.",
+      "FileName": "YouGetAnAPlus",
+      "PhraseWeights": {
+        "GiveAffirmation": 0.2,
+        "GiveSurprisingStatement": 0.1,
+        "Retreat": 0.2
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "Literacy has taken a real plunge in this country.",
+      "FileName": "LiteracyHasTakenA",
+      "PhraseWeights": {
+        "Insult": 0.6,
+        "GiveSurprisingStatement": 0.1,
+        "ShutUp": 0.1
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "Your participle is dangling",
+      "FileName": "YourParticipleIsDangling",
+      "PhraseWeights": {
+        "GiveSurprisingStatement": 0.4,
+        "SmCb_01A": 1.0
+      },
+ 
+      "PhraseRating": "PG13"
+    },
+    {
+      "DialogStr": "In a battle of wits you would be unarmed",
+      "FileName": "InABattleOfWits",
+      "PhraseWeights": {
+        "Insult": 0.4
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "You have my permission to fellatiate that goat over there.",
+      "FileName": "YouHaveMyPermission",
+      "PhraseWeights": {
+        "Insult": 0.4
+      },
+ 
+      "PhraseRating": "PG13"
+    },
+    {
+      "DialogStr": "You are a bigger whore than Hester Prynne",
+      "FileName": "YoureABiggerWhore",
+      "PhraseWeights": {
+        "Insult": 0.4
+      },
+ 
+      "PhraseRating": "PG13"
+    },
+    {
+      "DialogStr": "Even lady Chatterly wouldn't take you as a lover",
+      "FileName": "EvenLadyChatterlyWouldnt",
+      "PhraseWeights": {
+        "Insult": 0.4
+      },
+ 
+      "PhraseRating": "PG13"
+    },
+    {
+      "DialogStr": "Guess what I caught Lisa and Jimmy doing in the bathroom.",
+      "FileName": "GuessWhatICaught",
+      "PhraseWeights": {
+        "RequestActivity": 0.4
+      },
+ 
+      "PhraseRating": "PG13"
+    },
+    {
+      "DialogStr": "Do you know what I spent the summer doing?",
+      "FileName": "DoYouKnowWhatI",
+      "PhraseWeights": {
+        "RequestActivity": 0.4
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "What was Dicken's favorite activity?  It wasn't writing.",
+      "FileName": "WhatWasDickensFavorite",
+      "PhraseWeights": {
+        "RequestActivity": 0.4
+      },
+ 
+      "PhraseRating": "PG13"
+    },
+    {
+      "DialogStr": "What should I spend my evening on?",
+      "FileName": "WhatShouldISpend",
+      "PhraseWeights": {
+        "RequestActivity": 0.4,
+        "RequestAffirmation": 0.3,
+        "SmCb_01C": 1.0
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "Homework",
+      "FileName": "Homework",
+      "PhraseWeights": {
+        "GiveRecentHistory": 0.4,
+        "GiveActivity": 0.4
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "Playing tiddly winks with foreign coins",
+      "FileName": "PlayingTiddlyWinksWith",
+      "PhraseWeights": {
+        "GiveActivity": 0.4,
+        "GiveRecentHistory": 0.4
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "Hoping a prince will come",
+      "FileName": "HopingAPrinceWill",
+      "PhraseWeights": {
+        "GiveActivity": 0.4,
+        "GiveRecentHistory": 0.4
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "I could use some comic relief",
+      "FileName": "ICouldUseSome",
+      "PhraseWeights": {
+        "RequestJoke": 0.6,
+        "RequestAffirmation": 0.3
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "The reason the bicycle fell over was it was two tired",
+      "FileName": "TheReasonTheBicycle",
+      "PhraseWeights": {
+        "GiveJoke": 0.4
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "I really must take leave of you now.",
+      "FileName": "IReallyMustTake",
+      "PhraseWeights": {
+        "Retreat": 0.4
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "May I be so bold as to join you.",
+      "FileName": "MayIBeAs",
+      "PhraseWeights": {
+        "Greeting": 0.2,
+        "YesNoQuestion": 0.2
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "It wasn't the panda that eats, shoots, and leaves, it was the bank robber",
+      "FileName": "ItWasntThePanda",
+      "PhraseWeights": {
+        "GiveJoke": 0.4
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "It isn't really so bad deary.",
+      "FileName": "ItIsntReallySo",
+      "PhraseWeights": {
+        "GiveAffirmation": 0.4,
+        "SmCb_01E": 1.0
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "When I'm sad, I stick pins in an effigy of Carlos and shout at the top of my lungs.  It always makes me feel better.",
+      "FileName": "WhenImSadI",
+      "PhraseWeights": {
+        "GiveAffirmation": 0.1,
+        "Ramble": 0.3,
+        "GiveSurprisingStatement": 0.4
+      },
+ 
+      "PhraseRating": "PG13"
+    },
+    {
+      "DialogStr": "Let's take a walk, shall we.",
+      "FileName": "LetsTakeAWalk",
+      "PhraseWeights": {
+        "YesNoQuestion": 0.4
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "Let's not make a bigger deal of this than we have to OK?",
+      "FileName": "LetsNotMakeA",
+      "PhraseWeights": {
+        "YesNoQuestion": 0.4
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "Would you care to try some of my famous nipples of venus?",
+      "FileName": "WouldYouCareTo",
+      "PhraseWeights": {
+        "YesNoQuestion": 0.4,
+        "GiveSurprisingStatement": 0.4
+      },
+ 
+      "PhraseRating": "PG13"
+    },
+    {
+      "DialogStr": "Of course",
+      "FileName": "OfCourse",
+      "PhraseWeights": {
+        "Yes": 0.4
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "Does a childs lip quiver when he sees me reach for my ruler?",
+      "FileName": "DoesAChildsLip",
+      "PhraseWeights": {
+        "Yes": 0.4
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "Do the Lilliputians win the limbo game at every luau?",
+      "FileName": "DoTheLilliputiansWin",
+      "PhraseWeights": {
+        "Yes": 0.4
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "Do I look agreeable?",
+      "FileName": "DoILookAgreeable",
+      "PhraseWeights": {
+        "No": 0.4
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "I assure you I am not that kind of girl.",
+      "FileName": "IAssureYouI",
+      "PhraseWeights": {
+        "No": 0.4
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "If you look deeply into my eyes perhaps you can see a glimpse of the purgatory that surely awaits you.",
+      "FileName": "IfYouLookDeeply",
+      "PhraseWeights": {
+        "No": 0.1,
+        "GiveSurprisingStatement": 0.1,
+        "YesNoQuestion": 0.1
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Indeed.",
+      "FileName": "Indeed",
+      "PhraseWeights": {
+        "GiveDisbelief": 0.4,
+        "No": 0.4
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "Do you know what happens to those who tell fibs?",
+      "FileName": "DoYouKnowWhatHappens",
+      "PhraseWeights": {
+        "GiveDisbelief": 0.4,
+        "Threat": 0.2,
+        "YesNoQuestion": 0.2
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "Who is talking here?",
+      "FileName": "WhoIsTalkingHere",
+      "PhraseWeights": {
+        "ShutUp": 0.4
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "Where have you been?",
+      "FileName": "WhereHaveYouBeen",
+      "PhraseWeights": {
+        "RequestCatchup": 0.4
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "Unconscionable.",
+      "FileName": "Unconscionable",
+      "PhraseWeights": {
+        "GiveDisbelief": 0.4
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "The principal is all in a tizzy these days.  Seems the Texas school board has pushed the textbook publishers to remove all references to the state of Alaska ever having existed over some phallic size argument by the respective governors.  ",
+      "FileName": "ThePrincipalIsAll",
+      "PhraseWeights": {
+        "GiveDisbelief": 0.4,
+        "Ramble": 0.2
+      },
+ 
+      "PhraseRating": "PG13"
+    },
+    {
+      "DialogStr": "I beg your pardon.",
+      "FileName": "IBegYourPardon",
+      "PhraseWeights": {
+        "GiveDisbelief": 0.2,
+        "ShutUp": 0.3
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "What, pray tell, are they giggling about?",
+      "FileName": "WhatPrayTellAre",
+      "PhraseWeights": {
+        "RequestJoke": 0.3,
+        "RequestAffirmation": 0.3
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "You would think that people talking to one another with zero sense of context would be impossible.  But in reality, people do it all the time.",
+      "FileName": "YouWouldThinkThat",
+      "PhraseWeights": {
+        "GiveSurprisingStatement": 0.4
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "How do you do?",
+      "FileName": "HowDoYouDo",
+      "PhraseWeights": {
+        "Greeting": 0.4,
+        "RequestCatchup": 0.4
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "Any mentionable recent exploits?",
+      "FileName": "AnyMentionableRecentExploits",
+      "PhraseWeights": {
+        "RequestCatchup": 0.4
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Why not tell your friend Eunice what's going on?",
+      "FileName": "WhyNotTellYour",
+      "PhraseWeights": {
+        "RequestCatchup": 0.4
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "Haberdash!",
+      "FileName": "Haberdash",
+      "PhraseWeights": {
+        "Exclamation": 0.2
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Well hello there.",
+      "FileName": "WellHelloThere",
+      "PhraseWeights": {
+        "Greeting": 0.2
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "I hope you step on a Lego.",
+      "FileName": "IHopeYouStep",
+      "PhraseWeights": {
+        "Threat": 0.2
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "I'll not listen to reason.  Reason is always something someone else has to say.",
+      "FileName": "IllNotListenTo",
+      "PhraseWeights": {
+        "Retreat": 0.2
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Do you suppose they will allow me to add \"doing well in the shallow end of the gene pool\" as a report card mark?",
+      "FileName": "DoYouSupposeThey",
+      "PhraseWeights": {
+        "YesNoQuestion": 0.2
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Do angels have wings?",
+      "FileName": "DoAngelsHaveWings",
+      "PhraseWeights": {
+        "Yes": 0.2
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "About as likely as a sucessful 4th grade class free of ritalin, prozac, and valium.",
+      "FileName": "AboutAsLikelyAs",
+      "PhraseWeights": {
+        "No": 0.2
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "And where have you been off to?",
+      "FileName": "AndWhereHaveYou",
+      "PhraseWeights": {
+        "RequestCatchup": 0.2
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "I know it is tough today, but it really will be better tomorrow.",
+      "FileName": "IKnowItIsTough",
+      "PhraseWeights": {
+        "GiveAffirmation": 0.2
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "I do well most times, but there are these moments where I just really miss having a shoulder to lean on.",
+      "FileName": "IDoWellMost",
+      "PhraseWeights": {
+        "RequestAffirmation": 0.2
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "That is absurd.",
+      "FileName": "ThatIsAbsurd",
+      "PhraseWeights": {
+        "GiveDisbelief": 0.2
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "I sometimes wonder how a child in my class could have ever become the way they are.  Then we have parent teach conference weeks, and after about 20 hours, I wish I could go back to wondering as opposed to knowing how a kid could get to be a certain way.  And every time I hear a parent say \"I have a great idea\", I have this sinking sensation that am about to lose 2-20 hours of my life to something asenine.",
+      "FileName": "ISometimesWonderHow",
+      "PhraseWeights": {
+        "GiveRecentHistory": 0.2
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Seeing back to school ads in July, for a teacher, is like a vammpire seeing a cross.  It burns, dear god, it burns.",
+      "FileName": "SeeingBackToSchool",
+      "PhraseWeights": {
+        "GiveSurprisingStatement": 0.2
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Perhaps I should start dating the janitor, he must be able to sweep women off their feet.",
+      "FileName": "PerhapsIShouldStart",
+      "PhraseWeights": {
+        "Ramble": 0.2
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Silence!",
+      "FileName": "Silence",
+      "PhraseWeights": {
+        "ShutUp": 0.2
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "What does one say to the parents of the anti-christ when they believe his behavior is generated from the excess gluten in the cafeteria lunches?",
+      "FileName": "WhatDoesOneSay",
+      "PhraseWeights": {
+        "RequestJoke": 0.2
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "An open, casket funeral for Mr. Smyth?  Why?  I mean could they not close the casket and close the book on that old letch?  Perhaps he died of a viagra overdose and they couldn't close the casket.",
+      "FileName": "AnOpenCasketFuneral",
+      "PhraseWeights": {
+        "GiveJoke": 0.2
+      },
+ 
+      "PhraseRating": "PG13"
+    },
+    {
+      "DialogStr": "You are an artist.  Why I sense you could entertain a room with nothing to play but a rusty trombone.",
+      "FileName": "YouAreAnArtist",
+      "PhraseWeights": {
+        "Insult": 0.2
+      },
+ 
+      "PhraseRating": "PG13"
+    },
+    {
+      "DialogStr": "I would appreciate a full report on your recent activities young man.",
+      "FileName": "IWouldAppreciateA",
+      "PhraseWeights": {
+        "RequestActivity": 0.2
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "conjugating the words lie and lay for a class of 8th graders.",
+      "FileName": "ConjugatingTheWordsLie",
+      "PhraseWeights": {
+        "GiveActivity": 0.2
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "I'm just not certain.  If I ask outright I am risking everything.",
+      "FileName": "ImJustNotCertain",
+      "PhraseWeights": {
+        "RequestAdvice": 0.2
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "Can a teacher, in good concience, allow the class bully an extra minute or two of harassment after he is entrapped by the entire special needs track team?",
+      "FileName": "CanATeacherIn",
+      "PhraseWeights": {
+        "RequestAdvice": 0.2
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "I don't know about that, but I do know you never forget to check your pockets for crayons before doing the laundry.",
+      "FileName": "IDontKnowAbout",
+      "PhraseWeights": {
+        "GiveAdvice": 0.1
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "We all have bits of crazy in us, some more than others.  Much, more with some...",
+      "FileName": "WeAllHaveBits",
+      "PhraseWeights": {
+        "GiveAdvice": 0.2
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Do you know why the third grade boys have started inserting tampons into their bums?",
+      "FileName": "DoYouKnowWhy",
+      "PhraseWeights": {
+        "RequestMotivation": 0.2
+      },
+ 
+      "PhraseRating": "PG13"
+    },
+    {
+      "DialogStr": "The nerve of her.  What inspires a seventy two year old middle school principal to run the kissing booth while the kids are on break?",
+      "FileName": "TheNerveOfHer",
+      "PhraseWeights": {
+        "RequestMotivation": 0.2
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Could be the old green eyed Jealousy.  Or it could be the glassy eyed reefer madness.  Hard to say.",
+      "FileName": "CouldBeTheOld",
+      "PhraseWeights": {
+        "GiveMotivation": 0.2
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "I expect it was similar to the reason one doesn't go lingerie shopping with one's mother.",
+      "FileName": "IExpectItWas",
+      "PhraseWeights": {
+        "GiveMotivation": 0.2
+      },
+ 
+      "PhraseRating": "PG13"
+    },
+    {
+      "DialogStr": "It was spite.  Apparently some people live purely on spite and Marblor Reds.",
+      "FileName": "ItWasSpiteApparently",
+      "PhraseWeights": {
+        "GiveMotivation": 0.2
+      },
+ 
+      "PhraseRating": "PG13"
+    },
+    {
+      "DialogStr": "The same place you left your dignity.",
+      "FileName": "TheSamePlaceYou",
+      "PhraseWeights": {
+        "GiveLocation": 0.2
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Try across town.",
+      "FileName": "TryAcrossTown",
+      "PhraseWeights": {
+        "GiveLocation": 0.2
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "I am certain I would not be familiar with such a location.",
+      "FileName": "IAmCertainI",
+      "PhraseWeights": {
+        "GiveLocation": 0.2
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "Things edge farther towards intolerability.  Perhaps I will have to relocate.",
+      "FileName": "ThingsEdgeFartherTowards",
+      "PhraseWeights": {
+        "RequestLocation": 0.2,
+        "RequestAffirmation": 0.2
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Is there a nail salon around here?  I feel I will just crumble if I have to keep wandering around looking like I just clawed my way out of my own grave.",
+      "FileName": "IsThereANail",
+      "PhraseWeights": {
+        "RequestLocation": 0.2,
+        "RequestAffirmation": 0.2
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "If you were my favorite whalebone girdle, where would you be hiding?",
+      "FileName": "IfYouWereMy",
+      "PhraseWeights": {
+        "RequestLocation": 0.2
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Don't be pigeon livered, get on with it.",
+      "FileName": "DontBePigeonLivered",
+      "PhraseWeights": {
+        "Exclamation": 0.1,
+        "Threat": 0.1,
+        "ShutUp": 0.1
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "I've been hornswoggled!",
+      "FileName": "IveBeenHornswoggled",
+      "PhraseWeights": {
+        "Exclamation": 0.3,
+        "RequestAffirmation": 0.1,
+        "RequestAdvice": 0.2,
+        "GiveDisbelief": 0.1
+      },
+ 
+      "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "What is the matter Johny?",
+      "FileName": "WhatIsTheMatter",
+      "PhraseWeights": {
+        "LM02A": 0.2
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "And why would he do that?",
+      "FileName": "AndWhyWouldHe",
+      "PhraseWeights": {
+        "LM02C": 0.2
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "Do you owe him two dollars?",
+      "FileName": "DoYouOweHim",
+      "PhraseWeights": {
+        "LM02E": 0.2
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "Did anyone witness this alleged crime?",
+      "FileName": "DidAnyoneWitnessThis",
+      "PhraseWeights": {
+        "LM02G": 0.2
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "Well go ask Billy's father if he can corroborate your story.  Better yet, work it out directly with Eric.",
+      "FileName": "WellGoAskBillys",
+      "PhraseWeights": {
+        "LM02I": 0.2
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "This furry little monster is yours I take it.  I was initially put off by the smell of this little beast.",
+      "FileName": "ThisFurryLittleMonster",
+      "PhraseWeights": {
+        "LM15B": 0.2
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "Perhaps so, despite the odor, the warmth and purring when stroked attributes are somewhat endearing, but you must take better care that she doesn't wander off.",
+      "FileName": "PerhapsSoDespiteThe",
+      "PhraseWeights": {
+        "LM15D": 0.2
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "Johnny, that is very honest of you, I will return this to her this afternoon.  In fact, you deserve a reward.  You can keep one dollar.",
+      "FileName": "JohnnyThatIsVery",
+      "PhraseWeights": {
+        "LM17B": 0.2
+      },
+ 
+      "PhraseRating": "G"
+    }
+  ]
+}
