@@ -121,10 +121,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Logs\DecimalSerialLog.txt" />
-    <Content Include="Logs\HexSerialLog.txt" />
-    <Content Include="Logs\LogDialog.txt" />
-    <Content Include="Logs\LogSerialDecimal.txt" />
     <Content Include="TheGeneratedLogFilesGoHere.txt" />
   </ItemGroup>
   <ItemGroup />
