@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading; // for thread.sleep()
 using Newtonsoft.Json;
+using System.Windows;
 
 // TODO: JSON Input
 //       build unit tests around json imports
@@ -115,8 +116,18 @@ namespace DialogEngine
 
     public class Program
     {
+        
 
         public static DialogTracker TheDialogs = new DialogTracker();
+
+        public static Application WinApp { get; private set; }
+        public static Window MainWindow { get; private set; }
+
+        static void InitializeWindows()
+        {
+            WinApp = new Application();
+            WinApp.Run(MainWindow = new MainWindow()); // note: blocking call
+        }
 
         static void WriteStartupInfo() {
             if (SessionVars.WriteSerialLog)
@@ -283,11 +294,17 @@ namespace DialogEngine
             }
             Console.ReadLine();
         }
+        [STAThread]
 
         static void Main(string[] args) {
-            Console.SetBufferSize(Console.BufferWidth, 32766);
+
+
+            //Console.SetBufferSize(Console.BufferWidth, 32766);
+            //Console.WriteLine("Opening window...");
+            InitializeWindows(); // opens the WPF window and waits here
+            //Console.WriteLine("Exiting main...");
             WriteStartupInfo();
-            Console.WriteLine();
+            //Console.WriteLine();
             TheDialogs.intakeCharacters();
             SerialComs.InitSerial();
             InitModelDialogs.SetDefaults(TheDialogs);
