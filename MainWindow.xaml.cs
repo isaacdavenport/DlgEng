@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
+using System.Threading;
 
 
 namespace DialogEngine
@@ -22,51 +23,100 @@ namespace DialogEngine
     
     public partial class MainWindow : Window
     {
-        string versionTimeStr = "Dialog Engine ver 0.67 " + DateTime.Now;
+        
+        public static DialogTracker TheDialogs = new DialogTracker();
+
         public MainWindow()
         {
             InitializeComponent();
         }
-        void WriteStartupInfo()
-        {
-            if (SessionVars.WriteSerialLog)
-            {
-                //string versionTimeStr = "Dialog Engine ver 0.67 " + DateTime.Now;
-                //Console.WriteLine("");
-                //Console.WriteLine(versionTimeStr);
-                //Console.WriteLine("");
 
-                using (StreamWriter serialLog = new StreamWriter(
-                    (SessionVars.LogsDirectory + SessionVars.HexLogFileName), true))
+        public void PlayButton_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            Program.WriteStartupInfo();
+            TheDialogs.intakeCharacters();
+            InitModelDialogs.SetDefaults(TheDialogs);
+
+            if (SessionVars.TagUsageCheck)
+            {
+                Program.checkTagsUsed();
+            }
+
+            if (SessionVars.DebugFlag)
+            {
+                Program.CheckForMissingPhrases();
+                ((MainWindow)Application.Current.MainWindow).TestOutput.Text += "  press enter to continue" + Environment.NewLine;
+                //Console.WriteLine("  press enter to continue");
+
+                //Console.ReadLine();
+
+                if (!SessionVars.ForceCharactersAndDialogModel)
                 {
-                    serialLog.WriteLine("");
-                    serialLog.WriteLine("");
-                    serialLog.WriteLine(versionTimeStr);
-                    serialLog.Close();
-                }
-                using (StreamWriter serialLogDec = new StreamWriter(
-                    (SessionVars.LogsDirectory + SessionVars.DecimalLogFileName), true))
-                {
-                    serialLogDec.WriteLine("");
-                    serialLogDec.WriteLine("");
-                    serialLogDec.WriteLine(versionTimeStr);
-                    serialLogDec.Close();
-                }
-                using (StreamWriter serialLogDialog = new StreamWriter(
-                    (SessionVars.LogsDirectory + SessionVars.DialogLogFileName), true))
-                {
-                    serialLogDialog.WriteLine("");
-                    serialLogDialog.WriteLine("");
-                    serialLogDialog.WriteLine(versionTimeStr);
-                    serialLogDialog.Close();
+                    ((MainWindow)Application.Current.MainWindow).TestOutput.Text += "" + Environment.NewLine; // vb : is this a good practice
+                    //Console.WriteLine("   you may enter two characters initials to make them talk"); 
                 }
             }
-        }
 
-        private void PlayButton_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            WriteStartupInfo();
-            TestOutput.Text = versionTimeStr;
+            //Select Debug Output
+            if (SessionVars.ForceCharactersAndDialogModel)
+            {
+                ((MainWindow)Application.Current.MainWindow).TestOutput.Text += "   enter three numbers to set the next: DialogModel, Char1, Char2" + Environment.NewLine; // vb : is this a good practice       
+                
+                //Console.WriteLine("   enter three numbers to set the next: DialogModel, Char1, Char2");
+                //Console.WriteLine();
+            }
+
+            while (true)
+            {
+                if (SessionVars.ForceCharactersAndDialogModel)
+                {
+                    string[] keyboardInput = Console.ReadLine().Split(' ');
+
+                    //if keyboard input has three numbers for debug mode to force dialog model and characters
+                    if (keyboardInput.Length == 3)
+                    {
+                        int j = 0;
+                        int[] modelAndCharacters = new int[3];
+                        foreach (string asciiInt in keyboardInput)
+                        {
+                            modelAndCharacters[j] = Int32.Parse(asciiInt);
+                            j++;
+                        }
+
+                        TheDialogs.GenerateADialog(modelAndCharacters);
+                    }
+                    else
+                    {
+                        ((MainWindow)Application.Current.MainWindow).TestOutput.Text += "Incorrect input, generating random dialog." + Environment.NewLine;
+                        //Console.WriteLine("Incorrect input, generating random dialog.");
+                        TheDialogs.GenerateADialog(); // wrong number of user input select rand dialog and characters
+                    }
+                }
+                else
+                {
+                    if (!SessionVars.HeatMapOnlyMode)
+                    {
+                        TheDialogs.GenerateADialog();  //normal operation
+                        Thread.Sleep(1100);
+                        Thread.Sleep(RandomNumbers.Gen.Next(0, 2000));
+                    }
+                    else
+                    {
+                        Console.Clear();
+                        if (SessionVars.HeatMapFullMatrixDispMode)
+                        {
+                            FirmwareDebuggingTools.PrintHeatMap();
+                        }
+                        if (SessionVars.HeatMapSumsMode)
+                        {
+                            FirmwareDebuggingTools.PrintHeatMapSums();
+                        }
+                        Thread.Sleep(400);
+                    }
+                }
+            }
+
+
         }
     }
 }

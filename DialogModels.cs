@@ -1,6 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 using System.IO;
+using System.Windows;
 
 
 namespace DialogEngine
@@ -13,7 +14,8 @@ namespace DialogEngine
             try
             {
                 DirectoryInfo dialogs_d = new DirectoryInfo(SessionVars.DialogsDirectory);
-                Console.WriteLine("Dialog JSON in: " + SessionVars.DialogsDirectory);
+                ((MainWindow)Application.Current.MainWindow).TestOutput.Text += "Dialog JSON in: " + SessionVars.DialogsDirectory + Environment.NewLine;
+                //Console.WriteLine("Dialog JSON in: " + SessionVars.DialogsDirectory);
                 if (SessionVars.WriteSerialLog)
                 {
                     using (StreamWriter JSONLog = new StreamWriter(
@@ -25,7 +27,8 @@ namespace DialogEngine
                 var _inFiles = dialogs_d.GetFiles("*.json"); 
                 foreach (FileInfo file in _inFiles) //file of type FileInfo for each .json in directory
                 {
-                    Console.WriteLine(" opening dialog models in " + file.Name);
+                    ((MainWindow)Application.Current.MainWindow).TestOutput.Text += " opening dialog models in " + file.Name + Environment.NewLine;
+                    //Console.WriteLine(" opening dialog models in " + file.Name);
                     if (SessionVars.WriteSerialLog)
                     {
                         using (StreamWriter JSONLog = new StreamWriter(
@@ -59,7 +62,8 @@ namespace DialogEngine
                                 Console.ReadLine();
                             }
                         }
-                        Console.WriteLine(" completed " + file.Name);
+                        ((MainWindow)Application.Current.MainWindow).TestOutput.Text += " completed " + file.Name + Environment.NewLine;
+                        //Console.WriteLine(" completed " + file.Name);
                         if (SessionVars.WriteSerialLog)
                         {
                             using (StreamWriter JSONLog = new StreamWriter(
@@ -94,8 +98,9 @@ namespace DialogEngine
             }
             if (inObj.ModelDialogs.Count < 2)
             {
-                Console.WriteLine("  Insufficient dialog models found in " + SessionVars.DialogsDirectory + " exiting.");
-                Console.ReadLine();
+                ((MainWindow)Application.Current.MainWindow).TestOutput.Text += "  Insufficient dialog models found in " + SessionVars.DialogsDirectory + " exiting.";
+                //Console.WriteLine("  Insufficient dialog models found in " + SessionVars.DialogsDirectory + " exiting.");
+                //Console.ReadLine();
                 Environment.Exit(0);
             }
         }

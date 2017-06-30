@@ -5,7 +5,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
-using Newtonsoft.Json; 
+using Newtonsoft.Json;
+using System.Windows;
 
 // ReSharper disable ConditionIsAlwaysTrueOrFalse
 
@@ -61,10 +62,13 @@ namespace DialogEngine
         public void intakeCharacters()
         {
             DirectoryInfo d = new DirectoryInfo(SessionVars.CharactersDirectory);
-            Console.WriteLine("Character JSON in: " + SessionVars.CharactersDirectory);
+
+            ((MainWindow)Application.Current.MainWindow).TestOutput.Text += "Character JSON in: " + SessionVars.CharactersDirectory + Environment.NewLine;
+            //Console.WriteLine("Character JSON in: " + SessionVars.CharactersDirectory);
             foreach (FileInfo file in d.GetFiles("*.json")) //file of type FileInfo for each .json in directory
             {
-                Console.WriteLine(" Begin read of " + file.Name);
+                ((MainWindow)Application.Current.MainWindow).TestOutput.Text += " Begin read of " + file.Name + Environment.NewLine;
+                //Console.WriteLine(" Begin read of " + file.Name);
                 if (SessionVars.WriteSerialLog)
                 {
                     using (StreamWriter JSONLog = new StreamWriter(
@@ -113,7 +117,8 @@ namespace DialogEngine
                                 deserializedCharacterJSON.RecentPhrases.Enqueue(deserializedCharacterJSON.Phrases[0]);
                             }
                             //list Chars as they come in.
-                            Console.WriteLine(" Finish read of " + deserializedCharacterJSON.CharacterName);
+                            ((MainWindow)Application.Current.MainWindow).TestOutput.Text += " Finish read of " + deserializedCharacterJSON.CharacterName + Environment.NewLine;
+                            //Console.WriteLine(" Finish read of " + deserializedCharacterJSON.CharacterName);
                             if (SessionVars.WriteSerialLog)
                             {
                                 using (StreamWriter JSONLog = new StreamWriter(
@@ -127,40 +132,52 @@ namespace DialogEngine
                         }
                         catch (Newtonsoft.Json.JsonReaderException e)
                         {
-                            Console.WriteLine("Error reading " + file.Name);
-                            Console.WriteLine("JSON Parse error at " + e.LineNumber + ", " + e.LinePosition);
-                            Console.ReadLine();
+                            ((MainWindow)Application.Current.MainWindow).TestOutput.Text += "Error reading " + file.Name + Environment.NewLine;
+                            ((MainWindow)Application.Current.MainWindow).TestOutput.Text += "JSON Parse error at " + e.LineNumber + ", " + e.LinePosition + Environment.NewLine;
+                            //Console.WriteLine("Error reading " + file.Name);
+                            //Console.WriteLine("JSON Parse error at " + e.LineNumber + ", " + e.LinePosition);
+                            //Console.ReadLine(); // vb : have to figure out how to do readline from main window
                         }
                     }
                 }
                 catch (UnauthorizedAccessException e)
                 {
-                    Console.WriteLine(e.Message);
-                    Console.WriteLine("Unauthorized access exception while reading: " + file.FullName);
-                    Console.WriteLine("Check file and directory permissions");
-                    Console.ReadLine();
+                    ((MainWindow)Application.Current.MainWindow).TestOutput.Text += e.Message + Environment.NewLine;
+                    ((MainWindow)Application.Current.MainWindow).TestOutput.Text += "Unauthorized access exception while reading: " + file.FullName + Environment.NewLine;
+                    ((MainWindow)Application.Current.MainWindow).TestOutput.Text += "check the Character JSON path in your config file" + Environment.NewLine;
+                    //Console.WriteLine(e.Message);
+                    //Console.WriteLine("Unauthorized access exception while reading: " + file.FullName);
+                    //Console.WriteLine("Check file and directory permissions");
+                    //Console.ReadLine();
 
                 }
                 catch (DirectoryNotFoundException e)
                 {
-                    Console.WriteLine(e.Message);
-                    Console.WriteLine("Directory not found exception while reading: " + file.FullName);
-                    Console.WriteLine("check the Character JSON path in your config file");
-                    Console.ReadLine();
+                    ((MainWindow)Application.Current.MainWindow).TestOutput.Text += e.Message + Environment.NewLine;
+                    ((MainWindow)Application.Current.MainWindow).TestOutput.Text += "Directory not found exception while reading: " + file.FullName + Environment.NewLine;
+                    ((MainWindow)Application.Current.MainWindow).TestOutput.Text += "check the Character JSON path in your config file" + Environment.NewLine;
+                    //Console.WriteLine(e.Message);
+                    //Console.WriteLine("Directory not found exception while reading: " + file.FullName);
+                    //Console.WriteLine("check the Character JSON path in your config file");
+                    //Console.ReadLine();
                 }
                 catch (OutOfMemoryException e)
                 {
-                    Console.WriteLine(e.Message);
-                    Console.WriteLine("You probably need to restart your computer...");
+                    ((MainWindow)Application.Current.MainWindow).TestOutput.Text += e.Message + Environment.NewLine;
+                    ((MainWindow)Application.Current.MainWindow).TestOutput.Text += "You probably need to restart your computer..." + Environment.NewLine;
+                    //Console.WriteLine(e.Message);
+                    //Console.WriteLine("You probably need to restart your computer...");
                 }
             }
 
 
             if (CharacterList.Count < 2)
             {
-                Console.WriteLine("  Insufficient readable character json files found in "
-                    + SessionVars.CharactersDirectory + " .  Exiting.");
-                Console.ReadLine();
+                ((MainWindow)Application.Current.MainWindow).TestOutput.Text += "  Insufficient readable character json files found in "
+                    + SessionVars.CharactersDirectory + " .  Exiting." + Environment.NewLine;
+                //Console.WriteLine("  Insufficient readable character json files found in "
+                //    + SessionVars.CharactersDirectory + " .  Exiting.");
+                //Console.ReadLine();
                 Environment.Exit(0);
             }
 
@@ -170,7 +187,8 @@ namespace DialogEngine
                 RecentDialogs.Enqueue(0); // Fill the que with greeting dialogs
             }
 
-            Console.WriteLine();    //for break beofer dialogs intake in console.
+            ((MainWindow)Application.Current.MainWindow).TestOutput.Text += "" + Environment.NewLine;
+            //Console.WriteLine();    //for break beofer dialogs intake in console.
         }
 
         private static void RemovePhrasesOverParentalRating(Character inCharacter) {
