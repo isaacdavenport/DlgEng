@@ -66,11 +66,12 @@ namespace DialogEngine
                 //Console.WriteLine();
             }
 
-            while (true)
+            /*while (true)
             {
                 if (SessionVars.ForceCharactersAndDialogModel)
                 {
-                    string[] keyboardInput = Console.ReadLine().Split(' ');
+                    //string[] keyboardInput = Console.ReadLine().Split(' ');
+                    string[] keyboardInput = { "FS"," ","PP"}; //vb:added this to hard code a console.readline()
 
                     //if keyboard input has three numbers for debug mode to force dialog model and characters
                     if (keyboardInput.Length == 3)
@@ -97,12 +98,12 @@ namespace DialogEngine
                     if (!SessionVars.HeatMapOnlyMode)
                     {
                         TheDialogs.GenerateADialog();  //normal operation
-                        Thread.Sleep(1100);
-                        Thread.Sleep(RandomNumbers.Gen.Next(0, 2000));
+                        //Thread.Sleep(1100); //vb:commented out for debugging as code stops here
+                        //Thread.Sleep(RandomNumbers.Gen.Next(0, 2000)); //vb:commented out for debugging as code stops here
                     }
                     else
                     {
-                        Console.Clear();
+                        //Console.Clear();
                         if (SessionVars.HeatMapFullMatrixDispMode)
                         {
                             FirmwareDebuggingTools.PrintHeatMap();
@@ -111,12 +112,12 @@ namespace DialogEngine
                         {
                             FirmwareDebuggingTools.PrintHeatMapSums();
                         }
-                        Thread.Sleep(400);
+                        //Thread.Sleep(400); //vb:commented out for debugging as code stops here
                     }
                 }
             }
 
-
+        */
         }
     }
 }

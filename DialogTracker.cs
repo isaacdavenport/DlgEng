@@ -208,9 +208,11 @@ namespace DialogEngine
                 var playSuccess = Audio.PlayMp3(pathAndFileName);
                
                 if (playSuccess != 0) {
-                    Console.WriteLine("");
+
+                    ((MainWindow)Application.Current.MainWindow).TestOutput.Text += "" + Environment.NewLine + "   MP3 Play Error  ---  " + playSuccess + Environment.NewLine + "" + Environment.NewLine;
+                    /*Console.WriteLine("");
                     Console.WriteLine("   MP3 Play Error  ---  " + playSuccess);
-                    Console.WriteLine("");
+                    Console.WriteLine("");*/
                 }
                 int i = 0;
                 Thread.Sleep(600);
@@ -220,7 +222,8 @@ namespace DialogEngine
                 Thread.Sleep(1600);  // wait around a second after the audio is done for between phrase pause
             }
             else {
-                Console.WriteLine("Could not find: " + pathAndFileName);
+                ((MainWindow)Application.Current.MainWindow).TestOutput.Text += "Could not find: " + pathAndFileName + Environment.NewLine;
+                //Console.WriteLine("Could not find: " + pathAndFileName);
             }
         }
         
@@ -247,7 +250,8 @@ namespace DialogEngine
                                        " NextChars: " + CharacterList[character1Num].CharacterPrefix + " " +
                                        CharacterList[character2Num].CharacterPrefix + " " + DateTime.Now;
 
-            Console.WriteLine(dialogModelString);
+            ((MainWindow)Application.Current.MainWindow).TestOutput.Text += dialogModelString + Environment.NewLine;
+            //Console.WriteLine(dialogModelString);
             if (SessionVars.WriteSerialLog) {
                 using (StreamWriter serialLogDialogModels = new StreamWriter(
                     (SessionVars.LogsDirectory + SessionVars.DialogLogFileName), true)) {
@@ -449,7 +453,8 @@ namespace DialogEngine
                     if (recentPhraseQueueEntry == selectedPhrase) {
                         phraseIsDuplicate = true; //send through retry loop k again
                         if (SessionVars.ShowDupePhrases) {
-                            Console.WriteLine("Duplicate [" + selectedPhrase.DialogStr + "]");
+                            ((MainWindow)Application.Current.MainWindow).TestOutput.Text += "Duplicate [" + selectedPhrase.DialogStr + "]" + Environment.NewLine;
+                            //Console.WriteLine("Duplicate [" + selectedPhrase.DialogStr + "]");
                         }
                         break; // doesn't matter if duplicated more than once
                     }
@@ -485,8 +490,10 @@ namespace DialogEngine
                 _movementWaitCount++;
                 if (_movementWaitCount == 3) {
                     var ch1RetreatPhrase = PickAWeightedPhrase(Character1Num, "Retreat");
-                    Console.Write(CharacterList[Character1Num].CharacterName + " Wait3 : ");
-                    Console.WriteLine(ch1RetreatPhrase.DialogStr);
+                    ((MainWindow)Application.Current.MainWindow).TestOutput.Text += CharacterList[Character1Num].CharacterName + " Wait3 : " + Environment.NewLine;
+                    ((MainWindow)Application.Current.MainWindow).TestOutput.Text += ch1RetreatPhrase.DialogStr + Environment.NewLine;
+                    //Console.Write(CharacterList[Character1Num].CharacterName + " Wait3 : ");
+                    //Console.WriteLine(ch1RetreatPhrase.DialogStr);
                     PlayAudio(SessionVars.AudioDirectory + CharacterList[Character1Num].CharacterPrefix +
                               "_" + ch1RetreatPhrase.FileName + ".mp3");
                     return true;
@@ -608,7 +615,7 @@ namespace DialogEngine
 
                     var pathAndFileName = SessionVars.AudioDirectory + CharacterList[speakingCharacter].CharacterPrefix +
                                           "_" + selectedPhrase.FileName + ".mp3";
-                    PlayAudio(pathAndFileName);
+                    //PlayAudio(pathAndFileName); // vb: code stops here so commented out for debugging purpose
 
                     if (!SessionVars.ForceCharactersAndDialogModel &&
                         !DialogTrackerAndSerialComsCharactersSame())
