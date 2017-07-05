@@ -61,7 +61,7 @@ namespace DialogEngine
             if (SessionVars.ForceCharactersAndDialogModel)
             {
                 ((MainWindow)Application.Current.MainWindow).TestOutput.Text += "   enter three numbers to set the next: DialogModel, Char1, Char2" + Environment.NewLine; // vb : is this a good practice       
-                
+                ((MainWindow)Application.Current.MainWindow).TestOutput.Text += Environment.NewLine;
                 //Console.WriteLine("   enter three numbers to set the next: DialogModel, Char1, Char2");
                 //Console.WriteLine();
             }

@@ -591,15 +591,18 @@ namespace DialogEngine
                 if(CharacterList[speakingCharacter].PhraseTotals.phraseWeights.ContainsKey(currentPhraseType))
                 {
                     if (SessionVars.TextDialogsOn) {
-                        Console.Write(CharacterList[speakingCharacter].CharacterName + ": ");
+                        ((MainWindow)Application.Current.MainWindow).TestOutput.Text += CharacterList[speakingCharacter].CharacterName + ": " + Environment.NewLine;
+                        //Console.Write(CharacterList[speakingCharacter].CharacterName + ": ");
                     }
                     
                     if (CharacterList[speakingCharacter].PhraseTotals.phraseWeights[currentPhraseType] < 0.01f)
-                        Console.WriteLine("   Missing PhraseType: " + currentPhraseType + "\r\n");
+                        ((MainWindow)Application.Current.MainWindow).TestOutput.Text += "   Missing PhraseType: " + currentPhraseType + "\r\n";
+                        //Console.WriteLine("   Missing PhraseType: " + currentPhraseType + "\r\n");
 
                     selectedPhrase = PickAWeightedPhrase(speakingCharacter, currentPhraseType);
                     if (SessionVars.TextDialogsOn) {
-                        Console.WriteLine(selectedPhrase.DialogStr);
+                        ((MainWindow)Application.Current.MainWindow).TestOutput.Text += selectedPhrase.DialogStr + Environment.NewLine;
+                        //Console.WriteLine(selectedPhrase.DialogStr);selectedPhrase.DialogStr
                     }
                     AddPhraseToHistory(selectedPhrase, speakingCharacter);
 
