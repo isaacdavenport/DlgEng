@@ -136,6 +136,7 @@ namespace DialogEngine
                             ((MainWindow)Application.Current.MainWindow).TestOutput.Text += "JSON Parse error at " + e.LineNumber + ", " + e.LinePosition + Environment.NewLine;
                             //Console.WriteLine("Error reading " + file.Name);
                             //Console.WriteLine("JSON Parse error at " + e.LineNumber + ", " + e.LinePosition);
+
                             //Console.ReadLine(); // vb : have to figure out how to do readline from main window
                         }
                     }

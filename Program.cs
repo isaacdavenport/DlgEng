@@ -117,6 +117,9 @@ namespace DialogEngine
     public class Program
     {
         public static DialogTracker TheDialogs = new DialogTracker();
+        
+        //vb : variable to store input string
+        public string keyboardInput;
 
         public static Application WinApp { get; private set; }
         public static Window MainWindow { get; private set; }
@@ -312,19 +315,23 @@ namespace DialogEngine
             //Console.ReadLine();
         }
 
-        [STAThread]
+        [STAThread] //vb : STAT thread that takes care of starting an application.exe with WPF window
 
         static void Main(string[] args) {
 
 
             //Console.SetBufferSize(Console.BufferWidth, 32766);
             //Console.WriteLine("Opening window...");
-            InitializeWindows(); // opens the WPF window and waits here
+
+
+            InitializeWindows(); // vb : opens the WPF window and waits here
+
+
             //Console.WriteLine("Exiting main...");
-            WriteStartupInfo();
+            //WriteStartupInfo();
             //Console.WriteLine();
-            TheDialogs.intakeCharacters();
-            SerialComs.InitSerial();    //  vb : need to understand this implementation
+            //TheDialogs.intakeCharacters();
+            //SerialComs.InitSerial();    //  vb : need to understand this implementation
             //InitModelDialogs.SetDefaults(TheDialogs);
 
             /*if(SessionVars.TagUsageCheck)
@@ -345,7 +352,7 @@ namespace DialogEngine
                 Console.WriteLine();
             }*/
 
-            while (true) {
+            /*while (true) {
                 if (SessionVars.ForceCharactersAndDialogModel) {
                     string[] keyboardInput = Console.ReadLine().Split(' ');
 
@@ -381,7 +388,7 @@ namespace DialogEngine
                         Thread.Sleep(400);
                     }
                 }
-            }
+            }*/
         }
     }
 }

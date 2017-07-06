@@ -23,12 +23,24 @@ namespace DialogEngine
     
     public partial class MainWindow : Window
     {
-        
+
+        // vb : object references to class Dialog Tracker
+
         public static DialogTracker TheDialogs = new DialogTracker();
+        public string keyboardInput;
 
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void InputButton_Click(object sender, RoutedEventArgs e)
+        {
+            //vb : to test if input is retrived properly
+            ((MainWindow)Application.Current.MainWindow).TestOutput.Text += ((MainWindow)Application.Current.MainWindow).TestInput.Text;
+
+            //vb : store inpyt string in global variable - is this a good practice ??
+            keyboardInput = ((MainWindow)Application.Current.MainWindow).TestInput.Text;
         }
 
         public void PlayButton_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -53,7 +65,7 @@ namespace DialogEngine
 
                 if (!SessionVars.ForceCharactersAndDialogModel)
                 {
-                    ((MainWindow)Application.Current.MainWindow).TestOutput.Text += "" + Environment.NewLine; // vb : is this a good practice
+                    ((MainWindow)Application.Current.MainWindow).TestOutput.Text += "   you may enter two characters initials to make them talk" + Environment.NewLine; // vb : is this a good practice
                     //Console.WriteLine("   you may enter two characters initials to make them talk"); 
                 }
             }
@@ -65,6 +77,26 @@ namespace DialogEngine
                 ((MainWindow)Application.Current.MainWindow).TestOutput.Text += Environment.NewLine;
                 //Console.WriteLine("   enter three numbers to set the next: DialogModel, Char1, Char2");
                 //Console.WriteLine();
+            }
+
+            //vb: following part taken out of while(true) to check in input works and can be parsed
+
+            if (SessionVars.ForceCharactersAndDialogModel)
+            {
+                //string[] keyboardInput = Console.ReadLine().Split(' ');
+
+                // vb: take user input fromtext box instead of console.readline above
+                //system null reference exception
+
+                //string[] parsekeyboardInput = keyboardInput.Split();
+
+                //vb : for testing what is the parsed output
+                //((MainWindow)Application.Current.MainWindow).TestOutput.Text += parsekeyboardInput[0] + Environment.NewLine;
+                //((MainWindow)Application.Current.MainWindow).TestOutput.Text += parsekeyboardInput[1] + Environment.NewLine;
+                //((MainWindow)Application.Current.MainWindow).TestOutput.Text += parsekeyboardInput[2] + Environment.NewLine;
+
+                //if keyboard input has three numbers for debug mode to force dialog model and characters
+
             }
 
             /*while (true)
@@ -120,5 +152,6 @@ namespace DialogEngine
 
         */
         }
+
     }
 }
