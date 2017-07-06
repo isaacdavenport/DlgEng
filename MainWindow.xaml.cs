@@ -33,6 +33,7 @@ namespace DialogEngine
 
         public void PlayButton_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+
             Program.WriteStartupInfo();
             TheDialogs.intakeCharacters();
             InitModelDialogs.SetDefaults(TheDialogs);
