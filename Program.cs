@@ -116,14 +116,14 @@ namespace DialogEngine
 
     public class Program
     {
-        public static DialogTracker TheDialogs = new DialogTracker();
+        public static DialogTracker TheDialogs = new DialogTracker(); 
         
         //vb : variable to store input string
         public string keyboardInput;
 
         public static Application WinApp { get; private set; }
         public static Window MainWindow { get; private set; }
-        public ShutdownMode ShutdownMode { get; set; }
+        //public ShutdownMode ShutdownMode { get; set; }
 
         static void InitializeWindows()
         {

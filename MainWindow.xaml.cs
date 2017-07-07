@@ -32,6 +32,7 @@ namespace DialogEngine
         public MainWindow()
         {
             InitializeComponent();
+            //MessageBoxResult result = MessageBox.Show(this, "Hello MessageBox");
         }
 
         private void InputButton_Click(object sender, RoutedEventArgs e)
@@ -45,8 +46,7 @@ namespace DialogEngine
 
         public void PlayButton_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-
-            Program.WriteStartupInfo();
+            MessageBoxResult result = MessageBox.Show(this, "Hello MessageBox"); Program.WriteStartupInfo();
             TheDialogs.intakeCharacters();
             InitModelDialogs.SetDefaults(TheDialogs);
 
@@ -99,8 +99,16 @@ namespace DialogEngine
 
             }
 
-            /*while (true)
+
+            while (true)
             {
+                Thread.Sleep(300);
+
+                ((MainWindow)Application.Current.MainWindow).TestOutput.Text += "Hi Vihanga" + Environment.NewLine;
+                int myvar;
+                myvar = 10;
+
+
                 if (SessionVars.ForceCharactersAndDialogModel)
                 {
                     //string[] keyboardInput = Console.ReadLine().Split(' ');
@@ -113,7 +121,7 @@ namespace DialogEngine
                         int[] modelAndCharacters = new int[3];
                         foreach (string asciiInt in keyboardInput)
                         {
-                            modelAndCharacters[j] = Int32.Parse(asciiInt);
+                            //modelAndCharacters[j] = Int32.Parse(asciiInt);
                             j++;
                         }
 
@@ -131,8 +139,8 @@ namespace DialogEngine
                     if (!SessionVars.HeatMapOnlyMode)
                     {
                         TheDialogs.GenerateADialog();  //normal operation
-                        //Thread.Sleep(1100); //vb:commented out for debugging as code stops here
-                        //Thread.Sleep(RandomNumbers.Gen.Next(0, 2000)); //vb:commented out for debugging as code stops here
+                        Thread.Sleep(1100); //vb:commented out for debugging as code stops here
+                        Thread.Sleep(RandomNumbers.Gen.Next(0, 2000)); //vb:commented out for debugging as code stops here
                     }
                     else
                     {
@@ -145,12 +153,12 @@ namespace DialogEngine
                         {
                             FirmwareDebuggingTools.PrintHeatMapSums();
                         }
-                        //Thread.Sleep(400); //vb:commented out for debugging as code stops here
+                        Thread.Sleep(400); //vb:commented out for debugging as code stops here
                     }
                 }
             }
 
-        */
+        
         }
 
     }

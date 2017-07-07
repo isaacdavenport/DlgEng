@@ -616,7 +616,7 @@ namespace DialogEngine
 
                     var pathAndFileName = SessionVars.AudioDirectory + CharacterList[speakingCharacter].CharacterPrefix +
                                           "_" + selectedPhrase.FileName + ".mp3";
-                    //PlayAudio(pathAndFileName); // vb: code stops here so commented out for debugging purpose
+                    PlayAudio(pathAndFileName); // vb: code stops here so commented out for debugging purpose
 
                     if (!SessionVars.ForceCharactersAndDialogModel &&
                         !DialogTrackerAndSerialComsCharactersSame())
