@@ -20,7 +20,62 @@ namespace DialogEngine
     /// <summary>
     /// Interaction logic for UserControl1.xaml
     /// </summary>
-    
+
+    public static class TextBoxUtilities
+    {
+        public static readonly DependencyProperty AlwaysScrollToEndProperty = DependencyProperty.RegisterAttached("AlwaysScrollToEnd",
+                                                                                                                  typeof(bool),
+                                                                                                                  typeof(TextBoxUtilities),
+                                                                                                                  new PropertyMetadata(false, AlwaysScrollToEndChanged));
+
+        private static void AlwaysScrollToEndChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            TextBox tb = sender as TextBox;
+            if (tb != null)
+            {
+                bool alwaysScrollToEnd = (e.NewValue != null) && (bool)e.NewValue;
+                if (alwaysScrollToEnd)
+                {
+                    tb.ScrollToEnd();
+                    tb.TextChanged += TextChanged;
+                }
+                else
+                {
+                    tb.TextChanged -= TextChanged;
+                }
+            }
+            else
+            {
+                throw new InvalidOperationException("The attached AlwaysScrollToEnd property can only be applied to TextBox instances.");
+            }
+        }
+
+        public static bool GetAlwaysScrollToEnd(TextBox textBox)
+        {
+            if (textBox == null)
+            {
+                throw new ArgumentNullException("textBox");
+            }
+
+            return (bool)textBox.GetValue(AlwaysScrollToEndProperty);
+        }
+
+        public static void SetAlwaysScrollToEnd(TextBox textBox, bool alwaysScrollToEnd)
+        {
+            if (textBox == null)
+            {
+                throw new ArgumentNullException("textBox");
+            }
+
+            textBox.SetValue(AlwaysScrollToEndProperty, alwaysScrollToEnd);
+        }
+
+        private static void TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ((TextBox)sender).ScrollToEnd();
+        }
+    }
+
     public partial class MainWindow : Window
     {
 
@@ -46,6 +101,7 @@ namespace DialogEngine
 
         public void PlayButton_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            TextBoxUtilities.SetAlwaysScrollToEnd(TestOutput, true);
             MessageBoxResult result = MessageBox.Show(this, "Hello MessageBox"); Program.WriteStartupInfo();
             TheDialogs.intakeCharacters();
             InitModelDialogs.SetDefaults(TheDialogs);
