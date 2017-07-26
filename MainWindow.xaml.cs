@@ -40,7 +40,7 @@ namespace DialogEngine
             //vb : to test if input is retrived properly
             ((MainWindow)Application.Current.MainWindow).TestOutput.Text += ((MainWindow)Application.Current.MainWindow).TestInput.Text;
 
-            //vb : store inpyt string in global variable - is this a good practice ??
+            //vb : store input string in global variable - is this a good practice ??
             keyboardInput = ((MainWindow)Application.Current.MainWindow).TestInput.Text;
         }
 
@@ -98,17 +98,12 @@ namespace DialogEngine
                 //if keyboard input has three numbers for debug mode to force dialog model and characters
 
             }
+            ((MainWindow)Application.Current.MainWindow).TestOutput.Text += "Hi Vihanga" + Environment.NewLine;
 
 
-            while (true)
+            /*while (true)
             {
-                Thread.Sleep(300);
-
-                ((MainWindow)Application.Current.MainWindow).TestOutput.Text += "Hi Vihanga" + Environment.NewLine;
-                int myvar;
-                myvar = 10;
-
-
+                
                 if (SessionVars.ForceCharactersAndDialogModel)
                 {
                     //string[] keyboardInput = Console.ReadLine().Split(' ');
@@ -158,7 +153,7 @@ namespace DialogEngine
                 }
             }
 
-        
+        */
         }
 
     }
