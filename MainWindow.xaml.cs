@@ -99,6 +99,11 @@ namespace DialogEngine
             keyboardInput = ((MainWindow)Application.Current.MainWindow).TestInput.Text;
         }
 
+        public void OnPageLoad(object sender, RoutedEventArgs e)
+        {
+            ((MainWindow)Application.Current.MainWindow).TestOutput.Text += "  press enter to continue" + Environment.NewLine;
+        }
+
         public void PlayButton_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             TextBoxUtilities.SetAlwaysScrollToEnd(TestOutput, true);
