@@ -1,0 +1,586 @@
+{
+  "CharacterName": "Danny Patel",
+  "CharacterPrefix": "DP",
+  "Phrases": 
+[{
+      "DialogStr": "Danny Patel has not been initialized.",
+      "FileName": "DannyPatelHasNotBeen",
+      "PhraseWeights": {
+        "Exclamation": 0.01
+      },
+ 
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "I've been watching sloth videos on the internet all morning. I like how they cling desperately to things. Maybe I should call myself Sloth Man. Because sometimes, Justice Moves Slowly.",
+      "FileName": "WatchingSlothVidoes",
+      "PhraseWeights": {
+        "GiveRecentHistory": 8,
+        "GiveJoke": 1
+      },
+      "PhraseRating": "G"
+    },{
+      "DialogStr": "Now you're speaking my language--English.",
+      "FileName": "SpeakingMyLanguage",
+      "PhraseWeights": {
+        "GiveAgreement": 8
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "This may be a problem that can't be solved with punching. Mother told me those could come up from time to time.",
+      "FileName": "ThisMayBeAProblem",
+      "PhraseWeights": {
+        "GiveAdvice": 8
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "If this superhero thing doesn't work out, I'll need to go back to making soda commercials. Hey, kids! Drink refreshing blue soda. Now made with real blue!",
+      "FileName": "SodaCommercials",
+      "PhraseWeights": {
+        "Ramble": 5,
+        "RequestAffirmation": 5,
+	"RequestAdvice": 1
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "Call me Danny Patel. Actually, don't call me that--that's my secret identity. Let's start over. Call me Superhero, until I figure out what my superhero name should actually be.",
+      "FileName": "CallMeDannyPatel",
+      "PhraseWeights": {
+        "Greeting": 8
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "Here I am, to save you from danger! Unless you're not in danger. Then, I guess I'm just here to save you from not being around me. Ha ha.",
+      "FileName": "HereIAmToSaveYou",
+      "PhraseWeights": {
+        "Greeting": 4,
+        "GiveJoke": 1
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "You ripped my costume! Mom just finished sewing that. She has arthritis.",
+      "FileName": "RippedMyCostume",
+      "PhraseWeights": {
+        "Accuse": 8
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "Great Moons of Earth! Is that a good catchphrase? I suppose we've just got the one moon.",
+      "FileName": "IsThatAGoodCatchphrase",
+      "PhraseWeights": {
+        "RequestAffirmation": 2
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "If you can't get a handle on yourself, I may need to punch you. At which point I'll need to call a doctor and make sure that you recieve appropriate medical attention. Don't put me through that hassle!",
+      "FileName": "IMayNeedToPunch",
+      "PhraseWeights": {
+        "Threat": 8,
+        "ShutUp": 1,
+        "Deny": 1
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "I need to go drive mother to her chair yoga class.",
+      "FileName": "GoDriveMother",
+      "PhraseWeights": {
+        "Retreat": 8
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "Let's brainstorm superhero names for me. Doctor Man! No, that just sounds like I actually finished my medical degree. Oooh, how about Captain Man? Is that a good superhero name?",
+      "FileName": "BrainstormSuperheroNames",
+      "PhraseWeights": {
+        "YesNoQuestion": 9,
+        "RequestAffirmation": 2
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "Ha ha! Yes.",
+      "FileName": "HaHaYes",
+      "PhraseWeights": {
+        "Yes": 8,
+        "GoOnJoyful": 1
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "Ha ha! No.",
+      "FileName": "HaHaNo",
+      "PhraseWeights": {
+        "No": 8
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "So, what were you doing yesterday? Getting into brushes with danger?",
+      "FileName": "SoWhatWereYouDoing",
+      "PhraseWeights": {
+        "RequestCatchup": 8,
+        "RequestActivity": 5
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "If I could save one person from a burning building, you would be near the top of my list.",
+      "FileName": "SaveOnePerson",
+      "PhraseWeights": {
+        "GiveAffirmation": 8,
+        "Insult": 1
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "Do you expect me to buy that? You can't fool a true hero, which is what I almost am.",
+      "FileName": "ExpectMeToBuy",
+      "PhraseWeights": {
+        "GiveDisbelief": 8
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "Okay, the truth is--I've never punched anyone. I did punch my car once when it broke down outside of Boise, Idaho.",
+      "FileName": "NeverPunchedAnyone",
+      "PhraseWeights": {
+        "GiveSurprisingStatement": 3
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "I need to find somewhere to put my secret lair, and maybe that espresso machine I never put together.",
+      "FileName": "INeedToFind",
+      "PhraseWeights": {
+        "RequestLocation": 8
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "Completing one dozen sit-ups or even more?",
+      "FileName": "DozenSitUps",
+      "PhraseWeights": {
+        "GiveActivity": 8
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "With this new cape, don't I look like someone who can afford a boat?",
+      "FileName": "WithThisNewCape",
+      "PhraseWeights": {
+        "YesNoQuestion": 5,
+        "RequestAffirmation": 5
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "Are you some kind of filthy villain?",
+      "FileName": "FilthyVillain",
+      "PhraseWeights": {
+        "Insult": 5,
+        "GoOnDisapproval": 5,
+        "YesNoQuestion": 2
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "You truly are a hero's best friend.",
+      "FileName": "YouTrulyAre",
+      "PhraseWeights": {
+        "ThankYou": 8,
+        "GiveAffirmation": 5
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "All in a day's work...for a superhero",
+      "FileName": "AllInADaysWork",
+      "PhraseWeights": {
+        "YoureWelcome": 8
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "I wonder where a superhero could find some dastardly crimes to stop",
+      "FileName": "WhereASuperhero",
+      "PhraseWeights": {
+        "RequestLocation": 8
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "I've been trying to figure out if I've got any powers. At this point, I'm 98.6 percent sure I cannot fly.",
+      "FileName": "GotAnyPowers",
+      "PhraseWeights": {
+        "GiveRecentHistory": 8,
+        "GiveSurprisingStatement": 1
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "Hmmmm.",
+      "FileName": "Hm",
+      "PhraseWeights": {
+        "GoOnNeutral": 8
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "What? No! Don't tell me you've been punched in the head.",
+      "FileName": "DontTellMe",
+      "PhraseWeights": {
+        "Deny": 8,
+        "GiveDisbelief": 5,
+        "GoOnDisapproval": 1
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "I wonder who I could turn into an appropriately loyal sidekick.",
+      "FileName": "LoyalSidekick",
+      "PhraseWeights": {
+        "RequestWho": 8
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "Great moons of Earth!",
+      "FileName": "GreatMoonsOfEarth",
+      "PhraseWeights": {
+        "Exclamation": 8,
+        "GoOnSurprise": 5
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "Ah, I see.",
+      "FileName": "AhISee",
+      "PhraseWeights": {
+        "GoOnNeutral": 5,
+        "GoOnUnderstanding": 5
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "Well that just sours my milk.",
+      "FileName": "SoursMyMilk",
+      "PhraseWeights": {
+        "GoOnAngry": 8,
+        "GoOnDisgust": 5
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "I haven't been this scared since those high school kids stole my wallet.",
+      "FileName": "StoleMyWallet",
+      "PhraseWeights": {
+        "GoOnFear": 8,
+        "RequestAffirmation": 1
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "I'm concerned this is going to go the same way as my last career",
+      "FileName": "MyLastCareer",
+      "PhraseWeights": {
+        "GoOnFear": 8
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "Thank you, citizen",
+      "FileName": "ThankYouCitizen",
+      "PhraseWeights": {
+        "ThankYou": 8
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "Oh, you got that kitten down from that tree!",
+      "FileName": "GotThatKitten",
+      "PhraseWeights": {
+        "GiveCredit": 8
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "Listen, when you've got a new career, sometimes you make mistakes.",
+      "FileName": "GotANewCareer",
+      "PhraseWeights": {
+        "Admit": 8,
+        "GiveAdvice": 2
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "Sometimes I like to think about the greats--Captain Unvanquished, Miss Magma, Professor Parasite and the Tapeworm Kid. Why didn't they quit superheroics when it got tough? What kept them going?",
+      "FileName": "ThinkAboutTheGreats",
+      "PhraseWeights": {
+        "RequestMotivation": 8,
+        "RequestAffirmation": 2,
+        "Ramble": 2
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "It may have been the heart of evil that made them do it. The same foul impulse that makes men and women try to take over the world, rob banks, or post dumb comments on YouTube videos.",
+      "FileName": "HeartOfEvil",
+      "PhraseWeights": {
+        "GiveMotivation": 8
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "Ha ha!",
+      "FileName": "HaHa",
+      "PhraseWeights": {
+        "Exclamation": 6
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "Are you trying to become my archnemesis?",
+      "FileName": "BecomeMyArchnemesis",
+      "PhraseWeights": {
+        "YesNoQuestion": 4,
+        "Threat": 4
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "Punching villains in the face for justice?",
+      "FileName": "PunchingVillainsInTheFace",
+      "PhraseWeights": {
+        "GiveActivity": 8
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "An old story, but a true one--it was their mother that made them do it.",
+      "FileName": "AnOldStoryBut",
+      "PhraseWeights": {
+        "GiveMotivation": 8
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "Ha ha! I turned my dad bod to a rad bod.",
+      "FileName": "TurnedMyDad",
+      "PhraseWeights": {
+        "GiveSurprisingStatement": 3,
+        "GiveJoke": 3
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "Well, mother raised me properly.",
+      "FileName": "MotherRaisedMe",
+      "PhraseWeights": {
+        "YoureWelcome": 6
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "What's something snappy I could say when I defeat a villain?",
+      "FileName": "WhatsSomethingSnappy",
+      "PhraseWeights": {
+        "RequestJoke": 8
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "Oh, dear. I haven't felt this way since mother sprained her ankle making scrambled eggs. And I'm still not sure how she did that...",
+      "FileName": "MotherSprainedHerAnkle",
+      "PhraseWeights": {
+        "GoOnSad": 5,
+        "GoOnFear": 2
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "What should I be doing to get in shape for superheroics?",
+      "FileName": "GetInShape",
+      "PhraseWeights": {
+        "RequestActivity": 8
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "Did I just hear a citizen in danger? Have to run!",
+      "FileName": "CitizenInDanger",
+      "PhraseWeights": {
+        "Retreat": 8
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "Great moons of Earth, Yes!",
+      "FileName": "MoonsOfEarthYes",
+      "PhraseWeights": {
+        "Yes": 1,
+        "GoOnJoyful": 1
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "If it's anyone, it's mother.",
+      "FileName": "IfItsAnyone",
+      "PhraseWeights": {
+        "GiveWho": 8
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "You may want to check your utility belt.",
+      "FileName": "CheckYourUtilityBelt",
+      "PhraseWeights": {
+        "GiveLocation": 8
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "No.",
+      "FileName": "No",
+      "PhraseWeights": {
+        "No": 8
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "What's your business, citizen?",
+      "FileName": "YourBusiness",
+      "PhraseWeights": {
+        "RequestCatchup": 8,
+        "RequestActivity": 5
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "Your mother should be ashamed of you.",
+      "FileName": "YourMotherShouldBeAshamed",
+      "PhraseWeights": {
+        "Insult": 8,
+        "GoOnDisapproval": 5
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "That's more than enough.",
+      "FileName": "MoreThanEnough",
+      "PhraseWeights": {
+        "ShutUp": 8,
+        "Retreat": 5
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "It's been another taxing day of checking the hero wanted ads. Say something to cheer a guy up, would you?",
+      "FileName": "SaySomethingToCheer",
+      "PhraseWeights": {
+        "RequestJoke": 8,
+        "RequestAffirmation": 5
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "There are so many heroes out there. What can I do to stand out?",
+      "FileName": "SoManyHeroes",
+      "PhraseWeights": {
+        "RequestAdvice": 8,
+        "RequestAffirmation": 5
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "What made mother think that I could be a hero?",
+      "FileName": "WhatMadeMotherThink",
+      "PhraseWeights": {
+        "RequestMotivation": 8
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "Step one, I grab my cape. Step two, we make that happen.",
+      "FileName": "GrabMyCape",
+      "PhraseWeights": {
+        "GiveAgreement": 8
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "Great moons of Earth, that's worse than being a whale feeder at Sea World.",
+      "FileName": "WorseThanBeingAWhaleFeeder",
+      "PhraseWeights": {
+        "GoOnDisgust": 8,
+        "GoOnAngry": 5
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "Wherever wrongs are left unrighted. That's where I'd look.",
+      "FileName": "WhereverWrongs",
+      "PhraseWeights": {
+        "GiveLocation": 8
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "My empathy sense is tingling.",
+      "FileName": "MyEmpathySense",
+      "PhraseWeights": {
+        "GoOnUnderstanding": 3
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "That's like a villain winning the day.",
+      "FileName": "ThatsLikeAVillain",
+      "PhraseWeights": {
+        "GoOnSad": 6
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "I do believe you've done something so dastardly I can't even say it out loud.",
+      "FileName": "SomethingSoDastardly",
+      "PhraseWeights": {
+        "Accuse": 8
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "Captain Unvanquished. When I was a kid, I had a poster of him on my door. And his collectable thermos!",
+      "FileName": "IHadAPoster",
+      "PhraseWeights": {
+        "GiveWho": 8
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "Oh, my.",
+      "FileName": "OhMy",
+      "PhraseWeights": {
+        "GoOnSurprise": 4
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "You found my Captain Unvanquished collector's plates, didn't you?",
+      "FileName": "FoundMyCaptain",
+      "PhraseWeights": {
+        "GiveCredit": 8
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "Is there anyone who can make me an official superhero? I feel like someone needs to put me on a list.",
+      "FileName": "PutMeOnAList",
+      "PhraseWeights": {
+        "RequestWho": 8
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "Sometimes a superhero needs to give a superapology.",
+      "FileName": "SometimesASuperhero",
+      "PhraseWeights": {
+        "Admit": 8
+      },
+      "PhraseRating": "G"
+      },{
+      "DialogStr": "Twinkle, twinkle, little star",
+      "FileName": "TwinkleTwinkleLittleStar_A",
+      "PhraseWeights": {
+        "Twinkle1": 1
+      },
+      "PhraseRating": "G"
+    },{
+      "DialogStr": "How I wonder what you are",
+      "FileName": "HowIWonderWhat_A",
+      "PhraseWeights": {
+        "Twinkle2": 1
+      },
+      "PhraseRating": "G"
+    },{
+      "DialogStr": "Up above the world so high",
+      "FileName": "UpAboveTheWorld",
+      "PhraseWeights": {
+        "Twinkle3": 1
+      },
+      "PhraseRating": "G"
+    },{
+      "DialogStr": "Like a diamond in the sky",
+      "FileName": "LikeADiamondIn",
+      "PhraseWeights": {
+        "Twinkle4": 1
+      },
+      "PhraseRating": "G"
+    },{
+      "DialogStr": "Twinkle, twinkle, little star",
+      "FileName": "TwinkleTwinkleLittleStar_B",
+      "PhraseWeights": {
+        "Twinkle5": 1
+      },
+      "PhraseRating": "G"
+    },{
+      "DialogStr": "How I wonder what you are",
+      "FileName": "HowIWonderWhat_B",
+      "PhraseWeights": {
+        "Twinkle6": 1
+      },
+      "PhraseRating": "G"
+    },{
+      "DialogStr": "...",
+      "FileName": "HalfSecSilence",
+      "PhraseWeights": {
+        "GiveSilence": 1
+      },
+      "PhraseRating": "G"
+    }
+  ]
+}
+
+
+
+
+

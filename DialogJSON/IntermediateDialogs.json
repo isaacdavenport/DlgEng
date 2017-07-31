@@ -2,28 +2,6 @@
 {"inList" : 
 [
 {
-  "DialogName": "Greeting, GiveSilence",
-  "AddedOnDateTime": "2016-05-18T00:00:00",
-  "Popularity": 0.3,
-  "Adventure": "",
-  "Requires": [],
-  "Provides": [],
-  "PhraseTypeSequence": [
-    "Greeting",
-	"GiveSilence"
-  ]
-},{
-  "DialogName": "GiveSilence, Greeting --For non-speaking characters",
-  "AddedOnDateTime": "2016-05-18T00:00:00",
-  "Popularity": 0.3,
-  "Adventure": "",
-  "Requires": [],
-  "Provides": [],
-  "PhraseTypeSequence": [
-	"GiveSilence",
-    "Greeting"
-  ]
-},{
   "DialogName": "Exclamation, Exclamation",
   "AddedOnDateTime": "2016-05-18T00:00:00",
   "Popularity": 0.4,
@@ -32,28 +10,6 @@
   "Provides": [],
   "PhraseTypeSequence": [
     "Exclamation",
-    "Exclamation"
-  ]
-},{
-  "DialogName": "Exclamation, GiveSilence",
-  "AddedOnDateTime": "2016-05-18T00:00:00",
-  "Popularity": 0.7,
-  "Adventure": "",
-  "Requires": [],
-  "Provides": [],
-  "PhraseTypeSequence": [
-    "Exclamation",
-	"GiveSilence"
-  ]
-},{
-  "DialogName": "GiveSilence, Exclamation",
-  "AddedOnDateTime": "2016-05-18T00:00:00",
-  "Popularity": 0.8,
-  "Adventure": "",
-  "Requires": [],
-  "Provides": [],
-  "PhraseTypeSequence": [
-	"GiveSilence",
     "Exclamation"
   ]
 },{

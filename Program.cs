@@ -121,7 +121,7 @@ namespace DialogEngine
         static void WriteStartupInfo() {
             if (SessionVars.WriteSerialLog)
             {
-                string versionTimeStr = "Dialog Engine ver 0.67 " + DateTime.Now;
+                string versionTimeStr = "Dialog Engine ver 0.68 " + DateTime.Now;
                 Console.WriteLine("");
                 Console.WriteLine(versionTimeStr);
                 Console.WriteLine("");
@@ -225,7 +225,7 @@ namespace DialogEngine
                         }
                         if (!usedFlag)
                         {
-                            Console.WriteLine(" " + _phrasetag + " is not used.");
+                            Console.WriteLine(_character.CharacterName + " " + _phrasetag + " is not used.");
                             if (SessionVars.WriteSerialLog)
                             {
                                 using (StreamWriter JSONLog = new StreamWriter(
@@ -332,8 +332,8 @@ namespace DialogEngine
                 else {
                     if (!SessionVars.HeatMapOnlyMode) {
                         TheDialogs.GenerateADialog();  //normal operation
-                        Thread.Sleep(1100);  
-                        Thread.Sleep(RandomNumbers.Gen.Next(0, 2000));
+                        Thread.Sleep(300);  //shortened per Brielle's comments
+                        Thread.Sleep(RandomNumbers.Gen.Next(0, 1600));
                     }
                     else {
                         Console.Clear();

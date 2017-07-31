@@ -217,17 +217,6 @@
     "GiveAgreement",
 	"ThankYou"
   ]
-},{
-  "DialogName": "GiveSilence, GiveSilence --For Non Speaking Radios",
-  "AddedOnDateTime": "2017-04-24T18:00:00",
-  "Popularity": 0.2,
-  "Adventure": "",
-  "Requires": [],
-  "Provides": [],
-  "PhraseTypeSequence": [
-    "GiveSilence",
-	"GiveSilence"
-  ]
 }
 ]
 }
