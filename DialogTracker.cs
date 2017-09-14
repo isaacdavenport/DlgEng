@@ -251,7 +251,10 @@ namespace DialogEngine
                                        " NextChars: " + CharacterList[character1Num].CharacterPrefix + " " +
                                        CharacterList[character2Num].CharacterPrefix + " " + DateTime.Now;
 
-            ((MainWindow)Application.Current.MainWindow).TestOutput.Text += dialogModelString + Environment.NewLine;
+            //((MainWindow)Application.Current.MainWindow).TestOutput.Text += dialogModelString + Environment.NewLine;
+
+            MessageBoxResult result = MessageBox.Show(dialogModelString);
+
             //Console.WriteLine(dialogModelString);
             if (SessionVars.WriteSerialLog) {
                 using (StreamWriter serialLogDialogModels = new StreamWriter(

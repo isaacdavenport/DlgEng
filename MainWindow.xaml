@@ -4,8 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DialogEngine"
+             WindowStartupLocation="CenterScreen"
              mc:Ignorable="d" 
-             d:DesignHeight="451.32" Title="DialogEngine" Width="639.305" >
+             d:DesignHeight="451.32" Title="DialogEngine" Width="639.305"
+             Loaded="Window_Loaded">
     <Window.Resources>
         <Style x:Key="MultiLineTB" TargetType="TextBox">
             <Setter Property="Text" Value="{Binding Text, ElementName=tbMaster}"/>
@@ -21,12 +23,12 @@
             <ColumnDefinition Width="157*"/>
             <ColumnDefinition Width="360*"/>
         </Grid.ColumnDefinitions>
-        <Button x:Name="PlayButton" Content="Start" HorizontalAlignment="Left" Margin="0,63,0,-41.333" VerticalAlignment="Top" Width="298" Height="41" MouseDoubleClick ="PlayButton_MouseDoubleClick" Grid.Row="2" Grid.ColumnSpan="2"/>
+
         <TextBox x:Name="TestOutput" Height="320" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Grid.ColumnSpan="2" Grid.RowSpan="2" 
-                 ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" Style="{StaticResource MultiLineTB}" AcceptsReturn="True" local:TextBoxUtilities.AlwaysScrollToEnd="True" Margin="0,0,-0.333,0"/>
+                 ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" Style="{StaticResource MultiLineTB}" AcceptsReturn="True" Margin="0,0,-0.333,0"/>
         <TextBox x:Name="TestInput" HorizontalAlignment="Left" Height="63" Margin="0,0,-0.333,-0.333" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="631" Grid.ColumnSpan="2" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"
          ScrollViewer.CanContentScroll="True" />
-        <Button x:Name="InputButton" Content="Retrieve" HorizontalAlignment="Left" Margin="111.667,63,-0.333,-41.333" VerticalAlignment="Top" Width="328" Height="41" MouseDoubleClick ="PlayButton_MouseDoubleClick" Grid.Row="2" Grid.Column="1" Click="InputButton_Click"/>
+        <Button x:Name="InputButton" Content="Retrieve" HorizontalAlignment="Left" Margin="0,63,-0.333,-41.333" VerticalAlignment="Top" Width="631" Height="41" Grid.Row="2" Click="InputButton_Click" Grid.ColumnSpan="2"/>
 
     </Grid>
 </Window>

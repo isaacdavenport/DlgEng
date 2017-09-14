@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using System.ComponentModel;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -17,16 +18,10 @@ using System.Threading;
 
 namespace DialogEngine
 {
-    /// <summary>
-    /// Interaction logic for UserControl1.xaml
-    /// </summary>
 
     public static class TextBoxUtilities
     {
-        public static readonly DependencyProperty AlwaysScrollToEndProperty = DependencyProperty.RegisterAttached("AlwaysScrollToEnd",
-                                                                                                                  typeof(bool),
-                                                                                                                  typeof(TextBoxUtilities),
-                                                                                                                  new PropertyMetadata(false, AlwaysScrollToEndChanged));
+        public static readonly DependencyProperty AlwaysScrollToEndProperty = DependencyProperty.RegisterAttached("AlwaysScrollToEnd", typeof(bool), typeof(TextBoxUtilities), new PropertyMetadata(false, AlwaysScrollToEndChanged));
 
         private static void AlwaysScrollToEndChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
@@ -75,7 +70,6 @@ namespace DialogEngine
             ((TextBox)sender).ScrollToEnd();
         }
     }
-
     public partial class MainWindow : Window
     {
 
@@ -87,7 +81,6 @@ namespace DialogEngine
         public MainWindow()
         {
             InitializeComponent();
-            //MessageBoxResult result = MessageBox.Show(this, "Hello MessageBox");
         }
 
         private void InputButton_Click(object sender, RoutedEventArgs e)
@@ -98,11 +91,12 @@ namespace DialogEngine
             //vb : store input string in global variable - is this a good practice ??
             keyboardInput = ((MainWindow)Application.Current.MainWindow).TestInput.Text;
         }
-        
-        public void PlayButton_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             TextBoxUtilities.SetAlwaysScrollToEnd(TestOutput, true);
-            MessageBoxResult result = MessageBox.Show(this, "Hello MessageBox"); Program.WriteStartupInfo();
+            //MessageBoxResult result = MessageBox.Show(this, "Hello MessageBox"); 
+            Program.WriteStartupInfo();
             TheDialogs.intakeCharacters();
             InitModelDialogs.SetDefaults(TheDialogs);
 
@@ -141,38 +135,46 @@ namespace DialogEngine
             {
                 //string[] keyboardInput = Console.ReadLine().Split(' ');
 
-                // vb: take user input fromtext box instead of console.readline above
-                //system null reference exception
-
-                //string[] parsekeyboardInput = keyboardInput.Split();
+                //  vb: take user input fromtyext box instead of console.readline above
+                
+                string[] parsekeyboardInput = keyboardInput.Split();
 
                 //vb : for testing what is the parsed output
-                //((MainWindow)Application.Current.MainWindow).TestOutput.Text += parsekeyboardInput[0] + Environment.NewLine;
-                //((MainWindow)Application.Current.MainWindow).TestOutput.Text += parsekeyboardInput[1] + Environment.NewLine;
-                //((MainWindow)Application.Current.MainWindow).TestOutput.Text += parsekeyboardInput[2] + Environment.NewLine;
+                ((MainWindow)Application.Current.MainWindow).TestOutput.Text += parsekeyboardInput[0] + Environment.NewLine;
+               ((MainWindow)Application.Current.MainWindow).TestOutput.Text += parsekeyboardInput[1] + Environment.NewLine;
+                ((MainWindow)Application.Current.MainWindow).TestOutput.Text += parsekeyboardInput[2] + Environment.NewLine;
 
                 //if keyboard input has three numbers for debug mode to force dialog model and characters
 
             }
-            ((MainWindow)Application.Current.MainWindow).TestOutput.Text += "Hi Vihanga" + Environment.NewLine;
+            //((MainWindow)Application.Current.MainWindow).TestOutput.Text += "Hi Vihanga" + Environment.NewLine;
 
+            BackgroundWorker worker = new BackgroundWorker();
+            worker.WorkerReportsProgress = false;
+            worker.DoWork += worker_DoWork;
+            worker.RunWorkerCompleted += worker_RunWorkerCompleted;
+            worker.RunWorkerAsync(400);
+           
+        }
 
-            /*while (true)
+        void worker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            while (true)
             {
-                
+
                 if (SessionVars.ForceCharactersAndDialogModel)
                 {
                     //string[] keyboardInput = Console.ReadLine().Split(' ');
-                    string[] keyboardInput = { "FS"," ","PP"}; //vb:added this to hard code a console.readline()
+                    string[] parsekeyboardInput = keyboardInput.Split(); //vb:can add a hard code a console.readline()
 
                     //if keyboard input has three numbers for debug mode to force dialog model and characters
-                    if (keyboardInput.Length == 3)
+                    if (parsekeyboardInput.Length == 3)
                     {
                         int j = 0;
                         int[] modelAndCharacters = new int[3];
-                        foreach (string asciiInt in keyboardInput)
+                        foreach (string asciiInt in parsekeyboardInput)
                         {
-                            //modelAndCharacters[j] = Int32.Parse(asciiInt);
+                            modelAndCharacters[j] = Int32.Parse(asciiInt);
                             j++;
                         }
 
@@ -182,7 +184,8 @@ namespace DialogEngine
                     {
                         ((MainWindow)Application.Current.MainWindow).TestOutput.Text += "Incorrect input, generating random dialog." + Environment.NewLine;
                         //Console.WriteLine("Incorrect input, generating random dialog.");
-                        TheDialogs.GenerateADialog(); // wrong number of user input select rand dialog and characters
+                        TheDialogs.GenerateADialog();
+                        // wrong number of user input select rand dialog and characters
                     }
                 }
                 else
@@ -208,8 +211,10 @@ namespace DialogEngine
                     }
                 }
             }
-
-        */
+        }
+        void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show(this, "While loop completed");
         }
 
     }
