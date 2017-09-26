@@ -14,7 +14,7 @@
     },
     {
       "DialogStr": "Good day",
-      "FileName": "GoodDay",
+      "FileName": "GoodDayJunk",
       "PhraseWeights": {
         "Greeting": 5.3,
         "Exclamation": 0.2

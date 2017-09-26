@@ -508,7 +508,7 @@
 			"PhraseRating": "PG"
 		}, {
 			"DialogStr": "Do you know what really scares me sprinklers ah sprinklers runlet me in that's what happens when I'm around sprinkers so please don't turn them on please. ",
-			"FileName": "DoYouKnowWhat",
+			"FileName": "DoYouKnowWhatScaresMe",
 			"PhraseWeights": {
 				"GiveSurprisingStatement": 0.5,
 				"Ramble": 0.5
