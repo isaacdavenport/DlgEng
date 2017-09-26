@@ -25,6 +25,7 @@ namespace DialogEngine
         public static readonly bool MonitorReceiveBufferSize;
         public static readonly bool MonitorMessageParseFails;
         public static readonly string CurrentParentalRating;
+        public static readonly string BaseDirectory;
         public static readonly string LogsDirectory;
         public static readonly string CharactersDirectory;
         public static readonly string DialogsDirectory;
@@ -116,20 +117,31 @@ namespace DialogEngine
             else
                 CurrentParentalRating = "PG";
 
-            if (ConfigurationManager.AppSettings["LogsDirectory"] == null && WriteSerialLog) {
+            if (ConfigurationManager.AppSettings["BaseDirectory"] != null)
+            {
+                BaseDirectory = AppSet.ReadSetting("BaseDirectory");
+                if (!BaseDirectory.EndsWith(@"\")){
+                    BaseDirectory += @"\";
+                }
+                LogsDirectory = BaseDirectory + @"Logs\";
+                DialogsDirectory = BaseDirectory + @"DialogJSON\";
+                AudioDirectory = BaseDirectory + @"DialogAudio\";
+                CharactersDirectory = BaseDirectory + @"CharacterJSON\";
+            }
+
+            if (ConfigurationManager.AppSettings["LogsDirectory"] != null)
+                LogsDirectory = AppSet.ReadSetting("LogsDirectory");
+
+            if (LogsDirectory == null && WriteSerialLog) {
                 Console.WriteLine("Valid LogsDirectory path not found in config file exiting.");
                 Console.ReadLine();
                 Environment.Exit(0);
             }
 
-            if (ConfigurationManager.AppSettings["LogsDirectory"] != null)
-                LogsDirectory = AppSet.ReadSetting("LogsDirectory");
-            else
-                LogsDirectory = "";  //logs not used based on check above
-
             if (ConfigurationManager.AppSettings["CharactersDirectory"] != null)
                 CharactersDirectory = AppSet.ReadSetting("CharactersDirectory");
-            else {
+
+            if (CharactersDirectory == null) {
                 Console.WriteLine("Valid CharactersDirectory path not found in config file exiting.");
                 Console.ReadLine();
                 Environment.Exit(0);
@@ -137,37 +149,34 @@ namespace DialogEngine
 
             if (ConfigurationManager.AppSettings["DialogsDirectory"] != null)
                 DialogsDirectory = AppSet.ReadSetting("DialogsDirectory");
-            else
-            {
-                Console.WriteLine("Valid DialogsDirectory path not found in config file exiting.");
-                Console.ReadLine();
-                Environment.Exit(0);
-            }
 
-            if (ConfigurationManager.AppSettings["AudioDirectory"] == null && AudioDialogsOn)
+            if (DialogsDirectory == null)
             {
-                Console.WriteLine("Valid AudioDirectory path not found in config file exiting.");
+                    Console.WriteLine("Valid DialogsDirectory path not found in config file exiting.");
                 Console.ReadLine();
                 Environment.Exit(0);
             }
 
             if (ConfigurationManager.AppSettings["AudioDirectory"] != null)
                 AudioDirectory = AppSet.ReadSetting("AudioDirectory");
-            else
-                AudioDirectory = "";  //Audio not used based on check above
 
-
-            if (ConfigurationManager.AppSettings["ComPortName"] == null && !NoSerialPort)
+            if (AudioDirectory == null && AudioDialogsOn)
             {
-                Console.WriteLine("Valid ComPortName  not found in config file exiting.");
+                Console.WriteLine("Valid AudioDirectory path not found in config file exiting.");
                 Console.ReadLine();
                 Environment.Exit(0);
             }
 
             if (ConfigurationManager.AppSettings["ComPortName"] != null)
                 ComPortName = AppSet.ReadSetting("ComPortName");
-            else
-                ComPortName = "";  //serial not used based on check above
+
+            if (ComPortName == null && !NoSerialPort)
+            {
+                Console.WriteLine("Valid ComPortName  not found in config file exiting.");
+                Console.ReadLine();
+                Environment.Exit(0);
+            }
+
 
             DecimalLogFileName = "DecimalSerialLog.txt";  //TODO are these redundant?
             HexLogFileName = "HexSerialLog.txt";

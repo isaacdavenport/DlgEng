@@ -71,7 +71,7 @@ namespace DialogEngine
         // A character's Phrases list holds all the phrases they might say along with 
         // heuristic phraseWeights on what parts of a model dialog they might use them in.
 
-        public const int RecentPhrasesQueueSize = 4;
+        public const int RecentPhrasesQueueSize = 8;
         public Queue<PhraseEntry> RecentPhrases = new Queue<PhraseEntry>();  //TODO make this a method that runs over the history
     }
     

@@ -33,7 +33,7 @@ namespace DialogEngine
     public class DialogTracker
     {
         //Here we decide what to say next
-        protected const int RecentDialogsQueSize = 4;
+        protected const int RecentDialogsQueSize = 6;
         public List<ModelDialog> ModelDialogs = new List<ModelDialog>();
         public List<HistoricalDialog> HistoricalDialogs = new List<HistoricalDialog>();
         public List<HistoricalPhrase> HistoricalPhrases = new List<HistoricalPhrase>();
