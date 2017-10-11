@@ -4,9 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Threading; // for thread.sleep()
-using Newtonsoft.Json;
 using System.Windows;
+using Newtonsoft.Json;
+// for thread.sleep()
 
 // TODO: JSON Input
 //       build unit tests around json imports
@@ -16,17 +16,17 @@ using System.Windows;
 //          (who became closer most recently?)
 
 //  before tue 5/16
-    //unit tests on 3-4 easy methods
-    //unit test on generateADialog in dialogtracker.cs
+//unit tests on 3-4 easy methods
+//unit test on generateADialog in dialogtracker.cs
 
 namespace DialogEngine
 {
-    static class ParentalRatings
+    internal static class ParentalRatings
     {
         /// <summary>
-        /// Static string Dictionary example
+        ///     Static string Dictionary example
         /// </summary>
-        static Dictionary<string, int> _dict = new Dictionary<string, int>
+        private static readonly Dictionary<string, int> _dict = new Dictionary<string, int>
         {
             {"G", 1},
             {"PG", 2},
@@ -39,13 +39,8 @@ namespace DialogEngine
             // Try to get the result in the static Dictionary
             int result;
             if (_dict.TryGetValue(ratingString, out result))
-            {
                 return result;
-            }
-            else
-            {
-                return -1;
-            }
+            return -1;
         }
     }
 
@@ -54,28 +49,33 @@ namespace DialogEngine
     {
         public string DialogStr;
         public string FileName;
-        public Dictionary<string, double> phraseWeights;    //to replace PhraseWeights, uses string tags.
         public string PhraseRating;
+        public Dictionary<string, double> phraseWeights; //to replace PhraseWeights, uses string tags.
     }
 
     //[JsonObject(MemberSerialization.OptIn)]
     public class Character
     {
-        [JsonProperty("CharacterName")]
-        public string CharacterName { get; protected set; }
-        [JsonProperty("CharacterPrefix")]
-        public string CharacterPrefix { get; protected set; }
-        [JsonProperty("PhraseTotals")]
-        public PhraseEntry PhraseTotals = new PhraseEntry();
-        [JsonProperty("Phrases")]
-        public List<PhraseEntry> Phrases = new List<PhraseEntry>(); //entry now has string phraseweight tags.
         // A character's Phrases list holds all the phrases they might say along with 
         // heuristic phraseWeights on what parts of a model dialog they might use them in.
 
         public const int RecentPhrasesQueueSize = 4;
-        public Queue<PhraseEntry> RecentPhrases = new Queue<PhraseEntry>();  //TODO make this a method that runs over the history
+
+        [JsonProperty("Phrases")]
+        public List<PhraseEntry> Phrases = new List<PhraseEntry>(); //entry now has string phraseweight tags.
+
+        [JsonProperty("PhraseTotals")] public PhraseEntry PhraseTotals = new PhraseEntry();
+
+        public Queue<PhraseEntry> RecentPhrases = new Queue<PhraseEntry>()
+            ; //TODO make this a method that runs over the history
+
+        [JsonProperty("CharacterName")]
+        public string CharacterName { get; protected set; }
+
+        [JsonProperty("CharacterPrefix")]
+        public string CharacterPrefix { get; protected set; }
     }
-    
+
     //[JsonObject(MemberSerialization.OptIn)]
     public class ModelDialogInput
     {
@@ -84,29 +84,26 @@ namespace DialogEngine
 
     public class ModelDialog
     {
+        [JsonProperty("AddedOnDateTime")] public DateTime AddedOnDateTime = new DateTime(2016, 1, 2, 3, 4, 5);
+
+        [JsonProperty("Adventure")] public string Adventure = "";
+
         // a ModelDialog is a sequence of phrase types that represent an exchange between characters 
         // the model dialog will be filled with randomly selected character phrases of the appropriate phrase type
-        [JsonProperty("DialogName")]
-        public string Name;
+        [JsonProperty("DialogName")] public string Name;
 
-        [JsonProperty("AddedOnDateTime")]
-        public DateTime AddedOnDateTime = new DateTime(2016, 1, 2, 3, 4, 5);
+        [JsonProperty("PhraseTypeSequence")] public List<string> PhraseTypeSequence = new List<string>();
 
-        [JsonProperty("Popularity")]
-        public double Popularity = 1.0;
+        [JsonProperty("Popularity")] public double Popularity = 1.0;
 
-        [JsonProperty("Adventure")]
-        public string Adventure = "";
+        [JsonProperty("Provides")] public List<string> Provides = new List<string>();
 
-        [JsonProperty("Requires")]
-        public List<string> Requires = new List<string>();
+        [JsonProperty("Requires")] public List<string> Requires = new List<string>();
 
-        [JsonProperty("Provides")]
-        public List<string> Provides = new List<string>();
-
-        [JsonProperty("PhraseTypeSequence")]
-        public List<string> PhraseTypeSequence = new List<string>();
-        public bool AreDialogsRequirementsMet() {return true;}
+        public bool AreDialogsRequirementsMet()
+        {
+            return true;
+        }
     }
 
     public static class RandomNumbers
@@ -116,16 +113,17 @@ namespace DialogEngine
 
     public class Program
     {
-        public static DialogTracker TheDialogs = new DialogTracker(); 
-        
+        public static DialogTracker TheDialogs = new DialogTracker();
+
         //vb : variable to store input string
         public string keyboardInput;
 
         public static Application WinApp { get; private set; }
+
         public static Window MainWindow { get; private set; }
         //public ShutdownMode ShutdownMode { get; set; }
 
-        static void InitializeWindows()
+        private static void InitializeWindows()
         {
             WinApp = new Application();
             WinApp.ShutdownMode = ShutdownMode.OnLastWindowClose;
@@ -133,36 +131,39 @@ namespace DialogEngine
             WinApp.Shutdown();
         }
 
-        public static void WriteStartupInfo() { //vb: changed to public static void from static void
+        public static void WriteStartupInfo()
+        {
+            //vb: changed to public static void from static void
             if (SessionVars.WriteSerialLog)
             {
-                string versionTimeStr = "Dialog Engine ver 0.67 " + DateTime.Now;
-                ((MainWindow)Application.Current.MainWindow).TestOutput.Text += "" + Environment.NewLine; // vb : is this a good practice
-                ((MainWindow)Application.Current.MainWindow).TestOutput.Text += versionTimeStr + Environment.NewLine;
-                ((MainWindow)Application.Current.MainWindow).TestOutput.Text += "" + Environment.NewLine;
+                var versionTimeStr = "Dialog Engine ver 0.67 " + DateTime.Now;
+                ((MainWindow) Application.Current.MainWindow).TestOutput.Text +=
+                    "" + Environment.NewLine; // vb : is this a good practice
+                ((MainWindow) Application.Current.MainWindow).TestOutput.Text += versionTimeStr + Environment.NewLine;
+                ((MainWindow) Application.Current.MainWindow).TestOutput.Text += "" + Environment.NewLine;
                 //Console.WriteLine("");
                 //Console.WriteLine(versionTimeStr);
                 //Console.WriteLine("");
-                
 
-                using (StreamWriter serialLog = new StreamWriter(
-                    (SessionVars.LogsDirectory + SessionVars.HexLogFileName), true))
+
+                using (var serialLog = new StreamWriter(
+                    SessionVars.LogsDirectory + SessionVars.HexLogFileName, true))
                 {
                     serialLog.WriteLine("");
                     serialLog.WriteLine("");
                     serialLog.WriteLine(versionTimeStr);
                     serialLog.Close();
                 }
-                using (StreamWriter serialLogDec = new StreamWriter(
-                    (SessionVars.LogsDirectory + SessionVars.DecimalLogFileName), true))
+                using (var serialLogDec = new StreamWriter(
+                    SessionVars.LogsDirectory + SessionVars.DecimalLogFileName, true))
                 {
                     serialLogDec.WriteLine("");
                     serialLogDec.WriteLine("");
                     serialLogDec.WriteLine(versionTimeStr);
                     serialLogDec.Close();
                 }
-                using (StreamWriter serialLogDialog = new StreamWriter(
-                    (SessionVars.LogsDirectory + SessionVars.DialogLogFileName), true))
+                using (var serialLogDialog = new StreamWriter(
+                    SessionVars.LogsDirectory + SessionVars.DialogLogFileName, true))
                 {
                     serialLogDialog.WriteLine("");
                     serialLogDialog.WriteLine("");
@@ -172,29 +173,28 @@ namespace DialogEngine
             }
         }
 
-        public static void CheckForMissingPhrases() {
-            if (!SessionVars.AudioDialogsOn) {
-                return;
-            }
+        public static void CheckForMissingPhrases()
+        {
+            if (!SessionVars.AudioDialogsOn) return;
             foreach (var character in TheDialogs.CharacterList)
             {
-                foreach (PhraseEntry phrase in character.Phrases)
-                {
-                    if (!File.Exists(SessionVars.AudioDirectory + character.CharacterPrefix + "_" + phrase.FileName + ".mp3"))  //Char name and prefix are being left blank...
+                foreach (var phrase in character.Phrases)
+                    if (!File.Exists(SessionVars.AudioDirectory + character.CharacterPrefix + "_" + phrase.FileName +
+                                     ".mp3")) //Char name and prefix are being left blank...
                     {
-                        ((MainWindow)Application.Current.MainWindow).TestOutput.Text += "missing " + character.CharacterPrefix + "_" + phrase.FileName + ".mp3 " + phrase.DialogStr + Environment.NewLine; // vb : += is this a good practice
+                        ((MainWindow) Application.Current.MainWindow).TestOutput.Text +=
+                            "missing " + character.CharacterPrefix + "_" + phrase.FileName + ".mp3 " +
+                            phrase.DialogStr + Environment.NewLine; // vb : += is this a good practice
                         //Console.WriteLine("missing " + character.CharacterPrefix + "_" + phrase.FileName + ".mp3 " + phrase.DialogStr);
                         if (SessionVars.WriteSerialLog)
-                        {
-                            using (StreamWriter JSONLog = new StreamWriter(
-                            (SessionVars.LogsDirectory + SessionVars.DialogLogFileName), true))
+                            using (var JSONLog = new StreamWriter(
+                                SessionVars.LogsDirectory + SessionVars.DialogLogFileName, true))
                             {
-                                JSONLog.WriteLine("missing " + character.CharacterPrefix + "_" + phrase.FileName + ".mp3 " + phrase.DialogStr);
+                                JSONLog.WriteLine("missing " + character.CharacterPrefix + "_" + phrase.FileName +
+                                                  ".mp3 " + phrase.DialogStr);
                             }
-                        }
                     }
-                }
-                ((MainWindow)Application.Current.MainWindow).TestOutput.Text += Environment.NewLine;
+                ((MainWindow) Application.Current.MainWindow).TestOutput.Text += Environment.NewLine;
                 //Console.WriteLine();
             }
             //TODO check that all dialog models have unique names
@@ -203,123 +203,110 @@ namespace DialogEngine
         public static void checkTagsUsed() //changed from static void to public static void
         {
             //spit out all dialog model names and associated number.
-            ((MainWindow)Application.Current.MainWindow).TestOutput.Text += "" + Environment.NewLine; // vb : is this a good practice
-            ((MainWindow)Application.Current.MainWindow).TestOutput.Text += "Dialogs Index: " + Environment.NewLine;
-            ((MainWindow)Application.Current.MainWindow).TestOutput.Text += "" + Environment.NewLine;
+            ((MainWindow) Application.Current.MainWindow).TestOutput.Text +=
+                "" + Environment.NewLine; // vb : is this a good practice
+            ((MainWindow) Application.Current.MainWindow).TestOutput.Text += "Dialogs Index: " + Environment.NewLine;
+            ((MainWindow) Application.Current.MainWindow).TestOutput.Text += "" + Environment.NewLine;
             //Console.WriteLine("");
             //Console.WriteLine("Dialogs Index: ");
             //Console.ReadLine();
-            foreach (ModelDialog _dialog in TheDialogs.ModelDialogs)
+            foreach (var _dialog in TheDialogs.ModelDialogs)
             {
-                ((MainWindow)Application.Current.MainWindow).TestOutput.Text += " " + TheDialogs.ModelDialogs.IndexOf(_dialog) + " : " + _dialog.Name + Environment.NewLine;
+                ((MainWindow) Application.Current.MainWindow).TestOutput.Text +=
+                    " " + TheDialogs.ModelDialogs.IndexOf(_dialog) + " : " + _dialog.Name + Environment.NewLine;
                 //Console.WriteLine(" " + TheDialogs.ModelDialogs.IndexOf(_dialog) + " : " + _dialog.Name);
 
                 if (SessionVars.WriteSerialLog)
-                {
-                    using (StreamWriter JSONLog = new StreamWriter(
-                    (SessionVars.LogsDirectory + SessionVars.DialogLogFileName), true))
+                    using (var JSONLog = new StreamWriter(
+                        SessionVars.LogsDirectory + SessionVars.DialogLogFileName, true))
                     {
                         JSONLog.WriteLine(" " + TheDialogs.ModelDialogs.IndexOf(_dialog) + " : " + _dialog.Name);
                     }
-                }
             }
             //Console.ReadLine();
 
             //test that all character tags are used by a dialog model.
-            ((MainWindow)Application.Current.MainWindow).TestOutput.Text += "Check characters tags are used ";
+            ((MainWindow) Application.Current.MainWindow).TestOutput.Text += "Check characters tags are used ";
             //Console.WriteLine("Check characters tags are used ");
             //Console.ReadLine();
-            Boolean usedFlag = false;
-            foreach (Character _character in TheDialogs.CharacterList)
+            var usedFlag = false;
+            foreach (var _character in TheDialogs.CharacterList)
+            foreach (var _phrase in _character.Phrases)
+            foreach (var _phrasetag in _phrase.phraseWeights.Keys)
             {
-                foreach (PhraseEntry _phrase in _character.Phrases)
+                usedFlag = false;
+                foreach (var _dialog in TheDialogs.ModelDialogs)
                 {
-                    foreach (string _phrasetag in _phrase.phraseWeights.Keys)
-                    {
-                        usedFlag = false;
-                        foreach (ModelDialog _dialog in TheDialogs.ModelDialogs)
+                    foreach (var _dialogtag in _dialog.PhraseTypeSequence)
+                        if (_phrasetag == _dialogtag)
                         {
-                            foreach (string _dialogtag in _dialog.PhraseTypeSequence)
-                            {
-                                if (_phrasetag == _dialogtag)
-                                {
-                                    usedFlag = true;
-                                    break;
-                                }
-                            }
-                            if (usedFlag)
-                            { break; }
+                            usedFlag = true;
+                            break;
                         }
-                        if (!usedFlag)
+                    if (usedFlag)
+                        break;
+                }
+                if (!usedFlag)
+                {
+                    ((MainWindow) Application.Current.MainWindow).TestOutput.Text +=
+                        " " + _phrasetag + " is not used." + Environment.NewLine;
+                    //Console.WriteLine(" " + _phrasetag + " is not used.");
+                    if (SessionVars.WriteSerialLog)
+                        using (var JSONLog = new StreamWriter(
+                            SessionVars.LogsDirectory + SessionVars.DialogLogFileName, true))
                         {
-                            ((MainWindow)Application.Current.MainWindow).TestOutput.Text += " " + _phrasetag + " is not used." + Environment.NewLine;
-                            //Console.WriteLine(" " + _phrasetag + " is not used.");
-                            if (SessionVars.WriteSerialLog)
-                            {
-                                using (StreamWriter JSONLog = new StreamWriter(
-                                (SessionVars.LogsDirectory + SessionVars.DialogLogFileName), true))
-                                {
-                                    JSONLog.WriteLine(" " + _phrasetag + " is not used.");
-                                }
-                            }
+                            JSONLog.WriteLine(" " + _phrasetag + " is not used.");
                         }
-                    }
                 }
             }
             //Console.ReadLine();
 
             //test that all dialogs have character tags to use them
             //bad runtime, NxM for N and M phrases and dialogs worst case.
-            ((MainWindow)Application.Current.MainWindow).TestOutput.Text += "Check dialogs tags are used " + Environment.NewLine;
+            ((MainWindow) Application.Current.MainWindow).TestOutput.Text +=
+                "Check dialogs tags are used " + Environment.NewLine;
             //Console.WriteLine("Check dialogs tags are used ");
-            
+
             //Console.ReadLine();
-            foreach (ModelDialog _dialog in TheDialogs.ModelDialogs)
+            foreach (var _dialog in TheDialogs.ModelDialogs)
+            foreach (var _dialogtag in _dialog.PhraseTypeSequence) //each dialog model tag
             {
-                foreach (string _dialogtag in _dialog.PhraseTypeSequence)//each dialog model tag
+                usedFlag = false;
+                foreach (var _character in TheDialogs.CharacterList)
                 {
-                    usedFlag = false;
-                    foreach (Character _character in TheDialogs.CharacterList)
+                    foreach (var _characterPhrase in _character.Phrases)
                     {
-                        foreach (PhraseEntry _characterPhrase in _character.Phrases)
-                        {
-                            foreach (string _phraseTag in _characterPhrase.phraseWeights.Keys)//each character phrase tag
+                        foreach (var _phraseTag in _characterPhrase.phraseWeights.Keys) //each character phrase tag
+                            if (_dialogtag == _phraseTag)
                             {
-                                if (_dialogtag == _phraseTag)
-                                {
-                                    usedFlag = true;
-                                    break;
-                                }
+                                usedFlag = true;
+                                break;
                             }
-                            if (usedFlag)
-                            { break; }
-                        }
                         if (usedFlag)
-                        { break; }
+                            break;
                     }
-                    if (!usedFlag)
-                    {
-                        ((MainWindow)Application.Current.MainWindow).TestOutput.Text += " " + _dialogtag + " not used in " + _dialog.Name + Environment.NewLine;
-                        //Console.WriteLine(" " + _dialogtag + " not used in " + _dialog.Name);
-                        if (SessionVars.WriteSerialLog)
+                    if (usedFlag)
+                        break;
+                }
+                if (!usedFlag)
+                {
+                    ((MainWindow) Application.Current.MainWindow).TestOutput.Text +=
+                        " " + _dialogtag + " not used in " + _dialog.Name + Environment.NewLine;
+                    //Console.WriteLine(" " + _dialogtag + " not used in " + _dialog.Name);
+                    if (SessionVars.WriteSerialLog)
+                        using (var JSONLog = new StreamWriter(
+                            SessionVars.LogsDirectory + SessionVars.DialogLogFileName, true))
                         {
-                            using (StreamWriter JSONLog = new StreamWriter(
-                            (SessionVars.LogsDirectory + SessionVars.DialogLogFileName), true))
-                            {
-                                JSONLog.WriteLine(" " + _dialogtag + " not used in " + _dialog.Name);
-                            }
+                            JSONLog.WriteLine(" " + _dialogtag + " not used in " + _dialog.Name);
                         }
-                    }
                 }
             }
             //Console.ReadLine();
         }
 
         [STAThread] //vb : STAT thread that takes care of starting an application.exe with WPF window
-
-        static void Main(string[] args) {
-
-
+        private static void Main(string[] args)
+        {
             //Console.SetBufferSize(Console.BufferWidth, 32766);
             //Console.WriteLine("Opening window...");
 
@@ -344,7 +331,7 @@ namespace DialogEngine
                 if(!SessionVars.ForceCharactersAndDialogModel)
                 { Console.WriteLine("   you may enter two characters initials to make them talk"); }
             }*/
-            
+
             //Select Debug Output
             /*if (SessionVars.ForceCharactersAndDialogModel)
             {

@@ -162,54 +162,66 @@ namespace DialogEngine
             while (true)
             {
 
-                if (SessionVars.ForceCharactersAndDialogModel)
-                {
-                    //string[] keyboardInput = Console.ReadLine().Split(' ');
-                    string[] parsekeyboardInput = keyboardInput.Split(); //vb:can add a hard code a console.readline()
 
-                    //if keyboard input has three numbers for debug mode to force dialog model and characters
-                    if (parsekeyboardInput.Length == 3)
+
+
+
+
+                    if (SessionVars.ForceCharactersAndDialogModel)
                     {
-                        int j = 0;
-                        int[] modelAndCharacters = new int[3];
-                        foreach (string asciiInt in parsekeyboardInput)
-                        {
-                            modelAndCharacters[j] = Int32.Parse(asciiInt);
-                            j++;
-                        }
+                            //string[] keyboardInput = Console.ReadLine().Split(' ');
+                            string[] parsekeyboardInput = keyboardInput.Split(); //vb:can add a hard code a console.readline()
 
-                        TheDialogs.GenerateADialog(modelAndCharacters);
+                            //if keyboard input has three numbers for debug mode to force dialog model and characters
+                            if (parsekeyboardInput.Length == 3)
+                        {
+                            int j = 0;
+                            int[] modelAndCharacters = new int[3];
+                            foreach (string asciiInt in parsekeyboardInput)
+                            {
+                                modelAndCharacters[j] = Int32.Parse(asciiInt);
+                                j++;
+                            }
+
+
+                            TheDialogs.GenerateADialog(modelAndCharacters);
+
+
+
+                        }
+                        else
+                        {
+                            ((MainWindow)Application.Current.MainWindow).TestOutput.Text += "Incorrect input, generating random dialog." + Environment.NewLine;
+                                //Console.WriteLine("Incorrect input, generating random dialog.");
+                                TheDialogs.GenerateADialog();
+                                // wrong number of user input select rand dialog and characters
+                            }
                     }
                     else
                     {
-                        ((MainWindow)Application.Current.MainWindow).TestOutput.Text += "Incorrect input, generating random dialog." + Environment.NewLine;
-                        //Console.WriteLine("Incorrect input, generating random dialog.");
-                        TheDialogs.GenerateADialog();
-                        // wrong number of user input select rand dialog and characters
-                    }
-                }
-                else
-                {
-                    if (!SessionVars.HeatMapOnlyMode)
-                    {
-                        TheDialogs.GenerateADialog();  //normal operation
-                        Thread.Sleep(1100); //vb:commented out for debugging as code stops here
-                        Thread.Sleep(RandomNumbers.Gen.Next(0, 2000)); //vb:commented out for debugging as code stops here
-                    }
-                    else
-                    {
-                        //Console.Clear();
-                        if (SessionVars.HeatMapFullMatrixDispMode)
+                        if (!SessionVars.HeatMapOnlyMode)
                         {
-                            FirmwareDebuggingTools.PrintHeatMap();
-                        }
-                        if (SessionVars.HeatMapSumsMode)
+                            TheDialogs.GenerateADialog();  //normal operation
+                                Thread.Sleep(1100); //vb:commented out for debugging as code stops here
+                                Thread.Sleep(RandomNumbers.Gen.Next(0, 2000)); //vb:commented out for debugging as code stops here
+                            }
+                        else
                         {
-                            FirmwareDebuggingTools.PrintHeatMapSums();
-                        }
-                        Thread.Sleep(400); //vb:commented out for debugging as code stops here
+                                //Console.Clear();
+                                if (SessionVars.HeatMapFullMatrixDispMode)
+                            {
+                                FirmwareDebuggingTools.PrintHeatMap();
+                            }
+                            if (SessionVars.HeatMapSumsMode)
+                            {
+                                FirmwareDebuggingTools.PrintHeatMapSums();
+                            }
+                            Thread.Sleep(400); //vb:commented out for debugging as code stops here
+                            }
                     }
-                }
+
+
+
             }
         }
         void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)

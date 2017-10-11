@@ -1,0 +1,1285 @@
+{
+  "CharacterName": "Bjorn Oresson",
+  "CharacterPrefix": "BO",
+  "Phrases": [
+    {
+      "DialogStr": "Bjorn Oresson has not been initialized.",
+      "FileName": "BjornOressonHasNotBeen",
+      "PhraseWeights": {
+        "Exclamation": 0.01
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "Are you ready to Ragnaroooooooooooook",
+      "FileName": "ReadyToRag",
+      "PhraseWeights": {
+        "Exclamation": 8,
+        "YesNoQuestion": 2,
+        "GiveJoke": 1
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "Jah",
+      "FileName": "Jah",
+      "PhraseWeights": {
+        "Yes": 8,
+        "GoOnNeutral": 4
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "Jah, jah, jah",
+      "FileName": "JahJahJah",
+      "PhraseWeights": {
+        "Yes": 8,
+        "GiveAgreement": 1
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "Someone polish my battle axe. I'm about to need it",
+      "FileName": "SomeonePolishMy",
+      "PhraseWeights": {
+        "Threat": 8,
+        "ShutUp": 1
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "Go on a quest to Valhalla, where we all go once we've rocked too hard",
+      "FileName": "ValhallaWhereWeAllGo",
+      "PhraseWeights": {
+        "GiveLocation": 8,
+        "GiveAdvice": 2
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "I've been working on power chords. Jug jug jug jug jug jug jug jug jah jaaaaaaaaaah",
+      "FileName": "WorkingOnPowerChords",
+      "PhraseWeights": {
+        "GiveRecentHistory": 8
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "It may be time to search the infinite belly of Jormungandr, the World Serpent",
+      "FileName": "TimeToSearchTheInfiniteBelly",
+      "PhraseWeights": {
+        "GiveLocation": 8,
+        "SuggestPlan": 2
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "Where could the Frost Giants be? I need a drummer and they have good rhythm.",
+      "FileName": "WhereCouldTheFrostGiants",
+      "PhraseWeights": {
+        "RequestLocation": 8
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "Take my hand in friendship, and call me Bjorn Oresson",
+      "FileName": "TakeMyHand",
+      "PhraseWeights": {
+        "Greeting": 8
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "The wind blows west, and I must go",
+      "FileName": "TheWindBlowsWest",
+      "PhraseWeights": {
+        "Retreat": 8
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "No",
+      "FileName": "No",
+      "PhraseWeights": {
+        "No": 8
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "Sit with me a time, and tell me your tales of valor",
+      "FileName": "SitWithMeATime",
+      "PhraseWeights": {
+        "RequestCatchup": 8
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "Some things are in the hands of we mortals. Some things are better left to the gods",
+      "FileName": "SomeThingsAreInTheHands",
+      "PhraseWeights": {
+        "GiveAdvice": 8
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "You have the look of a proud warrior. With a full beard, you'd be prouder still",
+      "FileName": "LookOfAProudWarrior",
+      "PhraseWeights": {
+        "GiveAffirmation": 8
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "Hah! Now that is metal.",
+      "FileName": "NowThatIsMetal",
+      "PhraseWeights": {
+        "GoOnJoyful": 8
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "You scaly misshapen child of a tone-deaf troll",
+      "FileName": "YouScalyChild",
+      "PhraseWeights": {
+        "Insult": 8
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "No! I'd expect to hear such things from the lips of Loki the trickster",
+      "FileName": "IdExpectToHear",
+      "PhraseWeights": {
+        "GiveDisbelief": 8,
+        "GoOnDisapproval": 1,
+        "Deny": 1
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "If you cannot rock, then what will you be doing in the band?",
+      "FileName": "IfYouCannotRock",
+      "PhraseWeights": {
+        "RequestActivity": 8
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "...",
+      "FileName": "HalfSecSilence",
+      "PhraseWeights": {
+        "GiveSilence": 1
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "I don't understand. Who could have turned this amp...to eleven?",
+      "FileName": "ToEleven",
+      "PhraseWeights": {
+        "RequestWho": 8
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "My sister Inga has been braiding my beard",
+      "FileName": "BraidingMyBeard",
+      "PhraseWeights": {
+        "GiveRecentHistory": 8
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "I need new oars and sails for my longship. IKEA had none",
+      "FileName": "IkeaHadNone",
+      "PhraseWeights": {
+        "RequestLocation": 8,
+        "GiveRecentHistory": 1
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "You have innards of steel and the heart of a fire giant",
+      "FileName": "InnardsOfSteel",
+      "PhraseWeights": {
+        "GiveAffirmation": 8,
+        "ThankYou": 1
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "You touched my amps. I warned you not to do that",
+      "FileName": "TouchedMyAmps",
+      "PhraseWeights": {
+        "Accuse": 8
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "With all-seeing Odin as my witness...I did not",
+      "FileName": "IDidNot",
+      "PhraseWeights": {
+        "Deny": 8
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "With all-seeing Odin as my witness...jah, I did",
+      "FileName": "JahIDid",
+      "PhraseWeights": {
+        "Admit": 8
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "It wasn't me, it was dwarves. You should blame dwarves",
+      "FileName": "BlameDwarves",
+      "PhraseWeights": {
+        "Deny": 8
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "The Thunder God Thor came to me in a vision. But I feared to ride the lighting",
+      "FileName": "FearedToRideTheLightning",
+      "PhraseWeights": {
+        "GiveRecentHistory": 2,
+        "RequestAffirmation": 2,
+        "RequestAdvice": 1,
+        "GiveSurprisingStatement": 1,
+        "GiveSecret": 3
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "My hearing may be damaged, but I heard that well",
+      "FileName": "HearingMayBeDamaged",
+      "PhraseWeights": {
+        "GoOnUnderstanding": 8,
+        "GoOnNeutral": 1
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "Let's talk of graves, of worms, and epitaphs, and with rainy eyes write sorrow on the bosom of the earth,",
+      "FileName": "LetsTalkOfGraves",
+      "PhraseWeights": {
+        "RequestAffirmation": 2,
+        "RequestCatchup": 1,
+        "RequestJoke": 1,
+      "Greeting": 1
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "That shakes me worse than thunder in an open field",
+      "FileName": "ShakesMeWorse",
+      "PhraseWeights": {
+        "GoOnFear": 8,
+        "GoOnSad": 4
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "Foul.",
+      "FileName": "Foul",
+      "PhraseWeights": {
+        "GoOnDisgust": 8,
+       "GoOnAngry": 1,
+       "NotFunny": 2,
+       "GoOnDisapproval": 2
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "By the Horn of Heimdall",
+      "FileName": "ByTheHorn",
+      "PhraseWeights": {
+        "Exclamation": 2,
+        "GoOnSurprise": 3
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "It seems doom approaches",
+      "FileName": "DoomApproaches",
+      "PhraseWeights": {
+        "GoOnSad": 4,
+        "GoOnFear": 4,
+        "ImSad": 2,
+        "ImScared": 2
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "When I'm in need of a strong arm, you will do like for me",
+      "FileName": "NeedOfAStrongArm",
+      "PhraseWeights": {
+        "YoureWelcome": 3
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "Headbanging with a flight of Valkyries",
+      "FileName": "HeadbangingWithAFlight",
+      "PhraseWeights": {
+        "GiveActivity": 8
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "Shredding a solo",
+      "FileName": "ShreddingASolo",
+      "PhraseWeights": {
+        "GiveActivity": 4
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "When all the worlds were new, there was no food, and the Giant Ymir slept hungry. The giant began to sweat, and from the drops of his sweat came a cow, and from the cow's udders flowed rivers of milk that Ymir drank from.",
+      "FileName": "TheGiantYmirSlept",
+      "PhraseWeights": {
+        "Ramble": 8
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "The gods tried to shackle the great and dangerous Fenris wolf, but he snapped every rope and chain they put around him. The dwarves made a magic unbreakable ribbon to bind the animal. But the wolf was wary, cautious, and would not let none approach him with the ribbon, unless one of the gods would agree to place their hand inside his terrible mouth.",
+      "FileName": "TheGodsTriedToShackle",
+      "PhraseWeights": {
+        "Ramble": 8
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "Fool! You set this bubblegum inside my beard",
+      "FileName": "SetThisBubblegum",
+      "PhraseWeights": {
+        "Accuse": 8
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "When the day ends, and the grit of combat has collected beneath my fingernails, I yearn for a bubble bath.",
+      "FileName": "YearnForABubble",
+      "PhraseWeights": {
+        "GiveSurprisingStatement": 4,
+        "GiveJoke": 4
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "Why would anyone fill our roadie cases with laughing ravens",
+      "FileName": "FillOurRoadie",
+      "PhraseWeights": {
+        "RequestMotivation": 8
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "When the spirit of Rock fills the body, all manner of madness flows out",
+      "FileName": "TheSpiritOfRock",
+      "PhraseWeights": {
+        "GiveMotivation": 4,
+        "GiveAdvice": 1
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "I was alone on my boat under stormy skies, when a guitar solo pierced the heavens and gave me courage. Was it you who played it?",
+      "FileName": "AloneOnMyBoat",
+      "PhraseWeights": {
+        "GiveCredit": 9,
+        "YesNoQuestion": 2
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "Loki the trickster god is behind many things",
+      "FileName": "LokiTheTrickster",
+      "PhraseWeights": {
+        "GiveWho": 8
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "I shall grasp your arm and agree to that",
+      "FileName": "GraspYourArm",
+      "PhraseWeights": {
+        "AcceptPlan": 8
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "What dark days",
+      "FileName": "WhatDarkDays",
+      "PhraseWeights": {
+        "GoOnSad": 4,
+        "GoOnFear": 4,
+        "RequestAffirmation": 1,
+        "ImSad": 2
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "Peh!",
+      "FileName": "Peh",
+      "PhraseWeights": {
+        "GoOnDisapproval": 2,
+        "GoOnDisgust": 2,
+        "Exasperation": 2
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "Hah hah!",
+      "FileName": "HahHah",
+      "PhraseWeights": {
+        "GoOnJoyful": 8,
+        "Exclamation": 8,
+        "Laugh": 4
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "I lack the wisdom of Odin, but this I understand",
+      "FileName": "WisdomOfOdin",
+      "PhraseWeights": {
+        "GoOnUnderstanding": 4,
+        "GiveAffirmation": 1,
+        "GiveAdvice": 1
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "By the fangs of Fenrir, no",
+      "FileName": "ByTheFangs",
+      "PhraseWeights": {
+        "No": 8,
+        "Deny": 1,
+      "GoOnAngry": 1,
+      "RejectPlan": 2
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "I tire of this. Unless you wish to taste my axe, we will part ways",
+      "FileName": "ITireOfThis",
+      "PhraseWeights": {
+        "Retreat": 8,
+        "ShutUp": 1
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "I thank you",
+      "FileName": "IThankYou",
+      "PhraseWeights": {
+        "ThankYou": 8
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "A warrior admits what he has done",
+      "FileName": "AWarriorAdmits",
+      "PhraseWeights": {
+        "Admit": 8
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "By the gods, I can scarcely believe it",
+      "FileName": "ByTheGods",
+      "PhraseWeights": {
+        "GoOnSurprise": 8,
+        "GiveDisbelief": 4
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "At times I fear I've fought too many battles. Say something to stoke my spirits",
+      "FileName": "StokeMySpirits",
+      "PhraseWeights": {
+        "RequestJoke": 8,
+        "RequestAdvice": 1,
+       "RequestAffirmation": 4
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "You are a coward, and the holy halls of Valhalla will never harbor you.",
+      "FileName": "YouAreACoward",
+      "PhraseWeights": {
+        "Insult": 8
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "The time has come to put down my axe, and pick up my axe. I mean, guitar",
+      "FileName": "PutDownMyAxe",
+      "PhraseWeights": {
+        "GiveSurprisingStatement": 2,
+        "GiveJoke": 1
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "You watched after my sisters and brother in my absence",
+      "FileName": "YouWatchedAfter",
+      "PhraseWeights": {
+        "GiveCredit": 8
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "I need someone who can play bass. I will not do it",
+      "FileName": "PlayBass",
+      "PhraseWeights": {
+        "RequestWho": 8
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "You are welcome, friend",
+      "FileName": "YouAreWelcome",
+      "PhraseWeights": {
+        "YoureWelcome": 8
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "Erik the Red does more than settle islands",
+      "FileName": "ErikTheRed",
+      "PhraseWeights": {
+        "GiveWho": 4
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "It may be that they've seen too much bloodshed",
+      "FileName": "SeenTooMuch",
+      "PhraseWeights": {
+        "GiveMotivation": 8
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "If the time comes to make peace, how will I break bread with the enemy?",
+      "FileName": "BreakBread",
+      "PhraseWeights": {
+        "RequestActivity": 2,
+        "RequestAdvice": 4
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "In my years, I have made too many enemies. Do not force me to count you among them",
+      "FileName": "TooManyEnemies",
+      "PhraseWeights": {
+        "Threat": 8
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "When I was young, my father sent me to sea, but kept my brother with him. I do not know why",
+      "FileName": "MyFatherSentMe",
+      "PhraseWeights": {
+        "RequestMotivation": 8,
+        "GiveSecret": 4
+      },
+      "PhraseRating": "PG"
+      },{
+      "DialogStr": "Twinkle, twinkle, little star",
+      "FileName": "TwinkleTwinkleLittleStar_A",
+      "PhraseWeights": {
+        "Twinkle1": 1
+      },
+      "PhraseRating": "PG"
+    },{
+      "DialogStr": "How I wonder what you are",
+      "FileName": "HowIWonderWhat_A",
+      "PhraseWeights": {
+        "Twinkle2": 1
+      },
+      "PhraseRating": "PG"
+    },{
+      "DialogStr": "Up above the world so high",
+      "FileName": "UpAboveTheWorld",
+      "PhraseWeights": {
+        "Twinkle3": 1
+      },
+      "PhraseRating": "PG"
+    },{
+      "DialogStr": "Like a diamond in the sky",
+      "FileName": "LikeADiamondIn",
+      "PhraseWeights": {
+        "Twinkle4": 1
+      },
+      "PhraseRating": "PG"
+    },{
+      "DialogStr": "Twinkle, twinkle, little star",
+      "FileName": "TwinkleTwinkleLittleStar_B",
+      "PhraseWeights": {
+        "Twinkle5": 1
+      },
+      "PhraseRating": "PG"
+    },{
+      "DialogStr": "How I wonder what you are",
+      "FileName": "HowIWonderWhat_B",
+      "PhraseWeights": {
+        "Twinkle6": 1
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "You fill my belly with mirth",
+      "FileName": "BellyWithMirth",
+      "PhraseWeights": {
+        "Laugh": 6
+      },
+      "PhraseRating": "PG"
+        },{
+    "DialogStr": "My sister Inga braided my beard too tight",
+      "FileName": "BeardTooTight",
+      "PhraseWeights": {
+        "Complain": 8
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "I do not enjoy a sunny day",
+      "FileName": "EnjoyASunnyDay",
+      "PhraseWeights": {
+        "Complain": 8
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "I've rocked for many moons, and my right ear hears no longer",
+      "FileName": "RightEarHears",
+      "PhraseWeights": {
+        "Complain": 8
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "You've wounded me worse than any sword or arrow",
+      "FileName": "WoundedMeWorse",
+      "PhraseWeights": {
+        "HurtFeelings": 8
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "Friend, you've a troubled look upon your brow",
+      "FileName": "ATroubledLook",
+      "PhraseWeights": {
+        "WhatsWrong": 8,
+        "RequestQuestion": 2
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "Enough combat. Take my arm in truce",
+      "FileName": "ArmInTruce",
+      "PhraseWeights": {
+        "MakeUp": 8,
+        "Sorry": 4
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "Hails and horns",
+      "FileName": "HailsAndHorns",
+      "PhraseWeights": {
+        "Greeting": 8,
+        "Exclamation": 2
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "I lost a toe to frostbite",
+      "FileName": "LostAToe",
+      "PhraseWeights": {
+        "Complain": 8,
+        "GiveRecentHistory": 1
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "I can't get my axe in tune",
+      "FileName": "AxeInTune",
+      "PhraseWeights": {
+        "Complain": 8
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "I've not seen my brother Bard in many long years",
+      "FileName": "SeenMyBrother",
+      "PhraseWeights": {
+        "Complain": 8,
+        "RequestAffirmation": 2
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "Let's drink until our yesterdays are forgotten",
+      "FileName": "DrinkUntilOurYesterdays",
+      "PhraseWeights": {
+        "SuggestPlan": 8,
+        "GiveAdvice": 1
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "Perhaps you've had drink enough for today",
+      "FileName": "DrinkEnough",
+      "PhraseWeights": {
+        "NotFunny": 1,
+        "ShutUp": 1,
+        "Insult": 1,
+        "GiveDisbelief": 3
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "I've lost friends enough it battle. I'll not lose you over this",
+      "FileName": "LostFriendsEnough",
+      "PhraseWeights": {
+        "MakeUp": 8
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "Tell Bjorn what troubles you",
+      "FileName": "TellBjorn",
+      "PhraseWeights": {
+        "WhatsWrong": 8,
+       "RequestQuestion": 4
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "You speak to me like an enemy, and I've had too many of those",
+      "FileName": "LikeAnEnemy",
+      "PhraseWeights": {
+        "HurtFeelings": 8
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "I did not mean to wound you so",
+      "FileName": "WoundYouSo",
+      "PhraseWeights": {
+        "Sorry": 8
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "There's little humor in that",
+      "FileName": "LittleHumor",
+      "PhraseWeights": {
+        "NotFunny": 4,
+        "GoOnDisapproval": 2
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "Uhhhh. Sometimes I'd rather be deaf in both ears",
+      "FileName": "DeafInBothEars",
+      "PhraseWeights": {
+        "NotFunny": 4,
+        "ShutUp": 4,
+        "Exasperation": 4,
+        "DontCare": 4,
+        "GoOnDisgust": 1
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "The god Freyr had to give away his magic sword in order to woo a giantess. From that day, whenever he had to fight, he beat his opponents with a reindeer's antler! Ha ha ha! Hahahahahahaha!",
+      "FileName": "ReindeerAntler",
+      "PhraseWeights": {
+        "GiveJoke": 8,
+        "Ramble": 2
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "I may once have known that, but I've suffered too many head wounds since",
+      "FileName": "TooManyHeadWounds",
+      "PhraseWeights": {
+        "DontKnow": 8
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "When Ragnarok comes and the world is torn apart, what will remain?",
+      "FileName": "WhenRagnarokComes",
+      "PhraseWeights": {
+        "RequestObject": 9
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "Patel, what will become of your enemies when you've defeated them?",
+      "FileName": "BjornDannyEnemies1",
+      "PhraseWeights": {
+        "BjornDannyEnemies1": 8
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "Will you burn their homes, steal their horses, and pillage their villages?",
+      "FileName": "BjornDannyEnemies3",
+      "PhraseWeights": {
+        "BjornDannyEnemies3": 8
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "You may not have a warrior's heart, Danny Patel. But you're a wiser man than me.",
+      "FileName": "BjornDannyEnemies5",
+      "PhraseWeights": {
+        "BjornDannyEnemies5": 8,
+        "BjornToDanny": 4
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "When I was a child, she killed a she-wolf with her bear hands to protect our family.",
+      "FileName": "BjornDannyMother2",
+      "PhraseWeights": {
+        "BjornDannyMother2": 8
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "Ahh, there are no dwarves for miles",
+      "FileName": "NoDwarves",
+      "PhraseWeights": {
+        "GoodNews": 8,
+        "GiveSurprisingStatement": 2
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "Perhaps...after the world has been destroyed, and made again",
+      "FileName": "AfterTheWorld",
+      "PhraseWeights": {
+        "RejectPlan": 8
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "Only the Gods know that. You had best ask all-seeing Odin",
+      "FileName": "OnlyTheGods",
+      "PhraseWeights": {
+        "DontKnow": 8
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "That has the thunderous clap of truth",
+      "FileName": "ThunderousClapOfTruth",
+      "PhraseWeights": {
+        "GiveAgreement": 8
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "That cannot be so",
+      "FileName": "CannotBeSo",
+      "PhraseWeights": {
+        "GiveDisbelief": 8
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "We shall drink to that",
+      "FileName": "DrinkToThat",
+      "PhraseWeights": {
+        "AcceptPlan": 8
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "What stops your tears on lonesome days?",
+      "FileName": "StopsYourTears",
+      "PhraseWeights": {
+        "RequestLike": 8,
+        "RequestJoke": 1
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "My axe! I broke a string. What can I play instead?",
+      "FileName": "BrokeAString",
+      "PhraseWeights": {
+        "RequestObject": 8
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "My axe is in tune",
+      "FileName": "AxeIsInTune",
+      "PhraseWeights": {
+        "GoodNews": 8
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "Perhaps.",
+      "FileName": "Perhaps",
+      "PhraseWeights": {
+        "Maybe": 8,
+        "RejectPlan": 1
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "That may be so",
+      "FileName": "MayBeSo",
+      "PhraseWeights": {
+        "Maybe": 8
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "Grey skies warm my heart",
+      "FileName": "GreySkies",
+      "PhraseWeights": {
+        "GoodNews": 8,
+        "GiveLike": 6
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "It must be the clipped toenail of a god",
+      "FileName": "ClippedToenail",
+      "PhraseWeights": {
+        "GiveObject": 8
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "Odin sent me a vision, but I cannot remember. What was it he showed me through smoke",
+      "FileName": "ThroughSmoke",
+      "PhraseWeights": {
+        "RequestObject": 7
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "It must be a fine proud belch",
+      "FileName": "FineProudBelch",
+      "PhraseWeights": {
+        "GiveObject": 8
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "What is it you wish to know?",
+      "FileName": "WishToKnow",
+      "PhraseWeights": {
+        "RequestQuestion": 8
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "To watch over my sisters gives me comfort",
+      "FileName": "WatchOverMySisters",
+      "PhraseWeights": {
+        "GiveLike": 8
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "What keeps you out of the grip of madness?",
+      "FileName": "GripOfMadness",
+      "PhraseWeights": {
+        "RequestLike": 8
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "Ha! The sky is full of ravens",
+      "FileName": "SkyFullOfRavens",
+      "PhraseWeights": {
+        "GoodNews": 8,
+        "GiveSurprisingStatement": 2
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "My sister Inga gave birth to a healthy child",
+      "FileName": "HealthyChild",
+      "PhraseWeights": {
+        "GoodNews": 8,
+        "GiveSurprisingStatement": 2
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "When my father held me in his arms, he called me Bjorn",
+      "FileName": "WhenMyFatherHeld",
+      "PhraseWeights": {
+        "Greeting": 8
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "Do not test me. Or I'll make you play bass",
+      "FileName": "MakeYouPlayBass",
+      "PhraseWeights": {
+        "Threat": 6
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "There are many ways to harm a man. Only a few dozen of them involve an axe",
+      "FileName": "ManyWaysToHarm",
+      "PhraseWeights": {
+        "Threat": 6
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "Goodbye, until after the end of the world",
+      "FileName": "GoodbyeUntilAfterTheEnd",
+      "PhraseWeights": {
+        "Retreat": 8
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "It is so",
+      "FileName": "ItIsSo",
+      "PhraseWeights": {
+        "Yes": 4
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "It is not so",
+      "FileName": "ItIsNotSo",
+      "PhraseWeights": {
+        "No": 2,
+        "Deny": 2
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "What has destiny brought you?",
+      "FileName": "WhatHasDestinyBroughtYou",
+      "PhraseWeights": {
+        "RequestCatchup": 8,
+        "RequestObject": 2
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "Fear not, friend. When you perish, the Valkyries will save a place in Valhalla for you",
+      "FileName": "SaveAPlace",
+      "PhraseWeights": {
+        "GiveAffirmation": 8
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "We must stop this talk before I grow hoarse",
+      "FileName": "BeforeIGrowHoarse",
+      "PhraseWeights": {
+        "ShutUp": 4
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "What is that cunning look in your eye? Are you hiding dwarves?",
+      "FileName": "AreYouHidingDwarves",
+      "PhraseWeights": {
+        "YesNoQuestion": 6,
+        "Accuse": 4
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "Am I truly a warrior any longer?",
+      "FileName": "TrulyAWarrior",
+      "PhraseWeights": {
+        "YesNoQuestion": 8,
+        "RequestAffirmation": 2
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "Enough of blood and rain. Say something merry",
+      "FileName": "EnoughOfRain",
+      "PhraseWeights": {
+        "RequestJoke": 8
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "You knock-kneed kisser of dwarves",
+      "FileName": "KisserOfDwarves",
+      "PhraseWeights": {
+        "Insult": 8
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "What will the trickster Loki be doing to bring on the end of the world?",
+      "FileName": "WhatWillTheTrickster",
+      "PhraseWeights": {
+        "RequestActivity": 8
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "Cracking the knees of giants",
+      "FileName": "KneesOfGiants",
+      "PhraseWeights": {
+        "GiveActivity": 8
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "I need a way to keep my sanity",
+      "FileName": "KeepMySanity",
+      "PhraseWeights": {
+        "RequestAdvice": 4
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "Why did blind Hodor slay the god of beauty?",
+      "FileName": "WhyDidBlindHodor",
+      "PhraseWeights": {
+        "RequestMotivation": 8
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "They were fooled by the trickster god Loki",
+      "FileName": "FooledByTheTrickster",
+      "PhraseWeights": {
+        "GiveMotivation": 8
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "I have sailed past many horizons. But I do not know where to find the edge of the world",
+      "FileName": "TheEdgeOfTheWorld",
+      "PhraseWeights": {
+        "RequestLocation": 8
+      },
+      "PhraseRating": "PG"    
+},{
+    "DialogStr": "One may find what they seek on the other side of Bifrost, the rainbow bridge",
+      "FileName": "OtherSideOfBifrost",
+      "PhraseWeights": {
+        "GiveLocation": 8
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "We have a warrior's bond. You can trust me with your secret",
+      "FileName": "WeHaveAWarriorsBond",
+      "PhraseWeights": {
+        "RequestSecret": 8
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "My blood runs lightning hot",
+      "FileName": "BloodRunsHot",
+      "PhraseWeights": {
+        "ImAngry": 8,
+        "GoOnAngry": 2
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "How do you fare?",
+      "FileName": "HowDoYouFare",
+      "PhraseWeights": {
+        "HowAreYou": 8,
+        "WhatsWrong": 2
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "Ha! I feel so metal",
+      "FileName": "FeelSoMetal",
+      "PhraseWeights": {
+        "ImHappy": 8
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "[growling]",
+      "FileName": "Growling",
+      "PhraseWeights": {
+        "ImAngry": 4,
+        "GoOnAngry": 2,
+        "Exasperation": 2,
+        "BodilyNoise": 2
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "Enough of your chatter",
+      "FileName": "YourChatter",
+      "PhraseWeights": {
+        "Exasperation": 4,
+        "ShutUp": 4
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "Didn't hear you. It's this ringing in my brain",
+      "FileName": "RingingInMyBrain",
+      "PhraseWeights": {
+        "DontKnow": 4,
+        "DontCare": 4
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "I wonder whose appetite for destruction is most ravenous",
+      "FileName": "AppetiteForDestruction",
+      "PhraseWeights": {
+        "RequestWho": 8
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "Perhaps my last drummer. He left the band because he feared to meet a grisly end, like so many of his kind",
+      "FileName": "SoManyOfHisKind",
+      "PhraseWeights": {
+        "GiveWho": 8
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "Odin's ravens are forever watching, spying, finding secrets. And of all those secrets, what must the most terrible be?",
+      "FileName": "OdinsRavensWatching",
+      "PhraseWeights": {
+        "RequestSecret": 8
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "Perhaps a lock of blonde hair from someone best forgotten",
+      "FileName": "BlondeHairFromSomeone",
+      "PhraseWeights": {
+        "GiveObject": 8
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "Ah.",
+      "FileName": "Ah",
+      "PhraseWeights": {
+        "GoOnNeutral": 8
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "I've done much I regret. I wish you'd not remind me of it",
+      "FileName": "RemindMeOfIt",
+      "PhraseWeights": {
+        "Admit": 8
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "You make me a merry man",
+      "FileName": "YouMakeMeAMerryMan",
+      "PhraseWeights": {
+        "Laugh": 4
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "Even you have a destiny, Danny Patel. Whether fair or foul, I cannot say",
+      "FileName": "EvenYouHaveADestiny",
+      "PhraseWeights": {
+        "BjornToDanny": 8
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "We indeed have a warrior's bond",
+      "FileName": "WeIndeedHaveA",
+      "PhraseWeights": {
+        "ThankYou": 2,
+        "YoureWelcome": 2
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "Are you hale? Are you healthy? Does the spirit of metal possess you now?",
+      "FileName": "SpiritOfMetal",
+      "PhraseWeights": {
+        "HowAreYou": 8,
+        "YesNoQuestion": 2
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "My hands and heart are trembling. As though I have no battles left in me",
+      "FileName": "HandsHeartTrembling",
+      "PhraseWeights": {
+        "ImScared": 8,
+        "ImSad": 2
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "[big sneeze]",
+      "FileName": "BigSneeze",
+      "PhraseWeights": {
+        "BodilyNoise": 9
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "I am a granite god of rock",
+      "FileName": "GraniteGodOfRock",
+      "PhraseWeights": {
+        "Brag": 8
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "I feel, in this moment, at peace",
+      "FileName": "FeelAtPeace",
+      "PhraseWeights": {
+        "ImHappy": 8
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "You may tell me your secret. With all-seeing Odin as my witness, I will not share it",
+      "FileName": "OdinAsMyWitness",
+      "PhraseWeights": {
+        "RequestSecret": 8
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "I built a longboat with my bare hands, and nailed it tight with my fists",
+      "FileName": "BuiltALongboat",
+      "PhraseWeights": {
+        "Brag": 8
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "[long yawn]",
+      "FileName": "LongYawn",
+      "PhraseWeights": {
+        "DontCare": 2,
+        "BodilyNoise": 2,
+        "NotFunny": 1
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "The Norns guide the fate of we mortals. Now, let's play as though they guide our fingers",
+      "FileName": "NornsGuideTheFates",
+      "PhraseWeights": {
+        "SuggestPlan": 8
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "You've just given me one more sorrow",
+      "FileName": "OneMoreSorrow",
+      "PhraseWeights": {
+        "HurtFeelings": 8
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "We shall",
+      "FileName": "WeShall",
+      "PhraseWeights": {
+        "AcceptPlan": 6
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "My heart is full of cheer. And blood",
+      "FileName": "HeartIsFullOfCheer",
+      "PhraseWeights": {
+        "ImHappy": 8
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "I now have the mad and twitchy feeling that precedes a battle",
+      "FileName": "MadAndTwitchyFeeling",
+      "PhraseWeights": {
+        "ImAngry": 8
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "In truth, my beard...I have allowed my sister Inga to dye it",
+      "FileName": "AllowedToDye",
+      "PhraseWeights": {
+        "GiveSecret": 8
+      },
+      "PhraseRating": "PG"
+    },{
+    "DialogStr": "I can shred like the wolf Fenrir through a herd of cattle",
+      "FileName": "ShredLikeFenrir",
+      "PhraseWeights": {
+        "Brag": 8
+      },
+      "PhraseRating": "PG"
+}
+  ]
+}
