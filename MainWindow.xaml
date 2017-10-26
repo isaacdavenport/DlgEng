@@ -13,7 +13,7 @@
             <Setter Property="Text" Value="{Binding Text, ElementName=tbMaster}"/>
         </Style>
     </Window.Resources>
-    <Grid Margin="0,0,2,39">
+    <!--<Grid Margin="0,0,2,39">
         <Grid.RowDefinitions>
             <RowDefinition Height="51*"/>
             <RowDefinition Height="183*"/>
@@ -30,5 +30,19 @@
          ScrollViewer.CanContentScroll="True" />
         <Button x:Name="InputButton" Content="Retrieve" HorizontalAlignment="Left" Margin="0,63,-0.333,-41.333" VerticalAlignment="Top" Width="631" Height="41" Grid.Row="2" Click="InputButton_Click" Grid.ColumnSpan="2"/>
 
+    </Grid>-->
+
+    <Grid x:Name="mainGrid">
+        
+        <Frame x:Name="mainFrame"
+               NavigationUIVisibility="Hidden"
+               >
+            
+            <Frame.Background>
+                LightGray
+            </Frame.Background>
+        </Frame>
+        
+        
     </Grid>
 </Window>

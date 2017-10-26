@@ -8,13 +8,6 @@ using System.Threading;
 
 namespace DialogEngine
 {
-    public class ReceivedMessage
-    {
-        public string CharacterPrefix = "XX";
-        public DateTime ReceivedTime = DateTime.MinValue;
-        public int[] Rssi = new int[SerialComs.NUM_RADIOS];
-        public int SequenceNum = -1;
-    }
 
     public static class SerialComs
     {
@@ -41,15 +34,20 @@ namespace DialogEngine
 
         private static string ReadSerialInLine() {
             string message = null;
-            try {
-                if (_serialPort.BytesToRead > 18) {
+            try
+            {
+                if (_serialPort.BytesToRead > 18)
+                {
                     message = _serialPort.ReadLine();
-                    if (_serialPort.BytesToRead > 1000) {
+
+                    if (_serialPort.BytesToRead > 1000)
+                    {
                         // got behind for some reason
                         _serialPort.DiscardInBuffer();
                         Console.WriteLine("serial buffer over run.");
                     }
-                    if (SessionVars.WriteSerialLog) {
+                    if (SessionVars.WriteSerialLog)
+                    {
                         using (StreamWriter serialLog = new StreamWriter(
                             SessionVars.LogsDirectory + SessionVars.HexLogFileName, true)) {
                             serialLog.Write(DateTime.Now.ToString("mm.ss.fff") + "  ");

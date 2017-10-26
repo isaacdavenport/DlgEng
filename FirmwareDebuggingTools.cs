@@ -11,37 +11,45 @@ namespace DialogEngine
 {
     public static class FirmwareDebuggingTools
     {
+        #region -Fields-
 
-        public static void PrintHeatMap()
+
+        public delegate void WriteMessageFunc(string message);
+
+        #endregion
+
+        #region - Static methods -
+
+        public static void PrintHeatMap(WriteMessageFunc addDialogItem)
         {
             int i, l, m;
 
             for (i = 0; i < SerialComs.NUM_RADIOS; i++)
             {
-                ((MainWindow)Application.Current.MainWindow).TestOutput.Text += SelectNextCharacters.CharactersLastHeatMapUpdateTime[i].ToString("mm.ss.fff") + " " + Environment.NewLine;
-                //Console.Write(SelectNextCharacters.CharactersLastHeatMapUpdateTime[i].ToString("mm.ss.fff") + " ");
+                addDialogItem(SelectNextCharacters.CharactersLastHeatMapUpdateTime[i].ToString("mm.ss.fff") + " ");
+
             }
-            ((MainWindow)Application.Current.MainWindow).TestOutput.Text += Environment.NewLine;
-            //Console.WriteLine();
+
+            addDialogItem(string.Empty);
+
             for (l = 0; l < SerialComs.NUM_RADIOS; l++)
             {
                 for (m = 0; m < SerialComs.NUM_RADIOS; m++)
                 {
-                    ((MainWindow)Application.Current.MainWindow).TestOutput.Text += "{0:D3}" + SelectNextCharacters.HeatMap[l, m] + Environment.NewLine;
-                    ((MainWindow)Application.Current.MainWindow).TestOutput.Text += " " + Environment.NewLine;
-                    //Console.Write("{0:D3}", SelectNextCharacters.HeatMap[l, m]);
-                    //Console.Write(" ");
-                }
-                ((MainWindow)Application.Current.MainWindow).TestOutput.Text += "" + Environment.NewLine;
-                //Console.WriteLine("");
-            }
-            ((MainWindow)Application.Current.MainWindow).TestOutput.Text += "  Character1-2Num " + Program.TheDialogs.CharacterList[Program.TheDialogs.Character1Num].CharacterPrefix
-                              + " " + Program.TheDialogs.CharacterList[Program.TheDialogs.Character2Num].CharacterPrefix
-                              + " RSSIsum " + "{0:D3}" + SelectNextCharacters.BigRssi + ", rssiStable = " + SelectNextCharacters.RssiStable + Environment.NewLine;
+                    addDialogItem("{0:D3}" + SelectNextCharacters.HeatMap[l, m]);
 
-            //Console.WriteLine("  Character1-2Num " + Program.TheDialogs.CharacterList[Program.TheDialogs.Character1Num].CharacterPrefix
-            //                  + " " + Program.TheDialogs.CharacterList[Program.TheDialogs.Character2Num].CharacterPrefix
-            //                  + " RSSIsum " + "{0:D3}", SelectNextCharacters.BigRssi + ", rssiStable = " + SelectNextCharacters.RssiStable);
+                    addDialogItem(" ");
+
+                }
+                
+                addDialogItem(String.Empty);
+
+            }
+
+            addDialogItem("Character1-2Num " + DialogTracker.Instance.CharacterList[Program.TheDialogs.Character1Num].CharacterPrefix
+                              + " " + Program.TheDialogs.CharacterList[Program.TheDialogs.Character2Num].CharacterPrefix
+                              + " RSSIsum " + "{0:D3}" + SelectNextCharacters.BigRssi + ", rssiStable = " + SelectNextCharacters.RssiStable);
+
 
             ((MainWindow)Application.Current.MainWindow).TestOutput.Text += "" + Environment.NewLine;
             //Console.WriteLine("");
@@ -151,12 +159,19 @@ namespace DialogEngine
         public static void ProcessDebugFlags()
         {
             TimeSpan lenOfBuffer;
+
             if (SessionVars.HeatMapSumsMode && !SessionVars.HeatMapOnlyMode)
+            {
                 PrintHeatMapSums();
+            }
             if (SessionVars.HeatMapFullMatrixDispMode && !SessionVars.HeatMapOnlyMode)
+            {
                 PrintHeatMap();
+            }
             if (SessionVars.CheckStuckTransmissions && !SessionVars.HeatMapOnlyMode)
+            {
                 CheckStuckTransmissions();
+            }
             if (SessionVars.MonitorReceiveBufferSize && !SessionVars.HeatMapOnlyMode)
             {
                 lenOfBuffer = ParseMessage.ReceivedMessages.Last().ReceivedTime - ParseMessage.ReceivedMessages[0].ReceivedTime;
@@ -164,6 +179,9 @@ namespace DialogEngine
                                   " SecsOfBuff = " + lenOfBuffer.ToString(@"mm\.ss\.fff"));
             }
         }
+
+        #endregion
+
     }
 
 }

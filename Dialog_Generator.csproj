@@ -1,8 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="packages\Microsoft.Net.Compilers.2.0.1\build\Microsoft.Net.Compilers.props" Condition="Exists('packages\Microsoft.Net.Compilers.2.0.1\build\Microsoft.Net.Compilers.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
@@ -12,7 +13,8 @@
     <RootNamespace>DialogEngine</RootNamespace>
     <AssemblyName>DialogEngine</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
@@ -42,6 +44,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -51,6 +54,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>DialogEngine.Program</StartupObject>
@@ -65,7 +69,6 @@
     <Reference Include="System.configuration" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Windows.Input.Manipulations" />
     <Reference Include="System.Windows.Presentation" />
@@ -74,21 +77,37 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppSettings.cs" />
-    <Compile Include="DialogTracker.cs" />
+    <Compile Include="Core\RelayCommand.cs" />
+    <Compile Include="Core\ViewModelBase.cs" />
+    <Compile Include="Hendlers\Dialog\DialogTracker.cs" />
     <Compile Include="FirmwareDebuggingTools.cs" />
-    <Compile Include="ParseMessage.cs" />
-    <Compile Include="SelectNextCharacters.cs" />
-    <Compile Include="Serial.cs" />
+    <Compile Include="Helpers\AppSettings.cs" />
+    <Compile Include="Models\Dialog\Character.cs" />
+    <Compile Include="Models\Dialog\HistoricalDialog.cs" />
+    <Compile Include="Models\Dialog\HistoricalPhrase.cs" />
+    <Compile Include="Models\Dialog\ModelDialog.cs" />
+    <Compile Include="Models\Dialog\ModelDialogInput.cs" />
+    <Compile Include="Models\Dialog\ParentalRatings.cs" />
+    <Compile Include="Models\Dialog\PhraseEntry.cs" />
+    <Compile Include="Core\PageBase.cs" />
+    <Compile Include="Helpers\ParseMessage.cs" />
+    <Compile Include="Hendlers\Dialog\SelectNextCharacters.cs" />
+    <Compile Include="Hendlers\Dialog\Serial.cs" />
+    <Compile Include="Models\Dialog\ReceivedMessage.cs" />
     <Compile Include="MP3Player.cs" />
-    <Compile Include="DialogModels.cs" />
+    <Compile Include="Hendlers\Dialog\DialogModels.cs" />
     <Compile Include="Program.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SessionVariables.cs" />
+    <Compile Include="Helpers\SessionVariables.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Core\UI\Helpers\VisualHelper.cs" />
+    <Compile Include="ViewModels\Dialog\DialogViewModel.cs" />
+    <Compile Include="Views\Dialog\Dialog.xaml.cs">
+      <DependentUpon>Dialog.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -139,6 +158,17 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Dialog\Dialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controls\" />
+    <Folder Include="Models\MP3Player\" />
+    <Folder Include="Themes\" />
+    <Folder Include="ViewModels\MP3Player\" />
+    <Folder Include="Views\MP3Player\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

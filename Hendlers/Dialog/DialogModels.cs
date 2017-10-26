@@ -2,20 +2,42 @@
 using Newtonsoft.Json;
 using System.IO;
 using System.Windows;
+using DialogEngine.Models.Dialog;
 
 
 namespace DialogEngine
 {
-    public static class InitModelDialogs    //TODO lets get some graceful failures here. recovery from single file failures.
+    public class InitModelDialogs    //TODO lets get some graceful failures here. recovery from single file failures.
     {
-        public static void SetDefaults(DialogTracker inObj) //TODO is there a good way to identify orphaned tags? (dialog lines)
+    #region - Fields -
+
+        public delegate void WriteMessage(string message);
+
+        public WriteMessage AddDialogItem;
+
+        #endregion
+
+
+        #region - Constructor -
+
+        public InitModelDialogs(WriteMessage wm)
+        {
+            AddDialogItem = wm;
+        }
+
+        #endregion
+
+        #region - Public methods -
+
+        public void SetDefaults(DialogTracker inObj) //TODO is there a good way to identify orphaned tags? (dialog lines)
         {
             //Dialogs JSON parse here.
             try
             {
                 DirectoryInfo dialogs_d = new DirectoryInfo(SessionVars.DialogsDirectory);
-                ((MainWindow)Application.Current.MainWindow).TestOutput.Text += "Dialog JSON in: " + SessionVars.DialogsDirectory + Environment.NewLine;
-                //Console.WriteLine("Dialog JSON in: " + SessionVars.DialogsDirectory);
+
+                AddDialogItem("Dialog JSON in: " + SessionVars.DialogsDirectory);
+
                 if (SessionVars.WriteSerialLog)
                 {
                     using (StreamWriter JSONLog = new StreamWriter(
@@ -24,11 +46,12 @@ namespace DialogEngine
                         JSONLog.WriteLine("Dialog JSON in: " + SessionVars.DialogsDirectory);
                     }
                 }
-                var _inFiles = dialogs_d.GetFiles("*.json"); 
-                foreach (FileInfo file in _inFiles) //file of type FileInfo for each .json in directory
+                var inFiles = dialogs_d.GetFiles("*.json");
+
+                foreach (FileInfo file in inFiles) //file of type FileInfo for each .json in directory
                 {
-                    ((MainWindow)Application.Current.MainWindow).TestOutput.Text += " opening dialog models in " + file.Name + Environment.NewLine;
-                    //Console.WriteLine(" opening dialog models in " + file.Name);
+                    AddDialogItem(" opening dialog models in " + file.Name);
+
                     if (SessionVars.WriteSerialLog)
                     {
                         using (StreamWriter JSONLog = new StreamWriter(
@@ -46,8 +69,10 @@ namespace DialogEngine
                             try
                             {
                                 inDialog = reader.ReadToEnd();//create string of JSON file
+
                                 ModelDialogInput dialogsInClass = JsonConvert.DeserializeObject<ModelDialogInput>(inDialog);  //string to Object.
-                                foreach (ModelDialog curDialog in dialogsInClass.inList)
+
+                                foreach (ModelDialog curDialog in dialogsInClass.InList)
                                 {
                                     //Add to dialog List
                                     inObj.ModelDialogs.Add(curDialog);
@@ -62,8 +87,9 @@ namespace DialogEngine
                                 Console.ReadLine();
                             }
                         }
-                        ((MainWindow)Application.Current.MainWindow).TestOutput.Text += " completed " + file.Name + Environment.NewLine;
-                        //Console.WriteLine(" completed " + file.Name);
+
+                        AddDialogItem(" completed " + file.Name);
+
                         if (SessionVars.WriteSerialLog)
                         {
                             using (StreamWriter JSONLog = new StreamWriter(
@@ -98,11 +124,14 @@ namespace DialogEngine
             }
             if (inObj.ModelDialogs.Count < 2)
             {
-                ((MainWindow)Application.Current.MainWindow).TestOutput.Text += "  Insufficient dialog models found in " + SessionVars.DialogsDirectory + " exiting.";
-                //Console.WriteLine("  Insufficient dialog models found in " + SessionVars.DialogsDirectory + " exiting.");
-                //Console.ReadLine();
+                AddDialogItem("  Insufficient dialog models found in " + SessionVars.DialogsDirectory + " exiting.");
+
                 Environment.Exit(0);
             }
         }
+
+        #endregion
+
+
     }
 }
