@@ -7,29 +7,20 @@ using DialogEngine.Models.Dialog;
 
 namespace DialogEngine
 {
-    public class InitModelDialogs    //TODO lets get some graceful failures here. recovery from single file failures.
+    public static class InitModelDialogs    //TODO lets get some graceful failures here. recovery from single file failures.
     {
     #region - Fields -
 
-        public delegate void WriteMessage(string message);
+        public delegate void PrintMethod(string message);
 
-        public WriteMessage AddDialogItem;
-
-        #endregion
-
-
-        #region - Constructor -
-
-        public InitModelDialogs(WriteMessage wm)
-        {
-            AddDialogItem = wm;
-        }
+        public static PrintMethod AddDialogItem = new PrintMethod(((MainWindow)Application.Current.MainWindow).CurrentPrintMethod);
 
         #endregion
+
 
         #region - Public methods -
 
-        public void SetDefaults(DialogTracker inObj) //TODO is there a good way to identify orphaned tags? (dialog lines)
+        public static  void SetDefaults(DialogTracker inObj) //TODO is there a good way to identify orphaned tags? (dialog lines)
         {
             //Dialogs JSON parse here.
             try

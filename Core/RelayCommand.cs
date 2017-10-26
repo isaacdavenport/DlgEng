@@ -14,6 +14,7 @@ namespace DialogEngine.Core
     ///   default return value for the CanExecute
     ///   method is 'true'.
     /// </summary>
+    
     public class RelayCommand : ICommand
     {
         #region Constants and Fields

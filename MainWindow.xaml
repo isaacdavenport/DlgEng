@@ -6,13 +6,15 @@
              xmlns:local="clr-namespace:DialogEngine"
              WindowStartupLocation="CenterScreen"
              mc:Ignorable="d" 
-             d:DesignHeight="451.32" Title="DialogEngine" Width="639.305"
-             Loaded="Window_Loaded">
+             d:DesignHeight="451.32" Title="DialogEngine" Width="639.305">
+    
     <Window.Resources>
         <Style x:Key="MultiLineTB" TargetType="TextBox">
             <Setter Property="Text" Value="{Binding Text, ElementName=tbMaster}"/>
         </Style>
     </Window.Resources>
+    
+    
     <!--<Grid Margin="0,0,2,39">
         <Grid.RowDefinitions>
             <RowDefinition Height="51*"/>

@@ -9,6 +9,7 @@ namespace DialogEngine.UI.Helpers
 {
     public static class VisualHelper
     {
+
         public static T GetNearestContainer<T>(DependencyObject initial) where T : DependencyObject
         {
             DependencyObject visual = initial;
@@ -23,6 +24,7 @@ namespace DialogEngine.UI.Helpers
 
             return visual as T;
         }
+
 
         public static T GetVisualChild<T>(this DependencyObject parent) where T : FrameworkElement
         {

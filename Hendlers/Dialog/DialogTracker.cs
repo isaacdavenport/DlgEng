@@ -47,16 +47,21 @@ namespace DialogEngine
         public List<HistoricalPhrase> HistoricalPhrases = new List<HistoricalPhrase>();
         public List<ModelDialog> ModelDialogs = new List<ModelDialog>();
         public Queue<int> RecentDialogs = new Queue<int>();
-        public delegate void WriteMessage(string message);
-        public WriteMessage AddDialogItem;
+        public delegate void PrintMethod(string message);
+        public PrintMethod AddDialogItem;
 
         #endregion
 
         #region -Constructor-
 
-        public DialogTracker(WriteMessage wm)
+        public DialogTracker()
         {
-            AddDialogItem = wm;
+
+            MainWindow mw = (MainWindow)Application.Current.MainWindow;
+
+            // casting delegate
+            AddDialogItem = new PrintMethod(mw.CurrentPrintMethod);
+
         }
 
         #endregion
@@ -64,8 +69,10 @@ namespace DialogEngine
 
         #region - Singleton -
 
-        //singleton
 
+        /// <summary>
+        /// Implementation of singleton pattern for DialogTracker class
+        /// </summary>
         public static DialogTracker Instance
         {
             get

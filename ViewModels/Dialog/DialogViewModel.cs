@@ -31,8 +31,7 @@ namespace DialogEngine.ViewModels.Dialog
 
 
         //public fields
-        public static DialogTracker TheDialogs;
-        public InitModelDialogs InitModelDialogs;
+        public static DialogTracker TheDialogs=DialogTracker.Instance;
         public string KeyboardInput;
 
 
@@ -47,9 +46,6 @@ namespace DialogEngine.ViewModels.Dialog
 
             BindCommands();
 
-            TheDialogs=new DialogTracker(AddDialogItem);
-
-            InitModelDialogs=new InitModelDialogs(AddDialogItem);
         }
 
         #endregion

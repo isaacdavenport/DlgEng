@@ -5,20 +5,27 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
+using DialogEngine.Models.Dialog;
 
 namespace DialogEngine
 {
     public static class ParseMessage
     {
+        public  static  DialogTracker dialogTracker=DialogTracker.Instance;
+
         public static List<ReceivedMessage> ReceivedMessages = new List<ReceivedMessage>();
 
         public static void ProcessMessage(int rowNum, int[] newRow) {
+
             for (int k = 0; k < SerialComs.NUM_RADIOS; k++)
             {
                 SelectNextCharacters.HeatMap[rowNum, k] = newRow[k];
             }
+
             var currentDateTime = DateTime.Now;
+
             SelectNextCharacters.CharactersLastHeatMapUpdateTime[rowNum] = currentDateTime;
+
             AddMessageToReceivedBuffer(rowNum, newRow, currentDateTime);
         }
 
@@ -44,7 +51,8 @@ namespace DialogEngine
 
         static void AddMessageToReceivedBuffer(int characterRowNum, int[] rw, DateTime timeStamp)
         {
-            if (characterRowNum > Program.TheDialogs.CharacterList.Count - 1)  //was omiting character 5 from log when it was Count - 2
+
+            if (characterRowNum > dialogTracker.CharacterList.Count - 1)  //was omiting character 5 from log when it was Count - 2
             {
                 return;
             }
@@ -52,7 +60,7 @@ namespace DialogEngine
             {
                 ReceivedTime = timeStamp,
                 SequenceNum = rw[SerialComs.NUM_RADIOS],
-                CharacterPrefix = Program.TheDialogs.CharacterList[characterRowNum].CharacterPrefix
+                CharacterPrefix = dialogTracker.CharacterList[characterRowNum].CharacterPrefix
             });
             //TODO add a lock around this
             for (int i = 0; i < SerialComs.NUM_RADIOS; i++)

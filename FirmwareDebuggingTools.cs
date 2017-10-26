@@ -4,6 +4,7 @@
 using System;
 using System.Linq;
 using System.Windows;
+using DialogEngine.Models.Dialog;
 
 //TODO pull stuff out of here that is not serial and create a CharacterSelection.cs with pieces from DialogTracker
 
@@ -13,15 +14,21 @@ namespace DialogEngine
     {
         #region -Fields-
 
+        private static DialogTracker dialogTracker=DialogTracker.Instance;
 
-        public delegate void WriteMessageFunc(string message);
+        private delegate void PrintMethod(string message);
+
+        private static PrintMethod addDialogItem =new PrintMethod(((MainWindow) Application.Current.MainWindow).CurrentPrintMethod);
+ 
 
         #endregion
 
         #region - Static methods -
 
-        public static void PrintHeatMap(WriteMessageFunc addDialogItem)
+        public static void PrintHeatMap()
         {
+            ;
+
             int i, l, m;
 
             for (i = 0; i < SerialComs.NUM_RADIOS; i++)
@@ -46,14 +53,15 @@ namespace DialogEngine
 
             }
 
-            addDialogItem("Character1-2Num " + DialogTracker.Instance.CharacterList[Program.TheDialogs.Character1Num].CharacterPrefix
-                              + " " + Program.TheDialogs.CharacterList[Program.TheDialogs.Character2Num].CharacterPrefix
+            addDialogItem("Character1-2Num " + dialogTracker.CharacterList[dialogTracker.Character1Num].CharacterPrefix
+                              + " " + dialogTracker.CharacterList[dialogTracker.Character2Num].CharacterPrefix
                               + " RSSIsum " + "{0:D3}" + SelectNextCharacters.BigRssi + ", rssiStable = " + SelectNextCharacters.RssiStable);
 
 
-            ((MainWindow)Application.Current.MainWindow).TestOutput.Text += "" + Environment.NewLine;
+            //((MainWindow)Application.Current.MainWindow).TestOutput.Text += "" + Environment.NewLine;
             //Console.WriteLine("");
         }
+
 
         public static void PrintHeatMapSums()
         {
@@ -61,10 +69,10 @@ namespace DialogEngine
 
             for (i = 0; i < SerialComs.NUM_RADIOS; i++)
             {
-                ((MainWindow)Application.Current.MainWindow).TestOutput.Text += SelectNextCharacters.CharactersLastHeatMapUpdateTime[i].ToString("mm.ss.fff") + Environment.NewLine;
+                //((MainWindow)Application.Current.MainWindow).TestOutput.Text += SelectNextCharacters.CharactersLastHeatMapUpdateTime[i].ToString("mm.ss.fff") + Environment.NewLine;
                 //Console.Write(SelectNextCharacters.CharactersLastHeatMapUpdateTime[i].ToString("mm.ss.fff") + " ");
             }
-            ((MainWindow)Application.Current.MainWindow).TestOutput.Text += Environment.NewLine;
+            //((MainWindow)Application.Current.MainWindow).TestOutput.Text += Environment.NewLine;
             //Console.WriteLine();
             for (l = 0; l < SerialComs.NUM_RADIOS; l++)
             {
@@ -72,44 +80,49 @@ namespace DialogEngine
                 {
                     if (m > l)
                     {
-                        ((MainWindow)Application.Current.MainWindow).TestOutput.Text += "{0:D3}" + (SelectNextCharacters.HeatMap[l, m] + SelectNextCharacters.HeatMap[m, l]) + Environment.NewLine;
+                        //((MainWindow)Application.Current.MainWindow).TestOutput.Text += "{0:D3}" + (SelectNextCharacters.HeatMap[l, m] + SelectNextCharacters.HeatMap[m, l]) + Environment.NewLine;
                         //Console.Write("{0:D3}", (SelectNextCharacters.HeatMap[l, m] + SelectNextCharacters.HeatMap[m, l]));
                     }
                     else
                     {
-                        ((MainWindow)Application.Current.MainWindow).TestOutput.Text += "{0:D3}" + (0) + Environment.NewLine; //vb : is this format correct?
+                        //((MainWindow)Application.Current.MainWindow).TestOutput.Text += "{0:D3}" + (0) + Environment.NewLine; //vb : is this format correct?
                         //Console.Write("{0:D3}", (0));  // only show diagonal top of matrix when summed, symetrical
                     }
-                    ((MainWindow)Application.Current.MainWindow).TestOutput.Text += " " + Environment.NewLine;
+                    //((MainWindow)Application.Current.MainWindow).TestOutput.Text += " " + Environment.NewLine;
                     //Console.Write(" ");
                 }
-                ((MainWindow)Application.Current.MainWindow).TestOutput.Text += "" + Environment.NewLine;
+                //((MainWindow)Application.Current.MainWindow).TestOutput.Text += "" + Environment.NewLine;
                 //Console.WriteLine("");
             }
-            ((MainWindow)Application.Current.MainWindow).TestOutput.Text += "  nextCharacter1-2 " + Program.TheDialogs.CharacterList[SelectNextCharacters.NextCharacter1].CharacterPrefix
-                              + " " + Program.TheDialogs.CharacterList[SelectNextCharacters.NextCharacter2].CharacterPrefix
-                              + " RSSIsum " + "{0:D3}" + SelectNextCharacters.BigRssi + ", rssiStable = " + SelectNextCharacters.RssiStable + Environment.NewLine;
+            //((MainWindow)Application.Current.MainWindow).TestOutput.Text += "  nextCharacter1-2 " + Program.TheDialogs.CharacterList[SelectNextCharacters.NextCharacter1].CharacterPrefix
+                              //+ " " + Program.TheDialogs.CharacterList[SelectNextCharacters.NextCharacter2].CharacterPrefix
+                              //+ " RSSIsum " + "{0:D3}" + SelectNextCharacters.BigRssi + ", rssiStable = " + SelectNextCharacters.RssiStable + Environment.NewLine;
 
             /*Console.WriteLine("  nextCharacter1-2 " + Program.TheDialogs.CharacterList[SelectNextCharacters.NextCharacter1].CharacterPrefix
                               + " " + Program.TheDialogs.CharacterList[SelectNextCharacters.NextCharacter2].CharacterPrefix
                               + " RSSIsum " + "{0:D3}", SelectNextCharacters.BigRssi + ", rssiStable = " + SelectNextCharacters.RssiStable); */
-            ((MainWindow)Application.Current.MainWindow).TestOutput.Text += "" + Environment.NewLine;
+            //((MainWindow)Application.Current.MainWindow).TestOutput.Text += "" + Environment.NewLine;
             //Console.WriteLine("");
         }
 
         public static void CheckStuckTransmissions()
         {
+
+
             // step through recent messages to ensure all characters are still transmitting 
             // and transmitting unique messages (for debug of no-new-data FW bug)
             // each character is "OK " STUCK "STK" or "MIA" missing in action
             // this could be changed to order N rather than numCharacters*N but not worth it now
+
+            DialogTracker dialogTracker = DialogTracker.Instance;
+
             const int numMsgToChk = 5;
             if (ParseMessage.ReceivedMessages.Count < 20)
             {
                 return;
             }
             var currentTime = DateTime.Now;
-            foreach (var chr in Program.TheDialogs.CharacterList)
+            foreach (var chr in dialogTracker.CharacterList)
             {
                 Console.Write(chr.CharacterPrefix + " ");
                 ReceivedMessage[] lastFiveMsg = new ReceivedMessage[numMsgToChk];
@@ -166,7 +179,7 @@ namespace DialogEngine
             }
             if (SessionVars.HeatMapFullMatrixDispMode && !SessionVars.HeatMapOnlyMode)
             {
-                PrintHeatMap();
+                PrintHeatMap(); 
             }
             if (SessionVars.CheckStuckTransmissions && !SessionVars.HeatMapOnlyMode)
             {
