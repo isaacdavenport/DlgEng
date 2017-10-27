@@ -5,6 +5,7 @@ using System.IO.Ports;
 using System;
 using System.IO;
 using System.Threading;
+using DialogEngine.Helpers;
 
 namespace DialogEngine
 {

@@ -5,7 +5,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Media;
 
-namespace DialogEngine.UI.Helpers
+namespace DialogEngine.Helpers
 {
     public static class VisualHelper
     {

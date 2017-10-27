@@ -15,8 +15,10 @@ using System.Windows.Shapes;
 using System.IO;
 using System.Threading;
 using DialogEngine.Core;
-using DialogEngine.UI.Helpers;
+using DialogEngine.Helpers;
 using DialogEngine.ViewModels.Dialog;
+using DialogEngine.Views.Dialog;
+using Path = System.IO.Path;
 
 
 namespace DialogEngine
@@ -29,13 +31,15 @@ namespace DialogEngine
         //creating of delegate ( it is similar to pointer on function in C )
         public delegate void PrintMethod(string message);
 
-        private PrintMethod  _currentPrintMethod;
 
         #endregion
 
         public MainWindow()
         {
             InitializeComponent();
+
+            mainFrame.Source=new Uri("Views/Dialog/Dialog.xaml", UriKind.Relative);
+
         }
 
 
@@ -59,7 +63,7 @@ namespace DialogEngine
         private PrintMethod GetPrintMessageMethod()
         {
 
-            ViewModelBase currentViewModel = (mainFrame.Content as PageBase).DataContext as ViewModelBase;
+            ViewModelBase currentViewModel = (mainFrame.Content as Dialog).DataContext as ViewModelBase;
 
             if (currentViewModel is DialogViewModel)
             {
@@ -71,6 +75,7 @@ namespace DialogEngine
                 //todo 
                 return null;
             }
+
         }
 
         #endregion

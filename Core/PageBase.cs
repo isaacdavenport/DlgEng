@@ -1,7 +1,8 @@
 ﻿using System.ComponentModel;
 using System.Windows.Controls;
+using DialogEngine.Helpers;
 
-namespace DialogEngine.UI.Helpers
+namespace DialogEngine.Core
 {   /// <summary>
     /// 
     /// </summary>
@@ -50,7 +51,7 @@ namespace DialogEngine.UI.Helpers
 
             // Remove all command bindings on unload
             while (this.CommandBindings.Count > 0)
-                this.CommandBindings.RemoveAt(0);
+                CommandBindings.RemoveAt(0);
 
             OnPageUnloaded();
         }

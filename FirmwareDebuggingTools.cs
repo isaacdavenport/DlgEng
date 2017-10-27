@@ -4,6 +4,7 @@
 using System;
 using System.Linq;
 using System.Windows;
+using DialogEngine.Helpers;
 using DialogEngine.Models.Dialog;
 
 //TODO pull stuff out of here that is not serial and create a CharacterSelection.cs with pieces from DialogTracker

@@ -78,6 +78,9 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Core\RelayCommand.cs" />
     <Compile Include="Core\ViewModelBase.cs" />
     <Compile Include="Hendlers\Dialog\DialogTracker.cs" />
@@ -152,7 +155,19 @@
     <Content Include="TheGeneratedLogFilesGoHere.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
     <Page Include="MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\BaseViewStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -164,7 +179,6 @@
   <ItemGroup>
     <Folder Include="Controls\" />
     <Folder Include="Models\MP3Player\" />
-    <Folder Include="Themes\" />
     <Folder Include="ViewModels\MP3Player\" />
     <Folder Include="Views\MP3Player\" />
   </ItemGroup>

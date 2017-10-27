@@ -3,8 +3,9 @@
 
 using System;
 using System.Configuration;
+using System.IO;
 
-namespace DialogEngine
+namespace DialogEngine.Helpers
 {
     public static class SessionVars
     {
@@ -35,7 +36,11 @@ namespace DialogEngine
         public static readonly string DialogLogFileName = "LogDialog.txt";
         public static readonly string ComPortName;
 
-        static SessionVars() {
+        static SessionVars()
+        {
+
+
+
             //Verify the flags and strings in the app settings config file
             if (ConfigurationManager.AppSettings["DebugFlag"] != null) 
                 DebugFlag = Convert.ToBoolean(AppSet.ReadSetting("DebugFlag"));
@@ -117,19 +122,19 @@ namespace DialogEngine
             else
                 CurrentParentalRating = "PG";
 
-            if (ConfigurationManager.AppSettings["BaseDirectory"] != null)
-            {
-                BaseDirectory = AppSet.ReadSetting("BaseDirectory");
-                if (!BaseDirectory.EndsWith(@"\"))
-                {
-                    BaseDirectory += @"\";
-                }
-                LogsDirectory = BaseDirectory + @"Logs\";
-                DialogsDirectory = BaseDirectory + @"DialogJSON\";
-                AudioDirectory = BaseDirectory + @"DialogAudio\";
-                CharactersDirectory = BaseDirectory + @"CharacterJSON\";
 
-            }
+            //get executable path
+
+            string path = Environment.CurrentDirectory;
+
+            BaseDirectory = Path.GetFullPath(Path.Combine(path, @"..\..\"));
+
+            LogsDirectory = BaseDirectory + @"Logs\";
+            DialogsDirectory = BaseDirectory + @"DialogJSON\";
+            AudioDirectory = BaseDirectory + @"DialogAudio\";
+            CharactersDirectory = BaseDirectory + @"CharacterJSON\";
+
+            
 
 
             if (LogsDirectory == null && WriteSerialLog)

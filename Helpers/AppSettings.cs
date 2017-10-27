@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Configuration;
 
-namespace DialogEngine
+namespace DialogEngine.Helpers
 {
     class AppSet
     {

@@ -1,6 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DialogEngine;
 using System.Collections.Generic;
+using DialogEngine.Helpers;
+using DialogEngine.Models.Dialog;
 
 namespace UnitTests
 {
@@ -11,7 +13,7 @@ namespace UnitTests
         public void TestintakeCharacters()
         {
             DialogTracker instanceForTests = new DialogTracker();
-            instanceForTests.intakeCharacters();
+            instanceForTests.IntakeCharacters();
             Assert.IsTrue(instanceForTests.CharacterList.Count > 1);
 
             //charlist is of objects type chararcter
@@ -44,7 +46,7 @@ namespace UnitTests
         public void TestSwapChars1and2()
         {
             DialogTracker instanceForTests = new DialogTracker();
-            instanceForTests.intakeCharacters();
+            instanceForTests.IntakeCharacters();
             //initial state. Vals are not equal
             Assert.IsTrue(instanceForTests.Character1Num != instanceForTests.Character2Num);
             int Char1Num = instanceForTests.Character1Num;
@@ -61,7 +63,7 @@ namespace UnitTests
         public void TestRemovePhrasesOverParentalRating()
         {
             DialogTracker instanceForTests = new DialogTracker();
-            instanceForTests.intakeCharacters();
+            instanceForTests.IntakeCharacters();
             //check rating of all dialogs.
             // all phrases are now below the threshold.
             Dictionary<string, int> _ratings = new Dictionary<string, int> { { "G", 1 }, { "PG", 2 }, { "PG13", 3 }, { "R", 4 }, { "1", 1 }, { "2", 2 }, { "3", 3 }, { "4", 4 } };  //future proof if notation changes
@@ -78,7 +80,7 @@ namespace UnitTests
         public void TestPlayAudio()
         {
             DialogTracker instanceForTests = new DialogTracker();
-            instanceForTests.intakeCharacters();
+            instanceForTests.IntakeCharacters();
             //make sure audio plays
             //chars are changed (?)
             //audio does not overlap.

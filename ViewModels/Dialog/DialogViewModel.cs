@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using DialogEngine.Core;
-using DialogEngine.UI.Helpers;
+using DialogEngine.Helpers;
 using System.IO;
 using System.Threading;
 using System.Windows;
@@ -31,7 +31,7 @@ namespace DialogEngine.ViewModels.Dialog
 
 
         //public fields
-        public static DialogTracker TheDialogs=DialogTracker.Instance;
+        public static DialogTracker TheDialogs;
         public string KeyboardInput;
 
 
@@ -46,6 +46,7 @@ namespace DialogEngine.ViewModels.Dialog
 
             BindCommands();
 
+            //OnViewModelLoaded();
         }
 
         #endregion
@@ -92,12 +93,16 @@ namespace DialogEngine.ViewModels.Dialog
 
         private void OnInputButtonClick()
         {
-            string enteredText = _view.TestInput.Text;
+            string enteredText = _view.messageTextBox.Text;
 
-            if (string.IsNullOrEmpty(enteredText))
+            if (!string.IsNullOrEmpty(enteredText))
             {
                 AddDialogItem(enteredText);
+
+                _view.messageTextBox.Text = string.Empty;
+
             }
+
 
             //vb : store input string in global variable - is this a good practice ??
             //KeyboardInput = ((MainWindow)Application.Current.MainWindow).TestInput.Text;
@@ -139,18 +144,6 @@ namespace DialogEngine.ViewModels.Dialog
         }
 
 
-
-        private void RemovePhrasesOverParentalRating(Character inCharacter)
-        {
-            var maxParentalRating = ParentalRatings.GetNumeric(SessionVars.CurrentParentalRating);
-            var minParentalRating = ParentalRatings.GetNumeric("G");
-
-            inCharacter.Phrases.RemoveAll(item =>
-                ParentalRatings.GetNumeric(item.PhraseRating) > maxParentalRating ||
-                ParentalRatings.GetNumeric(item.PhraseRating) < minParentalRating);
-        }
-
-
         private void CheckForMissingPhrases()
         {
             if (!SessionVars.AudioDialogsOn)
@@ -162,11 +155,9 @@ namespace DialogEngine.ViewModels.Dialog
             {
                 foreach (var phrase in character.Phrases)
                 {
-                    if (!File.Exists(SessionVars.AudioDirectory + character.CharacterPrefix + "_" + phrase.FileName +
-                                     ".mp3")) //Char name and prefix are being left blank...
+                    if (!File.Exists(SessionVars.AudioDirectory + character.CharacterPrefix + "_" + phrase.FileName + ".mp3")) //Char name and prefix are being left blank...
                     {
-                        string debugMessage = "missing " + character.CharacterPrefix + "_" + phrase.FileName + ".mp3 " +
-                                              phrase.DialogStr;
+                        string debugMessage = "missing " + character.CharacterPrefix + "_" + phrase.FileName + ".mp3 " + phrase.DialogStr;
 
                         AddDialogItem(debugMessage);
 
@@ -175,8 +166,7 @@ namespace DialogEngine.ViewModels.Dialog
                             using (var JSONLog =
                                 new StreamWriter(SessionVars.LogsDirectory + SessionVars.DialogLogFileName, true))
                             {
-                                JSONLog.WriteLine("missing " + character.CharacterPrefix + "_" + phrase.FileName +
-                                                  ".mp3 " + phrase.DialogStr);
+                                JSONLog.WriteLine("missing " + character.CharacterPrefix + "_" + phrase.FileName + ".mp3 " + phrase.DialogStr);
                             }
                         }
 
@@ -189,7 +179,7 @@ namespace DialogEngine.ViewModels.Dialog
         }
 
 
-        private void CheckTagsUsed()
+        private void CheckTagsUsed(DialogTracker dialogTracker)
         {
 
             //spit out all dialog model names and associated number.
@@ -204,14 +194,14 @@ namespace DialogEngine.ViewModels.Dialog
             foreach (var dialog in TheDialogs.ModelDialogs)
             {
 
-                AddDialogItem(" " + TheDialogs.ModelDialogs.IndexOf(dialog) + " : " + dialog.Name);
+                AddDialogItem(" " + dialogTracker.ModelDialogs.IndexOf(dialog) + " : " + dialog.Name);
 
                 if (SessionVars.WriteSerialLog)
                 {
                     using (var JSONLog =
                         new StreamWriter(SessionVars.LogsDirectory + SessionVars.DialogLogFileName, true))
                     {
-                        JSONLog.WriteLine(" " + TheDialogs.ModelDialogs.IndexOf(dialog) + " : " + dialog.Name);
+                        JSONLog.WriteLine(" " + dialogTracker.ModelDialogs.IndexOf(dialog) + " : " + dialog.Name);
                     }
                 }
 
@@ -221,92 +211,96 @@ namespace DialogEngine.ViewModels.Dialog
             AddDialogItem("Check characters tags are used ");
 
             var usedFlag = false;
-            foreach (var character in TheDialogs.CharacterList)
-            foreach (var phrase in character.Phrases)
-            foreach (var phrasetag in phrase.PhraseWeights.Keys)
-            {
-                usedFlag = false;
-                foreach (var dialog in TheDialogs.ModelDialogs)
-                {
-                    foreach (var dialogtag in dialog.PhraseTypeSequence)
-                        if (phrasetag == dialogtag)
-                        {
-                            usedFlag = true;
-                            break;
-                        }
-                    if (usedFlag)
-                        break;
-                }
-                if (!usedFlag)
-                {
-                    AddDialogItem(" " + phrasetag + " is not used.");
 
-                    if (SessionVars.WriteSerialLog)
+            foreach (var character in dialogTracker.CharacterList)
+
+                foreach (var phrase in character.Phrases)
+
+                    foreach (var phrasetag in phrase.PhraseWeights.Keys)
                     {
-                        using (var JSONLog = new StreamWriter(SessionVars.LogsDirectory + SessionVars.DialogLogFileName,
-                            true))
+                        usedFlag = false;
+                        foreach (var dialog in dialogTracker.ModelDialogs)
                         {
-                            JSONLog.WriteLine(" " + phrasetag + " is not used.");
+                            foreach (var dialogtag in dialog.PhraseTypeSequence)
+                                if (phrasetag == dialogtag)
+                                {
+                                    usedFlag = true;
+                                    break;
+                                }
+                            if (usedFlag)
+                                break;
+                        }
+                        if (!usedFlag)
+                        {
+                            AddDialogItem(" " + phrasetag + " is not used.");
+
+                            if (SessionVars.WriteSerialLog)
+                            {
+                                using (var JSONLog = new StreamWriter(SessionVars.LogsDirectory + SessionVars.DialogLogFileName,
+                                    true))
+                                {
+                                    JSONLog.WriteLine(" " + phrasetag + " is not used.");
+                                }
+                            }
+
                         }
                     }
-
-                }
-            }
 
 
             AddDialogItem("Check dialogs tags are used");
 
-            foreach (var dialog in TheDialogs.ModelDialogs)
-            foreach (var dialogtag in dialog.PhraseTypeSequence) //each dialog model tag
-            {
-                usedFlag = false;
-                foreach (var character in TheDialogs.CharacterList)
+            foreach (var dialog in dialogTracker.ModelDialogs)
+                foreach (var dialogtag in dialog.PhraseTypeSequence) //each dialog model tag
                 {
-                    foreach (var characterPhrase in character.Phrases)
+                    usedFlag = false;
+                    foreach (var character in dialogTracker.CharacterList)
                     {
-                        foreach (var phraseTag in characterPhrase.PhraseWeights.Keys) //each character phrase tag
-                            if (dialogtag == phraseTag)
-                            {
-                                usedFlag = true;
+                        foreach (var characterPhrase in character.Phrases)
+                        {
+                            foreach (var phraseTag in characterPhrase.PhraseWeights.Keys) //each character phrase tag
+                                if (dialogtag == phraseTag)
+                                {
+                                    usedFlag = true;
+                                    break;
+                                }
+                            if (usedFlag)
                                 break;
-                            }
+                        }
                         if (usedFlag)
                             break;
                     }
-                    if (usedFlag)
-                        break;
-                }
-                if (!usedFlag)
-                {
-
-                    AddDialogItem(" " + dialogtag + " not used in " + dialog.Name);
-
-                    if (SessionVars.WriteSerialLog)
+                    if (!usedFlag)
                     {
-                        using (var JSONLog = new StreamWriter(SessionVars.LogsDirectory + SessionVars.DialogLogFileName,
-                            true))
-                        {
-                            JSONLog.WriteLine(" " + dialogtag + " not used in " + dialog.Name);
-                        }
-                    }
 
+                        AddDialogItem(" " + dialogtag + " not used in " + dialog.Name);
+
+                        if (SessionVars.WriteSerialLog)
+                        {
+                            using (var JSONLog = new StreamWriter(SessionVars.LogsDirectory + SessionVars.DialogLogFileName,
+                                true))
+                            {
+                                JSONLog.WriteLine(" " + dialogtag + " not used in " + dialog.Name);
+                            }
+                        }
+
+                    }
                 }
-            }
         }
 
 
-        private void OnPageLoaded()
+        private   void OnViewModelLoaded()
         {
+            DialogTracker dialogTracker = DialogTracker.Instance;
 
             WriteStartupInfo();
 
-            TheDialogs.IntakeCharacters();
+            dialogTracker.IntakeCharacters();
 
-            InitModelDialogs.SetDefaults(TheDialogs);
+            InitModelDialogs.SetDefaults(DialogTracker.Instance);
 
             if (SessionVars.TagUsageCheck)
             {
-                CheckTagsUsed();
+                //CheckTagsUsed();
             }
 
             if (SessionVars.DebugFlag)
@@ -439,7 +433,7 @@ namespace DialogEngine.ViewModels.Dialog
 
         public void AddDialogItem(string entry)
         {
-            _dialogCollection.Add(entry);
+            DialogCollection.Add(entry);
 
             OnPropertyChanged("DialogCollection");
         }

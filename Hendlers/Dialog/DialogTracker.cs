@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
+using DialogEngine.Helpers;
 using DialogEngine.Models.Dialog;
 using Newtonsoft.Json;
 
@@ -48,7 +49,7 @@ namespace DialogEngine
         public List<ModelDialog> ModelDialogs = new List<ModelDialog>();
         public Queue<int> RecentDialogs = new Queue<int>();
         public delegate void PrintMethod(string message);
-        public PrintMethod AddDialogItem;
+        public PrintMethod _adddDialogItem;
 
         #endregion
 
@@ -56,11 +57,6 @@ namespace DialogEngine
 
         public DialogTracker()
         {
-
-            MainWindow mw = (MainWindow)Application.Current.MainWindow;
-
-            // casting delegate
-            AddDialogItem = new PrintMethod(mw.CurrentPrintMethod);
 
         }
 
@@ -95,6 +91,20 @@ namespace DialogEngine
 
         public int CurrentDialogModel { get; set; }
 
+
+        public PrintMethod AddDialogItem
+        {
+            get
+            {
+
+                return new PrintMethod(((MainWindow) Application.Current.MainWindow).CurrentPrintMethod);
+                 ;
+            }
+
+
+            set { _adddDialogItem = value; }
+
+        }
 
         #endregion
 
@@ -249,7 +259,7 @@ namespace DialogEngine
             return false;
         }
 
-        public void IntakeCharacters()
+        public  void IntakeCharacters()
         {
             var d = new DirectoryInfo(SessionVars.CharactersDirectory);
 
