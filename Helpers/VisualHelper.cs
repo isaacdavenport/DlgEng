@@ -16,49 +16,49 @@ namespace DialogEngine.Helpers
         ///
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="initial"></param>
+        /// <param name="_initial"></param>
         /// <returns>Returns firt container of initial with type T </returns>
-        public static T GetNearestContainer<T>(DependencyObject initial) where T : DependencyObject
+        public static T GetNearestContainer<T>(DependencyObject _initial) where T : DependencyObject
         {
-            DependencyObject visual = initial;
+            DependencyObject _visual = _initial;
 
-            if (visual is Visual || visual is System.Windows.Media.Media3D.Visual3D)
+            if (_visual is Visual || _visual is System.Windows.Media.Media3D.Visual3D)
             {
-                while (visual != null && visual.GetType() != typeof(T))
+                while (_visual != null && _visual.GetType() != typeof(T))
                 {
-                    visual = VisualTreeHelper.GetParent(visual);
+                    _visual = VisualTreeHelper.GetParent(_visual);
                 }
             }
 
-            return visual as T;
+            return _visual as T;
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="parent"></param>
+        /// <param name="_parent"></param>
         /// <returns>Returns first child of type T for parent object</returns>
-        public static T GetVisualChild<T>(this DependencyObject parent) where T : FrameworkElement
+        public static T GetVisualChild<T>(this DependencyObject _parent) where T : FrameworkElement
         {
-            T child = default(T);
+            T _child = default(T);
 
-            int numVisuals = VisualTreeHelper.GetChildrenCount(parent);
+            int _numVisuals = VisualTreeHelper.GetChildrenCount(_parent);
 
-            for (int i = 0; i < numVisuals; i++)
+            for (int _i = 0; _i < _numVisuals; _i++)
             {
-                Visual v = (Visual)VisualTreeHelper.GetChild(parent, i);
-                child = v as T;
-                if (child == null)
+                Visual _v = (Visual)VisualTreeHelper.GetChild(_parent, _i);
+                _child = _v as T;
+                if (_child == null)
                 {
-                    child = GetVisualChild<T>(v);
+                    _child = GetVisualChild<T>(_v);
                 }
-                if (child != null)
+                if (_child != null)
                 {
                     break;
                 }
             }
-            return child;
+            return _child;
         }
     }
 }

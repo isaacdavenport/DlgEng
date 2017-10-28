@@ -11,16 +11,16 @@ namespace DialogEngine.Helpers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="key"></param>
+        /// <param name="_key"></param>
         /// <returns>Value in App.config for assigned key</returns>
-        public static string ReadSetting(string key) {  //returns null if key or file not found
+        public static string ReadSetting(string _key) {  //returns null if key or file not found
             try {
-                var appSettings = ConfigurationManager.AppSettings;
-                string result = appSettings[key];
-                if (result == null) {
-                    Console.WriteLine(key + " not found in AppSettings File.");
+                var _appSettings = ConfigurationManager.AppSettings;
+                string _result = _appSettings[_key];
+                if (_result == null) {
+                    Console.WriteLine(_key + " not found in AppSettings File.");
                 }
-                return result;
+                return _result;
             }
             catch (ConfigurationErrorsException) {
                 Console.WriteLine("Error reading app settings");

@@ -34,26 +34,26 @@ namespace DialogEngine.Core
         /// <summary>
         ///   Creates a new command that can always execute.
         /// </summary>
-        /// <param name = "execute">The execution logic.</param>
-        public RelayCommand(Action<object> execute)
-            : this(execute, null)
+        /// <param name = "_execute">The execution logic.</param>
+        public RelayCommand(Action<object> _execute)
+            : this(_execute, null)
         {
         }
 
         /// <summary>
         ///   Creates a new command.
         /// </summary>
-        /// <param name = "execute">The execution logic.</param>
-        /// <param name = "canExecute">The execution status logic.</param>
-        public RelayCommand(Action<object> execute, Predicate<object> canExecute)
+        /// <param name = "_execute">The execution logic.</param>
+        /// <param name = "_canExecute">The execution status logic.</param>
+        public RelayCommand(Action<object> _execute, Predicate<object> _canExecute)
         {
-            if (execute == null)
+            if (_execute == null)
             {
                 throw new ArgumentNullException("Execute");
             }
 
-            this.mExecute = execute;
-            this.mCanExecute = canExecute;
+            this.mExecute = _execute;
+            this.mCanExecute = _canExecute;
         }
 
         #endregion
@@ -85,12 +85,12 @@ namespace DialogEngine.Core
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="parameter"></param>
+        /// <param name="_parameter"></param>
         /// <returns></returns>
         [DebuggerStepThrough]
-        public bool CanExecute(object parameter)
+        public bool CanExecute(object _parameter)
         {
-            return this.mCanExecute == null || this.mCanExecute(parameter);
+            return this.mCanExecute == null || this.mCanExecute(_parameter);
         }
 
         public void RaiseCanExecuteChanged()
@@ -103,10 +103,10 @@ namespace DialogEngine.Core
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="parameter"></param>
-        public void Execute(object parameter)
+        /// <param name="_parameter"></param>
+        public void Execute(object _parameter)
         {
-            this.mExecute(parameter);
+            this.mExecute(_parameter);
         }
 
         #endregion

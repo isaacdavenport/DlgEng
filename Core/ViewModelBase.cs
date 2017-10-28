@@ -72,21 +72,21 @@ namespace DialogEngine.Core
         /// <summary>
         /// Notifies of property changed.
         /// </summary>
-        /// <param name="propertyName">Name of changed property.</param>
-        public virtual void OnPropertyChanged(string propertyName)
+        /// <param name="_propertyName">Name of changed property.</param>
+        public virtual void OnPropertyChanged(string _propertyName)
         {
             if (PropertyChanged != null)
             {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+                PropertyChanged(this, new PropertyChangedEventArgs(_propertyName));
             }
         }
 
         /// <summary>
         /// Used to execute methods on application close.
         /// </summary>
-        /// <param name="e">Closing event.</param>
+        /// <param name="_e">Closing event.</param>
         /// <remarks>Call method on overriden OnClosing() method in application main window.</remarks>
-        public virtual void OnClose(CancelEventArgs e)
+        public virtual void OnClose(CancelEventArgs _e)
         {
 
         }
@@ -101,10 +101,10 @@ namespace DialogEngine.Core
             this.Dispose(false);
         }
 
-        protected void Dispose(bool disposing)
+        protected void Dispose(bool _disposing)
         {
 
-            if (disposing)
+            if (_disposing)
             {
                 OnDisposing();
             }

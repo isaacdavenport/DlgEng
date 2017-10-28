@@ -23,7 +23,7 @@ namespace SerialTest
             //
         }
 
-        private TestContext testContextInstance;
+        private TestContext mTestContextInstance;
 
         /// <summary>
         ///Gets or sets the test context which provides
@@ -33,11 +33,11 @@ namespace SerialTest
         {
             get
             {
-                return testContextInstance;
+                return mTestContextInstance;
             }
             set
             {
-                testContextInstance = value;
+                mTestContextInstance = value;
             }
         }
 
@@ -84,21 +84,21 @@ namespace SerialTest
         [TestMethod]
         public void Test_ParseMessage()
         {
-            int[] rssiRow = new int[SerialComs.NUM_RADIOS + 1];
+            int[] _rssiRow = new int[SerialComs.NumRadios + 1];
 
             // Too short
-            Assert.AreEqual(-1, ParseMessage.Parse("", rssiRow));
+            Assert.AreEqual(-1, ParseMessage.Parse("", _rssiRow));
             // Doesn't contain FF and A5
-            Assert.AreEqual(-1, ParseMessage.Parse("000000000087003b00100000", rssiRow));
+            Assert.AreEqual(-1, ParseMessage.Parse("000000000087003b00100000", _rssiRow));
             // Also too short - doesn't have 19 characters because we're not including
             // the \n that we would get when reading from the serial port
-            Assert.AreEqual(-1, ParseMessage.Parse("ffff0000000000a500", rssiRow));
+            Assert.AreEqual(-1, ParseMessage.Parse("ffff0000000000a500", _rssiRow));
 
 
             // Just right - has the newline from the serial port
-            Assert.AreEqual(2, ParseMessage.Parse("ffaf00ff000000a502\n", rssiRow));
-            Assert.AreEqual(2, ParseMessage.Parse("ffc100ff00b500a50e\n", rssiRow));
-            Assert.AreEqual(4, ParseMessage.Parse("ffbb00bb00ff00a501\n", rssiRow));
+            Assert.AreEqual(2, ParseMessage.Parse("ffaf00ff000000a502\n", _rssiRow));
+            Assert.AreEqual(2, ParseMessage.Parse("ffc100ff00b500a50e\n", _rssiRow));
+            Assert.AreEqual(4, ParseMessage.Parse("ffbb00bb00ff00a501\n", _rssiRow));
 
         }
     }

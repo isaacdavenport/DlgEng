@@ -12,11 +12,11 @@ namespace DialogEngine
     {
         #region  - Fields -
 
-        private static Random _random = new Random();
-        private  static DialogTracker _dialogTracker=DialogTracker.Instance;
+        private static Random mcRandom = new Random();
+        private  static DialogTracker mcDialogTracker=DialogTracker.Instance;
 
 
-        public const int STRONG_RSSI_BUF_DEPTH = 12;
+        public const int StrongRssiBufDepth = 12;
 
         public static readonly TimeSpan MaxLastSeenInterval = new TimeSpan(0, 0, 0, 2, 100);
 
@@ -24,9 +24,9 @@ namespace DialogEngine
         public static int BigRssi = 0;
         public static bool RssiStable = false;
         public static int NextCharacter1 = 1, NextCharacter2 = 2;
-        public static int[,] HeatMap = new int[SerialComs.NUM_RADIOS, SerialComs.NUM_RADIOS];
-        public static DateTime[] CharactersLastHeatMapUpdateTime = new DateTime[SerialComs.NUM_RADIOS];
-        static int[,] _strongRssiCharacterPairBuf = new int[2, STRONG_RSSI_BUF_DEPTH];
+        public static int[,] HeatMap = new int[SerialComs.NumRadios, SerialComs.NumRadios];
+        public static DateTime[] CharactersLastHeatMapUpdateTime = new DateTime[SerialComs.NumRadios];
+        static int[,] mcStrongRssiCharacterPairBuf = new int[2, StrongRssiBufDepth];
 
         #endregion
 
@@ -36,24 +36,24 @@ namespace DialogEngine
         
 
 
-        static void EnqueLatestCharacters(int ch1, int ch2)
+        static void enqueLatestCharacters(int _ch1, int _ch2)
         {
             RssiStable = true;
 
-            for (int i = 0; i < STRONG_RSSI_BUF_DEPTH - 1; i++)
+            for (int _i = 0; _i < StrongRssiBufDepth - 1; _i++)
             {  
                 // scoot data in buffer back by one to make room for next
-                _strongRssiCharacterPairBuf[0, i] = _strongRssiCharacterPairBuf[0, i + 1];
-                _strongRssiCharacterPairBuf[1, i] = _strongRssiCharacterPairBuf[1, i + 1];
+                mcStrongRssiCharacterPairBuf[0, _i] = mcStrongRssiCharacterPairBuf[0, _i + 1];
+                mcStrongRssiCharacterPairBuf[1, _i] = mcStrongRssiCharacterPairBuf[1, _i + 1];
             }
 
-            _strongRssiCharacterPairBuf[0, STRONG_RSSI_BUF_DEPTH - 1] = ch1;
-            _strongRssiCharacterPairBuf[1, STRONG_RSSI_BUF_DEPTH - 1] = ch2;
+            mcStrongRssiCharacterPairBuf[0, StrongRssiBufDepth - 1] = _ch1;
+            mcStrongRssiCharacterPairBuf[1, StrongRssiBufDepth - 1] = _ch2;
 
-            for (int i = 0; i < STRONG_RSSI_BUF_DEPTH - 1; i++)
+            for (int _i = 0; _i < StrongRssiBufDepth - 1; _i++)
             {
-                if (_strongRssiCharacterPairBuf[0, i] != _strongRssiCharacterPairBuf[0, i + 1] ||
-                    _strongRssiCharacterPairBuf[1, i] != _strongRssiCharacterPairBuf[1, i + 1])
+                if (mcStrongRssiCharacterPairBuf[0, _i] != mcStrongRssiCharacterPairBuf[0, _i + 1] ||
+                    mcStrongRssiCharacterPairBuf[1, _i] != mcStrongRssiCharacterPairBuf[1, _i + 1])
                 {
                     RssiStable = false;
                     break;
@@ -61,17 +61,17 @@ namespace DialogEngine
             }
         }
 
-        static void AssignNextCharacters(int tempCh1, int tempCh2)
+        static void assignNextCharacters(int _tempCh1, int _tempCh2)
         {
-            if ((_random.NextDouble() > 0.5) && RssiStable)
+            if ((mcRandom.NextDouble() > 0.5) && RssiStable)
             {
-                NextCharacter1 = tempCh1;
-                NextCharacter2 = tempCh2;
+                NextCharacter1 = _tempCh1;
+                NextCharacter2 = _tempCh2;
             }
             else if (RssiStable)
             {
-                NextCharacter1 = tempCh2;
-                NextCharacter2 = tempCh1;
+                NextCharacter1 = _tempCh2;
+                NextCharacter2 = _tempCh1;
             }
         }
 
@@ -85,36 +85,36 @@ namespace DialogEngine
         {
             //  This method takes the RSSI values and combines them so that the RSSI for Ch2 looking at 
             //  Ch1 is added to the RSSI for Ch1 looking at Ch2
-            int tempCh1 = 0, tempCh2 = 0, i = 0, j = 0;
+            int _tempCh1 = 0, _tempCh2 = 0, _i = 0, _j = 0;
 
-            var currentTime = DateTime.Now;
-            tempCh1 = NextCharacter1;
-            tempCh2 = NextCharacter2;
+            var _currentTime = DateTime.Now;
+            _tempCh1 = NextCharacter1;
+            _tempCh2 = NextCharacter2;
 
-            BigRssi = HeatMap[tempCh1, tempCh2] + HeatMap[tempCh2, tempCh1];  //only pick up new characters if bigRssi greater not =
+            BigRssi = HeatMap[_tempCh1, _tempCh2] + HeatMap[_tempCh2, _tempCh1];  //only pick up new characters if bigRssi greater not =
 
 
-            for (i = 0; i < SerialComs.NUM_RADIOS; i++)
+            for (_i = 0; _i < SerialComs.NumRadios; _i++)
             {  // the sixth radio is the computer's receiver now included for adventures
 
-                for (j = i + 1; j < SerialComs.NUM_RADIOS; j++)
+                for (_j = _i + 1; _j < SerialComs.NumRadios; _j++)
                 {  // only need data above the matrix diagonal
-                    if (HeatMap[i, j] + HeatMap[j, i] > BigRssi && currentTime - CharactersLastHeatMapUpdateTime[i] < MaxLastSeenInterval
-                        && currentTime - CharactersLastHeatMapUpdateTime[j] < MaxLastSeenInterval)
+                    if (HeatMap[_i, _j] + HeatMap[_j, _i] > BigRssi && _currentTime - CharactersLastHeatMapUpdateTime[_i] < MaxLastSeenInterval
+                        && _currentTime - CharactersLastHeatMapUpdateTime[_j] < MaxLastSeenInterval)
                     {  // look at both characters view of each other
-                        BigRssi = HeatMap[i, j] + HeatMap[j, i];
-                        tempCh1 = i;
-                        tempCh2 = j;
+                        BigRssi = HeatMap[_i, _j] + HeatMap[_j, _i];
+                        _tempCh1 = _i;
+                        _tempCh2 = _j;
                     }
                 }
 
             }
 
 
-            if (tempCh1 <= _dialogTracker.CharacterList.Count && tempCh2 <= _dialogTracker.CharacterList.Count)
+            if (_tempCh1 <= mcDialogTracker.CharacterList.Count && _tempCh2 <= mcDialogTracker.CharacterList.Count)
             {
-                EnqueLatestCharacters(tempCh1, tempCh2);
-                AssignNextCharacters(tempCh1, tempCh2);
+                enqueLatestCharacters(_tempCh1, _tempCh2);
+                assignNextCharacters(_tempCh1, _tempCh2);
             }
         }
 
@@ -122,13 +122,13 @@ namespace DialogEngine
         {   
             // used for computers with no serial input radio for random, or forceCharacter mode
             // does not include final character the silent schoolhouse, not useful in noSerial mode 
-            bool userHasForcedCharacters = false;
+            bool _userHasForcedCharacters = false;
 
-            DateTime nextCharacterSwapTime = new DateTime();
+            DateTime _nextCharacterSwapTime = new DateTime();
 
-            nextCharacterSwapTime = DateTime.Now;
+            _nextCharacterSwapTime = DateTime.Now;
 
-            nextCharacterSwapTime.AddSeconds(12);
+            _nextCharacterSwapTime.AddSeconds(12);
 
 
             while (true)
@@ -136,25 +136,25 @@ namespace DialogEngine
                 if (SessionVars.DebugFlag && Console.KeyAvailable)
                 {
 
-                    var userInput = Console.ReadLine();
+                    var _userInput = Console.ReadLine();
 
-                    String[] CharactersInitials = userInput.Split(' ');
+                    String[] _charactersInitials = _userInput.Split(' ');
 
 
-                    if (CharactersInitials.Length == 2 && CharactersInitials.Length < 15)
+                    if (_charactersInitials.Length == 2 && _charactersInitials.Length < 15)
                     {  //two three letter inital sets should be less than7 w space
 
-                        userHasForcedCharacters = true;
+                        _userHasForcedCharacters = true;
 
-                        foreach (var character in _dialogTracker.CharacterList)
+                        foreach (var _character in mcDialogTracker.CharacterList)
                         {
-                            if (CharactersInitials[0] == character.CharacterPrefix)
+                            if (_charactersInitials[0] == _character.CharacterPrefix)
                             {
-                                NextCharacter1 = _dialogTracker.CharacterList.IndexOf(character);
+                                NextCharacter1 = mcDialogTracker.CharacterList.IndexOf(_character);
                             }
-                            if (CharactersInitials[1] == character.CharacterPrefix)
+                            if (_charactersInitials[1] == _character.CharacterPrefix)
                             {
-                                NextCharacter2 = _dialogTracker.CharacterList.IndexOf(character);
+                                NextCharacter2 = mcDialogTracker.CharacterList.IndexOf(_character);
                             }
                         }
                     }
@@ -164,18 +164,18 @@ namespace DialogEngine
                 Thread.Sleep(1000);
 
 
-                if (!userHasForcedCharacters && nextCharacterSwapTime.CompareTo(DateTime.Now) < 0)
+                if (!_userHasForcedCharacters && _nextCharacterSwapTime.CompareTo(DateTime.Now) < 0)
                 {
-                    NextCharacter1 = _random.Next(0, _dialogTracker.CharacterList.Count); //lower bound inclusive, upper exclusive
-                    NextCharacter2 = _random.Next(0, _dialogTracker.CharacterList.Count); //lower bound inclusive, upper exclusive
-                    nextCharacterSwapTime = DateTime.Now;
-                    nextCharacterSwapTime = nextCharacterSwapTime.AddSeconds(8 + _random.Next(0, 34));
+                    NextCharacter1 = mcRandom.Next(0, mcDialogTracker.CharacterList.Count); //lower bound inclusive, upper exclusive
+                    NextCharacter2 = mcRandom.Next(0, mcDialogTracker.CharacterList.Count); //lower bound inclusive, upper exclusive
+                    _nextCharacterSwapTime = DateTime.Now;
+                    _nextCharacterSwapTime = _nextCharacterSwapTime.AddSeconds(8 + mcRandom.Next(0, 34));
                 }
 
 
                 while (NextCharacter1 == NextCharacter2)
                 {
-                    NextCharacter2 = _random.Next(0, _dialogTracker.CharacterList.Count);
+                    NextCharacter2 = mcRandom.Next(0, mcDialogTracker.CharacterList.Count);
                 }
             }
         }

@@ -34,6 +34,8 @@ namespace DialogEngine
         private int mPriorCharacter2Num = 100;
         private int mUrrentDialogModel = 1;
         private Random mRandom = new Random();
+        private PrintMethod mAdddDialogItem;
+
 
         #endregion
 
@@ -61,9 +63,8 @@ namespace DialogEngine
         public List<ModelDialog> ModelDialogs = new List<ModelDialog>();
         public Queue<int> RecentDialogs = new Queue<int>();
 
-        public delegate void PrintMethod(string message);
+        public delegate void PrintMethod(string _message);
 
-        public PrintMethod _adddDialogItem;
 
         #endregion
 
@@ -103,6 +104,9 @@ namespace DialogEngine
 
         #region - Properties -
 
+        /// <summary>
+        /// Curent dialog model
+        /// </summary>
         public int CurrentDialogModel { get; set; }
 
 
@@ -111,105 +115,117 @@ namespace DialogEngine
             get
             {
                 return new PrintMethod(((MainWindow) Application.Current.MainWindow).CurrentPrintMethod);
-                ;
+                
             }
 
 
-            set { _adddDialogItem = value; }
+            set
+            {
+                mAdddDialogItem = value;
+            }
         }
 
         #endregion
 
 
+
         #region - Public methods -
 
-        public Character ParseCharJSON(FileInfo CharFile)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="_charFile"></param>
+        /// <returns></returns>
+        public Character ParseCharJson(FileInfo _charFile)
         {
-            using (var fi = File.OpenText(CharFile.FullName))
+            using (var _fi = File.OpenText(_charFile.FullName))
             {
-                var serializer = new JsonSerializer();
-                var CharObj = (Character) serializer.Deserialize(fi, typeof(Character));
+                var _serializer = new JsonSerializer();
+                var _charObj = (Character)_serializer.Deserialize(_fi, typeof(Character));
 
-                return CharObj;
+                return _charObj;
             }
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="_dialogDirectives"></param>
         // TODO generate parallel dialogs, using string tags.
-        public void GenerateADialog(params int[] dialogDirectives)
+        public void GenerateADialog(params int[] _dialogDirectives)
         {
-            if (!ImportClosestSerialComsCharacters())
+            if (!importClosestSerialComsCharacters())
                 return;
 
-            CurrentDialogModel = PickAWeightedDialog(Character1Num, Character2Num);
+            CurrentDialogModel = pickAWeightedDialog(Character1Num, Character2Num);
 
-            if (WaitingForMovement() || SameCharactersAsLast && SessionVars.WaitIndefinatelyForMove)
+            if (waitingForMovement() || SameCharactersAsLast && SessionVars.WaitIndefinatelyForMove)
                 return;
 
-            ProcessDebugFlags(dialogDirectives);
+            processDebugFlags(_dialogDirectives);
 
-            AddDialogModelToHistory(CurrentDialogModel, Character1Num, Character2Num);
+            addDialogModelToHistory(CurrentDialogModel, Character1Num, Character2Num);
 
-            var speakingCharacter = Character1Num;
-
-
-            var selectedPhrase = CharacterList[speakingCharacter].Phrases[0]; //initialize to unused placeholder phrase
+            var _speakingCharacter = Character1Num;
 
 
-            foreach (var currentPhraseType in ModelDialogs[mUrrentDialogModel].PhraseTypeSequence)
+            var _selectedPhrase = CharacterList[_speakingCharacter].Phrases[0]; //initialize to unused placeholder phrase
+
+
+            foreach (var _currentPhraseType in ModelDialogs[mUrrentDialogModel].PhraseTypeSequence)
             {
-                if (CharacterList[speakingCharacter].PhraseTotals.PhraseWeights.ContainsKey(currentPhraseType))
+                if (CharacterList[_speakingCharacter].PhraseTotals.PhraseWeights.ContainsKey(_currentPhraseType))
                     if (SessionVars.TextDialogsOn)
                     {
                         //Here we try to change property of object which is created in main thread and we have to add code  to main thread's dispatcher object to do that
 
                         if (Application.Current.Dispatcher.CheckAccess())
                         {
-                            AddDialogItem(CharacterList[speakingCharacter].CharacterName);
+                            AddDialogItem(CharacterList[_speakingCharacter].CharacterName);
 
 
-                            if (CharacterList[speakingCharacter].PhraseTotals.PhraseWeights[currentPhraseType] < 0.01f)
+                            if (CharacterList[_speakingCharacter].PhraseTotals.PhraseWeights[_currentPhraseType] < 0.01f)
                             {
-                                AddDialogItem("   Missing PhraseType: " + currentPhraseType);
+                                AddDialogItem("   Missing PhraseType: " + _currentPhraseType);
                             }
 
-                            selectedPhrase = PickAWeightedPhrase(speakingCharacter, currentPhraseType);
+                            _selectedPhrase = PickAWeightedPhrase(_speakingCharacter, _currentPhraseType);
 
                             if (SessionVars.TextDialogsOn)
                             {
-                                AddDialogItem(selectedPhrase.DialogStr);
+                                AddDialogItem(_selectedPhrase.DialogStr);
                             }
                         }
                         else
                         {
                             Application.Current.Dispatcher.BeginInvoke(() =>
                             {
-                                AddDialogItem(CharacterList[speakingCharacter].CharacterName);
+                                AddDialogItem(CharacterList[_speakingCharacter].CharacterName);
 
 
-                                if (CharacterList[speakingCharacter].PhraseTotals.PhraseWeights[currentPhraseType] <
+                                if (CharacterList[_speakingCharacter].PhraseTotals.PhraseWeights[_currentPhraseType] <
                                     0.01f)
                                 {
-                                    AddDialogItem(" Missing PhraseType: " + currentPhraseType + "\r\n");
+                                    AddDialogItem(" Missing PhraseType: " + _currentPhraseType + "\r\n");
                                 }
 
-                                selectedPhrase = PickAWeightedPhrase(speakingCharacter, currentPhraseType);
+                                _selectedPhrase = PickAWeightedPhrase(_speakingCharacter, _currentPhraseType);
 
                                 if (SessionVars.TextDialogsOn)
                                 {
-                                    AddDialogItem(selectedPhrase.DialogStr);
+                                    AddDialogItem(_selectedPhrase.DialogStr);
                                 }
                             });
                         }
 
 
-                        AddPhraseToHistory(selectedPhrase, speakingCharacter);
+                        addPhraseToHistory(_selectedPhrase, _speakingCharacter);
 
-                        var pathAndFileName =  SessionVars.AudioDirectory 
-                                             + CharacterList[speakingCharacter].CharacterPrefix 
-                                             + "_" + selectedPhrase.FileName + ".mp3";
+                        var _pathAndFileName =  SessionVars.AudioDirectory 
+                                             + CharacterList[_speakingCharacter].CharacterPrefix 
+                                             + "_" + _selectedPhrase.FileName + ".mp3";
 
-                        PlayAudio(pathAndFileName); // vb: code stops here so commented out for debugging purpose
+                        playAudio(_pathAndFileName); // vb: code stops here so commented out for debugging purpose
 
                         if (   !SessionVars.ForceCharactersAndDialogModel 
                             && !DialogTrackerAndSerialComsCharactersSame())
@@ -219,10 +235,10 @@ namespace DialogEngine
                             return; // the characters have moved  TODO break into charactersSame() and use also with prior
                         }
                         //Toggle character
-                        if (speakingCharacter == Character1Num) //toggle which character is speaking next
-                            speakingCharacter = Character2Num;
+                        if (_speakingCharacter == Character1Num) //toggle which character is speaking next
+                            _speakingCharacter = Character2Num;
                         else
-                            speakingCharacter = Character1Num;
+                            _speakingCharacter = Character1Num;
                     }
 
                 HistoricalDialogs[HistoricalDialogs.Count - 1].Completed = true;
@@ -233,29 +249,33 @@ namespace DialogEngine
 
                 RecentDialogs.Dequeue(); //move to use HistoricalDialogs
                 RecentDialogs.Enqueue(CurrentDialogModel);
-                LastPhraseImpliedMovement = DetermineIfMovementImplied(selectedPhrase);
+                LastPhraseImpliedMovement = determineIfMovementImplied(_selectedPhrase);
             }
         }
 
 
-        public void WriteDialogInfo(int character1Num, int character2Num)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="_character1Num"></param>
+        /// <param name="_character2Num"></param>
+        public void WriteDialogInfo(int _character1Num, int _character2Num)
         {
-            var dialogModelString = "\r\n  --DiMod " + CurrentDialogModel + " " +
+            var _dialogModelString = "\r\n  --DiMod " + CurrentDialogModel + " " +
                                     ModelDialogs[CurrentDialogModel].Name +
-                                    " NextChars: " + CharacterList[character1Num].CharacterPrefix + " " +
-                                    CharacterList[character2Num].CharacterPrefix + " " + DateTime.Now;
+                                    " NextChars: " + CharacterList[_character1Num].CharacterPrefix + " " +
+                                    CharacterList[_character2Num].CharacterPrefix + " " + DateTime.Now;
 
-            //((MainWindow)Application.Current.MainWindow).TestOutput.Text += dialogModelString + Environment.NewLine;
 
-            var result = MessageBox.Show(dialogModelString);
+            var _result = MessageBox.Show(_dialogModelString);
 
             //Console.WriteLine(dialogModelString);
             if (SessionVars.WriteSerialLog)
-                using (var serialLogDialogModels = new StreamWriter(
+                using (var _serialLogDialogModels = new StreamWriter(
                     SessionVars.LogsDirectory + SessionVars.DialogLogFileName, true))
                 {
-                    serialLogDialogModels.WriteLine(dialogModelString);
-                    serialLogDialogModels.Close();
+                    _serialLogDialogModels.WriteLine(_dialogModelString);
+                    _serialLogDialogModels.Close();
                 }
         }
 
@@ -274,133 +294,133 @@ namespace DialogEngine
 
         public void IntakeCharacters()
         {
-            var d = new DirectoryInfo(SessionVars.CharactersDirectory);
+            var _d = new DirectoryInfo(SessionVars.CharactersDirectory);
 
-            string characterJsonMessage = "Character JSON in: " + SessionVars.CharactersDirectory;
+            string _characterJsonMessage = "Character JSON in: " + SessionVars.CharactersDirectory;
 
-            AddDialogItem(characterJsonMessage);
+            AddDialogItem(_characterJsonMessage);
 
-            foreach (var file in d.GetFiles("*.json")) //file of type FileInfo for each .json in directory
+            foreach (var _file in _d.GetFiles("*.json")) //file of type FileInfo for each .json in directory
             {
-                string beginReadMessage = " Begin read of " + file.Name;
+                string _beginReadMessage = " Begin read of " + _file.Name;
 
-                AddDialogItem(beginReadMessage);
+                AddDialogItem(_beginReadMessage);
 
                 if (SessionVars.WriteSerialLog)
                 {
-                    using (var JSONLog =
+                    using (var _jsonLog =
                         new StreamWriter(SessionVars.LogsDirectory + SessionVars.DialogLogFileName, true))
                     {
-                        JSONLog.WriteLine(" Begin read of " + file.Name);
+                        _jsonLog.WriteLine(" Begin read of " + _file.Name);
                     }
                 }
 
-                string inChar;
+                string _inChar;
 
                 try
                 {
-                    var fs = file.OpenRead(); //open a read-only FileStream
+                    var _fs = _file.OpenRead(); //open a read-only FileStream
 
-                    using (var reader = new StreamReader(fs)
+                    using (var _reader = new StreamReader(_fs)
                     ) //creates new streamerader for fs stream. Could also construct with filename...
                     {
                         try
                         {
-                            inChar = reader.ReadToEnd();
+                            _inChar = _reader.ReadToEnd();
 
-                            var deserializedCharacterJSON =
-                                JsonConvert.DeserializeObject<Models.Dialog.Character>(inChar);
+                            var _deserializedCharacterJson =
+                                JsonConvert.DeserializeObject<Models.Dialog.Character>(_inChar);
 
-                            deserializedCharacterJSON.PhraseTotals = new PhraseEntry(); //init PhraseTotals
+                            _deserializedCharacterJson.PhraseTotals = new PhraseEntry(); //init PhraseTotals
 
-                            deserializedCharacterJSON.PhraseTotals.DialogStr = "phrase weights";
+                            _deserializedCharacterJson.PhraseTotals.DialogStr = "phrase weights";
 
-                            deserializedCharacterJSON.PhraseTotals.FileName = "silence";
+                            _deserializedCharacterJson.PhraseTotals.FileName = "silence";
 
-                            deserializedCharacterJSON.PhraseTotals.PhraseRating = "G";
+                            _deserializedCharacterJson.PhraseTotals.PhraseRating = "G";
 
-                            deserializedCharacterJSON.PhraseTotals.PhraseWeights = new Dictionary<string, double>();
+                            _deserializedCharacterJson.PhraseTotals.PhraseWeights = new Dictionary<string, double>();
 
-                            deserializedCharacterJSON.PhraseTotals.PhraseWeights.Add("Greeting", 0.0f);
+                            _deserializedCharacterJson.PhraseTotals.PhraseWeights.Add("Greeting", 0.0f);
 
 
-                            RemovePhrasesOverParentalRating(deserializedCharacterJSON);
+                            removePhrasesOverParentalRating(_deserializedCharacterJson);
 
                             //Calculate Phrase Weight Totals here.
-                            foreach (var curPhrase in deserializedCharacterJSON.Phrases)
+                            foreach (var _curPhrase in _deserializedCharacterJson.Phrases)
                             {
-                                foreach (var tag in curPhrase.PhraseWeights.Keys)
+                                foreach (var _tag in _curPhrase.PhraseWeights.Keys)
                                 {
-                                    if (deserializedCharacterJSON.PhraseTotals.PhraseWeights.Keys.Contains(tag))
+                                    if (_deserializedCharacterJson.PhraseTotals.PhraseWeights.Keys.Contains(_tag))
                                     {
-                                        deserializedCharacterJSON.PhraseTotals.PhraseWeights[tag] +=
-                                            curPhrase.PhraseWeights[tag];
+                                        _deserializedCharacterJson.PhraseTotals.PhraseWeights[_tag] +=
+                                            _curPhrase.PhraseWeights[_tag];
                                     }
                                     else
                                     {
-                                        deserializedCharacterJSON.PhraseTotals.PhraseWeights.Add(tag,
-                                            curPhrase.PhraseWeights[tag]);
+                                        _deserializedCharacterJson.PhraseTotals.PhraseWeights.Add(_tag,
+                                            _curPhrase.PhraseWeights[_tag]);
                                     }
                                 }
                             }
 
-                            for (var i = 0; i < Character.RecentPhrasesQueueSize; i++)
+                            for (var _i = 0; _i < Character.RecentPhrasesQueueSize; _i++)
                             {
                                 // we always deque after enque so this sets que size
-                                deserializedCharacterJSON.RecentPhrases.Enqueue(deserializedCharacterJSON.Phrases[0]);
+                                _deserializedCharacterJson.RecentPhrases.Enqueue(_deserializedCharacterJson.Phrases[0]);
                             }
 
                             //list Chars as they come in.
 
-                            string finishReadMessage = " Finish read of " + deserializedCharacterJSON.CharacterName;
+                            string _finishReadMessage = " Finish read of " + _deserializedCharacterJson.CharacterName;
 
-                            AddDialogItem(finishReadMessage);
+                            AddDialogItem(_finishReadMessage);
 
                             if (SessionVars.WriteSerialLog)
                             {
-                                using (var JSONLog =
+                                using (var _jsonLog =
                                     new StreamWriter(SessionVars.LogsDirectory + SessionVars.DialogLogFileName, true))
                                 {
-                                    JSONLog.WriteLine(" Finish read of " + deserializedCharacterJSON.CharacterName);
+                                    _jsonLog.WriteLine(" Finish read of " + _deserializedCharacterJson.CharacterName);
                                 }
                             }
 
                             //Add to Char List
-                            CharacterList.Add(deserializedCharacterJSON);
+                            CharacterList.Add(_deserializedCharacterJson);
                         }
-                        catch (JsonReaderException e)
+                        catch (JsonReaderException _e)
                         {
-                            string errorReadingMessage = "Error reading " + file.Name;
+                            string _errorReadingMessage = "Error reading " + _file.Name;
 
-                            AddDialogItem(errorReadingMessage);
+                            AddDialogItem(_errorReadingMessage);
 
 
-                            string jsonParseErrorMessage =
-                                "JSON Parse error at " + e.LineNumber + ", " + e.LinePosition;
+                            string _jsonParseErrorMessage =
+                                "JSON Parse error at " + _e.LineNumber + ", " + _e.LinePosition;
 
-                            AddDialogItem(jsonParseErrorMessage);
+                            AddDialogItem(_jsonParseErrorMessage);
                         }
                     }
                 }
-                catch (UnauthorizedAccessException e)
+                catch (UnauthorizedAccessException _e)
                 {
-                    AddDialogItem(e.Message);
+                    AddDialogItem(_e.Message);
 
-                    AddDialogItem("Unauthorized access exception while reading: " + file.FullName);
+                    AddDialogItem("Unauthorized access exception while reading: " + _file.FullName);
 
                     AddDialogItem("Check the Character JSON path in your config file");
                 }
-                catch (DirectoryNotFoundException e)
+                catch (DirectoryNotFoundException _e)
                 {
-                    AddDialogItem(e.Message);
+                    AddDialogItem(_e.Message);
 
-                    AddDialogItem("Directory not found exception while reading: " + file.FullName);
+                    AddDialogItem("Directory not found exception while reading: " + _file.FullName);
 
                     AddDialogItem("check the Character JSON path in your config file");
                 }
-                catch (OutOfMemoryException e)
+                catch (OutOfMemoryException _e)
                 {
-                    AddDialogItem(e.Message);
+                    AddDialogItem(_e.Message);
 
                     AddDialogItem("You probably need to restart your computer...");
                 }
@@ -409,16 +429,16 @@ namespace DialogEngine
 
             if (CharacterList.Count < 2)
             {
-                string errorMessage = "  Insufficient readable character json files found in " +
+                string _errorMessage = "  Insufficient readable character json files found in " +
                                       SessionVars.CharactersDirectory + " .  Exiting.";
 
-                AddDialogItem(errorMessage);
+                AddDialogItem(_errorMessage);
 
                 Environment.Exit(0);
             }
 
             // Fill the queue with greeting dialogs
-            for (var i = 0; i < RecentDialogsQueSize; i++)
+            for (var _i = 0; _i < RecentDialogsQueSize; _i++)
             {
                 RecentDialogs.Enqueue(0); // Fill the que with greeting dialogs
             }
@@ -449,54 +469,54 @@ namespace DialogEngine
 
         public void SwapCharactersOneAndTwo()
         {
-            var tempCh1 = Character1Num;
+            var _tempCh1 = Character1Num;
             Character1Num = Character2Num;
-            Character2Num = tempCh1;
+            Character2Num = _tempCh1;
             // it doesn't appear we should update prior characters 1 and 2 here
         }
 
 
-        public PhraseEntry PickAWeightedPhrase(int speakingCharacter, string currentPhraseType)
+        public PhraseEntry PickAWeightedPhrase(int _speakingCharacter, string _currentPhraseType)
         {
-            var selectedPhrase = CharacterList[speakingCharacter].Phrases[0]; //initialize to unused phrase
+            var _selectedPhrase = CharacterList[_speakingCharacter].Phrases[0]; //initialize to unused phrase
             //Randomly select a phrase of correct Type
-            var phraseIsDuplicate = true;
+            var _phraseIsDuplicate = true;
 
-            for (var k = 0; k < 6 && phraseIsDuplicate; k++) //do retries if selected phrase is recently used
+            for (var _k = 0; _k < 6 && _phraseIsDuplicate; _k++) //do retries if selected phrase is recently used
             {
-                phraseIsDuplicate = false;
+                _phraseIsDuplicate = false;
 
-                var phraseTableWeightedIndex = mRandom.NextDouble(); // rand 0.0 - 1.0
+                var _phraseTableWeightedIndex = mRandom.NextDouble(); // rand 0.0 - 1.0
 
-                phraseTableWeightedIndex *=
-                    CharacterList[speakingCharacter].PhraseTotals.PhraseWeights[currentPhraseType];
-                double amountOfCurrentPhraseType = 0;
+                _phraseTableWeightedIndex *=
+                    CharacterList[_speakingCharacter].PhraseTotals.PhraseWeights[_currentPhraseType];
+                double _amountOfCurrentPhraseType = 0;
 
-                foreach (var currentPhraseTableEntry in CharacterList[speakingCharacter].Phrases)
+                foreach (var _currentPhraseTableEntry in CharacterList[_speakingCharacter].Phrases)
                 {
-                    if (currentPhraseTableEntry.PhraseWeights.ContainsKey(currentPhraseType))
-                        amountOfCurrentPhraseType += currentPhraseTableEntry.PhraseWeights[currentPhraseType];
+                    if (_currentPhraseTableEntry.PhraseWeights.ContainsKey(_currentPhraseType))
+                        _amountOfCurrentPhraseType += _currentPhraseTableEntry.PhraseWeights[_currentPhraseType];
 
-                    if (amountOfCurrentPhraseType > phraseTableWeightedIndex)
+                    if (_amountOfCurrentPhraseType > _phraseTableWeightedIndex)
                     {
-                        selectedPhrase = currentPhraseTableEntry;
+                        _selectedPhrase = _currentPhraseTableEntry;
                         break; //inner foreach since we have the phrase we want
                     }
                 }
-                foreach (var recentPhraseQueueEntry in CharacterList[speakingCharacter].RecentPhrases)
+                foreach (var _recentPhraseQueueEntry in CharacterList[_speakingCharacter].RecentPhrases)
                 {
-                    if (recentPhraseQueueEntry == selectedPhrase)
+                    if (_recentPhraseQueueEntry == _selectedPhrase)
                     {
-                        phraseIsDuplicate = true; //send through retry loop k again
+                        _phraseIsDuplicate = true; //send through retry loop k again
                         if (SessionVars.ShowDupePhrases)
                             if (Application.Current.Dispatcher.CheckAccess())
                             {
-                                AddDialogItem("Duplicate [" + selectedPhrase.DialogStr + "]");
+                                AddDialogItem("Duplicate [" + _selectedPhrase.DialogStr + "]");
                             }
                             else
                                 Application.Current.Dispatcher.BeginInvoke(() =>
                                 {
-                                    AddDialogItem("Duplicate [" + selectedPhrase.DialogStr + "]");
+                                    AddDialogItem("Duplicate [" + _selectedPhrase.DialogStr + "]");
                                 });
                         break; // doesn't matter if duplicated more than once
                     }
@@ -504,48 +524,48 @@ namespace DialogEngine
             }
 
             //eventually overload enque to remove first to keep size same or create a replace
-            CharacterList[speakingCharacter].RecentPhrases.Dequeue();
-            CharacterList[speakingCharacter].RecentPhrases.Enqueue(selectedPhrase);
-            return selectedPhrase;
+            CharacterList[_speakingCharacter].RecentPhrases.Dequeue();
+            CharacterList[_speakingCharacter].RecentPhrases.Enqueue(_selectedPhrase);
+            return _selectedPhrase;
         }
 
         #endregion
 
         #region - Private methods -
 
-        private static void RemovePhrasesOverParentalRating(Character inCharacter)
+        private static void removePhrasesOverParentalRating(Character _inCharacter)
         {
-            var maxParentalRating = ParentalRatings.GetNumeric(SessionVars.CurrentParentalRating);
-            var minParentalRating = ParentalRatings.GetNumeric("G");
-            inCharacter.Phrases.RemoveAll(item =>
-                ParentalRatings.GetNumeric(item.PhraseRating) > maxParentalRating ||
-                ParentalRatings.GetNumeric(item.PhraseRating) < minParentalRating);
+            var _maxParentalRating = ParentalRatings.GetNumeric(SessionVars.CurrentParentalRating);
+            var _minParentalRating = ParentalRatings.GetNumeric("G");
+            _inCharacter.Phrases.RemoveAll(_item =>
+                ParentalRatings.GetNumeric(_item.PhraseRating) > _maxParentalRating ||
+                ParentalRatings.GetNumeric(_item.PhraseRating) < _minParentalRating);
         }
 
 
-        private void PlayAudio(string pathAndFileName)
+        private void playAudio(string _pathAndFileName)
         {
             if (!SessionVars.AudioDialogsOn)
             {
                 Thread.Sleep(2200);
                 return;
             }
-            if (File.Exists(pathAndFileName))
+            if (File.Exists(_pathAndFileName))
             {
-                var playSuccess = Audio.PlayMp3(pathAndFileName);
+                var _playSuccess = Audio.PlayMp3(_pathAndFileName);
 
-                if (playSuccess != 0)
+                if (_playSuccess != 0)
                 {
-                    AddDialogItem("   MP3 Play Error  ---  " + playSuccess);
+                    AddDialogItem("   MP3 Play Error  ---  " + _playSuccess);
 
                     AddDialogItem(string.Empty);
                     AddDialogItem(String.Empty);
                 }
 
 
-                var i = 0;
+                var _i = 0;
                 Thread.Sleep(600);
-                while (Audio.IsPlaying() && i < 250)
+                while (Audio.IsPlaying() && _i < 250)
                 {
                     // 20 seconds is max
                     Thread.Sleep(100);
@@ -555,72 +575,72 @@ namespace DialogEngine
             }
             else
             {
-                AddDialogItem("Could not find: " + pathAndFileName + Environment.NewLine);
+                AddDialogItem("Could not find: " + _pathAndFileName + Environment.NewLine);
             }
         }
 
 
-        private void AddDialogModelToHistory(int dialogModelIndex, int ch1, int ch2)
+        private void addDialogModelToHistory(int _dialogModelIndex, int _ch1, int _ch2)
         {
             HistoricalDialogs.Add(new HistoricalDialog
             {
-                DialogIndex = dialogModelIndex,
-                DialogName = ModelDialogs[dialogModelIndex].Name,
+                DialogIndex = _dialogModelIndex,
+                DialogName = ModelDialogs[_dialogModelIndex].Name,
                 StartedTime = DateTime.Now,
                 Completed = false,
-                Character1 = ch1,
-                Character2 = ch2
+                Character1 = _ch1,
+                Character2 = _ch2
             });
         }
 
 
         private List<int> findMostRecentAdventureDialogIndexes()
         {
-            var mostRecentAdventureDialogs = new List<int>();
+            var _mostRecentAdventureDialogs = new List<int>();
             // most recent will be in the 0 index of list
-            var foundAdventures = new List<string>();
-            var j = 0;
-            for (var i = HistoricalDialogs.Count - 1; i >= 0; i--)
+            var _foundAdventures = new List<string>();
+            var _j = 0;
+            for (var _i = HistoricalDialogs.Count - 1; _i >= 0; _i--)
             {
-                var dialog = ModelDialogs[HistoricalDialogs[i].DialogIndex];
-                if (dialog.Adventure.Length > 0 && !foundAdventures.Contains(dialog.Adventure))
+                var _dialog = ModelDialogs[HistoricalDialogs[_i].DialogIndex];
+                if (_dialog.Adventure.Length > 0 && !_foundAdventures.Contains(_dialog.Adventure))
                 {
                     //if the dialog was part of an adventure and we haven't already found the most recent 
                     //from that adventure add the dialog to the most recent adventure list
-                    foundAdventures.Add(dialog.Adventure);
-                    mostRecentAdventureDialogs.Add(HistoricalDialogs[i].DialogIndex);
+                    _foundAdventures.Add(_dialog.Adventure);
+                    _mostRecentAdventureDialogs.Add(HistoricalDialogs[_i].DialogIndex);
                 }
-                j++;
-                if (j > 400) break; //don't go through all of time looking for active adventures
+                _j++;
+                if (_j > 400) break; //don't go through all of time looking for active adventures
             }
-            return mostRecentAdventureDialogs;
+            return _mostRecentAdventureDialogs;
         }
 
-        private bool CheckIfDialogModelUsedRecently(int dialogModel)
+        private bool checkIfDialogModelUsedRecently(int _dialogModel)
         {
-            foreach (var recentDialogQueueEntry in RecentDialogs) // try again if dialog model recentlyused
-                if (recentDialogQueueEntry == dialogModel)
+            foreach (var _recentDialogQueueEntry in RecentDialogs) // try again if dialog model recentlyused
+                if (_recentDialogQueueEntry == _dialogModel)
                 {
                     if (SessionVars.ShowDupePhrases)
-                        Console.WriteLine("Duplicate Dialog [" + dialogModel + "]");
+                        Console.WriteLine("Duplicate Dialog [" + _dialogModel + "]");
                     return true;
                 }
             return false;
         }
 
-        private bool CheckIfCharactersHavePhrasesForDialog(int dialogModel, int character1Num, int character2Num)
+        private bool checkIfCharactersHavePhrasesForDialog(int _dialogModel, int _character1Num, int _character2Num)
         {
-            var currentCharacter = character1Num;
-            foreach (var element in ModelDialogs[dialogModel].PhraseTypeSequence)
+            var _currentCharacter = _character1Num;
+            foreach (var _element in ModelDialogs[_dialogModel].PhraseTypeSequence)
                 //try again if characters lack phrases for this model
-                if (CharacterList[currentCharacter].PhraseTotals.PhraseWeights.ContainsKey(element))
+                if (CharacterList[_currentCharacter].PhraseTotals.PhraseWeights.ContainsKey(_element))
                 {
-                    if (CharacterList[currentCharacter].PhraseTotals.PhraseWeights[element] < 0.015f)
+                    if (CharacterList[_currentCharacter].PhraseTotals.PhraseWeights[_element] < 0.015f)
                         return false;
-                    if (currentCharacter == character1Num)
-                        currentCharacter = character2Num;
+                    if (_currentCharacter == _character1Num)
+                        _currentCharacter = _character2Num;
                     else
-                        currentCharacter = character1Num;
+                        _currentCharacter = _character1Num;
                 }
                 else
                 {
@@ -629,64 +649,64 @@ namespace DialogEngine
             return true;
         }
 
-        private bool CheckIfDialogPreRequirementMet(int dialogModel)
+        private bool checkIfDialogPreRequirementMet(int _dialogModel)
         {
-            if (ModelDialogs[dialogModel].Requires == null || ModelDialogs[dialogModel].Requires.Count == 0)
+            if (ModelDialogs[_dialogModel].Requires == null || ModelDialogs[_dialogModel].Requires.Count == 0)
                 return true;
             if (!HistoricalDialogs.Any())
                 return false;
-            var lastHistoricalDialog = HistoricalDialogs.Last();
-            foreach (var requiredTag in ModelDialogs[dialogModel].Requires)
+            var _lastHistoricalDialog = HistoricalDialogs.Last();
+            foreach (var _requiredTag in ModelDialogs[_dialogModel].Requires)
             {
-                var currentRequiredTagSatisfied = false;
-                foreach (var histDialog in HistoricalDialogs)
+                var _currentRequiredTagSatisfied = false;
+                foreach (var _histDialog in HistoricalDialogs)
                 {
                     // could speed by only going through unique historical dialog index #s
-                    if (ModelDialogs[histDialog.DialogIndex].Adventure == ModelDialogs[dialogModel].Adventure)
-                        foreach (var providedTag in ModelDialogs[histDialog.DialogIndex].Provides)
-                            if (providedTag == requiredTag)
+                    if (ModelDialogs[_histDialog.DialogIndex].Adventure == ModelDialogs[_dialogModel].Adventure)
+                        foreach (var _providedTag in ModelDialogs[_histDialog.DialogIndex].Provides)
+                            if (_providedTag == _requiredTag)
                             {
-                                currentRequiredTagSatisfied = true;
+                                _currentRequiredTagSatisfied = true;
                                 break;
                             }
-                    if (currentRequiredTagSatisfied)
+                    if (_currentRequiredTagSatisfied)
                         break;
-                    if (histDialog == lastHistoricalDialog)
+                    if (_histDialog == _lastHistoricalDialog)
                         return false;
                 }
             }
             return true;
         }
 
-        private int FindNextAdventureDialogForCharacters(int character1Num, int character2Num,
-            List<int> mostRecentAdventureDialogIndexes)
+        private int findNextAdventureDialogForCharacters(int _character1Num, int _character2Num,
+            List<int> _mostRecentAdventureDialogIndexes)
         {
-            var ch1First = new bool();
-            var ch2First = new bool();
+            var _ch1First = new bool();
+            var _ch2First = new bool();
 
             //if we have recently done adventures give priority to adventure dialogs check them first
-            foreach (var recentAdventureIdx in mostRecentAdventureDialogIndexes)
+            foreach (var _recentAdventureIdx in _mostRecentAdventureDialogIndexes)
                 //given recent adventures
-            foreach (var possibleDialog in ModelDialogs
+            foreach (var _possibleDialog in ModelDialogs
             ) //TODO probably a cleaner way to do this with Linq and lamda expressions
             {
                 //look for follow on adventure possibilities
-                var possibleDialogIdx = ModelDialogs.IndexOf(possibleDialog);
-                if (ModelDialogs[recentAdventureIdx].Adventure == possibleDialog.Adventure)
-                    foreach (var providedStringKey in ModelDialogs[recentAdventureIdx].Provides)
-                        if (possibleDialog.Requires.Contains(providedStringKey))
+                var _possibleDialogIdx = ModelDialogs.IndexOf(_possibleDialog);
+                if (ModelDialogs[_recentAdventureIdx].Adventure == _possibleDialog.Adventure)
+                    foreach (var _providedStringKey in ModelDialogs[_recentAdventureIdx].Provides)
+                        if (_possibleDialog.Requires.Contains(_providedStringKey))
                         {
                             //if a the most recent adventure dialog in the adventure provides what we require we won't 
                             //go backwards in adventures
-                            ch1First = CheckIfCharactersHavePhrasesForDialog(possibleDialogIdx,
-                                character1Num, character2Num);
-                            ch2First = CheckIfCharactersHavePhrasesForDialog(possibleDialogIdx,
-                                character2Num, character1Num);
-                            if (ch1First || ch2First)
+                            _ch1First = checkIfCharactersHavePhrasesForDialog(_possibleDialogIdx,
+                                _character1Num, _character2Num);
+                            _ch2First = checkIfCharactersHavePhrasesForDialog(_possibleDialogIdx,
+                                _character2Num, _character1Num);
+                            if (_ch1First || _ch2First)
                             {
-                                if (ch2First)
+                                if (_ch2First)
                                     SwapCharactersOneAndTwo();
-                                return possibleDialogIdx;
+                                return _possibleDialogIdx;
                             }
                         }
             }
@@ -694,118 +714,118 @@ namespace DialogEngine
         }
 
 
-        private void AddPhraseToHistory(PhraseEntry selectedPhrase, int speakingCharacter)
+        private void addPhraseToHistory(PhraseEntry _selectedPhrase, int _speakingCharacter)
         {
             HistoricalPhrases.Add(new HistoricalPhrase
             {
-                CharacterIndex = speakingCharacter,
-                CharacterPrefix = CharacterList[speakingCharacter].CharacterPrefix,
-                PhraseIndex = CharacterList[speakingCharacter].Phrases.IndexOf(selectedPhrase),
-                PhraseFile = selectedPhrase.FileName,
+                CharacterIndex = _speakingCharacter,
+                CharacterPrefix = CharacterList[_speakingCharacter].CharacterPrefix,
+                PhraseIndex = CharacterList[_speakingCharacter].Phrases.IndexOf(_selectedPhrase),
+                PhraseFile = _selectedPhrase.FileName,
                 StartedTime = DateTime.Now
             });
 
             if (SessionVars.WriteSerialLog)
-                using (var serialLogDialogLines = new StreamWriter(
+                using (var _serialLogDialogLines = new StreamWriter(
                     SessionVars.LogsDirectory + SessionVars.DialogLogFileName, true))
                 {
-                    serialLogDialogLines.WriteLine(CharacterList[speakingCharacter].CharacterName + ": " +
-                                                   selectedPhrase.DialogStr);
-                    serialLogDialogLines.Close();
+                    _serialLogDialogLines.WriteLine(CharacterList[_speakingCharacter].CharacterName + ": " +
+                                                   _selectedPhrase.DialogStr);
+                    _serialLogDialogLines.Close();
                 }
         }
 
 
-        private int PickAWeightedDialog(int character1Num, int character2Num)
+        private int pickAWeightedDialog(int _character1Num, int _character2Num)
         {
             //TODO check that all characters/phrasetypes required for adventure are included before starting adventure?
-            var dialogModel = 0;
+            var _dialogModel = 0;
 
-            var mostRecentAdventureDialogIndexes = findMostRecentAdventureDialogIndexes();
+            var _mostRecentAdventureDialogIndexes = findMostRecentAdventureDialogIndexes();
 
             // most recent will be in the 0 index of list which will be hit first in foreach
-            if (mostRecentAdventureDialogIndexes.Count > 0)
+            if (_mostRecentAdventureDialogIndexes.Count > 0)
             {
-                var nextAdventureDialogIdx =
-                    FindNextAdventureDialogForCharacters(character1Num, character2Num,
-                        mostRecentAdventureDialogIndexes);
+                var _nextAdventureDialogIdx =
+                    findNextAdventureDialogForCharacters(_character1Num, _character2Num,
+                        _mostRecentAdventureDialogIndexes);
 
-                if (nextAdventureDialogIdx > 0 && nextAdventureDialogIdx < ModelDialogs.Count)
-                    return nextAdventureDialogIdx; // we have an adventure dialog for these characters go with it
+                if (_nextAdventureDialogIdx > 0 && _nextAdventureDialogIdx < ModelDialogs.Count)
+                    return _nextAdventureDialogIdx; // we have an adventure dialog for these characters go with it
             }
 
-            var dialogWeightIndex = 0.0;
-            var attempts = 0;
-            var dialogModelFits = false;
+            var _dialogWeightIndex = 0.0;
+            var _attempts = 0;
+            var _dialogModelFits = false;
 
 
-            while (!dialogModelFits && attempts < 4000)
+            while (!_dialogModelFits && _attempts < 4000)
             {
-                attempts++;
+                _attempts++;
                 // exclude greetings at 0 and 1 TODO use .Greeting instead of hard coded const
-                dialogWeightIndex = mRandom.NextDouble();
-                dialogWeightIndex *= DialogModelPopularitySum - 0.4;
-                dialogWeightIndex += 0.4; // TODO better way to avoid greetings than by weight 0.2 each
-                double currentDialogWeightSum = 0;
+                _dialogWeightIndex = mRandom.NextDouble();
+                _dialogWeightIndex *= DialogModelPopularitySum - 0.4;
+                _dialogWeightIndex += 0.4; // TODO better way to avoid greetings than by weight 0.2 each
+                double _currentDialogWeightSum = 0;
 
 
-                foreach (var dialog in ModelDialogs)
+                foreach (var _dialog in ModelDialogs)
                 {
-                    currentDialogWeightSum += dialog.Popularity;
-                    if (currentDialogWeightSum > dialogWeightIndex)
+                    _currentDialogWeightSum += _dialog.Popularity;
+                    if (_currentDialogWeightSum > _dialogWeightIndex)
                     {
-                        dialogModel = ModelDialogs.IndexOf(dialog);
+                        _dialogModel = ModelDialogs.IndexOf(_dialog);
                         break;
                     }
                 }
-                var dialogModelUsedRecently = CheckIfDialogModelUsedRecently(dialogModel);
+                var _dialogModelUsedRecently = checkIfDialogModelUsedRecently(_dialogModel);
 
-                var charactersHavePhrases =
-                    CheckIfCharactersHavePhrasesForDialog(dialogModel, Character1Num, Character2Num);
+                var _charactersHavePhrases =
+                    checkIfCharactersHavePhrasesForDialog(_dialogModel, Character1Num, Character2Num);
 
-                var dialogPreRequirementsMet = CheckIfDialogPreRequirementMet(dialogModel);
+                var _dialogPreRequirementsMet = checkIfDialogPreRequirementMet(_dialogModel);
 
-                var greetingAppropriate = !(ModelDialogs[dialogModel].PhraseTypeSequence[0] == "Greeting"
+                var _greetingAppropriate = !(ModelDialogs[_dialogModel].PhraseTypeSequence[0] == "Greeting"
                                             && SameCharactersAsLast
                 ); // don't want a greeting with same characters as last
 
-                if (dialogPreRequirementsMet && charactersHavePhrases
-                    && greetingAppropriate && !dialogModelUsedRecently)
-                    dialogModelFits = true;
+                if (_dialogPreRequirementsMet && _charactersHavePhrases
+                    && _greetingAppropriate && !_dialogModelUsedRecently)
+                    _dialogModelFits = true;
             }
-            return dialogModel;
+            return _dialogModel;
         }
 
 
-        private bool ImportClosestSerialComsCharacters()
+        private bool importClosestSerialComsCharacters()
         {
-            var tempChar1 = SelectNextCharacters.NextCharacter1;
-            var tempChar2 = SelectNextCharacters.NextCharacter2;
-            if (tempChar1 == tempChar2 || tempChar1 >= CharacterList.Count || tempChar2 >= CharacterList.Count)
+            var _tempChar1 = SelectNextCharacters.NextCharacter1;
+            var _tempChar2 = SelectNextCharacters.NextCharacter2;
+            if (_tempChar1 == _tempChar2 || _tempChar1 >= CharacterList.Count || _tempChar2 >= CharacterList.Count)
                 return false;
             SameCharactersAsLast =
-                (tempChar1 == mPriorCharacter1Num || tempChar1 == mPriorCharacter2Num) &&
-                (tempChar2 == mPriorCharacter1Num || tempChar2 == mPriorCharacter2Num);
+                (_tempChar1 == mPriorCharacter1Num || _tempChar1 == mPriorCharacter2Num) &&
+                (_tempChar2 == mPriorCharacter1Num || _tempChar2 == mPriorCharacter2Num);
 
-            Character1Num = tempChar1;
-            Character2Num = tempChar2;
+            Character1Num = _tempChar1;
+            Character2Num = _tempChar2;
             mPriorCharacter1Num = Character1Num;
             mPriorCharacter2Num = Character2Num;
             return true;
         }
 
 
-        private void ProcessDebugFlags(params int[] dialogDirectives)
+        private void processDebugFlags(params int[] _dialogDirectives)
         {
-            if (dialogDirectives.Count() == 3
+            if (_dialogDirectives.Count() == 3
             ) //if the array input is correct size and inputs don't exceed bounds set dialog parameters 
             {
-                if (dialogDirectives[0] < ModelDialogs.Count)
-                    CurrentDialogModel = dialogDirectives[0];
-                if (dialogDirectives[1] < CharacterList.Count)
-                    Character1Num = dialogDirectives[1];
-                if (dialogDirectives[2] < CharacterList.Count)
-                    Character2Num = dialogDirectives[2];
+                if (_dialogDirectives[0] < ModelDialogs.Count)
+                    CurrentDialogModel = _dialogDirectives[0];
+                if (_dialogDirectives[1] < CharacterList.Count)
+                    Character1Num = _dialogDirectives[1];
+                if (_dialogDirectives[2] < CharacterList.Count)
+                    Character2Num = _dialogDirectives[2];
             }
 
             if (SessionVars.DebugFlag)
@@ -816,7 +836,7 @@ namespace DialogEngine
                 FirmwareDebuggingTools.PrintHeatMapSums();
         }
 
-        private bool WaitingForMovement()
+        private bool waitingForMovement()
         {
             if (LastPhraseImpliedMovement && SameCharactersAsLast && !SessionVars.NoSerialPort)
             {
@@ -824,7 +844,7 @@ namespace DialogEngine
                 mcMovementWaitCount++;
                 if (mcMovementWaitCount == 3)
                 {
-                    var ch1RetreatPhrase = PickAWeightedPhrase(Character1Num, "Retreat");
+                    var _ch1RetreatPhrase = PickAWeightedPhrase(Character1Num, "Retreat");
 
 
                     //if we can reach object created by main thread we don't need to queue our code to dispatcher object of main thread
@@ -837,25 +857,25 @@ namespace DialogEngine
                         {
                             AddDialogItem(CharacterList[Character1Num].CharacterName + " Wait3 : ");
 
-                            AddDialogItem(ch1RetreatPhrase.DialogStr);
+                            AddDialogItem(_ch1RetreatPhrase.DialogStr);
                         });
                     }
 
 
                     //Console.Write(CharacterList[Character1Num].CharacterName + " Wait3 : ");
                     //Console.WriteLine(ch1RetreatPhrase.DialogStr);
-                    PlayAudio(SessionVars.AudioDirectory + CharacterList[Character1Num].CharacterPrefix +
-                              "_" + ch1RetreatPhrase.FileName + ".mp3");
+                    playAudio(SessionVars.AudioDirectory + CharacterList[Character1Num].CharacterPrefix +
+                              "_" + _ch1RetreatPhrase.FileName + ".mp3");
                     return true;
                 }
                 if (mcMovementWaitCount == 7)
                 {
                     LastPhraseImpliedMovement = false;
-                    var ch2RetreatPhrase = PickAWeightedPhrase(Character2Num, "Retreat");
+                    var _ch2RetreatPhrase = PickAWeightedPhrase(Character2Num, "Retreat");
                     Console.Write(CharacterList[Character2Num].CharacterName + " Wait5 : ");
-                    Console.WriteLine(ch2RetreatPhrase.DialogStr);
-                    PlayAudio(SessionVars.AudioDirectory + CharacterList[Character2Num].CharacterPrefix +
-                              "_" + ch2RetreatPhrase.FileName + ".mp3");
+                    Console.WriteLine(_ch2RetreatPhrase.DialogStr);
+                    playAudio(SessionVars.AudioDirectory + CharacterList[Character2Num].CharacterPrefix +
+                              "_" + _ch2RetreatPhrase.FileName + ".mp3");
                     return true;
                 }
                 if (mcMovementWaitCount > 11)
@@ -871,19 +891,19 @@ namespace DialogEngine
             return false;
         }
 
-        private bool DetermineIfMovementImplied(PhraseEntry selectedPhrase)
+        private bool determineIfMovementImplied(PhraseEntry _selectedPhrase)
         {
-            double insultWeight, retrWeight, threatWeight, shutUpWeight;
+            double _insultWeight, _retrWeight, _threatWeight, _shutUpWeight;
 
-            selectedPhrase.PhraseWeights.TryGetValue("Insult", out insultWeight);
+            _selectedPhrase.PhraseWeights.TryGetValue("Insult", out _insultWeight);
 
-            selectedPhrase.PhraseWeights.TryGetValue("Retreat", out retrWeight);
+            _selectedPhrase.PhraseWeights.TryGetValue("Retreat", out _retrWeight);
 
-            selectedPhrase.PhraseWeights.TryGetValue("Threat", out threatWeight);
+            _selectedPhrase.PhraseWeights.TryGetValue("Threat", out _threatWeight);
 
-            selectedPhrase.PhraseWeights.TryGetValue("ShutUp", out shutUpWeight);
+            _selectedPhrase.PhraseWeights.TryGetValue("ShutUp", out _shutUpWeight);
 
-            if (insultWeight + retrWeight + threatWeight + shutUpWeight > 0.1)
+            if (_insultWeight + _retrWeight + _threatWeight + _shutUpWeight > 0.1)
             {
                 return true;
             }

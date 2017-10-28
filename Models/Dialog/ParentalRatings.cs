@@ -13,7 +13,7 @@ namespace DialogEngine.Models.Dialog
         /// PG13 - Parents Strongly Cautioned
         /// R - Restricted - under 17 requires accompanying parent
         /// </summary>
-        private static readonly Dictionary<string, int> _dict = new Dictionary<string, int>
+        private static readonly Dictionary<string, int> mcDict = new Dictionary<string, int>
         {
             {"G", 1}, 
             {"PG", 2},
@@ -24,14 +24,14 @@ namespace DialogEngine.Models.Dialog
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="ratingString"></param>
+        /// <param name="_ratingString"></param>
         /// <returns></returns>
-        public static int GetNumeric(string ratingString)
+        public static int GetNumeric(string _ratingString)
         {
             // Try to get the result in the static Dictionary
-            int result;
-            if (_dict.TryGetValue(ratingString, out result))
-                return result;
+            int _result;
+            if (mcDict.TryGetValue(_ratingString, out _result))
+                return _result;
             return -1;
         }
     }

@@ -16,7 +16,7 @@ namespace DialogEngine.ViewModels.Dialog
 {
     /// <summary>
     /// Implementation of <see cref="ViewModelBase"/>
-    /// DataContext of Dialog.xaml/>
+    /// DataContext for Dialog.xaml/>
     /// </summary>
     public class DialogViewModel : ViewModelBase
     {
@@ -40,13 +40,11 @@ namespace DialogEngine.ViewModels.Dialog
 
         #endregion
 
-
-
         #region - Constructor -
 
-        public DialogViewModel(Views.Dialog.Dialog view)
+        public DialogViewModel(Views.Dialog.Dialog _view)
         {
-            mView = view;
+            mView = _view;
 
             bindCommands();
 
@@ -54,9 +52,6 @@ namespace DialogEngine.ViewModels.Dialog
         }
 
         #endregion
-
-
-
 
         #region - Properties -
         /// <summary>
@@ -85,35 +80,30 @@ namespace DialogEngine.ViewModels.Dialog
 
         #endregion
 
-
-
         #region - Commands -
-
 
         public RelayCommand InputButtonClick { get; set; }
 
 
         #endregion
 
-
-
         #region - Private methods -
 
 
         private void bindCommands()
         {
-            this.InputButtonClick = new RelayCommand(x => onInputButtonClick());
+            this.InputButtonClick = new RelayCommand(_x => onInputButtonClick());
         }
 
 
 
         private void onInputButtonClick()
         {
-            string enteredText = mView.messageTextBox.Text;
+            string _enteredText = mView.messageTextBox.Text;
 
-            if (!string.IsNullOrEmpty(enteredText))
+            if (!string.IsNullOrEmpty(_enteredText))
             {
-                AddDialogItem(enteredText);
+                AddDialogItem(_enteredText);
 
                 mView.messageTextBox.Text = string.Empty;
 
@@ -126,33 +116,32 @@ namespace DialogEngine.ViewModels.Dialog
         {
             if (SessionVars.WriteSerialLog)
             {
-                var versionTimeStr = "Dialog Engine ver 0.67 " + DateTime.Now;
+                var _versionTimeStr = "Dialog Engine ver 0.67 " + DateTime.Now;
 
-                AddDialogItem(versionTimeStr);
+                AddDialogItem(_versionTimeStr);
 
-                using (var serialLog = new StreamWriter(
-                    SessionVars.LogsDirectory + SessionVars.HexLogFileName, true))
+                using (var _serialLog = new StreamWriter(SessionVars.LogsDirectory + SessionVars.HexLogFileName, true))
                 {
-                    serialLog.WriteLine("");
-                    serialLog.WriteLine("");
-                    serialLog.WriteLine(versionTimeStr);
-                    serialLog.Close();
+                    _serialLog.WriteLine("");
+                    _serialLog.WriteLine("");
+                    _serialLog.WriteLine(_versionTimeStr);
+                    _serialLog.Close();
                 }
-                using (var serialLogDec = new StreamWriter(
-                    SessionVars.LogsDirectory + SessionVars.DecimalLogFileName, true))
+
+                using (var _serialLogDec = new StreamWriter(SessionVars.LogsDirectory + SessionVars.DecimalLogFileName, true))
                 {
-                    serialLogDec.WriteLine("");
-                    serialLogDec.WriteLine("");
-                    serialLogDec.WriteLine(versionTimeStr);
-                    serialLogDec.Close();
+                    _serialLogDec.WriteLine("");
+                    _serialLogDec.WriteLine("");
+                    _serialLogDec.WriteLine(_versionTimeStr);
+                    _serialLogDec.Close();
                 }
-                using (var serialLogDialog = new StreamWriter(
-                    SessionVars.LogsDirectory + SessionVars.DialogLogFileName, true))
+
+                using (var _serialLogDialog = new StreamWriter(SessionVars.LogsDirectory + SessionVars.DialogLogFileName, true))
                 {
-                    serialLogDialog.WriteLine("");
-                    serialLogDialog.WriteLine("");
-                    serialLogDialog.WriteLine(versionTimeStr);
-                    serialLogDialog.Close();
+                    _serialLogDialog.WriteLine("");
+                    _serialLogDialog.WriteLine("");
+                    _serialLogDialog.WriteLine(_versionTimeStr);
+                    _serialLogDialog.Close();
                 }
             }
         }
@@ -161,31 +150,28 @@ namespace DialogEngine.ViewModels.Dialog
         private void checkForMissingPhrases()
         {
             if (!SessionVars.AudioDialogsOn)
-            {
                 return;
-            }
 
-            foreach (var character in mcTheDialogs.CharacterList)
+            foreach (var _character in mcTheDialogs.CharacterList)
             {
-                foreach (var phrase in character.Phrases)
+                foreach (var _phrase in _character.Phrases)
                 {
-                    if (!File.Exists(SessionVars.AudioDirectory + character.CharacterPrefix + "_" + phrase.FileName + ".mp3")) //Char name and prefix are being left blank...
+                    if (!File.Exists(SessionVars.AudioDirectory 
+                        + _character.CharacterPrefix + "_" 
+                        +_phrase.FileName + ".mp3")) //Char name and prefix are being left blank...
                     {
-                        string debugMessage = "missing " + character.CharacterPrefix + "_" + phrase.FileName + ".mp3 " + phrase.DialogStr;
+                        var _debugMessage = "missing " + _character.CharacterPrefix + "_" + _phrase.FileName + ".mp3 " + _phrase.DialogStr;
 
-                        AddDialogItem(debugMessage);
+                        AddDialogItem(_debugMessage);
 
                         if (SessionVars.WriteSerialLog)
-                        {
-                            using (var JSONLog =
-                                new StreamWriter(SessionVars.LogsDirectory + SessionVars.DialogLogFileName, true))
+                            using (var _jsonLog = new StreamWriter(SessionVars.LogsDirectory + SessionVars.DialogLogFileName, true))
                             {
-                                JSONLog.WriteLine("missing " + character.CharacterPrefix + "_" + phrase.FileName + ".mp3 " + phrase.DialogStr);
+                                _jsonLog.WriteLine("missing " + _character.CharacterPrefix + "_" + _phrase.FileName + ".mp3 " + _phrase.DialogStr);
                             }
-                        }
-
                     }
                 }
+
 
                 AddDialogItem(string.Empty);
             }
@@ -194,7 +180,7 @@ namespace DialogEngine.ViewModels.Dialog
 
 
 
-        private void checkTagsUsed(DialogTracker dialogTracker)
+        private void checkTagsUsed(DialogTracker _dialogTracker)
         {
 
             //spit out all dialog model names and associated number.
@@ -206,17 +192,16 @@ namespace DialogEngine.ViewModels.Dialog
 
             AddDialogItem(string.Empty);
 
-            foreach (var dialog in mcTheDialogs.ModelDialogs)
+            foreach (var _dialog in mcTheDialogs.ModelDialogs)
             {
 
-                AddDialogItem(" " + dialogTracker.ModelDialogs.IndexOf(dialog) + " : " + dialog.Name);
+                AddDialogItem(" " + _dialogTracker.ModelDialogs.IndexOf(_dialog) + " : " + _dialog.Name);
 
                 if (SessionVars.WriteSerialLog)
                 {
-                    using (var JSONLog =
-                        new StreamWriter(SessionVars.LogsDirectory + SessionVars.DialogLogFileName, true))
+                    using (var _jsonLog = new StreamWriter(SessionVars.LogsDirectory + SessionVars.DialogLogFileName, true))
                     {
-                        JSONLog.WriteLine(" " + dialogTracker.ModelDialogs.IndexOf(dialog) + " : " + dialog.Name);
+                        _jsonLog.WriteLine(" " + _dialogTracker.ModelDialogs.IndexOf(_dialog) + " : " + _dialog.Name);
                     }
                 }
 
@@ -225,76 +210,87 @@ namespace DialogEngine.ViewModels.Dialog
             //test that all character tags are used by a dialog model.
             AddDialogItem("Check characters tags are used ");
 
-            var usedFlag = false;
+            var _usedFlag = false;
 
-            foreach (var character in dialogTracker.CharacterList)
-
-                foreach (var phrase in character.Phrases)
-
-                    foreach (var phrasetag in phrase.PhraseWeights.Keys)
+            foreach (var _character in _dialogTracker.CharacterList)
+            {
+                foreach (var _phrase in _character.Phrases)
+                {
+                    foreach (var _phrasetag in _phrase.PhraseWeights.Keys)
                     {
-                        usedFlag = false;
-                        foreach (var dialog in dialogTracker.ModelDialogs)
+                        _usedFlag = false;
+
+                        foreach (var _dialog in _dialogTracker.ModelDialogs)
                         {
-                            foreach (var dialogtag in dialog.PhraseTypeSequence)
-                                if (phrasetag == dialogtag)
+                            foreach (var _dialogtag in _dialog.PhraseTypeSequence)
+                            {
+                                if (_phrasetag == _dialogtag)
                                 {
-                                    usedFlag = true;
+                                    _usedFlag = true;
                                     break;
                                 }
-                            if (usedFlag)
+                            }
+
+                            if (_usedFlag)
                                 break;
                         }
-                        if (!usedFlag)
+
+                        if (!_usedFlag)
                         {
-                            AddDialogItem(" " + phrasetag + " is not used.");
+                            AddDialogItem(" " + _phrasetag + " is not used.");
 
                             if (SessionVars.WriteSerialLog)
                             {
-                                using (var JSONLog = new StreamWriter(SessionVars.LogsDirectory + SessionVars.DialogLogFileName,
+                                using (var _jsonLog = new StreamWriter(SessionVars.LogsDirectory + SessionVars.DialogLogFileName,
                                     true))
                                 {
-                                    JSONLog.WriteLine(" " + phrasetag + " is not used.");
+                                    _jsonLog.WriteLine(" " + _phrasetag + " is not used.");
                                 }
                             }
 
                         }
                     }
 
+                }
+            }
+
 
             AddDialogItem("Check dialogs tags are used");
 
-            foreach (var dialog in dialogTracker.ModelDialogs)
-                foreach (var dialogtag in dialog.PhraseTypeSequence) //each dialog model tag
+            foreach (var _dialog in _dialogTracker.ModelDialogs)
+                foreach (var _dialogtag in _dialog.PhraseTypeSequence) //each dialog model tag
                 {
-                    usedFlag = false;
-                    foreach (var character in dialogTracker.CharacterList)
+                    _usedFlag = false;
+                    foreach (var _character in _dialogTracker.CharacterList)
                     {
-                        foreach (var characterPhrase in character.Phrases)
+                        foreach (var _characterPhrase in _character.Phrases)
                         {
-                            foreach (var phraseTag in characterPhrase.PhraseWeights.Keys) //each character phrase tag
-                                if (dialogtag == phraseTag)
+                            foreach (var _phraseTag in _characterPhrase.PhraseWeights.Keys) //each character phrase tag{
+                            {
+                                if (_dialogtag == _phraseTag)
                                 {
-                                    usedFlag = true;
+                                    _usedFlag = true;
                                     break;
                                 }
-                            if (usedFlag)
+                            }
+
+                            if (_usedFlag)
                                 break;
                         }
-                        if (usedFlag)
+
+                        if (_usedFlag)
                             break;
                     }
-                    if (!usedFlag)
+                    if (!_usedFlag)
                     {
 
-                        AddDialogItem(" " + dialogtag + " not used in " + dialog.Name);
+                        AddDialogItem(" " + _dialogtag + " not used in " + _dialog.Name);
 
                         if (SessionVars.WriteSerialLog)
                         {
-                            using (var JSONLog = new StreamWriter(SessionVars.LogsDirectory + SessionVars.DialogLogFileName,
-                                true))
+                            using (var _jsonLog = new StreamWriter(SessionVars.LogsDirectory + SessionVars.DialogLogFileName,true))
                             {
-                                JSONLog.WriteLine(" " + dialogtag + " not used in " + dialog.Name);
+                                _jsonLog.WriteLine(" " + _dialogtag + " not used in " + _dialog.Name);
                             }
                         }
 
@@ -304,17 +300,17 @@ namespace DialogEngine.ViewModels.Dialog
 
         private void onViewModelLoaded()
         {
-            DialogTracker dialogTracker = DialogTracker.Instance;
+            DialogTracker _dialogTracker = DialogTracker.Instance;
 
             writeStartupInfo();
 
-            dialogTracker.IntakeCharacters();
+            _dialogTracker.IntakeCharacters();
 
             InitModelDialogs.SetDefaults(DialogTracker.Instance);
 
             if (SessionVars.TagUsageCheck)
             {
-                checkTagsUsed(dialogTracker);
+                checkTagsUsed(_dialogTracker);
             }
 
             if (SessionVars.DebugFlag)
@@ -346,29 +342,29 @@ namespace DialogEngine.ViewModels.Dialog
 
                 //  vb: take user input fromtyext box instead of console.readline above
 
-                string[] parsekeyboardInput = mKeyboardInput.Split();
+                string[] _parsekeyboardInput = mKeyboardInput.Split();
 
                 //vb : for testing what is the parsed output
-                AddDialogItem(parsekeyboardInput[0] + Environment.NewLine);
+                AddDialogItem(_parsekeyboardInput[0] + Environment.NewLine);
 
-                AddDialogItem(parsekeyboardInput[1] + Environment.NewLine);
+                AddDialogItem(_parsekeyboardInput[1] + Environment.NewLine);
 
-                AddDialogItem(parsekeyboardInput[2] + Environment.NewLine);
+                AddDialogItem(_parsekeyboardInput[2] + Environment.NewLine);
 
                 //if keyboard input has three numbers for debug mode to force dialog model and characters
 
             }
 
-            BackgroundWorker worker = new BackgroundWorker();
+            BackgroundWorker _worker = new BackgroundWorker();
 
-            worker.WorkerReportsProgress = false;
-            worker.DoWork += worker_DoWork;
-            worker.RunWorkerCompleted += worker_RunWorkerCompleted;
-            worker.RunWorkerAsync(400);
+            _worker.WorkerReportsProgress = false;
+            _worker.DoWork += worker_DoWork;
+            _worker.RunWorkerCompleted += worker_RunWorkerCompleted;
+            _worker.RunWorkerAsync(400);
 
         }
 
-        private void worker_DoWork(object sender, DoWorkEventArgs e)
+        private void worker_DoWork(object _sender, DoWorkEventArgs _e)
         {
             while (true)
             {
@@ -376,23 +372,23 @@ namespace DialogEngine.ViewModels.Dialog
                 if (SessionVars.ForceCharactersAndDialogModel)
                 {
                     //string[] keyboardInput = Console.ReadLine().Split(' ');
-                    string[] parsekeyboardInput = mKeyboardInput.Split(); //vb:can add a hard code a console.readline()
+                    string[] _parsekeyboardInput = mKeyboardInput.Split(); //vb:can add a hard code a console.readline()
 
                     //if keyboard input has three numbers for debug mode to force dialog model and characters
-                    if (parsekeyboardInput.Length == 3)
+                    if (_parsekeyboardInput.Length == 3)
                     {
-                        int j = 0;
+                        int _j = 0;
 
-                        int[] modelAndCharacters = new int[3];
+                        int[] _modelAndCharacters = new int[3];
 
-                        foreach (string asciiInt in parsekeyboardInput)
+                        foreach (string _asciiInt in _parsekeyboardInput)
                         {
-                            modelAndCharacters[j] = Int32.Parse(asciiInt);
-                            j++;
+                            _modelAndCharacters[_j] = Int32.Parse(_asciiInt);
+                            _j++;
                         }
 
 
-                        mcTheDialogs.GenerateADialog(modelAndCharacters);
+                        mcTheDialogs.GenerateADialog(_modelAndCharacters);
 
                     }
                     else
@@ -436,9 +432,9 @@ namespace DialogEngine.ViewModels.Dialog
         }
 
 
-        private void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void worker_RunWorkerCompleted(object _sender, RunWorkerCompletedEventArgs _e)
         {
-            MessageBoxResult result = MessageBox.Show("While loop completed");
+            MessageBoxResult _result = MessageBox.Show("While loop completed");
         }
 
 
@@ -446,9 +442,9 @@ namespace DialogEngine.ViewModels.Dialog
 
         #region - Public methods -
 
-        public void AddDialogItem(string entry)
+        public void AddDialogItem(string _entry)
         {
-            DialogCollection.Add(entry);
+            DialogCollection.Add(_entry);
 
             OnPropertyChanged("DialogCollection");
         }

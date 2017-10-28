@@ -9,7 +9,7 @@ namespace DialogEngine.Models.Dialog
     {
         public string CharacterPrefix = "XX";
         public DateTime ReceivedTime = DateTime.MinValue;
-        public int[] Rssi = new int[SerialComs.NUM_RADIOS];
+        public int[] Rssi = new int[SerialComs.NumRadios];
         public int SequenceNum = -1;
     }
 }

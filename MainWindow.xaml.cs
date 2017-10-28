@@ -34,7 +34,7 @@ namespace DialogEngine
 
 
         //creating of delegate ( it is similar to pointer on function in C )
-        public delegate void PrintMethod(string message);
+        public delegate void PrintMethod(string _message);
 
 
 
@@ -60,9 +60,9 @@ namespace DialogEngine
         {
             get
             {
-                PrintMethod printMethod = getPrintMessageMethod();
+                PrintMethod _printMethod = getPrintMessageMethod();
 
-                return printMethod;
+                return _printMethod;
             }
         }
 
@@ -74,11 +74,11 @@ namespace DialogEngine
         private PrintMethod getPrintMessageMethod()
         {
 
-            ViewModelBase currentViewModel = (mainFrame.Content as Dialog).DataContext as ViewModelBase;
+            ViewModelBase _currentViewModel = (mainFrame.Content as Dialog).DataContext as ViewModelBase;
 
-            if (currentViewModel is DialogViewModel)
+            if (_currentViewModel is DialogViewModel)
             {
-                return (currentViewModel as DialogViewModel).AddDialogItem;
+                return (_currentViewModel as DialogViewModel).AddDialogItem;
             }
             else
             {

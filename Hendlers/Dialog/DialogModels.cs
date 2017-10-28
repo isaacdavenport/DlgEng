@@ -15,7 +15,7 @@ namespace DialogEngine
         private static readonly ILog mcLogger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
 
-        public delegate void PrintMethod(string message);
+        public delegate void PrintMethod(string _message);
         public static PrintMethod AddDialogItem = new PrintMethod(((MainWindow)Application.Current.MainWindow).CurrentPrintMethod);
 
         #endregion
@@ -23,103 +23,103 @@ namespace DialogEngine
 
         #region - Public methods -
 
-        public static  void SetDefaults(DialogTracker inObj) //TODO is there a good way to identify orphaned tags? (dialog lines)
+        public static  void SetDefaults(DialogTracker _inObj) //TODO is there a good way to identify orphaned tags? (dialog lines)
         {
             //Dialogs JSON parse here.
             try
             {
-                DirectoryInfo dialogs_d = new DirectoryInfo(SessionVars.DialogsDirectory);
+                DirectoryInfo _dialogsD = new DirectoryInfo(SessionVars.DialogsDirectory);
 
                 AddDialogItem("Dialog JSON in: " + SessionVars.DialogsDirectory);
 
                 if (SessionVars.WriteSerialLog)
                 {
-                    using (StreamWriter JSONLog = new StreamWriter(
+                    using (StreamWriter _jsonLog = new StreamWriter(
                     (SessionVars.LogsDirectory + SessionVars.DialogLogFileName), true))
                     {
-                        JSONLog.WriteLine("Dialog JSON in: " + SessionVars.DialogsDirectory);
+                        _jsonLog.WriteLine("Dialog JSON in: " + SessionVars.DialogsDirectory);
                     }
                 }
 
-                var inFiles = dialogs_d.GetFiles("*.json");
+                var _inFiles = _dialogsD.GetFiles("*.json");
 
-                foreach (FileInfo file in inFiles) //file of type FileInfo for each .json in directory
+                foreach (FileInfo _file in _inFiles) //file of type FileInfo for each .json in directory
                 {
-                    AddDialogItem(" opening dialog models in " + file.Name);
+                    AddDialogItem(" opening dialog models in " + _file.Name);
 
                     if (SessionVars.WriteSerialLog)
                     {
-                        using (StreamWriter JSONLog = new StreamWriter(
+                        using (StreamWriter _jsonLog = new StreamWriter(
                         (SessionVars.LogsDirectory + SessionVars.DialogLogFileName), true))
                         {
-                            JSONLog.WriteLine(" opening dialog models in " + file.Name);
+                            _jsonLog.WriteLine(" opening dialog models in " + _file.Name);
                         }
                     }
 
-                    string inDialog;
+                    string _inDialog;
 
                     try
                     {
-                        FileStream fs = file.OpenRead();    //open a read-only FileStream
-                        using (StreamReader reader = new StreamReader(fs))   //creates new streamerader for fs stream. Could also construct with filename...
+                        FileStream _fs = _file.OpenRead();    //open a read-only FileStream
+                        using (StreamReader _reader = new StreamReader(_fs))   //creates new streamerader for fs stream. Could also construct with filename...
                         {
                             try
                             {
-                                inDialog = reader.ReadToEnd();//create string of JSON file
+                                _inDialog = _reader.ReadToEnd();//create string of JSON file
 
-                                ModelDialogInput dialogsInClass = JsonConvert.DeserializeObject<ModelDialogInput>(inDialog);  //string to Object.
+                                ModelDialogInput _dialogsInClass = JsonConvert.DeserializeObject<ModelDialogInput>(_inDialog);  //string to Object.
 
-                                foreach (ModelDialog curDialog in dialogsInClass.InList)
+                                foreach (ModelDialog _curDialog in _dialogsInClass.InList)
                                 {
                                     //Add to dialog List
-                                    inObj.ModelDialogs.Add(curDialog);
+                                    _inObj.ModelDialogs.Add(_curDialog);
                                     //population sums
-                                    inObj.DialogModelPopularitySum += curDialog.Popularity;
+                                    _inObj.DialogModelPopularitySum += _curDialog.Popularity;
                                 }
                             }
-                            catch (Newtonsoft.Json.JsonReaderException e)
+                            catch (Newtonsoft.Json.JsonReaderException _e)
                             {
-                                Console.WriteLine("Error reading " + file.Name);
-                                Console.WriteLine("JSON Parse error at " + e.LineNumber + ", " + e.LinePosition);
+                                Console.WriteLine("Error reading " + _file.Name);
+                                Console.WriteLine("JSON Parse error at " + _e.LineNumber + ", " + _e.LinePosition);
                                 Console.ReadLine();
                             }
                         }
 
-                        AddDialogItem(" completed " + file.Name);
+                        AddDialogItem(" completed " + _file.Name);
 
                         if (SessionVars.WriteSerialLog)
                         {
-                            using (StreamWriter JSONLog = new StreamWriter(
+                            using (StreamWriter _jsonLog = new StreamWriter(
                             (SessionVars.LogsDirectory + SessionVars.DialogLogFileName), true))
                             {
-                                JSONLog.WriteLine(" completed " + file.Name);
+                                _jsonLog.WriteLine(" completed " + _file.Name);
                             }
                         }
                     }
-                    catch (UnauthorizedAccessException e)
+                    catch (UnauthorizedAccessException _e)
                     {
-                        Console.WriteLine(e.Message);
-                        Console.WriteLine("Unauthorized access exception while reading: " + file.FullName);
+                        Console.WriteLine(_e.Message);
+                        Console.WriteLine("Unauthorized access exception while reading: " + _file.FullName);
                         Console.WriteLine("Check file and directory permissions");
                         Console.ReadLine();
 
                     }
-                    catch (DirectoryNotFoundException e)
+                    catch (DirectoryNotFoundException _e)
                     {
-                        Console.WriteLine(e.Message);
-                        Console.WriteLine("Directory not found exception while reading: " + file.FullName);
+                        Console.WriteLine(_e.Message);
+                        Console.WriteLine("Directory not found exception while reading: " + _file.FullName);
                         Console.WriteLine("check the Dialog JSON path in your config file");
                         Console.ReadLine();
                     }
                 }
             }
-            catch (OutOfMemoryException e)
+            catch (OutOfMemoryException _e)
             {
-                Console.WriteLine(e.Message);
+                Console.WriteLine(_e.Message);
                 Console.WriteLine("You probably need to restart your computer...");
                 Console.ReadLine();
             }
-            if (inObj.ModelDialogs.Count < 2)
+            if (_inObj.ModelDialogs.Count < 2)
             {
                 AddDialogItem("  Insufficient dialog models found in " + SessionVars.DialogsDirectory + " exiting.");
 

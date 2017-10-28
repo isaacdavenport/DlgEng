@@ -40,21 +40,21 @@ namespace DialogEngine.Core
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="propertyName"></param>
-        protected void OnPropertyChanged(string propertyName)
+        /// <param name="_propertyName"></param>
+        protected void OnPropertyChanged(string _propertyName)
         {
             if (PropertyChanged != null)
             {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+                PropertyChanged(this, new PropertyChangedEventArgs(_propertyName));
             }
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void onPageBaseLoaded(object sender, System.Windows.RoutedEventArgs e)
+        /// <param name="_sender"></param>
+        /// <param name="_e"></param>
+        private void onPageBaseLoaded(object _sender, System.Windows.RoutedEventArgs _e)
         {
             this.Loaded -= onPageBaseLoaded;
 
@@ -64,9 +64,9 @@ namespace DialogEngine.Core
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void onPageBaseUnloaded(object sender, System.Windows.RoutedEventArgs e)
+        /// <param name="_sender"></param>
+        /// <param name="_e"></param>
+        private void onPageBaseUnloaded(object _sender, System.Windows.RoutedEventArgs _e)
         {
             this.Unloaded -= onPageBaseUnloaded;
 
@@ -96,11 +96,11 @@ namespace DialogEngine.Core
         /// </summary>
         public void Refresh()
         {
-            var mainFrame = VisualHelper.GetNearestContainer<Frame>(this);
+            var _mainFrame = VisualHelper.GetNearestContainer<Frame>(this);
 
-            if (mainFrame != null)
+            if (_mainFrame != null)
             {
-                mainFrame.Refresh();
+                _mainFrame.Refresh();
             }
         }
 

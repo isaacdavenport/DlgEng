@@ -15,11 +15,11 @@ namespace DialogEngine
     {
         #region -Fields-
 
-        private static DialogTracker dialogTracker=DialogTracker.Instance;
+        private static DialogTracker mcDialogTracker=DialogTracker.Instance;
 
-        private delegate void PrintMethod(string message);
+        private delegate void PrintMethod(string _message);
 
-        private static PrintMethod addDialogItem =new PrintMethod(((MainWindow) Application.Current.MainWindow).CurrentPrintMethod);
+        private static PrintMethod mcAddDialogItem =new PrintMethod(((MainWindow) Application.Current.MainWindow).CurrentPrintMethod);
  
 
         #endregion
@@ -30,32 +30,32 @@ namespace DialogEngine
         {
             ;
 
-            int i, l, m;
+            int _i, _l, _;
 
-            for (i = 0; i < SerialComs.NUM_RADIOS; i++)
+            for (_i = 0; _i < SerialComs.NumRadios; _i++)
             {
-                addDialogItem(SelectNextCharacters.CharactersLastHeatMapUpdateTime[i].ToString("mm.ss.fff") + " ");
+                mcAddDialogItem(SelectNextCharacters.CharactersLastHeatMapUpdateTime[_i].ToString("mm.ss.fff") + " ");
 
             }
 
-            addDialogItem(string.Empty);
+            mcAddDialogItem(string.Empty);
 
-            for (l = 0; l < SerialComs.NUM_RADIOS; l++)
+            for (_l = 0; _l < SerialComs.NumRadios; _l++)
             {
-                for (m = 0; m < SerialComs.NUM_RADIOS; m++)
+                for (_ = 0; _ < SerialComs.NumRadios; _++)
                 {
-                    addDialogItem("{0:D3}" + SelectNextCharacters.HeatMap[l, m]);
+                    mcAddDialogItem("{0:D3}" + SelectNextCharacters.HeatMap[_l, _]);
 
-                    addDialogItem(" ");
+                    mcAddDialogItem(" ");
 
                 }
                 
-                addDialogItem(String.Empty);
+                mcAddDialogItem(String.Empty);
 
             }
 
-            addDialogItem("Character1-2Num " + dialogTracker.CharacterList[dialogTracker.Character1Num].CharacterPrefix
-                              + " " + dialogTracker.CharacterList[dialogTracker.Character2Num].CharacterPrefix
+            mcAddDialogItem("Character1-2Num " + mcDialogTracker.CharacterList[mcDialogTracker.Character1Num].CharacterPrefix
+                              + " " + mcDialogTracker.CharacterList[mcDialogTracker.Character2Num].CharacterPrefix
                               + " RSSIsum " + "{0:D3}" + SelectNextCharacters.BigRssi + ", rssiStable = " + SelectNextCharacters.RssiStable);
 
 
@@ -66,20 +66,20 @@ namespace DialogEngine
 
         public static void PrintHeatMapSums()
         {
-            int i, l, m;
+            int _i, _l, _;
 
-            for (i = 0; i < SerialComs.NUM_RADIOS; i++)
+            for (_i = 0; _i < SerialComs.NumRadios; _i++)
             {
                 //((MainWindow)Application.Current.MainWindow).TestOutput.Text += SelectNextCharacters.CharactersLastHeatMapUpdateTime[i].ToString("mm.ss.fff") + Environment.NewLine;
                 //Console.Write(SelectNextCharacters.CharactersLastHeatMapUpdateTime[i].ToString("mm.ss.fff") + " ");
             }
             //((MainWindow)Application.Current.MainWindow).TestOutput.Text += Environment.NewLine;
             //Console.WriteLine();
-            for (l = 0; l < SerialComs.NUM_RADIOS; l++)
+            for (_l = 0; _l < SerialComs.NumRadios; _l++)
             {
-                for (m = 1; m < SerialComs.NUM_RADIOS; m++)
+                for (_ = 1; _ < SerialComs.NumRadios; _++)
                 {
-                    if (m > l)
+                    if (_ > _l)
                     {
                         //((MainWindow)Application.Current.MainWindow).TestOutput.Text += "{0:D3}" + (SelectNextCharacters.HeatMap[l, m] + SelectNextCharacters.HeatMap[m, l]) + Environment.NewLine;
                         //Console.Write("{0:D3}", (SelectNextCharacters.HeatMap[l, m] + SelectNextCharacters.HeatMap[m, l]));
@@ -115,46 +115,46 @@ namespace DialogEngine
             // each character is "OK " STUCK "STK" or "MIA" missing in action
             // this could be changed to order N rather than numCharacters*N but not worth it now
 
-            DialogTracker dialogTracker = DialogTracker.Instance;
+            DialogTracker _dialogTracker = DialogTracker.Instance;
 
             const int numMsgToChk = 5;
             if (ParseMessage.ReceivedMessages.Count < 20)
             {
                 return;
             }
-            var currentTime = DateTime.Now;
-            foreach (var chr in dialogTracker.CharacterList)
+            var _currentTime = DateTime.Now;
+            foreach (var _chr in _dialogTracker.CharacterList)
             {
-                Console.Write(chr.CharacterPrefix + " ");
-                ReceivedMessage[] lastFiveMsg = new ReceivedMessage[numMsgToChk];
-                int i, j = 0;
-                for (i = ParseMessage.ReceivedMessages.Count - 1; i > 2; i--)
+                Console.Write(_chr.CharacterPrefix + " ");
+                ReceivedMessage[] _lastFiveMsg = new ReceivedMessage[numMsgToChk];
+                int _i, _j = 0;
+                for (_i = ParseMessage.ReceivedMessages.Count - 1; _i > 2; _i--)
                 {
-                    if (ParseMessage.ReceivedMessages[i].CharacterPrefix == chr.CharacterPrefix)
+                    if (ParseMessage.ReceivedMessages[_i].CharacterPrefix == _chr.CharacterPrefix)
                     {
-                        if (j == 0 && currentTime - ParseMessage.ReceivedMessages[i].ReceivedTime > SelectNextCharacters.MaxLastSeenInterval)
+                        if (_j == 0 && _currentTime - ParseMessage.ReceivedMessages[_i].ReceivedTime > SelectNextCharacters.MaxLastSeenInterval)
                         {
                             Console.Write("MIA ");  //haven't seen this character in over maxLastSeenInterval seconds
                             break;
                         }
-                        if (j < numMsgToChk)
+                        if (_j < numMsgToChk)
                         {
-                            lastFiveMsg[j] = ParseMessage.ReceivedMessages[i];
-                            j++;
+                            _lastFiveMsg[_j] = ParseMessage.ReceivedMessages[_i];
+                            _j++;
                         }
                         else
                         {
-                            bool messagesUnique = false;
-                            for (var k = 1; k < numMsgToChk; k++)
+                            bool _messagesUnique = false;
+                            for (var _k = 1; _k < numMsgToChk; _k++)
                             {
-                                if (lastFiveMsg[k].SequenceNum != lastFiveMsg[k - 1].SequenceNum)
+                                if (_lastFiveMsg[_k].SequenceNum != _lastFiveMsg[_k - 1].SequenceNum)
                                 {
                                     Console.Write("OK  ");  //some of the recent messages are unique
-                                    messagesUnique = true;
+                                    _messagesUnique = true;
                                     break;
                                 }
                             }
-                            if (!messagesUnique)
+                            if (!_messagesUnique)
                             {
                                 Console.Write("STK ");  //last five messages all had same seq number so we are stuck 
                             }
@@ -162,7 +162,7 @@ namespace DialogEngine
                         }
                     }
                 }
-                if (i < 3)  // if we counted all the way down we didn't find our five messages from this character he is MIA
+                if (_i < 3)  // if we counted all the way down we didn't find our five messages from this character he is MIA
                 {
                     Console.Write("MIA ");
                 }
@@ -172,7 +172,7 @@ namespace DialogEngine
 
         public static void ProcessDebugFlags()
         {
-            TimeSpan lenOfBuffer;
+            TimeSpan _lenOfBuffer;
 
             if (SessionVars.HeatMapSumsMode && !SessionVars.HeatMapOnlyMode)
             {
@@ -188,9 +188,9 @@ namespace DialogEngine
             }
             if (SessionVars.MonitorReceiveBufferSize && !SessionVars.HeatMapOnlyMode)
             {
-                lenOfBuffer = ParseMessage.ReceivedMessages.Last().ReceivedTime - ParseMessage.ReceivedMessages[0].ReceivedTime;
+                _lenOfBuffer = ParseMessage.ReceivedMessages.Last().ReceivedTime - ParseMessage.ReceivedMessages[0].ReceivedTime;
                 Console.WriteLine("RecBuffCnt = " + ParseMessage.ReceivedMessages.Count +
-                                  " SecsOfBuff = " + lenOfBuffer.ToString(@"mm\.ss\.fff"));
+                                  " SecsOfBuff = " + _lenOfBuffer.ToString(@"mm\.ss\.fff"));
             }
         }
 
