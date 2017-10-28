@@ -19,6 +19,7 @@ using DialogEngine.Helpers;
 using DialogEngine.ViewModels.Dialog;
 using DialogEngine.Views.Dialog;
 using log4net;
+using log4net.Repository.Hierarchy;
 using Path = System.IO.Path;
 
 
@@ -29,7 +30,7 @@ namespace DialogEngine
     {
         #region -fields-
 
-        private static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog mcLogger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
 
         //creating of delegate ( it is similar to pointer on function in C )
@@ -44,7 +45,7 @@ namespace DialogEngine
         {
             log4net.Config.XmlConfigurator.Configure(new FileInfo("log4net.config"));
 
-            Logger.Info("Application started.");
+            mcLogger.Info("Application started.");
 
             InitializeComponent();
 
@@ -59,7 +60,7 @@ namespace DialogEngine
         {
             get
             {
-                PrintMethod printMethod = GetPrintMessageMethod();
+                PrintMethod printMethod = getPrintMessageMethod();
 
                 return printMethod;
             }
@@ -70,7 +71,7 @@ namespace DialogEngine
 
         #region -private methods-
 
-        private PrintMethod GetPrintMessageMethod()
+        private PrintMethod getPrintMessageMethod()
         {
 
             ViewModelBase currentViewModel = (mainFrame.Content as Dialog).DataContext as ViewModelBase;

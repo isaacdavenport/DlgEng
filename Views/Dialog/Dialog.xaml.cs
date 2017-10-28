@@ -17,14 +17,15 @@ using DialogEngine.ViewModels.Dialog;
 namespace DialogEngine.Views.Dialog
 {
     /// <summary>
-    /// Interaction logic for Dialog.xaml
+    /// Implementation of <see cref="PageBase"/>
+    /// It can be  set as content of <see cref="Frame"/>
     /// </summary>
     public partial class Dialog : PageBase
     {
         public Dialog()
         {
             InitializeComponent();
-
+           
             DataContext = new DialogViewModel(this);
         }
 

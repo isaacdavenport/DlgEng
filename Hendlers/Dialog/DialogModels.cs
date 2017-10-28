@@ -4,16 +4,18 @@ using System.IO;
 using System.Windows;
 using DialogEngine.Helpers;
 using DialogEngine.Models.Dialog;
+using log4net;
 
 
 namespace DialogEngine
 {
     public static class InitModelDialogs    //TODO lets get some graceful failures here. recovery from single file failures.
     {
-    #region - Fields -
+        #region - Fields -
+        private static readonly ILog mcLogger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
 
         public delegate void PrintMethod(string message);
-
         public static PrintMethod AddDialogItem = new PrintMethod(((MainWindow)Application.Current.MainWindow).CurrentPrintMethod);
 
         #endregion
@@ -38,6 +40,7 @@ namespace DialogEngine
                         JSONLog.WriteLine("Dialog JSON in: " + SessionVars.DialogsDirectory);
                     }
                 }
+
                 var inFiles = dialogs_d.GetFiles("*.json");
 
                 foreach (FileInfo file in inFiles) //file of type FileInfo for each .json in directory
@@ -52,7 +55,9 @@ namespace DialogEngine
                             JSONLog.WriteLine(" opening dialog models in " + file.Name);
                         }
                     }
+
                     string inDialog;
+
                     try
                     {
                         FileStream fs = file.OpenRead();    //open a read-only FileStream

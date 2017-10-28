@@ -3,8 +3,16 @@ using System.Configuration;
 
 namespace DialogEngine.Helpers
 {
+    /// <summary>
+    /// Helper class which search for properties with defined key in App.config file 
+    /// </summary>
     class AppSet
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns>Value in App.config for assigned key</returns>
         public static string ReadSetting(string key) {  //returns null if key or file not found
             try {
                 var appSettings = ConfigurationManager.AppSettings;

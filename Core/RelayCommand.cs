@@ -13,17 +13,19 @@ namespace DialogEngine.Core
     ///   objects by invoking delegates. The
     ///   default return value for the CanExecute
     ///   method is 'true'.
+    /// 
+    ///   Implementation of ICommand interface
     /// </summary>
     
     public class RelayCommand : ICommand
     {
         #region Constants and Fields
 
-        private readonly Predicate<object> _canExecute;
+        private readonly Predicate<object> mCanExecute;
 
-        private readonly Action<object> _execute;
+        private readonly Action<object> mExecute;
 
-        private Action<object> _action;
+        private Action<object> mAction;
 
         #endregion
 
@@ -50,14 +52,17 @@ namespace DialogEngine.Core
                 throw new ArgumentNullException("Execute");
             }
 
-            this._execute = execute;
-            this._canExecute = canExecute;
+            this.mExecute = execute;
+            this.mCanExecute = canExecute;
         }
 
         #endregion
 
         #region Events
 
+        /// <summary>
+        /// CanExecuteChanged event
+        /// </summary>
         public event EventHandler CanExecuteChanged
         {
             add
@@ -77,10 +82,15 @@ namespace DialogEngine.Core
 
         #region ICommand
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
         [DebuggerStepThrough]
         public bool CanExecute(object parameter)
         {
-            return this._canExecute == null || this._canExecute(parameter);
+            return this.mCanExecute == null || this.mCanExecute(parameter);
         }
 
         public void RaiseCanExecuteChanged()
@@ -90,9 +100,13 @@ namespace DialogEngine.Core
             CommandManager.InvalidateRequerySuggested();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="parameter"></param>
         public void Execute(object parameter)
         {
-            this._execute(parameter);
+            this.mExecute(parameter);
         }
 
         #endregion

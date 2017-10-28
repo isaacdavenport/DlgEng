@@ -39,11 +39,14 @@ namespace DialogEngine
         static void EnqueLatestCharacters(int ch1, int ch2)
         {
             RssiStable = true;
+
             for (int i = 0; i < STRONG_RSSI_BUF_DEPTH - 1; i++)
-            {  // scoot data in buffer back by one to make room for next
+            {  
+                // scoot data in buffer back by one to make room for next
                 _strongRssiCharacterPairBuf[0, i] = _strongRssiCharacterPairBuf[0, i + 1];
                 _strongRssiCharacterPairBuf[1, i] = _strongRssiCharacterPairBuf[1, i + 1];
             }
+
             _strongRssiCharacterPairBuf[0, STRONG_RSSI_BUF_DEPTH - 1] = ch1;
             _strongRssiCharacterPairBuf[1, STRONG_RSSI_BUF_DEPTH - 1] = ch2;
 
@@ -83,6 +86,7 @@ namespace DialogEngine
             //  This method takes the RSSI values and combines them so that the RSSI for Ch2 looking at 
             //  Ch1 is added to the RSSI for Ch1 looking at Ch2
             int tempCh1 = 0, tempCh2 = 0, i = 0, j = 0;
+
             var currentTime = DateTime.Now;
             tempCh1 = NextCharacter1;
             tempCh2 = NextCharacter2;
@@ -103,6 +107,7 @@ namespace DialogEngine
                         tempCh2 = j;
                     }
                 }
+
             }
 
 
@@ -114,7 +119,8 @@ namespace DialogEngine
         }
 
         public static void OccasionallyChangeToRandNewCharacter()
-        {   // used for computers with no serial input radio for random, or forceCharacter mode
+        {   
+            // used for computers with no serial input radio for random, or forceCharacter mode
             // does not include final character the silent schoolhouse, not useful in noSerial mode 
             bool userHasForcedCharacters = false;
 

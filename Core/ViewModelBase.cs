@@ -8,6 +8,11 @@ using System.Windows.Threading;
 
 namespace DialogEngine.Core
 {
+
+    /// <summary>
+    /// Base class for implementing ViewModel class 
+    /// Implements <see cref="INotifyPropertyChanged"/> and <see cref="IDisposable"/>
+    /// </summary>
     public abstract class ViewModelBase : INotifyPropertyChanged, IDisposable
     {
         #region - Events  -
@@ -107,6 +112,9 @@ namespace DialogEngine.Core
 
         protected virtual void OnDisposing() { }
 
+        /// <summary>
+        /// Dispose the object
+        /// </summary>
         public void Dispose()
         {
             this.Dispose(true);

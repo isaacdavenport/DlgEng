@@ -7,9 +7,17 @@ using System.Windows.Media;
 
 namespace DialogEngine.Helpers
 {
+    /// <summary>
+    /// Helper class which help to serach nodes in visual tree of application/> 
+    /// </summary>
     public static class VisualHelper
     {
-
+        /// <summary>
+        ///
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="initial"></param>
+        /// <returns>Returns firt container of initial with type T </returns>
         public static T GetNearestContainer<T>(DependencyObject initial) where T : DependencyObject
         {
             DependencyObject visual = initial;
@@ -25,7 +33,12 @@ namespace DialogEngine.Helpers
             return visual as T;
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="parent"></param>
+        /// <returns>Returns first child of type T for parent object</returns>
         public static T GetVisualChild<T>(this DependencyObject parent) where T : FrameworkElement
         {
             T child = default(T);

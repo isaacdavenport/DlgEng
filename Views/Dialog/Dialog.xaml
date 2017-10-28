@@ -42,6 +42,7 @@
                               HorizontalAlignment="Stretch"  
                               ItemsSource="{Binding DialogCollection}">
             
+            
             <ItemsControl.Template>
                 <ControlTemplate>
                     <ScrollViewer x:Name="ScrollViewerMessages">
@@ -50,6 +51,7 @@
                 </ControlTemplate>
             </ItemsControl.Template>
 
+            
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <VirtualizingStackPanel VerticalAlignment="Stretch"/>

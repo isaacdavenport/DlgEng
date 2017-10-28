@@ -16,27 +16,39 @@ using Newtonsoft.Json;
 
 namespace DialogEngine
 {
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class DialogTracker
     {
-
         #region - Fields -
 
-        //private fields
-        private static DialogTracker  _instance = null;
-        private static readonly object padlock = new object();
-        private static int _movementWaitCount;
-        private int _priorCharacter1Num = 100;
-        private int _priorCharacter2Num = 100;
-        private int _urrentDialogModel = 1;
-        private Random _random=new Random();
+        #region - Private fields -
 
-        //protected fields
+        private static DialogTracker mcInstance = null;
+        private static int mcMovementWaitCount;
+
+        private static readonly object mcPadlock = new object();
+
+        private int mPriorCharacter1Num = 100;
+        private int mPriorCharacter2Num = 100;
+        private int mUrrentDialogModel = 1;
+        private Random mRandom = new Random();
+
+        #endregion
+
+        #region - Protected fields -
+
         protected const int RecentDialogsQueSize = 6;
 
+        #endregion
 
-        //public fields
+
+        #region - Public fields -
+
+       
         public WindowsMediaPlayerMp3 Audio = new WindowsMediaPlayerMp3();
+
         public int Character1Num;
         public int Character2Num = 1;
         public double DialogModelPopularitySum;
@@ -48,8 +60,12 @@ namespace DialogEngine
         public List<HistoricalPhrase> HistoricalPhrases = new List<HistoricalPhrase>();
         public List<ModelDialog> ModelDialogs = new List<ModelDialog>();
         public Queue<int> RecentDialogs = new Queue<int>();
+
         public delegate void PrintMethod(string message);
+
         public PrintMethod _adddDialogItem;
+
+        #endregion
 
         #endregion
 
@@ -57,14 +73,12 @@ namespace DialogEngine
 
         public DialogTracker()
         {
-
         }
 
         #endregion
 
 
         #region - Singleton -
-
 
         /// <summary>
         /// Implementation of singleton pattern for DialogTracker class
@@ -73,13 +87,13 @@ namespace DialogEngine
         {
             get
             {
-                lock (padlock)
+                lock (mcPadlock)
                 {
-                    if (_instance == null)
+                    if (mcInstance == null)
                     {
-                        _instance = new DialogTracker();
+                        mcInstance = new DialogTracker();
                     }
-                    return _instance;
+                    return mcInstance;
                 }
             }
         }
@@ -96,23 +110,18 @@ namespace DialogEngine
         {
             get
             {
-
                 return new PrintMethod(((MainWindow) Application.Current.MainWindow).CurrentPrintMethod);
-                 ;
+                ;
             }
 
 
             set { _adddDialogItem = value; }
-
         }
 
         #endregion
 
 
-
         #region - Public methods -
-
-
 
         public Character ParseCharJSON(FileInfo CharFile)
         {
@@ -120,10 +129,10 @@ namespace DialogEngine
             {
                 var serializer = new JsonSerializer();
                 var CharObj = (Character) serializer.Deserialize(fi, typeof(Character));
+
                 return CharObj;
             }
         }
-
 
 
         // TODO generate parallel dialogs, using string tags.
@@ -131,18 +140,23 @@ namespace DialogEngine
         {
             if (!ImportClosestSerialComsCharacters())
                 return;
+
             CurrentDialogModel = PickAWeightedDialog(Character1Num, Character2Num);
+
             if (WaitingForMovement() || SameCharactersAsLast && SessionVars.WaitIndefinatelyForMove)
                 return;
+
             ProcessDebugFlags(dialogDirectives);
+
             AddDialogModelToHistory(CurrentDialogModel, Character1Num, Character2Num);
 
             var speakingCharacter = Character1Num;
-            var
-                selectedPhrase = CharacterList[speakingCharacter].Phrases[0]; //initialize to unused placeholder phrase
 
 
-            foreach (var currentPhraseType in ModelDialogs[_urrentDialogModel].PhraseTypeSequence)
+            var selectedPhrase = CharacterList[speakingCharacter].Phrases[0]; //initialize to unused placeholder phrase
+
+
+            foreach (var currentPhraseType in ModelDialogs[mUrrentDialogModel].PhraseTypeSequence)
             {
                 if (CharacterList[speakingCharacter].PhraseTotals.PhraseWeights.ContainsKey(currentPhraseType))
                     if (SessionVars.TextDialogsOn)
@@ -170,8 +184,6 @@ namespace DialogEngine
                         {
                             Application.Current.Dispatcher.BeginInvoke(() =>
                             {
-
-
                                 AddDialogItem(CharacterList[speakingCharacter].CharacterName);
 
 
@@ -187,22 +199,23 @@ namespace DialogEngine
                                 {
                                     AddDialogItem(selectedPhrase.DialogStr);
                                 }
-
                             });
                         }
 
 
                         AddPhraseToHistory(selectedPhrase, speakingCharacter);
 
-                        var pathAndFileName = SessionVars.AudioDirectory +
-                                              CharacterList[speakingCharacter].CharacterPrefix +
-                                              "_" + selectedPhrase.FileName + ".mp3";
+                        var pathAndFileName =  SessionVars.AudioDirectory 
+                                             + CharacterList[speakingCharacter].CharacterPrefix 
+                                             + "_" + selectedPhrase.FileName + ".mp3";
+
                         PlayAudio(pathAndFileName); // vb: code stops here so commented out for debugging purpose
 
-                        if (!SessionVars.ForceCharactersAndDialogModel &&
-                            !DialogTrackerAndSerialComsCharactersSame())
+                        if (   !SessionVars.ForceCharactersAndDialogModel 
+                            && !DialogTrackerAndSerialComsCharactersSame())
                         {
                             SameCharactersAsLast = false;
+
                             return; // the characters have moved  TODO break into charactersSame() and use also with prior
                         }
                         //Toggle character
@@ -249,17 +262,17 @@ namespace DialogEngine
 
         public bool DialogTrackerAndSerialComsCharactersSame()
         {
-            if ((Character1Num == SelectNextCharacters.NextCharacter1 ||
-                 Character1Num == SelectNextCharacters.NextCharacter2)
-                && (Character2Num == SelectNextCharacters.NextCharacter2 ||
-                    Character2Num == SelectNextCharacters.NextCharacter1))
+            if ((  Character1Num == SelectNextCharacters.NextCharacter1 
+                || Character1Num == SelectNextCharacters.NextCharacter2)
+                && (Character2Num == SelectNextCharacters.NextCharacter2 
+                || Character2Num == SelectNextCharacters.NextCharacter1))
             {
                 return true;
             }
             return false;
         }
 
-        public  void IntakeCharacters()
+        public void IntakeCharacters()
         {
             var d = new DirectoryInfo(SessionVars.CharactersDirectory);
 
@@ -269,7 +282,6 @@ namespace DialogEngine
 
             foreach (var file in d.GetFiles("*.json")) //file of type FileInfo for each .json in directory
             {
-
                 string beginReadMessage = " Begin read of " + file.Name;
 
                 AddDialogItem(beginReadMessage);
@@ -296,7 +308,8 @@ namespace DialogEngine
                         {
                             inChar = reader.ReadToEnd();
 
-                            var deserializedCharacterJSON =JsonConvert.DeserializeObject<Models.Dialog.Character>(inChar);
+                            var deserializedCharacterJSON =
+                                JsonConvert.DeserializeObject<Models.Dialog.Character>(inChar);
 
                             deserializedCharacterJSON.PhraseTotals = new PhraseEntry(); //init PhraseTotals
 
@@ -328,9 +341,7 @@ namespace DialogEngine
                                         deserializedCharacterJSON.PhraseTotals.PhraseWeights.Add(tag,
                                             curPhrase.PhraseWeights[tag]);
                                     }
-
                                 }
-
                             }
 
                             for (var i = 0; i < Character.RecentPhrasesQueueSize; i++)
@@ -378,7 +389,6 @@ namespace DialogEngine
                     AddDialogItem("Unauthorized access exception while reading: " + file.FullName);
 
                     AddDialogItem("Check the Character JSON path in your config file");
-
                 }
                 catch (DirectoryNotFoundException e)
                 {
@@ -399,7 +409,6 @@ namespace DialogEngine
 
             if (CharacterList.Count < 2)
             {
-
                 string errorMessage = "  Insufficient readable character json files found in " +
                                       SessionVars.CharactersDirectory + " .  Exiting.";
 
@@ -416,8 +425,6 @@ namespace DialogEngine
 
             AddDialogItem(string.Empty);
         }
-
-
 
 
         //    if (CharacterList.Count < 2)
@@ -459,9 +466,10 @@ namespace DialogEngine
             {
                 phraseIsDuplicate = false;
 
-                var phraseTableWeightedIndex = _random.NextDouble(); // rand 0.0 - 1.0
+                var phraseTableWeightedIndex = mRandom.NextDouble(); // rand 0.0 - 1.0
 
-                phraseTableWeightedIndex *= CharacterList[speakingCharacter].PhraseTotals.PhraseWeights[currentPhraseType];
+                phraseTableWeightedIndex *=
+                    CharacterList[speakingCharacter].PhraseTotals.PhraseWeights[currentPhraseType];
                 double amountOfCurrentPhraseType = 0;
 
                 foreach (var currentPhraseTableEntry in CharacterList[speakingCharacter].Phrases)
@@ -493,7 +501,6 @@ namespace DialogEngine
                         break; // doesn't matter if duplicated more than once
                     }
                 }
-
             }
 
             //eventually overload enque to remove first to keep size same or create a replace
@@ -505,7 +512,6 @@ namespace DialogEngine
         #endregion
 
         #region - Private methods -
-
 
         private static void RemovePhrasesOverParentalRating(Character inCharacter)
         {
@@ -537,21 +543,18 @@ namespace DialogEngine
                 }
 
 
-
                 var i = 0;
                 Thread.Sleep(600);
                 while (Audio.IsPlaying() && i < 250)
                 {
                     // 20 seconds is max
                     Thread.Sleep(100);
-
                 }
 
                 Thread.Sleep(1600); // wait around a second after the audio is done for between phrase pause
             }
             else
             {
-
                 AddDialogItem("Could not find: " + pathAndFileName + Environment.NewLine);
             }
         }
@@ -570,18 +573,8 @@ namespace DialogEngine
             });
         }
 
-        #endregion
 
-
-
-
-
-
-
-
-
-
-        private List<int> FindMostRecentAdventureDialogIndexes()
+        private List<int> findMostRecentAdventureDialogIndexes()
         {
             var mostRecentAdventureDialogs = new List<int>();
             // most recent will be in the 0 index of list
@@ -728,13 +721,15 @@ namespace DialogEngine
             //TODO check that all characters/phrasetypes required for adventure are included before starting adventure?
             var dialogModel = 0;
 
-            var mostRecentAdventureDialogIndexes = FindMostRecentAdventureDialogIndexes();
+            var mostRecentAdventureDialogIndexes = findMostRecentAdventureDialogIndexes();
+
             // most recent will be in the 0 index of list which will be hit first in foreach
             if (mostRecentAdventureDialogIndexes.Count > 0)
             {
                 var nextAdventureDialogIdx =
                     FindNextAdventureDialogForCharacters(character1Num, character2Num,
                         mostRecentAdventureDialogIndexes);
+
                 if (nextAdventureDialogIdx > 0 && nextAdventureDialogIdx < ModelDialogs.Count)
                     return nextAdventureDialogIdx; // we have an adventure dialog for these characters go with it
             }
@@ -742,14 +737,18 @@ namespace DialogEngine
             var dialogWeightIndex = 0.0;
             var attempts = 0;
             var dialogModelFits = false;
+
+
             while (!dialogModelFits && attempts < 4000)
             {
                 attempts++;
                 // exclude greetings at 0 and 1 TODO use .Greeting instead of hard coded const
-                dialogWeightIndex = _random.NextDouble();
+                dialogWeightIndex = mRandom.NextDouble();
                 dialogWeightIndex *= DialogModelPopularitySum - 0.4;
                 dialogWeightIndex += 0.4; // TODO better way to avoid greetings than by weight 0.2 each
                 double currentDialogWeightSum = 0;
+
+
                 foreach (var dialog in ModelDialogs)
                 {
                     currentDialogWeightSum += dialog.Popularity;
@@ -760,19 +759,22 @@ namespace DialogEngine
                     }
                 }
                 var dialogModelUsedRecently = CheckIfDialogModelUsedRecently(dialogModel);
+
                 var charactersHavePhrases =
                     CheckIfCharactersHavePhrasesForDialog(dialogModel, Character1Num, Character2Num);
+
                 var dialogPreRequirementsMet = CheckIfDialogPreRequirementMet(dialogModel);
+
                 var greetingAppropriate = !(ModelDialogs[dialogModel].PhraseTypeSequence[0] == "Greeting"
                                             && SameCharactersAsLast
                 ); // don't want a greeting with same characters as last
+
                 if (dialogPreRequirementsMet && charactersHavePhrases
                     && greetingAppropriate && !dialogModelUsedRecently)
                     dialogModelFits = true;
             }
             return dialogModel;
         }
-
 
 
         private bool ImportClosestSerialComsCharacters()
@@ -782,13 +784,13 @@ namespace DialogEngine
             if (tempChar1 == tempChar2 || tempChar1 >= CharacterList.Count || tempChar2 >= CharacterList.Count)
                 return false;
             SameCharactersAsLast =
-                (tempChar1 == _priorCharacter1Num || tempChar1 == _priorCharacter2Num) &&
-                (tempChar2 == _priorCharacter1Num || tempChar2 == _priorCharacter2Num);
+                (tempChar1 == mPriorCharacter1Num || tempChar1 == mPriorCharacter2Num) &&
+                (tempChar2 == mPriorCharacter1Num || tempChar2 == mPriorCharacter2Num);
 
             Character1Num = tempChar1;
             Character2Num = tempChar2;
-            _priorCharacter1Num = Character1Num;
-            _priorCharacter2Num = Character2Num;
+            mPriorCharacter1Num = Character1Num;
+            mPriorCharacter2Num = Character2Num;
             return true;
         }
 
@@ -818,9 +820,9 @@ namespace DialogEngine
         {
             if (LastPhraseImpliedMovement && SameCharactersAsLast && !SessionVars.NoSerialPort)
             {
-                Thread.Sleep(_random.Next(0, 3000));
-                _movementWaitCount++;
-                if (_movementWaitCount == 3)
+                Thread.Sleep(mRandom.Next(0, 3000));
+                mcMovementWaitCount++;
+                if (mcMovementWaitCount == 3)
                 {
                     var ch1RetreatPhrase = PickAWeightedPhrase(Character1Num, "Retreat");
 
@@ -828,7 +830,6 @@ namespace DialogEngine
                     //if we can reach object created by main thread we don't need to queue our code to dispatcher object of main thread
                     if (Application.Current.Dispatcher.CheckAccess())
                     {
-
                     }
                     else
                     {
@@ -847,7 +848,7 @@ namespace DialogEngine
                               "_" + ch1RetreatPhrase.FileName + ".mp3");
                     return true;
                 }
-                if (_movementWaitCount == 7)
+                if (mcMovementWaitCount == 7)
                 {
                     LastPhraseImpliedMovement = false;
                     var ch2RetreatPhrase = PickAWeightedPhrase(Character2Num, "Retreat");
@@ -857,16 +858,16 @@ namespace DialogEngine
                               "_" + ch2RetreatPhrase.FileName + ".mp3");
                     return true;
                 }
-                if (_movementWaitCount > 11)
+                if (mcMovementWaitCount > 11)
                 {
-                    _movementWaitCount = 0;
+                    mcMovementWaitCount = 0;
                     LastPhraseImpliedMovement = false; //reset the wait for movement flag after waiting a long time
                 }
                 return true;
             }
             LastPhraseImpliedMovement =
                 false; //reset the wait for movement flag when we are no longer same characters as last time
-            _movementWaitCount = 0;
+            mcMovementWaitCount = 0;
             return false;
         }
 
@@ -890,7 +891,6 @@ namespace DialogEngine
             return false;
         }
 
-
-
+        #endregion
     }
 }

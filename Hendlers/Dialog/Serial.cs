@@ -15,26 +15,41 @@ namespace DialogEngine
         public const int NUM_RADIOS = 6;  //includes dongle
         static SerialPort _serialPort;
 
-        public static void InitSerial() {
-            if (!SessionVars.NoSerialPort) {
+        public static void InitSerial()
+
+        {
+            if (!SessionVars.NoSerialPort)
+
+            {
                 _serialPort = new SerialPort();
+
                 Thread readThread = new Thread(RegularylyReadSerial);
+
                 _serialPort.PortName = SessionVars.ComPortName;
+
                 _serialPort.BaudRate = 460800;
+
                 _serialPort.ReadTimeout = 500;
+
                 _serialPort.Open();
+
                 _serialPort.DiscardInBuffer();
+
                 readThread.Start();
             }
-            else {
+
+            else
+            {
                 Thread dontReadThread = new Thread(SelectNextCharacters.OccasionallyChangeToRandNewCharacter);
                 dontReadThread.Start();
             }
             //worry about stopping cleanly later TODO
         }
 
-        private static string ReadSerialInLine() {
+        private static string ReadSerialInLine()
+        {
             string message = null;
+
             try
             {
                 if (_serialPort.BytesToRead > 18)

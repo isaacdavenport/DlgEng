@@ -7,14 +7,25 @@ namespace DialogEngine.Models.Dialog
 {
     internal static class ParentalRatings
     {
+        /// <summary>
+        /// G - General Audiences
+        /// PG - Parental Guidance Suggested
+        /// PG13 - Parents Strongly Cautioned
+        /// R - Restricted - under 17 requires accompanying parent
+        /// </summary>
         private static readonly Dictionary<string, int> _dict = new Dictionary<string, int>
         {
-            {"G", 1},
+            {"G", 1}, 
             {"PG", 2},
             {"PG13", 3},
             {"R", 4}
         };
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ratingString"></param>
+        /// <returns></returns>
         public static int GetNumeric(string ratingString)
         {
             // Try to get the result in the static Dictionary

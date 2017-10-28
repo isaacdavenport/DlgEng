@@ -7,6 +7,9 @@ using System.IO;
 
 namespace DialogEngine.Helpers
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class SessionVars
     {
 
@@ -38,7 +41,6 @@ namespace DialogEngine.Helpers
 
         static SessionVars()
         {
-
 
 
             //Verify the flags and strings in the app settings config file
@@ -123,10 +125,10 @@ namespace DialogEngine.Helpers
                 CurrentParentalRating = "PG";
 
 
-            //get executable path
-
+            //get executable path of DialogGenerator.exe
             string path = Environment.CurrentDirectory;
 
+            //path is  "solutionDir/bin/outputDir", so we need to go back 2 times to solutionDir
             BaseDirectory = Path.GetFullPath(Path.Combine(path, @"..\..\"));
 
             LogsDirectory = BaseDirectory + @"Logs\";

@@ -3,8 +3,13 @@ using System.Windows.Controls;
 using DialogEngine.Helpers;
 
 namespace DialogEngine.Core
-{   /// <summary>
-    /// 
+{   
+    
+
+    /// <summary>
+    /// Base class for all pages in application
+    /// Extends <see cref="Page"/>
+    /// Implements <see cref="INotifyPropertyChanged"/>
     /// </summary>
     public abstract class PageBase: Page , INotifyPropertyChanged
     {
@@ -12,23 +17,30 @@ namespace DialogEngine.Core
         #endregion
 
         #region - Events -
-
+        /// <summary>
+        /// Property changed event.
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
 
         #region  - Constructor -
-
+        /// <summary>
+        /// 
+        /// </summary>
         public PageBase()
         {
-            this.Loaded += OnPageBaseLoaded;
-            this.Unloaded += OnPageBaseUnloaded;
+            this.Loaded += onPageBaseLoaded;
+            this.Unloaded += onPageBaseUnloaded;
         }
 
         #endregion
 
         #region - Private methods -
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="propertyName"></param>
         protected void OnPropertyChanged(string propertyName)
         {
             if (PropertyChanged != null)
@@ -37,17 +49,26 @@ namespace DialogEngine.Core
             }
         }
 
-        private void OnPageBaseLoaded(object sender, System.Windows.RoutedEventArgs e)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void onPageBaseLoaded(object sender, System.Windows.RoutedEventArgs e)
         {
-            this.Loaded -= OnPageBaseLoaded;
+            this.Loaded -= onPageBaseLoaded;
 
             OnPageLoaded();
         }
 
-
-        private void OnPageBaseUnloaded(object sender, System.Windows.RoutedEventArgs e)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void onPageBaseUnloaded(object sender, System.Windows.RoutedEventArgs e)
         {
-            this.Unloaded -= OnPageBaseUnloaded;
+            this.Unloaded -= onPageBaseUnloaded;
 
             // Remove all command bindings on unload
             while (this.CommandBindings.Count > 0)

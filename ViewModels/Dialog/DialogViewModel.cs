@@ -14,59 +14,70 @@ using System.ComponentModel;
 
 namespace DialogEngine.ViewModels.Dialog
 {
+    /// <summary>
+    /// Implementation of <see cref="ViewModelBase"/>
+    /// DataContext of Dialog.xaml/>
+    /// </summary>
     public class DialogViewModel : ViewModelBase
     {
         #region - Fieds -
 
-        //private fields
-        private Views.Dialog.Dialog _view;
-        private Random _random = new Random();
+        #region -Private fields-
 
-        //Dynamic collection of objects, objects can be added,removed or updated, and UI is automatically updated 
-        private ObservableCollection<string> _dialogCollection;
+        private static DialogTracker mcTheDialogs;
 
+        private Views.Dialog.Dialog mView;
+        private Random mRandom = new Random();
+        private string mKeyboardInput;
+        private ObservableCollection<string> mDialogCollection;
 
-        //protected fields
-        protected const int RecentDialogsQueSize = 6;
+        #endregion
 
-
-        //public fields
-        public static DialogTracker TheDialogs;
-        public string KeyboardInput;
-
+        #region - Public fields -
 
 
         #endregion
+
+        #endregion
+
+
 
         #region - Constructor -
 
         public DialogViewModel(Views.Dialog.Dialog view)
         {
-            _view = view;
+            mView = view;
 
-            BindCommands();
+            bindCommands();
 
             //OnViewModelLoaded();
         }
 
         #endregion
 
-        #region - Properties -
 
+
+
+        #region - Properties -
+        /// <summary>
+        /// Dynamic collection of objects, objects can be added,removed or updated, and UI is automatically updated 
+        /// </summary>
         public ObservableCollection<string> DialogCollection
         {
             get
             {
-                if (_dialogCollection == null)
+                if (mDialogCollection == null)
                 {
-                    _dialogCollection = new ObservableCollection<string>();
+                    mDialogCollection = new ObservableCollection<string>();
                 }
-                return _dialogCollection;
+                return mDialogCollection;
             }
 
             set
             {
-                _dialogCollection = value;
+                mDialogCollection = value;
+
+                // send notification to view (model is changed)
                 OnPropertyChanged("DialogCollection");
             }
 
@@ -74,7 +85,10 @@ namespace DialogEngine.ViewModels.Dialog
 
         #endregion
 
+
+
         #region - Commands -
+
 
         public RelayCommand InputButtonClick { get; set; }
 
@@ -82,33 +96,33 @@ namespace DialogEngine.ViewModels.Dialog
         #endregion
 
 
+
         #region - Private methods -
 
-        private void BindCommands()
+
+        private void bindCommands()
         {
-            this.InputButtonClick = new RelayCommand(x => OnInputButtonClick());
+            this.InputButtonClick = new RelayCommand(x => onInputButtonClick());
         }
 
 
 
-        private void OnInputButtonClick()
+        private void onInputButtonClick()
         {
-            string enteredText = _view.messageTextBox.Text;
+            string enteredText = mView.messageTextBox.Text;
 
             if (!string.IsNullOrEmpty(enteredText))
             {
                 AddDialogItem(enteredText);
 
-                _view.messageTextBox.Text = string.Empty;
+                mView.messageTextBox.Text = string.Empty;
 
             }
 
-
-            //vb : store input string in global variable - is this a good practice ??
-            //KeyboardInput = ((MainWindow)Application.Current.MainWindow).TestInput.Text;
         }
 
-        private void WriteStartupInfo()
+
+        private void writeStartupInfo()
         {
             if (SessionVars.WriteSerialLog)
             {
@@ -144,14 +158,14 @@ namespace DialogEngine.ViewModels.Dialog
         }
 
 
-        private void CheckForMissingPhrases()
+        private void checkForMissingPhrases()
         {
             if (!SessionVars.AudioDialogsOn)
             {
                 return;
             }
 
-            foreach (var character in TheDialogs.CharacterList)
+            foreach (var character in mcTheDialogs.CharacterList)
             {
                 foreach (var phrase in character.Phrases)
                 {
@@ -179,7 +193,8 @@ namespace DialogEngine.ViewModels.Dialog
         }
 
 
-        private void CheckTagsUsed(DialogTracker dialogTracker)
+
+        private void checkTagsUsed(DialogTracker dialogTracker)
         {
 
             //spit out all dialog model names and associated number.
@@ -191,7 +206,7 @@ namespace DialogEngine.ViewModels.Dialog
 
             AddDialogItem(string.Empty);
 
-            foreach (var dialog in TheDialogs.ModelDialogs)
+            foreach (var dialog in mcTheDialogs.ModelDialogs)
             {
 
                 AddDialogItem(" " + dialogTracker.ModelDialogs.IndexOf(dialog) + " : " + dialog.Name);
@@ -287,12 +302,11 @@ namespace DialogEngine.ViewModels.Dialog
                 }
         }
 
-
-        private   void OnViewModelLoaded()
+        private void onViewModelLoaded()
         {
             DialogTracker dialogTracker = DialogTracker.Instance;
 
-            WriteStartupInfo();
+            writeStartupInfo();
 
             dialogTracker.IntakeCharacters();
 
@@ -300,12 +314,12 @@ namespace DialogEngine.ViewModels.Dialog
 
             if (SessionVars.TagUsageCheck)
             {
-                //CheckTagsUsed();
+                checkTagsUsed(dialogTracker);
             }
 
             if (SessionVars.DebugFlag)
             {
-                CheckForMissingPhrases();
+                checkForMissingPhrases();
 
                 AddDialogItem("  press enter to continue");
 
@@ -332,7 +346,7 @@ namespace DialogEngine.ViewModels.Dialog
 
                 //  vb: take user input fromtyext box instead of console.readline above
 
-                string[] parsekeyboardInput = KeyboardInput.Split();
+                string[] parsekeyboardInput = mKeyboardInput.Split();
 
                 //vb : for testing what is the parsed output
                 AddDialogItem(parsekeyboardInput[0] + Environment.NewLine);
@@ -346,6 +360,7 @@ namespace DialogEngine.ViewModels.Dialog
             }
 
             BackgroundWorker worker = new BackgroundWorker();
+
             worker.WorkerReportsProgress = false;
             worker.DoWork += worker_DoWork;
             worker.RunWorkerCompleted += worker_RunWorkerCompleted;
@@ -353,7 +368,7 @@ namespace DialogEngine.ViewModels.Dialog
 
         }
 
-        void worker_DoWork(object sender, DoWorkEventArgs e)
+        private void worker_DoWork(object sender, DoWorkEventArgs e)
         {
             while (true)
             {
@@ -361,7 +376,7 @@ namespace DialogEngine.ViewModels.Dialog
                 if (SessionVars.ForceCharactersAndDialogModel)
                 {
                     //string[] keyboardInput = Console.ReadLine().Split(' ');
-                    string[] parsekeyboardInput = KeyboardInput.Split(); //vb:can add a hard code a console.readline()
+                    string[] parsekeyboardInput = mKeyboardInput.Split(); //vb:can add a hard code a console.readline()
 
                     //if keyboard input has three numbers for debug mode to force dialog model and characters
                     if (parsekeyboardInput.Length == 3)
@@ -377,7 +392,7 @@ namespace DialogEngine.ViewModels.Dialog
                         }
 
 
-                        TheDialogs.GenerateADialog(modelAndCharacters);
+                        mcTheDialogs.GenerateADialog(modelAndCharacters);
 
                     }
                     else
@@ -385,18 +400,18 @@ namespace DialogEngine.ViewModels.Dialog
 
                         AddDialogItem("Incorrect input, generating random dialog.");
 
-                        TheDialogs.GenerateADialog();
+                        mcTheDialogs.GenerateADialog();
                     }
                 }
                 else
                 {
                     if (!SessionVars.HeatMapOnlyMode)
                     {
-                        TheDialogs.GenerateADialog(); //normal operation
+                        mcTheDialogs.GenerateADialog(); //normal operation
 
                         Thread.Sleep(1100); //vb:commented out for debugging as code stops here
 
-                        Thread.Sleep(_random.Next(0, 2000)); //vb:commented out for debugging as code stops here
+                        Thread.Sleep(mRandom.Next(0, 2000)); //vb:commented out for debugging as code stops here
                     }
                     else
                     {
@@ -421,7 +436,7 @@ namespace DialogEngine.ViewModels.Dialog
         }
 
 
-        void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             MessageBoxResult result = MessageBox.Show("While loop completed");
         }
