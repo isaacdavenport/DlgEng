@@ -15,11 +15,11 @@ namespace DialogEngine
     {
         #region -Fields-
 
-        private static DialogTracker mcDialogTracker=DialogTracker.Instance;
+        private static DialogTracker msDialogTracker=DialogTracker.Instance;
 
         private delegate void PrintMethod(string _message);
 
-        private static PrintMethod mcAddDialogItem =new PrintMethod(((MainWindow) Application.Current.MainWindow).CurrentPrintMethod);
+        private static PrintMethod msAddDialogItem =new PrintMethod(((MainWindow) Application.Current.MainWindow).CurrentPrintMethod);
  
 
         #endregion
@@ -34,28 +34,28 @@ namespace DialogEngine
 
             for (_i = 0; _i < SerialComs.NumRadios; _i++)
             {
-                mcAddDialogItem(SelectNextCharacters.CharactersLastHeatMapUpdateTime[_i].ToString("mm.ss.fff") + " ");
+                msAddDialogItem(SelectNextCharacters.CharactersLastHeatMapUpdateTime[_i].ToString("mm.ss.fff") + " ");
 
             }
 
-            mcAddDialogItem(string.Empty);
+            msAddDialogItem(string.Empty);
 
             for (_l = 0; _l < SerialComs.NumRadios; _l++)
             {
                 for (_ = 0; _ < SerialComs.NumRadios; _++)
                 {
-                    mcAddDialogItem("{0:D3}" + SelectNextCharacters.HeatMap[_l, _]);
+                    msAddDialogItem("{0:D3}" + SelectNextCharacters.HeatMap[_l, _]);
 
-                    mcAddDialogItem(" ");
+                    msAddDialogItem(" ");
 
                 }
                 
-                mcAddDialogItem(String.Empty);
+                msAddDialogItem(String.Empty);
 
             }
 
-            mcAddDialogItem("Character1-2Num " + mcDialogTracker.CharacterList[mcDialogTracker.Character1Num].CharacterPrefix
-                              + " " + mcDialogTracker.CharacterList[mcDialogTracker.Character2Num].CharacterPrefix
+            msAddDialogItem("Character1-2Num " + msDialogTracker.CharacterList[msDialogTracker.Character1Num].CharacterPrefix
+                              + " " + msDialogTracker.CharacterList[msDialogTracker.Character2Num].CharacterPrefix
                               + " RSSIsum " + "{0:D3}" + SelectNextCharacters.BigRssi + ", rssiStable = " + SelectNextCharacters.RssiStable);
 
 

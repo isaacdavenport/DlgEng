@@ -9,6 +9,7 @@ using log4net;
 
 namespace DialogEngine
 {
+
     public static class InitModelDialogs    //TODO lets get some graceful failures here. recovery from single file failures.
     {
         #region - Fields -
@@ -23,6 +24,11 @@ namespace DialogEngine
 
         #region - Public methods -
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="_inObj"></param>
         public static  void SetDefaults(DialogTracker _inObj) //TODO is there a good way to identify orphaned tags? (dialog lines)
         {
             //Dialogs JSON parse here.
@@ -34,8 +40,7 @@ namespace DialogEngine
 
                 if (SessionVars.WriteSerialLog)
                 {
-                    using (StreamWriter _jsonLog = new StreamWriter(
-                    (SessionVars.LogsDirectory + SessionVars.DialogLogFileName), true))
+                    using (StreamWriter _jsonLog = new StreamWriter((SessionVars.LogsDirectory + SessionVars.DialogLogFileName), true))
                     {
                         _jsonLog.WriteLine("Dialog JSON in: " + SessionVars.DialogsDirectory);
                     }
@@ -49,8 +54,7 @@ namespace DialogEngine
 
                     if (SessionVars.WriteSerialLog)
                     {
-                        using (StreamWriter _jsonLog = new StreamWriter(
-                        (SessionVars.LogsDirectory + SessionVars.DialogLogFileName), true))
+                        using (StreamWriter _jsonLog = new StreamWriter((SessionVars.LogsDirectory + SessionVars.DialogLogFileName), true))
                         {
                             _jsonLog.WriteLine(" opening dialog models in " + _file.Name);
                         }
@@ -61,6 +65,7 @@ namespace DialogEngine
                     try
                     {
                         FileStream _fs = _file.OpenRead();    //open a read-only FileStream
+
                         using (StreamReader _reader = new StreamReader(_fs))   //creates new streamerader for fs stream. Could also construct with filename...
                         {
                             try
@@ -89,8 +94,7 @@ namespace DialogEngine
 
                         if (SessionVars.WriteSerialLog)
                         {
-                            using (StreamWriter _jsonLog = new StreamWriter(
-                            (SessionVars.LogsDirectory + SessionVars.DialogLogFileName), true))
+                            using (StreamWriter _jsonLog = new StreamWriter((SessionVars.LogsDirectory + SessionVars.DialogLogFileName), true))
                             {
                                 _jsonLog.WriteLine(" completed " + _file.Name);
                             }

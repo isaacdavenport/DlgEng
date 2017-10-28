@@ -12,8 +12,8 @@ namespace DialogEngine
     {
         #region  - Fields -
 
-        private static Random mcRandom = new Random();
-        private  static DialogTracker mcDialogTracker=DialogTracker.Instance;
+        private static Random msRandom = new Random();
+        private  static DialogTracker msDialogTracker=DialogTracker.Instance;
 
 
         public const int StrongRssiBufDepth = 12;
@@ -26,7 +26,7 @@ namespace DialogEngine
         public static int NextCharacter1 = 1, NextCharacter2 = 2;
         public static int[,] HeatMap = new int[SerialComs.NumRadios, SerialComs.NumRadios];
         public static DateTime[] CharactersLastHeatMapUpdateTime = new DateTime[SerialComs.NumRadios];
-        static int[,] mcStrongRssiCharacterPairBuf = new int[2, StrongRssiBufDepth];
+        static int[,] msStrongRssiCharacterPairBuf = new int[2, StrongRssiBufDepth];
 
         #endregion
 
@@ -36,24 +36,24 @@ namespace DialogEngine
         
 
 
-        static void enqueLatestCharacters(int _ch1, int _ch2)
+        private static void enqueLatestCharacters(int _ch1, int _ch2)
         {
             RssiStable = true;
 
             for (int _i = 0; _i < StrongRssiBufDepth - 1; _i++)
             {  
                 // scoot data in buffer back by one to make room for next
-                mcStrongRssiCharacterPairBuf[0, _i] = mcStrongRssiCharacterPairBuf[0, _i + 1];
-                mcStrongRssiCharacterPairBuf[1, _i] = mcStrongRssiCharacterPairBuf[1, _i + 1];
+                msStrongRssiCharacterPairBuf[0, _i] = msStrongRssiCharacterPairBuf[0, _i + 1];
+                msStrongRssiCharacterPairBuf[1, _i] = msStrongRssiCharacterPairBuf[1, _i + 1];
             }
 
-            mcStrongRssiCharacterPairBuf[0, StrongRssiBufDepth - 1] = _ch1;
-            mcStrongRssiCharacterPairBuf[1, StrongRssiBufDepth - 1] = _ch2;
+            msStrongRssiCharacterPairBuf[0, StrongRssiBufDepth - 1] = _ch1;
+            msStrongRssiCharacterPairBuf[1, StrongRssiBufDepth - 1] = _ch2;
 
             for (int _i = 0; _i < StrongRssiBufDepth - 1; _i++)
             {
-                if (mcStrongRssiCharacterPairBuf[0, _i] != mcStrongRssiCharacterPairBuf[0, _i + 1] ||
-                    mcStrongRssiCharacterPairBuf[1, _i] != mcStrongRssiCharacterPairBuf[1, _i + 1])
+                if (msStrongRssiCharacterPairBuf[0, _i] != msStrongRssiCharacterPairBuf[0, _i + 1] ||
+                    msStrongRssiCharacterPairBuf[1, _i] != msStrongRssiCharacterPairBuf[1, _i + 1])
                 {
                     RssiStable = false;
                     break;
@@ -63,7 +63,7 @@ namespace DialogEngine
 
         static void assignNextCharacters(int _tempCh1, int _tempCh2)
         {
-            if ((mcRandom.NextDouble() > 0.5) && RssiStable)
+            if ((msRandom.NextDouble() > 0.5) && RssiStable)
             {
                 NextCharacter1 = _tempCh1;
                 NextCharacter2 = _tempCh2;
@@ -85,6 +85,7 @@ namespace DialogEngine
         {
             //  This method takes the RSSI values and combines them so that the RSSI for Ch2 looking at 
             //  Ch1 is added to the RSSI for Ch1 looking at Ch2
+
             int _tempCh1 = 0, _tempCh2 = 0, _i = 0, _j = 0;
 
             var _currentTime = DateTime.Now;
@@ -98,10 +99,14 @@ namespace DialogEngine
             {  // the sixth radio is the computer's receiver now included for adventures
 
                 for (_j = _i + 1; _j < SerialComs.NumRadios; _j++)
-                {  // only need data above the matrix diagonal
-                    if (HeatMap[_i, _j] + HeatMap[_j, _i] > BigRssi && _currentTime - CharactersLastHeatMapUpdateTime[_i] < MaxLastSeenInterval
+                {   
+                    // only need data above the matrix diagonal
+
+                    if (   HeatMap[_i, _j] + HeatMap[_j, _i] > BigRssi 
+                        && _currentTime - CharactersLastHeatMapUpdateTime[_i] < MaxLastSeenInterval
                         && _currentTime - CharactersLastHeatMapUpdateTime[_j] < MaxLastSeenInterval)
-                    {  // look at both characters view of each other
+                    {  
+                        // look at both characters view of each other
                         BigRssi = HeatMap[_i, _j] + HeatMap[_j, _i];
                         _tempCh1 = _i;
                         _tempCh2 = _j;
@@ -111,7 +116,7 @@ namespace DialogEngine
             }
 
 
-            if (_tempCh1 <= mcDialogTracker.CharacterList.Count && _tempCh2 <= mcDialogTracker.CharacterList.Count)
+            if (_tempCh1 <= msDialogTracker.CharacterList.Count && _tempCh2 <= msDialogTracker.CharacterList.Count)
             {
                 enqueLatestCharacters(_tempCh1, _tempCh2);
                 assignNextCharacters(_tempCh1, _tempCh2);
@@ -146,15 +151,16 @@ namespace DialogEngine
 
                         _userHasForcedCharacters = true;
 
-                        foreach (var _character in mcDialogTracker.CharacterList)
+                        foreach (var _character in msDialogTracker.CharacterList)
                         {
                             if (_charactersInitials[0] == _character.CharacterPrefix)
                             {
-                                NextCharacter1 = mcDialogTracker.CharacterList.IndexOf(_character);
+                                NextCharacter1 = msDialogTracker.CharacterList.IndexOf(_character);
                             }
+
                             if (_charactersInitials[1] == _character.CharacterPrefix)
                             {
-                                NextCharacter2 = mcDialogTracker.CharacterList.IndexOf(_character);
+                                NextCharacter2 = msDialogTracker.CharacterList.IndexOf(_character);
                             }
                         }
                     }
@@ -166,16 +172,16 @@ namespace DialogEngine
 
                 if (!_userHasForcedCharacters && _nextCharacterSwapTime.CompareTo(DateTime.Now) < 0)
                 {
-                    NextCharacter1 = mcRandom.Next(0, mcDialogTracker.CharacterList.Count); //lower bound inclusive, upper exclusive
-                    NextCharacter2 = mcRandom.Next(0, mcDialogTracker.CharacterList.Count); //lower bound inclusive, upper exclusive
+                    NextCharacter1 = msRandom.Next(0, msDialogTracker.CharacterList.Count); //lower bound inclusive, upper exclusive
+                    NextCharacter2 = msRandom.Next(0, msDialogTracker.CharacterList.Count); //lower bound inclusive, upper exclusive
                     _nextCharacterSwapTime = DateTime.Now;
-                    _nextCharacterSwapTime = _nextCharacterSwapTime.AddSeconds(8 + mcRandom.Next(0, 34));
+                    _nextCharacterSwapTime = _nextCharacterSwapTime.AddSeconds(8 + msRandom.Next(0, 34));
                 }
 
 
                 while (NextCharacter1 == NextCharacter2)
                 {
-                    NextCharacter2 = mcRandom.Next(0, mcDialogTracker.CharacterList.Count);
+                    NextCharacter2 = msRandom.Next(0, msDialogTracker.CharacterList.Count);
                 }
             }
         }

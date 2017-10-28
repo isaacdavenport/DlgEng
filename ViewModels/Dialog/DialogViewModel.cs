@@ -24,7 +24,7 @@ namespace DialogEngine.ViewModels.Dialog
 
         #region -Private fields-
 
-        private static DialogTracker mcTheDialogs;
+        private static DialogTracker msTheDialogs;
 
         private Views.Dialog.Dialog mView;
         private Random mRandom = new Random();
@@ -152,7 +152,7 @@ namespace DialogEngine.ViewModels.Dialog
             if (!SessionVars.AudioDialogsOn)
                 return;
 
-            foreach (var _character in mcTheDialogs.CharacterList)
+            foreach (var _character in msTheDialogs.CharacterList)
             {
                 foreach (var _phrase in _character.Phrases)
                 {
@@ -192,7 +192,7 @@ namespace DialogEngine.ViewModels.Dialog
 
             AddDialogItem(string.Empty);
 
-            foreach (var _dialog in mcTheDialogs.ModelDialogs)
+            foreach (var _dialog in msTheDialogs.ModelDialogs)
             {
 
                 AddDialogItem(" " + _dialogTracker.ModelDialogs.IndexOf(_dialog) + " : " + _dialog.Name);
@@ -388,7 +388,7 @@ namespace DialogEngine.ViewModels.Dialog
                         }
 
 
-                        mcTheDialogs.GenerateADialog(_modelAndCharacters);
+                        msTheDialogs.GenerateADialog(_modelAndCharacters);
 
                     }
                     else
@@ -396,14 +396,14 @@ namespace DialogEngine.ViewModels.Dialog
 
                         AddDialogItem("Incorrect input, generating random dialog.");
 
-                        mcTheDialogs.GenerateADialog();
+                        msTheDialogs.GenerateADialog();
                     }
                 }
                 else
                 {
                     if (!SessionVars.HeatMapOnlyMode)
                     {
-                        mcTheDialogs.GenerateADialog(); //normal operation
+                        msTheDialogs.GenerateADialog(); //normal operation
 
                         Thread.Sleep(1100); //vb:commented out for debugging as code stops here
 

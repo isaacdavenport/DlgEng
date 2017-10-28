@@ -12,60 +12,39 @@ namespace DialogEngine
 
     public static class SerialComs
     {
+        #region - Fields -
+
+        private static SerialPort msSerialPort;
+
         public const int NumRadios = 6;  //includes dongle
-        static SerialPort mcSerialPort;
 
-        public static void InitSerial()
+        #endregion
 
-        {
-            if (!SessionVars.NoSerialPort)
 
-            {
-                mcSerialPort = new SerialPort();
+        #region - Private functions -
 
-                Thread _readThread = new Thread(RegularylyReadSerial);
-
-                mcSerialPort.PortName = SessionVars.ComPortName;
-
-                mcSerialPort.BaudRate = 460800;
-
-                mcSerialPort.ReadTimeout = 500;
-
-                mcSerialPort.Open();
-
-                mcSerialPort.DiscardInBuffer();
-
-                _readThread.Start();
-            }
-
-            else
-            {
-                Thread _dontReadThread = new Thread(SelectNextCharacters.OccasionallyChangeToRandNewCharacter);
-                _dontReadThread.Start();
-            }
-            //worry about stopping cleanly later TODO
-        }
-
+       
         private static string readSerialInLine()
         {
             string _message = null;
 
             try
             {
-                if (mcSerialPort.BytesToRead > 18)
+                if (msSerialPort.BytesToRead > 18)
                 {
-                    _message = mcSerialPort.ReadLine();
+                    _message = msSerialPort.ReadLine();
 
-                    if (mcSerialPort.BytesToRead > 1000)
+                    if (msSerialPort.BytesToRead > 1000)
                     {
                         // got behind for some reason
-                        mcSerialPort.DiscardInBuffer();
+                        msSerialPort.DiscardInBuffer();
+
                         Console.WriteLine("serial buffer over run.");
                     }
                     if (SessionVars.WriteSerialLog)
                     {
-                        using (StreamWriter _serialLog = new StreamWriter(
-                            SessionVars.LogsDirectory + SessionVars.HexLogFileName, true)) {
+                        using (StreamWriter _serialLog = new StreamWriter(SessionVars.LogsDirectory + SessionVars.HexLogFileName, true))
+                        {
                             _serialLog.Write(DateTime.Now.ToString("mm.ss.fff") + "  ");
                             _serialLog.Write(_message);
                             _serialLog.Close();
@@ -79,6 +58,48 @@ namespace DialogEngine
             return _message;
         }
 
+        #endregion
+
+
+        #region - Public methods -
+
+
+
+        /// <summary>
+        /// Initialize serial port
+        /// </summary>
+        public static void InitSerial()
+
+        {
+            if (!SessionVars.NoSerialPort)
+
+            {
+                msSerialPort = new SerialPort();
+
+                Thread _readThread = new Thread(RegularylyReadSerial);
+
+                msSerialPort.PortName = SessionVars.ComPortName;
+
+                msSerialPort.BaudRate = 460800;
+
+                msSerialPort.ReadTimeout = 500;
+
+                msSerialPort.Open();
+
+                msSerialPort.DiscardInBuffer();
+
+                _readThread.Start();
+            }
+
+            else
+            {
+                Thread _dontReadThread = new Thread(SelectNextCharacters.OccasionallyChangeToRandNewCharacter);
+                _dontReadThread.Start();
+            }
+            //worry about stopping cleanly later TODO
+        }
+
+
         public static void RegularylyReadSerial()
         {
             int[] _newRow = new int[NumRadios + 1];
@@ -89,6 +110,7 @@ namespace DialogEngine
                 var _processCurrentMessage = true;
                 int _rowNum = -1;
                 var _message = readSerialInLine();
+
                 if (_message != null)
                 {
                     _rowNum = ParseMessage.Parse(_message, _newRow);
@@ -97,11 +119,14 @@ namespace DialogEngine
                 {
                     _processCurrentMessage = false;  //we are in here a great deal
                 }
-                if (_rowNum > -1 && _rowNum < NumRadios && _processCurrentMessage) {
+
+                if (_rowNum > -1 && _rowNum < NumRadios && _processCurrentMessage)
+                {
                     _cycleCount++;
                     ParseMessage.ProcessMessage(_rowNum, _newRow);
                     SelectNextCharacters.FindBiggestRssiPair();
                 }
+
                 if (_cycleCount > 110)
                 {
                     FirmwareDebuggingTools.ProcessDebugFlags();
@@ -109,6 +134,10 @@ namespace DialogEngine
                 }
             }
         }
+
+        #endregion
+
+
     }
 }
 
