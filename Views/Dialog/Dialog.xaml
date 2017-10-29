@@ -110,9 +110,11 @@
                 
                 <!-- Placeholder -->
                 <TextBox IsHitTestVisible="False" BorderThickness="0" Margin="10,0" BorderBrush="White" FontSize="16"  Text="Enter message here . . ."  VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="LightGray"  TextWrapping="Wrap">
+                    
                     <TextBox.Style>
 
                         <Style TargetType="{x:Type TextBox}">
+                            
                             <Setter Property="Visibility" Value="Collapsed"/>
                             <Style.Triggers>
 
@@ -121,6 +123,7 @@
                                     <Setter Property="Visibility" Value="Visible"/>
                                     
                                 </DataTrigger>
+                                
                             </Style.Triggers>
                             
                         </Style>

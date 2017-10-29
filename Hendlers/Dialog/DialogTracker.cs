@@ -118,7 +118,6 @@ namespace DialogEngine
         #endregion
 
 
-
         #region - Public methods -
 
         /// <summary>
@@ -314,8 +313,7 @@ namespace DialogEngine
                 {
                     var _fs = _file.OpenRead(); //open a read-only FileStream
 
-                    using (var _reader = new StreamReader(_fs)
-                    ) //creates new streamerader for fs stream. Could also construct with filename...
+                    using (var _reader = new StreamReader(_fs)) //creates new streamerader for fs stream. Could also construct with filename...
                     {
                         try
                         {
