@@ -1,0 +1,86 @@
+{
+  "CharacterName": "Hoshi Kelvinson",
+  "CharacterPrefix": "HK",
+  "Phrases": [
+    {
+      "DialogStr": "My name's Hoshi Kelvinson.",
+      "FileName": "MyNamesHoshi",
+      "PhraseWeights": {
+        "Greeting": 5
+      },
+      "PhraseRating": "G"
+    },
+   {
+      "DialogStr": "Have you ever seen the sun rise from the moon?",
+      "FileName": "HaveYouEverSeenTheSun",
+      "PhraseWeights": {
+        "YesNoQuestion": 5
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "You fixed my laser skillet!",
+      "FileName": "YouFixedMy",
+      "PhraseWeights": {
+        "GiveCredit": 5
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "Sometimes, when I'm flipping pancakes out past Pluto and there aren't any customers in line, I get a little lonely.",
+      "FileName": "SometimesWhenImFlipping",
+      "PhraseWeights": {
+        "RequestAffirmation": 5
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "Pay me a visit the next time you're in space. I'll keep a glass of orange juice cold, just for you.",
+      "FileName": "PayMeAVisit",
+      "PhraseWeights": {
+        "GiveAffirmation": 5
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "Yes.",
+      "FileName": "Yes",
+      "PhraseWeights": {
+        "Yes": 5
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "No.",
+      "FileName": "No",
+      "PhraseWeights": {
+        "No": 5
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "Thank you!",
+      "FileName": "ThankYou",
+      "PhraseWeights": {
+        "ThankYou": 5
+      },
+ 
+      "PhraseRating": "G"
+    },
+    {
+      "DialogStr": "You're welcome.",
+      "FileName": "YoureWelcome",
+      "PhraseWeights": {
+        "YoureWelcome": 5
+      },
+ 
+      "PhraseRating": "G"
+    }
+  ]
+}

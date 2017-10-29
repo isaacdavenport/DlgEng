@@ -15,7 +15,7 @@
 },{
   "DialogName": "YesNoQuestion, No",
   "AddedOnDateTime": "2016-05-18T00:00:00",
-  "Popularity": 2.4,
+  "Popularity": 4,
   "Adventure": "",
   "Requires": [],
   "Provides": [],
@@ -26,7 +26,7 @@
 },{
   "DialogName": "YesNoQuestion, Yes",
   "AddedOnDateTime": "2016-05-18T00:00:00",
-  "Popularity": 2.4,
+  "Popularity": 4,
   "Adventure": "",
   "Requires": [],
   "Provides": [],
@@ -37,7 +37,7 @@
 },{
   "DialogName": "Request Affirmation, Give Affirmation, Thank You, Youre Welcome",
   "AddedOnDateTime": "2016-05-18T00:00:00",
-  "Popularity": 0.6,
+  "Popularity": 1,
   "Adventure": "",
   "Requires": [],
   "Provides": [],
@@ -62,7 +62,7 @@
 },{
   "DialogName": "Give Affirmation, Thank You, Youre Welcome",
   "AddedOnDateTime": "2016-05-18T00:00:00",
-  "Popularity": 0.6,
+  "Popularity": 1,
   "Adventure": "",
   "Requires": [],
   "Provides": [],
@@ -85,7 +85,7 @@
 },{
   "DialogName": "Give Affirmation, Thank You, Youre Welcome",
   "AddedOnDateTime": "2016-05-18T00:00:00",
-  "Popularity": 0.6,
+  "Popularity": 1,
   "Adventure": "",
   "Requires": [],
   "Provides": [],

@@ -4,7 +4,7 @@
 {
   "DialogName": "Threat Retreat",
   "AddedOnDateTime": "2016-05-18T00:00:00",
-  "Popularity": 2.2,
+  "Popularity": 3,
   "Adventure": "",
   "Requires": [],
   "Provides": [],
@@ -15,7 +15,7 @@
 },{
   "DialogName": "Insult, Insult, Insult",
   "AddedOnDateTime": "2016-05-18T00:00:00",
-  "Popularity": 0.3,
+  "Popularity": 0.5,
   "Adventure": "",
   "Requires": [],
   "Provides": [],
@@ -123,7 +123,7 @@
 },{
   "DialogName": "Accuse Deny",
   "AddedOnDateTime": "2016-05-18T00:00:00",
-  "Popularity": 1.8,
+  "Popularity": 4,
   "Adventure": "",
   "Requires": [],
   "Provides": [],
@@ -134,7 +134,7 @@
 },{
   "DialogName": "Accuse Admit",
   "AddedOnDateTime": "2016-05-18T00:00:00",
-  "Popularity": 2.4,
+  "Popularity": 4,
   "Adventure": "",
   "Requires": [],
   "Provides": [],
@@ -145,7 +145,7 @@
 },{
   "DialogName": "Accuse, Deny, Shift Blame",
   "AddedOnDateTime": "2016-05-18T00:00:00",
-  "Popularity": 1.6,
+  "Popularity": 0.1,
   "Adventure": "",
   "Requires": [],
   "Provides": [],
@@ -159,7 +159,7 @@
 },{
   "DialogName": "Give Credit, Deny",
   "AddedOnDateTime": "2016-05-18T00:00:00",
-  "Popularity": 0.2,
+  "Popularity": 0.3,
   "Adventure": "",
   "Requires": [],
   "Provides": [],
@@ -182,7 +182,7 @@
 },{
   "DialogName": "RequestWho, GiveWho, GiveAgreement, ThankYou",
   "AddedOnDateTime": "2016-05-18T00:00:00",
-  "Popularity": 0.2,
+  "Popularity": 0.5,
   "Adventure": "",
   "Requires": [],
   "Provides": [],
@@ -195,7 +195,7 @@
 },{
   "DialogName": "RequestAdvice, GiveAdvice, GiveAgreement, YourWelcome",
   "AddedOnDateTime": "2016-05-18T00:00:00",
-  "Popularity": 0.2,
+  "Popularity": 0.5,
   "Adventure": "",
   "Requires": [],
   "Provides": [],
@@ -216,17 +216,6 @@
     "GiveSurprisingStatement",
     "GiveAgreement",
 	"ThankYou"
-  ]
-},{
-  "DialogName": "GiveSilence, GiveSilence --For Non Speaking Radios",
-  "AddedOnDateTime": "2017-04-24T18:00:00",
-  "Popularity": 0.2,
-  "Adventure": "",
-  "Requires": [],
-  "Provides": [],
-  "PhraseTypeSequence": [
-    "GiveSilence",
-	"GiveSilence"
   ]
 }
 ]
