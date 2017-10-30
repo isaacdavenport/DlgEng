@@ -32,7 +32,7 @@ namespace DialogEngine
         private int mPriorCharacter2Num = 100;
         private int mUrrentDialogModel = 1;
         private Random mRandom = new Random();
-        private PrintMethod mAdddDialogItem;
+        private PrintMethod mAddDialogItem;
 
 
         #endregion
@@ -104,14 +104,14 @@ namespace DialogEngine
         {
             get
             {
-                return new PrintMethod(((MainWindow) Application.Current.MainWindow).CurrentPrintMethod);
+                return mAddDialogItem;
                 
             }
 
 
             set
             {
-                mAdddDialogItem = value;
+                mAddDialogItem = value;
             }
         }
 

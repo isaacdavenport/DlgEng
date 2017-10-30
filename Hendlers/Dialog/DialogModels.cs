@@ -17,7 +17,8 @@ namespace DialogEngine
 
 
         public delegate void PrintMethod(string _message);
-        public static PrintMethod AddDialogItem = new PrintMethod(((MainWindow)Application.Current.MainWindow).CurrentPrintMethod);
+
+        public static PrintMethod AddDialogItem;
 
         #endregion
 

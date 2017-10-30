@@ -22,6 +22,7 @@ namespace DialogEngine.Views.Dialog
     /// </summary>
     public partial class Dialog : PageBase
     {
+
         public Dialog()
         {
             InitializeComponent();
@@ -32,6 +33,10 @@ namespace DialogEngine.Views.Dialog
 
         protected override void OnPageLoaded()
         {
+            DialogTracker.Instance.AddDialogItem = new DialogTracker.PrintMethod(((MainWindow) Application.Current.MainWindow).CurrentPrintMethod);
+
+            InitModelDialogs.AddDialogItem = new InitModelDialogs.PrintMethod(((MainWindow) Application.Current.MainWindow).CurrentPrintMethod);
+
             (this.DataContext as DialogViewModel).TheDialogs=DialogTracker.Instance;
             ;
             (this.DataContext as DialogViewModel).OnViewModelLoaded();

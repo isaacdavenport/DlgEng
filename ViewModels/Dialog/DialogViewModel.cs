@@ -355,67 +355,77 @@ namespace DialogEngine.ViewModels.Dialog
 
         public void OnViewModelLoaded()
         {
-            DialogTracker _dialogTracker = DialogTracker.Instance;
+            BackgroundWorker _workerLoader = new BackgroundWorker();
 
-            writeStartupInfo();
-
-            _dialogTracker.IntakeCharacters();
-
-            InitModelDialogs.SetDefaults(DialogTracker.Instance);
-
-
-
-            if (SessionVars.TagUsageCheck)
+            _workerLoader.DoWork += (_sender, _e) =>
             {
-                checkTagsUsed(_dialogTracker);
-            }
+
+                DialogTracker _dialogTracker = DialogTracker.Instance;
+
+                writeStartupInfo();
+
+                _dialogTracker.IntakeCharacters();
+
+                InitModelDialogs.SetDefaults(DialogTracker.Instance);
 
 
 
-            if (SessionVars.DebugFlag)
-            {
-                checkForMissingPhrases();
-
-                AddDialogItem("  press enter to continue");
-
-
-                if (!SessionVars.ForceCharactersAndDialogModel)
+                if (SessionVars.TagUsageCheck)
                 {
-                    AddDialogItem("   you may enter two characters initials to make them talk");
+                    checkTagsUsed(_dialogTracker);
                 }
 
-            }
 
 
-            //Select Debug Output
-            if (SessionVars.ForceCharactersAndDialogModel)
-            {
-                AddDialogItem("   enter three numbers to set the next: DialogModel, Char1, Char2");
+                if (SessionVars.DebugFlag)
+                {
+                    checkForMissingPhrases();
 
-                AddDialogItem(string.Empty);
-            }
+                    AddDialogItem("  press enter to continue");
 
 
-            //vb: following part taken out of while(true) to check in input works and can be parsed
+                    if (!SessionVars.ForceCharactersAndDialogModel)
+                    {
+                        AddDialogItem("   you may enter two characters initials to make them talk");
+                    }
 
-            if (SessionVars.ForceCharactersAndDialogModel)
-            {
-                //string[] keyboardInput = Console.ReadLine().Split(' ');
+                }
 
-                //  vb: take user input fromtyext box instead of console.readline above
 
-                string[] _parsekeyboardInput = mKeyboardInput.Split();
+                //Select Debug Output
+                if (SessionVars.ForceCharactersAndDialogModel)
+                {
+                    AddDialogItem("   enter three numbers to set the next: DialogModel, Char1, Char2");
 
-                //vb : for testing what is the parsed output
-                AddDialogItem(_parsekeyboardInput[0] + Environment.NewLine);
+                    AddDialogItem(string.Empty);
+                }
 
-                AddDialogItem(_parsekeyboardInput[1] + Environment.NewLine);
 
-                AddDialogItem(_parsekeyboardInput[2] + Environment.NewLine);
+                //vb: following part taken out of while(true) to check in input works and can be parsed
 
-                //if keyboard input has three numbers for debug mode to force dialog model and characters
+                if (SessionVars.ForceCharactersAndDialogModel)
+                {
+                    //string[] keyboardInput = Console.ReadLine().Split(' ');
 
-            }
+                    //  vb: take user input fromtyext box instead of console.readline above
+
+                    string[] _parsekeyboardInput = mKeyboardInput.Split();
+
+                    //vb : for testing what is the parsed output
+                    AddDialogItem(_parsekeyboardInput[0] + Environment.NewLine);
+
+                    AddDialogItem(_parsekeyboardInput[1] + Environment.NewLine);
+
+                    AddDialogItem(_parsekeyboardInput[2] + Environment.NewLine);
+
+                    //if keyboard input has three numbers for debug mode to force dialog model and characters
+
+                }
+
+            };
+
+
+            _workerLoader.RunWorkerAsync();
 
 
             BackgroundWorker _worker = new BackgroundWorker();
@@ -509,9 +519,25 @@ namespace DialogEngine.ViewModels.Dialog
 
         public void AddDialogItem(string _entry)
         {
-            DialogCollection.Add(_entry);
+            if (Application.Current.Dispatcher.CheckAccess())
+            {
+                DialogCollection.Add(_entry);
 
-            OnPropertyChanged("DialogCollection");
+                OnPropertyChanged("DialogCollection");
+            }
+            else
+            {
+                Application.Current.Dispatcher.BeginInvoke((Action) (() =>
+                {
+
+                    DialogCollection.Add(_entry);
+
+                    OnPropertyChanged("DialogCollection");
+
+                }));
+            }
+
+
         }
 
         #endregion
