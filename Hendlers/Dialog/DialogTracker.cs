@@ -285,6 +285,8 @@ namespace DialogEngine
             return false;
         }
 
+
+
         public void IntakeCharacters()
         {
             var _d = new DirectoryInfo(SessionVars.CharactersDirectory);
@@ -293,11 +295,17 @@ namespace DialogEngine
 
             AddDialogItem(_characterJsonMessage);
 
+
+
             foreach (var _file in _d.GetFiles("*.json")) //file of type FileInfo for each .json in directory
             {
+
+
                 string _beginReadMessage = " Begin read of " + _file.Name;
 
                 AddDialogItem(_beginReadMessage);
+
+
 
                 if (SessionVars.WriteSerialLog)
                 {
@@ -306,6 +314,8 @@ namespace DialogEngine
                         _jsonLog.WriteLine(" Begin read of " + _file.Name);
                     }
                 }
+
+
 
                 string _inChar;
 
@@ -321,6 +331,7 @@ namespace DialogEngine
 
                             var _deserializedCharacterJson = JsonConvert.DeserializeObject<Models.Dialog.Character>(_inChar);
 
+
                             _deserializedCharacterJson.PhraseTotals = new PhraseEntry(); //init PhraseTotals
 
                             _deserializedCharacterJson.PhraseTotals.DialogStr = "phrase weights";
@@ -335,6 +346,8 @@ namespace DialogEngine
 
 
                             removePhrasesOverParentalRating(_deserializedCharacterJson);
+
+
 
                             //Calculate Phrase Weight Totals here.
                             foreach (var _curPhrase in _deserializedCharacterJson.Phrases)
@@ -354,17 +367,23 @@ namespace DialogEngine
                                 }
                             }
 
+
+
                             for (var _i = 0; _i < Character.RecentPhrasesQueueSize; _i++)
                             {
                                 // we always deque after enque so this sets que size
                                 _deserializedCharacterJson.RecentPhrases.Enqueue(_deserializedCharacterJson.Phrases[0]);
                             }
 
+
+
                             //list Chars as they come in.
 
                             string _finishReadMessage = " Finish read of " + _deserializedCharacterJson.CharacterName;
 
                             AddDialogItem(_finishReadMessage);
+
+
 
                             if (SessionVars.WriteSerialLog)
                             {
@@ -376,6 +395,8 @@ namespace DialogEngine
 
                             //Add to Char List
                             CharacterList.Add(_deserializedCharacterJson);
+
+
                         }
                         catch (JsonReaderException _e)
                         {
@@ -417,7 +438,7 @@ namespace DialogEngine
 
             if (CharacterList.Count < 2)
             {
-                string _errorMessage = "  Insufficient readable character json files found in " 
+                string _errorMessage = "Insufficient readable character json files found in " 
                                        + SessionVars.CharactersDirectory + " .  Exiting.";
 
                 AddDialogItem(_errorMessage);
@@ -425,11 +446,13 @@ namespace DialogEngine
                 Environment.Exit(0);
             }
 
+
             // Fill the queue with greeting dialogs
             for (var _i = 0; _i < RecentDialogsQueSize; _i++)
             {
                 RecentDialogs.Enqueue(0); // Fill the que with greeting dialogs
             }
+
 
             AddDialogItem(string.Empty);
         }
@@ -664,6 +687,8 @@ namespace DialogEngine
             return false;
         }
 
+
+
         private bool checkIfCharactersHavePhrasesForDialog(int _dialogModel, int _character1Num, int _character2Num)
         {
             var _currentCharacter = _character1Num;
@@ -693,6 +718,8 @@ namespace DialogEngine
 
             return true;
         }
+
+
 
         private bool checkIfDialogPreRequirementMet(int _dialogModel)
         {
@@ -764,6 +791,7 @@ namespace DialogEngine
                                 _ch1First = checkIfCharactersHavePhrasesForDialog(_possibleDialogIdx, _character1Num, _character2Num);
 
                                 _ch2First = checkIfCharactersHavePhrasesForDialog(_possibleDialogIdx, _character2Num, _character1Num);
+
                                 if (_ch1First || _ch2First)
                                 {
                                     if (_ch2First)
@@ -850,6 +878,8 @@ namespace DialogEngine
                         break;
                     }
                 }
+
+
                 var _dialogModelUsedRecently = checkIfDialogModelUsedRecently(_dialogModel);
 
                 var _charactersHavePhrases = checkIfCharactersHavePhrasesForDialog(_dialogModel, Character1Num, Character2Num);

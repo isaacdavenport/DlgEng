@@ -27,6 +27,14 @@ namespace DialogEngine.Views.Dialog
             InitializeComponent();
            
             DataContext = new DialogViewModel(this);
+
+        }
+
+        protected override void OnPageLoaded()
+        {
+            (this.DataContext as DialogViewModel).TheDialogs=DialogTracker.Instance;
+            ;
+            (this.DataContext as DialogViewModel).OnViewModelLoaded();
         }
 
     }

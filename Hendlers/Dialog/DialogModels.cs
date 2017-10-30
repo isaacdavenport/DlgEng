@@ -36,7 +36,8 @@ namespace DialogEngine
             {
                 DirectoryInfo _dialogsD = new DirectoryInfo(SessionVars.DialogsDirectory);
 
-                AddDialogItem("Dialog JSON in: " + SessionVars.DialogsDirectory);
+                mcLogger.Info("Dialog JSON in: " + SessionVars.DialogsDirectory);
+
 
                 if (SessionVars.WriteSerialLog)
                 {
@@ -46,11 +47,15 @@ namespace DialogEngine
                     }
                 }
 
+
+
                 var _inFiles = _dialogsD.GetFiles("*.json");
 
                 foreach (FileInfo _file in _inFiles) //file of type FileInfo for each .json in directory
                 {
-                    AddDialogItem(" opening dialog models in " + _file.Name);
+                    mcLogger.Info(" opening dialog models in " + _file.Name);
+
+
 
                     if (SessionVars.WriteSerialLog)
                     {
@@ -59,6 +64,9 @@ namespace DialogEngine
                             _jsonLog.WriteLine(" opening dialog models in " + _file.Name);
                         }
                     }
+
+
+
 
                     string _inDialog;
 
@@ -74,6 +82,8 @@ namespace DialogEngine
 
                                 ModelDialogInput _dialogsInClass = JsonConvert.DeserializeObject<ModelDialogInput>(_inDialog);  //string to Object.
 
+
+
                                 foreach (ModelDialog _curDialog in _dialogsInClass.InList)
                                 {
                                     //Add to dialog List
@@ -81,6 +91,7 @@ namespace DialogEngine
                                     //population sums
                                     _inObj.DialogModelPopularitySum += _curDialog.Popularity;
                                 }
+
                             }
                             catch (Newtonsoft.Json.JsonReaderException _e)
                             {
@@ -90,7 +101,10 @@ namespace DialogEngine
                             }
                         }
 
-                        AddDialogItem(" completed " + _file.Name);
+
+
+                        mcLogger.Info(" completed " + _file.Name);
+
 
                         if (SessionVars.WriteSerialLog)
                         {
@@ -99,6 +113,8 @@ namespace DialogEngine
                                 _jsonLog.WriteLine(" completed " + _file.Name);
                             }
                         }
+
+
                     }
                     catch (UnauthorizedAccessException _e)
                     {
@@ -110,12 +126,16 @@ namespace DialogEngine
                     }
                     catch (DirectoryNotFoundException _e)
                     {
+
                         Console.WriteLine(_e.Message);
                         Console.WriteLine("Directory not found exception while reading: " + _file.FullName);
                         Console.WriteLine("check the Dialog JSON path in your config file");
                         Console.ReadLine();
+
                     }
                 }
+
+
             }
             catch (OutOfMemoryException _e)
             {
@@ -123,12 +143,19 @@ namespace DialogEngine
                 Console.WriteLine("You probably need to restart your computer...");
                 Console.ReadLine();
             }
+
+
+
+
             if (_inObj.ModelDialogs.Count < 2)
             {
-                AddDialogItem("  Insufficient dialog models found in " + SessionVars.DialogsDirectory + " exiting.");
+
+                MessageBox.Show("Insufficient dialog models found in " + SessionVars.DialogsDirectory + " exiting.");
 
                 Environment.Exit(0);
             }
+
+
         }
 
         #endregion

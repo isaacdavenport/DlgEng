@@ -37,8 +37,7 @@ namespace DialogEngine
         public delegate void PrintMethod(string _message);
 
 
-
-        
+     
         #endregion
 
         public MainWindow()
@@ -73,8 +72,12 @@ namespace DialogEngine
 
         private PrintMethod getPrintMessageMethod()
         {
+            if (mainFrame.Content == null)
+            {
+                return null;
+            }
 
-            ViewModelBase _currentViewModel = (mainFrame.Content as Dialog).DataContext as ViewModelBase;
+            ViewModelBase _currentViewModel = (mainFrame.Content as PageBase).DataContext as ViewModelBase;
 
             if (_currentViewModel is DialogViewModel)
             {
@@ -82,8 +85,6 @@ namespace DialogEngine
             }
             else
             {
-
-                //todo 
                 return null;
             }
 

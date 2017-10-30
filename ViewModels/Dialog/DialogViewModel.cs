@@ -11,6 +11,8 @@ using System.Windows;
 using Newtonsoft.Json;
 using DialogEngine.Models.Dialog;
 using System.ComponentModel;
+using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace DialogEngine.ViewModels.Dialog
 {
@@ -25,7 +27,6 @@ namespace DialogEngine.ViewModels.Dialog
         #region -Private fields-
 
         private static DialogTracker msTheDialogs;
-
         private Views.Dialog.Dialog mView;
         private Random mRandom = new Random();
         private string mKeyboardInput;
@@ -33,12 +34,13 @@ namespace DialogEngine.ViewModels.Dialog
 
         #endregion
 
+
         #region - Public fields -
 
-
         #endregion
 
         #endregion
+
 
         #region - Constructor -
 
@@ -48,10 +50,10 @@ namespace DialogEngine.ViewModels.Dialog
 
             bindCommands();
 
-            //OnViewModelLoaded();
         }
 
         #endregion
+
 
         #region - Properties -
         /// <summary>
@@ -74,11 +76,24 @@ namespace DialogEngine.ViewModels.Dialog
 
                 // send notification to view (model is changed)
                 OnPropertyChanged("DialogCollection");
+
+                
+                (VisualTreeHelper.GetChild(mView.textOutput,0) as ScrollViewer).ScrollToBottom();
             }
 
         }
 
+
+        public DialogTracker TheDialogs
+        {
+            set
+            {
+                msTheDialogs = value;
+            }
+        }
+
         #endregion
+
 
         #region - Commands -
 
@@ -86,6 +101,7 @@ namespace DialogEngine.ViewModels.Dialog
 
 
         #endregion
+
 
         #region - Private methods -
 
@@ -147,22 +163,30 @@ namespace DialogEngine.ViewModels.Dialog
         }
 
 
+
         private void checkForMissingPhrases()
         {
             if (!SessionVars.AudioDialogsOn)
                 return;
 
+
             foreach (var _character in msTheDialogs.CharacterList)
             {
+
                 foreach (var _phrase in _character.Phrases)
                 {
+
+
                     if (!File.Exists(SessionVars.AudioDirectory 
                         + _character.CharacterPrefix + "_" 
                         +_phrase.FileName + ".mp3")) //Char name and prefix are being left blank...
                     {
+
                         var _debugMessage = "missing " + _character.CharacterPrefix + "_" + _phrase.FileName + ".mp3 " + _phrase.DialogStr;
 
                         AddDialogItem(_debugMessage);
+
+
 
                         if (SessionVars.WriteSerialLog)
                             using (var _jsonLog = new StreamWriter(SessionVars.LogsDirectory + SessionVars.DialogLogFileName, true))
@@ -170,6 +194,8 @@ namespace DialogEngine.ViewModels.Dialog
                                 _jsonLog.WriteLine("missing " + _character.CharacterPrefix + "_" + _phrase.FileName + ".mp3 " + _phrase.DialogStr);
                             }
                     }
+
+
                 }
 
 
@@ -192,10 +218,12 @@ namespace DialogEngine.ViewModels.Dialog
 
             AddDialogItem(string.Empty);
 
+
             foreach (var _dialog in msTheDialogs.ModelDialogs)
             {
 
                 AddDialogItem(" " + _dialogTracker.ModelDialogs.IndexOf(_dialog) + " : " + _dialog.Name);
+
 
                 if (SessionVars.WriteSerialLog)
                 {
@@ -204,6 +232,7 @@ namespace DialogEngine.ViewModels.Dialog
                         _jsonLog.WriteLine(" " + _dialogTracker.ModelDialogs.IndexOf(_dialog) + " : " + _dialog.Name);
                     }
                 }
+
 
             }
 
@@ -214,30 +243,41 @@ namespace DialogEngine.ViewModels.Dialog
 
             foreach (var _character in _dialogTracker.CharacterList)
             {
+
                 foreach (var _phrase in _character.Phrases)
                 {
+
                     foreach (var _phrasetag in _phrase.PhraseWeights.Keys)
                     {
+
                         _usedFlag = false;
+
 
                         foreach (var _dialog in _dialogTracker.ModelDialogs)
                         {
+
                             foreach (var _dialogtag in _dialog.PhraseTypeSequence)
                             {
+
                                 if (_phrasetag == _dialogtag)
                                 {
                                     _usedFlag = true;
                                     break;
                                 }
+
                             }
+
+
 
                             if (_usedFlag)
                                 break;
                         }
 
+
                         if (!_usedFlag)
                         {
                             AddDialogItem(" " + _phrasetag + " is not used.");
+
 
                             if (SessionVars.WriteSerialLog)
                             {
@@ -248,6 +288,7 @@ namespace DialogEngine.ViewModels.Dialog
                                 }
                             }
 
+
                         }
                     }
 
@@ -257,14 +298,19 @@ namespace DialogEngine.ViewModels.Dialog
 
             AddDialogItem("Check dialogs tags are used");
 
+
             foreach (var _dialog in _dialogTracker.ModelDialogs)
                 foreach (var _dialogtag in _dialog.PhraseTypeSequence) //each dialog model tag
                 {
+
                     _usedFlag = false;
+
                     foreach (var _character in _dialogTracker.CharacterList)
                     {
+
                         foreach (var _characterPhrase in _character.Phrases)
                         {
+
                             foreach (var _phraseTag in _characterPhrase.PhraseWeights.Keys) //each character phrase tag{
                             {
                                 if (_dialogtag == _phraseTag)
@@ -272,19 +318,26 @@ namespace DialogEngine.ViewModels.Dialog
                                     _usedFlag = true;
                                     break;
                                 }
+
                             }
+
 
                             if (_usedFlag)
                                 break;
+
                         }
+
 
                         if (_usedFlag)
                             break;
                     }
+
+
                     if (!_usedFlag)
                     {
 
                         AddDialogItem(" " + _dialogtag + " not used in " + _dialog.Name);
+
 
                         if (SessionVars.WriteSerialLog)
                         {
@@ -298,7 +351,9 @@ namespace DialogEngine.ViewModels.Dialog
                 }
         }
 
-        private void onViewModelLoaded()
+
+
+        public void OnViewModelLoaded()
         {
             DialogTracker _dialogTracker = DialogTracker.Instance;
 
@@ -308,10 +363,14 @@ namespace DialogEngine.ViewModels.Dialog
 
             InitModelDialogs.SetDefaults(DialogTracker.Instance);
 
+
+
             if (SessionVars.TagUsageCheck)
             {
                 checkTagsUsed(_dialogTracker);
             }
+
+
 
             if (SessionVars.DebugFlag)
             {
@@ -324,7 +383,9 @@ namespace DialogEngine.ViewModels.Dialog
                 {
                     AddDialogItem("   you may enter two characters initials to make them talk");
                 }
+
             }
+
 
             //Select Debug Output
             if (SessionVars.ForceCharactersAndDialogModel)
@@ -333,6 +394,7 @@ namespace DialogEngine.ViewModels.Dialog
 
                 AddDialogItem(string.Empty);
             }
+
 
             //vb: following part taken out of while(true) to check in input works and can be parsed
 
@@ -354,6 +416,7 @@ namespace DialogEngine.ViewModels.Dialog
                 //if keyboard input has three numbers for debug mode to force dialog model and characters
 
             }
+
 
             BackgroundWorker _worker = new BackgroundWorker();
 
@@ -417,10 +480,12 @@ namespace DialogEngine.ViewModels.Dialog
                             FirmwareDebuggingTools.PrintHeatMap();
                         }
 
+
                         if (SessionVars.HeatMapSumsMode)
                         {
                             FirmwareDebuggingTools.PrintHeatMapSums();
                         }
+
 
                         Thread.Sleep(400); //vb:commented out for debugging as code stops here
                     }
