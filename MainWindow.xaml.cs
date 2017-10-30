@@ -32,11 +32,6 @@ namespace DialogEngine
 
         private static readonly ILog mcLogger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-
-        //creating of delegate ( it is similar to pointer on function in C )
-        public delegate void PrintMethod(string _message);
-
-
      
         #endregion
 
@@ -53,44 +48,9 @@ namespace DialogEngine
         }
 
 
-        #region - Properties -
-
-        public PrintMethod CurrentPrintMethod
-        {
-            get
-            {
-                PrintMethod _printMethod = getPrintMessageMethod();
-
-                return _printMethod;
-            }
-        }
-
-        #endregion
 
 
-        #region -private methods-
 
-        private PrintMethod getPrintMessageMethod()
-        {
-            if (mainFrame.Content == null)
-            {
-                return null;
-            }
-
-            ViewModelBase _currentViewModel = (mainFrame.Content as PageBase).DataContext as ViewModelBase;
-
-            if (_currentViewModel is DialogViewModel)
-            {
-                return (_currentViewModel as DialogViewModel).AddDialogItem;
-            }
-            else
-            {
-                return null;
-            }
-
-        }
-
-        #endregion
 
 
 
