@@ -17,12 +17,20 @@ namespace DialogEngine
 
         private static DialogTracker msDialogTracker=DialogTracker.Instance;
 
-        private delegate void PrintMethod(string _message);
+        public delegate void PrintMethod(string _message);
 
-        private static PrintMethod msAddDialogItem =new PrintMethod(((MainWindow) Application.Current.MainWindow).CurrentPrintMethod);
- 
+        private static PrintMethod mcAddDialogItem;
 
         #endregion
+
+        #region - Properties -
+
+        public static PrintMethod AddDialogItem { get; set; }
+
+
+        #endregion
+
+
 
         #region - Static methods -
 
@@ -34,27 +42,27 @@ namespace DialogEngine
 
             for (_i = 0; _i < SerialComs.NumRadios; _i++)
             {
-                msAddDialogItem(SelectNextCharacters.CharactersLastHeatMapUpdateTime[_i].ToString("mm.ss.fff") + " ");
+                AddDialogItem(SelectNextCharacters.CharactersLastHeatMapUpdateTime[_i].ToString("mm.ss.fff") + " ");
 
             }
 
-            msAddDialogItem(string.Empty);
+            AddDialogItem(string.Empty);
 
             for (_l = 0; _l < SerialComs.NumRadios; _l++)
             {
                 for (_ = 0; _ < SerialComs.NumRadios; _++)
                 {
-                    msAddDialogItem("{0:D3}" + SelectNextCharacters.HeatMap[_l, _]);
+                    AddDialogItem("{0:D3}" + SelectNextCharacters.HeatMap[_l, _]);
 
-                    msAddDialogItem(" ");
+                    AddDialogItem(" ");
 
                 }
                 
-                msAddDialogItem(String.Empty);
+                AddDialogItem(String.Empty);
 
             }
 
-            msAddDialogItem("Character1-2Num " + msDialogTracker.CharacterList[msDialogTracker.Character1Num].CharacterPrefix
+            AddDialogItem("Character1-2Num " + msDialogTracker.CharacterList[msDialogTracker.Character1Num].CharacterPrefix
                               + " " + msDialogTracker.CharacterList[msDialogTracker.Character2Num].CharacterPrefix
                               + " RSSIsum " + "{0:D3}" + SelectNextCharacters.BigRssi + ", rssiStable = " + SelectNextCharacters.RssiStable);
 

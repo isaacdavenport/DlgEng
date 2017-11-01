@@ -168,44 +168,25 @@ namespace DialogEngine
                     {
                         //Here we try to change property of object which is created in main thread and we have to add code  to main thread's dispatcher object to do that
 
-                        if (Application.Current.Dispatcher.CheckAccess())
+
+                        AddDialogItem(CharacterList[_speakingCharacter].CharacterName);
+
+
+                        if (CharacterList[_speakingCharacter].PhraseTotals.PhraseWeights[_currentPhraseType] < 0.01f)
                         {
-                            AddDialogItem(CharacterList[_speakingCharacter].CharacterName);
-
-
-                            if (CharacterList[_speakingCharacter].PhraseTotals.PhraseWeights[_currentPhraseType] < 0.01f)
-                            {
-                                AddDialogItem("   Missing PhraseType: " + _currentPhraseType);
-                            }
-
-                            _selectedPhrase = PickAWeightedPhrase(_speakingCharacter, _currentPhraseType);
-
-                            if (SessionVars.TextDialogsOn)
-                            {
-                                AddDialogItem(_selectedPhrase.DialogStr);
-                            }
+                            AddDialogItem("   Missing PhraseType: " + _currentPhraseType);
                         }
-                        else
+
+
+                        _selectedPhrase = PickAWeightedPhrase(_speakingCharacter, _currentPhraseType);
+
+
+
+                        if (SessionVars.TextDialogsOn)
                         {
-                            Application.Current.Dispatcher.BeginInvoke(() =>
-                            {
-                                AddDialogItem(CharacterList[_speakingCharacter].CharacterName);
-
-
-                                if (CharacterList[_speakingCharacter].PhraseTotals.PhraseWeights[_currentPhraseType] <
-                                    0.01f)
-                                {
-                                    AddDialogItem(" Missing PhraseType: " + _currentPhraseType + "\r\n");
-                                }
-
-                                _selectedPhrase = PickAWeightedPhrase(_speakingCharacter, _currentPhraseType);
-
-                                if (SessionVars.TextDialogsOn)
-                                {
-                                    AddDialogItem(_selectedPhrase.DialogStr);
-                                }
-                            });
+                            AddDialogItem(_selectedPhrase.DialogStr);
                         }
+
 
 
                         addPhraseToHistory(_selectedPhrase, _speakingCharacter);
@@ -253,9 +234,9 @@ namespace DialogEngine
         /// <param name="_character2Num"></param>
         public void WriteDialogInfo(int _character1Num, int _character2Num)
         {
-            var _dialogModelString = "\r\n  --DiMod " + CurrentDialogModel + " " 
-                                     + ModelDialogs[CurrentDialogModel].Name 
-                                     + " NextChars: " + CharacterList[_character1Num].CharacterPrefix + " " 
+            var _dialogModelString = "\r\n  --DiMod " + CurrentDialogModel + " "
+                                     + ModelDialogs[CurrentDialogModel].Name
+                                     + " NextChars: " + CharacterList[_character1Num].CharacterPrefix + " "
                                      + CharacterList[_character2Num].CharacterPrefix + " " + DateTime.Now;
 
 
@@ -392,6 +373,8 @@ namespace DialogEngine
                                     _jsonLog.WriteLine(" Finish read of " + _deserializedCharacterJson.CharacterName);
                                 }
                             }
+
+
 
                             //Add to Char List
                             CharacterList.Add(_deserializedCharacterJson);

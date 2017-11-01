@@ -32,6 +32,7 @@ namespace DialogEngine
 
         private static readonly ILog mcLogger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
+
      
         #endregion
 
@@ -43,16 +44,10 @@ namespace DialogEngine
 
             InitializeComponent();
 
+            //set Dialog.xaml as default page
             mainFrame.Source=new Uri("Views/Dialog/Dialog.xaml", UriKind.Relative);
 
         }
-
-
-
-
-
-
-
 
 
     }

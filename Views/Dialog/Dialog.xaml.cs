@@ -37,6 +37,8 @@ namespace DialogEngine.Views.Dialog
 
             InitModelDialogs.AddDialogItem = new InitModelDialogs.PrintMethod(((this.DataContext as DialogViewModel).AddDialogItem));
 
+            FirmwareDebuggingTools.AddDialogItem = new FirmwareDebuggingTools.PrintMethod(((this.DataContext as DialogViewModel).AddDialogItem));
+
             (this.DataContext as DialogViewModel).TheDialogs=DialogTracker.Instance;
             ;
             (this.DataContext as DialogViewModel).OnViewModelLoaded();

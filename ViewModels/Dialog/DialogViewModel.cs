@@ -13,6 +13,7 @@ using DialogEngine.Models.Dialog;
 using System.ComponentModel;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Threading;
 
 namespace DialogEngine.ViewModels.Dialog
 {
@@ -78,7 +79,7 @@ namespace DialogEngine.ViewModels.Dialog
                 OnPropertyChanged("DialogCollection");
 
                 
-                (VisualTreeHelper.GetChild(mView.textOutput,0) as ScrollViewer).ScrollToBottom();
+                (VisualTreeHelper.GetChild(mView.textOutput,0) as ScrollViewer)?.ScrollToBottom();
             }
 
         }
