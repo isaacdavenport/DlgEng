@@ -10,36 +10,36 @@ namespace DialogEngine.Helpers
     /// <summary>
     /// 
     /// </summary>
-    public static class SessionVars
+    public static class SessionVariables
     {
 
-        public static readonly bool DebugFlag;
-        public static readonly bool TagUsageCheck;
-        public static readonly bool AudioDialogsOn;
-        public static readonly bool TextDialogsOn;
-        public static readonly bool ForceCharactersAndDialogModel;
-        public static readonly bool WaitIndefinatelyForMove;
-        public static readonly bool ShowDupePhrases;
-        public static readonly bool HeatMapFullMatrixDispMode;
-        public static readonly bool HeatMapSumsMode;
-        public static readonly bool HeatMapOnlyMode;
-        public static readonly bool WriteSerialLog;
-        public static readonly bool NoSerialPort;
-        public static readonly bool CheckStuckTransmissions;
-        public static readonly bool MonitorReceiveBufferSize;
-        public static readonly bool MonitorMessageParseFails;
-        public static readonly string CurrentParentalRating;
-        public static readonly string BaseDirectory;
-        public static readonly string LogsDirectory;
-        public static readonly string CharactersDirectory;
-        public static readonly string DialogsDirectory;
-        public static readonly string AudioDirectory;
-        public static readonly string DecimalLogFileName = "DecimalSerialLog.txt";
-        public static readonly string HexLogFileName = "HexSerialLog.txt";
-        public static readonly string DialogLogFileName = "LogDialog.txt";
-        public static readonly string ComPortName;
+        public static bool DebugFlag;
+        public static  bool TagUsageCheck;
+        public static  bool AudioDialogsOn;
+        public static  bool TextDialogsOn;
+        public static  bool ForceCharactersAndDialogModel;
+        public static  bool WaitIndefinatelyForMove;
+        public static  bool ShowDupePhrases;
+        public static  bool HeatMapFullMatrixDispMode;
+        public static  bool HeatMapSumsMode;
+        public static  bool HeatMapOnlyMode;
+        public static  bool WriteSerialLog;
+        public static  bool UseSerialPort;
+        public static  bool CheckStuckTransmissions;
+        public static  bool MonitorReceiveBufferSize;
+        public static  bool MonitorMessageParseFails;
+        public static  string CurrentParentalRating;
+        public static  string BaseDirectory;
+        public static  string LogsDirectory;
+        public static  string CharactersDirectory;
+        public static  string DialogsDirectory;
+        public static  string AudioDirectory;
+        public static  string DecimalLogFileName = "DecimalSerialLog.txt";
+        public static  string HexLogFileName = "HexSerialLog.txt";
+        public static  string DialogLogFileName = "LogDialog.txt";
+        public static  string ComPortName;
 
-        static SessionVars()
+        static SessionVariables()
         {
 
 
@@ -99,10 +99,10 @@ namespace DialogEngine.Helpers
             else
                 WriteSerialLog = false;
 
-            if (ConfigurationManager.AppSettings["NoSerialPort"] != null)
-                NoSerialPort = Convert.ToBoolean(AppSet.ReadSetting("NoSerialPort"));
+            if (ConfigurationManager.AppSettings["UseSerialPort"] != null)
+                UseSerialPort = Convert.ToBoolean(AppSet.ReadSetting("UseSerialPort"));
             else
-                NoSerialPort = true;
+                UseSerialPort = false;
 
             if (ConfigurationManager.AppSettings["CheckStuckTransmissions"] != null)
                 CheckStuckTransmissions = Convert.ToBoolean(AppSet.ReadSetting("CheckStuckTransmissions"));
@@ -186,7 +186,7 @@ namespace DialogEngine.Helpers
             }
 
 
-            if (ComPortName == null && !NoSerialPort)
+            if (ComPortName == null && UseSerialPort)
             {
                 Console.WriteLine("Valid ComPortName  not found in config file exiting.");
                 Console.ReadLine();

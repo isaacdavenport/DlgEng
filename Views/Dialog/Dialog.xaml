@@ -6,20 +6,18 @@
       xmlns:local="clr-namespace:DialogEngine.Views.Dialog"
       xmlns:core="clr-namespace:DialogEngine.Core"
       xmlns:dialog="clr-namespace:DialogEngine.ViewModels.Dialog"
+      xmlns:models="clr-namespace:DialogEngine.Models.Dialog"
+      xmlns:sys="clr-namespace:System;assembly=mscorlib"
       mc:Ignorable="d" 
       d:DesignHeight="300" d:DesignWidth="300"
       Title="Dialog">
 
     <Page.Resources>
-        
+
         <ResourceDictionary>
-            
             <ResourceDictionary.MergedDictionaries>
-                
                 <ResourceDictionary Source="/Themes/Generic.xaml"></ResourceDictionary>
-                
             </ResourceDictionary.MergedDictionaries>
-            
         </ResourceDictionary>
         
     </Page.Resources>
@@ -27,23 +25,224 @@
     <Grid>
 
         <Grid.RowDefinitions>
-            
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="0.5*"/>
-            
+            <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        
-        <ItemsControl x:Name="textOutput"
-                              ScrollViewer.VerticalScrollBarVisibility="Auto" 
-                              HorizontalContentAlignment="Stretch"  
-                              SnapsToDevicePixels="True" 
-                              Grid.Row="0"
-                              Margin="0,5"
-                              Background="White"
-                              VerticalAlignment="Stretch" 
-                              HorizontalAlignment="Stretch"  
-                              ItemsSource="{Binding DialogCollection}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition MinWidth="300" Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="2"></ColumnDefinition>
+            <ColumnDefinition Width="3*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Border CornerRadius="5" BorderBrush="LightGray" BorderThickness="1" Grid.Column="0" Grid.Row="0" Margin="17,17,17,17">
+
+            <Grid  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" >
+            <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Row="0" Grid.Column="0" Margin="5,5,10,5">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                        <Label FontSize="14" FontWeight="Bold" Content="Choose characters" Grid.Column="0" HorizontalAlignment="Center"></Label>
+
+                </Grid>
+
+                <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                    <Label Grid.Column="0" FontSize="14" HorizontalAlignment="Right"  Content="Character 1:"></Label>
+                        <ComboBox x:Name="Charachter1"  Grid.Column="1" SelectedIndex="{Binding Selected1CharacterIndex}" DisplayMemberPath="CharacterName" IsSynchronizedWithCurrentItem="True"  HorizontalAlignment="Stretch"  Margin="0,0,0,3"    ItemsSource="{Binding Character1Collection}"></ComboBox>
+
+                </Grid>
+
+                <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Grid.Column="0" FontSize="14" HorizontalAlignment="Right"  Content="Character 2:"></Label>
+                        <ComboBox x:Name="Charachter2"  Grid.Column="1" SelectedIndex="{Binding Selected2CharacterIndex}" DisplayMemberPath="CharacterName" IsSynchronizedWithCurrentItem="True" HorizontalAlignment="Stretch"  Margin="0,0,0,3"  ItemsSource="{Binding Character2Collection}"></ComboBox>
+
+                </Grid>
+
+                
+                
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Column="0" FontSize="14" HorizontalAlignment="Right" Content="Dialog model:"></Label>
+                        <ComboBox x:Name="DialogModel" Grid.Column="1"  IsSynchronizedWithCurrentItem="True"  HorizontalAlignment="Stretch" SelectedIndex="{Binding SelectedDialogModelIndex}" Margin="0,0,0,3"  ItemsSource="{Binding DialogModelCollection}"></ComboBox>
+
+                </Grid>
+
+                <Separator Margin="0,15,15,0" Background="White" />
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Label FontSize="14" FontWeight="Bold" Content="Character 1"  Grid.ColumnSpan="2" Margin="0,0,0,0" HorizontalAlignment="Center"></Label>
+
+                </Grid>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0" FontSize="14" HorizontalAlignment="Right"  Content="Character name:"></Label>
+                <TextBox Grid.Column="1" IsEnabled="False" Style="{StaticResource TextBoxStyle1}" Margin="0,0,0,3" Text="{Binding ElementName=Charachter1, Path=SelectedItem.CharacterName}"></TextBox>
+
+            </Grid>
+
+            <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0" FontSize="14"   HorizontalAlignment="Right" Content="Initials:"></Label>
+                <TextBox Grid.Column="1" IsEnabled="False" Style="{StaticResource TextBoxStyle1}" Margin="0,0,0,3" Text="{Binding ElementName=Charachter1, Path=SelectedItem.CharacterPrefix}"></TextBox>
+
+            </Grid>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Column="0" FontSize="14"  HorizontalAlignment="Right" Content="Number:"></Label>
+                    <TextBox Grid.Column="1" IsEnabled="False" Style="{StaticResource TextBoxStyle1}" Margin="0,0,0,3" Text="{Binding ElementName=Charachter1, Path=SelectedIndex}"></TextBox>
+
+                </Grid>
+
+
+                    <Separator Margin="0,15,15,0" Background="White" />
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <Label FontSize="14" FontWeight="Bold" Content="Character 2"  Grid.ColumnSpan="2" Margin="0,0,0,0" HorizontalAlignment="Center"></Label>
+
+                    </Grid>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Grid.Column="0" FontSize="14" HorizontalAlignment="Right"  Content="Character name:"></Label>
+                        <TextBox Grid.Column="1" IsEnabled="False" Style="{StaticResource TextBoxStyle1}" Margin="0,0,0,3" Text="{Binding ElementName=Charachter2, Path=SelectedItem.CharacterName}"></TextBox>
+
+                    </Grid>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Grid.Column="0" FontSize="14"  HorizontalAlignment="Right" Content="Initials:"></Label>
+                        <TextBox Grid.Column="1" IsEnabled="False" Style="{StaticResource TextBoxStyle1}" Margin="0,0,0,3" Text="{Binding ElementName=Charachter2, Path=SelectedItem.CharacterPrefix}"></TextBox>
+
+                    </Grid>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Grid.Column="0" FontSize="14"  HorizontalAlignment="Right" Content="Number:"></Label>
+                        <TextBox Grid.Column="1" IsEnabled="False"  Style="{StaticResource TextBoxStyle1}" Margin="0,0,0,3"  Text="{Binding ElementName=Charachter2, Path=SelectedIndex}"></TextBox>
+
+                    </Grid>
+
+                <Separator Margin="0,15,15,0" Background="White" />
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Content="Generate dialog" Style="{StaticResource btn-primary}" Command="{Binding GenerateDialog}" HorizontalAlignment="Center" Grid.Column="0"></Button>
+
+                </Grid>
+
+                </StackPanel>
+                
+        </Grid>
+
+        </Border>
+
+
+        <GridSplitter Grid.Column="1" Grid.Row="0" Width="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"></GridSplitter>
+
+        <ItemsControl             
+            x:Name="textOutput"
+            ScrollViewer.VerticalScrollBarVisibility="Auto" 
+            HorizontalContentAlignment="Stretch"  
+            SnapsToDevicePixels="True"
+            Grid.Column="2"
+            Grid.Row="0"
+            Margin="0,5,10,20"
+            Background="White"
+            VerticalAlignment="Stretch" 
+            HorizontalAlignment="Stretch"  
+            ItemsSource="{Binding DialogLinesCollection}">
+            
+            
+            <ItemsControl.Resources>
+
+                <DataTemplate DataType="{x:Type models:DialogItem }">
+                    <DockPanel HorizontalAlignment="Stretch" Margin="30,0,60,0">
+                        <Border Margin="3" CornerRadius="0 10 10 10" HorizontalAlignment="Left" Background="WhiteSmoke">
+                            <StackPanel>
+
+                                <TextBlock Padding="8" TextWrapping="Wrap" FontSize="16" Foreground="SkyBlue" Text="{Binding Path=Character.CharacterName }" Width="auto" HorizontalAlignment="Left"  />
+                                <TextBlock Padding="8" TextWrapping="Wrap" FontSize="16" Text="{Binding Path=PhraseEntry.DialogStr }" Width="auto" HorizontalAlignment="Left"  />
+
+                            </StackPanel>
+                        </Border>
+                    </DockPanel>
+
+                </DataTemplate>
+
+                <DataTemplate DataType="{x:Type sys:String }">
+                    <DockPanel HorizontalAlignment="Stretch" Margin="30,0,60,0">
+                        <Border Margin="3" CornerRadius="0 10 10 10" HorizontalAlignment="Left" Background="WhiteSmoke">
+                            <StackPanel>
+
+                                <TextBlock Padding="8" TextWrapping="Wrap" FontSize="16" Text="{Binding}" Width="auto" HorizontalAlignment="Left"  />
+                            </StackPanel>
+                        </Border>
+                    </DockPanel>
+
+                </DataTemplate>
+
+            </ItemsControl.Resources>
+            
             
             
             <ItemsControl.Template>
@@ -62,109 +261,10 @@
             </ItemsControl.ItemsPanel>
 
 
-            <ItemsControl.ItemTemplate>
-               
-
-                    <DataTemplate>
-                        <DockPanel HorizontalAlignment="Stretch" Margin="30,0,60,0">
-                            <Border Margin="3" CornerRadius="0 10 10 10" HorizontalAlignment="Left" Background="WhiteSmoke">
-                                <StackPanel>
-
-                                    <TextBlock Padding="8" TextWrapping="Wrap" FontSize="16" Text="{Binding}" Width="auto" HorizontalAlignment="Left"  />
-                                </StackPanel>
-                            </Border>
-                        </DockPanel>
-
-                    </DataTemplate>
-                
-            </ItemsControl.ItemTemplate>
-
-
         </ItemsControl>
 
-        
-        
-
-        <!--Writing Messages-->
-        <Border Grid.Row="1" 
-                        Background="White"
-                        CornerRadius="0,0,25,25">
-
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition  Width="*"/>
-                    <ColumnDefinition Width="auto"/>
-                </Grid.ColumnDefinitions>
-                
-                
-                
-                <TextBox 
-                                     HorizontalAlignment="Stretch"
-                                     BorderBrush="LightGray"
-                                     Height="50"
-                                     Margin="5,5,10,5"
-                                     BorderThickness="0"
-                                     TextWrapping="Wrap"
-                                     FontSize="16"
-                                     VerticalScrollBarVisibility="Auto"
-                                     VerticalAlignment="Stretch"                       
-                                     x:Name="messageTextBox">
-
-                </TextBox>
-
-                
-                <!-- Placeholder -->
-                
-                <TextBox IsHitTestVisible="False" BorderThickness="0" Margin="10,0" BorderBrush="White" FontSize="16"  Text="Enter message here . . ."  VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="LightGray"  TextWrapping="Wrap">
-                    
-                    <TextBox.Style>
-
-                        <Style TargetType="{x:Type TextBox}">
-                            
-                            <Setter Property="Visibility" Value="Collapsed"/>
-                            <Style.Triggers>
-
-                                <DataTrigger Binding="{Binding Text, ElementName=messageTextBox}" Value="">
-                                    
-                                    <Setter Property="Visibility" Value="Visible"/>
-                                    
-                                </DataTrigger>
-                                
-                            </Style.Triggers>
-                            
-                        </Style>
-                        
-                    </TextBox.Style>
-                    
-                    
-                </TextBox>
-
-                <!-- End of placehodler  -->
-                
-                
-                
-                <!-- Send message button  -->
-                
-                <Button
-                    
-                                    Grid.Column="1" 
-                                    Margin="5" 
-                                    HorizontalAlignment="Right" 
-                                    IsEnabled="{Binding ElementName=messageTextBox,Path=Text.Length}" 
-                                    Width="70" 
-                                    Height="70" 
-                                    Content="Send"
-                                    Padding="15"
-                                    Command="{Binding InputButtonClick}">
-                                    
-                </Button>
-                
-                <!-- End of send message button  -->
-                
-            </Grid>
-        </Border>
-
-
+       
     </Grid>
     
 </core:PageBase>
+

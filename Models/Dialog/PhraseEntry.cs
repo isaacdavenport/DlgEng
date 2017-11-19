@@ -11,7 +11,7 @@ namespace DialogEngine.Models.Dialog
         /// <summary>
         /// Represents content which charachter will say
         /// </summary>
-        public string DialogStr;
+        public string DialogStr { get; set; }
 
 
         /// <summary>

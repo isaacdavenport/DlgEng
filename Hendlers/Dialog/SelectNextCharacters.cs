@@ -138,7 +138,7 @@ namespace DialogEngine
 
             while (true)
             {
-                if (SessionVars.DebugFlag && Console.KeyAvailable)
+                if (SessionVariables.DebugFlag && Console.KeyAvailable)
                 {
 
                     var _userInput = Console.ReadLine();

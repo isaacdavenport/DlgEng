@@ -5,40 +5,121 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DialogEngine"
              WindowStartupLocation="CenterScreen"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
+             WindowState="Maximized"
+                  
              mc:Ignorable="d" 
              d:DesignHeight="451.32" Title="DialogEngine" Width="639.305">
     
     <Window.Resources>
-        <Style x:Key="MultiLineTB" TargetType="TextBox">
-            <Setter Property="Text" Value="{Binding Text, ElementName=tbMaster}"/>
-        </Style>
+  
     </Window.Resources>
     
    
-    <Grid x:Name="mainGrid">
+    <Grid x:Name="mainGrid" >
 
-        <DockPanel Margin="0,5,0,0">
-            <Menu DockPanel.Dock="Top">
-                <MenuItem Header="_Dialog">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        
+        
+            <Menu  FontSize="16" Grid.Row="0"  Margin="0,0,0,0" Background="White" >
+
+                <MenuItem Header="_File" Background="White" IsEnabled="False">
+
                 </MenuItem>
 
-                <MenuItem Header="_MP3Player">
+                <MenuItem Header="_View" Background="White">
+
+                    <MenuItem Header="_Dialog"  Click="_dialog_Click"></MenuItem>
+
+                    <MenuItem Header="_MP3Player"></MenuItem>
+
                 </MenuItem>
+
                 
+                <MenuItem Header="_Tools">
+                     <MenuItem Header="_Settings" Click="_settings_Click"></MenuItem>
+                </MenuItem>
+
+                <MenuItem Header="_Help">
+                    <MenuItem Header="_About Toys2Life" Click="_aboutDialogEngine_Click"></MenuItem>
+                </MenuItem>
+
             </Menu>
-        </DockPanel>
+
+        <!--Toolbar-->
+        <Border BorderBrush="LightGray" Grid.Row="1" BorderThickness="0 0 0 1" VerticalAlignment="Top">
+            <StackPanel Background="White" HorizontalAlignment="Stretch" Orientation="Horizontal" VerticalAlignment="Top" Height="40">
+
+                <Button BorderThickness="1" BorderBrush="LightGray" FontSize="12" Foreground="LightGray" Click="_dialog_Click" Background="White"  Margin="10,5,5,5" Width="30" Height="30" >
+                    <Button.Content>
+                        <fa:ImageAwesome Icon="Comments" />
+                    </Button.Content>
+                    <Button.ToolTip>
+                        <TextBlock Text="Dialog"></TextBlock>
+                    </Button.ToolTip>
+                </Button>
+
+                <Button BorderThickness="1" Margin="0,5,5,5" Background="White" Foreground="White"  Height="30" Width="30" BorderBrush="LightGray">
+                    <Button.Content>
+                        <fa:ImageAwesome Icon="Microphone" />
+                    </Button.Content>
+                    <Button.ToolTip>
+                       <TextBlock Text="MP3 Player"></TextBlock>
+                    </Button.ToolTip>
+                </Button>
+
+                <Separator BorderThickness="2"></Separator>
+
+                <Button BorderThickness="1" Foreground="Blue"  Margin="15,5,5,5" Click="_settings_Click"  Background="White" Height="30" Width="30"  BorderBrush="LightGray">
+                    <Button.Content>
+                        <fa:ImageAwesome Icon="Cogs"></fa:ImageAwesome> 
+                    </Button.Content>
+                    <Button.ToolTip>
+                        <TextBlock Text="Settings"></TextBlock>
+                    </Button.ToolTip>
+                </Button>
 
 
+            </StackPanel>
+        </Border>
+
+        <!-- Main frame -->
         <Frame x:Name="mainFrame"
                NavigationUIVisibility="Hidden"
-               Margin="0,25,0,0"
-               >
+               Margin="0,5,0,5"
+               Grid.Row="2"
+               HorizontalAlignment="Stretch"
+               VerticalAlignment="Stretch"
+               Background="White"
+               />
+                    
+        <!-- Statusbar -->
+        <StatusBar Grid.Row="3" HorizontalAlignment="Stretch" Background="White" Height="50" BorderBrush="LightGray" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderThickness="0,1,0,0">
+            <StatusBar.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ItemsPanelTemplate>
+            </StatusBar.ItemsPanel>
             
-            <Frame.Background>
-                LightGray
-            </Frame.Background>
-        </Frame>
-        
-        
+            
+            <StatusBarItem VerticalContentAlignment="Center" Grid.Column="2" HorizontalContentAlignment="Center">
+
+                <TextBlock  HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Run Text="Toys2Life" x:Name="StatusBarTextBox" Background="White" Foreground="Blue" FontSize="12"></Run>
+                </TextBlock>
+
+            </StatusBarItem>
+
+        </StatusBar>
+
     </Grid>
 </Window>

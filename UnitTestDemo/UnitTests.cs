@@ -71,7 +71,7 @@ namespace UnitTests
             {
                 foreach(PhraseEntry _dialog in _character.Phrases)
                 {
-                    Assert.IsTrue(_ratings[_dialog.PhraseRating] <= _ratings[SessionVars.CurrentParentalRating]);
+                    Assert.IsTrue(_ratings[_dialog.PhraseRating] <= _ratings[SessionVariables.CurrentParentalRating]);
                 }
             }
         }

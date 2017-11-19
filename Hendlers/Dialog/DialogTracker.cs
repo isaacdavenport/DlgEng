@@ -7,9 +7,11 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Windows;
+using System.Windows.Media;
 using System.Windows.Threading;
 using DialogEngine.Helpers;
 using DialogEngine.Models.Dialog;
+using log4net;
 using Newtonsoft.Json;
 
 // ReSharper disable ConditionIsAlwaysTrueOrFalse
@@ -22,6 +24,7 @@ namespace DialogEngine
         #region - Fields -
 
         #region - Private fields -
+        private static readonly ILog mcLogger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         private static DialogTracker msInstance = null;
         private static int msMovementWaitCount;
@@ -30,7 +33,7 @@ namespace DialogEngine
 
         private int mPriorCharacter1Num = 100;
         private int mPriorCharacter2Num = 100;
-        private int mUrrentDialogModel = 1;
+        private int mCurrentDialogModel = 1;
         private Random mRandom = new Random();
         private PrintMethod mAddDialogItem;
 
@@ -61,13 +64,21 @@ namespace DialogEngine
         public List<ModelDialog> ModelDialogs = new List<ModelDialog>();
         public Queue<int> RecentDialogs = new Queue<int>();
 
-        public delegate void PrintMethod(string _message);
+        public delegate void PrintMethod(Object  _message);
 
 
         #endregion
 
         #endregion
 
+        #region - Constructor- 
+
+        public DialogTracker()
+        {
+            
+        }
+
+        #endregion
 
         #region - Singleton -
 
@@ -146,12 +157,14 @@ namespace DialogEngine
             if (!importClosestSerialComsCharacters())
                 return;
 
+            processDebugFlags(_dialogDirectives);
+
+
             CurrentDialogModel = pickAWeightedDialog(Character1Num, Character2Num);
 
-            if (waitingForMovement() || SameCharactersAsLast && SessionVars.WaitIndefinatelyForMove)
+            if (waitingForMovement() || SameCharactersAsLast && SessionVariables.WaitIndefinatelyForMove)
                 return;
 
-            processDebugFlags(_dialogDirectives);
 
             addDialogModelToHistory(CurrentDialogModel, Character1Num, Character2Num);
 
@@ -161,20 +174,20 @@ namespace DialogEngine
             var _selectedPhrase = CharacterList[_speakingCharacter].Phrases[0]; //initialize to unused placeholder phrase
 
 
-            foreach (var _currentPhraseType in ModelDialogs[mUrrentDialogModel].PhraseTypeSequence)
+            foreach (var _currentPhraseType in ModelDialogs[mCurrentDialogModel].PhraseTypeSequence)
             {
                 if (CharacterList[_speakingCharacter].PhraseTotals.PhraseWeights.ContainsKey(_currentPhraseType))
-                    if (SessionVars.TextDialogsOn)
+                    if (SessionVariables.TextDialogsOn)
                     {
                         //Here we try to change property of object which is created in main thread and we have to add code  to main thread's dispatcher object to do that
 
 
-                        AddDialogItem(CharacterList[_speakingCharacter].CharacterName);
+                        //AddDialogItem(CharacterList[_speakingCharacter]);
 
 
                         if (CharacterList[_speakingCharacter].PhraseTotals.PhraseWeights[_currentPhraseType] < 0.01f)
                         {
-                            AddDialogItem("   Missing PhraseType: " + _currentPhraseType);
+                            WriteStatusBarInfo("   Missing PhraseType: " + _currentPhraseType,Brushes.Orange);
                         }
 
 
@@ -182,22 +195,23 @@ namespace DialogEngine
 
 
 
-                        if (SessionVars.TextDialogsOn)
-                        {
-                            AddDialogItem(_selectedPhrase.DialogStr);
-                        }
+                        //if (SessionVariables.TextDialogsOn)
+                        //{
+                        //    AddDialogItem(_selectedPhrase.DialogStr);
+                        //}
 
+                        AddDialogItem(new DialogItem(CharacterList[_speakingCharacter],_selectedPhrase));
 
 
                         addPhraseToHistory(_selectedPhrase, _speakingCharacter);
 
-                        var _pathAndFileName =  SessionVars.AudioDirectory 
+                        var _pathAndFileName =  SessionVariables.AudioDirectory 
                                                 + CharacterList[_speakingCharacter].CharacterPrefix 
                                                 + "_" + _selectedPhrase.FileName + ".mp3";
 
                         playAudio(_pathAndFileName); // vb: code stops here so commented out for debugging purpose
 
-                        if (   !SessionVars.ForceCharactersAndDialogModel 
+                        if (   !SessionVariables.ForceCharactersAndDialogModel 
                             && !DialogTrackerAndSerialComsCharactersSame())
                         {
                             SameCharactersAsLast = false;
@@ -240,11 +254,13 @@ namespace DialogEngine
                                      + CharacterList[_character2Num].CharacterPrefix + " " + DateTime.Now;
 
 
-            var _result = MessageBox.Show(_dialogModelString);
+            WriteStatusBarInfo(_dialogModelString,Brushes.Black);
 
-            if (SessionVars.WriteSerialLog)
+            //var _result = MessageBox.Show(_dialogModelString);
+
+            if (SessionVariables.WriteSerialLog)
             {
-                using (var _serialLogDialogModels = new StreamWriter(SessionVars.LogsDirectory + SessionVars.DialogLogFileName, true))
+                using (var _serialLogDialogModels = new StreamWriter(SessionVariables.LogsDirectory + SessionVariables.DialogLogFileName, true))
                 {
                     _serialLogDialogModels.WriteLine(_dialogModelString);
                     _serialLogDialogModels.Close();
@@ -270,11 +286,11 @@ namespace DialogEngine
 
         public void IntakeCharacters()
         {
-            var _d = new DirectoryInfo(SessionVars.CharactersDirectory);
+            var _d = new DirectoryInfo(SessionVariables.CharactersDirectory);
 
-            string _characterJsonMessage = "Character JSON in: " + SessionVars.CharactersDirectory;
+            string _characterJsonMessage = "Character JSON in: " + SessionVariables.CharactersDirectory;
 
-            AddDialogItem(_characterJsonMessage);
+            WriteStatusBarInfo(_characterJsonMessage,Brushes.Black);
 
 
 
@@ -284,13 +300,13 @@ namespace DialogEngine
 
                 string _beginReadMessage = " Begin read of " + _file.Name;
 
-                AddDialogItem(_beginReadMessage);
+                //WriteStatusBarInfo(_beginReadMessage,Brushes.Black);
 
 
 
-                if (SessionVars.WriteSerialLog)
+                if (SessionVariables.WriteSerialLog)
                 {
-                    using (var _jsonLog = new StreamWriter(SessionVars.LogsDirectory + SessionVars.DialogLogFileName, true))
+                    using (var _jsonLog = new StreamWriter(SessionVariables.LogsDirectory + SessionVariables.DialogLogFileName, true))
                     {
                         _jsonLog.WriteLine(" Begin read of " + _file.Name);
                     }
@@ -362,13 +378,13 @@ namespace DialogEngine
 
                             string _finishReadMessage = " Finish read of " + _deserializedCharacterJson.CharacterName;
 
-                            AddDialogItem(_finishReadMessage);
+                            //WriteStatusBarInfo(_finishReadMessage,Brushes.Black);
 
 
 
-                            if (SessionVars.WriteSerialLog)
+                            if (SessionVariables.WriteSerialLog)
                             {
-                                using (var _jsonLog = new StreamWriter(SessionVars.LogsDirectory + SessionVars.DialogLogFileName, true))
+                                using (var _jsonLog = new StreamWriter(SessionVariables.LogsDirectory + SessionVariables.DialogLogFileName, true))
                                 {
                                     _jsonLog.WriteLine(" Finish read of " + _deserializedCharacterJson.CharacterName);
                                 }
@@ -385,36 +401,34 @@ namespace DialogEngine
                         {
                             string _errorReadingMessage = "Error reading " + _file.Name;
 
-                            AddDialogItem(_errorReadingMessage);
+                            WriteStatusBarInfo(_errorReadingMessage,Brushes.Red);
 
 
                             string _jsonParseErrorMessage = "JSON Parse error at " + _e.LineNumber + ", " + _e.LinePosition;
 
-                            AddDialogItem(_jsonParseErrorMessage);
+                            mcLogger.Error(_jsonParseErrorMessage);
                         }
                     }
                 }
                 catch (UnauthorizedAccessException _e)
                 {
-                    AddDialogItem(_e.Message);
+                    mcLogger.Error(_e.Message);
 
-                    AddDialogItem("Unauthorized access exception while reading: " + _file.FullName);
+                    WriteStatusBarInfo("Unauthorized access exception while reading: " + _file.FullName,Brushes.Red);
 
-                    AddDialogItem("Check the Character JSON path in your config file");
                 }
                 catch (DirectoryNotFoundException _e)
                 {
-                    AddDialogItem(_e.Message);
+                    mcLogger.Error(_e.Message);
 
-                    AddDialogItem("Directory not found exception while reading: " + _file.FullName);
+                    WriteStatusBarInfo("Directory not found exception while reading: " + _file.FullName,Brushes.Red);
 
-                    AddDialogItem("check the Character JSON path in your config file");
                 }
                 catch (OutOfMemoryException _e)
                 {
-                    AddDialogItem(_e.Message);
+                    mcLogger.Error(_e.Message);
 
-                    AddDialogItem("You probably need to restart your computer...");
+                    WriteStatusBarInfo("You probably need to restart your computer...",Brushes.Red);
                 }
             }
 
@@ -422,11 +436,10 @@ namespace DialogEngine
             if (CharacterList.Count < 2)
             {
                 string _errorMessage = "Insufficient readable character json files found in " 
-                                       + SessionVars.CharactersDirectory + " .  Exiting.";
+                                       + SessionVariables.CharactersDirectory + " .  Exiting.";
 
-                AddDialogItem(_errorMessage);
+                MessageBox.Show(_errorMessage);
 
-                Environment.Exit(0);
             }
 
 
@@ -437,7 +450,6 @@ namespace DialogEngine
             }
 
 
-            AddDialogItem(string.Empty);
         }
 
 
@@ -445,9 +457,9 @@ namespace DialogEngine
         //    {
         //        ((MainWindow) Application.Current.MainWindow).TestOutput.Text +=
         //            "  Insufficient readable character json files found in "
-        //            + SessionVars.CharactersDirectory + " .  Exiting." + Environment.NewLine;
+        //            + SessionVariables.CharactersDirectory + " .  Exiting." + Environment.NewLine;
         //        //Console.WriteLine("  Insufficient readable character json files found in "
-        //        //    + SessionVars.CharactersDirectory + " .  Exiting.");
+        //        //    + SessionVariables.CharactersDirectory + " .  Exiting.");
         //        //Console.ReadLine();
         //        Environment.Exit(0);
         //    }
@@ -516,17 +528,9 @@ namespace DialogEngine
                     if (_recentPhraseQueueEntry == _selectedPhrase)
                     {
                         _phraseIsDuplicate = true; //send through retry loop k again
-                        if (SessionVars.ShowDupePhrases)
+                        if (SessionVariables.ShowDupePhrases)
                         {
-                            if (Application.Current.Dispatcher.CheckAccess())
-                            {
-                                AddDialogItem("Duplicate [" + _selectedPhrase.DialogStr + "]");
-                            }
-                            else
-                                Application.Current.Dispatcher.BeginInvoke(() =>
-                                {
-                                    AddDialogItem("Duplicate [" + _selectedPhrase.DialogStr + "]");
-                                });
+                                AddDialogItem("Duplicate [" + _selectedPhrase.DialogStr + "]");                             
                         }
 
                         break; // doesn't matter if duplicated more than once
@@ -554,7 +558,7 @@ namespace DialogEngine
         /// <param name="_inCharacter"></param>
         private static void removePhrasesOverParentalRating(Character _inCharacter)
         {
-            var _maxParentalRating = ParentalRatings.GetNumeric(SessionVars.CurrentParentalRating);
+            var _maxParentalRating = ParentalRatings.GetNumeric(SessionVariables.CurrentParentalRating);
             var _minParentalRating = ParentalRatings.GetNumeric("G");
 
 
@@ -566,7 +570,7 @@ namespace DialogEngine
 
         private void playAudio(string _pathAndFileName)
         {
-            if (!SessionVars.AudioDialogsOn)
+            if (!SessionVariables.AudioDialogsOn)
             {
                 Thread.Sleep(2200);
                 return;
@@ -579,10 +583,8 @@ namespace DialogEngine
 
                 if (_playSuccess != 0)
                 {
-                    AddDialogItem("   MP3 Play Error  ---  " + _playSuccess);
+                    WriteStatusBarInfo("   MP3 Play Error  ---  " + _playSuccess,Brushes.Red);
 
-                    AddDialogItem(string.Empty);
-                    AddDialogItem(String.Empty);
                 }
 
 
@@ -600,7 +602,7 @@ namespace DialogEngine
             }
             else
             {
-                AddDialogItem("Could not find: " + _pathAndFileName + Environment.NewLine);
+                WriteStatusBarInfo("Could not find: " + _pathAndFileName,Brushes.Red);
             }
         }
 
@@ -658,8 +660,8 @@ namespace DialogEngine
             {
                 if (_recentDialogQueueEntry == _dialogModel)
                 {
-                    if (SessionVars.ShowDupePhrases)
-                        Console.WriteLine("Duplicate Dialog [" + _dialogModel + "]");
+                    if (SessionVariables.ShowDupePhrases)
+                        WriteStatusBarInfo("Duplicate Dialog [" + _dialogModel + "]",Brushes.Orange);
 
                     return true;
                 }
@@ -806,9 +808,9 @@ namespace DialogEngine
                 StartedTime = DateTime.Now
             });
 
-            if (SessionVars.WriteSerialLog)
+            if (SessionVariables.WriteSerialLog)
                 using (var _serialLogDialogLines = new StreamWriter(
-                    SessionVars.LogsDirectory + SessionVars.DialogLogFileName, true))
+                    SessionVariables.LogsDirectory + SessionVariables.DialogLogFileName, true))
                 {
                     _serialLogDialogLines.WriteLine(CharacterList[_speakingCharacter].CharacterName + ": " +
                                                    _selectedPhrase.DialogStr);
@@ -924,15 +926,15 @@ namespace DialogEngine
                     Character2Num = _dialogDirectives[2];
             }
 
-            if (SessionVars.DebugFlag)
+            if (SessionVariables.DebugFlag)
                 WriteDialogInfo(Character1Num, Character2Num);
 
 
-            if (SessionVars.HeatMapFullMatrixDispMode)
+            if (SessionVariables.HeatMapFullMatrixDispMode)
                 FirmwareDebuggingTools.PrintHeatMap();
 
 
-            if (SessionVars.HeatMapSumsMode)
+            if (SessionVariables.HeatMapSumsMode)
                 FirmwareDebuggingTools.PrintHeatMapSums();
         }
 
@@ -941,7 +943,7 @@ namespace DialogEngine
 
         private bool waitingForMovement()
         {
-            if (LastPhraseImpliedMovement && SameCharactersAsLast && !SessionVars.NoSerialPort)
+            if (LastPhraseImpliedMovement && SameCharactersAsLast && SessionVariables.UseSerialPort)
             {
                 Thread.Sleep(mRandom.Next(0, 3000));
                 msMovementWaitCount++;
@@ -951,24 +953,14 @@ namespace DialogEngine
                 {
                     var _ch1RetreatPhrase = PickAWeightedPhrase(Character1Num, "Retreat");
 
+                    AddDialogItem("Wait3");
 
-                    //if we can reach object created by main thread we don't need to queue our code to dispatcher object of main thread
-                    if (Application.Current.Dispatcher.CheckAccess())
-                    {
-                    }
-                    else
-                    {
-                        Application.Current.Dispatcher.BeginInvoke(() =>
-                        {
-                            AddDialogItem(CharacterList[Character1Num].CharacterName + " Wait3 : ");
-
-                            AddDialogItem(_ch1RetreatPhrase.DialogStr);
-                        });
-                    }
+                    AddDialogItem(new DialogItem(CharacterList[Character1Num],_ch1RetreatPhrase));
 
 
-                    playAudio(SessionVars.AudioDirectory + CharacterList[Character1Num].CharacterPrefix +
+                    playAudio(SessionVariables.AudioDirectory + CharacterList[Character1Num].CharacterPrefix +
                               "_" + _ch1RetreatPhrase.FileName + ".mp3");
+
                     return true;
                 }
 
@@ -979,11 +971,11 @@ namespace DialogEngine
 
                     var _ch2RetreatPhrase = PickAWeightedPhrase(Character2Num, "Retreat");
 
-                    Console.Write(CharacterList[Character2Num].CharacterName + " Wait5 : ");
-                    Console.WriteLine(_ch2RetreatPhrase.DialogStr);
+                    AddDialogItem("Wait5");
 
+                    AddDialogItem(new DialogItem(CharacterList[Character2Num], _ch2RetreatPhrase));
 
-                    playAudio( SessionVars.AudioDirectory 
+                    playAudio( SessionVariables.AudioDirectory 
                                + CharacterList[Character2Num].CharacterPrefix 
                                + "_" + _ch2RetreatPhrase.FileName + ".mp3");
 
@@ -1031,6 +1023,38 @@ namespace DialogEngine
             }
 
             return false;
+        }
+
+
+        public void WriteStatusBarInfo(string _infoMessage,Brush _infoColor)
+        {
+            if (Application.Current.Dispatcher.CheckAccess())
+            {
+                try
+                {
+                    (Application.Current.MainWindow as MainWindow).WriteStatusInfo(_infoMessage, _infoColor);
+
+                }
+                catch (Exception e)
+                {
+                    mcLogger.Error(e.Message);
+                }
+            }
+            else
+            {
+                Application.Current.Dispatcher.BeginInvoke((Action)(() =>
+                {
+                    try
+                    {
+                        (Application.Current.MainWindow as MainWindow).WriteStatusInfo(_infoMessage, _infoColor);
+
+                    }
+                    catch (Exception e)
+                    {
+                        mcLogger.Error(e.Message);
+                    }
+                }));
+            }
         }
 
         #endregion

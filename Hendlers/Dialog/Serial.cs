@@ -41,9 +41,9 @@ namespace DialogEngine
 
                         Console.WriteLine("serial buffer over run.");
                     }
-                    if (SessionVars.WriteSerialLog)
+                    if (SessionVariables.WriteSerialLog)
                     {
-                        using (StreamWriter _serialLog = new StreamWriter(SessionVars.LogsDirectory + SessionVars.HexLogFileName, true))
+                        using (StreamWriter _serialLog = new StreamWriter(SessionVariables.LogsDirectory + SessionVariables.HexLogFileName, true))
                         {
                             _serialLog.Write(DateTime.Now.ToString("mm.ss.fff") + "  ");
                             _serialLog.Write(_message);
@@ -71,14 +71,14 @@ namespace DialogEngine
         public static void InitSerial()
 
         {
-            if (!SessionVars.NoSerialPort)
+            if (SessionVariables.UseSerialPort)
 
             {
                 msSerialPort = new SerialPort();
 
                 Thread _readThread = new Thread(RegularylyReadSerial);
 
-                msSerialPort.PortName = SessionVars.ComPortName;
+                msSerialPort.PortName = SessionVariables.ComPortName;
 
                 msSerialPort.BaudRate = 460800;
 

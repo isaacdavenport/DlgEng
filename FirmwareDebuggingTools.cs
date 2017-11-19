@@ -46,7 +46,6 @@ namespace DialogEngine
 
             }
 
-            AddDialogItem(string.Empty);
 
             for (_l = 0; _l < SerialComs.NumRadios; _l++)
             {
@@ -54,21 +53,14 @@ namespace DialogEngine
                 {
                     AddDialogItem("{0:D3}" + SelectNextCharacters.HeatMap[_l, _]);
 
-                    AddDialogItem(" ");
-
                 }
                 
-                AddDialogItem(String.Empty);
-
             }
 
             AddDialogItem("Character1-2Num " + msDialogTracker.CharacterList[msDialogTracker.Character1Num].CharacterPrefix
                               + " " + msDialogTracker.CharacterList[msDialogTracker.Character2Num].CharacterPrefix
                               + " RSSIsum " + "{0:D3}" + SelectNextCharacters.BigRssi + ", rssiStable = " + SelectNextCharacters.RssiStable);
 
-
-            //((MainWindow)Application.Current.MainWindow).TestOutput.Text += "" + Environment.NewLine;
-            //Console.WriteLine("");
         }
 
 
@@ -182,19 +174,19 @@ namespace DialogEngine
         {
             TimeSpan _lenOfBuffer;
 
-            if (SessionVars.HeatMapSumsMode && !SessionVars.HeatMapOnlyMode)
+            if (SessionVariables.HeatMapSumsMode && !SessionVariables.HeatMapOnlyMode)
             {
                 PrintHeatMapSums();
             }
-            if (SessionVars.HeatMapFullMatrixDispMode && !SessionVars.HeatMapOnlyMode)
+            if (SessionVariables.HeatMapFullMatrixDispMode && !SessionVariables.HeatMapOnlyMode)
             {
                 PrintHeatMap(); 
             }
-            if (SessionVars.CheckStuckTransmissions && !SessionVars.HeatMapOnlyMode)
+            if (SessionVariables.CheckStuckTransmissions && !SessionVariables.HeatMapOnlyMode)
             {
                 CheckStuckTransmissions();
             }
-            if (SessionVars.MonitorReceiveBufferSize && !SessionVars.HeatMapOnlyMode)
+            if (SessionVariables.MonitorReceiveBufferSize && !SessionVariables.HeatMapOnlyMode)
             {
                 _lenOfBuffer = ParseMessage.ReceivedMessages.Last().ReceivedTime - ParseMessage.ReceivedMessages[0].ReceivedTime;
                 Console.WriteLine("RecBuffCnt = " + ParseMessage.ReceivedMessages.Count +

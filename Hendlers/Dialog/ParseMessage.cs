@@ -48,9 +48,9 @@ namespace DialogEngine
                 ReceivedMessages.Last().Rssi[_i] = _rw[_i];
             }
 
-            if (SessionVars.WriteSerialLog)
+            if (SessionVariables.WriteSerialLog)
             {
-                using (StreamWriter _serialLogDecimal = new StreamWriter((SessionVars.LogsDirectory + SessionVars.DecimalLogFileName), true))
+                using (StreamWriter _serialLogDecimal = new StreamWriter((SessionVariables.LogsDirectory + SessionVariables.DecimalLogFileName), true))
                 {
                     _serialLogDecimal.Write(ReceivedMessages[ReceivedMessages.Count - 1].CharacterPrefix + "  ");
                     _serialLogDecimal.Write(ReceivedMessages[ReceivedMessages.Count - 1].ReceivedTime.ToString("mm.ss.fff") + "  ");
@@ -125,7 +125,7 @@ namespace DialogEngine
                 _rssiRow[SerialComs.NumRadios] = int.Parse(_message.Substring(SerialComs.NumRadios * 2 + 4, 2), System.Globalization.NumberStyles.HexNumber);
 
             }
-            if (_rowNumber == -1 && SessionVars.MonitorMessageParseFails) Console.WriteLine("Failed to parse message.");
+            if (_rowNumber == -1 && SessionVariables.MonitorMessageParseFails) Console.WriteLine("Failed to parse message.");
 
             return _rowNumber;
         }
