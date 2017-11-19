@@ -39,8 +39,6 @@ namespace DialogEngine
 
         #endregion
 
-        
-
         #region - constructor -
         public MainWindow()
         {
@@ -54,7 +52,6 @@ namespace DialogEngine
         }
 
         #endregion
-
 
         #region - private methods -
 
