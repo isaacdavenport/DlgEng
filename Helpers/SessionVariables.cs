@@ -7,9 +7,7 @@ using System.IO;
 
 namespace DialogEngine.Helpers
 {
-    /// <summary>
-    /// 
-    /// </summary>
+
     public static class SessionVariables
     {
 

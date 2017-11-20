@@ -386,6 +386,7 @@ namespace DialogEngine.ViewModels.Dialog
                         }
                         catch (Exception ex)
                         {
+                            mcLogger.Error(ex.Message);
                         }
                     }
                 }

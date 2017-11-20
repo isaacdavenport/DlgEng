@@ -36,6 +36,8 @@ namespace DialogEngine
             InitializeComponent();
 
             mainFrame.Source = new Uri("Views/Dialog/Dialog.xaml", UriKind.Relative);
+
+            
         }
 
         #endregion

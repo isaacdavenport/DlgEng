@@ -108,8 +108,6 @@ namespace DialogEngine
 
         public static void CheckStuckTransmissions()
         {
-
-
             // step through recent messages to ensure all characters are still transmitting 
             // and transmitting unique messages (for debug of no-new-data FW bug)
             // each character is "OK " STUCK "STK" or "MIA" missing in action
