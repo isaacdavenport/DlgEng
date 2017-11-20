@@ -13,22 +13,156 @@ namespace DialogEngine.Helpers
     public static class SessionVariables
     {
 
-        public static bool DebugFlag;
-        public static  bool TagUsageCheck;
-        public static  bool AudioDialogsOn;
-        public static  bool TextDialogsOn;
-        public static  bool ForceCharactersAndDialogModel;
-        public static  bool WaitIndefinatelyForMove;
+        public static bool DebugFlag
+        {
+            get
+            {
+                bool result=false;
+                //Verify the flags and strings in the app settings config file
+                if (ConfigurationManager.AppSettings["DebugFlag"] != null)
+                    result = Convert.ToBoolean(AppSet.ReadSetting("DebugFlag"));
+
+                return result;
+            }
+
+        }
+        public static bool TagUsageCheck
+        {
+            get
+            {
+                bool result = false;
+
+                if (ConfigurationManager.AppSettings["TagUsageCheck"] != null)
+                    result = Convert.ToBoolean(AppSet.ReadSetting("TagUsageCheck"));
+
+                return result;
+            }
+        }
+
+        public static  bool AudioDialogsOn
+        {
+            get
+            {
+                bool result = false;
+
+                if (ConfigurationManager.AppSettings["AudioDialogsOn"] != null)
+                    result = Convert.ToBoolean(AppSet.ReadSetting("AudioDialogsOn"));
+
+                return result;
+            }
+        }
+        public static  bool TextDialogsOn
+        {
+            get
+            {
+                bool result=false;
+
+                if (ConfigurationManager.AppSettings["TextDialogsOn"] != null)
+                    result = Convert.ToBoolean(AppSet.ReadSetting("TextDialogsOn"));
+
+                return result;
+            }
+        }
+        public static bool ForceCharactersAndDialogModel
+        {
+            get
+            {
+                bool result = false;
+
+                if (ConfigurationManager.AppSettings["ForceCharactersAndDialogModel"] != null)
+                    result = Convert.ToBoolean(AppSet.ReadSetting("ForceCharactersAndDialogModel"));
+
+                return result;
+            }
+        }
+        public static  bool WaitIndefinatelyForMove
+        {
+            get
+            {
+                bool result=false;
+
+                if (ConfigurationManager.AppSettings["WaitIndefinatelyForMove"] != null)
+                    result = Convert.ToBoolean(AppSet.ReadSetting("WaitIndefinatelyForMove"));
+
+                return result;
+            }
+        }
+
+        public static bool WriteSerialLog
+        {
+            get
+            {
+                bool result = false;
+
+                if (ConfigurationManager.AppSettings["WriteSerialLog"] != null)
+                    result = Convert.ToBoolean(AppSet.ReadSetting("WriteSerialLog"));
+
+                return result;
+
+            }
+        }
+
+        public static bool HeatMapFullMatrixDispMode
+        {
+            get
+            {
+                bool result = false;
+
+                if (ConfigurationManager.AppSettings["HeatMapFullMatrixDispMode"] != null)
+                    result = Convert.ToBoolean(AppSet.ReadSetting("HeatMapFullMatrixDispMode"));
+
+                return result;
+            }
+        }
+
+        public static bool UseSerialPort
+        {
+            get
+            {
+                bool result = false;
+
+                if (ConfigurationManager.AppSettings["UseSerialPort"] != null)
+                    result = Convert.ToBoolean(AppSet.ReadSetting("UseSerialPort"));
+
+                return result;
+            }
+        }
+
+        public static string CurrentParentalRating
+        {
+            get
+            {
+                string result = "PG";
+
+                if (ConfigurationManager.AppSettings["CurrentParentalRating"] != null)
+                    result = AppSet.ReadSetting("CurrentParentalRating");
+
+                return result;
+            }
+        }
+
+        public static string ComPortName
+        {
+            get
+            {
+                string result=string.Empty;
+
+                if (ConfigurationManager.AppSettings["ComPortName"] != null)
+                {
+                  result   = AppSet.ReadSetting("ComPortName");
+                }
+
+                return result;
+            }
+        }
+
+
         public static  bool ShowDupePhrases;
-        public static  bool HeatMapFullMatrixDispMode;
         public static  bool HeatMapSumsMode;
         public static  bool HeatMapOnlyMode;
-        public static  bool WriteSerialLog;
-        public static  bool UseSerialPort;
         public static  bool CheckStuckTransmissions;
         public static  bool MonitorReceiveBufferSize;
         public static  bool MonitorMessageParseFails;
-        public static  string CurrentParentalRating;
         public static  string BaseDirectory;
         public static  string LogsDirectory;
         public static  string CharactersDirectory;
@@ -37,52 +171,15 @@ namespace DialogEngine.Helpers
         public static  string DecimalLogFileName = "DecimalSerialLog.txt";
         public static  string HexLogFileName = "HexSerialLog.txt";
         public static  string DialogLogFileName = "LogDialog.txt";
-        public static  string ComPortName;
 
         static SessionVariables()
         {
-
-
-            //Verify the flags and strings in the app settings config file
-            if (ConfigurationManager.AppSettings["DebugFlag"] != null) 
-                DebugFlag = Convert.ToBoolean(AppSet.ReadSetting("DebugFlag"));
-            else 
-                DebugFlag = false;
-
-            if (ConfigurationManager.AppSettings["TagUsageCheck"] != null)
-                TagUsageCheck = Convert.ToBoolean(AppSet.ReadSetting("TagUsageCheck"));
-            else
-                TagUsageCheck = false;
-
-            if (ConfigurationManager.AppSettings["AudioDialogsOn"] != null)
-                AudioDialogsOn = Convert.ToBoolean(AppSet.ReadSetting("AudioDialogsOn"));
-            else
-                AudioDialogsOn = false;
-
-            if (ConfigurationManager.AppSettings["TextDialogsOn"] != null)
-                TextDialogsOn = Convert.ToBoolean(AppSet.ReadSetting("TextDialogsOn"));
-            else
-                TextDialogsOn = true;
-
-            if (ConfigurationManager.AppSettings["ForceCharactersAndDialogModel"] != null)
-                ForceCharactersAndDialogModel = Convert.ToBoolean(AppSet.ReadSetting("ForceCharactersAndDialogModel"));
-            else
-                ForceCharactersAndDialogModel = false;
-
-            if (ConfigurationManager.AppSettings["WaitIndefinatelyForMove"] != null)
-                WaitIndefinatelyForMove = Convert.ToBoolean(AppSet.ReadSetting("WaitIndefinatelyForMove"));
-            else
-                WaitIndefinatelyForMove = false;
 
             if (ConfigurationManager.AppSettings["ShowDupePhrases"] != null)
                 ShowDupePhrases = Convert.ToBoolean(AppSet.ReadSetting("ShowDupePhrases"));
             else
                 ShowDupePhrases = false;
 
-            if (ConfigurationManager.AppSettings["HeatMapFullMatrixDispMode"] != null)
-                HeatMapFullMatrixDispMode = Convert.ToBoolean(AppSet.ReadSetting("HeatMapFullMatrixDispMode"));
-            else
-                HeatMapFullMatrixDispMode = false;
 
             if (ConfigurationManager.AppSettings["HeatMapSumsMode"] != null)
                 HeatMapSumsMode = Convert.ToBoolean(AppSet.ReadSetting("HeatMapSumsMode"));
@@ -94,15 +191,6 @@ namespace DialogEngine.Helpers
             else
                 HeatMapOnlyMode = false;
 
-            if (ConfigurationManager.AppSettings["WriteSerialLog"] != null)
-                WriteSerialLog = Convert.ToBoolean(AppSet.ReadSetting("WriteSerialLog"));
-            else
-                WriteSerialLog = false;
-
-            if (ConfigurationManager.AppSettings["UseSerialPort"] != null)
-                UseSerialPort = Convert.ToBoolean(AppSet.ReadSetting("UseSerialPort"));
-            else
-                UseSerialPort = false;
 
             if (ConfigurationManager.AppSettings["CheckStuckTransmissions"] != null)
                 CheckStuckTransmissions = Convert.ToBoolean(AppSet.ReadSetting("CheckStuckTransmissions"));
@@ -119,10 +207,7 @@ namespace DialogEngine.Helpers
             else
                 MonitorMessageParseFails = false;
 
-            if (ConfigurationManager.AppSettings["CurrentParentalRating"] != null)
-                CurrentParentalRating = AppSet.ReadSetting("CurrentParentalRating");
-            else
-                CurrentParentalRating = "PG";
+
 
 
             //get executable path of DialogGenerator.exe
@@ -137,8 +222,6 @@ namespace DialogEngine.Helpers
             CharactersDirectory = BaseDirectory + @"CharacterJSON\";
 
             
-
-
             if (LogsDirectory == null && WriteSerialLog)
             {
                 Console.WriteLine("Valid LogsDirectory path not found in config file exiting.");
@@ -177,12 +260,6 @@ namespace DialogEngine.Helpers
                 Console.WriteLine("Valid AudioDirectory path not found in config file exiting.");
                 Console.ReadLine();
                 Environment.Exit(0);
-            }
-
-
-            if (ConfigurationManager.AppSettings["ComPortName"] != null)
-            {
-                ComPortName = AppSet.ReadSetting("ComPortName");
             }
 
 
