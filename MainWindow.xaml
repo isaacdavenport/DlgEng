@@ -75,7 +75,7 @@
 
                 <Separator BorderThickness="2"></Separator>
 
-                <Button BorderThickness="1" Foreground="Blue"  Margin="15,5,5,5" Click="_settings_Click"  Background="White" Height="30" Width="30"  BorderBrush="LightGray">
+                <Button BorderThickness="1"  Foreground="Blue"  Margin="15,5,5,5" Click="_settings_Click"  Background="White" Height="30" Width="30"  BorderBrush="LightGray">
                     <Button.Content>
                         <fa:ImageAwesome Icon="Cogs"></fa:ImageAwesome> 
                     </Button.Content>

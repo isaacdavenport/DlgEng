@@ -1,50 +1,55 @@
-﻿using System;
-using System.Collections.Generic;
+﻿//  Confidential Source Code Property Toys2Life LLC Colorado 2017
+//  www.toys2life.org
+
+using System;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using DialogEngine.Core;
-using DialogEngine.Helpers;
+using System.ComponentModel;
 using System.IO;
+using System.Reflection;
 using System.Threading;
 using System.Windows;
-using Newtonsoft.Json;
-using DialogEngine.Models.Dialog;
-using System.ComponentModel;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Threading;
+using DialogEngine.Core;
+using DialogEngine.Helpers;
+using DialogEngine.Models.Dialog;
 using log4net;
+using Newtonsoft.Json;
 
 namespace DialogEngine.ViewModels.Dialog
 {
     /// <summary>
-    /// Implementation of <see cref="ViewModelBase"/>
-    /// DataContext for Dialog.xaml/>
+    ///     Implementation of <see cref="ViewModelBase" />
+    ///     DataContext for Dialog.xaml/>
     /// </summary>
     public class DialogViewModel : ViewModelBase
     {
         #region - Fieds -
 
         #region -Private fields-
-        private static readonly ILog mcLogger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        private DialogTracker TheDialogs;
-        private Views.Dialog.Dialog mView;
-        private Random mRandom = new Random();
-        private ObservableCollection<Object> mDialogLinesCollection;
+
+        private static readonly ILog mcLogger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private readonly DialogTracker TheDialogs;
+        private readonly Views.Dialog.Dialog mView;
+        private readonly Random mRandom = new Random();
+
+        // 
+        private ObservableCollection<object> mDialogLinesCollection;
+
+        // Combobox item sources
         private ObservableCollection<CharacterInfo> mCharacter1Collection;
         private ObservableCollection<CharacterInfo> mCharacter2Collection;
         private ObservableCollection<string> mDialogModelCollection;
-        private int mSelected1CharacterIndex=0;
-        private int mSelected2CharacterIndex=1;
-        private int mSelectedDialogModelIndex=0;
+
+        // Character n combobox item index
+        private int mSelected1CharacterIndex;
+        private int mSelected2CharacterIndex = 1;  // preventing to default to the same character name
+        private int mSelectedDialogModelIndex;
 
         #endregion
 
 
         #region - Public fields -
-
-        #endregion
 
         #endregion
 
@@ -58,29 +63,90 @@ namespace DialogEngine.ViewModels.Dialog
 
             bindCommands();
 
-            this.mCharacter1Collection = this._loadAllCharacterNames(SessionVariables.CharactersDirectory);
+            mCharacter1Collection = _loadAllCharacterNames(SessionVariables.CharactersDirectory);
 
-            this.mCharacter2Collection = new ObservableCollection<CharacterInfo>(this.mCharacter1Collection);
+            mCharacter2Collection = new ObservableCollection<CharacterInfo>(mCharacter1Collection);
 
-            this.mDialogModelCollection = this._loadAllDialogModels(SessionVariables.DialogsDirectory);
+            mDialogModelCollection = _loadAllDialogModels(SessionVariables.DialogsDirectory);
 
             _initDialogData();
         }
 
         #endregion
 
-        #region - Properties -
+        #region - Commands -
+
+        public RelayCommand GenerateDialog { get; set; }
+
+        #endregion
+
+        #region - Public methods -
+
         /// <summary>
-        /// Dynamic collection of objects, objects can be added,removed or updated, and UI is automatically updated 
+        /// Add dialog item line
         /// </summary>
-        public ObservableCollection<Object> DialogLinesCollection
+        /// <param name="_entry">Line to be added</param>
+        public void AddDialogItem(object _entry)
+        {
+            if (Application.Current.Dispatcher.CheckAccess())
+            {
+                try
+                {
+                    DialogLinesCollection.Add(_entry);
+
+                    OnPropertyChanged("DialogLinesCollection");
+
+                    var scrollViewer = VisualTreeHelper.GetChild(mView.textOutput, 0) as ScrollViewer;
+
+                    scrollViewer.ScrollToBottom();
+                }
+                catch (Exception e)
+                {
+                    mcLogger.Error(e.Message);
+                }
+            }
+
+            else
+            {
+                Application.Current.Dispatcher.BeginInvoke((Action)(() =>
+                {
+                    try
+                    {
+                        DialogLinesCollection.Add(_entry);
+
+                        OnPropertyChanged("DialogLinesCollection");
+
+                        var scrollViewer = VisualTreeHelper.GetChild(mView.textOutput, 0) as ScrollViewer;
+
+                        scrollViewer.ScrollToBottom();
+                    }
+                    catch (Exception _e)
+                    {
+                        mcLogger.Error(_e.Message);
+                    }
+                } ));
+            }
+
+        }
+
+        #endregion
+
+
+
+        #endregion
+
+        #region - Properties -
+
+        /// <summary>
+        /// Dynamic collection of objects, objects can be added,removed or updated, and UI is automatically updated
+        /// </summary>
+        public ObservableCollection<object> DialogLinesCollection
         {
             get
             {
                 if (mDialogLinesCollection == null)
-                {
-                    mDialogLinesCollection = new ObservableCollection<Object>();
-                }
+                    mDialogLinesCollection = new ObservableCollection<object>();
+
                 return mDialogLinesCollection;
             }
 
@@ -90,154 +156,123 @@ namespace DialogEngine.ViewModels.Dialog
 
                 // send notification to view (model is changed)
                 OnPropertyChanged("DialogLinesCollection");
-
-                
-
             }
-
         }
 
+        /// <summary>
+        /// Character 1 combobox item source
+        /// </summary>
         public ObservableCollection<CharacterInfo> Character1Collection
         {
             get
             {
-                if (this.mCharacter1Collection == null)
-                {
-                    this.mCharacter1Collection = new ObservableCollection<CharacterInfo>();
-                }
-                return this.mCharacter1Collection;
+                if (mCharacter1Collection == null)
+                    mCharacter1Collection = new ObservableCollection<CharacterInfo>();
+
+                return mCharacter1Collection;
             }
 
             set
             {
-                this.mCharacter1Collection = value;
+                mCharacter1Collection = value;
 
                 // send notification to view (model is changed)
                 OnPropertyChanged("Character1Collection");
-
             }
-
         }
 
+        /// <summary>
+        /// Character 2 combobox item source
+        /// </summary>
         public ObservableCollection<CharacterInfo> Character2Collection
         {
             get
             {
-                if (this.mCharacter2Collection == null)
-                {
-                    this.mCharacter2Collection = new ObservableCollection<CharacterInfo>();
-                }
-                return this.mCharacter2Collection;
+                if (mCharacter2Collection == null)
+                    mCharacter2Collection = new ObservableCollection<CharacterInfo>();
+
+                return mCharacter2Collection;
             }
 
             set
             {
-                this.mCharacter2Collection = value;
+                mCharacter2Collection = value;
 
                 // send notification to view (model is changed)
                 OnPropertyChanged("Character2Collection");
             }
-
         }
+
 
         public int Selected1CharacterIndex
         {
-            get
-            {
-
-                return this.mSelected1CharacterIndex;
-            }
+            get => mSelected1CharacterIndex;
 
             set
             {
-                this.mSelected1CharacterIndex = value;
+                mSelected1CharacterIndex = value;
 
                 // send notification to view (model is changed)
                 OnPropertyChanged("Selected1CharacterIndex");
             }
-
         }
 
         public int Selected2CharacterIndex
         {
-            get
-            {
-
-                return this.mSelected2CharacterIndex;
-            }
+            get => mSelected2CharacterIndex;
 
             set
             {
-                this.mSelected2CharacterIndex = value;
+                mSelected2CharacterIndex = value;
 
                 // send notification to view (model is changed)
                 OnPropertyChanged("Selected2CharacterIndex");
             }
-
         }
 
         public int SelectedDialogModelIndex
         {
-            get
-            {
-
-                return this.mSelectedDialogModelIndex;
-            }
+            get => mSelectedDialogModelIndex;
 
             set
             {
-                this.mSelectedDialogModelIndex = value;
+                mSelectedDialogModelIndex = value;
 
                 // send notification to view (model is changed)
                 OnPropertyChanged("SelectedDialogModel");
             }
-
         }
 
         public ObservableCollection<string> DialogModelCollection
         {
             get
             {
-                if (this.mDialogModelCollection == null)
-                {
-                    this.mDialogModelCollection = new ObservableCollection<string>();
-                }
-                return this.mDialogModelCollection;
+                if (mDialogModelCollection == null)
+                    mDialogModelCollection = new ObservableCollection<string>();
+                return mDialogModelCollection;
             }
 
             set
             {
-                this.mDialogModelCollection = value;
+                mDialogModelCollection = value;
 
                 // send notification to view (model is changed)
                 OnPropertyChanged("DialogModelCollection");
             }
-
         }
-
-
-        #endregion
-
-        #region - Commands -
-
-        public RelayCommand GenerateDialog { get; set; }
-
 
         #endregion
 
         #region - Private methods -
 
-
         private void bindCommands()
         {
-            this.GenerateDialog = new RelayCommand(_x => _generateDialogClick());
+            GenerateDialog = new RelayCommand(_x => _generateDialogClick());
         }
-
 
 
         private void _generateDialogClick()
         {
-
             StartDialog();
         }
 
@@ -250,7 +285,8 @@ namespace DialogEngine.ViewModels.Dialog
 
                 AddDialogItem(_versionTimeStr);
 
-                using (var _serialLog = new StreamWriter(SessionVariables.LogsDirectory + SessionVariables.HexLogFileName, true))
+                using (var _serialLog =
+                    new StreamWriter(SessionVariables.LogsDirectory + SessionVariables.HexLogFileName, true))
                 {
                     _serialLog.WriteLine("");
                     _serialLog.WriteLine("");
@@ -258,7 +294,8 @@ namespace DialogEngine.ViewModels.Dialog
                     _serialLog.Close();
                 }
 
-                using (var _serialLogDec = new StreamWriter(SessionVariables.LogsDirectory + SessionVariables.DecimalLogFileName, true))
+                using (var _serialLogDec =
+                    new StreamWriter(SessionVariables.LogsDirectory + SessionVariables.DecimalLogFileName, true))
                 {
                     _serialLogDec.WriteLine("");
                     _serialLogDec.WriteLine("");
@@ -266,7 +303,8 @@ namespace DialogEngine.ViewModels.Dialog
                     _serialLogDec.Close();
                 }
 
-                using (var _serialLogDialog = new StreamWriter(SessionVariables.LogsDirectory + SessionVariables.DialogLogFileName, true))
+                using (var _serialLogDialog =
+                    new StreamWriter(SessionVariables.LogsDirectory + SessionVariables.DialogLogFileName, true))
                 {
                     _serialLogDialog.WriteLine("");
                     _serialLogDialog.WriteLine("");
@@ -277,7 +315,6 @@ namespace DialogEngine.ViewModels.Dialog
         }
 
 
-
         private void checkForMissingPhrases()
         {
             if (!SessionVariables.AudioDialogsOn)
@@ -285,47 +322,36 @@ namespace DialogEngine.ViewModels.Dialog
 
 
             foreach (var _character in TheDialogs.CharacterList)
-            {
-
-                foreach (var _phrase in _character.Phrases)
+            foreach (var _phrase in _character.Phrases)
+                if (!File.Exists(SessionVariables.AudioDirectory
+                                 + _character.CharacterPrefix + "_"
+                                 + _phrase.FileName + ".mp3")) //Char name and prefix are being left blank...
                 {
+                    var _debugMessage = "missing " + _character.CharacterPrefix + "_" + _phrase.FileName + ".mp3 " +
+                                        _phrase.DialogStr;
+
+                    //AddDialogItem(_debugMessage);
 
 
-                    if (!File.Exists(SessionVariables.AudioDirectory 
-                        + _character.CharacterPrefix + "_" 
-                        +_phrase.FileName + ".mp3")) //Char name and prefix are being left blank...
-                    {
-
-                        var _debugMessage = "missing " + _character.CharacterPrefix + "_" + _phrase.FileName + ".mp3 " + _phrase.DialogStr;
-
-                        //AddDialogItem(_debugMessage);
-
-
-
-                        if (SessionVariables.WriteSerialLog)
-                            using (var _jsonLog = new StreamWriter(SessionVariables.LogsDirectory + SessionVariables.DialogLogFileName, true))
-                            {
-                                _jsonLog.WriteLine("missing " + _character.CharacterPrefix + "_" + _phrase.FileName + ".mp3 " + _phrase.DialogStr);
-                            }
-                    }
-
-
+                    if (SessionVariables.WriteSerialLog)
+                        using (var _jsonLog =
+                            new StreamWriter(SessionVariables.LogsDirectory + SessionVariables.DialogLogFileName, true))
+                        {
+                            _jsonLog.WriteLine("missing " + _character.CharacterPrefix + "_" + _phrase.FileName +
+                                               ".mp3 " + _phrase.DialogStr);
+                        }
                 }
-
-            }
             //TODO check that all dialog models have unique names
         }
 
         private ObservableCollection<string> _loadAllDialogModels(string _path)
         {
-            ObservableCollection<string> _dialogModels=new ObservableCollection<string>();
+            var _dialogModels = new ObservableCollection<string>();
 
-            DirectoryInfo _directoryInfo = new DirectoryInfo(_path);
+            var _directoryInfo = new DirectoryInfo(_path);
 
             foreach (var _file in _directoryInfo.GetFiles("*.json"))
-            {
-                _dialogModels.Add(System.IO.Path.GetFileNameWithoutExtension(_file.FullName));
-            }
+                _dialogModels.Add(Path.GetFileNameWithoutExtension(_file.FullName));
 
             return _dialogModels;
         }
@@ -333,13 +359,12 @@ namespace DialogEngine.ViewModels.Dialog
 
         private ObservableCollection<CharacterInfo> _loadAllCharacterNames(string _path)
         {
-            DirectoryInfo _directoryInfo = new DirectoryInfo(_path);
+            var _directoryInfo = new DirectoryInfo(_path);
 
-            ObservableCollection<CharacterInfo> _charactersInfo=new ObservableCollection<CharacterInfo>();
+            var _charactersInfo = new ObservableCollection<CharacterInfo>();
 
             foreach (var _file in _directoryInfo.GetFiles("*.json")) //file of type FileInfo for each .json in directory
             {
-
                 string _inChar;
 
                 try
@@ -353,7 +378,7 @@ namespace DialogEngine.ViewModels.Dialog
                         {
                             _inChar = _reader.ReadToEnd();
 
-                            var _deserializedCharacterJson = JsonConvert.DeserializeObject<Models.Dialog.CharacterInfo>(_inChar);
+                            var _deserializedCharacterJson = JsonConvert.DeserializeObject<CharacterInfo>(_inChar);
 
                             _deserializedCharacterJson.FileName = _file.Name;
 
@@ -361,42 +386,32 @@ namespace DialogEngine.ViewModels.Dialog
                         }
                         catch (Exception ex)
                         {
-
+                            mcLogger.Error(ex.Message);
                         }
                     }
                 }
 
                 catch (Exception ex)
                 {
-                    
                 }
             }
 
             return _charactersInfo;
-
         }
 
         private void checkTagsUsed(DialogTracker _dialogTracker)
         {
-
-
-
-
             foreach (var _dialog in TheDialogs.ModelDialogs)
             {
-
                 AddDialogItem(" " + _dialogTracker.ModelDialogs.IndexOf(_dialog) + " : " + _dialog.Name);
 
 
                 if (SessionVariables.WriteSerialLog)
-                {
-                    using (var _jsonLog = new StreamWriter(SessionVariables.LogsDirectory + SessionVariables.DialogLogFileName, true))
+                    using (var _jsonLog =
+                        new StreamWriter(SessionVariables.LogsDirectory + SessionVariables.DialogLogFileName, true))
                     {
                         _jsonLog.WriteLine(" " + _dialogTracker.ModelDialogs.IndexOf(_dialog) + " : " + _dialog.Name);
                     }
-                }
-
-
             }
 
             //test that all character tags are used by a dialog model.
@@ -405,56 +420,39 @@ namespace DialogEngine.ViewModels.Dialog
             var _usedFlag = false;
 
             foreach (var _character in _dialogTracker.CharacterList)
+            foreach (var _phrase in _character.Phrases)
+            foreach (var _phrasetag in _phrase.PhraseWeights.Keys)
             {
+                _usedFlag = false;
 
-                foreach (var _phrase in _character.Phrases)
+
+                foreach (var _dialog in _dialogTracker.ModelDialogs)
                 {
-
-                    foreach (var _phrasetag in _phrase.PhraseWeights.Keys)
-                    {
-
-                        _usedFlag = false;
-
-
-                        foreach (var _dialog in _dialogTracker.ModelDialogs)
+                    foreach (var _dialogtag in _dialog.PhraseTypeSequence)
+                        if (_phrasetag == _dialogtag)
                         {
-
-                            foreach (var _dialogtag in _dialog.PhraseTypeSequence)
-                            {
-
-                                if (_phrasetag == _dialogtag)
-                                {
-                                    _usedFlag = true;
-                                    break;
-                                }
-
-                            }
-
-
-
-                            if (_usedFlag)
-                                break;
+                            _usedFlag = true;
+                            break;
                         }
 
 
-                        if (!_usedFlag)
+                    if (_usedFlag)
+                        break;
+                }
+
+
+                if (!_usedFlag)
+                {
+                    AddDialogItem(" " + _phrasetag + " is not used.");
+
+
+                    if (SessionVariables.WriteSerialLog)
+                        using (var _jsonLog = new StreamWriter(
+                            SessionVariables.LogsDirectory + SessionVariables.DialogLogFileName,
+                            true))
                         {
-                            AddDialogItem(" " + _phrasetag + " is not used.");
-
-
-                            if (SessionVariables.WriteSerialLog)
-                            {
-                                using (var _jsonLog = new StreamWriter(SessionVariables.LogsDirectory + SessionVariables.DialogLogFileName,
-                                    true))
-                                {
-                                    _jsonLog.WriteLine(" " + _phrasetag + " is not used.");
-                                }
-                            }
-
-
+                            _jsonLog.WriteLine(" " + _phrasetag + " is not used.");
                         }
-                    }
-
                 }
             }
 
@@ -463,32 +461,20 @@ namespace DialogEngine.ViewModels.Dialog
 
 
             foreach (var _dialog in _dialogTracker.ModelDialogs)
-                foreach (var _dialogtag in _dialog.PhraseTypeSequence) //each dialog model tag
+            foreach (var _dialogtag in _dialog.PhraseTypeSequence) //each dialog model tag
+            {
+                _usedFlag = false;
+
+                foreach (var _character in _dialogTracker.CharacterList)
                 {
-
-                    _usedFlag = false;
-
-                    foreach (var _character in _dialogTracker.CharacterList)
+                    foreach (var _characterPhrase in _character.Phrases)
                     {
-
-                        foreach (var _characterPhrase in _character.Phrases)
-                        {
-
-                            foreach (var _phraseTag in _characterPhrase.PhraseWeights.Keys) //each character phrase tag{
+                        foreach (var _phraseTag in _characterPhrase.PhraseWeights.Keys) //each character phrase tag{
+                            if (_dialogtag == _phraseTag)
                             {
-                                if (_dialogtag == _phraseTag)
-                                {
-                                    _usedFlag = true;
-                                    break;
-                                }
-
-                            }
-
-
-                            if (_usedFlag)
+                                _usedFlag = true;
                                 break;
-
-                        }
+                            }
 
 
                         if (_usedFlag)
@@ -496,32 +482,32 @@ namespace DialogEngine.ViewModels.Dialog
                     }
 
 
-                    if (!_usedFlag)
-                    {
-
-                        AddDialogItem(" " + _dialogtag + " not used in " + _dialog.Name);
-
-
-                        if (SessionVariables.WriteSerialLog)
-                        {
-                            using (var _jsonLog = new StreamWriter(SessionVariables.LogsDirectory + SessionVariables.DialogLogFileName,true))
-                            {
-                                _jsonLog.WriteLine(" " + _dialogtag + " not used in " + _dialog.Name);
-                            }
-                        }
-
-                    }
+                    if (_usedFlag)
+                        break;
                 }
+
+
+                if (!_usedFlag)
+                {
+                    AddDialogItem(" " + _dialogtag + " not used in " + _dialog.Name);
+
+
+                    if (SessionVariables.WriteSerialLog)
+                        using (var _jsonLog =
+                            new StreamWriter(SessionVariables.LogsDirectory + SessionVariables.DialogLogFileName, true))
+                        {
+                            _jsonLog.WriteLine(" " + _dialogtag + " not used in " + _dialog.Name);
+                        }
+                }
+            }
         }
 
         private void _initDialogData()
         {
-            BackgroundWorker _workerLoader = new BackgroundWorker();
+            var _workerLoader = new BackgroundWorker();
 
             _workerLoader.DoWork += (_sender, _e) =>
             {
-
-
                 writeStartupInfo();
 
                 InitModelDialogs.SetDefaults(TheDialogs);
@@ -530,17 +516,11 @@ namespace DialogEngine.ViewModels.Dialog
 
 
                 if (SessionVariables.TagUsageCheck)
-                {
                     checkTagsUsed(TheDialogs);
-                }
-
 
 
                 if (SessionVariables.DebugFlag)
-                {
                     checkForMissingPhrases();
-                }
-
             };
 
             _workerLoader.RunWorkerAsync();
@@ -548,33 +528,29 @@ namespace DialogEngine.ViewModels.Dialog
 
         public void StartDialog()
         {
-
-            BackgroundWorker _worker = new BackgroundWorker();
+            var _worker = new BackgroundWorker();
 
             _worker.WorkerReportsProgress = false;
             _worker.DoWork += worker_DoWork;
             _worker.RunWorkerCompleted += worker_RunWorkerCompleted;
             _worker.RunWorkerAsync(400);
-
         }
 
         private void worker_DoWork(object _sender, DoWorkEventArgs _e)
         {
             while (true)
             {
-
                 if (SessionVariables.ForceCharactersAndDialogModel)
                 {
+                    var _modelAndCharacters = new int[3];
 
-                        int[] _modelAndCharacters = new int[3];
+                    _modelAndCharacters[0] = SelectedDialogModelIndex;
 
-                        _modelAndCharacters[0] = SelectedDialogModelIndex;
-                        
-                        _modelAndCharacters[1] = Selected1CharacterIndex;
+                    _modelAndCharacters[1] = Selected1CharacterIndex;
 
-                        _modelAndCharacters[2] = Selected2CharacterIndex;
-                                              
-                        TheDialogs.GenerateADialog(_modelAndCharacters);
+                    _modelAndCharacters[2] = Selected2CharacterIndex;
+
+                    TheDialogs.GenerateADialog(_modelAndCharacters);
                 }
                 else
                 {
@@ -588,25 +564,17 @@ namespace DialogEngine.ViewModels.Dialog
                     }
                     else
                     {
-
                         if (SessionVariables.HeatMapFullMatrixDispMode)
-                        {
                             FirmwareDebuggingTools.PrintHeatMap();
-                        }
 
 
                         if (SessionVariables.HeatMapSumsMode)
-                        {
                             FirmwareDebuggingTools.PrintHeatMapSums();
-                        }
 
 
                         Thread.Sleep(400); //vb:commented out for debugging as code stops here
                     }
                 }
-
-
-
             }
         }
 
@@ -616,60 +584,6 @@ namespace DialogEngine.ViewModels.Dialog
             //MessageBoxResult _result = MessageBox.Show("While loop completed");
         }
 
-
-        #endregion
-
-        #region - Public methods -
-
-
-        public void AddDialogItem(Object _entry)
-        {
-
-                if (Application.Current.Dispatcher.CheckAccess())
-                {
-                    try
-                    {
-                        DialogLinesCollection.Add(_entry);
-
-                        OnPropertyChanged("DialogLinesCollection");
-
-                        var scrollViewer = (VisualTreeHelper.GetChild(mView.textOutput, 0) as ScrollViewer);
-
-                        scrollViewer.ScrollToBottom();
-                    }
-                    catch (Exception e)
-                    {
-                        mcLogger.Error(e.Message);
-                    }
-
-                }
-                else
-                {
-                    Application.Current.Dispatcher.BeginInvoke((Action)(() =>
-                    {
-                        try
-                        {
-                            DialogLinesCollection.Add(_entry);
-
-                            OnPropertyChanged("DialogLinesCollection");
-
-                            var scrollViewer = (VisualTreeHelper.GetChild(mView.textOutput, 0) as ScrollViewer);
-
-                            scrollViewer.ScrollToBottom();
-                        }
-                        catch (Exception _e)
-                        {
-                            mcLogger.Error(_e.Message);
-                            
-                        }
- 
-
-                    }));
-                }
-            }
-
         #endregion
     }
 }
-
-
