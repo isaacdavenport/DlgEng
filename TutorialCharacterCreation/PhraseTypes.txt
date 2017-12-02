@@ -1,4 +1,4 @@
-        Exclamation,
+      Exclamation,
         Greeting,
         Threat,
         Retreat,
@@ -43,4 +43,32 @@
         GoOnFear,
         GoOnDisapproval,
 		GiveAgreement,
-		
+SuggestPlan  
+Complain
+Laugh 
+NotFunny 
+HurtFeelings 
+Sorry 
+WhatsWrong 
+MakeUp 
+AcceptPlan
+RejectPlan
+DontKnow
+RequestLike
+GiveLike
+RequestObject
+GiveObject
+GoodNews
+RequestQuestion
+Maybe
+HowAreYou
+ImSad
+ImScared
+ImAngry
+ImHappy
+Exasperation
+DontCare
+BodilyNoise
+Brag
+RequestSecret
+GiveSecret
