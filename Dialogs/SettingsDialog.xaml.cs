@@ -1,4 +1,7 @@
-﻿using System;
+﻿//  Confidential Source Code Property Toys2Life LLC Colorado 2017
+//  www.toys2life.org
+
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Configuration;
@@ -41,8 +44,6 @@ namespace DialogEngine.Controls
         #region -private functions-
 
         
-
-
         private void _generateDialog()
         {
 
@@ -73,7 +74,7 @@ namespace DialogEngine.Controls
                     ToggleButton _toggleButton=new ToggleButton();
                     _toggleButton.HorizontalAlignment = HorizontalAlignment.Left;
                     _toggleButton.IsChecked = _flag;
-                    _toggleButton.Style=this.FindResource("ToggleButtonStyle1") as Style;
+                    _toggleButton.Style=this.FindResource("ToggleButtonTwoOptionsStyle") as Style;
                     _toggleButton.Width = 100;
 
                     MainGrid.Children.Add(_toggleButton);

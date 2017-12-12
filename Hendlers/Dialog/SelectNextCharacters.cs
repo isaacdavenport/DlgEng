@@ -33,10 +33,7 @@ namespace DialogEngine
 
         #region - Private methods -
 
-        
-
-
-        private static void enqueLatestCharacters(int _ch1, int _ch2)
+        private static void _enqueLatestCharacters(int _ch1, int _ch2)
         {
             RssiStable = true;
 
@@ -61,7 +58,7 @@ namespace DialogEngine
             }
         }
 
-        static void assignNextCharacters(int _tempCh1, int _tempCh2)
+        static void _assignNextCharacters(int _tempCh1, int _tempCh2)
         {
             if ((msRandom.NextDouble() > 0.5) && RssiStable)
             {
@@ -118,8 +115,8 @@ namespace DialogEngine
 
             if (_tempCh1 <= msDialogTracker.CharacterList.Count && _tempCh2 <= msDialogTracker.CharacterList.Count)
             {
-                enqueLatestCharacters(_tempCh1, _tempCh2);
-                assignNextCharacters(_tempCh1, _tempCh2);
+                _enqueLatestCharacters(_tempCh1, _tempCh2);
+                _assignNextCharacters(_tempCh1, _tempCh2);
             }
         }
 

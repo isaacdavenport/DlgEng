@@ -13,6 +13,9 @@ using DialogEngine.Helpers;
 using DialogEngine.Models.Dialog;
 using log4net;
 using Newtonsoft.Json;
+using DialogEngine.Models.Logger;
+using System.Diagnostics;
+using System.Runtime.CompilerServices;
 
 // ReSharper disable ConditionIsAlwaysTrueOrFalse
 
@@ -35,8 +38,7 @@ namespace DialogEngine
         private int mPriorCharacter2Num = 100;
         private int mCurrentDialogModel = 1;
         private Random mRandom = new Random();
-        private PrintMethod mAddDialogItem;
-
+        private PrintMethod mAddItem;
 
         #endregion
 
@@ -48,11 +50,10 @@ namespace DialogEngine
 
 
         #region - Public fields -
-
-       
+    
         public WindowsMediaPlayerMp3 Audio = new WindowsMediaPlayerMp3();
 
-        public int Character1Num;
+        public int Character1Num = 0;
         public int Character2Num = 1;
         public double DialogModelPopularitySum;
         public bool LastPhraseImpliedMovement;
@@ -66,17 +67,11 @@ namespace DialogEngine
 
         public delegate void PrintMethod(Object  _message);
 
-
         #endregion
 
         #endregion
 
         #region - Constructor- 
-
-        public DialogTracker()
-        {
-            
-        }
 
         #endregion
 
@@ -111,18 +106,15 @@ namespace DialogEngine
         public int CurrentDialogModel { get; set; }
 
 
-        public PrintMethod AddDialogItem
+        public PrintMethod AddItem
         {
             get
             {
-                return mAddDialogItem;
-                
+                return mAddItem;               
             }
-
-
             set
             {
-                mAddDialogItem = value;
+                mAddItem = value;
             }
         }
 
@@ -179,28 +171,18 @@ namespace DialogEngine
                 if (CharacterList[_speakingCharacter].PhraseTotals.PhraseWeights.ContainsKey(_currentPhraseType))
                     if (SessionVariables.TextDialogsOn)
                     {
-                        //Here we try to change property of object which is created in main thread and we have to add code  to main thread's dispatcher object to do that
-
-
-                        //AddDialogItem(CharacterList[_speakingCharacter]);
-
 
                         if (CharacterList[_speakingCharacter].PhraseTotals.PhraseWeights[_currentPhraseType] < 0.01f)
                         {
-                            WriteStatusBarInfo("   Missing PhraseType: " + _currentPhraseType,Brushes.Orange);
+                            AddItem(new WarningMessage("Missing PhraseType: " + _currentPhraseType));
                         }
 
 
                         _selectedPhrase = PickAWeightedPhrase(_speakingCharacter, _currentPhraseType);
 
+                    
 
-
-                        //if (SessionVariables.TextDialogsOn)
-                        //{
-                        //    AddDialogItem(_selectedPhrase.DialogStr);
-                        //}
-
-                        AddDialogItem(new DialogItem(CharacterList[_speakingCharacter],_selectedPhrase));
+                        AddItem(new DialogItem() { Character = CharacterList[_speakingCharacter], PhraseEntry = _selectedPhrase  });
 
 
                         addPhraseToHistory(_selectedPhrase, _speakingCharacter);
@@ -248,13 +230,13 @@ namespace DialogEngine
         /// <param name="_character2Num"></param>
         public void WriteDialogInfo(int _character1Num, int _character2Num)
         {
-            var _dialogModelString = "\r\n  --DiMod " + CurrentDialogModel + " "
+            var _dialogModelString = " --DiMod " + CurrentDialogModel + " "
                                      + ModelDialogs[CurrentDialogModel].Name
                                      + " NextChars: " + CharacterList[_character1Num].CharacterPrefix + " "
                                      + CharacterList[_character2Num].CharacterPrefix + " " + DateTime.Now;
 
 
-            WriteStatusBarInfo(_dialogModelString,Brushes.Black);
+            AddItem(new InfoMessage(_dialogModelString));
 
             //var _result = MessageBox.Show(_dialogModelString);
 
@@ -283,14 +265,14 @@ namespace DialogEngine
         }
 
 
-
         public void IntakeCharacters()
         {
-            var _d = new DirectoryInfo(SessionVariables.CharactersDirectory);
+
+        var _d = new DirectoryInfo(SessionVariables.CharactersDirectory);
 
             string _characterJsonMessage = "Character JSON in: " + SessionVariables.CharactersDirectory;
 
-            WriteStatusBarInfo(_characterJsonMessage,Brushes.Black);
+            AddItem(new InfoMessage(_characterJsonMessage));
 
 
 
@@ -300,7 +282,7 @@ namespace DialogEngine
 
                 string _beginReadMessage = " Begin read of " + _file.Name;
 
-                //WriteStatusBarInfo(_beginReadMessage,Brushes.Black);
+                AddItem(new InfoMessage(_beginReadMessage));
 
 
 
@@ -380,6 +362,7 @@ namespace DialogEngine
 
                             //WriteStatusBarInfo(_finishReadMessage,Brushes.Black);
 
+                            AddItem(new InfoMessage(_finishReadMessage));
 
 
                             if (SessionVariables.WriteSerialLog)
@@ -401,7 +384,7 @@ namespace DialogEngine
                         {
                             string _errorReadingMessage = "Error reading " + _file.Name;
 
-                            WriteStatusBarInfo(_errorReadingMessage,Brushes.Red);
+                            AddItem(new ErrorMessage(_errorReadingMessage));
 
 
                             string _jsonParseErrorMessage = "JSON Parse error at " + _e.LineNumber + ", " + _e.LinePosition;
@@ -414,21 +397,21 @@ namespace DialogEngine
                 {
                     mcLogger.Error(_e.Message);
 
-                    WriteStatusBarInfo("Unauthorized access exception while reading: " + _file.FullName,Brushes.Red);
+                    AddItem(new ErrorMessage("Unauthorized access exception while reading: " + _file.FullName));
 
                 }
                 catch (DirectoryNotFoundException _e)
                 {
                     mcLogger.Error(_e.Message);
 
-                    WriteStatusBarInfo("Directory not found exception while reading: " + _file.FullName,Brushes.Red);
+                    AddItem(new ErrorMessage("Directory not found exception while reading: " + _file.FullName));
 
                 }
                 catch (OutOfMemoryException _e)
                 {
                     mcLogger.Error(_e.Message);
 
-                    WriteStatusBarInfo("You probably need to restart your computer...",Brushes.Red);
+                    AddItem(new ErrorMessage("You probably need to restart your computer..."));
                 }
             }
 
@@ -438,7 +421,7 @@ namespace DialogEngine
                 string _errorMessage = "Insufficient readable character json files found in " 
                                        + SessionVariables.CharactersDirectory + " .  Exiting.";
 
-                MessageBox.Show(_errorMessage);
+                AddItem(new ErrorMessage(_errorMessage));
 
             }
 
@@ -530,7 +513,7 @@ namespace DialogEngine
                         _phraseIsDuplicate = true; //send through retry loop k again
                         if (SessionVariables.ShowDupePhrases)
                         {
-                                AddDialogItem("Duplicate [" + _selectedPhrase.DialogStr + "]");                             
+                                AddItem(new WarningMessage("Duplicate [" + _selectedPhrase.DialogStr + "]"));                             
                         }
 
                         break; // doesn't matter if duplicated more than once
@@ -583,8 +566,7 @@ namespace DialogEngine
 
                 if (_playSuccess != 0)
                 {
-                    WriteStatusBarInfo("   MP3 Play Error  ---  " + _playSuccess,Brushes.Red);
-
+                    AddItem(new ErrorMessage("MP3 Play Error  ---  " + _playSuccess));
                 }
 
 
@@ -602,7 +584,7 @@ namespace DialogEngine
             }
             else
             {
-                WriteStatusBarInfo("Could not find: " + _pathAndFileName,Brushes.Red);
+                AddItem(new ErrorMessage("Could not find: " + _pathAndFileName));
             }
         }
 
@@ -661,7 +643,8 @@ namespace DialogEngine
                 if (_recentDialogQueueEntry == _dialogModel)
                 {
                     if (SessionVariables.ShowDupePhrases)
-                        WriteStatusBarInfo("Duplicate Dialog [" + _dialogModel + "]",Brushes.Orange);
+                        AddItem(new WarningMessage("Duplicate Dialog [" + _dialogModel + "]"));
+
 
                     return true;
                 }
@@ -953,9 +936,10 @@ namespace DialogEngine
                 {
                     var _ch1RetreatPhrase = PickAWeightedPhrase(Character1Num, "Retreat");
 
-                    AddDialogItem("Wait3");
+                    AddItem(new InfoMessage("Wait3"));
 
-                    AddDialogItem(new DialogItem(CharacterList[Character1Num],_ch1RetreatPhrase));
+
+                    AddItem(new DialogItem() { Character = CharacterList[Character1Num], PhraseEntry = _ch1RetreatPhrase });
 
 
                     playAudio(SessionVariables.AudioDirectory + CharacterList[Character1Num].CharacterPrefix +
@@ -971,9 +955,9 @@ namespace DialogEngine
 
                     var _ch2RetreatPhrase = PickAWeightedPhrase(Character2Num, "Retreat");
 
-                    AddDialogItem("Wait5");
+                    AddItem(new InfoMessage("Wait5"));
 
-                    AddDialogItem(new DialogItem(CharacterList[Character2Num], _ch2RetreatPhrase));
+                    AddItem(new DialogItem() { Character = CharacterList[Character2Num], PhraseEntry = _ch2RetreatPhrase });
 
                     playAudio( SessionVariables.AudioDirectory 
                                + CharacterList[Character2Num].CharacterPrefix 
@@ -1033,7 +1017,6 @@ namespace DialogEngine
                 try
                 {
                     (Application.Current.MainWindow as MainWindow).WriteStatusInfo(_infoMessage, _infoColor);
-
                 }
                 catch (Exception e)
                 {
@@ -1047,7 +1030,6 @@ namespace DialogEngine
                     try
                     {
                         (Application.Current.MainWindow as MainWindow).WriteStatusInfo(_infoMessage, _infoColor);
-
                     }
                     catch (Exception e)
                     {

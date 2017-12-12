@@ -99,7 +99,7 @@
                />
                     
         <!-- Statusbar -->
-        <StatusBar Grid.Row="3" HorizontalAlignment="Stretch" Background="White" Height="50" BorderBrush="LightGray" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderThickness="0,1,0,0">
+        <StatusBar Grid.Row="3" HorizontalAlignment="Stretch" Background="White" Height="25" BorderBrush="LightGray" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderThickness="0,1,0,0">
             <StatusBar.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Grid>

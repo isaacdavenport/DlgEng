@@ -35,14 +35,14 @@ namespace DialogEngine
 
             InitializeComponent();
 
-            mainFrame.Source = new Uri("Views/Dialog/Dialog.xaml", UriKind.Relative);
+            mainFrame.Source = new Uri("Views/Dialog/DialogView.xaml", UriKind.Relative);
 
             
         }
 
         #endregion
 
-        #region -Public functions-
+        #region - Public methods -
 
         public void WriteStatusInfo(string _infoMessage, Brush _infoColor)
         {
@@ -66,7 +66,7 @@ namespace DialogEngine
         private void _dialog_Click(object sender, RoutedEventArgs e)
         {
             e.Handled = true;
-            mainFrame.Source = new Uri("Views/Dialog/Dialog.xaml", UriKind.Relative);
+            mainFrame.Source = new Uri("Views/Dialog/DialogView.xaml", UriKind.Relative);
         }
 
         private void _aboutDialogEngine_Click(object sender, RoutedEventArgs e)

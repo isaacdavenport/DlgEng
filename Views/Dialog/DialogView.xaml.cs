@@ -1,4 +1,7 @@
-﻿using DialogEngine.Core;
+﻿//  Confidential Source Code Property Toys2Life LLC Colorado 2017
+//  www.toys2life.org
+
+using DialogEngine.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,10 +23,10 @@ namespace DialogEngine.Views.Dialog
     /// Implementation of <see cref="PageBase"/>
     /// It can be  set as content of <see cref="Frame"/>
     /// </summary>
-    public partial class Dialog : PageBase
+    public partial class DialogView : PageBase
     {
 
-        public Dialog()
+        public DialogView()
         {
             InitializeComponent();
            
@@ -33,11 +36,11 @@ namespace DialogEngine.Views.Dialog
 
         protected override void OnPageLoaded()
         {
-            DialogTracker.Instance.AddDialogItem = new DialogTracker.PrintMethod((this.DataContext as DialogViewModel).AddDialogItem);
+            //DialogTracker.Instance.AddItem = new DialogTracker.PrintMethod((this.DataContext as DialogViewModel).AddItem);
 
-            InitModelDialogs.AddDialogItem = new InitModelDialogs.PrintMethod(((this.DataContext as DialogViewModel).AddDialogItem));
+            //InitModelDialogs.AddItem = new InitModelDialogs.PrintMethod(((this.DataContext as DialogViewModel).AddItem));
 
-            FirmwareDebuggingTools.AddDialogItem = new FirmwareDebuggingTools.PrintMethod(((this.DataContext as DialogViewModel).AddDialogItem));
+            FirmwareDebuggingTools.AddItem = new FirmwareDebuggingTools.PrintMethod(((this.DataContext as DialogViewModel).AddItem));
             
         }
 

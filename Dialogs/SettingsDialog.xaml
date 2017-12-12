@@ -5,8 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DialogEngine.Controls"
         WindowStartupLocation="CenterOwner"
-        mc:Ignorable="d"
-        
+        mc:Ignorable="d"      
         Title="Settings" Height="900" Width="600">
     
     <Window.Resources>
@@ -25,7 +24,6 @@
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        
-                 
+                       
     </Grid>
 </Window>

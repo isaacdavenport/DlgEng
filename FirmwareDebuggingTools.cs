@@ -19,13 +19,13 @@ namespace DialogEngine
 
         public delegate void PrintMethod(string _message);
 
-        private static PrintMethod mcAddDialogItem;
+        private static PrintMethod mcAddItem;
 
         #endregion
 
         #region - Properties -
 
-        public static PrintMethod AddDialogItem { get; set; }
+        public static PrintMethod AddItem { get; set; }
 
 
         #endregion
@@ -42,7 +42,7 @@ namespace DialogEngine
 
             for (_i = 0; _i < SerialComs.NumRadios; _i++)
             {
-                AddDialogItem(SelectNextCharacters.CharactersLastHeatMapUpdateTime[_i].ToString("mm.ss.fff") + " ");
+                AddItem(SelectNextCharacters.CharactersLastHeatMapUpdateTime[_i].ToString("mm.ss.fff") + " ");
 
             }
 
@@ -51,13 +51,13 @@ namespace DialogEngine
             {
                 for (_ = 0; _ < SerialComs.NumRadios; _++)
                 {
-                    AddDialogItem("{0:D3}" + SelectNextCharacters.HeatMap[_l, _]);
+                    AddItem("{0:D3}" + SelectNextCharacters.HeatMap[_l, _]);
 
                 }
                 
             }
 
-            AddDialogItem("Character1-2Num " + msDialogTracker.CharacterList[msDialogTracker.Character1Num].CharacterPrefix
+            AddItem("Character1-2Num " + msDialogTracker.CharacterList[msDialogTracker.Character1Num].CharacterPrefix
                               + " " + msDialogTracker.CharacterList[msDialogTracker.Character2Num].CharacterPrefix
                               + " RSSIsum " + "{0:D3}" + SelectNextCharacters.BigRssi + ", rssiStable = " + SelectNextCharacters.RssiStable);
 

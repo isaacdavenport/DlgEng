@@ -12,10 +12,13 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DialogEngine</RootNamespace>
     <AssemblyName>DialogEngine</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -28,11 +31,8 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -89,14 +89,25 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\AboutDialogEngine.xaml.cs">
-      <DependentUpon>AboutDialogEngine.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Converters\CharacterStateToBooleanConverter.cs" />
+    <Compile Include="Converters\DynamicGroupNameConverter.cs" />
+    <Compile Include="Converters\ModelDialogStateToBooleanConverter.cs" />
+    <Compile Include="Converters\RowIndexConverter.cs" />
+    <Compile Include="Converters\StarWidthConverter.cs" />
     <Compile Include="Dialogs\SettingsDialog.xaml.cs">
       <DependentUpon>SettingsDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Core\RelayCommand.cs" />
     <Compile Include="Core\ViewModelBase.cs" />
+    <Compile Include="Events\CompositeEvent.cs" />
+    <Compile Include="Events\DialogEvents\ChangedCharactersStateEvent.cs" />
+    <Compile Include="Events\DialogEvents\ChangedModelDialogStateEvent.cs" />
+    <Compile Include="Events\EventAggregator.cs" />
+    <Compile Include="Events\EventBase.cs" />
+    <Compile Include="Events\EventSubscription.cs" />
+    <Compile Include="Events\IEventSubscription.cs" />
+    <Compile Include="Events\SimpleEvent.cs" />
+    <Compile Include="Events\SimpleEventSubscription.cs" />
     <Compile Include="Hendlers\Dialog\DialogTracker.cs" />
     <Compile Include="FirmwareDebuggingTools.cs" />
     <Compile Include="Helpers\AppSettings.cs" />
@@ -106,6 +117,7 @@
     <Compile Include="Models\Dialog\HistoricalDialog.cs" />
     <Compile Include="Models\Dialog\HistoricalPhrase.cs" />
     <Compile Include="Models\Dialog\ModelDialog.cs" />
+    <Compile Include="Models\Dialog\ModelDialogInfo.cs" />
     <Compile Include="Models\Dialog\ModelDialogInput.cs" />
     <Compile Include="Models\Dialog\ParentalRatings.cs" />
     <Compile Include="Models\Dialog\PhraseEntry.cs" />
@@ -114,8 +126,14 @@
     <Compile Include="Hendlers\Dialog\SelectNextCharacters.cs" />
     <Compile Include="Hendlers\Dialog\Serial.cs" />
     <Compile Include="Models\Dialog\ReceivedMessage.cs" />
+    <Compile Include="Models\Enums\CharacterState.cs" />
+    <Compile Include="Models\Enums\ModelDialogState.cs" />
+    <Compile Include="Models\Logger\ErrorMessage.cs" />
+    <Compile Include="Models\Logger\InfoMessage.cs" />
+    <Compile Include="Models\Logger\LogMessage.cs" />
+    <Compile Include="Models\Logger\WarningMessage.cs" />
     <Compile Include="MP3Player.cs" />
-    <Compile Include="Hendlers\Dialog\DialogModels.cs" />
+    <Compile Include="Hendlers\Dialog\InitModelDialogs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\SessionVariables.cs" />
     <Compile Include="MainWindow.xaml.cs">
@@ -123,8 +141,8 @@
     </Compile>
     <Compile Include="Helpers\VisualHelper.cs" />
     <Compile Include="ViewModels\Dialog\DialogViewModel.cs" />
-    <Compile Include="Views\Dialog\Dialog.xaml.cs">
-      <DependentUpon>Dialog.xaml</DependentUpon>
+    <Compile Include="Views\Dialog\DialogView.xaml.cs">
+      <DependentUpon>DialogView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -166,13 +184,19 @@
   <ItemGroup>
     <None Include="App.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </None>
     <None Include="log4net.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\Images\error.png" />
+    <Resource Include="Resources\Images\warning.png" />
+    <Resource Include="Resources\Images\info.png" />
+    <Resource Include="Resources\Images\clearAll.png" />
     <Content Include="TheGeneratedLogFilesGoHere.txt" />
   </ItemGroup>
   <ItemGroup>
@@ -180,10 +204,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Dialogs\AboutDialogEngine.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Dialogs\SettingsDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -200,7 +220,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Dialog\Dialog.xaml">
+    <Page Include="Views\Dialog\DialogView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

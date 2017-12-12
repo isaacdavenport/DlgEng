@@ -27,6 +27,7 @@ namespace DialogEngine
         private void Player_MediaError(object pMediaObject)
         {
             WriteStatusBarInfo("Incorrect .mp3 file.", Brushes.Red);
+            mcLogger.Error("Incorrect .mp3 file.");
         }
 
         public int PlayMp3(string _path)
@@ -75,7 +76,7 @@ namespace DialogEngine
             }
             catch
             {
-                Console.WriteLine("MP3 Player Status not readable");
+                mcLogger.Error("MP3 Player Status not readable");
             }
             return _code;
         }
@@ -83,14 +84,12 @@ namespace DialogEngine
         public void WriteStatusBarInfo(string _infoMessage, Brush _infoColor)
         {
 
-
             if (Application.Current.Dispatcher.CheckAccess())
             {
 
                 try
                 {
                     (Application.Current.MainWindow as MainWindow).WriteStatusInfo(_infoMessage, _infoColor);
-
                 }
                 catch (Exception e)
                 {
@@ -104,7 +103,6 @@ namespace DialogEngine
                     try
                     {
                         (Application.Current.MainWindow as MainWindow).WriteStatusInfo(_infoMessage, _infoColor);
-
                     }
                     catch (Exception e)
                     {

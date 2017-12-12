@@ -10,5 +10,12 @@ namespace DialogEngine
     /// </summary>
     public partial class App : Application
     {
+
+        // Handling all unhandled exceptions in application
+        private void Application_DisptatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {
+            MessageBox.Show("An unhandled exception just occurred: " + e.Exception.Message, "Exception", MessageBoxButton.OK, MessageBoxImage.Warning);
+            e.Handled = true;
+        }
     }
 }

@@ -6,11 +6,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace DialogEngine.Models.Dialog
+namespace DialogEngine.Models.Enums
 {
-    public class ModelDialogInput
+    /// <summary>
+    /// Represetns state of Dialog model
+    /// </summary>
+    public enum ModelDialogState
     {
-        public List<ModelDialog> InList;
-
+        On,  
+        Off
     }
 }

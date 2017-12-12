@@ -15,6 +15,10 @@ using DialogEngine.Helpers;
 using DialogEngine.Models.Dialog;
 using log4net;
 using Newtonsoft.Json;
+using DialogEngine.Models.Logger;
+using System.Threading.Tasks;
+using DialogEngine.Events;
+using DialogEngine.Events.DialogEvents;
 
 namespace DialogEngine.ViewModels.Dialog
 {
@@ -30,24 +34,22 @@ namespace DialogEngine.ViewModels.Dialog
 
         private static readonly ILog mcLogger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private readonly DialogTracker TheDialogs;
-        private readonly Views.Dialog.Dialog mView;
+        private readonly Views.Dialog.DialogView mView;
         private readonly Random mRandom = new Random();
+        private BackgroundWorker _dialogWorker;
+        private bool _isModelsDialogChanged = false;
 
-        // 
+        
         private ObservableCollection<object> mDialogLinesCollection;
 
         // Combobox item sources
         private ObservableCollection<CharacterInfo> mCharacter1Collection;
-        private ObservableCollection<CharacterInfo> mCharacter2Collection;
-        private ObservableCollection<string> mDialogModelCollection;
-
-        // Character n combobox item index
-        private int mSelected1CharacterIndex;
-        private int mSelected2CharacterIndex = 1;  // preventing to default to the same character name
-        private int mSelectedDialogModelIndex;
+        private ObservableCollection<ModelDialogInfo> mDialogModelCollection;
+        private ObservableCollection<InfoMessage> mInfoMessagesCollection;
+        private ObservableCollection<WarningMessage> mWarningMessagesCollection;
+        private ObservableCollection<ErrorMessage> mErrorMessagesCollection;
 
         #endregion
-
 
         #region - Public fields -
 
@@ -55,21 +57,22 @@ namespace DialogEngine.ViewModels.Dialog
 
         #region - Constructor -
 
-        public DialogViewModel(Views.Dialog.Dialog _view)
+        public DialogViewModel(Views.Dialog.DialogView _view)
         {
+            EventAggregator.Instance.GetEvent<ChangedCharactersStateEvent>().Subscribe(_onChangedCharacterState);
+            EventAggregator.Instance.GetEvent<ChangedModelDialogStateEvent>().Subscribe(_onChangedModelDialogState);
+
             mView = _view;
 
             TheDialogs = DialogTracker.Instance;
 
-            bindCommands();
+            TheDialogs.AddItem = new DialogTracker.PrintMethod(AddItem);
+            InitModelDialogs.AddItem = new InitModelDialogs.PrintMethod(AddItem);
 
-            mCharacter1Collection = _loadAllCharacterNames(SessionVariables.CharactersDirectory);
-
-            mCharacter2Collection = new ObservableCollection<CharacterInfo>(mCharacter1Collection);
-
-            mDialogModelCollection = _loadAllDialogModels(SessionVariables.DialogsDirectory);
+            _bindCommands();
 
             _initDialogData();
+
         }
 
         #endregion
@@ -77,6 +80,8 @@ namespace DialogEngine.ViewModels.Dialog
         #region - Commands -
 
         public RelayCommand GenerateDialog { get; set; }
+
+        public RelayCommand ClearAllMessages { get; set; }
 
         #endregion
 
@@ -86,45 +91,18 @@ namespace DialogEngine.ViewModels.Dialog
         /// Add dialog item line
         /// </summary>
         /// <param name="_entry">Line to be added</param>
-        public void AddDialogItem(object _entry)
+        public void AddItem(object _entry)
         {
             if (Application.Current.Dispatcher.CheckAccess())
             {
-                try
-                {
-                    DialogLinesCollection.Add(_entry);
-
-                    OnPropertyChanged("DialogLinesCollection");
-
-                    var scrollViewer = VisualTreeHelper.GetChild(mView.textOutput, 0) as ScrollViewer;
-
-                    scrollViewer.ScrollToBottom();
-                }
-                catch (Exception e)
-                {
-                    mcLogger.Error(e.Message);
-                }
+                _processAddItem(_entry);
             }
-
             else
             {
                 Application.Current.Dispatcher.BeginInvoke((Action)(() =>
                 {
-                    try
-                    {
-                        DialogLinesCollection.Add(_entry);
-
-                        OnPropertyChanged("DialogLinesCollection");
-
-                        var scrollViewer = VisualTreeHelper.GetChild(mView.textOutput, 0) as ScrollViewer;
-
-                        scrollViewer.ScrollToBottom();
-                    }
-                    catch (Exception _e)
-                    {
-                        mcLogger.Error(_e.Message);
-                    }
-                } ));
+                    _processAddItem(_entry);
+                }));
             }
 
         }
@@ -181,74 +159,14 @@ namespace DialogEngine.ViewModels.Dialog
             }
         }
 
-        /// <summary>
-        /// Character 2 combobox item source
-        /// </summary>
-        public ObservableCollection<CharacterInfo> Character2Collection
-        {
-            get
-            {
-                if (mCharacter2Collection == null)
-                    mCharacter2Collection = new ObservableCollection<CharacterInfo>();
-
-                return mCharacter2Collection;
-            }
-
-            set
-            {
-                mCharacter2Collection = value;
-
-                // send notification to view (model is changed)
-                OnPropertyChanged("Character2Collection");
-            }
-        }
 
 
-        public int Selected1CharacterIndex
-        {
-            get => mSelected1CharacterIndex;
-
-            set
-            {
-                mSelected1CharacterIndex = value;
-
-                // send notification to view (model is changed)
-                OnPropertyChanged("Selected1CharacterIndex");
-            }
-        }
-
-        public int Selected2CharacterIndex
-        {
-            get => mSelected2CharacterIndex;
-
-            set
-            {
-                mSelected2CharacterIndex = value;
-
-                // send notification to view (model is changed)
-                OnPropertyChanged("Selected2CharacterIndex");
-            }
-        }
-
-        public int SelectedDialogModelIndex
-        {
-            get => mSelectedDialogModelIndex;
-
-            set
-            {
-                mSelectedDialogModelIndex = value;
-
-                // send notification to view (model is changed)
-                OnPropertyChanged("SelectedDialogModel");
-            }
-        }
-
-        public ObservableCollection<string> DialogModelCollection
+        public ObservableCollection<ModelDialogInfo> DialogModelCollection
         {
             get
             {
                 if (mDialogModelCollection == null)
-                    mDialogModelCollection = new ObservableCollection<string>();
+                    mDialogModelCollection = new ObservableCollection<ModelDialogInfo>();
                 return mDialogModelCollection;
             }
 
@@ -256,26 +174,202 @@ namespace DialogEngine.ViewModels.Dialog
             {
                 mDialogModelCollection = value;
 
+                _isModelsDialogChanged = true;
                 // send notification to view (model is changed)
                 OnPropertyChanged("DialogModelCollection");
             }
         }
 
+        public ObservableCollection<ErrorMessage> ErrorMessagesCollection
+        {
+            get
+            {
+                if (mErrorMessagesCollection == null)
+                {
+                    mErrorMessagesCollection = new ObservableCollection<ErrorMessage>();
+                }
+
+                return mErrorMessagesCollection;
+            }
+
+            set
+            {
+                mErrorMessagesCollection = value;
+
+                OnPropertyChanged("ErrorMessagesCollection");
+
+            }
+        }
+
+        public ObservableCollection<WarningMessage> WarningMessagesCollection
+        {
+            get
+            {
+                if (mWarningMessagesCollection == null)
+                {
+                    mWarningMessagesCollection = new ObservableCollection<WarningMessage>();
+                }
+
+                return mWarningMessagesCollection;
+            }
+
+            set
+            {
+                mWarningMessagesCollection = value;
+
+                OnPropertyChanged("WarningMessagesCollection");
+
+            }
+        }
+
+        public ObservableCollection<InfoMessage> InfoMessagesCollection
+        {
+            get
+            {
+                if (mInfoMessagesCollection == null)
+                {
+                    mInfoMessagesCollection = new ObservableCollection<InfoMessage>();
+                }
+
+                return mInfoMessagesCollection;
+            }
+
+            set
+            {
+                mInfoMessagesCollection = value;
+
+                OnPropertyChanged("InfoMessagesCollection");
+
+            }
+        }
+
+
+
         #endregion
 
         #region - Private methods -
 
-        private void bindCommands()
+        private void _onChangedCharacterState()
         {
-            GenerateDialog = new RelayCommand(_x => _generateDialogClick());
+        }
+
+        private void _onChangedModelDialogState()
+        {
+            _isModelsDialogChanged = true;
+        }
+
+        private void _processAddItem(object _entry)
+        {
+            try
+            {
+                if (_entry is DialogItem || _entry is String)
+                {
+                    DialogLinesCollection.Add(_entry);
+
+                    OnPropertyChanged("DialogLinesCollection");
+
+                    var scrollViewer = VisualTreeHelper.GetChild(mView.textOutput, 0) as ScrollViewer;
+
+                    scrollViewer.ScrollToBottom();
+                }
+                else if (_entry is InfoMessage)
+                {
+                    InfoMessagesCollection.Insert(0, (InfoMessage)_entry);
+
+                    int _length = InfoMessagesCollection.Count;
+
+                    if (_length > 300)
+                    {
+                        WarningMessagesCollection.RemoveAt(_length - 1);
+                    }
+
+                    OnPropertyChanged("InfoMessagesCollection");
+
+                }
+                else if (_entry is WarningMessage)
+                {
+                    WarningMessagesCollection.Insert(0, (WarningMessage)_entry);
+
+                    int _length = WarningMessagesCollection.Count;
+
+                    if (_length > 300)
+                    {
+                        WarningMessagesCollection.RemoveAt(_length - 1);
+                    }
+
+                    OnPropertyChanged("WarningMessagesCollection");
+
+                }
+                else
+                {
+                    ErrorMessagesCollection.Insert(0, (ErrorMessage)_entry);
+
+                    int _length = ErrorMessagesCollection.Count;
+
+                    if (_length > 300)
+                    {
+                        ErrorMessagesCollection.RemoveAt(_length - 1);
+                    }
+
+                    OnPropertyChanged("ErrorMessagesCollection");
+                }
+            }
+            catch (Exception _e)
+            {
+                mcLogger.Error(_e.Message);
+            }
+        }
+
+        private void _bindCommands()
+        {
+            GenerateDialog = new RelayCommand(_x => StartDialog());
+
+            ClearAllMessages = new RelayCommand(x => _clearAllMessages((string)x));
         }
 
 
-        private void _generateDialogClick()
-        {
-            StartDialog();
-        }
 
+        private void _clearAllMessages(string type)
+        {
+            switch (type)
+            {
+                case "DialogLinesCollection":
+                    {
+                        DialogLinesCollection.Clear();
+
+                        OnPropertyChanged(type);
+
+                        break;
+                    }
+
+                case "InfoMessagesCollection":
+                    {
+                        InfoMessagesCollection.Clear();
+
+                        OnPropertyChanged(type);
+
+                        break;
+                    }
+
+                case "WarningMessagesCollection":
+                    {
+                        WarningMessagesCollection.Clear();
+
+                        OnPropertyChanged(type);
+
+                        break;
+                    }
+
+                case "ErrorMessagesCollection":
+                    {
+                        ErrorMessagesCollection.Clear();
+
+                        OnPropertyChanged(type);
+
+                        break;
+                    }
+            }
+        }
 
         private void writeStartupInfo()
         {
@@ -283,7 +377,8 @@ namespace DialogEngine.ViewModels.Dialog
             {
                 var _versionTimeStr = "Dialog Engine ver 0.67 " + DateTime.Now;
 
-                AddDialogItem(_versionTimeStr);
+
+                AddItem(new InfoMessage(_versionTimeStr));
 
                 using (var _serialLog =
                     new StreamWriter(SessionVariables.LogsDirectory + SessionVariables.HexLogFileName, true))
@@ -327,10 +422,10 @@ namespace DialogEngine.ViewModels.Dialog
                                  + _character.CharacterPrefix + "_"
                                  + _phrase.FileName + ".mp3")) //Char name and prefix are being left blank...
                 {
-                    var _debugMessage = "missing " + _character.CharacterPrefix + "_" + _phrase.FileName + ".mp3 " +
+                    var _debugMessage = "Missing " + _character.CharacterPrefix + "_" + _phrase.FileName + ".mp3 " +
                                         _phrase.DialogStr;
 
-                    //AddDialogItem(_debugMessage);
+                    AddItem(new WarningMessage(_debugMessage));
 
 
                     if (SessionVariables.WriteSerialLog)
@@ -344,57 +439,76 @@ namespace DialogEngine.ViewModels.Dialog
             //TODO check that all dialog models have unique names
         }
 
-        private ObservableCollection<string> _loadAllDialogModels(string _path)
+        private async Task<ObservableCollection<ModelDialogInfo>> _loadAllDialogModels(string _path)
         {
-            var _dialogModels = new ObservableCollection<string>();
+            var _dialogModels = new ObservableCollection<ModelDialogInfo>();
 
-            var _directoryInfo = new DirectoryInfo(_path);
 
-            foreach (var _file in _directoryInfo.GetFiles("*.json"))
-                _dialogModels.Add(Path.GetFileNameWithoutExtension(_file.FullName));
+
+
+            await Task.Run(() =>
+            {
+                var _directoryInfo = new DirectoryInfo(_path);
+
+
+                foreach (var _file in _directoryInfo.GetFiles("*.json"))
+                {
+                    _dialogModels.Add(new ModelDialogInfo() { FileName = Path.GetFileNameWithoutExtension(_file.FullName) });
+                }
+
+            });
 
             return _dialogModels;
         }
 
 
-        private ObservableCollection<CharacterInfo> _loadAllCharacterNames(string _path)
+
+
+        private async Task<ObservableCollection<CharacterInfo>> _loadAllCharacterNames(string _path)
         {
-            var _directoryInfo = new DirectoryInfo(_path);
 
             var _charactersInfo = new ObservableCollection<CharacterInfo>();
 
-            foreach (var _file in _directoryInfo.GetFiles("*.json")) //file of type FileInfo for each .json in directory
+
+            await Task.Run(() =>
             {
-                string _inChar;
+                var _directoryInfo = new DirectoryInfo(_path);
 
-                try
+
+                foreach (var _file in _directoryInfo.GetFiles("*.json")) //file of type FileInfo for each .json in directory
                 {
-                    var _fs = _file.OpenRead(); //open a read-only FileStream
+                    string _inChar;
 
-                    using (var _reader = new StreamReader(_fs)
-                    ) //creates new streamerader for fs stream. Could also construct with filename...
+                    try
                     {
-                        try
+                        var _fs = _file.OpenRead(); //open a read-only FileStream
+
+                        using (var _reader = new StreamReader(_fs)
+                        ) //creates new streamerader for fs stream. Could also construct with filename...
                         {
-                            _inChar = _reader.ReadToEnd();
+                            try
+                            {
+                                _inChar = _reader.ReadToEnd();
 
-                            var _deserializedCharacterJson = JsonConvert.DeserializeObject<CharacterInfo>(_inChar);
+                                var _deserializedCharacterJson = JsonConvert.DeserializeObject<CharacterInfo>(_inChar);
 
-                            _deserializedCharacterJson.FileName = _file.Name;
+                                _deserializedCharacterJson.FileName = _file.Name;
 
-                            _charactersInfo.Add(_deserializedCharacterJson);
-                        }
-                        catch (Exception ex)
-                        {
-                            mcLogger.Error(ex.Message);
+                                _charactersInfo.Add(_deserializedCharacterJson);
+                            }
+                            catch (Exception ex)
+                            {
+                                mcLogger.Error(ex.Message);
+                            }
                         }
                     }
-                }
 
-                catch (Exception ex)
-                {
+                    catch (Exception ex)
+                    {
+                    }
                 }
-            }
+            });
+
 
             return _charactersInfo;
         }
@@ -403,7 +517,7 @@ namespace DialogEngine.ViewModels.Dialog
         {
             foreach (var _dialog in TheDialogs.ModelDialogs)
             {
-                AddDialogItem(" " + _dialogTracker.ModelDialogs.IndexOf(_dialog) + " : " + _dialog.Name);
+                AddItem(new InfoMessage(" " + _dialogTracker.ModelDialogs.IndexOf(_dialog) + " : " + _dialog.Name));
 
 
                 if (SessionVariables.WriteSerialLog)
@@ -415,7 +529,7 @@ namespace DialogEngine.ViewModels.Dialog
             }
 
             //test that all character tags are used by a dialog model.
-            AddDialogItem("Check characters tags are used ");
+            AddItem(new InfoMessage("Check characters tags are used "));
 
             var _usedFlag = false;
 
@@ -443,7 +557,7 @@ namespace DialogEngine.ViewModels.Dialog
 
                 if (!_usedFlag)
                 {
-                    AddDialogItem(" " + _phrasetag + " is not used.");
+                    AddItem(new InfoMessage(" " + _phrasetag + " is not used."));
 
 
                     if (SessionVariables.WriteSerialLog)
@@ -457,7 +571,7 @@ namespace DialogEngine.ViewModels.Dialog
             }
 
 
-            AddDialogItem("Check dialogs tags are used");
+            AddItem(new InfoMessage("Check dialogs tags are used"));
 
 
             foreach (var _dialog in _dialogTracker.ModelDialogs)
@@ -489,7 +603,7 @@ namespace DialogEngine.ViewModels.Dialog
 
                 if (!_usedFlag)
                 {
-                    AddDialogItem(" " + _dialogtag + " not used in " + _dialog.Name);
+                    AddItem(new InfoMessage(" " + _dialogtag + " not used in " + _dialog.Name));
 
 
                     if (SessionVariables.WriteSerialLog)
@@ -502,8 +616,10 @@ namespace DialogEngine.ViewModels.Dialog
             }
         }
 
-        private void _initDialogData()
+        private async void _initDialogData()
         {
+
+
             var _workerLoader = new BackgroundWorker();
 
             _workerLoader.DoWork += (_sender, _e) =>
@@ -524,31 +640,53 @@ namespace DialogEngine.ViewModels.Dialog
             };
 
             _workerLoader.RunWorkerAsync();
+
+
+            Task<ObservableCollection<CharacterInfo>> _charactersTask =  _loadAllCharacterNames(SessionVariables.CharactersDirectory);
+            Task<ObservableCollection<ModelDialogInfo>> _modelDialogTask = _loadAllDialogModels(SessionVariables.DialogsDirectory);
+
+            Character1Collection = await _charactersTask;
+            DialogModelCollection = await _modelDialogTask;
+
         }
 
         public void StartDialog()
         {
-            var _worker = new BackgroundWorker();
+                DialogLinesCollection.Clear();
 
-            _worker.WorkerReportsProgress = false;
-            _worker.DoWork += worker_DoWork;
-            _worker.RunWorkerCompleted += worker_RunWorkerCompleted;
-            _worker.RunWorkerAsync(400);
+                OnPropertyChanged("DialogLinesCollection");
+
+                 _dialogWorker = new BackgroundWorker();
+
+                _dialogWorker.WorkerReportsProgress = false;
+                _dialogWorker.DoWork += worker_DoWork;
+                _dialogWorker.RunWorkerCompleted += worker_RunWorkerCompleted;
+                _dialogWorker.RunWorkerAsync(400);
+           
         }
 
         private void worker_DoWork(object _sender, DoWorkEventArgs _e)
         {
             while (true)
             {
+                if(_isModelsDialogChanged == true)
+                {
+                    InitModelDialogs.SetDefaults(TheDialogs,DialogModelCollection);
+
+                    _isModelsDialogChanged = false;
+                }
+
                 if (SessionVariables.ForceCharactersAndDialogModel)
                 {
                     var _modelAndCharacters = new int[3];
 
-                    _modelAndCharacters[0] = SelectedDialogModelIndex;
+                    _modelAndCharacters[0] = 1;
 
-                    _modelAndCharacters[1] = Selected1CharacterIndex;
+                    _modelAndCharacters[1] = 0;
 
-                    _modelAndCharacters[2] = Selected2CharacterIndex;
+                    _modelAndCharacters[2] = 1;
+
+                    
 
                     TheDialogs.GenerateADialog(_modelAndCharacters);
                 }
