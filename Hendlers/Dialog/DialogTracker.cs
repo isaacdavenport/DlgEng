@@ -508,7 +508,7 @@ namespace DialogEngine
 
                 foreach (var _recentPhraseQueueEntry in CharacterList[_speakingCharacter].RecentPhrases)
                 {
-                    if (_recentPhraseQueueEntry == _selectedPhrase)
+                    if (_recentPhraseQueueEntry.Equals(_selectedPhrase))
                     {
                         _phraseIsDuplicate = true; //send through retry loop k again
                         if (SessionVariables.ShowDupePhrases)
@@ -812,9 +812,7 @@ namespace DialogEngine
             // most recent will be in the 0 index of list which will be hit first in foreach
             if (_mostRecentAdventureDialogIndexes.Count > 0)
             {
-                var _nextAdventureDialogIdx =
-                    findNextAdventureDialogForCharacters(_character1Num, _character2Num,
-                        _mostRecentAdventureDialogIndexes);
+                var _nextAdventureDialogIdx = findNextAdventureDialogForCharacters(_character1Num, _character2Num,_mostRecentAdventureDialogIndexes);
 
 
                 if (_nextAdventureDialogIdx > 0 && _nextAdventureDialogIdx < ModelDialogs.Count)
@@ -854,7 +852,7 @@ namespace DialogEngine
 
                 var _dialogPreRequirementsMet = checkIfDialogPreRequirementMet(_dialogModel);
 
-                var _greetingAppropriate = !(ModelDialogs[_dialogModel].PhraseTypeSequence[0] == "Greeting" && SameCharactersAsLast); // don't want a greeting with same characters as last
+                var _greetingAppropriate = !(ModelDialogs[_dialogModel].PhraseTypeSequence[0].Equals("Greeting") && SameCharactersAsLast); // don't want a greeting with same characters as last
 
                 if (   _dialogPreRequirementsMet && _charactersHavePhrases && _greetingAppropriate && !_dialogModelUsedRecently)
                     _dialogModelFits = true;

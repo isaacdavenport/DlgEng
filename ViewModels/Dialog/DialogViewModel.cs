@@ -422,8 +422,7 @@ namespace DialogEngine.ViewModels.Dialog
                                  + _character.CharacterPrefix + "_"
                                  + _phrase.FileName + ".mp3")) //Char name and prefix are being left blank...
                 {
-                    var _debugMessage = "Missing " + _character.CharacterPrefix + "_" + _phrase.FileName + ".mp3 " +
-                                        _phrase.DialogStr;
+                    var _debugMessage = "Missing " + _character.CharacterPrefix + "_" + _phrase.FileName + ".mp3 " + _phrase.DialogStr;
 
                     AddItem(new WarningMessage(_debugMessage));
 
@@ -562,8 +561,7 @@ namespace DialogEngine.ViewModels.Dialog
 
                     if (SessionVariables.WriteSerialLog)
                         using (var _jsonLog = new StreamWriter(
-                            SessionVariables.LogsDirectory + SessionVariables.DialogLogFileName,
-                            true))
+                            SessionVariables.LogsDirectory + SessionVariables.DialogLogFileName,true))
                         {
                             _jsonLog.WriteLine(" " + _phrasetag + " is not used.");
                         }
