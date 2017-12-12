@@ -1,86 +1,78 @@
 {
-  "CharacterName": "Hoshi Kelvinson",
-  "CharacterPrefix": "HK",
-  "Phrases": [
-    {
-      "DialogStr": "My name's Hoshi Kelvinson.",
-      "FileName": "MyNamesHoshi",
-      "PhraseWeights": {
-        "Greeting": 5
+   "CharacterName" : "Hoshi Kelvinson",
+   "CharacterPrefix" : "HK",
+   "Phrases" : [
+      {
+         "DialogStr" : "My name's Hoshi Kelvinson.",
+         "FileName" : "Greeting",
+         "PhraseWeights" : {
+            "Greeting" : 5
+         },
+         "PhraseRating" : "G"
       },
-      "PhraseRating": "G"
-    },
-   {
-      "DialogStr": "Have you ever seen the sun rise from the moon?",
-      "FileName": "HaveYouEverSeenTheSun",
-      "PhraseWeights": {
-        "YesNoQuestion": 5
+      {
+         "DialogStr" : "Have you ever seen the sun rise from the moon?",
+         "FileName" : "YesNoQuestion",
+         "PhraseWeights" : {
+            "YesNoQuestion" : 5
+         },
+         "PhraseRating" : "G"
       },
- 
-      "PhraseRating": "G"
-    },
-    {
-      "DialogStr": "You fixed my laser skillet!",
-      "FileName": "YouFixedMy",
-      "PhraseWeights": {
-        "GiveCredit": 5
+      {
+         "DialogStr" : "You fixed my laser skillet!",
+         "FileName" : "GiveCredit",
+         "PhraseWeights" : {
+            "GiveCredit" : 5
+         },
+         "PhraseRating" : "G"
       },
- 
-      "PhraseRating": "G"
-    },
-    {
-      "DialogStr": "Sometimes, when I'm flipping pancakes out past Pluto and there aren't any customers in line, I get a little lonely.",
-      "FileName": "SometimesWhenImFlipping",
-      "PhraseWeights": {
-        "RequestAffirmation": 5
+      {
+         "DialogStr" : "Sometimes, when I'm flipping pancakes out past Pluto and there aren't any customers in line, I get a little lonely.",
+         "FileName" : "RequestAffirmation",
+         "PhraseWeights" : {
+            "RequestAffirmation" : 5
+         },
+         "PhraseRating" : "G"
       },
- 
-      "PhraseRating": "G"
-    },
-    {
-      "DialogStr": "Pay me a visit the next time you're in space. I'll keep a glass of orange juice cold, just for you.",
-      "FileName": "PayMeAVisit",
-      "PhraseWeights": {
-        "GiveAffirmation": 5
+      {
+         "DialogStr" : "Pay me a visit the next time you're in space. I'll keep a glass of orange juice cold, just for you.",
+         "FileName" : "GiveAffirmation",
+         "PhraseWeights" : {
+            "GiveAffirmation" : 5
+         },
+         "PhraseRating" : "G"
       },
- 
-      "PhraseRating": "G"
-    },
-    {
-      "DialogStr": "Yes.",
-      "FileName": "Yes",
-      "PhraseWeights": {
-        "Yes": 5
+      {
+         "DialogStr" : "Yes.",
+         "FileName" : "Yes",
+         "PhraseWeights" : {
+            "Yes" : 5
+         },
+         "PhraseRating" : "G"
       },
- 
-      "PhraseRating": "G"
-    },
-    {
-      "DialogStr": "No.",
-      "FileName": "No",
-      "PhraseWeights": {
-        "No": 5
+      {
+         "DialogStr" : "No.",
+         "FileName" : "No",
+         "PhraseWeights" : {
+            "No" : 5
+         },
+         "PhraseRating" : "G"
       },
- 
-      "PhraseRating": "G"
-    },
-    {
-      "DialogStr": "Thank you!",
-      "FileName": "ThankYou",
-      "PhraseWeights": {
-        "ThankYou": 5
+      {
+         "DialogStr" : "Thank you!",
+         "FileName" : "ThankYou",
+         "PhraseWeights" : {
+            "ThankYou" : 5
+         },
+         "PhraseRating" : "G"
       },
- 
-      "PhraseRating": "G"
-    },
-    {
-      "DialogStr": "You're welcome.",
-      "FileName": "YoureWelcome",
-      "PhraseWeights": {
-        "YoureWelcome": 5
-      },
- 
-      "PhraseRating": "G"
-    }
-  ]
+      {
+         "DialogStr" : "You're welcome.",
+         "FileName" : "YoureWelcome",
+         "PhraseWeights" : {
+            "YoureWelcome" : 5
+         },
+         "PhraseRating" : "G"
+      }
+   ]
 }
