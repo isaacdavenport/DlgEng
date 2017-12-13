@@ -893,18 +893,18 @@ namespace DialogEngine
         {
 
             //if the array input is correct size and inputs don't exceed bounds set dialog parameters 
-            if (_dialogDirectives.Count() == 3)
+            if (_dialogDirectives.Count() == 2)
             {
-                if (_dialogDirectives[0] < ModelDialogs.Count)
-                    CurrentDialogModel = _dialogDirectives[0];
+                //if (_dialogDirectives[0] < ModelDialogs.Count)
+                //    CurrentDialogModel = _dialogDirectives[0];
+
+
+                if (_dialogDirectives[0] < CharacterList.Count)
+                    Character1Num = _dialogDirectives[0];
 
 
                 if (_dialogDirectives[1] < CharacterList.Count)
-                    Character1Num = _dialogDirectives[1];
-
-
-                if (_dialogDirectives[2] < CharacterList.Count)
-                    Character2Num = _dialogDirectives[2];
+                    Character2Num = _dialogDirectives[1];
             }
 
             if (SessionVariables.DebugFlag)

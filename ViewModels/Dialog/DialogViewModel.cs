@@ -37,10 +37,14 @@ namespace DialogEngine.ViewModels.Dialog
         private readonly Views.Dialog.DialogView mView;
         private readonly Random mRandom = new Random();
         private BackgroundWorker _dialogWorker;
+        private ManualResetEvent _resetEvent = new ManualResetEvent(false);
         private bool _isModelsDialogChanged = false;
 
         
         private ObservableCollection<object> mDialogLinesCollection;
+
+        private string mSelectedCharacter1="";
+        private string mSelectedCharacter2 = "";
 
         // Combobox item sources
         private ObservableCollection<CharacterInfo> mCharacter1Collection;
@@ -114,6 +118,38 @@ namespace DialogEngine.ViewModels.Dialog
         #endregion
 
         #region - Properties -
+
+
+        public string SelectedCharacter1
+        {
+            get
+            {
+                return mSelectedCharacter1;
+            }
+
+            set
+            {
+                mSelectedCharacter1 = value;
+
+                OnPropertyChanged("SelectedCharacter1");
+            }
+        }
+
+
+        public string SelectedCharacter2
+        {
+            get
+            {
+                return mSelectedCharacter2;
+            }
+
+            set
+            {
+                mSelectedCharacter2 = value;
+
+                OnPropertyChanged("SelectedCharacter2");
+            }
+        }
 
         /// <summary>
         /// Dynamic collection of objects, objects can be added,removed or updated, and UI is automatically updated
@@ -648,25 +684,47 @@ namespace DialogEngine.ViewModels.Dialog
 
         }
 
-        public void StartDialog()
+        public async void StartDialog()
         {
-                DialogLinesCollection.Clear();
+            DialogLinesCollection.Clear();
 
-                OnPropertyChanged("DialogLinesCollection");
+            OnPropertyChanged("DialogLinesCollection");
 
-                 _dialogWorker = new BackgroundWorker();
+            await Task.Run(() =>
+            {
+                if (_dialogWorker != null)
+                {
 
-                _dialogWorker.WorkerReportsProgress = false;
-                _dialogWorker.DoWork += worker_DoWork;
-                _dialogWorker.RunWorkerCompleted += worker_RunWorkerCompleted;
-                _dialogWorker.RunWorkerAsync(400);
+                    _dialogWorker.CancelAsync();
+
+                    _resetEvent.WaitOne();
+
+                    _dialogWorker.RunWorkerAsync(400);
+
+                }
+                else
+                {
+
+                    _dialogWorker = new BackgroundWorker();
+                    _dialogWorker.WorkerSupportsCancellation = true;
+                    _dialogWorker.WorkerReportsProgress = false;
+                    _dialogWorker.DoWork += worker_DoWork;
+                    _dialogWorker.RunWorkerAsync(400);
+
+                }
+
+            });
+
            
         }
 
         private void worker_DoWork(object _sender, DoWorkEventArgs _e)
         {
-            while (true)
+            while (((BackgroundWorker)_sender).CancellationPending != true)
             {
+
+                MessageBox.Show(Thread.CurrentThread.ManagedThreadId.ToString());
+
                 if(_isModelsDialogChanged == true)
                 {
                     InitModelDialogs.SetDefaults(TheDialogs,DialogModelCollection);
@@ -674,17 +732,19 @@ namespace DialogEngine.ViewModels.Dialog
                     _isModelsDialogChanged = false;
                 }
 
+                
+
                 if (SessionVariables.ForceCharactersAndDialogModel)
                 {
-                    var _modelAndCharacters = new int[3];
 
-                    _modelAndCharacters[0] = 1;
 
-                    _modelAndCharacters[1] = 0;
+                    var _modelAndCharacters = new int[2];
 
-                    _modelAndCharacters[2] = 1;
+                    //_modelAndCharacters[0] = 1;
 
-                    
+                    _modelAndCharacters[0] = Int32.Parse(SelectedCharacter1);
+
+                    _modelAndCharacters[1] = Int32.Parse(SelectedCharacter2);
 
                     TheDialogs.GenerateADialog(_modelAndCharacters);
                 }
@@ -712,13 +772,15 @@ namespace DialogEngine.ViewModels.Dialog
                     }
                 }
             }
+
+            MessageBox.Show("Return");
+            _e.Cancel = true;
+
+            _resetEvent.Set();
+
+            return;
         }
 
-
-        private void worker_RunWorkerCompleted(object _sender, RunWorkerCompletedEventArgs _e)
-        {
-            //MessageBoxResult _result = MessageBox.Show("While loop completed");
-        }
 
         #endregion
     }
