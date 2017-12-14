@@ -39,8 +39,10 @@ namespace DialogEngine.ViewModels.Dialog
         private BackgroundWorker _dialogWorker;
         private ManualResetEvent _resetEvent = new ManualResetEvent(false);
         private bool _isModelsDialogChanged = false;
+        private CancellationTokenSource _cancellationTokensource;
 
-        
+
+
         private ObservableCollection<object> mDialogLinesCollection;
 
         private string mSelectedCharacter1="";
@@ -690,95 +692,86 @@ namespace DialogEngine.ViewModels.Dialog
 
             OnPropertyChanged("DialogLinesCollection");
 
+            if(_cancellationTokensource == null)
+            {
+                _cancellationTokensource = new CancellationTokenSource();
+            }
+            else
+            {
+                _cancellationTokensource.Cancel();
+
+                _cancellationTokensource = new CancellationTokenSource();
+            }
+
+
             await Task.Run(() =>
             {
-                if (_dialogWorker != null)
-                {
 
-                    _dialogWorker.CancelAsync();
+                _dialogWorkerMethod(_cancellationTokensource.Token);
 
-                    _resetEvent.WaitOne();
-
-                    _dialogWorker.RunWorkerAsync(400);
-
-                }
-                else
-                {
-
-                    _dialogWorker = new BackgroundWorker();
-                    _dialogWorker.WorkerSupportsCancellation = true;
-                    _dialogWorker.WorkerReportsProgress = false;
-                    _dialogWorker.DoWork += worker_DoWork;
-                    _dialogWorker.RunWorkerAsync(400);
-
-                }
-
-            });
+            }, _cancellationTokensource.Token);
 
            
         }
 
-        private void worker_DoWork(object _sender, DoWorkEventArgs _e)
+
+        private async void _dialogWorkerMethod(CancellationToken _cancellationToken)
         {
-            while (((BackgroundWorker)_sender).CancellationPending != true)
+            Task task =Task.Run(() =>
             {
-
-                MessageBox.Show(Thread.CurrentThread.ManagedThreadId.ToString());
-
-                if(_isModelsDialogChanged == true)
-                {
-                    InitModelDialogs.SetDefaults(TheDialogs,DialogModelCollection);
-
-                    _isModelsDialogChanged = false;
-                }
-
-                
-
-                if (SessionVariables.ForceCharactersAndDialogModel)
+                while (!_cancellationToken.IsCancellationRequested)
                 {
 
-
-                    var _modelAndCharacters = new int[2];
-
-                    //_modelAndCharacters[0] = 1;
-
-                    _modelAndCharacters[0] = Int32.Parse(SelectedCharacter1);
-
-                    _modelAndCharacters[1] = Int32.Parse(SelectedCharacter2);
-
-                    TheDialogs.GenerateADialog(_modelAndCharacters);
-                }
-                else
-                {
-                    if (!SessionVariables.HeatMapOnlyMode)
+                    if (_isModelsDialogChanged == true)
                     {
-                        TheDialogs.GenerateADialog(); //normal operation
+                        InitModelDialogs.SetDefaults(TheDialogs, DialogModelCollection);
 
-                        Thread.Sleep(1100); //vb:commented out for debugging as code stops here
+                        _isModelsDialogChanged = false;
+                    }
 
-                        Thread.Sleep(mRandom.Next(0, 2000)); //vb:commented out for debugging as code stops here
+
+
+                    if (SessionVariables.ForceCharactersAndDialogModel)
+                    {
+
+
+                        var _modelAndCharacters = new int[2];
+
+                        //_modelAndCharacters[0] = 1;
+
+                        _modelAndCharacters[0] = Int32.Parse(SelectedCharacter1);
+
+                        _modelAndCharacters[1] = Int32.Parse(SelectedCharacter2);
+
+                        TheDialogs.GenerateADialog(_cancellationToken,_modelAndCharacters);
                     }
                     else
                     {
-                        if (SessionVariables.HeatMapFullMatrixDispMode)
-                            FirmwareDebuggingTools.PrintHeatMap();
+                        if (!SessionVariables.HeatMapOnlyMode)
+                        {
+                            TheDialogs.GenerateADialog(_cancellationToken); //normal operation
+
+                            Thread.Sleep(1100); //vb:commented out for debugging as code stops here
+
+                            Thread.Sleep(mRandom.Next(0, 2000)); //vb:commented out for debugging as code stops here
+                        }
+                        else
+                        {
+                            if (SessionVariables.HeatMapFullMatrixDispMode)
+                                FirmwareDebuggingTools.PrintHeatMap();
 
 
-                        if (SessionVariables.HeatMapSumsMode)
-                            FirmwareDebuggingTools.PrintHeatMapSums();
+                            if (SessionVariables.HeatMapSumsMode)
+                                FirmwareDebuggingTools.PrintHeatMapSums();
 
 
-                        Thread.Sleep(400); //vb:commented out for debugging as code stops here
+                            Thread.Sleep(400); //vb:commented out for debugging as code stops here
+                        }
                     }
                 }
-            }
+            }, _cancellationToken);
 
-            MessageBox.Show("Return");
-            _e.Cancel = true;
-
-            _resetEvent.Set();
-
-            return;
+            await task;
         }
 
 

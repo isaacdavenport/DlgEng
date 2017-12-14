@@ -144,8 +144,15 @@ namespace DialogEngine
         /// </summary>
         /// <param name="_dialogDirectives"></param>
         // TODO generate parallel dialogs, using string tags.
-        public void GenerateADialog(params int[] _dialogDirectives)
+        public void GenerateADialog(CancellationToken _cancellationToken,params int[] _dialogDirectives)
         {
+
+            //check is async method canceled
+            if (_cancellationToken.IsCancellationRequested)
+            {
+                return;
+            }
+            
             if (!importClosestSerialComsCharacters())
                 return;
 
@@ -168,6 +175,12 @@ namespace DialogEngine
 
             foreach (var _currentPhraseType in ModelDialogs[mCurrentDialogModel].PhraseTypeSequence)
             {
+                //check is async method canceled
+                if (_cancellationToken.IsCancellationRequested)
+                {
+                    return;
+                }
+
                 if (CharacterList[_speakingCharacter].PhraseTotals.PhraseWeights.ContainsKey(_currentPhraseType))
                     if (SessionVariables.TextDialogsOn)
                     {
