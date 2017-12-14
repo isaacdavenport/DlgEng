@@ -360,7 +360,7 @@ namespace DialogEngine.ViewModels.Dialog
 
         private void _bindCommands()
         {
-            GenerateDialog = new RelayCommand(_x => StartDialog());
+            GenerateDialog = new RelayCommand(_x => _startDialog());
 
             ClearAllMessages = new RelayCommand(x => _clearAllMessages((string)x));
         }
@@ -686,7 +686,7 @@ namespace DialogEngine.ViewModels.Dialog
 
         }
 
-        public async void StartDialog()
+        public  void _startDialog()
         {
             DialogLinesCollection.Clear();
 
@@ -704,12 +704,7 @@ namespace DialogEngine.ViewModels.Dialog
             }
 
 
-            await Task.Run(() =>
-            {
-
-                _dialogWorkerMethod(_cancellationTokensource.Token);
-
-            }, _cancellationTokensource.Token);
+            _dialogWorkerMethod(_cancellationTokensource.Token);
 
            
         }
