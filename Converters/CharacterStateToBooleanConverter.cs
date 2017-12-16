@@ -32,6 +32,7 @@ namespace DialogEngine.Converters
         {
             EventAggregator.Instance.GetEvent<ChangedCharactersStateEvent>().Publish();
 
+
             return (CharacterState)_parameter;
         }
     }

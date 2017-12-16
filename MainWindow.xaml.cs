@@ -18,7 +18,7 @@ namespace DialogEngine
     /// </summary>
     public partial class MainWindow : Window
     {
-        #region -fields-
+        #region - fields -
         
         // Default application logger
         private static readonly ILog mcLogger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
@@ -38,16 +38,6 @@ namespace DialogEngine
             mainFrame.Source = new Uri("Views/Dialog/DialogView.xaml", UriKind.Relative);
 
             
-        }
-
-        #endregion
-
-        #region - Public methods -
-
-        public void WriteStatusInfo(string _infoMessage, Brush _infoColor)
-        {
-            StatusBarTextBox.Foreground = _infoColor;
-            StatusBarTextBox.Text = _infoMessage;
         }
 
         #endregion
@@ -75,5 +65,17 @@ namespace DialogEngine
         }
 
         #endregion
+
+        #region - public methods -
+
+        public void WriteStatusInfo(string _infoMessage, Brush _infoColor)
+        {
+            StatusBarTextBox.Foreground = _infoColor;
+            StatusBarTextBox.Text = _infoMessage;
+        }
+
+        #endregion
+
+
     }
 }

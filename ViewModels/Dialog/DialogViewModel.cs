@@ -61,6 +61,8 @@ namespace DialogEngine.ViewModels.Dialog
 
         #endregion
 
+        #endregion
+
         #region - Constructor -
 
         public DialogViewModel(Views.Dialog.DialogView _view)
@@ -80,42 +82,6 @@ namespace DialogEngine.ViewModels.Dialog
             _initDialogData();
 
         }
-
-        #endregion
-
-        #region - Commands -
-
-        public RelayCommand GenerateDialog { get; set; }
-
-        public RelayCommand ClearAllMessages { get; set; }
-
-        #endregion
-
-        #region - Public methods -
-
-        /// <summary>
-        /// Add dialog item line
-        /// </summary>
-        /// <param name="_entry">Line to be added</param>
-        public void AddItem(object _entry)
-        {
-            if (Application.Current.Dispatcher.CheckAccess())
-            {
-                _processAddItem(_entry);
-            }
-            else
-            {
-                Application.Current.Dispatcher.BeginInvoke((Action)(() =>
-                {
-                    _processAddItem(_entry);
-                }));
-            }
-
-        }
-
-        #endregion
-
-
 
         #endregion
 
@@ -282,6 +248,14 @@ namespace DialogEngine.ViewModels.Dialog
         }
 
 
+
+        #endregion
+
+        #region - Commands -
+
+        public RelayCommand GenerateDialog { get; set; }
+
+        public RelayCommand ClearAllMessages { get; set; }
 
         #endregion
 
@@ -729,7 +703,6 @@ namespace DialogEngine.ViewModels.Dialog
                     if (SessionVariables.ForceCharactersAndDialogModel)
                     {
 
-
                         var _modelAndCharacters = new int[2];
 
                         //_modelAndCharacters[0] = 1;
@@ -771,5 +744,30 @@ namespace DialogEngine.ViewModels.Dialog
 
 
         #endregion
+
+        #region - Public methods -
+
+        /// <summary>
+        /// Add dialog item line
+        /// </summary>
+        /// <param name="_entry">Line to be added</param>
+        public void AddItem(object _entry)
+        {
+            if (Application.Current.Dispatcher.CheckAccess())
+            {
+                _processAddItem(_entry);
+            }
+            else
+            {
+                Application.Current.Dispatcher.BeginInvoke((Action)(() =>
+                {
+                    _processAddItem(_entry);
+                }));
+            }
+
+        }
+
+        #endregion
+
     }
 }
