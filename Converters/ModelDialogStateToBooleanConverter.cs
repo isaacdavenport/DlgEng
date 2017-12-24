@@ -19,6 +19,14 @@ namespace DialogEngine.Converters
     /// </summary>
     public class ModelDialogStateToBooleanConverter : IValueConverter
     {
+        /// <summary>
+        /// Check radio button if ModelDialogState enum value is equal to casted ModelDialogState string value
+        /// </summary>
+        /// <param name="_value"></param>
+        /// <param name="_targetType"></param>
+        /// <param name="_parameter"></param>
+        /// <param name="_culture"></param>
+        /// <returns>bool</returns>
         public object Convert(object _value, Type _targetType, object _parameter, CultureInfo _culture)
         {
             ModelDialogState _state = (ModelDialogState)_parameter;
@@ -28,6 +36,14 @@ namespace DialogEngine.Converters
             return _state == _enumValue;
         }
 
+        /// <summary>
+        /// Casts ModelDialogState string value to ModelDialogState enum value
+        /// </summary>
+        /// <param name="_value"></param>
+        /// <param name="_targetType"></param>
+        /// <param name="_parameter"></param>
+        /// <param name="_culture"></param>
+        /// <returns>new ModelDialogState</returns>
         public object ConvertBack(object _value, Type _targetType, object _parameter, CultureInfo _culture)
         {
             EventAggregator.Instance.GetEvent<ChangedModelDialogStateEvent>().Publish();

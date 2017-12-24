@@ -10,10 +10,9 @@ using System.Threading.Tasks;
 namespace DialogEngine.Events.DialogEvents
 {
     /// <summary>
-    /// Event is fired when CharacterState is changed
-    /// Extends <see cref="SimpleEvent"/>
+    /// Event is fired when we want to stop currently playing .mp3 file
     /// </summary>
-    public class ChangedCharactersStateEvent : SimpleEvent
+    public class StopPlayingCurrentDialogLineEvent : SimpleEvent
     {
     }
 }

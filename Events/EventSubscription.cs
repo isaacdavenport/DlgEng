@@ -20,10 +20,10 @@ namespace DialogEngine.Events
         /// <summary>
         /// Initializes new instance of EventSubscription class with provided action.
         /// </summary>
-        /// <param name="action">Action to execute when event is published.</param>
-        public EventSubscription(Action<TPayload> action)
+        /// <param name="_action">Action to execute when event is published.</param>
+        public EventSubscription(Action<TPayload> _action)
         {
-            this._target = action;
+            this._target = _action;
         }
 
         /// <summary>

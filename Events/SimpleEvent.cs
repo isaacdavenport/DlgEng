@@ -15,24 +15,24 @@ namespace DialogEngine.Events
         /// <summary>
         /// Subscribes a delegate to an event.
         /// </summary>
-        /// <param name="action">The delegate that gets executed when the event is raised.</param>
-        public virtual void Subscribe(Action action)
+        /// <param name="_action">The delegate that gets executed when the event is raised.</param>
+        public virtual void Subscribe(Action _action)
         {
-            this.InternalSubscribe(new SimpleEventSubscription(action));
+            this.InternalSubscribe(new SimpleEventSubscription(_action));
         }
 
         /// <summary>
         /// Removes the first subscriber matching <seealso cref="Action"/> from the subscribers' list.
         /// </summary>
-        /// <param name="subscriber">The <see cref="Action"/> used when subscribing to the event.</param>
-        public virtual void Unsubscribe(Action subscriber)
+        /// <param name="_subscriber">The <see cref="Action"/> used when subscribing to the event.</param>
+        public virtual void Unsubscribe(Action _subscriber)
         {
             lock (Subscriptions)
             {
-                IEventSubscription eventSubscription = Subscriptions.Cast<SimpleEventSubscription>().FirstOrDefault(evt => evt.Action == subscriber);
-                if (eventSubscription != null)
+                IEventSubscription _eventSubscription = Subscriptions.Cast<SimpleEventSubscription>().FirstOrDefault(evt => evt.Action == _subscriber);
+                if (_eventSubscription != null)
                 {
-                    Subscriptions.Remove(eventSubscription);
+                    Subscriptions.Remove(_eventSubscription);
                 }
             }
         }
@@ -44,9 +44,9 @@ namespace DialogEngine.Events
         {
             lock (Subscriptions)
             {
-                foreach (var subscription in Subscriptions)
+                foreach (var _subscription in Subscriptions)
                 {
-                    ((Action)subscription.Target)();
+                    ((Action)_subscription.Target)();
                 }
             }
         }

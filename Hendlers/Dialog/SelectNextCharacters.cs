@@ -13,20 +13,18 @@ namespace DialogEngine
         #region  - Fields -
 
         private static Random msRandom = new Random();
-        private  static DialogTracker msDialogTracker=DialogTracker.Instance;
-
+        private static DialogTracker msDialogTracker=DialogTracker.Instance;
+        private static int[,] msStrongRssiCharacterPairBuf = new int[2, StrongRssiBufDepth];
 
         public const int StrongRssiBufDepth = 12;
-
         public static readonly TimeSpan MaxLastSeenInterval = new TimeSpan(0, 0, 0, 2, 100);
-
 
         public static int BigRssi = 0;
         public static bool RssiStable = false;
-        public static int NextCharacter1 = 1, NextCharacter2 = 2;
+        public static int NextCharacter1 = 1;
+        public static int NextCharacter2 = 2;
         public static int[,] HeatMap = new int[SerialComs.NumRadios, SerialComs.NumRadios];
         public static DateTime[] CharactersLastHeatMapUpdateTime = new DateTime[SerialComs.NumRadios];
-        static int[,] msStrongRssiCharacterPairBuf = new int[2, StrongRssiBufDepth];
 
         #endregion
 
@@ -57,6 +55,7 @@ namespace DialogEngine
                 }
             }
         }
+
 
         static void _assignNextCharacters(int _tempCh1, int _tempCh2)
         {

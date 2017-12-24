@@ -10,7 +10,8 @@
       xmlns:loggerModel ="clr-namespace:DialogEngine.Models.Logger"
       xmlns:sys="clr-namespace:System;assembly=mscorlib"
       xmlns:fa="http://schemas.fontawesome.io/icons/"
-      xmlns:converters ="clr-namespace:DialogEngine.Converters"      
+      xmlns:converters ="clr-namespace:DialogEngine.Converters"
+      xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
       mc:Ignorable="d" 
       d:DesignHeight="300" d:DesignWidth="300"
       Title="Dialog">
@@ -71,7 +72,6 @@
                                   HorizontalAlignment="Stretch"  
                                   Margin="0,0,0,3"
                                   Text="Settings"
-                                  Tag="Settings"
                                   IsReadOnly="true"
                                   ItemsSource="{Binding Character1Collection}" />
 
@@ -104,152 +104,6 @@
 
                 <Separator Margin="0,15,15,0" Background="White" />
 
-                <!--<Grid>
-                    <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-
-                        <Label FontSize="14" 
-                               FontWeight="Bold" 
-                               Content="Character 1"  
-                               Grid.ColumnSpan="2" 
-                               Margin="0,0,0,0" 
-                               HorizontalAlignment="Center" />
-
-                </Grid>-->
-
-                <Grid>
-                    
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-
-                        </Grid.ColumnDefinitions>
-
-                        <Label Grid.Column="0"
-                               FontSize="14" 
-                               HorizontalAlignment="Right"  
-                               Content="Character 1:" />
-
-                        <TextBox Grid.Column="1"
-                                 x:Name="SelectedCharacter1"
-                                 Style="{StaticResource TextBoxStyle1}" 
-                                 Text="{Binding SelectedCharacter1, Mode=TwoWay}"
-                                 Margin="0,0,0,3" 
-                                  />
-
-                  </Grid>
-
-                 <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-
-                        </Grid.ColumnDefinitions>
-
-                        <Label Grid.Column="0"
-                               FontSize="14"   HorizontalAlignment="Right" Content="Character 2:"></Label>
-                
-                        <TextBox Grid.Column="1" 
-                                  x:Name="SelectedCharacter2"
-                                 Style="{StaticResource TextBoxStyle1}" 
-                                 Text="{Binding SelectedCharacter2, Mode=TwoWay}"
-                                 Margin="0,0,0,3"
-                                  />
-
-                 </Grid>
-
-                <!--<Grid>
-                    <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="2*" />
-                        </Grid.ColumnDefinitions>
-
-                        <Label Grid.Column="0" 
-                               FontSize="14"  
-                               HorizontalAlignment="Right" 
-                               Content="Number:" />
-
-                        <TextBox Grid.Column="1" 
-                                 IsEnabled="False" 
-                                 Style="{StaticResource TextBoxStyle1}" 
-                                 Margin="0,0,0,3" 
-                                 Text="{Binding ElementName=Charachter1, Path=SelectedIndex}" />
-
-                </Grid>
-
-
-                    <Separator Margin="0,15,15,0" Background="White" />-->
-
-                
-                <!--<Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-
-                        <Label FontSize="14" 
-                               FontWeight="Bold" 
-                               Content="Character 2"  
-                               Grid.ColumnSpan="2" 
-                               Margin="0,0,0,0" 
-                               HorizontalAlignment="Center" />
-
-                </Grid>
-
-                <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="2*" />
-                        </Grid.ColumnDefinitions>
-
-                        <Label Grid.Column="0" 
-                               FontSize="14" 
-                               HorizontalAlignment="Right"  
-                               Content="Character name:" />
-
-                        <TextBox Grid.Column="1" 
-                                 IsEnabled="False" 
-                                 Style="{StaticResource TextBoxStyle1}" 
-                                 Margin="0,0,0,3" 
-                                 Text="{Binding ElementName=Charachter2, Path=SelectedItem.CharacterName}" />
-
-                </Grid>-->
-
-                <!--<Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="2*" />
-                        </Grid.ColumnDefinitions>
-
-                        <Label Grid.Column="0" FontSize="14"  HorizontalAlignment="Right" Content="Initials:"></Label>
-                        <TextBox Grid.Column="1" 
-                                 IsEnabled="False" 
-                                 Style="{StaticResource TextBoxStyle1}" 
-                                 Margin="0,0,0,3" 
-                                 Text="{Binding ElementName=Charachter2, Path=SelectedItem.CharacterPrefix}" />
-
-                </Grid>
-
-                <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="2*" />
-                        </Grid.ColumnDefinitions>
-
-                        <Label Grid.Column="0" 
-                               FontSize="14"  
-                               HorizontalAlignment="Right" 
-                               Content="Number:" />
-
-                        <TextBox Grid.Column="1" 
-                                 IsEnabled="False"  
-                                 Style="{StaticResource TextBoxStyle1}" 
-                                 Margin="0,0,0,3"  
-                                 Text="{Binding ElementName=Charachter2, Path=SelectedIndex}" />
-
-                </Grid>-->
 
                 <Separator Margin="0,15,15,0" Background="White" />
 
@@ -391,7 +245,7 @@
                       VerticalAlignment="Stretch" 
                       HorizontalAlignment="Stretch" />
 
-            <TabControl Grid.Row="2" BorderThickness="0" HorizontalAlignment="Stretch" TabStripPlacement="Bottom" VerticalAlignment="Stretch" x:Name="LoggerMessages">
+            <TabControl  Grid.Row="2" BorderThickness="0"  HorizontalAlignment="Stretch" TabStripPlacement="Bottom" VerticalAlignment="Stretch" x:Name="LoggerMessages">
                 <TabControl.Resources>
                     <Style TargetType="TabItem">
                         <Setter Property="Template">
@@ -418,7 +272,12 @@
                         </Setter>
                     </Style>
                 </TabControl.Resources>
-                
+
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding RefreshTabItem}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
                 
                 <TabItem BorderThickness="0">
 
@@ -455,7 +314,7 @@
                         
                         <ListView.View>
                             <GridView >
-                                <GridViewColumn Header="Description"
+                                <GridViewColumn x:Name="ErrorGridViewColumn" Header="Description"
                                                 Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}, Converter={StaticResource StarWidthConverter}}" 
                                                 DisplayMemberBinding="{Binding Message}" />
                                 <GridViewColumn Header="File" Width="200"  DisplayMemberBinding="{Binding SourceFile}" />
@@ -501,7 +360,7 @@
                         
                         <ListView.View>
                             <GridView >
-                                <GridViewColumn Header="Description"
+                                <GridViewColumn x:Name="WarningGridViewColumn" Header="Description"
                                                 Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}, Converter={StaticResource StarWidthConverter}}" 
                                                 DisplayMemberBinding="{Binding Message}" />
                                 <GridViewColumn Header="File" Width="200"  DisplayMemberBinding="{Binding SourceFile}" />
@@ -526,9 +385,9 @@
                         </ContextMenu>
 
                     </TabItem.ContextMenu>
-                    
+
                     <TabItem.Header>
-                        <StackPanel Orientation="Horizontal" >
+                        <StackPanel  Orientation="Horizontal" >
                             <Image Width="15" Height="15"  Source="pack://application:,,,/Resources/Images/info.png" />
                             <Label Content="{Binding InfoMessagesCollection.Count}"/>
                             <Label Content="Info"/>
@@ -546,7 +405,7 @@
                         
                         <ListView.View>
                             <GridView >
-                                <GridViewColumn Header="Description" 
+                                <GridViewColumn x:Name="InfoGridViewColumn" Header="Description" 
                                                 Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}, Converter={StaticResource StarWidthConverter}}" 
                                                 DisplayMemberBinding="{Binding Message}" />
                                 <GridViewColumn Header="File" Width="200"  DisplayMemberBinding="{Binding SourceFile}" />

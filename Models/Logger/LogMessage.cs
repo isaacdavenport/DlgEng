@@ -15,16 +15,29 @@ namespace DialogEngine.Models.Logger
     /// </summary>
     public abstract class LogMessage
     {
+        /// <summary>
+        /// Set message
+        /// </summary>
+        /// <param name="_message">Message text</param>
         protected LogMessage(string _message)
         {
             Message = _message;
         }
 
-        public string Message { get; set; }  // message text
+        /// <summary>
+        /// Message text
+        /// </summary>
+        public string Message { get; set; }
 
-        public string SourceFile { get; set; }  // file where message generated
+        /// <summary>
+        /// File where message generated
+        /// </summary>
+        public string SourceFile { get; set; }  
 
-        public int    Line { get; set; } // line in file where message generated
+        /// <summary>
+        /// Line in file where message generated
+        /// </summary>
+        public int    Line { get; set; } 
 
     }
 }

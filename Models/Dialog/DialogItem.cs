@@ -8,12 +8,15 @@ using System.Text;
 
 namespace DialogEngine.Models.Dialog
 {
-
+    /// <summary>
+    /// Class represents one dialog line
+    /// </summary>
     public class DialogItem
     {
-
+        // Speaker character
         public Character Character { get; set; }
 
+        // Current spekaing phrase
         public PhraseEntry PhraseEntry { get; set; }
 
     }

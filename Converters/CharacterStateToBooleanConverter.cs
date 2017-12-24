@@ -19,6 +19,14 @@ namespace DialogEngine.Converters
     /// </summary>
     public class CharacterStateToBooleanConverter : IValueConverter
     {
+        /// <summary>
+        /// Check radio button if CharacterState enum value is equal to casted CharacterState string value
+        /// </summary>
+        /// <param name="_value"></param>
+        /// <param name="_targetType"></param>
+        /// <param name="_parameter"></param>
+        /// <param name="_culture"></param>
+        /// <returns> bool </returns>
         public object Convert(object _value, Type _targetType, object _parameter, CultureInfo _culture)
         {
             CharacterState _state = (CharacterState)_parameter;
@@ -28,12 +36,18 @@ namespace DialogEngine.Converters
             return _state == _enumValue;
         }
 
+
+        /// <summary>
+        /// Casts CharacterState string value to CharacterState enum value
+        /// </summary>
+        /// <param name="_value"></param>
+        /// <param name="_targetType"></param>
+        /// <param name="_parameter">New character state as string value</param>
+        /// <param name="_culture"></param>
+        /// <returns>New character state as enum value</returns>
         public object ConvertBack(object _value, Type _targetType, object _parameter, CultureInfo _culture)
-        {
-            EventAggregator.Instance.GetEvent<ChangedCharactersStateEvent>().Publish();
-
-
-            return (CharacterState)_parameter;
+        {         
+            return (CharacterState)_parameter; ;
         }
     }
 }

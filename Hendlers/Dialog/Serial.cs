@@ -69,7 +69,6 @@ namespace DialogEngine
         /// Initialize serial port
         /// </summary>
         public static void InitSerial()
-
         {
             if (SessionVariables.UseSerialPort)
 

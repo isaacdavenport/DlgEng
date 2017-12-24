@@ -16,7 +16,7 @@ namespace DialogEngine.Events
     {
         #region - Fields -
 
-        private readonly Dictionary<Type, EventBase> events = new Dictionary<Type, EventBase>();
+        private readonly Dictionary<Type, EventBase> mEvents = new Dictionary<Type, EventBase>();
 
         #endregion
 
@@ -55,18 +55,18 @@ namespace DialogEngine.Events
         /// <returns>A singleton instance of an event object of type <typeparamref name="TEventType"/>.</returns>
         public TEventType GetEvent<TEventType>() where TEventType : EventBase, new()
         {
-            EventBase existingEvent = null;
+            EventBase _existingEvent = null;
 
-            if (!this.events.TryGetValue(typeof(TEventType), out existingEvent))
+            if (!this.mEvents.TryGetValue(typeof(TEventType), out _existingEvent))
             {
-                TEventType newEvent = new TEventType();
-                this.events[typeof(TEventType)] = newEvent;
+                TEventType _newEvent = new TEventType();
+                this.mEvents[typeof(TEventType)] = _newEvent;
 
-                return newEvent;
+                return _newEvent;
             }
             else
             {
-                return (TEventType)existingEvent;
+                return (TEventType)_existingEvent;
             }
         }
     }

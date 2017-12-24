@@ -1,4 +1,7 @@
-﻿namespace DialogEngine.Core
+﻿//  Confidential Source Code Property Toys2Life LLC Colorado 2017
+//  www.toys2life.org
+
+namespace DialogEngine.Core
 {
     using System.ComponentModel;
     using System.Windows;
@@ -17,7 +20,7 @@
         /// </summary>
         public PageBase()
         {
-            this.Loaded += this.onPageBaseLoaded;
+            this.Loaded += this._onPageBaseLoaded;
             this.Unloaded += this.onPageBaseUnloaded;
         }
 
@@ -39,14 +42,14 @@
         /// <summary>
         ///     Occurs when page is loaded for first time.
         /// </summary>
-        protected virtual void OnPageLoaded()
+        protected virtual void onPageLoaded()
         {
         }
 
         /// <summary>
         ///     Occurs when page is unloaded.
         /// </summary>
-        protected virtual void OnPageUnloaded()
+        protected virtual void onPageUnloaded()
         {
         }
 
@@ -62,11 +65,11 @@
         /// </summary>
         /// <param name="_sender"></param>
         /// <param name="_e"></param>
-        private void onPageBaseLoaded(object _sender, RoutedEventArgs _e)
+        private void _onPageBaseLoaded(object _sender, RoutedEventArgs _e)
         {
-            this.Loaded -= this.onPageBaseLoaded;
+            this.Loaded -= this._onPageBaseLoaded;
 
-            this.OnPageLoaded();
+            this.onPageLoaded();
         }
 
         /// <summary>
@@ -80,7 +83,7 @@
             // Remove all command bindings on unload
             while (this.CommandBindings.Count > 0) this.CommandBindings.RemoveAt(0);
 
-            this.OnPageUnloaded();
+            this.onPageUnloaded();
         }
     }
 }

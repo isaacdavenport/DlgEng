@@ -154,26 +154,45 @@
                                         BorderBrush="LightGray">
 
 
-                                        <DataGrid ItemsSource="{TemplateBinding ItemsSource}"  HeadersVisibility="Column"  CanUserAddRows="False" Background="White" VerticalGridLinesBrush="LightGray" HorizontalGridLinesBrush="LightGray" BorderBrush="LightGray" BorderThickness="1" AutoGenerateColumns="False"  Height="200">
+                                        <DataGrid ItemsSource="{TemplateBinding ItemsSource}" x:Name="dataGrid"  HeadersVisibility="Column"  CanUserAddRows="False" Background="White" VerticalGridLinesBrush="LightGray" HorizontalGridLinesBrush="LightGray" BorderBrush="LightGray" BorderThickness="1" AutoGenerateColumns="False"  Height="200">
                                             <DataGrid.Columns>
+                                                
                                                 <DataGridTextColumn IsReadOnly="True" 
                                                                     Header="" 
                                                                     Width="auto" 
-                                                                    Binding ="{Binding RelativeSource={RelativeSource FindAncestor,  AncestorType={x:Type DataGridRow}},Converter={StaticResource RowIndexConverter}}" />
+                                                                    Binding ="{Binding RelativeSource={RelativeSource FindAncestor,  AncestorType={x:Type DataGridRow}},Converter={StaticResource RowIndexConverter}}"></DataGridTextColumn>
+
                                                 
                                                 <DataGridTextColumn IsReadOnly="True" 
                                                                     Width="*" 
                                                                     Header="Characters" 
                                                                     Binding ="{Binding CharacterName}" />
-                                                
-                                                <DataGridTemplateColumn Header="On"
-                                                                        Width="auto">
-                                                    
+
+                                                <DataGridTemplateColumn Header="Available" Width="auto">
                                                     <DataGridTemplateColumn.CellTemplate>
                                                         <DataTemplate>
-                                                            <RadioButton HorizontalAlignment="Center" 
-                                                                         IsChecked="{Binding State, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, Converter = {StaticResource CharacterStateToBooleanConverter} , ConverterParameter={x:Static enums:CharacterState.On}}" >
+                                                            <RadioButton HorizontalAlignment="Center" IsChecked="{Binding State, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter = {StaticResource CharacterStateToBooleanConverter}, ConverterParameter={x:Static enums:CharacterState.Available}}">
                                                                 <RadioButton.GroupName>
+                                                                    <MultiBinding Converter="{StaticResource DynamicGroupNameConverter}">
+                                                                        <Binding Path="CharacterName" />
+                                                                        <Binding Path="Name" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=ComboBox}" />
+                                                                    </MultiBinding>
+                                                                </RadioButton.GroupName>
+                                                            </RadioButton>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+
+                                                </DataGridTemplateColumn>
+                                                <DataGridTemplateColumn Header="On"
+                                                                        Width="auto">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <RadioButton IsChecked="{Binding State, 
+                                                                                            Mode=TwoWay,
+                                                                                            UpdateSourceTrigger=PropertyChanged, 
+                                                                                            Converter = {StaticResource CharacterStateToBooleanConverter}, 
+                                                                                            ConverterParameter={x:Static enums:CharacterState.On}}" >
+                                                            <RadioButton.GroupName>
                                                                     <MultiBinding Converter="{StaticResource DynamicGroupNameConverter}">
                                                                         <Binding Path="CharacterName" />
                                                                         <Binding Path="Name" 
@@ -186,12 +205,16 @@
 
                                                 </DataGridTemplateColumn>
 
+                                                
                                                 <DataGridTemplateColumn Header="Off"
                                                                         Width="auto">
                                                     <DataGridTemplateColumn.CellTemplate>
                                                         <DataTemplate>
-                                                            <RadioButton HorizontalAlignment="Center" 
-                                                                         IsChecked="{Binding State, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, Converter = {StaticResource CharacterStateToBooleanConverter} , ConverterParameter={x:Static enums:CharacterState.Off}}" >
+                                                            <RadioButton IsChecked="{Binding State, 
+                                                                                             Mode=TwoWay,
+                                                                                             UpdateSourceTrigger=PropertyChanged, 
+                                                                                             Converter = {StaticResource CharacterStateToBooleanConverter}, 
+                                                                                             ConverterParameter={x:Static enums:CharacterState.Off}}" >
                                                                 <RadioButton.GroupName>
                                                                         <MultiBinding Converter="{StaticResource DynamicGroupNameConverter}">
                                                                             <Binding Path="CharacterName" />
@@ -205,23 +228,7 @@
                                                 </DataGridTemplateColumn>
                                                 
                                                 
-                                                <DataGridTemplateColumn Header="Available"
-                                                                        Width="auto">
-                                                    <DataGridTemplateColumn.CellTemplate>
-                                                        <DataTemplate>
-                                                            <RadioButton HorizontalAlignment="Center" 
-                                                                         IsChecked="{Binding State, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, Converter = {StaticResource CharacterStateToBooleanConverter} , ConverterParameter={x:Static enums:CharacterState.Available}}" >
-                                                                <RadioButton.GroupName>
-                                                                    <MultiBinding Converter="{StaticResource DynamicGroupNameConverter}">
-                                                                        <Binding Path="CharacterName" />
-                                                                        <Binding Path="Name" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=ComboBox}" />
-                                                                    </MultiBinding>
-                                                                </RadioButton.GroupName>
-                                                            </RadioButton>
-                                                        </DataTemplate>
-                                                    </DataGridTemplateColumn.CellTemplate>
 
-                                                </DataGridTemplateColumn>
                                             </DataGrid.Columns>
                                         </DataGrid>
                                        
@@ -377,7 +384,7 @@
                                                     <DataGridTemplateColumn.CellTemplate>
                                                         <DataTemplate>
                                                             <RadioButton HorizontalAlignment="Center" 
-                                                                         IsChecked="{Binding State, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, Converter = {StaticResource ModelDialogStateToBooleanConverter} , ConverterParameter={x:Static enums:ModelDialogState.On}}" >
+                                                                         IsChecked="{Binding State, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, Converter = {StaticResource ModelDialogStateToBooleanConverter}, ConverterParameter={x:Static enums:ModelDialogState.On}}" >
                                                                 <RadioButton.GroupName>
                                                                     <MultiBinding Converter="{StaticResource DynamicGroupNameConverter}">
                                                                         <Binding Path="FileName" />

@@ -1,6 +1,5 @@
-﻿// // Filename : RelayCommand.cs
-// // Date Created : 2017/10/30
-// // Created by: Sasa Basta
+﻿//  Confidential Source Code Property Toys2Life LLC Colorado 2017
+//  www.toys2life.org
 
 namespace DialogEngine.Core
 {

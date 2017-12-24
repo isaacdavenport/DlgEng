@@ -27,26 +27,26 @@ namespace DialogEngine.Events
         /// <summary>
         /// Subscribe to event.
         /// </summary>
-        /// <param name="subscription">Subscription to add.</param>
-        protected void InternalSubscribe(IEventSubscription subscription)
+        /// <param name="_subscription">Subscription to add.</param>
+        protected void InternalSubscribe(IEventSubscription _subscription)
         {
-            if (subscription == null) throw new System.ArgumentNullException("eventSubscription");
+            if (_subscription == null) throw new System.ArgumentNullException("eventSubscription");
 
             lock (Subscriptions)
             {
-                _subscriptions.Add(subscription);
+                _subscriptions.Add(_subscription);
             }
         }
 
         /// <summary>
         /// Unsubscribe.
         /// </summary>
-        /// <param name="subscription">Subscription to remove.</param>
-        protected void InternalUnsubscribe(IEventSubscription subscription)
+        /// <param name="_subscription">Subscription to remove.</param>
+        protected void InternalUnsubscribe(IEventSubscription _subscription)
         {
             lock (Subscriptions)
             {
-                this.Subscriptions.Remove(subscription);
+                this.Subscriptions.Remove(_subscription);
             }
         }
 

@@ -16,6 +16,7 @@ using Newtonsoft.Json;
 using DialogEngine.Models.Logger;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 
 // ReSharper disable ConditionIsAlwaysTrueOrFalse
 
@@ -278,174 +279,178 @@ namespace DialogEngine
         }
 
 
-        public void IntakeCharacters()
+        public async void IntakeCharacters()
         {
 
-        var _d = new DirectoryInfo(SessionVariables.CharactersDirectory);
-
-            string _characterJsonMessage = "Character JSON in: " + SessionVariables.CharactersDirectory;
-
-            AddItem(new InfoMessage(_characterJsonMessage));
-
-
-
-            foreach (var _file in _d.GetFiles("*.json")) //file of type FileInfo for each .json in directory
+            Task task = Task.Run(() =>
             {
 
+                var _d = new DirectoryInfo(SessionVariables.CharactersDirectory);
 
-                string _beginReadMessage = " Begin read of " + _file.Name;
+                string _characterJsonMessage = "Character JSON in: " + SessionVariables.CharactersDirectory;
 
-                AddItem(new InfoMessage(_beginReadMessage));
+                AddItem(new InfoMessage(_characterJsonMessage));
 
 
 
-                if (SessionVariables.WriteSerialLog)
+                foreach (var _file in _d.GetFiles("*.json")) //file of type FileInfo for each .json in directory
                 {
-                    using (var _jsonLog = new StreamWriter(SessionVariables.LogsDirectory + SessionVariables.DialogLogFileName, true))
+
+
+                    string _beginReadMessage = " Begin read of " + _file.Name;
+
+                    AddItem(new InfoMessage(_beginReadMessage));
+
+
+
+                    if (SessionVariables.WriteSerialLog)
                     {
-                        _jsonLog.WriteLine(" Begin read of " + _file.Name);
+                        using (var _jsonLog = new StreamWriter(SessionVariables.LogsDirectory + SessionVariables.DialogLogFileName, true))
+                        {
+                            _jsonLog.WriteLine(" Begin read of " + _file.Name);
+                        }
+                    }
+
+
+
+                    string _inChar;
+
+                    try
+                    {
+                        var _fs = _file.OpenRead(); //open a read-only FileStream
+
+                        using (var _reader = new StreamReader(_fs)) //creates new streamerader for fs stream. Could also construct with filename...
+                        {
+                            try
+                            {
+                                _inChar = _reader.ReadToEnd();
+
+                                var _deserializedCharacterJson = JsonConvert.DeserializeObject<Models.Dialog.Character>(_inChar);
+
+
+                                _deserializedCharacterJson.PhraseTotals = new PhraseEntry(); //init PhraseTotals
+
+                                _deserializedCharacterJson.PhraseTotals.DialogStr = "phrase weights";
+
+                                _deserializedCharacterJson.PhraseTotals.FileName = "silence";
+
+                                _deserializedCharacterJson.PhraseTotals.PhraseRating = "G";
+
+                                _deserializedCharacterJson.PhraseTotals.PhraseWeights = new Dictionary<string, double>();
+
+                                _deserializedCharacterJson.PhraseTotals.PhraseWeights.Add("Greeting", 0.0f);
+
+
+                                removePhrasesOverParentalRating(_deserializedCharacterJson);
+
+
+
+                                //Calculate Phrase Weight Totals here.
+                                foreach (var _curPhrase in _deserializedCharacterJson.Phrases)
+                                {
+                                    foreach (var _tag in _curPhrase.PhraseWeights.Keys)
+                                    {
+                                        if (_deserializedCharacterJson.PhraseTotals.PhraseWeights.Keys.Contains(_tag))
+                                        {
+                                            _deserializedCharacterJson.PhraseTotals.PhraseWeights[_tag] +=
+                                                _curPhrase.PhraseWeights[_tag];
+                                        }
+                                        else
+                                        {
+                                            _deserializedCharacterJson.PhraseTotals.PhraseWeights.Add(_tag,
+                                                _curPhrase.PhraseWeights[_tag]);
+                                        }
+                                    }
+                                }
+
+
+
+                                for (var _i = 0; _i < Character.RecentPhrasesQueueSize; _i++)
+                                {
+                                    // we always deque after enque so this sets que size
+                                    _deserializedCharacterJson.RecentPhrases.Enqueue(_deserializedCharacterJson.Phrases[0]);
+                                }
+
+
+
+                                //list Chars as they come in.
+
+                                string _finishReadMessage = " Finish read of " + _deserializedCharacterJson.CharacterName;
+
+                                //WriteStatusBarInfo(_finishReadMessage,Brushes.Black);
+
+                                AddItem(new InfoMessage(_finishReadMessage));
+
+
+                                if (SessionVariables.WriteSerialLog)
+                                {
+                                    using (var _jsonLog = new StreamWriter(SessionVariables.LogsDirectory + SessionVariables.DialogLogFileName, true))
+                                    {
+                                        _jsonLog.WriteLine(" Finish read of " + _deserializedCharacterJson.CharacterName);
+                                    }
+                                }
+
+
+
+                                //Add to Char List
+                                CharacterList.Add(_deserializedCharacterJson);
+
+
+                            }
+                            catch (JsonReaderException _e)
+                            {
+                                string _errorReadingMessage = "Error reading " + _file.Name;
+
+                                AddItem(new ErrorMessage(_errorReadingMessage));
+
+
+                                string _jsonParseErrorMessage = "JSON Parse error at " + _e.LineNumber + ", " + _e.LinePosition;
+
+                                mcLogger.Error(_jsonParseErrorMessage);
+                            }
+                        }
+                    }
+                    catch (UnauthorizedAccessException _e)
+                    {
+                        mcLogger.Error(_e.Message);
+
+                        AddItem(new ErrorMessage("Unauthorized access exception while reading: " + _file.FullName));
+
+                    }
+                    catch (DirectoryNotFoundException _e)
+                    {
+                        mcLogger.Error(_e.Message);
+
+                        AddItem(new ErrorMessage("Directory not found exception while reading: " + _file.FullName));
+
+                    }
+                    catch (OutOfMemoryException _e)
+                    {
+                        mcLogger.Error(_e.Message);
+
+                        AddItem(new ErrorMessage("You probably need to restart your computer..."));
                     }
                 }
 
 
-
-                string _inChar;
-
-                try
+                if (CharacterList.Count < 2)
                 {
-                    var _fs = _file.OpenRead(); //open a read-only FileStream
+                    string _errorMessage = "Insufficient readable character json files found in "
+                                           + SessionVariables.CharactersDirectory + " .  Exiting.";
 
-                    using (var _reader = new StreamReader(_fs)) //creates new streamerader for fs stream. Could also construct with filename...
-                    {
-                        try
-                        {
-                            _inChar = _reader.ReadToEnd();
-
-                            var _deserializedCharacterJson = JsonConvert.DeserializeObject<Models.Dialog.Character>(_inChar);
-
-
-                            _deserializedCharacterJson.PhraseTotals = new PhraseEntry(); //init PhraseTotals
-
-                            _deserializedCharacterJson.PhraseTotals.DialogStr = "phrase weights";
-
-                            _deserializedCharacterJson.PhraseTotals.FileName = "silence";
-
-                            _deserializedCharacterJson.PhraseTotals.PhraseRating = "G";
-
-                            _deserializedCharacterJson.PhraseTotals.PhraseWeights = new Dictionary<string, double>();
-
-                            _deserializedCharacterJson.PhraseTotals.PhraseWeights.Add("Greeting", 0.0f);
-
-
-                            removePhrasesOverParentalRating(_deserializedCharacterJson);
-
-
-
-                            //Calculate Phrase Weight Totals here.
-                            foreach (var _curPhrase in _deserializedCharacterJson.Phrases)
-                            {
-                                foreach (var _tag in _curPhrase.PhraseWeights.Keys)
-                                {
-                                    if (_deserializedCharacterJson.PhraseTotals.PhraseWeights.Keys.Contains(_tag))
-                                    {
-                                        _deserializedCharacterJson.PhraseTotals.PhraseWeights[_tag] +=
-                                            _curPhrase.PhraseWeights[_tag];
-                                    }
-                                    else
-                                    {
-                                        _deserializedCharacterJson.PhraseTotals.PhraseWeights.Add(_tag,
-                                            _curPhrase.PhraseWeights[_tag]);
-                                    }
-                                }
-                            }
-
-
-
-                            for (var _i = 0; _i < Character.RecentPhrasesQueueSize; _i++)
-                            {
-                                // we always deque after enque so this sets que size
-                                _deserializedCharacterJson.RecentPhrases.Enqueue(_deserializedCharacterJson.Phrases[0]);
-                            }
-
-
-
-                            //list Chars as they come in.
-
-                            string _finishReadMessage = " Finish read of " + _deserializedCharacterJson.CharacterName;
-
-                            //WriteStatusBarInfo(_finishReadMessage,Brushes.Black);
-
-                            AddItem(new InfoMessage(_finishReadMessage));
-
-
-                            if (SessionVariables.WriteSerialLog)
-                            {
-                                using (var _jsonLog = new StreamWriter(SessionVariables.LogsDirectory + SessionVariables.DialogLogFileName, true))
-                                {
-                                    _jsonLog.WriteLine(" Finish read of " + _deserializedCharacterJson.CharacterName);
-                                }
-                            }
-
-
-
-                            //Add to Char List
-                            CharacterList.Add(_deserializedCharacterJson);
-
-
-                        }
-                        catch (JsonReaderException _e)
-                        {
-                            string _errorReadingMessage = "Error reading " + _file.Name;
-
-                            AddItem(new ErrorMessage(_errorReadingMessage));
-
-
-                            string _jsonParseErrorMessage = "JSON Parse error at " + _e.LineNumber + ", " + _e.LinePosition;
-
-                            mcLogger.Error(_jsonParseErrorMessage);
-                        }
-                    }
-                }
-                catch (UnauthorizedAccessException _e)
-                {
-                    mcLogger.Error(_e.Message);
-
-                    AddItem(new ErrorMessage("Unauthorized access exception while reading: " + _file.FullName));
+                    AddItem(new ErrorMessage(_errorMessage));
 
                 }
-                catch (DirectoryNotFoundException _e)
+
+
+                // Fill the queue with greeting dialogs
+                for (var _i = 0; _i < RecentDialogsQueSize; _i++)
                 {
-                    mcLogger.Error(_e.Message);
-
-                    AddItem(new ErrorMessage("Directory not found exception while reading: " + _file.FullName));
-
+                    RecentDialogs.Enqueue(0); // Fill the que with greeting dialogs
                 }
-                catch (OutOfMemoryException _e)
-                {
-                    mcLogger.Error(_e.Message);
-
-                    AddItem(new ErrorMessage("You probably need to restart your computer..."));
-                }
-            }
 
 
-            if (CharacterList.Count < 2)
-            {
-                string _errorMessage = "Insufficient readable character json files found in " 
-                                       + SessionVariables.CharactersDirectory + " .  Exiting.";
-
-                AddItem(new ErrorMessage(_errorMessage));
-
-            }
-
-
-            // Fill the queue with greeting dialogs
-            for (var _i = 0; _i < RecentDialogsQueSize; _i++)
-            {
-                RecentDialogs.Enqueue(0); // Fill the que with greeting dialogs
-            }
-
-
+            });
         }
 
 
@@ -897,7 +902,6 @@ namespace DialogEngine
             mPriorCharacter2Num = Character2Num;
 
 
-
             return true;
         }
 
@@ -908,9 +912,6 @@ namespace DialogEngine
             //if the array input is correct size and inputs don't exceed bounds set dialog parameters 
             if (_dialogDirectives.Count() == 2)
             {
-                //if (_dialogDirectives[0] < ModelDialogs.Count)
-                //    CurrentDialogModel = _dialogDirectives[0];
-
 
                 if (_dialogDirectives[0] < CharacterList.Count)
                     Character1Num = _dialogDirectives[0];

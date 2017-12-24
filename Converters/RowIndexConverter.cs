@@ -12,16 +12,30 @@ using System.Windows.Data;
 
 namespace DialogEngine.Converters
 {
-    /// <summary>
-    /// Returns row number from datagrid
-    /// </summary>
+
     public class RowIndexConverter : IValueConverter
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="targetType"></param>
+        /// <param name="parameter"></param>
+        /// <param name="culture"></param>
+        /// <returns>Returns row index in DataGrid</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return (value as DataGridRow).GetIndex();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="targetType"></param>
+        /// <param name="parameter"></param>
+        /// <param name="culture"></param>
+        /// <returns>It is OneWay binding so method returns null</returns>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return null;

@@ -19,24 +19,24 @@ namespace DialogEngine.Events
         /// <summary>
         /// Subscribes a delegate to an event.
         /// </summary>
-        /// <param name="action">The delegate that gets executed when the event is raised.</param>
-        public virtual void Subscribe(Action<TPayload> action)
+        /// <param name="_action">The delegate that gets executed when the event is raised.</param>
+        public virtual void Subscribe(Action<TPayload> _action)
         {
-            this.InternalSubscribe(new EventSubscription<TPayload>(action));
+            this.InternalSubscribe(new EventSubscription<TPayload>(_action));
         }
 
         /// <summary>
         /// Removes the first subscriber matching <seealso cref="Action{TPayload}"/> from the subscribers' list.
         /// </summary>
-        /// <param name="subscriber">The <see cref="Action{TPayload}"/> used when subscribing to the event.</param>
-        public virtual void Unsubscribe(Action<TPayload> subscriber)
+        /// <param name="_subscriber">The <see cref="Action{TPayload}"/> used when subscribing to the event.</param>
+        public virtual void Unsubscribe(Action<TPayload> _subscriber)
         {
             lock (Subscriptions)
             {
-                IEventSubscription eventSubscription = Subscriptions.Cast<EventSubscription<TPayload>>().FirstOrDefault(evt => evt.Action == subscriber);
-                if (eventSubscription != null)
+                IEventSubscription _eventSubscription = Subscriptions.Cast<EventSubscription<TPayload>>().FirstOrDefault(evt => evt.Action == _subscriber);
+                if (_eventSubscription != null)
                 {
-                    Subscriptions.Remove(eventSubscription);
+                    Subscriptions.Remove(_eventSubscription);
                 }
             }
         }
@@ -44,14 +44,14 @@ namespace DialogEngine.Events
         /// <summary>
         /// Publishes the <see cref="CompositeEvent{TPayload}"/>.
         /// </summary>
-        /// <param name="payload">Message to pass to the subscribers.</param>
-        public virtual void Publish(TPayload payload)
+        /// <param name="_payload">Message to pass to the subscribers.</param>
+        public virtual void Publish(TPayload _payload)
         {
             lock (Subscriptions)
             {
-                foreach (var subscription in Subscriptions)
+                foreach (var _subscription in Subscriptions)
                 {
-                    ((Action<TPayload>)subscription.Target)(payload);
+                    ((Action<TPayload>)_subscription.Target)(_payload);
                 }
             }
         }

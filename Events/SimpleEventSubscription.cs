@@ -19,10 +19,10 @@ namespace DialogEngine.Events
         /// <summary>
         /// Iniitalizes new instance of DefaultEventSubscription class.
         /// </summary>
-        /// <param name="action"></param>
-        public SimpleEventSubscription(Action action)
+        /// <param name="_action"></param>
+        public SimpleEventSubscription(Action _action)
         {
-            this._target = action;
+            this._target = _action;
         }
 
         /// <summary>

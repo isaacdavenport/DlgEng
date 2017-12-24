@@ -13,7 +13,10 @@ namespace DialogEngine.Models.Enums
     /// </summary>
     public enum ModelDialogState
     {
-        On,  
+        /// model dialog will be loaded
+        On,
+
+        /// model dialog will be ignored
         Off
     }
 }

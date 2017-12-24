@@ -23,7 +23,6 @@ namespace DialogEngine
 
         #endregion
 
-
         #region - Private methods -
 
         static void addMessageToReceivedBuffer(int _characterRowNum, int[] _rw, DateTime _timeStamp)
@@ -74,8 +73,6 @@ namespace DialogEngine
         }
 
         #endregion
-
-
 
         #region - Public functions -
 

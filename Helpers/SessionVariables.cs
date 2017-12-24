@@ -11,6 +11,21 @@ namespace DialogEngine.Helpers
     public static class SessionVariables
     {
 
+        public static bool ShowDupePhrases;
+        public static bool HeatMapSumsMode;
+        public static bool HeatMapOnlyMode;
+        public static bool CheckStuckTransmissions;
+        public static bool MonitorReceiveBufferSize;
+        public static bool MonitorMessageParseFails;
+        public static string BaseDirectory;
+        public static string LogsDirectory;
+        public static string CharactersDirectory;
+        public static string DialogsDirectory;
+        public static string AudioDirectory;
+        public static string DecimalLogFileName = "DecimalSerialLog.txt";
+        public static string HexLogFileName = "HexSerialLog.txt";
+        public static string DialogLogFileName = "LogDialog.txt";
+
         public static bool DebugFlag
         {
             get
@@ -24,6 +39,7 @@ namespace DialogEngine.Helpers
             }
 
         }
+
         public static bool TagUsageCheck
         {
             get
@@ -49,6 +65,7 @@ namespace DialogEngine.Helpers
                 return result;
             }
         }
+
         public static  bool TextDialogsOn
         {
             get
@@ -61,6 +78,7 @@ namespace DialogEngine.Helpers
                 return result;
             }
         }
+
         public static bool ForceCharactersAndDialogModel
         {
             get
@@ -73,6 +91,7 @@ namespace DialogEngine.Helpers
                 return result;
             }
         }
+
         public static  bool WaitIndefinatelyForMove
         {
             get
@@ -155,20 +174,6 @@ namespace DialogEngine.Helpers
         }
 
 
-        public static  bool ShowDupePhrases;
-        public static  bool HeatMapSumsMode;
-        public static  bool HeatMapOnlyMode;
-        public static  bool CheckStuckTransmissions;
-        public static  bool MonitorReceiveBufferSize;
-        public static  bool MonitorMessageParseFails;
-        public static  string BaseDirectory;
-        public static  string LogsDirectory;
-        public static  string CharactersDirectory;
-        public static  string DialogsDirectory;
-        public static  string AudioDirectory;
-        public static  string DecimalLogFileName = "DecimalSerialLog.txt";
-        public static  string HexLogFileName = "HexSerialLog.txt";
-        public static  string DialogLogFileName = "LogDialog.txt";
 
         static SessionVariables()
         {

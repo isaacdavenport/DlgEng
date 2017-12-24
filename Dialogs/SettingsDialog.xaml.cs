@@ -33,6 +33,9 @@ namespace DialogEngine.Controls
 
         #endregion
 
+        /// <summary>
+        /// Creates instance of SettingsDialog
+        /// </summary>
         public SettingsDialog()
         {
             InitializeComponent();
@@ -48,7 +51,6 @@ namespace DialogEngine.Controls
         {
 
             NameValueCollection _settings = ConfigurationManager.AppSettings;
-
 
             int _index = 0;
 
@@ -187,6 +189,7 @@ namespace DialogEngine.Controls
             }
 
         }
+
 
 
         private void _closeDialog_Click(object sender, RoutedEventArgs e)

@@ -113,15 +113,15 @@ namespace DialogEngine
             // each character is "OK " STUCK "STK" or "MIA" missing in action
             // this could be changed to order N rather than numCharacters*N but not worth it now
 
-            DialogTracker _dialogTracker = DialogTracker.Instance;
 
             const int numMsgToChk = 5;
             if (ParseMessage.ReceivedMessages.Count < 20)
             {
                 return;
             }
+
             var _currentTime = DateTime.Now;
-            foreach (var _chr in _dialogTracker.CharacterList)
+            foreach (var _chr in msDialogTracker.CharacterList)
             {
                 Console.Write(_chr.CharacterPrefix + " ");
                 ReceivedMessage[] _lastFiveMsg = new ReceivedMessage[numMsgToChk];

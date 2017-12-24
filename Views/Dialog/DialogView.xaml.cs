@@ -26,6 +26,9 @@ namespace DialogEngine.Views.Dialog
     public partial class DialogView : PageBase
     {
 
+        /// <summary>
+        /// Creates instance of DialogView
+        /// </summary>
         public DialogView()
         {
             InitializeComponent();
@@ -34,11 +37,14 @@ namespace DialogEngine.Views.Dialog
 
         }
 
-        protected override void OnPageLoaded()
-        {
-            //DialogTracker.Instance.AddItem = new DialogTracker.PrintMethod((this.DataContext as DialogViewModel).AddItem);
 
-            //InitModelDialogs.AddItem = new InitModelDialogs.PrintMethod(((this.DataContext as DialogViewModel).AddItem));
+        protected override void onPageLoaded()
+        {
+            DialogTracker.Instance.AddItem = new DialogTracker.PrintMethod((this.DataContext as DialogViewModel).AddItem);
+
+            InitModelDialogs.AddItem = new InitModelDialogs.PrintMethod(((this.DataContext as DialogViewModel).AddItem));
+
+            (this.DataContext as DialogViewModel).InitDialogData();
 
             FirmwareDebuggingTools.AddItem = new FirmwareDebuggingTools.PrintMethod(((this.DataContext as DialogViewModel).AddItem));
             

@@ -1,4 +1,8 @@
-﻿using log4net;
+﻿//  Confidential Source Code Property Toys2Life LLC Colorado 2017
+//  www.toys2life.org
+
+using DialogEngine.Events.DialogEvents;
+using log4net;
 using System;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -13,23 +17,47 @@ namespace DialogEngine
     {
         private static readonly ILog mcLogger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-
-
         public WMPLib.WindowsMediaPlayer Player;
 
+        /// <summary>
+        /// Creates instance of WindowsMediaPlayerMp3
+        /// </summary>
         public WindowsMediaPlayerMp3()
         {
             Player = new WMPLib.WindowsMediaPlayer();
             Player.MediaError += Player_MediaError;
+            Events.EventAggregator.Instance.GetEvent<StopPlayingCurrentDialogLineEvent>().Subscribe(_stopPlayingCurrentDialogLine);
 
         }
+
+        // stops currently playing .mp3 file
+        private void _stopPlayingCurrentDialogLine()
+        {
+            try
+            {
+                Player.controls.stop();
+            }
+            catch (Exception ex)
+            {
+                mcLogger.Error(ex.Message);
+            }
+        }
+
 
         private void Player_MediaError(object pMediaObject)
         {
-            WriteStatusBarInfo("Incorrect .mp3 file.", Brushes.Red);
             mcLogger.Error("Incorrect .mp3 file.");
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="_path">Path to .mp3 file</param>
+        /// <returns>
+        /// 0 - player successfully started .mp3 file
+        /// 1 - error with starting .mp3 file 
+        /// </returns>
         public int PlayMp3(string _path)
         {
             try
@@ -47,6 +75,10 @@ namespace DialogEngine
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public bool IsPlaying()
         {
             try
@@ -67,6 +99,11 @@ namespace DialogEngine
             }
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>Status of mp3 player</returns>
         public int Status()
         {
             int _code = 1000;
@@ -81,36 +118,6 @@ namespace DialogEngine
             return _code;
         }
 
-        public void WriteStatusBarInfo(string _infoMessage, Brush _infoColor)
-        {
 
-            if (Application.Current.Dispatcher.CheckAccess())
-            {
-
-                try
-                {
-                    (Application.Current.MainWindow as MainWindow).WriteStatusInfo(_infoMessage, _infoColor);
-                }
-                catch (Exception e)
-                {
-                    mcLogger.Error(e.Message);
-                }
-            }
-            else
-            {
-                Application.Current.Dispatcher.BeginInvoke((Action)(() =>
-                {
-                    try
-                    {
-                        (Application.Current.MainWindow as MainWindow).WriteStatusInfo(_infoMessage, _infoColor);
-                    }
-                    catch (Exception e)
-                    {
-                        mcLogger.Error(e.Message);
-                    }
-                }));
-
-            }
-        }
     }
 }
