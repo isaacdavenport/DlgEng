@@ -37,7 +37,6 @@ namespace DialogEngine
 
         private int mPriorCharacter1Num = 100;
         private int mPriorCharacter2Num = 100;
-        private int mCurrentDialogModel = 1;
         private Random mRandom = new Random();
         private PrintMethod mAddItem;
 
@@ -173,7 +172,7 @@ namespace DialogEngine
             var _selectedPhrase = CharacterList[_speakingCharacter].Phrases[0]; //initialize to unused placeholder phrase
 
 
-            foreach (var _currentPhraseType in ModelDialogs[mCurrentDialogModel].PhraseTypeSequence)
+            foreach (var _currentPhraseType in ModelDialogs[CurrentDialogModel].PhraseTypeSequence)
             {
                 //check is async method canceled
                 if (_cancellationToken.IsCancellationRequested)
