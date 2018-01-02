@@ -171,7 +171,8 @@
                                                 <DataGridTemplateColumn Header="Available" Width="auto">
                                                     <DataGridTemplateColumn.CellTemplate>
                                                         <DataTemplate>
-                                                            <RadioButton HorizontalAlignment="Center" IsChecked="{Binding State, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter = {StaticResource CharacterStateToBooleanConverter}, ConverterParameter={x:Static enums:CharacterState.Available}}">
+                                                            <RadioButton HorizontalAlignment="Center" 
+                                                                         IsChecked="{Binding State, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter = {StaticResource CharacterStateToBooleanConverter}, ConverterParameter={x:Static enums:CharacterState.Available}}">
                                                                 <RadioButton.GroupName>
                                                                     <MultiBinding Converter="{StaticResource DynamicGroupNameConverter}">
                                                                         <Binding Path="CharacterName" />

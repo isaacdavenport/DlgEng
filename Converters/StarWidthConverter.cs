@@ -1,6 +1,8 @@
 ﻿//  Confidential Source Code Property Toys2Life LLC Colorado 2017
 //  www.toys2life.org
 
+//  Converters convert input parameter to a value expected by a gui item  
+
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -12,6 +14,7 @@ using System.Windows.Data;
 namespace DialogEngine.Converters
 {
     /// <summary>
+    /// Assigns width for GridViewColumn as Grid.StarWith
     /// </summary>
     public class StarWidthConverter : IValueConverter
     {
@@ -41,7 +44,7 @@ namespace DialogEngine.Converters
         }
 
         /// <summary>
-        /// 
+        /// Converts Grid.StarWidth to double 
         /// </summary>
         /// <param name="value"></param>
         /// <param name="targetType"></param>

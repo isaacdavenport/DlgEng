@@ -117,7 +117,7 @@
     <Compile Include="Events\SimpleEventSubscription.cs" />
     <Compile Include="Hendlers\Dialog\DialogTracker.cs" />
     <Compile Include="FirmwareDebuggingTools.cs" />
-    <Compile Include="Helpers\AppSettings.cs" />
+    <Compile Include="Helpers\AppSet.cs" />
     <Compile Include="Models\Dialog\Character.cs" />
     <Compile Include="Models\Dialog\CharacterInfo.cs" />
     <Compile Include="Models\Dialog\DialogItem.cs" />
@@ -131,7 +131,7 @@
     <Compile Include="Core\PageBase.cs" />
     <Compile Include="Hendlers\Dialog\ParseMessage.cs" />
     <Compile Include="Hendlers\Dialog\SelectNextCharacters.cs" />
-    <Compile Include="Hendlers\Dialog\Serial.cs" />
+    <Compile Include="Hendlers\Dialog\SerialComs.cs" />
     <Compile Include="Models\Dialog\ReceivedMessage.cs" />
     <Compile Include="Models\Enums\CharacterState.cs" />
     <Compile Include="Models\Enums\ModelDialogState.cs" />

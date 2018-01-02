@@ -11,7 +11,7 @@ namespace DialogEngine.Events
 {
 
     /// <summary>
-    /// Defines a class that manages publication and subscription to events.
+    /// Manages publication and subscription of composite events.
     /// </summary>
     /// <typeparam name="TPayload">The type of message that will be passed to the subscribers.</typeparam>
     public class CompositeEvent<TPayload> : EventBase

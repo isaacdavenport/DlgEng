@@ -9,7 +9,9 @@ using System.Threading.Tasks;
 
 namespace DialogEngine.Events
 {
-
+    /// <summary>
+    /// Manages publication and subscription of simple events.
+    /// </summary>
     public class SimpleEvent : EventBase
     {
         /// <summary>

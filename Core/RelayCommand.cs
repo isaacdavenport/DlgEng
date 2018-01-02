@@ -1,6 +1,8 @@
 ﻿//  Confidential Source Code Property Toys2Life LLC Colorado 2017
 //  www.toys2life.org
 
+// Base classes for mvvm, enabling gui decoupling from other logic
+
 namespace DialogEngine.Core
 {
     using System;
@@ -55,9 +57,10 @@ namespace DialogEngine.Core
         }
 
         /// <summary>
+        /// Determines if command can be executed
         /// </summary>
         /// <param name="_parameter"></param>
-        /// <returns></returns>
+        /// <returns>Command can execute: false / true</returns>
         [DebuggerStepThrough]
         public bool CanExecute(object _parameter)
         {

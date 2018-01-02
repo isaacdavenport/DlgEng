@@ -5,6 +5,7 @@ using System;
 using System.Timers;
 using System.Threading;
 using DialogEngine.Helpers;
+using DialogEngine.ViewModels.Dialog;
 
 namespace DialogEngine
 {
@@ -134,31 +135,20 @@ namespace DialogEngine
 
             while (true)
             {
-                if (SessionVariables.DebugFlag && Console.KeyAvailable)
+                if (SessionVariables.DebugFlag)
                 {
 
-                    var _userInput = Console.ReadLine();
 
-                    String[] _charactersInitials = _userInput.Split(' ');
-
-
-                    if (_charactersInitials.Length == 2 && _charactersInitials.Length < 15)
+                    if (DialogViewModel.SelectedCharactersOn == 2)
                     {  //two three letter inital sets should be less than7 w space
 
                         _userHasForcedCharacters = true;
 
-                        foreach (var _character in msDialogTracker.CharacterList)
-                        {
-                            if (_charactersInitials[0] == _character.CharacterPrefix)
-                            {
-                                NextCharacter1 = msDialogTracker.CharacterList.IndexOf(_character);
-                            }
 
-                            if (_charactersInitials[1] == _character.CharacterPrefix)
-                            {
-                                NextCharacter2 = msDialogTracker.CharacterList.IndexOf(_character);
-                            }
-                        }
+                        NextCharacter1 = DialogViewModel.Instance.SelectedIndex1;
+
+                        NextCharacter2 = DialogViewModel.Instance.SelectedIndex2;
+
                     }
                 }
 

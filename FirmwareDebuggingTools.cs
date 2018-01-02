@@ -30,28 +30,26 @@ namespace DialogEngine
 
         #endregion
 
-
-
         #region - Static methods -
 
         public static void PrintHeatMap()
         {
             ;
 
-            int _i, _l, _;
+            int i, l, k;
 
-            for (_i = 0; _i < SerialComs.NumRadios; _i++)
+            for (i = 0; i < SerialComs.NumRadios; i++)
             {
-                AddItem(SelectNextCharacters.CharactersLastHeatMapUpdateTime[_i].ToString("mm.ss.fff") + " ");
+                AddItem(SelectNextCharacters.CharactersLastHeatMapUpdateTime[i].ToString("mm.ss.fff") + " ");
 
             }
 
 
-            for (_l = 0; _l < SerialComs.NumRadios; _l++)
+            for (l = 0; l < SerialComs.NumRadios; l++)
             {
-                for (_ = 0; _ < SerialComs.NumRadios; _++)
+                for (k = 0; k < SerialComs.NumRadios; k++)
                 {
-                    AddItem("{0:D3}" + SelectNextCharacters.HeatMap[_l, _]);
+                    AddItem("{0:D3}" + SelectNextCharacters.HeatMap[l, k]);
 
                 }
                 
@@ -66,20 +64,20 @@ namespace DialogEngine
 
         public static void PrintHeatMapSums()
         {
-            int _i, _l, _;
+            int i, l, k;
 
-            for (_i = 0; _i < SerialComs.NumRadios; _i++)
+            for (i = 0; i < SerialComs.NumRadios; i++)
             {
                 //((MainWindow)Application.Current.MainWindow).TestOutput.Text += SelectNextCharacters.CharactersLastHeatMapUpdateTime[i].ToString("mm.ss.fff") + Environment.NewLine;
                 //Console.Write(SelectNextCharacters.CharactersLastHeatMapUpdateTime[i].ToString("mm.ss.fff") + " ");
             }
             //((MainWindow)Application.Current.MainWindow).TestOutput.Text += Environment.NewLine;
             //Console.WriteLine();
-            for (_l = 0; _l < SerialComs.NumRadios; _l++)
+            for (l = 0; l < SerialComs.NumRadios; l++)
             {
-                for (_ = 1; _ < SerialComs.NumRadios; _++)
+                for (k = 1; k < SerialComs.NumRadios; k++)
                 {
-                    if (_ > _l)
+                    if (k > l)
                     {
                         //((MainWindow)Application.Current.MainWindow).TestOutput.Text += "{0:D3}" + (SelectNextCharacters.HeatMap[l, m] + SelectNextCharacters.HeatMap[m, l]) + Environment.NewLine;
                         //Console.Write("{0:D3}", (SelectNextCharacters.HeatMap[l, m] + SelectNextCharacters.HeatMap[m, l]));
@@ -125,27 +123,27 @@ namespace DialogEngine
             {
                 Console.Write(_chr.CharacterPrefix + " ");
                 ReceivedMessage[] _lastFiveMsg = new ReceivedMessage[numMsgToChk];
-                int _i, _j = 0;
-                for (_i = ParseMessage.ReceivedMessages.Count - 1; _i > 2; _i--)
+                int i, j = 0;
+                for (i = ParseMessage.ReceivedMessages.Count - 1; i > 2; i--)
                 {
-                    if (ParseMessage.ReceivedMessages[_i].CharacterPrefix == _chr.CharacterPrefix)
+                    if (ParseMessage.ReceivedMessages[i].CharacterPrefix == _chr.CharacterPrefix)
                     {
-                        if (_j == 0 && _currentTime - ParseMessage.ReceivedMessages[_i].ReceivedTime > SelectNextCharacters.MaxLastSeenInterval)
+                        if (j == 0 && _currentTime - ParseMessage.ReceivedMessages[i].ReceivedTime > SelectNextCharacters.MaxLastSeenInterval)
                         {
                             Console.Write("MIA ");  //haven't seen this character in over maxLastSeenInterval seconds
                             break;
                         }
-                        if (_j < numMsgToChk)
+                        if (j < numMsgToChk)
                         {
-                            _lastFiveMsg[_j] = ParseMessage.ReceivedMessages[_i];
-                            _j++;
+                            _lastFiveMsg[j] = ParseMessage.ReceivedMessages[i];
+                            j++;
                         }
                         else
                         {
                             bool _messagesUnique = false;
-                            for (var _k = 1; _k < numMsgToChk; _k++)
+                            for (var k = 1; k < numMsgToChk; k++)
                             {
-                                if (_lastFiveMsg[_k].SequenceNum != _lastFiveMsg[_k - 1].SequenceNum)
+                                if (_lastFiveMsg[k].SequenceNum != _lastFiveMsg[k - 1].SequenceNum)
                                 {
                                     Console.Write("OK  ");  //some of the recent messages are unique
                                     _messagesUnique = true;
@@ -160,12 +158,11 @@ namespace DialogEngine
                         }
                     }
                 }
-                if (_i < 3)  // if we counted all the way down we didn't find our five messages from this character he is MIA
+                if (i < 3)  // if we counted all the way down we didn't find our five messages from this character he is MIA
                 {
                     Console.Write("MIA ");
                 }
             }
-            Console.WriteLine();
         }
 
         public static void ProcessDebugFlags()

@@ -20,6 +20,9 @@ namespace DialogEngine.Models.Dialog
     /// </summary>
     public class CharacterInfo 
     {
+        // max allowed characters in On state is 2
+        private const int mcMaxAllowedCharactersOn = 2;
+
         private CharacterState _state;
 
         [JsonProperty("CharacterName")]
@@ -34,8 +37,9 @@ namespace DialogEngine.Models.Dialog
         {
             set
             {
-                // max allowed characters in On state is 2
-                if( DialogViewModel.SelectedCharactersOn == 2 ){
+                
+                if( DialogViewModel.SelectedCharactersOn == mcMaxAllowedCharactersOn )
+                {
 
                     if(value != CharacterState.On)
                     {

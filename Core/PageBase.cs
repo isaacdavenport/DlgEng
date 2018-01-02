@@ -1,6 +1,8 @@
 ﻿//  Confidential Source Code Property Toys2Life LLC Colorado 2017
 //  www.toys2life.org
 
+// Base classes for mvvm, enabling gui decoupling from other logic
+
 namespace DialogEngine.Core
 {
     using System.ComponentModel;
@@ -17,6 +19,7 @@ namespace DialogEngine.Core
     public abstract class PageBase : Page, INotifyPropertyChanged
     {
         /// <summary>
+        /// Subscribe for page loaded and unloaded events
         /// </summary>
         public PageBase()
         {

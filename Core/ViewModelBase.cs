@@ -1,6 +1,8 @@
 ﻿//  Confidential Source Code Property Toys2Life LLC Colorado 2017
 //  www.toys2life.org
 
+// Base classes for mvvm, enabling gui decoupling from other logic
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -103,6 +105,7 @@ namespace DialogEngine.Core
         {
             this.Dispose(false);
         }
+
 
         protected void Dispose(bool _disposing)
         {

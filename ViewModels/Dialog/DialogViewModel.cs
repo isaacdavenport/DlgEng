@@ -21,6 +21,7 @@ using DialogEngine.Events;
 using DialogEngine.Events.DialogEvents;
 using System.Windows.Data;
 using DialogEngine.Converters;
+using DialogEngine.Views.Dialog;
 
 namespace DialogEngine.ViewModels.Dialog
 {
@@ -38,15 +39,22 @@ namespace DialogEngine.ViewModels.Dialog
         // counter for characters in On state
         private static int mSelectedCharactersOn;
 
+        private static DialogViewModel msInstance = null;
+
+        private static readonly object mcPadlock = new object();
+
         private readonly DialogTracker mcTheDialogs;
 
         // reference on view
-        private readonly Views.Dialog.DialogView mView;
+        private  Views.Dialog.DialogView mView;
 
         private readonly Random mRandom = new Random();
 
         // detect is dialog model changed, true value force application to reload dialog model
-        private bool _isModelsDialogChanged = false;
+        private bool mIsModelsDialogChanged = false;
+
+        private int mSelectedIndex1;
+        private int mSelectedIndex2;
 
         // create token which we pass to background method, so we can force method to finish executing
         private CancellationTokenSource _cancellationTokensource;
@@ -66,18 +74,38 @@ namespace DialogEngine.ViewModels.Dialog
         #endregion
 
 
+        #region - Singleton - 
+
+        /// <summary>
+        /// Implementation of singleton pattern for DialogTracker class
+        /// </summary>
+        public static DialogViewModel Instance
+        {
+            get
+            {
+                lock (mcPadlock)
+                {
+                    if (msInstance == null)
+                    {
+                        msInstance = new DialogViewModel();
+                    }
+                    return msInstance;
+                }
+            }
+        }
+
+        #endregion
+
         #region - Constructor -
 
         /// <summary>
         /// Creates instance of DialogViewModel.cs
         /// </summary>
-        /// <param name="_view">Reference on view</param>
-        public DialogViewModel(Views.Dialog.DialogView _view)
+        public DialogViewModel()
         {
             EventAggregator.Instance.GetEvent<ChangedCharactersStateEvent>().Subscribe(_onChangedCharacterState);
             EventAggregator.Instance.GetEvent<ChangedModelDialogStateEvent>().Subscribe(_onChangedModelDialogState);
 
-            mView = _view;
 
             mcTheDialogs = DialogTracker.Instance;
 
@@ -112,6 +140,23 @@ namespace DialogEngine.ViewModels.Dialog
             }
         }
 
+        public int SelectedIndex1 { get => mSelectedIndex1; set => mSelectedIndex1 = value; }
+
+
+        public int SelectedIndex2 { get => mSelectedIndex2; set => mSelectedIndex2 = value; }
+
+        public DialogView View
+        {
+            get
+            {
+                return mView;
+            }
+
+            set
+            {
+                this.mView = value;
+            }
+        }
 
         /// <summary>
         /// Counter for characters in "On" state
@@ -275,8 +320,8 @@ namespace DialogEngine.ViewModels.Dialog
         /// </summary>
         public RelayCommand RefreshTabItem { get; set; }
 
-        #endregion
 
+        #endregion
 
         #region - Private methods -
 
@@ -284,13 +329,27 @@ namespace DialogEngine.ViewModels.Dialog
         private void _onChangedCharacterState()
         {
             int result = 0;
+            SelectedCharactersOn = 0;
 
+            int index = 0;
+            
             foreach(CharacterInfo characterInfo in CharacterCollection)
             {
-                if(characterInfo.State == Models.Enums.CharacterState.On)
+                if (characterInfo.State == Models.Enums.CharacterState.On)
                 {
+                    string fieldName = "mSelectedIndex" + (SelectedCharactersOn + 1);
+
+                    var field = this.GetType().GetField(fieldName, BindingFlags.Instance | BindingFlags.NonPublic);
+
+                    field.SetValue(this, index);
+
                     result += 1;
+
+                    if (result == 2)
+                        break;
                 }
+
+                index++;
             }
 
             SelectedCharactersOn = result;
@@ -302,7 +361,7 @@ namespace DialogEngine.ViewModels.Dialog
         // change indicator if state of dialog models changed
         private void _onChangedModelDialogState()
         {
-            _isModelsDialogChanged = true;
+            mIsModelsDialogChanged = true;
         }
 
 
@@ -723,40 +782,23 @@ namespace DialogEngine.ViewModels.Dialog
                       while (!_cancellationToken.IsCancellationRequested)
                       {
 
-                          if (_isModelsDialogChanged == true)
+                          if (mIsModelsDialogChanged == true)
                           {
                               InitModelDialogs.SetDefaults(mcTheDialogs, DialogModelCollection);
 
-                              _isModelsDialogChanged = false;
+                              mIsModelsDialogChanged = false;
                           }
 
 
                           if (SelectedCharactersOn == 2)
                           {
-                              var _modelAndCharacters = new int[2];
+                              var _SelectedCharacters = new int[2];
 
-                              int _charactersLength = CharacterCollection.Count;
+                              _SelectedCharacters[0] = SelectedIndex1;
 
-                              int _index = 0;
-                              for (int _i = 0; _i < _charactersLength; _i++)
-                              {
-                                  if (CharacterCollection[_i].State == Models.Enums.CharacterState.On)
-                                  {
-                                      _modelAndCharacters[_index] = _i;
+                              _SelectedCharacters[1] = SelectedIndex2;
 
-                                      if (_index == 2)
-                                      {
-                                          break;
-                                      }
-                                      else
-                                      {
-                                          _index++;
-                                      }
-
-                                  }
-                              }
-
-                              mcTheDialogs.GenerateADialog(_cancellationToken, _modelAndCharacters);
+                              mcTheDialogs.GenerateADialog(_cancellationToken, _SelectedCharacters);
                           }
                           else
                           {
@@ -842,6 +884,8 @@ namespace DialogEngine.ViewModels.Dialog
             InitModelDialogs.SetDefaults(mcTheDialogs);
 
             mcTheDialogs.IntakeCharacters();
+
+            SerialComs.InitSerial();
 
             Task<ObservableCollection<CharacterInfo>> _charactersTask = _loadAllCharacterNames(SessionVariables.CharactersDirectory);
             Task<ObservableCollection<ModelDialogInfo>> _modelDialogTask = _loadAllDialogModels(SessionVariables.DialogsDirectory);

@@ -45,6 +45,7 @@ namespace DialogEngine
         {
             //Dialogs JSON parse here.
 
+            _inObj.ModelDialogs?.Clear();
 
             Task task = Task.Run(() =>
             {
@@ -83,12 +84,16 @@ namespace DialogEngine
 
                         if (_modelDialogsState != null)
                         {
+
                             if (_modelDialogsState[_index].State == ModelDialogState.Off)
                             {
-
-                                _index += 1;
+                                _index++;
 
                                 continue;  // if modelDialog state is off, ignore this file
+                            }
+                            else
+                            {
+                                _index++;
                             }
 
                         }
@@ -111,7 +116,8 @@ namespace DialogEngine
                         {
                             var _fs = _file.OpenRead(); //open a read-only FileStream
 
-                            using (var _reader = new StreamReader(_fs)) //creates new streamerader for fs stream. Could also construct with filename...
+                            //creates new streamerader for fs stream. Could also construct with filename...
+                            using (var _reader = new StreamReader(_fs))
                             {
                                 try
                                 {
@@ -124,6 +130,7 @@ namespace DialogEngine
                                     {
                                         //Add to dialog List
                                         _inObj.ModelDialogs.Add(_curDialog);
+
                                         //population sums
                                         _inObj.DialogModelPopularitySum += _curDialog.Popularity;
                                     }
@@ -158,7 +165,6 @@ namespace DialogEngine
                         }
                     }
 
-                    _index += 1;
 
                 }
                 catch (OutOfMemoryException _e)

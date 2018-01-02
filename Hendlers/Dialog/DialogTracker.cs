@@ -49,7 +49,6 @@ namespace DialogEngine
 
         #endregion
 
-
         #region - Public fields -
     
         public WindowsMediaPlayerMp3 Audio = new WindowsMediaPlayerMp3();
@@ -244,25 +243,28 @@ namespace DialogEngine
         /// <param name="_character2Num"></param>
         public void WriteDialogInfo(int _character1Num, int _character2Num)
         {
-            var _dialogModelString = " --DiMod " + CurrentDialogModel + " "
-                                     + ModelDialogs[CurrentDialogModel].Name
-                                     + " NextChars: " + CharacterList[_character1Num].CharacterPrefix + " "
-                                     + CharacterList[_character2Num].CharacterPrefix + " " + DateTime.Now;
-
-
-            AddItem(new InfoMessage(_dialogModelString));
-
-            //var _result = MessageBox.Show(_dialogModelString);
-
-            if (SessionVariables.WriteSerialLog)
+            if (ModelDialogs.Count > 0)
             {
-                using (var _serialLogDialogModels = new StreamWriter(SessionVariables.LogsDirectory + SessionVariables.DialogLogFileName, true))
+
+                var _dialogModelString = " --DiMod " + CurrentDialogModel + " "
+                                         + ModelDialogs[CurrentDialogModel].Name
+                                         + " NextChars: " + CharacterList[_character1Num].CharacterPrefix + " "
+                                         + CharacterList[_character2Num].CharacterPrefix + " " + DateTime.Now;
+
+
+                AddItem(new InfoMessage(_dialogModelString));
+
+                //var _result = MessageBox.Show(_dialogModelString);
+
+                if (SessionVariables.WriteSerialLog)
                 {
-                    _serialLogDialogModels.WriteLine(_dialogModelString);
-                    _serialLogDialogModels.Close();
+                    using (var _serialLogDialogModels = new StreamWriter(SessionVariables.LogsDirectory + SessionVariables.DialogLogFileName, true))
+                    {
+                        _serialLogDialogModels.WriteLine(_dialogModelString);
+                        _serialLogDialogModels.Close();
+                    }
                 }
             }
-
         }
 
 
@@ -365,7 +367,7 @@ namespace DialogEngine
 
 
 
-                                for (var _i = 0; _i < Character.RecentPhrasesQueueSize; _i++)
+                                for (var i = 0; i < Character.RecentPhrasesQueueSize; i++)
                                 {
                                     // we always deque after enque so this sets que size
                                     _deserializedCharacterJson.RecentPhrases.Enqueue(_deserializedCharacterJson.Phrases[0]);
@@ -397,36 +399,36 @@ namespace DialogEngine
 
 
                             }
-                            catch (JsonReaderException _e)
+                            catch (JsonReaderException e)
                             {
                                 string _errorReadingMessage = "Error reading " + _file.Name;
 
                                 AddItem(new ErrorMessage(_errorReadingMessage));
 
 
-                                string _jsonParseErrorMessage = "JSON Parse error at " + _e.LineNumber + ", " + _e.LinePosition;
+                                string _jsonParseErrorMessage = "JSON Parse error at " + e.LineNumber + ", " + e.LinePosition;
 
                                 mcLogger.Error(_jsonParseErrorMessage);
                             }
                         }
                     }
-                    catch (UnauthorizedAccessException _e)
+                    catch (UnauthorizedAccessException e)
                     {
-                        mcLogger.Error(_e.Message);
+                        mcLogger.Error(e.Message);
 
                         AddItem(new ErrorMessage("Unauthorized access exception while reading: " + _file.FullName));
 
                     }
-                    catch (DirectoryNotFoundException _e)
+                    catch (DirectoryNotFoundException e)
                     {
-                        mcLogger.Error(_e.Message);
+                        mcLogger.Error(e.Message);
 
                         AddItem(new ErrorMessage("Directory not found exception while reading: " + _file.FullName));
 
                     }
-                    catch (OutOfMemoryException _e)
+                    catch (OutOfMemoryException e)
                     {
-                        mcLogger.Error(_e.Message);
+                        mcLogger.Error(e.Message);
 
                         AddItem(new ErrorMessage("You probably need to restart your computer..."));
                     }
@@ -497,7 +499,7 @@ namespace DialogEngine
             var _phraseIsDuplicate = true;
 
 
-            for (var _k = 0; _k < 6 && _phraseIsDuplicate; _k++) //do retries if selected phrase is recently used
+            for (var k = 0; k < 6 && _phraseIsDuplicate; k++) //do retries if selected phrase is recently used
             {
                 _phraseIsDuplicate = false;
 
@@ -588,11 +590,11 @@ namespace DialogEngine
                 }
 
 
-                var _i = 0;
+                var i = 0;
                 Thread.Sleep(600);
 
 
-                while (Audio.IsPlaying() && _i < 250)
+                while (Audio.IsPlaying() && i < 250)
                 {
                     // 20 seconds is max
                     Thread.Sleep(100);
@@ -626,25 +628,25 @@ namespace DialogEngine
             var _mostRecentAdventureDialogs = new List<int>();
             // most recent will be in the 0 index of list
             var _foundAdventures = new List<string>();
-            var _j = 0;
+            var j = 0;
 
 
-            for (var _i = HistoricalDialogs.Count - 1; _i >= 0; _i--)
+            for (var i = HistoricalDialogs.Count - 1; i >= 0; i--)
             {
-                var _dialog = ModelDialogs[HistoricalDialogs[_i].DialogIndex];
+                var _dialog = ModelDialogs[HistoricalDialogs[i].DialogIndex];
 
                 if (_dialog.Adventure.Length > 0 && !_foundAdventures.Contains(_dialog.Adventure))
                 {
                     //if the dialog was part of an adventure and we haven't already found the most recent 
                     //from that adventure add the dialog to the most recent adventure list
                     _foundAdventures.Add(_dialog.Adventure);
-                    _mostRecentAdventureDialogs.Add(HistoricalDialogs[_i].DialogIndex);
+                    _mostRecentAdventureDialogs.Add(HistoricalDialogs[i].DialogIndex);
                 }
 
 
-                _j++;
+                j++;
 
-                if (_j > 400) break; //don't go through all of time looking for active adventures
+                if (j > 400) break; //don't go through all of time looking for active adventures
             }
 
 

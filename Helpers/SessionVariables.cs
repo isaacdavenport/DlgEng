@@ -1,15 +1,21 @@
 ﻿//Confidential Source Code Property Toys2Life LLC Colorado 2017
 //www.toys2life.org
 
+using log4net;
 using System;
 using System.Configuration;
 using System.IO;
+using System.Reflection;
 
 namespace DialogEngine.Helpers
 {
-
+    /// <summary>
+    /// Aggregator of all application settings 
+    /// </summary>
     public static class SessionVariables
     {
+        private static readonly ILog mcLogger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
 
         public static bool ShowDupePhrases;
         public static bool HeatMapSumsMode;
@@ -174,7 +180,9 @@ namespace DialogEngine.Helpers
         }
 
 
-
+        /// <summary>
+        /// Static constructor
+        /// </summary>
         static SessionVariables()
         {
 
@@ -227,8 +235,7 @@ namespace DialogEngine.Helpers
             
             if (LogsDirectory == null && WriteSerialLog)
             {
-                Console.WriteLine("Valid LogsDirectory path not found in config file exiting.");
-                Console.ReadLine();
+                mcLogger.Debug("Valid LogsDirectory path not found in config file exiting.");
                 Environment.Exit(0);
             }
         
@@ -237,9 +244,8 @@ namespace DialogEngine.Helpers
                 CharactersDirectory = AppSet.ReadSetting("CharactersDirectory");
 
             if (CharactersDirectory == null)
-            { 
-                Console.WriteLine("Valid CharactersDirectory path not found in config file exiting.");
-                Console.ReadLine();
+            {
+                mcLogger.Debug("Valid CharactersDirectory path not found in config file exiting.");
                 Environment.Exit(0);
             }
 
@@ -248,8 +254,7 @@ namespace DialogEngine.Helpers
             
             if(DialogsDirectory == null)
             {
-                Console.WriteLine("Valid DialogsDirectory path not found in config file exiting.");
-                Console.ReadLine();
+                mcLogger.Debug("Valid DialogsDirectory path not found in config file exiting.");
                 Environment.Exit(0);
             }
 
@@ -260,16 +265,14 @@ namespace DialogEngine.Helpers
 
             if (AudioDirectory == null && AudioDialogsOn)
             { 
-                Console.WriteLine("Valid AudioDirectory path not found in config file exiting.");
-                Console.ReadLine();
+                mcLogger.Debug("Valid AudioDirectory path not found in config file exiting.");
                 Environment.Exit(0);
             }
 
 
             if (ComPortName == null && UseSerialPort)
             {
-                Console.WriteLine("Valid ComPortName  not found in config file exiting.");
-                Console.ReadLine();
+                mcLogger.Debug("Valid ComPortName  not found in config file exiting.");
                 Environment.Exit(0);
             }
 

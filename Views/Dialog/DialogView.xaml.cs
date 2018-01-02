@@ -33,7 +33,7 @@ namespace DialogEngine.Views.Dialog
         {
             InitializeComponent();
            
-            DataContext = new DialogViewModel(this);
+            DataContext = new DialogViewModel();
 
         }
 
@@ -44,10 +44,13 @@ namespace DialogEngine.Views.Dialog
 
             InitModelDialogs.AddItem = new InitModelDialogs.PrintMethod(((this.DataContext as DialogViewModel).AddItem));
 
+            (this.DataContext as DialogViewModel).View = this;
+
             (this.DataContext as DialogViewModel).InitDialogData();
 
             FirmwareDebuggingTools.AddItem = new FirmwareDebuggingTools.PrintMethod(((this.DataContext as DialogViewModel).AddItem));
             
+
         }
 
     }

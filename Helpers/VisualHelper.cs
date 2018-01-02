@@ -11,12 +11,12 @@ using System.Windows.Media;
 namespace DialogEngine.Helpers
 {
     /// <summary>
-    /// Helper class which help to serach nodes in visual tree of application/> 
+    /// Helper class which helps to search nodes in visual tree of the application
     /// </summary>
     public static class VisualHelper
     {
         /// <summary>
-        ///
+        /// Returns firt container of initial with type T
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="_initial"></param>
@@ -37,7 +37,7 @@ namespace DialogEngine.Helpers
         }
 
         /// <summary>
-        /// 
+        /// Returns first child of type T for parent object
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="_parent"></param>
@@ -48,14 +48,16 @@ namespace DialogEngine.Helpers
 
             int _numVisuals = VisualTreeHelper.GetChildrenCount(_parent);
 
-            for (int _i = 0; _i < _numVisuals; _i++)
+            for (int i = 0; i < _numVisuals; i++)
             {
-                Visual _v = (Visual)VisualTreeHelper.GetChild(_parent, _i);
-                _child = _v as T;
+                Visual _visual = (Visual)VisualTreeHelper.GetChild(_parent, i);
+                _child = _visual as T;
+
                 if (_child == null)
                 {
-                    _child = GetVisualChild<T>(_v);
+                    _child = GetVisualChild<T>(_visual);
                 }
+
                 if (_child != null)
                 {
                     break;

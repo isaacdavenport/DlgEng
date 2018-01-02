@@ -1,6 +1,8 @@
 ﻿//  Confidential Source Code Property Toys2Life LLC Colorado 2017
 //  www.toys2life.org
 
+//  Converters convert input parameter to a value expected by a gui item  
+
 using DialogEngine.Events;
 using DialogEngine.Events.DialogEvents;
 using DialogEngine.Models.Enums;
@@ -15,12 +17,12 @@ using System.Windows.Data;
 namespace DialogEngine.Converters
 {
     /// <summary>
-    /// Check radio button depend of ModelDialog state
+    /// Checks radio button depending on ModelDialog state
     /// </summary>
     public class ModelDialogStateToBooleanConverter : IValueConverter
     {
         /// <summary>
-        /// Check radio button if ModelDialogState enum value is equal to casted ModelDialogState string value
+        /// Checks if radio button  ModelDialogState enum value is equal to casted ModelDialogState string value
         /// </summary>
         /// <param name="_value"></param>
         /// <param name="_targetType"></param>
