@@ -17,6 +17,7 @@ using DialogEngine.Models.Logger;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using DialogEngine.ViewModels.Dialog;
 
 // ReSharper disable ConditionIsAlwaysTrueOrFalse
 
@@ -103,7 +104,12 @@ namespace DialogEngine
         /// <summary>
         /// Curent dialog model
         /// </summary>
-        public int CurrentDialogModel { get; set; }
+        public int CurrentDialogModel
+        {
+            get { return mCurrentDialogModel; }
+
+            set { mCurrentDialogModel = value; }
+        }
 
 
         public PrintMethod AddItem
@@ -207,7 +213,8 @@ namespace DialogEngine
                         playAudio(_pathAndFileName); // vb: code stops here so commented out for debugging purpose
 
                         if (   !SessionVariables.ForceCharactersAndDialogModel 
-                            && !DialogTrackerAndSerialComsCharactersSame())
+                            && !DialogTrackerAndSerialComsCharactersSame()
+                            && DialogViewModel.SelectedCharactersOn != 1)
                         {
                             SameCharactersAsLast = false;
 
@@ -824,6 +831,8 @@ namespace DialogEngine
 
         private int pickAWeightedDialog(int _character1Num, int _character2Num)
         {
+           
+
             //TODO check that all characters/phrasetypes required for adventure are included before starting adventure?
             var _dialogModel = 0;
 
@@ -921,6 +930,12 @@ namespace DialogEngine
 
                 if (_dialogDirectives[1] < CharacterList.Count)
                     Character2Num = _dialogDirectives[1];
+            }
+            else
+            {
+                Character1Num = SelectNextCharacters.NextCharacter1;
+
+                Character2Num = SelectNextCharacters.NextCharacter2;
             }
 
             if (SessionVariables.DebugFlag)

@@ -14,6 +14,7 @@ using DialogEngine.Models.Logger;
 using System.Collections.ObjectModel;
 using DialogEngine.Models.Enums;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace DialogEngine
 {
@@ -44,10 +45,10 @@ namespace DialogEngine
         public static async  void SetDefaults(DialogTracker _inObj,params object[] _arguments) //TODO is there a good way to identify orphaned tags? (dialog lines)
         {
             //Dialogs JSON parse here.
+        List<ModelDialog> _modelDialogs = new List<ModelDialog>();
+        double _dialogModelPopularitySum = 0.0;
 
-            _inObj.ModelDialogs?.Clear();
-
-            Task task = Task.Run(() =>
+        Task task = Task.Run(() =>
             {
 
                 int _index = 0;
@@ -129,10 +130,10 @@ namespace DialogEngine
                                     foreach (var _curDialog in _dialogsInClass.InList)
                                     {
                                         //Add to dialog List
-                                        _inObj.ModelDialogs.Add(_curDialog);
+                                        _modelDialogs.Add(_curDialog);
 
                                         //population sums
-                                        _inObj.DialogModelPopularitySum += _curDialog.Popularity;
+                                        _dialogModelPopularitySum += _curDialog.Popularity;
                                     }
                                 }
                                 catch (JsonReaderException _e)
@@ -174,6 +175,9 @@ namespace DialogEngine
                     mcLogger.Error(_e.Message);
                 }
 
+
+                _inObj.ModelDialogs = _modelDialogs;
+                _inObj.DialogModelPopularitySum = _dialogModelPopularitySum;
 
                 if (_inObj.ModelDialogs.Count < 2)
                     MessageBox.Show("Insufficient dialog models found in " + SessionVariables.DialogsDirectory + " exiting.");

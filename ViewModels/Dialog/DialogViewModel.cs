@@ -51,7 +51,7 @@ namespace DialogEngine.ViewModels.Dialog
         private readonly Random mRandom = new Random();
 
         // detect is dialog model changed, true value force application to reload dialog model
-        private bool mIsModelsDialogChanged = false;
+        private bool mIsModelsDialogChanged;
 
         private int mSelectedIndex1;
         private int mSelectedIndex2;
@@ -331,13 +331,16 @@ namespace DialogEngine.ViewModels.Dialog
             int result = 0;
             SelectedCharactersOn = 0;
 
+            SelectedIndex1 = -1;
+            SelectedIndex2 = -1;
+
             int index = 0;
             
             foreach(CharacterInfo characterInfo in CharacterCollection)
             {
                 if (characterInfo.State == Models.Enums.CharacterState.On)
                 {
-                    string fieldName = "mSelectedIndex" + (SelectedCharactersOn + 1);
+                    string fieldName = "mSelectedIndex" + (result + 1);
 
                     var field = this.GetType().GetField(fieldName, BindingFlags.Instance | BindingFlags.NonPublic);
 
@@ -355,6 +358,7 @@ namespace DialogEngine.ViewModels.Dialog
             SelectedCharactersOn = result;
 
             OnPropertyChanged("SelectedCharactersOn");
+
         }
 
 
@@ -800,10 +804,22 @@ namespace DialogEngine.ViewModels.Dialog
 
                               mcTheDialogs.GenerateADialog(_cancellationToken, _SelectedCharacters);
                           }
+                          else if(SelectedCharactersOn == 1)
+                          {
+                              var _SelectedCharacters = new int[2];
+
+                              _SelectedCharacters[0] = SelectedIndex1 == -1 ? SelectedIndex2 : SelectedIndex1;
+
+                              _SelectedCharacters[1] = SelectNextCharacters.GetNextCharacter(_SelectedCharacters[0]);
+
+                              mcTheDialogs.GenerateADialog(_cancellationToken, _SelectedCharacters);
+
+                          }
                           else
                           {
                               if (!SessionVariables.HeatMapOnlyMode)
                               {
+
                                   mcTheDialogs.GenerateADialog(_cancellationToken); //normal operation
 
                                   Thread.Sleep(1100); //vb:commented out for debugging as code stops here
@@ -867,7 +883,6 @@ namespace DialogEngine.ViewModels.Dialog
         {
             Task task = Task.Run(() =>
             {
-
                 writeStartupInfo();
 
                 if (SessionVariables.TagUsageCheck)
@@ -877,7 +892,6 @@ namespace DialogEngine.ViewModels.Dialog
                 if (SessionVariables.DebugFlag)
                     checkForMissingPhrases();
 
-
             });
 
 
@@ -885,7 +899,6 @@ namespace DialogEngine.ViewModels.Dialog
 
             mcTheDialogs.IntakeCharacters();
 
-            SerialComs.InitSerial();
 
             Task<ObservableCollection<CharacterInfo>> _charactersTask = _loadAllCharacterNames(SessionVariables.CharactersDirectory);
             Task<ObservableCollection<ModelDialogInfo>> _modelDialogTask = _loadAllDialogModels(SessionVariables.DialogsDirectory);
@@ -893,6 +906,8 @@ namespace DialogEngine.ViewModels.Dialog
 
             CharacterCollection = await _charactersTask;
             DialogModelCollection = await _modelDialogTask;
+
+            SerialComs.InitSerial();
         }
 
         #endregion

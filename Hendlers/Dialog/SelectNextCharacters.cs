@@ -14,7 +14,7 @@ namespace DialogEngine
         #region  - Fields -
 
         private static Random msRandom = new Random();
-        private static DialogTracker msDialogTracker=DialogTracker.Instance;
+        private static DialogTracker msDialogTracker = DialogTracker.Instance;
         private static int[,] msStrongRssiCharacterPairBuf = new int[2, StrongRssiBufDepth];
 
         public const int StrongRssiBufDepth = 12;
@@ -37,7 +37,7 @@ namespace DialogEngine
             RssiStable = true;
 
             for (int _i = 0; _i < StrongRssiBufDepth - 1; _i++)
-            {  
+            {
                 // scoot data in buffer back by one to make room for next
                 msStrongRssiCharacterPairBuf[0, _i] = msStrongRssiCharacterPairBuf[0, _i + 1];
                 msStrongRssiCharacterPairBuf[1, _i] = msStrongRssiCharacterPairBuf[1, _i + 1];
@@ -72,6 +72,33 @@ namespace DialogEngine
             }
         }
 
+        public static int GetNextCharacter(params int[] _indexToSkip)
+        {
+            int index;
+            bool _isIndexTheSame;
+
+            Random random = new Random(); 
+            do
+            {
+                index = random.Next(0, msDialogTracker.CharacterList.Count);
+                _isIndexTheSame = false;
+
+                if(_indexToSkip != null && _indexToSkip.Length > 0)
+                {
+                    if (index == _indexToSkip[0])
+                        _isIndexTheSame = true;
+                }
+            }
+            while (!_isSelectedCharacterAvailable(index) || _isIndexTheSame);
+
+            return index;
+        }
+
+        private static bool _isSelectedCharacterAvailable(int index)
+        {
+
+            return DialogViewModel.Instance.CharacterCollection[index].State == Models.Enums.CharacterState.Available;
+        }
 
         #endregion
 
@@ -158,17 +185,15 @@ namespace DialogEngine
 
                 if (!_userHasForcedCharacters && _nextCharacterSwapTime.CompareTo(DateTime.Now) < 0)
                 {
-                    NextCharacter1 = msRandom.Next(0, msDialogTracker.CharacterList.Count); //lower bound inclusive, upper exclusive
-                    NextCharacter2 = msRandom.Next(0, msDialogTracker.CharacterList.Count); //lower bound inclusive, upper exclusive
+
+                    NextCharacter1 = GetNextCharacter(); //lower bound inclusive, upper exclusive
+                    NextCharacter2 = GetNextCharacter(NextCharacter1); //lower bound inclusive, upper exclusive
                     _nextCharacterSwapTime = DateTime.Now;
                     _nextCharacterSwapTime = _nextCharacterSwapTime.AddSeconds(8 + msRandom.Next(0, 34));
                 }
 
 
-                while (NextCharacter1 == NextCharacter2)
-                {
-                    NextCharacter2 = msRandom.Next(0, msDialogTracker.CharacterList.Count);
-                }
+
             }
         }
 
