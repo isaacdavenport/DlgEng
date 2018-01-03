@@ -33,7 +33,7 @@ namespace DialogEngine
 
         private static DialogTracker msInstance = null;
         private static int msMovementWaitCount;
-
+        private static int mCurrentDialogModel;
         private static readonly object mcPadlock = new object();
 
         private int mPriorCharacter1Num = 100;
