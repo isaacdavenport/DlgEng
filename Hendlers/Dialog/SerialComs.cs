@@ -6,6 +6,8 @@ using System;
 using System.IO;
 using System.Threading;
 using DialogEngine.Helpers;
+using log4net;
+using System.Reflection;
 
 namespace DialogEngine
 {
@@ -13,6 +15,8 @@ namespace DialogEngine
     public static class SerialComs
     {
         #region - Fields -
+
+        private static readonly ILog mcLogger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         private static SerialPort msSerialPort;
 
@@ -73,21 +77,28 @@ namespace DialogEngine
             if (SessionVariables.UseSerialPort)
 
             {
-                msSerialPort = new SerialPort();
+                try
+                {
+                    msSerialPort = new SerialPort();
 
-                Thread _readThread = new Thread(RegularylyReadSerial);
+                    Thread _readThread = new Thread(RegularylyReadSerial);
 
-                msSerialPort.PortName = SessionVariables.ComPortName;
+                    msSerialPort.PortName = SessionVariables.ComPortName;
 
-                msSerialPort.BaudRate = 460800;
+                    msSerialPort.BaudRate = 460800;
 
-                msSerialPort.ReadTimeout = 500;
+                    msSerialPort.ReadTimeout = 500;
 
-                msSerialPort.Open();
+                    msSerialPort.Open();
 
-                msSerialPort.DiscardInBuffer();
+                    msSerialPort.DiscardInBuffer();
 
-                _readThread.Start();
+                    _readThread.Start();
+                }
+                catch(Exception ex)
+                {
+                    mcLogger.Error("Serial port error " + ex.Message);
+                }
             }
 
             else

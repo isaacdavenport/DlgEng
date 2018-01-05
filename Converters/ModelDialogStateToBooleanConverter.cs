@@ -7,11 +7,7 @@ using DialogEngine.Events;
 using DialogEngine.Events.DialogEvents;
 using DialogEngine.Models.Enums;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Windows;
 using System.Windows.Data;
 
 namespace DialogEngine.Converters

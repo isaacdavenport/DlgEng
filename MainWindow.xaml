@@ -25,16 +25,21 @@
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
         
-        
+        <!-- Menu -->
             <Menu  FontSize="16" Grid.Row="0"  Margin="0,0,0,0" Background="White" >
 
-                <MenuItem Header="_File" Background="White" IsEnabled="False">
-
-                </MenuItem>
+             <MenuItem Header="_File" Background="White">
+                <MenuItem Header="_Reload files"  Click="_reloadFiles_Click"></MenuItem>
+            </MenuItem>
 
                 <MenuItem Header="_View" Background="White">
 
-                    <MenuItem Header="_Dialog"  Click="_dialog_Click"></MenuItem>
+                    <MenuItem Header="_Dialog"  Click="_dialog_Click">
+                        
+                        <MenuItem Header="_Add character"  Click="_addCharacter_Click"></MenuItem>
+                        <MenuItem Header="_Add dialog model"  Click="_addDialogModel_Click"></MenuItem>
+
+                    </MenuItem>
 
                     <MenuItem Header="_MP3Player"></MenuItem>
 
@@ -52,10 +57,47 @@
             </Menu>
 
         <!--Toolbar-->
-        <Border BorderBrush="LightGray" Grid.Row="1" BorderThickness="0 0 0 1" VerticalAlignment="Top">
-            <StackPanel Background="White" HorizontalAlignment="Stretch" Orientation="Horizontal" VerticalAlignment="Top" Height="40">
+        <Border BorderBrush="LightGray" 
+                Grid.Row="1" 
+                BorderThickness="0 0 0 1" 
+                VerticalAlignment="Top">
+            
+            <StackPanel Background="White" 
+                        HorizontalAlignment="Stretch" 
+                        Orientation="Horizontal" 
+                        VerticalAlignment="Top" 
+                        Height="40">
 
-                <Button BorderThickness="1" BorderBrush="LightGray" FontSize="12" Foreground="LightGray" Click="_dialog_Click" Background="White"  Margin="10,5,5,5" Width="30" Height="30" >
+                <Button BorderThickness="1" 
+                        BorderBrush="LightGray" 
+                        FontSize="12" 
+                        Foreground="LightGray" 
+                        Click="_reloadFiles_Click" 
+                        Background="White"  
+                        Margin="10,5,5,5" 
+                        Width="30" 
+                        Height="30" >
+                    
+                    <Button.Content>
+                        <fa:ImageAwesome Icon="Refresh" />
+                    </Button.Content>
+                    <Button.ToolTip>
+                        <TextBlock Text="Relaod files"></TextBlock>
+                    </Button.ToolTip>
+                </Button>
+
+                <Separator BorderThickness="2"></Separator>
+
+                <Button BorderThickness="1" 
+                        BorderBrush="LightGray" 
+                        FontSize="12" 
+                        Foreground="LightGray" 
+                        Click="_dialog_Click" 
+                        Background="White"  
+                        Margin="10,5,5,5" 
+                        Width="30" 
+                        Height="30" >
+                    
                     <Button.Content>
                         <fa:ImageAwesome Icon="Comments" />
                     </Button.Content>
@@ -64,7 +106,14 @@
                     </Button.ToolTip>
                 </Button>
 
-                <Button BorderThickness="1" Margin="0,5,5,5" Background="White" Foreground="White"  Height="30" Width="30" BorderBrush="LightGray">
+                <Button BorderThickness="1" 
+                        Margin="0,5,5,5" 
+                        Background="White" 
+                        Foreground="White"  
+                        Height="30" 
+                        Width="30" 
+                        BorderBrush="LightGray">
+                    
                     <Button.Content>
                         <fa:ImageAwesome Icon="Microphone" />
                     </Button.Content>
@@ -75,7 +124,15 @@
 
                 <Separator BorderThickness="2"></Separator>
 
-                <Button BorderThickness="1"  Foreground="Blue"  Margin="15,5,5,5" Click="_settings_Click"  Background="White" Height="30" Width="30"  BorderBrush="LightGray">
+                <Button BorderThickness="1"  
+                        Foreground="Blue"  
+                        Margin="10,5,5,5" 
+                        Click="_settings_Click"  
+                        Background="White" 
+                        Height="30" 
+                        Width="30"  
+                        BorderBrush="LightGray">
+                    
                     <Button.Content>
                         <fa:ImageAwesome Icon="Cogs"></fa:ImageAwesome> 
                     </Button.Content>
@@ -84,7 +141,8 @@
                     </Button.ToolTip>
                 </Button>
 
-
+                
+                
             </StackPanel>
         </Border>
 
@@ -99,7 +157,15 @@
                />
                     
         <!-- Statusbar -->
-        <StatusBar Grid.Row="3" HorizontalAlignment="Stretch" Background="White" Height="25" BorderBrush="LightGray" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderThickness="0,1,0,0">
+        <StatusBar Grid.Row="3" 
+                   HorizontalAlignment="Stretch" 
+                   Background="White" 
+                   Height="25" 
+                   BorderBrush="LightGray" 
+                   HorizontalContentAlignment="Center" 
+                   VerticalContentAlignment="Center" 
+                   BorderThickness="0,1,0,0">
+            
             <StatusBar.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Grid>
@@ -111,10 +177,16 @@
             </StatusBar.ItemsPanel>
             
             
-            <StatusBarItem VerticalContentAlignment="Center" Grid.Column="2" HorizontalContentAlignment="Center">
+            <StatusBarItem VerticalContentAlignment="Center" 
+                           Grid.Column="2" 
+                           HorizontalContentAlignment="Center">
 
                 <TextBlock  HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Run Text="Toys2Life" x:Name="StatusBarTextBox" Background="White" Foreground="Blue" FontSize="12"></Run>
+                    <Run Text="Toys2Life" 
+                         x:Name="StatusBarTextBox" 
+                         Background="White" 
+                         Foreground="Blue" 
+                         FontSize="12" />
                 </TextBlock>
 
             </StatusBarItem>

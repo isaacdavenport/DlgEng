@@ -42,13 +42,13 @@ namespace DialogEngine
         /// </summary>
         /// <param name="_inObj"><see cref="DialogTracker"/></param>
         /// <param name="_arguments"> If arguments lenght > 0 then we need to reload models dialog because state is changed </param>
-        public static async  void SetDefaults(DialogTracker _inObj,params object[] _arguments) //TODO is there a good way to identify orphaned tags? (dialog lines)
+        public static async  Task SetDefaults(DialogTracker _inObj,params object[] _arguments) //TODO is there a good way to identify orphaned tags? (dialog lines)
         {
             //Dialogs JSON parse here.
         List<ModelDialog> _modelDialogs = new List<ModelDialog>();
         double _dialogModelPopularitySum = 0.0;
 
-        Task task = Task.Run(() =>
+        await Task.Run(() =>
             {
 
                 int _index = 0;
@@ -62,10 +62,8 @@ namespace DialogEngine
 
 
                     if (SessionVariables.WriteSerialLog)
-                        using (var _jsonLog = new StreamWriter(SessionVariables.LogsDirectory + SessionVariables.DialogLogFileName, true))
-                        {
-                            _jsonLog.WriteLine("Dialog JSON in: " + SessionVariables.DialogsDirectory);
-                        }
+                        LoggerHelper.Info("LogDialog","Dialog JSON in: " + SessionVariables.DialogsDirectory);
+
 
 
                     var _inFiles = _dialogsD.GetFiles("*.json");
@@ -105,10 +103,8 @@ namespace DialogEngine
 
 
                         if (SessionVariables.WriteSerialLog)
-                            using (var _jsonLog = new StreamWriter(SessionVariables.LogsDirectory + SessionVariables.DialogLogFileName, true))
-                            {
-                                _jsonLog.WriteLine(" opening dialog models in " + _file.Name);
-                            }
+                            LoggerHelper.Info("LogDialog"," opening dialog models in " + _file.Name);
+
 
 
                         string _inDialog;
@@ -148,10 +144,9 @@ namespace DialogEngine
 
 
                             if (SessionVariables.WriteSerialLog)
-                                using (var _jsonLog = new StreamWriter(SessionVariables.LogsDirectory + SessionVariables.DialogLogFileName, true))
-                                {
-                                    _jsonLog.WriteLine(" completed " + _file.Name);
-                                }
+                                LoggerHelper.Info("LogDialog"," completed " + _file.Name);
+
+
                         }
                         catch (UnauthorizedAccessException _e)
                         {

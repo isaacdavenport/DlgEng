@@ -97,6 +97,7 @@
     </Compile>
     <Compile Include="Converters\CharacterStateToBooleanConverter.cs" />
     <Compile Include="Converters\DynamicGroupNameConverter.cs" />
+    <Compile Include="Converters\InvertBooleanConverter.cs" />
     <Compile Include="Converters\ModelDialogStateToBooleanConverter.cs" />
     <Compile Include="Converters\RowIndexConverter.cs" />
     <Compile Include="Converters\StarWidthConverter.cs" />
@@ -115,6 +116,7 @@
     <Compile Include="Events\IEventSubscription.cs" />
     <Compile Include="Events\SimpleEvent.cs" />
     <Compile Include="Events\SimpleEventSubscription.cs" />
+    <Compile Include="Helpers\LoggerHelper.cs" />
     <Compile Include="Hendlers\Dialog\DialogTracker.cs" />
     <Compile Include="FirmwareDebuggingTools.cs" />
     <Compile Include="Helpers\AppSet.cs" />

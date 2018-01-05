@@ -4,11 +4,7 @@
 //  Converters convert input parameter to a value expected by a gui item  
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
 
 namespace DialogEngine.Converters

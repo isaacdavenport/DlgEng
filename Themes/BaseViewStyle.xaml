@@ -9,7 +9,7 @@
     <converters:StarWidthConverter x:Key="StarWidthConverter" />
     <converters:DynamicGroupNameConverter x:Key="DynamicGroupNameConverter" />
     <converters:RowIndexConverter x:Key="RowIndexConverter" />
-
+    <converters:InvertBooleanConverter x:Key="InvertBooleanConverter" />
 
 
     <Style  TargetType="{x:Type RadioButton}">
@@ -154,7 +154,19 @@
                                         BorderBrush="LightGray">
 
 
-                                        <DataGrid ItemsSource="{TemplateBinding ItemsSource}" x:Name="dataGrid"  HeadersVisibility="Column"  CanUserAddRows="False" Background="White" VerticalGridLinesBrush="LightGray" HorizontalGridLinesBrush="LightGray" BorderBrush="LightGray" BorderThickness="1" AutoGenerateColumns="False"  Height="200">
+                                        <DataGrid IsEnabled="{Binding DataContext.IsDialogStopped , RelativeSource={RelativeSource AncestorType=ComboBox}}" 
+                                                  ItemsSource="{TemplateBinding ItemsSource}" 
+                                                  x:Name="dataGrid"  
+                                                  HeadersVisibility="Column"  
+                                                  CanUserAddRows="False" 
+                                                  Background="White" 
+                                                  VerticalGridLinesBrush="LightGray" 
+                                                  HorizontalGridLinesBrush="LightGray" 
+                                                  BorderBrush="LightGray" 
+                                                  BorderThickness="1" 
+                                                  AutoGenerateColumns="False"  
+                                                  Height="200">
+                                            
                                             <DataGrid.Columns>
                                                 
                                                 <DataGridTextColumn IsReadOnly="True" 
@@ -376,10 +388,31 @@
                                         BorderBrush="LightGray">
 
 
-                                        <DataGrid ItemsSource="{TemplateBinding ItemsSource}"  HeadersVisibility="Column" CanUserAddRows="False" EnableRowVirtualization="True"  Background="White" VerticalGridLinesBrush="LightGray" HorizontalGridLinesBrush="LightGray" BorderBrush="LightGray" BorderThickness="1" AutoGenerateColumns="False"  Height="200">
+                                        <DataGrid ItemsSource="{TemplateBinding ItemsSource}" 
+                                                  IsEnabled="{Binding DataContext.IsDialogStopped, RelativeSource={RelativeSource AncestorType=ComboBox}}" 
+                                                  HeadersVisibility="Column" 
+                                                  CanUserAddRows="False" 
+                                                  EnableRowVirtualization="True"  
+                                                  Background="White" 
+                                                  VerticalGridLinesBrush="LightGray" 
+                                                  HorizontalGridLinesBrush="LightGray" 
+                                                  BorderBrush="LightGray" 
+                                                  BorderThickness="1" 
+                                                  AutoGenerateColumns="False"  
+                                                  Height="200">
+                                            
+                                            
                                             <DataGrid.Columns>
-                                                <DataGridTextColumn IsReadOnly="True" Header="" Width="auto" Binding ="{Binding RelativeSource={RelativeSource FindAncestor,  AncestorType={x:Type DataGridRow}},Converter={StaticResource RowIndexConverter}}" />
-                                                <DataGridTextColumn IsReadOnly="True" Width="*" Header="Dialog models" Binding ="{Binding FileName}" />
+                                                <DataGridTextColumn IsReadOnly="True" 
+                                                                    Header="" 
+                                                                    Width="auto" 
+                                                                    Binding ="{Binding RelativeSource={RelativeSource FindAncestor,  AncestorType={x:Type DataGridRow}},Converter={StaticResource RowIndexConverter}}" />
+                                                
+                                                <DataGridTextColumn IsReadOnly="True" 
+                                                                    Width="*" 
+                                                                    Header="Dialog models" 
+                                                                    Binding ="{Binding FileName}" />
+                                                
                                                 <DataGridTemplateColumn Header="On"
                                                                         Width="auto">
                                                     <DataGridTemplateColumn.CellTemplate>
@@ -444,6 +477,7 @@
     </Style>
 
 
+    <!-- Text box -->
     <Style x:Key="TextBoxStyle1" TargetType="TextBox">
         <Setter Property="Template">
             <Setter.Value>
@@ -479,7 +513,7 @@
     <SolidColorBrush x:Key="ButtonNormalBorder" Color="#FF707070"/>
 
 
-    
+    <!-- Toggle button -->
     <Style x:Key="ToggleButtonTwoOptionsStyle"  TargetType="ToggleButton">
         <Setter Property="FocusVisualStyle" Value="{StaticResource ButtonFocusVisual}"/>
         <Setter Property="Background" Value="{StaticResource ButtonNormalBackground}"/>
@@ -493,12 +527,36 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
                     <StackPanel Orientation="Horizontal">
-                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                        <Border x:Name="on" Width="25" Height="25" Background="LightGray" CornerRadius="2,0,0,4" Margin="10,0,0,0">
-                            <TextBlock x:Name="onText" Text="On" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                          Margin="{TemplateBinding Padding}" 
+                                          RecognizesAccessKey="True" 
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        
+                        <Border x:Name="on" 
+                                Width="25" 
+                                Height="25" 
+                                Background="LightGray" 
+                                CornerRadius="2,0,0,4" 
+                                Margin="0,0,0,0">
+                            
+                            <TextBlock x:Name="onText" 
+                                       Text="On" 
+                                       HorizontalAlignment="Center" 
+                                       VerticalAlignment="Center"/>
                         </Border>
-                        <Border x:Name="off" Width="25" Height="25" Background="LightGray" CornerRadius="0,2,4,0">
-                            <TextBlock x:Name="offText" Text="Off" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        
+                        <Border x:Name="off" 
+                                Width="25" 
+                                Height="25" 
+                                Background="LightGray" 
+                                CornerRadius="0,2,4,0">
+                            
+                            <TextBlock x:Name="offText" 
+                                       Text="Off" 
+                                       HorizontalAlignment="Center" 
+                                       VerticalAlignment="Center"/>
                         </Border>
 
                     </StackPanel>
@@ -528,8 +586,19 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Thumb}">
                     <Grid x:Name="Grid">
-                        <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" Height="Auto" Fill="Transparent" />
-                        <Border x:Name="Rectangle1" CornerRadius="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" Height="Auto"  Background="{TemplateBinding Background}" />
+                        <Rectangle HorizontalAlignment="Stretch" 
+                                   VerticalAlignment="Stretch" 
+                                   Width="Auto" 
+                                   Height="Auto" 
+                                   Fill="Transparent" />
+                        
+                        <Border x:Name="Rectangle1" 
+                                CornerRadius="10" 
+                                HorizontalAlignment="Stretch" 
+                                VerticalAlignment="Stretch" 
+                                Width="Auto" 
+                                Height="Auto"  
+                                Background="{TemplateBinding Background}" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="Tag" Value="Horizontal">

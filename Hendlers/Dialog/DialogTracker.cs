@@ -97,7 +97,6 @@ namespace DialogEngine
 
         #endregion
 
-
         #region - Properties -
 
         /// <summary>
@@ -124,7 +123,6 @@ namespace DialogEngine
         }
 
         #endregion
-
 
         #region - Public methods -
 
@@ -264,11 +262,7 @@ namespace DialogEngine
 
                 if (SessionVariables.WriteSerialLog)
                 {
-                    using (var _serialLogDialogModels = new StreamWriter(SessionVariables.LogsDirectory + SessionVariables.DialogLogFileName, true))
-                    {
-                        _serialLogDialogModels.WriteLine(_dialogModelString);
-                        _serialLogDialogModels.Close();
-                    }
+                    LoggerHelper.Info("LogDialog",_dialogModelString);
                 }
             }
         }
@@ -287,10 +281,10 @@ namespace DialogEngine
         }
 
 
-        public async void IntakeCharacters()
+        public async Task IntakeCharacters()
         {
 
-            Task task = Task.Run(() =>
+            await Task.Run(() =>
             {
 
                 var _d = new DirectoryInfo(SessionVariables.CharactersDirectory);
@@ -313,10 +307,9 @@ namespace DialogEngine
 
                     if (SessionVariables.WriteSerialLog)
                     {
-                        using (var _jsonLog = new StreamWriter(SessionVariables.LogsDirectory + SessionVariables.DialogLogFileName, true))
-                        {
-                            _jsonLog.WriteLine(" Begin read of " + _file.Name);
-                        }
+
+                        LoggerHelper.Info("LogDialog"," Begin read of " + _file.Name);
+
                     }
 
 
@@ -392,10 +385,7 @@ namespace DialogEngine
 
                                 if (SessionVariables.WriteSerialLog)
                                 {
-                                    using (var _jsonLog = new StreamWriter(SessionVariables.LogsDirectory + SessionVariables.DialogLogFileName, true))
-                                    {
-                                        _jsonLog.WriteLine(" Finish read of " + _deserializedCharacterJson.CharacterName);
-                                    }
+                                    LoggerHelper.Info("LogDialog"," Finish read of " + _deserializedCharacterJson.CharacterName);
                                 }
 
 
@@ -414,7 +404,13 @@ namespace DialogEngine
 
                                 string _jsonParseErrorMessage = "JSON Parse error at " + e.LineNumber + ", " + e.LinePosition;
 
-                                mcLogger.Error(_jsonParseErrorMessage);
+                                AddItem(new ErrorMessage(_jsonParseErrorMessage));
+                            }
+                            catch (Exception ex)
+                            {
+                                mcLogger.Error("Error during parsing json file " + ex.Message);
+
+                                AddItem(new ErrorMessage("Error during parsing json file."));
                             }
                         }
                     }
@@ -561,10 +557,7 @@ namespace DialogEngine
         #region - Private methods -
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="_inCharacter"></param>
+
         private static void removePhrasesOverParentalRating(Character _inCharacter)
         {
             var _maxParentalRating = ParentalRatings.GetNumeric(SessionVariables.CurrentParentalRating);
@@ -598,7 +591,7 @@ namespace DialogEngine
 
                 var i = 0;
                 Thread.Sleep(600);
-
+                
 
                 while (Audio.IsPlaying() && i < 250)
                 {
@@ -818,13 +811,8 @@ namespace DialogEngine
             });
 
             if (SessionVariables.WriteSerialLog)
-                using (var _serialLogDialogLines = new StreamWriter(
-                    SessionVariables.LogsDirectory + SessionVariables.DialogLogFileName, true))
-                {
-                    _serialLogDialogLines.WriteLine(CharacterList[_speakingCharacter].CharacterName + ": " +
-                                                   _selectedPhrase.DialogStr);
-                    _serialLogDialogLines.Close();
-                }
+                LoggerHelper.Info("LogDialog",CharacterList[_speakingCharacter].CharacterName + ": " + _selectedPhrase.DialogStr);
+
         }
 
 
@@ -986,6 +974,7 @@ namespace DialogEngine
                     AddItem(new InfoMessage("Wait5"));
 
                     AddItem(new DialogItem() { Character = CharacterList[Character2Num], PhraseEntry = _ch2RetreatPhrase });
+
 
                     playAudio( SessionVariables.AudioDirectory 
                                + CharacterList[Character2Num].CharacterPrefix 

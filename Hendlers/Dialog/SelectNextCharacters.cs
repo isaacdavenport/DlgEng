@@ -83,7 +83,7 @@ namespace DialogEngine
                 index = random.Next(0, msDialogTracker.CharacterList.Count);
                 _isIndexTheSame = false;
 
-                if(_indexToSkip != null && _indexToSkip.Length > 0)
+                if( _indexToSkip.Length > 0 )
                 {
                     if (index == _indexToSkip[0])
                         _isIndexTheSame = true;

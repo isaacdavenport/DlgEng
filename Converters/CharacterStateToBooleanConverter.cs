@@ -5,14 +5,9 @@
 
 using DialogEngine.Models.Enums;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows.Data;
 using System.Globalization;
-using System.Windows;
-using DialogEngine.Events;
-using DialogEngine.Events.DialogEvents;
+
 
 namespace DialogEngine.Converters
 {

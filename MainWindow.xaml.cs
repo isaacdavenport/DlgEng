@@ -10,6 +10,9 @@ using System.Windows.Media;
 using DialogEngine.Controls;
 using log4net;
 using log4net.Config;
+using Microsoft.Win32;
+using DialogEngine.Helpers;
+using DialogEngine.ViewModels.Dialog;
 
 namespace DialogEngine
 {
@@ -64,6 +67,57 @@ namespace DialogEngine
             Process.Start("https://sites.google.com/isaacdavenport.com/toys2life/home");
         }
 
+        private void _addCharacter_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog _openFileDialog = new OpenFileDialog();
+
+            _openFileDialog.DefaultExt = "json";
+            _openFileDialog.Filter = "Json file (*.json) | *.json";
+
+            Nullable<bool> result = _openFileDialog.ShowDialog();
+
+            if (result == true)
+            {
+                try
+                {
+                    string fileName = _openFileDialog.FileName;
+
+                    File.Copy(fileName, Path.Combine(SessionVariables.BaseDirectory, SessionVariables.CharactersDirectory, Path.GetFileName(fileName)));
+                }
+                catch (Exception ex)
+                {
+                    mcLogger.Error("Error during saving new character " + ex.Message);
+                    MessageBox.Show("Error during saving new character.");
+                }
+            }
+
+        }
+
+        private void _addDialogModel_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog _openFileDialog = new OpenFileDialog();
+
+            _openFileDialog.DefaultExt = "json";
+            _openFileDialog.Filter = "Json file (*.json) | *.json";
+
+            Nullable<bool> result = _openFileDialog.ShowDialog();
+
+            if (result == true)
+            {
+                try
+                {
+                    string fileName = _openFileDialog.FileName;
+
+                    File.Copy(fileName, Path.Combine(SessionVariables.BaseDirectory, SessionVariables.DialogsDirectory, Path.GetFileName(fileName)));
+                }
+                catch (Exception ex)
+                {
+                    mcLogger.Error("Error during saving new dialog model " + ex.Message);
+                    MessageBox.Show("Error during saving new dialog model.");
+                }
+            }
+        }
+
         #endregion
 
         #region - public methods -
@@ -74,8 +128,13 @@ namespace DialogEngine
             StatusBarTextBox.Text = _infoMessage;
         }
 
+
+
         #endregion
 
-
+        private void _reloadFiles_Click(object sender, RoutedEventArgs e)
+        {
+            DialogViewModel.Instance.ReloadDialogData();
+        }
     }
 }

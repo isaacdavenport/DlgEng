@@ -110,13 +110,23 @@
                 <Grid>
                     <Grid.ColumnDefinitions>
                             <ColumnDefinition />
+                            <ColumnDefinition />
                         </Grid.ColumnDefinitions>
 
-                        <Button Content="Generate dialog" 
+                        <Button x:Name="StopDialogBtn"
+                                Content="Stop dialog" 
+                                Style="{StaticResource btn-primary}" 
+                                Command="{Binding StopDialog}" 
+                                HorizontalAlignment="Center" 
+                                IsEnabled="{Binding IsDialogStopped , Converter={StaticResource InvertBooleanConverter}}"
+                                Grid.Column="0" />
+
+                        <Button Content="Start dialog" 
                                 Style="{StaticResource btn-primary}" 
                                 Command="{Binding GenerateDialog}" 
-                                HorizontalAlignment="Center" 
-                                Grid.Column="0" />
+                                HorizontalAlignment="Center"
+                                IsEnabled="{Binding IsDialogStopped}"
+                                Grid.Column="1" />
 
                 </Grid>
 

@@ -26,22 +26,11 @@ namespace DialogEngine
         {
             Player = new WMPLib.WindowsMediaPlayer();
             Player.MediaError += Player_MediaError;
-            Events.EventAggregator.Instance.GetEvent<StopPlayingCurrentDialogLineEvent>().Subscribe(_stopPlayingCurrentDialogLine);
+            Events.EventAggregator.Instance.GetEvent<StopPlayingCurrentDialogLineEvent>().Subscribe(StopPlayingCurrentDialogLine);
 
         }
 
-        // stops currently playing .mp3 file
-        private void _stopPlayingCurrentDialogLine()
-        {
-            try
-            {
-                Player.controls.stop();
-            }
-            catch (Exception ex)
-            {
-                mcLogger.Error(ex.Message);
-            }
-        }
+
 
 
         private void Player_MediaError(object pMediaObject)
@@ -76,9 +65,9 @@ namespace DialogEngine
         }
 
         /// <summary>
-        /// 
+        /// Check is player playing
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Is player playing</returns>
         public bool IsPlaying()
         {
             try
@@ -101,7 +90,7 @@ namespace DialogEngine
 
 
         /// <summary>
-        /// 
+        /// Check status of player
         /// </summary>
         /// <returns>Status of mp3 player</returns>
         public int Status()
@@ -118,6 +107,20 @@ namespace DialogEngine
             return _code;
         }
 
+        /// <summary>
+        /// Stops player
+        /// </summary>
+        public void StopPlayingCurrentDialogLine()
+        {
+            try
+            {
+                Player.controls.stop();
+            }
+            catch (Exception ex)
+            {
+                mcLogger.Error(ex.Message);
+            }
+        }
 
     }
 }
