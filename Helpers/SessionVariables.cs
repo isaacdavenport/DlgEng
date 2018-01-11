@@ -200,7 +200,7 @@ namespace DialogEngine.Helpers
             if (ConfigurationManager.AppSettings["HeatMapOnlyMode"] != null)
                 HeatMapOnlyMode = Convert.ToBoolean(AppSet.ReadSetting("HeatMapOnlyMode"));
             else
-                HeatMapOnlyMode = true;
+                HeatMapOnlyMode = false;
 
 
             if (ConfigurationManager.AppSettings["CheckStuckTransmissions"] != null)

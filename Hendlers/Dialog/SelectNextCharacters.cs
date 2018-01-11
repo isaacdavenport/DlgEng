@@ -6,6 +6,8 @@ using System.Timers;
 using System.Threading;
 using DialogEngine.Helpers;
 using DialogEngine.ViewModels.Dialog;
+using DialogEngine.Events;
+using DialogEngine.Events.DialogEvents;
 
 namespace DialogEngine
 {
@@ -64,12 +66,18 @@ namespace DialogEngine
             {
                 NextCharacter1 = _tempCh1;
                 NextCharacter2 = _tempCh2;
+                EventAggregator.Instance.GetEvent<StopPlayingCurrentDialogLineEvent>().Publish();
+
             }
             else if (RssiStable)
             {
                 NextCharacter1 = _tempCh2;
                 NextCharacter2 = _tempCh1;
+                EventAggregator.Instance.GetEvent<StopPlayingCurrentDialogLineEvent>().Publish();
+
             }
+
+
         }
 
         public static int GetNextCharacter(params int[] _indexToSkip)
