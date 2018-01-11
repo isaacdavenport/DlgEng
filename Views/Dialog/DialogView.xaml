@@ -460,7 +460,7 @@
                                 </DataGrid.CellStyle>
                             </DataGrid>
 
-                            <Grid Width="auto" Height="auto">
+                            <Grid Width="150" Height="auto">
                                 
 
                                 <Grid.RowDefinitions>
@@ -481,7 +481,7 @@
                                            Grid.Column="0" 
                                            Content="Character 1:" />
                                     
-                                    <TextBlock Grid.Column="1" VerticalAlignment="Center" TextAlignment="Center"   IsEnabled="False" >                                    
+                                    <TextBlock Grid.Column="1" VerticalAlignment="Center" TextAlignment="Left"   IsEnabled="False" >                                    
                                         <Run FontWeight="Bold" Text="{Binding Character1Prefix}" />
                                     </TextBlock>
 
@@ -489,7 +489,7 @@
 
                                 <Grid Grid.Row="1">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
+                                        <ColumnDefinition />
                                         <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
 
@@ -498,7 +498,7 @@
                                            Grid.Column="0"  
                                            Content="Character 2:" />
                                     
-                                    <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" IsEnabled="False" >                                   
+                                    <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" IsEnabled="False" >                                   
                                         <Run FontWeight="Bold" Text="{Binding Character2Prefix}" />
                                     </TextBlock>
 
@@ -529,8 +529,8 @@
 
                                 <Grid Grid.Row="3">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition  Width="*"/>
                                     </Grid.ColumnDefinitions>
 
                                     <Label HorizontalAlignment="Right" 

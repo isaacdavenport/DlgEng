@@ -163,6 +163,7 @@ namespace DialogEngine
             processDebugFlags(_dialogDirectives);
 
 
+
             CurrentDialogModel = pickAWeightedDialog(Character1Num, Character2Num);
 
             if (waitingForMovement() || SameCharactersAsLast && SessionVariables.WaitIndefinatelyForMove)
@@ -189,6 +190,11 @@ namespace DialogEngine
                     if (SessionVariables.TextDialogsOn)
                     {
 
+                        if (SessionVariables.TextDialogsOn)
+                        {
+                            AddItem(new InfoMessage(CharacterList[_speakingCharacter].CharacterName + ": "));
+                        }
+
                         if (CharacterList[_speakingCharacter].PhraseTotals.PhraseWeights[_currentPhraseType] < 0.01f)
                         {
                             AddItem(new WarningMessage("Missing PhraseType: " + _currentPhraseType));
@@ -197,7 +203,10 @@ namespace DialogEngine
 
                         _selectedPhrase = PickAWeightedPhrase(_speakingCharacter, _currentPhraseType);
 
-                    
+                        if (SessionVariables.TextDialogsOn)
+                        {
+                            AddItem(new InfoMessage(_selectedPhrase.DialogStr));
+                        }
 
                         AddItem(new DialogItem() { Character = CharacterList[_speakingCharacter], PhraseEntry = _selectedPhrase  });
 
