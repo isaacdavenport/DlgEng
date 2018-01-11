@@ -7,6 +7,9 @@ using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
 using DialogEngine.Models.Enums;
+using DialogEngine.ViewModels.Dialog;
+using DialogEngine.Events;
+using DialogEngine.Events.DialogEvents;
 
 namespace DialogEngine.Models.Dialog
 {
@@ -23,6 +26,14 @@ namespace DialogEngine.Models.Dialog
         /// A character's Phrases list holds all the phrases they might say along with 
         /// heuristic phraseWeights on what parts of a model dialog they might use them in.
         /// </summary>
+        /// 
+                
+        // max allowed characters in On state is 2
+        private const int mcMaxAllowedCharactersOn = 2;
+
+        private CharacterState _state;
+
+
         [JsonProperty("Phrases")]
         public List<PhraseEntry> Phrases = new List<PhraseEntry>(); //entry now has string phraseweight tags.
 
@@ -37,6 +48,40 @@ namespace DialogEngine.Models.Dialog
 
         [JsonProperty("CharacterPrefix")]
         public string CharacterPrefix { get; protected set; }
+
+        [JsonIgnore]
+        public CharacterState State
+        {
+            set
+            {
+
+                if (DialogViewModel.SelectedCharactersOn == mcMaxAllowedCharactersOn)
+                {
+
+                    if (value != CharacterState.On)
+                    {
+                        _state = value;
+
+                        EventAggregator.Instance.GetEvent<ChangedCharactersStateEvent>().Publish();
+
+                    }
+                }
+                else
+                {
+                    _state = value;
+
+                    EventAggregator.Instance.GetEvent<ChangedCharactersStateEvent>().Publish();
+                }
+
+
+            }
+
+            get
+            {
+                return _state;
+
+            }
+        }
 
     }
 }

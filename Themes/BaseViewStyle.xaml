@@ -10,6 +10,8 @@
     <converters:DynamicGroupNameConverter x:Key="DynamicGroupNameConverter" />
     <converters:RowIndexConverter x:Key="RowIndexConverter" />
     <converters:InvertBooleanConverter x:Key="InvertBooleanConverter" />
+    <converters:MatrixToDataViewConverter x:Key="MatrixToDataViewConverter" />
+    <converters:ValueToColorConverter x:Key="ValueToColorConverter" />
 
 
     <Style  TargetType="{x:Type RadioButton}">
@@ -154,7 +156,7 @@
                                         BorderBrush="LightGray">
 
 
-                                        <DataGrid IsEnabled="{Binding DataContext.IsDialogStopped , RelativeSource={RelativeSource AncestorType=ComboBox}}" 
+                                        <DataGrid 
                                                   ItemsSource="{TemplateBinding ItemsSource}" 
                                                   x:Name="dataGrid"  
                                                   HeadersVisibility="Column"  

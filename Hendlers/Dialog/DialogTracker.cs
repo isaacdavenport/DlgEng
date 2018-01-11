@@ -18,6 +18,7 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using DialogEngine.ViewModels.Dialog;
+using System.Collections.ObjectModel;
 
 // ReSharper disable ConditionIsAlwaysTrueOrFalse
 
@@ -59,7 +60,7 @@ namespace DialogEngine
         public bool LastPhraseImpliedMovement;
         public bool SameCharactersAsLast;
 
-        public List<Character> CharacterList = new List<Character>();
+        public ObservableCollection<Character> CharacterList =new ObservableCollection<Character>();
         public List<HistoricalDialog> HistoricalDialogs = new List<HistoricalDialog>();
         public List<HistoricalPhrase> HistoricalPhrases = new List<HistoricalPhrase>();
         public List<ModelDialog> ModelDialogs = new List<ModelDialog>();
@@ -281,8 +282,9 @@ namespace DialogEngine
         }
 
 
-        public async Task IntakeCharacters()
+        public async Task<ObservableCollection<Character>> IntakeCharacters()
         {
+            ObservableCollection<Character> _characterList = new ObservableCollection<Character>();
 
             await Task.Run(() =>
             {
@@ -328,6 +330,11 @@ namespace DialogEngine
 
                                 var _deserializedCharacterJson = JsonConvert.DeserializeObject<Models.Dialog.Character>(_inChar);
 
+                                //if there is wrong json file, just ignore it
+                                if(_deserializedCharacterJson.CharacterName == null)
+                                {
+                                    continue;
+                                }
 
                                 _deserializedCharacterJson.PhraseTotals = new PhraseEntry(); //init PhraseTotals
 
@@ -391,7 +398,7 @@ namespace DialogEngine
 
 
                                 //Add to Char List
-                                CharacterList.Add(_deserializedCharacterJson);
+                                _characterList.Add(_deserializedCharacterJson);
 
 
                             }
@@ -437,14 +444,7 @@ namespace DialogEngine
                 }
 
 
-                if (CharacterList.Count < 2)
-                {
-                    string _errorMessage = "Insufficient readable character json files found in "
-                                           + SessionVariables.CharactersDirectory + " .  Exiting.";
 
-                    AddItem(new ErrorMessage(_errorMessage));
-
-                }
 
 
                 // Fill the queue with greeting dialogs
@@ -455,6 +455,20 @@ namespace DialogEngine
 
 
             });
+
+            CharacterList = _characterList;
+
+            if (CharacterList.Count < 2)
+            {
+                string _errorMessage = "Insufficient readable character json files found in "
+                                       + SessionVariables.CharactersDirectory + " .  Exiting.";
+
+                AddItem(new ErrorMessage(_errorMessage));
+
+            }
+
+            return _characterList;
+
         }
 
 

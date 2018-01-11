@@ -33,38 +33,7 @@ namespace DialogEngine.Models.Dialog
 
         public  string FileName { get; set; }
 
-        public CharacterState State
-        {
-            set
-            {
-                
-                if( DialogViewModel.SelectedCharactersOn == mcMaxAllowedCharactersOn )
-                {
 
-                    if(value != CharacterState.On)
-                    {
-                        _state = value;
-
-                        EventAggregator.Instance.GetEvent<ChangedCharactersStateEvent>().Publish();
-
-                    }
-                }
-                else
-                {
-                    _state = value;
-
-                    EventAggregator.Instance.GetEvent<ChangedCharactersStateEvent>().Publish();
-                }
-
-
-            }
-
-            get
-            {
-                return _state;
-
-            }
-        }
 
 
     }

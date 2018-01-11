@@ -110,7 +110,7 @@ namespace DialogEngine
             //  This method takes the RSSI values and combines them so that the RSSI for Ch2 looking at 
             //  Ch1 is added to the RSSI for Ch1 looking at Ch2
 
-            int _tempCh1 = 0, _tempCh2 = 0, _i = 0, _j = 0;
+            int _tempCh1 = 0, _tempCh2 = 0, i = 0, j = 0;
 
             var _currentTime = DateTime.Now;
             _tempCh1 = NextCharacter1;
@@ -119,21 +119,21 @@ namespace DialogEngine
             BigRssi = HeatMap[_tempCh1, _tempCh2] + HeatMap[_tempCh2, _tempCh1];  //only pick up new characters if bigRssi greater not =
 
 
-            for (_i = 0; _i < SerialComs.NumRadios; _i++)
+            for ( i = 0; i < SerialComs.NumRadios; i++)
             {  // the sixth radio is the computer's receiver now included for adventures
 
-                for (_j = _i + 1; _j < SerialComs.NumRadios; _j++)
+                for ( j = i + 1; j < SerialComs.NumRadios; j++)
                 {   
                     // only need data above the matrix diagonal
 
-                    if (   HeatMap[_i, _j] + HeatMap[_j, _i] > BigRssi 
-                        && _currentTime - CharactersLastHeatMapUpdateTime[_i] < MaxLastSeenInterval
-                        && _currentTime - CharactersLastHeatMapUpdateTime[_j] < MaxLastSeenInterval)
+                    if (   HeatMap[i, j] + HeatMap[j, i] > BigRssi 
+                        && _currentTime - CharactersLastHeatMapUpdateTime[i] < MaxLastSeenInterval
+                        && _currentTime - CharactersLastHeatMapUpdateTime[j] < MaxLastSeenInterval)
                     {  
                         // look at both characters view of each other
-                        BigRssi = HeatMap[_i, _j] + HeatMap[_j, _i];
-                        _tempCh1 = _i;
-                        _tempCh2 = _j;
+                        BigRssi = HeatMap[i, j] + HeatMap[j, i];
+                        _tempCh1 = i;
+                        _tempCh2 = j;
                     }
                 }
 

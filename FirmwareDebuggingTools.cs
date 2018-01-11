@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows;
 using DialogEngine.Helpers;
 using DialogEngine.Models.Dialog;
+using DialogEngine.ViewModels.Dialog;
 
 //TODO pull stuff out of here that is not serial and create a CharacterSelection.cs with pieces from DialogTracker
 
@@ -34,30 +35,39 @@ namespace DialogEngine
 
         public static void PrintHeatMap()
         {
-            ;
 
-            int i, l, k;
+            DialogViewModel.Instance.HeatMap = SelectNextCharacters.HeatMap;
 
-            for (i = 0; i < SerialComs.NumRadios; i++)
-            {
-                AddItem(SelectNextCharacters.CharactersLastHeatMapUpdateTime[i].ToString("mm.ss.fff") + " ");
+            DialogViewModel.Instance.Character1Prefix = DialogViewModel.Instance.CharacterCollection[SelectNextCharacters.NextCharacter1].CharacterPrefix;
 
-            }
+            DialogViewModel.Instance.Character2Prefix = DialogViewModel.Instance.CharacterCollection[SelectNextCharacters.NextCharacter2].CharacterPrefix;
+
+            DialogViewModel.Instance.RSSIsum = SelectNextCharacters.BigRssi;
+
+            DialogViewModel.Instance.RSSIstable = SelectNextCharacters.RssiStable;
+
+            //int i, l, k;
+
+            //for (i = 0; i < SerialComs.NumRadios; i++)
+            //{
+            //    AddItem(SelectNextCharacters.CharactersLastHeatMapUpdateTime[i].ToString("mm.ss.fff") + " ");
+
+            //}
 
 
-            for (l = 0; l < SerialComs.NumRadios; l++)
-            {
-                for (k = 0; k < SerialComs.NumRadios; k++)
-                {
-                    AddItem("{0:D3}" + SelectNextCharacters.HeatMap[l, k]);
+            //for (l = 0; l < SerialComs.NumRadios; l++)
+            //{
+            //    for (k = 0; k < SerialComs.NumRadios; k++)
+            //    {
+            //        AddItem("{0:D3}" + SelectNextCharacters.HeatMap[l, k]);
 
-                }
+            //    }
                 
-            }
+            //}
 
-            AddItem("Character1-2Num " + msDialogTracker.CharacterList[msDialogTracker.Character1Num].CharacterPrefix
-                              + " " + msDialogTracker.CharacterList[msDialogTracker.Character2Num].CharacterPrefix
-                              + " RSSIsum " + "{0:D3}" + SelectNextCharacters.BigRssi + ", rssiStable = " + SelectNextCharacters.RssiStable);
+            //AddItem("Character1-2Num " + msDialogTracker.CharacterList[msDialogTracker.Character1Num].CharacterPrefix
+            //                  + " " + msDialogTracker.CharacterList[msDialogTracker.Character2Num].CharacterPrefix
+            //                  + " RSSIsum " + "{0:D3}" + SelectNextCharacters.BigRssi + ", rssiStable = " + SelectNextCharacters.RssiStable);
 
         }
 
@@ -68,10 +78,8 @@ namespace DialogEngine
 
             for (i = 0; i < SerialComs.NumRadios; i++)
             {
-                //((MainWindow)Application.Current.MainWindow).TestOutput.Text += SelectNextCharacters.CharactersLastHeatMapUpdateTime[i].ToString("mm.ss.fff") + Environment.NewLine;
                 //Console.Write(SelectNextCharacters.CharactersLastHeatMapUpdateTime[i].ToString("mm.ss.fff") + " ");
             }
-            //((MainWindow)Application.Current.MainWindow).TestOutput.Text += Environment.NewLine;
             //Console.WriteLine();
             for (l = 0; l < SerialComs.NumRadios; l++)
             {
@@ -79,7 +87,6 @@ namespace DialogEngine
                 {
                     if (k > l)
                     {
-                        //((MainWindow)Application.Current.MainWindow).TestOutput.Text += "{0:D3}" + (SelectNextCharacters.HeatMap[l, m] + SelectNextCharacters.HeatMap[m, l]) + Environment.NewLine;
                         //Console.Write("{0:D3}", (SelectNextCharacters.HeatMap[l, m] + SelectNextCharacters.HeatMap[m, l]));
                     }
                     else
@@ -87,20 +94,16 @@ namespace DialogEngine
                         //((MainWindow)Application.Current.MainWindow).TestOutput.Text += "{0:D3}" + (0) + Environment.NewLine; //vb : is this format correct?
                         //Console.Write("{0:D3}", (0));  // only show diagonal top of matrix when summed, symetrical
                     }
-                    //((MainWindow)Application.Current.MainWindow).TestOutput.Text += " " + Environment.NewLine;
                     //Console.Write(" ");
                 }
-                //((MainWindow)Application.Current.MainWindow).TestOutput.Text += "" + Environment.NewLine;
                 //Console.WriteLine("");
             }
-            //((MainWindow)Application.Current.MainWindow).TestOutput.Text += "  nextCharacter1-2 " + Program.TheDialogs.CharacterList[SelectNextCharacters.NextCharacter1].CharacterPrefix
-                              //+ " " + Program.TheDialogs.CharacterList[SelectNextCharacters.NextCharacter2].CharacterPrefix
-                              //+ " RSSIsum " + "{0:D3}" + SelectNextCharacters.BigRssi + ", rssiStable = " + SelectNextCharacters.RssiStable + Environment.NewLine;
+
 
             /*Console.WriteLine("  nextCharacter1-2 " + Program.TheDialogs.CharacterList[SelectNextCharacters.NextCharacter1].CharacterPrefix
                               + " " + Program.TheDialogs.CharacterList[SelectNextCharacters.NextCharacter2].CharacterPrefix
                               + " RSSIsum " + "{0:D3}", SelectNextCharacters.BigRssi + ", rssiStable = " + SelectNextCharacters.RssiStable); */
-            //((MainWindow)Application.Current.MainWindow).TestOutput.Text += "" + Environment.NewLine;
+       
             //Console.WriteLine("");
         }
 

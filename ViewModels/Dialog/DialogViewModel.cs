@@ -46,7 +46,7 @@ namespace DialogEngine.ViewModels.Dialog
         private readonly DialogTracker mcTheDialogs;
 
         // reference on view
-        private  Views.Dialog.DialogView mView;
+        private Views.Dialog.DialogView mView;
 
         private readonly Random mRandom = new Random();
 
@@ -56,7 +56,14 @@ namespace DialogEngine.ViewModels.Dialog
         private int mSelectedIndex1;
         private int mSelectedIndex2;
 
+        private string mCharacter1Prefix = "";
+        private string mCharacter2Prefix = "";
+        private bool mRSSIstable;
+        private int mRSSIsum;
+
         private bool mIsDialogStopped = true;
+
+        private int[,] mHeatMap = new int[SerialComs.NumRadios,SerialComs.NumRadios] ;
 
         // create token which we pass to background method, so we can force method to finish executing
         private CancellationTokenSource _cancellationTokensource;
@@ -65,7 +72,7 @@ namespace DialogEngine.ViewModels.Dialog
         private ObservableCollection<object> mDialogLinesCollection;
 
         // Combobox item sources
-        private ObservableCollection<CharacterInfo> mCharacterCollection;
+        private ObservableCollection<Character> mCharacterCollection;
         private ObservableCollection<ModelDialogInfo> mDialogModelCollection;
 
         // Collections of debug messages
@@ -151,6 +158,25 @@ namespace DialogEngine.ViewModels.Dialog
         /// </summary>
         public int SelectedIndex2 { get => mSelectedIndex2; set => mSelectedIndex2 = value; }
 
+
+
+        public int[,] HeatMap
+        {
+            get
+            {
+                return mHeatMap;
+            }
+            set
+            {
+                mHeatMap = value;
+                //this.SetProperty(ref mHeatMap, value);
+
+                OnPropertyChanged("HeatMap");
+
+            }
+        }
+
+
         /// <summary>
         /// Represents dialog started state
         /// </summary>
@@ -165,6 +191,78 @@ namespace DialogEngine.ViewModels.Dialog
                 mIsDialogStopped = value;
 
                 OnPropertyChanged("IsDialogStopped");
+            }
+        }
+
+
+
+        public string Character1Prefix
+        {
+            get
+            {
+                return mCharacter1Prefix;
+            }
+
+            set
+            {
+                mCharacter1Prefix = value;
+
+                OnPropertyChanged("Character1Prefix");
+
+            }
+        }
+
+
+
+        public bool RSSIstable
+        {
+            get
+            {
+                return mRSSIstable;
+            }
+
+            set
+            {
+                mRSSIstable = value;
+
+                OnPropertyChanged("RSSIstable");
+
+            }
+        }
+
+
+
+        public int RSSIsum
+        {
+            get
+            {
+                return mRSSIsum;
+            }
+
+            set
+            {
+                mRSSIsum = value;
+
+                OnPropertyChanged("RSSIsum");
+
+            }
+        }
+
+
+
+        public string Character2Prefix
+        {
+            get
+            {
+                return mCharacter2Prefix;
+            }
+
+            set
+            {
+                mCharacter2Prefix = value;
+
+                OnPropertyChanged("Character2Prefix");
+
             }
         }
 
@@ -205,13 +303,13 @@ namespace DialogEngine.ViewModels.Dialog
         /// Collection of <see cref="CharacterInfo"/>
         /// Source for characters combobox
         /// </summary>
-        public ObservableCollection<CharacterInfo> CharacterCollection
+        public ObservableCollection<Character> CharacterCollection
         {
             get
             {
                 if (mCharacterCollection == null)
                 {
-                    mCharacterCollection = new ObservableCollection<CharacterInfo>();
+                    mCharacterCollection = new ObservableCollection<Character>();
 
                 }
 
@@ -367,7 +465,7 @@ namespace DialogEngine.ViewModels.Dialog
 
             int index = 0;
             
-            foreach(CharacterInfo characterInfo in CharacterCollection)
+            foreach(Character characterInfo in CharacterCollection)
             {
                 if (characterInfo.State == Models.Enums.CharacterState.On)
                 {
@@ -815,17 +913,17 @@ namespace DialogEngine.ViewModels.Dialog
 
             try
             {
+                if (mIsModelsDialogChanged == true)
+                {
+                    await InitModelDialogs.SetDefaults(mcTheDialogs, DialogModelCollection);
+
+                    mIsModelsDialogChanged = false;
+                }
+
                 await Task.Run(() =>
                   {
                       while (!_cancellationToken.IsCancellationRequested)
                       {
-
-                          if (mIsModelsDialogChanged == true)
-                          {
-                              InitModelDialogs.SetDefaults(mcTheDialogs, DialogModelCollection);
-
-                              mIsModelsDialogChanged = false;
-                          }
 
 
                           if (SelectedCharactersOn == 2)
@@ -918,9 +1016,9 @@ namespace DialogEngine.ViewModels.Dialog
 
             await InitModelDialogs.SetDefaults(mcTheDialogs);
 
-            await mcTheDialogs.IntakeCharacters();
+            //await mcTheDialogs.IntakeCharacters();
 
-            Task<ObservableCollection<CharacterInfo>> _charactersTask = _loadAllCharacterNames(SessionVariables.CharactersDirectory);
+            Task<ObservableCollection<Character>> _charactersTask = mcTheDialogs.IntakeCharacters();
             Task<ObservableCollection<ModelDialogInfo>> _modelDialogTask = _loadAllDialogModels(SessionVariables.DialogsDirectory);
 
             CharacterCollection = await _charactersTask;
@@ -949,14 +1047,14 @@ namespace DialogEngine.ViewModels.Dialog
 
             await InitModelDialogs.SetDefaults(mcTheDialogs);
 
-            await mcTheDialogs.IntakeCharacters();
+            CharacterCollection = await mcTheDialogs.IntakeCharacters();
 
 
-            Task<ObservableCollection<CharacterInfo>> _charactersTask = _loadAllCharacterNames(SessionVariables.CharactersDirectory);
+           // Task<ObservableCollection<CharacterInfo>> _charactersTask = _loadAllCharacterNames(SessionVariables.CharactersDirectory);
             Task<ObservableCollection<ModelDialogInfo>> _modelDialogTask = _loadAllDialogModels(SessionVariables.DialogsDirectory);
 
 
-            CharacterCollection = await _charactersTask;
+           // CharacterCollection = await _charactersTask;
             DialogModelCollection = await _modelDialogTask;
 
             SerialComs.InitSerial();
