@@ -210,8 +210,7 @@ namespace DialogEngine
 
                         playAudio(_pathAndFileName); // vb: code stops here so commented out for debugging purpose
 
-                        if (   !SessionVariables.ForceCharactersAndDialogModel 
-                            && !DialogTrackerAndSerialComsCharactersSame()
+                        if ( !DialogTrackerAndSerialComsCharactersSame()
                             && DialogViewModel.SelectedCharactersOn != 1)
                         {
                             SameCharactersAsLast = false;
@@ -547,11 +546,6 @@ namespace DialogEngine
                     if (_recentPhraseQueueEntry.Equals(_selectedPhrase))
                     {
                         _phraseIsDuplicate = true; //send through retry loop k again
-                        if (SessionVariables.ShowDupePhrases)
-                        {
-                                AddItem(new WarningMessage("Duplicate [" + _selectedPhrase.DialogStr + "]"));                             
-                        }
-
                         break; // doesn't matter if duplicated more than once
                     }
                 }
@@ -674,16 +668,8 @@ namespace DialogEngine
             foreach (var _recentDialogQueueEntry in RecentDialogs) // try again if dialog model recentlyused{
             {
                 if (_recentDialogQueueEntry == _dialogModel)
-                {
-                    if (SessionVariables.ShowDupePhrases)
-                        AddItem(new WarningMessage("Duplicate Dialog [" + _dialogModel + "]"));
-
-
                     return true;
-                }
             }
-
-
 
             return false;
         }
@@ -707,15 +693,10 @@ namespace DialogEngine
                     else
                         _currentCharacter = _character1Num;
 
-
                 }
                 else
-                {
                     return false;
-                }
             }
-
-
 
             return true;
         }
@@ -942,13 +923,9 @@ namespace DialogEngine
             if (SessionVariables.DebugFlag)
                 WriteDialogInfo(Character1Num, Character2Num);
 
-
-            if (SessionVariables.HeatMapFullMatrixDispMode)
+            //if (SessionVariables.HeatMapFullMatrixDispMode)
                 FirmwareDebuggingTools.PrintHeatMap();
 
-
-            if (SessionVariables.HeatMapSumsMode)
-                FirmwareDebuggingTools.PrintHeatMapSums();
         }
 
 

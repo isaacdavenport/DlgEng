@@ -33,7 +33,9 @@ namespace DialogEngine
 
         #region - Static methods -
 
+#pragma warning disable 1591
         public static void PrintHeatMap()
+#pragma warning restore 1591
         {
 
             DialogViewModel.Instance.HeatMap = SelectNextCharacters.HeatMap;
@@ -46,150 +48,6 @@ namespace DialogEngine
 
             DialogViewModel.Instance.RSSIstable = SelectNextCharacters.RssiStable;
 
-            //int i, l, k;
-
-            //for (i = 0; i < SerialComs.NumRadios; i++)
-            //{
-            //    AddItem(SelectNextCharacters.CharactersLastHeatMapUpdateTime[i].ToString("mm.ss.fff") + " ");
-
-            //}
-
-
-            //for (l = 0; l < SerialComs.NumRadios; l++)
-            //{
-            //    for (k = 0; k < SerialComs.NumRadios; k++)
-            //    {
-            //        AddItem("{0:D3}" + SelectNextCharacters.HeatMap[l, k]);
-
-            //    }
-                
-            //}
-
-            //AddItem("Character1-2Num " + msDialogTracker.CharacterList[msDialogTracker.Character1Num].CharacterPrefix
-            //                  + " " + msDialogTracker.CharacterList[msDialogTracker.Character2Num].CharacterPrefix
-            //                  + " RSSIsum " + "{0:D3}" + SelectNextCharacters.BigRssi + ", rssiStable = " + SelectNextCharacters.RssiStable);
-
-        }
-
-
-        public static void PrintHeatMapSums()
-        {
-            int i, l, k;
-
-            for (i = 0; i < SerialComs.NumRadios; i++)
-            {
-                //Console.Write(SelectNextCharacters.CharactersLastHeatMapUpdateTime[i].ToString("mm.ss.fff") + " ");
-            }
-            //Console.WriteLine();
-            for (l = 0; l < SerialComs.NumRadios; l++)
-            {
-                for (k = 1; k < SerialComs.NumRadios; k++)
-                {
-                    if (k > l)
-                    {
-                        //Console.Write("{0:D3}", (SelectNextCharacters.HeatMap[l, m] + SelectNextCharacters.HeatMap[m, l]));
-                    }
-                    else
-                    {
-                        //((MainWindow)Application.Current.MainWindow).TestOutput.Text += "{0:D3}" + (0) + Environment.NewLine; //vb : is this format correct?
-                        //Console.Write("{0:D3}", (0));  // only show diagonal top of matrix when summed, symetrical
-                    }
-                    //Console.Write(" ");
-                }
-                //Console.WriteLine("");
-            }
-
-
-            /*Console.WriteLine("  nextCharacter1-2 " + Program.TheDialogs.CharacterList[SelectNextCharacters.NextCharacter1].CharacterPrefix
-                              + " " + Program.TheDialogs.CharacterList[SelectNextCharacters.NextCharacter2].CharacterPrefix
-                              + " RSSIsum " + "{0:D3}", SelectNextCharacters.BigRssi + ", rssiStable = " + SelectNextCharacters.RssiStable); */
-       
-            //Console.WriteLine("");
-        }
-
-        public static void CheckStuckTransmissions()
-        {
-            // step through recent messages to ensure all characters are still transmitting 
-            // and transmitting unique messages (for debug of no-new-data FW bug)
-            // each character is "OK " STUCK "STK" or "MIA" missing in action
-            // this could be changed to order N rather than numCharacters*N but not worth it now
-
-
-            const int numMsgToChk = 5;
-            if (ParseMessage.ReceivedMessages.Count < 20)
-            {
-                return;
-            }
-
-            var _currentTime = DateTime.Now;
-            foreach (var _chr in msDialogTracker.CharacterList)
-            {
-                Console.Write(_chr.CharacterPrefix + " ");
-                ReceivedMessage[] _lastFiveMsg = new ReceivedMessage[numMsgToChk];
-                int i, j = 0;
-                for (i = ParseMessage.ReceivedMessages.Count - 1; i > 2; i--)
-                {
-                    if (ParseMessage.ReceivedMessages[i].CharacterPrefix == _chr.CharacterPrefix)
-                    {
-                        if (j == 0 && _currentTime - ParseMessage.ReceivedMessages[i].ReceivedTime > SelectNextCharacters.MaxLastSeenInterval)
-                        {
-                            Console.Write("MIA ");  //haven't seen this character in over maxLastSeenInterval seconds
-                            break;
-                        }
-                        if (j < numMsgToChk)
-                        {
-                            _lastFiveMsg[j] = ParseMessage.ReceivedMessages[i];
-                            j++;
-                        }
-                        else
-                        {
-                            bool _messagesUnique = false;
-                            for (var k = 1; k < numMsgToChk; k++)
-                            {
-                                if (_lastFiveMsg[k].SequenceNum != _lastFiveMsg[k - 1].SequenceNum)
-                                {
-                                    Console.Write("OK  ");  //some of the recent messages are unique
-                                    _messagesUnique = true;
-                                    break;
-                                }
-                            }
-                            if (!_messagesUnique)
-                            {
-                                Console.Write("STK ");  //last five messages all had same seq number so we are stuck 
-                            }
-                            break;
-                        }
-                    }
-                }
-                if (i < 3)  // if we counted all the way down we didn't find our five messages from this character he is MIA
-                {
-                    Console.Write("MIA ");
-                }
-            }
-        }
-
-        public static void ProcessDebugFlags()
-        {
-            TimeSpan _lenOfBuffer;
-
-            if (SessionVariables.HeatMapSumsMode && !SessionVariables.HeatMapOnlyMode)
-            {
-                PrintHeatMapSums();
-            }
-            if (SessionVariables.HeatMapFullMatrixDispMode && !SessionVariables.HeatMapOnlyMode)
-            {
-                PrintHeatMap(); 
-            }
-            if (SessionVariables.CheckStuckTransmissions && !SessionVariables.HeatMapOnlyMode)
-            {
-                CheckStuckTransmissions();
-            }
-            if (SessionVariables.MonitorReceiveBufferSize && !SessionVariables.HeatMapOnlyMode)
-            {
-                _lenOfBuffer = ParseMessage.ReceivedMessages.Last().ReceivedTime - ParseMessage.ReceivedMessages[0].ReceivedTime;
-                Console.WriteLine("RecBuffCnt = " + ParseMessage.ReceivedMessages.Count +
-                                  " SecsOfBuff = " + _lenOfBuffer.ToString(@"mm\.ss\.fff"));
-            }
         }
 
         #endregion

@@ -949,27 +949,11 @@ namespace DialogEngine.ViewModels.Dialog
                           }
                           else
                           {
-                              if (!SessionVariables.HeatMapOnlyMode)
-                              {
+                               mcTheDialogs.GenerateADialog(_cancellationToken); //normal operation
 
-                                  mcTheDialogs.GenerateADialog(_cancellationToken); //normal operation
+                               Thread.Sleep(1100); //vb:commented out for debugging as code stops here
 
-                                  Thread.Sleep(1100); //vb:commented out for debugging as code stops here
-
-                                  Thread.Sleep(mRandom.Next(0, 2000)); //vb:commented out for debugging as code stops here
-                              }
-                              else
-                              {
-                                  if (SessionVariables.HeatMapFullMatrixDispMode)
-                                      FirmwareDebuggingTools.PrintHeatMap();
-
-
-                                  if (SessionVariables.HeatMapSumsMode)
-                                      FirmwareDebuggingTools.PrintHeatMapSums();
-
-
-                                  Thread.Sleep(400); //vb:commented out for debugging as code stops here
-                              }
+                               Thread.Sleep(mRandom.Next(0, 2000)); //vb:commented out for debugging as code stops here
                           }
                       }
                   }, _cancellationToken);

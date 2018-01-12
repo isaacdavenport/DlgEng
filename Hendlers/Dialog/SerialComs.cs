@@ -137,9 +137,9 @@ namespace DialogEngine
                     SelectNextCharacters.FindBiggestRssiPair();
                 }
 
-                if (_cycleCount > 110)
+                if (_cycleCount > 80)
                 {
-                    FirmwareDebuggingTools.ProcessDebugFlags();
+                    FirmwareDebuggingTools.PrintHeatMap();
                     _cycleCount = 0;
                 }
             }

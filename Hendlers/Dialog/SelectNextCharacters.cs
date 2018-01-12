@@ -66,14 +66,14 @@ namespace DialogEngine
             {
                 NextCharacter1 = _tempCh1;
                 NextCharacter2 = _tempCh2;
-                EventAggregator.Instance.GetEvent<StopPlayingCurrentDialogLineEvent>().Publish();
+                //EventAggregator.Instance.GetEvent<StopPlayingCurrentDialogLineEvent>().Publish();
 
             }
             else if (RssiStable)
             {
                 NextCharacter1 = _tempCh2;
                 NextCharacter2 = _tempCh1;
-                EventAggregator.Instance.GetEvent<StopPlayingCurrentDialogLineEvent>().Publish();
+                //EventAggregator.Instance.GetEvent<StopPlayingCurrentDialogLineEvent>().Publish();
 
             }
 
@@ -157,7 +157,7 @@ namespace DialogEngine
 
         public static void OccasionallyChangeToRandNewCharacter()
         {   
-            // used for computers with no serial input radio for random, or forceCharacter mode
+            // used for computers with no serial input radio for random, and to forceCharacter selection
             // does not include final character the silent schoolhouse, not useful in noSerial mode 
             bool _userHasForcedCharacters = false;
 
