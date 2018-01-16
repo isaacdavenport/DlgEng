@@ -18,8 +18,6 @@ namespace DialogEngine.Helpers
 
 
         public static bool ShowDupePhrases;
-        public static bool HeatMapSumsMode;
-        public static bool HeatMapOnlyMode;
         public static bool CheckStuckTransmissions;
         public static bool MonitorReceiveBufferSize;
         public static bool MonitorMessageParseFails;
@@ -125,18 +123,6 @@ namespace DialogEngine.Helpers
             }
         }
 
-        public static bool HeatMapFullMatrixDispMode
-        {
-            get
-            {
-                bool result = false;
-
-                if (ConfigurationManager.AppSettings["HeatMapFullMatrixDispMode"] != null)
-                    result = Convert.ToBoolean(AppSet.ReadSetting("HeatMapFullMatrixDispMode"));
-
-                return result;
-            }
-        }
 
         public static bool UseSerialPort
         {
@@ -190,17 +176,6 @@ namespace DialogEngine.Helpers
                 ShowDupePhrases = Convert.ToBoolean(AppSet.ReadSetting("ShowDupePhrases"));
             else
                 ShowDupePhrases = false;
-
-
-            if (ConfigurationManager.AppSettings["HeatMapSumsMode"] != null)
-                HeatMapSumsMode = Convert.ToBoolean(AppSet.ReadSetting("HeatMapSumsMode"));
-            else
-                HeatMapSumsMode = false;
-
-            if (ConfigurationManager.AppSettings["HeatMapOnlyMode"] != null)
-                HeatMapOnlyMode = Convert.ToBoolean(AppSet.ReadSetting("HeatMapOnlyMode"));
-            else
-                HeatMapOnlyMode = false;
 
 
             if (ConfigurationManager.AppSettings["CheckStuckTransmissions"] != null)

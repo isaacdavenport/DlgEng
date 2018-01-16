@@ -70,6 +70,8 @@ namespace DialogEngine
                 NextCharacter1 = _tempCh2;
                 NextCharacter2 = _tempCh1;
             }
+
+
         }
 
         public static int GetNextCharacter(params int[] _indexToSkip)

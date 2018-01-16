@@ -952,12 +952,8 @@ namespace DialogEngine
                 WriteDialogInfo(Character1Num, Character2Num);
 
 
-            if (SessionVariables.HeatMapFullMatrixDispMode)
                 FirmwareDebuggingTools.PrintHeatMap();
 
-
-            if (SessionVariables.HeatMapSumsMode)
-                FirmwareDebuggingTools.PrintHeatMapSums();
         }
 
 

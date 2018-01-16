@@ -8,6 +8,7 @@ using System.Threading;
 using DialogEngine.Helpers;
 using log4net;
 using System.Reflection;
+using System.Windows;
 
 namespace DialogEngine
 {
@@ -22,12 +23,14 @@ namespace DialogEngine
 
         public const int NumRadios = 6;  //includes dongle
 
+        public static object CompPortErrorDialog { get; private set; }
+
         #endregion
 
 
         #region - Private functions -
 
-       
+
         private static string readSerialInLine()
         {
             string _message = null;
@@ -98,6 +101,8 @@ namespace DialogEngine
                 catch(Exception ex)
                 {
                     mcLogger.Error("Serial port error " + ex.Message);
+
+                    MessageBox.Show("COM port  doesn't exist. Please check configuration. ");
                 }
             }
 

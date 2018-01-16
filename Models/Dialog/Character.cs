@@ -31,7 +31,9 @@ namespace DialogEngine.Models.Dialog
         // max allowed characters in On state is 2
         private const int mcMaxAllowedCharactersOn = 2;
 
-        private CharacterState _state;
+        private CharacterState mState;
+
+        private int mRadioNum = -1;
 
 
         [JsonProperty("Phrases")]
@@ -50,36 +52,44 @@ namespace DialogEngine.Models.Dialog
         public string CharacterPrefix { get; protected set; }
 
         [JsonIgnore]
+        public int RadioNum
+        {
+            set
+            {
+                mRadioNum = value;
+            }
+            get
+            {
+                return mRadioNum;
+            }
+        }
+
+        [JsonIgnore]
         public CharacterState State
         {
             set
             {
-
                 if (DialogViewModel.SelectedCharactersOn == mcMaxAllowedCharactersOn)
                 {
 
                     if (value != CharacterState.On)
                     {
-                        _state = value;
+                        mState = value;
 
                         EventAggregator.Instance.GetEvent<ChangedCharactersStateEvent>().Publish();
-
                     }
                 }
                 else
                 {
-                    _state = value;
+                    mState = value;
 
                     EventAggregator.Instance.GetEvent<ChangedCharactersStateEvent>().Publish();
                 }
-
-
             }
 
             get
             {
-                return _state;
-
+                return mState;
             }
         }
 
