@@ -923,8 +923,7 @@ namespace DialogEngine
             if (SessionVariables.DebugFlag)
                 WriteDialogInfo(Character1Num, Character2Num);
 
-            //if (SessionVariables.HeatMapFullMatrixDispMode)
-                HeatMap.PrintHeatMap();
+            HeatMap.PrintHeatMap();
 
         }
 
