@@ -47,10 +47,6 @@ namespace DialogEngine.Views.Dialog
             (this.DataContext as DialogViewModel).View = this;
 
             (this.DataContext as DialogViewModel).InitDialogData();
-
-            //SerialComs.InitSerial();
-
-            FirmwareDebuggingTools.AddItem = new FirmwareDebuggingTools.PrintMethod(((this.DataContext as DialogViewModel).AddItem));
             
         }
 
