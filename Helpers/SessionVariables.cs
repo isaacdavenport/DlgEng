@@ -109,19 +109,6 @@ namespace DialogEngine.Helpers
             }
         }
 
-/*        public static bool HeatMapFullMatrixDispMode
-        {
-            get
-            {
-                bool result = false;
-
-                if (ConfigurationManager.AppSettings["HeatMapFullMatrixDispMode"] != null)
-                    result = Convert.ToBoolean(AppSet.ReadSetting("HeatMapFullMatrixDispMode"));
-
-                return result;
-            }
-        }
-*/
         public static bool UseSerialPort
         {
             get

@@ -916,7 +916,6 @@ namespace DialogEngine
             else
             {
                 Character1Num = SelectNextCharacters.NextCharacter1;
-
                 Character2Num = SelectNextCharacters.NextCharacter2;
             }
 
