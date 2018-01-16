@@ -139,7 +139,7 @@ namespace DialogEngine
 
                 if (_cycleCount > 80)
                 {
-                    FirmwareDebuggingTools.PrintHeatMap();
+                    HeatMap.PrintHeatMap();
                     _cycleCount = 0;
                 }
             }

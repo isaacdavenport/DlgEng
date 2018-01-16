@@ -5,41 +5,21 @@ using DialogEngine.ViewModels.Dialog;
 
 namespace DialogEngine
 {
-    public static class FirmwareDebuggingTools
+    public static class HeatMap
     {
-        #region -Fields-
-
- //       public delegate void PrintMethod(string _message);
-
-        #endregion
-
-        #region - Properties -
-
-  //      public static PrintMethod AddItem { get; set; }
-
-        #endregion
-
         #region - Static methods -
 
-#pragma warning disable 1591
+        #pragma warning disable 1591
         public static void PrintHeatMap()
-#pragma warning restore 1591
+        #pragma warning restore 1591
         {
-
             DialogViewModel.Instance.HeatMap = SelectNextCharacters.HeatMap;
-
             DialogViewModel.Instance.Character1Prefix = DialogViewModel.Instance.CharacterCollection[SelectNextCharacters.NextCharacter1].CharacterPrefix;
-
             DialogViewModel.Instance.Character2Prefix = DialogViewModel.Instance.CharacterCollection[SelectNextCharacters.NextCharacter2].CharacterPrefix;
-
             DialogViewModel.Instance.RSSIsum = SelectNextCharacters.BigRssi;
-
             DialogViewModel.Instance.RSSIstable = SelectNextCharacters.RssiStable;
-
         }
-
         #endregion
-
     }
 
 }

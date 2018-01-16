@@ -924,12 +924,9 @@ namespace DialogEngine
                 WriteDialogInfo(Character1Num, Character2Num);
 
             //if (SessionVariables.HeatMapFullMatrixDispMode)
-                FirmwareDebuggingTools.PrintHeatMap();
+                HeatMap.PrintHeatMap();
 
         }
-
-
-
 
         private bool waitingForMovement()
         {

@@ -109,7 +109,7 @@ namespace DialogEngine.Helpers
             }
         }
 
-        public static bool HeatMapFullMatrixDispMode
+/*        public static bool HeatMapFullMatrixDispMode
         {
             get
             {
@@ -121,7 +121,7 @@ namespace DialogEngine.Helpers
                 return result;
             }
         }
-
+*/
         public static bool UseSerialPort
         {
             get
