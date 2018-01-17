@@ -22,6 +22,8 @@ using DialogEngine.Events.DialogEvents;
 using System.Windows.Data;
 using DialogEngine.Converters;
 using DialogEngine.Views.Dialog;
+using GalaSoft.MvvmLight.CommandWpf;
+using System.Windows.Input;
 
 namespace DialogEngine.ViewModels.Dialog
 {
@@ -50,6 +52,8 @@ namespace DialogEngine.ViewModels.Dialog
 
         private readonly Random mRandom = new Random();
 
+        private Point mStartPosition;
+
         // detect is dialog model changed, true value force application to reload dialog model
         private bool mIsModelsDialogChanged;
 
@@ -63,7 +67,7 @@ namespace DialogEngine.ViewModels.Dialog
 
         private bool mIsDialogStopped = true;
 
-        private int[,] mHeatMap = new int[SerialComs.NumRadios,SerialComs.NumRadios] ;
+        private int[,] mHeatMap = new int[SerialComs.NumRadios, SerialComs.NumRadios];
 
         // create token which we pass to background method, so we can force method to finish executing
         private CancellationTokenSource _cancellationTokensource;
@@ -120,6 +124,8 @@ namespace DialogEngine.ViewModels.Dialog
             _bindCommands();
         }
 
+
+
         #endregion
 
         #region - Properties -
@@ -169,7 +175,6 @@ namespace DialogEngine.ViewModels.Dialog
             set
             {
                 mHeatMap = value;
-                //this.SetProperty(ref mHeatMap, value);
 
                 OnPropertyChanged("HeatMap");
 
@@ -318,10 +323,22 @@ namespace DialogEngine.ViewModels.Dialog
 
             set
             {
-                    mCharacterCollection = value;
+                mCharacterCollection = value;
 
-                    // send notification to view (model is changed)
-                    OnPropertyChanged("CharacterCollection");
+                if (string.IsNullOrEmpty(mView.Radio_0.Text))
+                {
+                    for(int i=0;i<SerialComs.NumRadios && i < mCharacterCollection.Count; i++)
+                    {
+                        mCharacterCollection[i].RadioNum = i;
+
+                        string textBoxName = "Radio_" + i.ToString();
+                        (mView.FindName(textBoxName) as TextBox).Text = mCharacterCollection[i].CharacterName;
+
+                        (mView.FindName(textBoxName) as TextBox).Tag = mCharacterCollection[i];
+                    }
+                }
+
+                OnPropertyChanged("CharacterCollection");
             }
         }
 
@@ -433,22 +450,37 @@ namespace DialogEngine.ViewModels.Dialog
         /// <summary>
         /// Start dialog 
         /// </summary>
-        public RelayCommand GenerateDialog { get; set; }
+        public Core.RelayCommand GenerateDialog { get; set; }
 
         /// <summary>
         /// Clear messages depends on message type
         /// </summary>
-        public RelayCommand ClearAllMessages { get; set; }
+        public Core.RelayCommand ClearAllMessages { get; set; }
 
         /// <summary>
         /// Update bindings for columns width with <see cref="StarWidthConverter"/>
         /// </summary>
-        public RelayCommand RefreshTabItem { get; set; }
+        public Core.RelayCommand RefreshTabItem { get; set; }
 
         /// <summary>
         /// Stops dialog
         /// </summary>
-        public RelayCommand StopDialog { get; set; }
+        public Core.RelayCommand StopDialog { get; set; }
+
+        public Core.RelayCommand ClearRadioBindingCommand { get; set; }
+
+
+        public RelayCommand<MouseButtonEventArgs> PreviewMouseLeftButtonDownCommand { get; set; }
+
+        public RelayCommand<MouseEventArgs> PreviewMouseMoveCommand { get; set; }
+
+        public RelayCommand<DragEventArgs> DragEnterCommand { get; set; }
+
+        public RelayCommand<DragEventArgs> DropCommand { get; set; }
+
+        public RelayCommand<DragEventArgs> DragOverCommand { get; set; }
+
+
 
         #endregion
 
@@ -464,8 +496,8 @@ namespace DialogEngine.ViewModels.Dialog
             SelectedIndex2 = -1;
 
             int index = 0;
-            
-            foreach(Character characterInfo in CharacterCollection)
+
+            foreach (Character characterInfo in CharacterCollection)
             {
                 if (characterInfo.State == Models.Enums.CharacterState.On)
                 {
@@ -566,13 +598,114 @@ namespace DialogEngine.ViewModels.Dialog
 
         private void _bindCommands()
         {
-            GenerateDialog = new RelayCommand(_x => _startDialog());
+            GenerateDialog = new Core.RelayCommand(_x => _startDialog());
 
-            ClearAllMessages = new RelayCommand(x => _clearAllMessages((string)x));
+            ClearAllMessages = new Core.RelayCommand(x => _clearAllMessages((string)x));
 
-            RefreshTabItem = new RelayCommand(x => _refreshTabItem());
+            RefreshTabItem = new Core.RelayCommand(x => _refreshTabItem());
 
-            StopDialog = new RelayCommand(x => _stopDialog());
+            StopDialog = new Core.RelayCommand(x => _stopDialog());
+
+            ClearRadioBindingCommand = new Core.RelayCommand(x => _clearRadioBindingCommand((string)x));
+
+            PreviewMouseLeftButtonDownCommand = new RelayCommand<MouseButtonEventArgs>(_previewMouseLeftButtonCommand);
+
+            PreviewMouseMoveCommand = new RelayCommand<MouseEventArgs>(_previewMouseMoveCommand);
+
+            DragEnterCommand = new RelayCommand<DragEventArgs>(_dragEnterCommand);
+
+            DropCommand = new RelayCommand<DragEventArgs>(_dropCommand);
+
+            DragOverCommand = new RelayCommand<DragEventArgs>(_dragOverCommand);
+        }
+
+        private void _clearRadioBindingCommand(string _elementName)
+        {
+            TextBox tb = mView.FindName(_elementName) as TextBox;
+
+            tb.Text = "";
+
+            (tb.Tag as Character).RadioNum = -1;
+
+            tb.Tag = null;
+
+            mView.CharactersListBox.Items.Refresh();
+        }
+
+        private void _dragOverCommand(DragEventArgs e)
+        {
+            //We need to add this to override the default PreviewDrag behavior. If we don’t, then the Drop Event will not fire.
+            e.Handled = true;
+        }
+
+        private void _dropCommand(DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent("characterFormat"))
+            {
+                Character character = e.Data.GetData("characterFormat") as Character;
+
+                // if radioNum == -1 then character is already assigned
+                if (character.RadioNum < 0)
+                {
+
+                    TextBox tb = e.Source as TextBox;
+
+                    string[] _nameRadioNum = tb.Name.Split('_');
+
+                    int _numRadio = int.Parse(_nameRadioNum[1]);
+
+                    character.RadioNum = _numRadio;
+
+
+                    if(tb.Tag != null)
+                    {
+                        (tb.Tag as Character).RadioNum = -1;
+                    }
+
+                    tb.Text = character.CharacterName;
+                    tb.Tag = character;
+
+                    mView.CharactersListBox.Items.Refresh();
+                }
+            }
+        }
+
+        private void _dragEnterCommand(DragEventArgs e)
+        {
+            if (!e.Data.GetDataPresent("characterFormat") || !(e.Source is TextBox))
+            {
+                e.Effects = DragDropEffects.None;
+            }
+            else
+            {
+                e.Effects = DragDropEffects.Copy;
+            }
+        }
+
+        private void _previewMouseMoveCommand(MouseEventArgs e)
+        {
+            Point _mousePos = e.GetPosition(null);
+            Vector diff = mStartPosition - _mousePos;
+
+
+            if ((e.LeftButton == MouseButtonState.Pressed) &&
+                (Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance ||
+                Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance))
+            {
+                ListBox _listBox = e.Source as ListBox;
+                ListBoxItem _listBoxItem = VisualHelper.GetNearestContainer<ListBoxItem>((DependencyObject)e.OriginalSource);
+
+                Character character = (Character)_listBox.ItemContainerGenerator.ItemFromContainer(_listBoxItem);
+
+                DataObject _dragData = new DataObject("characterFormat", character);
+
+                DragDrop.DoDragDrop(_listBoxItem, _dragData, DragDropEffects.Copy);
+            }
+        }
+
+        private void _previewMouseLeftButtonCommand(MouseButtonEventArgs e)
+        {
+            mStartPosition = e.GetPosition(null);
         }
 
 
@@ -630,46 +763,6 @@ namespace DialogEngine.ViewModels.Dialog
 
 
 
-        private void writeStartupInfo()
-        {
-            if (SessionVariables.WriteSerialLog)
-            {
-                var _versionTimeStr = "Dialog Engine ver 0.67 " + DateTime.Now;
-
-
-                AddItem(new InfoMessage(_versionTimeStr));
-
-                using (var _serialLog =
-                    new StreamWriter(SessionVariables.LogsDirectory + SessionVariables.HexLogFileName, true))
-                {
-                    _serialLog.WriteLine("");
-                    _serialLog.WriteLine("");
-                    _serialLog.WriteLine(_versionTimeStr);
-                    _serialLog.Close();
-                }
-
-                using (var _serialLogDec =
-                    new StreamWriter(SessionVariables.LogsDirectory + SessionVariables.DecimalLogFileName, true))
-                {
-                    _serialLogDec.WriteLine("");
-                    _serialLogDec.WriteLine("");
-                    _serialLogDec.WriteLine(_versionTimeStr);
-                    _serialLogDec.Close();
-                }
-
-                using (var _serialLogDialog =
-                    new StreamWriter(SessionVariables.LogsDirectory + SessionVariables.DialogLogFileName, true))
-                {
-                    _serialLogDialog.WriteLine("");
-                    _serialLogDialog.WriteLine("");
-                    _serialLogDialog.WriteLine(_versionTimeStr);
-                    _serialLogDialog.Close();
-                }
-            }
-        }
-
-
-
         private void checkForMissingPhrases()
         {
             if (!SessionVariables.AudioDialogsOn)
@@ -722,56 +815,7 @@ namespace DialogEngine.ViewModels.Dialog
         }
 
 
-        // loads information about characters
-        private async Task<ObservableCollection<CharacterInfo>> _loadAllCharacterNames(string _path)
-        {
 
-            var _charactersInfo = new ObservableCollection<CharacterInfo>();
-
-
-            await Task.Run(() =>
-            {
-                var _directoryInfo = new DirectoryInfo(_path);
-
-
-                foreach (var _file in _directoryInfo.GetFiles("*.json")) //file of type FileInfo for each .json in directory
-                {
-                    string _inChar;
-
-                    try
-                    {
-                        var _fs = _file.OpenRead(); //open a read-only FileStream
-
-                        using (var _reader = new StreamReader(_fs)) //creates new streamerader for fs stream. Could also construct with filename...
-                        {
-                            try
-                            {
-                                _inChar = _reader.ReadToEnd();
-
-                                var _deserializedCharacterJson = JsonConvert.DeserializeObject<CharacterInfo>(_inChar);
-
-                                _deserializedCharacterJson.FileName = _file.Name;
-
-                                if(_deserializedCharacterJson.CharacterName != null)
-                                _charactersInfo.Add(_deserializedCharacterJson);
-                            }
-                            catch (Exception ex)
-                            {
-                                mcLogger.Error(ex.Message);
-                            }
-                        }
-                    }
-
-                    catch (Exception ex)
-                    {
-                        mcLogger.Error(ex.Message);
-                    }
-                }
-            });
-
-
-            return _charactersInfo;
-        }
 
 
 
@@ -935,6 +979,7 @@ namespace DialogEngine.ViewModels.Dialog
                               _SelectedCharacters[1] = SelectedIndex2;
 
                               mcTheDialogs.GenerateADialog(_cancellationToken, _SelectedCharacters);
+
                           }
                           else if(SelectedCharactersOn == 1)
                           {
@@ -949,11 +994,17 @@ namespace DialogEngine.ViewModels.Dialog
                           }
                           else
                           {
-                               mcTheDialogs.GenerateADialog(_cancellationToken); //normal operation
 
-                               Thread.Sleep(1100); //vb:commented out for debugging as code stops here
+                              mcTheDialogs.GenerateADialog(_cancellationToken); //normal operation
 
-                               Thread.Sleep(mRandom.Next(0, 2000)); //vb:commented out for debugging as code stops here
+                              Thread.Sleep(1100); 
+
+                              Thread.Sleep(mRandom.Next(0, 2000)); 
+
+                              FirmwareDebuggingTools.PrintHeatMap();
+
+                              Thread.Sleep(400); 
+                              
                           }
                       }
                   }, _cancellationToken);
@@ -1000,8 +1051,6 @@ namespace DialogEngine.ViewModels.Dialog
 
             await InitModelDialogs.SetDefaults(mcTheDialogs);
 
-            //await mcTheDialogs.IntakeCharacters();
-
             Task<ObservableCollection<Character>> _charactersTask = mcTheDialogs.IntakeCharacters();
             Task<ObservableCollection<ModelDialogInfo>> _modelDialogTask = _loadAllDialogModels(SessionVariables.DialogsDirectory);
 
@@ -1017,7 +1066,6 @@ namespace DialogEngine.ViewModels.Dialog
         {
             await Task.Run(() =>
             {
-                writeStartupInfo();
 
                 if (SessionVariables.TagUsageCheck)
                     checkTagsUsed(mcTheDialogs);
@@ -1033,12 +1081,8 @@ namespace DialogEngine.ViewModels.Dialog
 
             CharacterCollection = await mcTheDialogs.IntakeCharacters();
 
-
-           // Task<ObservableCollection<CharacterInfo>> _charactersTask = _loadAllCharacterNames(SessionVariables.CharactersDirectory);
             Task<ObservableCollection<ModelDialogInfo>> _modelDialogTask = _loadAllDialogModels(SessionVariables.DialogsDirectory);
 
-
-           // CharacterCollection = await _charactersTask;
             DialogModelCollection = await _modelDialogTask;
 
             SerialComs.InitSerial();

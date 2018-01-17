@@ -6,8 +6,6 @@ using System.Timers;
 using System.Threading;
 using DialogEngine.Helpers;
 using DialogEngine.ViewModels.Dialog;
-using DialogEngine.Events;
-using DialogEngine.Events.DialogEvents;
 
 namespace DialogEngine
 {
@@ -33,6 +31,8 @@ namespace DialogEngine
 
 
         #region - Private methods -
+
+
 
         private static void _enqueLatestCharacters(int _ch1, int _ch2)
         {
@@ -64,21 +64,34 @@ namespace DialogEngine
         {
             if ((msRandom.NextDouble() > 0.5) && RssiStable)
             {
-                NextCharacter1 = _tempCh1;
-                NextCharacter2 = _tempCh2;
-                //EventAggregator.Instance.GetEvent<StopPlayingCurrentDialogLineEvent>().Publish();
-
+                NextCharacter1 = _getCharacterMappedIndex(_tempCh1);
+                NextCharacter2 = _getCharacterMappedIndex(_tempCh2);
             }
             else if (RssiStable)
             {
-                NextCharacter1 = _tempCh2;
-                NextCharacter2 = _tempCh1;
-                //EventAggregator.Instance.GetEvent<StopPlayingCurrentDialogLineEvent>().Publish();
-
+                NextCharacter1 = _getCharacterMappedIndex(_tempCh2);
+                NextCharacter2 = _getCharacterMappedIndex(_tempCh1);
             }
 
 
         }
+
+
+        private static int _getCharacterMappedIndex(int _radioNum)
+        {
+            int length = DialogViewModel.Instance.CharacterCollection.Count;
+
+            for(int i=0;i<length; i++)
+            {
+                if(DialogViewModel.Instance.CharacterCollection[i].RadioNum == _radioNum)
+                {
+                    return i;
+                }
+            }
+
+            return 0;
+        }
+
 
         public static int GetNextCharacter(params int[] _indexToSkip)
         {
@@ -157,7 +170,7 @@ namespace DialogEngine
 
         public static void OccasionallyChangeToRandNewCharacter()
         {   
-            // used for computers with no serial input radio for random, and to forceCharacter selection
+            // used for computers with no serial input radio for random, or forceCharacter mode
             // does not include final character the silent schoolhouse, not useful in noSerial mode 
             bool _userHasForcedCharacters = false;
 

@@ -18,6 +18,7 @@ namespace DialogEngine.Helpers
 
 
         public static bool ShowDupePhrases;
+        public static bool CheckStuckTransmissions;
         public static bool MonitorReceiveBufferSize;
         public static bool MonitorMessageParseFails;
         public static string BaseDirectory;
@@ -82,6 +83,19 @@ namespace DialogEngine.Helpers
             }
         }
 
+        public static bool ForceCharactersAndDialogModel
+        {
+            get
+            {
+                bool result = false;
+
+                if (ConfigurationManager.AppSettings["ForceCharactersAndDialogModel"] != null)
+                    result = Convert.ToBoolean(AppSet.ReadSetting("ForceCharactersAndDialogModel"));
+
+                return result;
+            }
+        }
+
         public static  bool WaitIndefinatelyForMove
         {
             get
@@ -108,6 +122,7 @@ namespace DialogEngine.Helpers
 
             }
         }
+
 
         public static bool UseSerialPort
         {
@@ -157,6 +172,17 @@ namespace DialogEngine.Helpers
         static SessionVariables()
         {
 
+            if (ConfigurationManager.AppSettings["ShowDupePhrases"] != null)
+                ShowDupePhrases = Convert.ToBoolean(AppSet.ReadSetting("ShowDupePhrases"));
+            else
+                ShowDupePhrases = false;
+
+
+            if (ConfigurationManager.AppSettings["CheckStuckTransmissions"] != null)
+                CheckStuckTransmissions = Convert.ToBoolean(AppSet.ReadSetting("CheckStuckTransmissions"));
+            else
+                CheckStuckTransmissions = false;
+
             if (ConfigurationManager.AppSettings["MonitorReceiveBufferSize"] != null)
                 MonitorReceiveBufferSize = Convert.ToBoolean(AppSet.ReadSetting("MonitorReceiveBufferSize"));
             else
@@ -166,6 +192,8 @@ namespace DialogEngine.Helpers
                 MonitorMessageParseFails = Convert.ToBoolean(AppSet.ReadSetting("MonitorMessageParseFails"));
             else
                 MonitorMessageParseFails = false;
+
+
 
 
             //get executable path of DialogGenerator.exe
