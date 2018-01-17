@@ -77,9 +77,6 @@ namespace DialogEngine
         /// </summary>
         public static void InitSerial()
         {
-            if (SessionVariables.UseSerialPort)
-
-            {
                 try
                 {
                     msSerialPort = new SerialPort();
@@ -104,14 +101,15 @@ namespace DialogEngine
 
                     MessageBox.Show("COM port  doesn't exist. Please check configuration. ");
                 }
-            }
 
-            else
-            {
-                Thread _dontReadThread = new Thread(SelectNextCharacters.OccasionallyChangeToRandNewCharacter);
-                _dontReadThread.Start();
-            }
             //worry about stopping cleanly later TODO
+        }
+
+
+        public static void DontReadSerail()
+        {
+            Thread _dontReadThread = new Thread(SelectNextCharacters.OccasionallyChangeToRandNewCharacter);
+            _dontReadThread.Start();
         }
 
 

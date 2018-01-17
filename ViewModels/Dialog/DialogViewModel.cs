@@ -1085,7 +1085,14 @@ namespace DialogEngine.ViewModels.Dialog
 
             DialogModelCollection = await _modelDialogTask;
 
-            SerialComs.InitSerial();
+            if (SessionVariables.UseSerialPort)
+            {
+                SerialComs.InitSerial();
+            }
+            else
+            {
+                SerialComs.DontReadSerail();
+            }
         }
 
         #endregion
