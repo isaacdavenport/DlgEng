@@ -4,7 +4,14 @@
 
     <ResourceDictionary.MergedDictionaries>
 
-        <ResourceDictionary Source="/Themes/BaseViewStyle.xaml" />
+        <ResourceDictionary Source="/Themes/Converters.xaml" />
+        <ResourceDictionary Source="/Themes/ButtonStyle.xaml" />
+        <ResourceDictionary Source="/Themes/RadioButtonStyle.xaml" />
+        <ResourceDictionary Source="/Themes/ScrollBarStyle.xaml" />
+        <ResourceDictionary Source="/Themes/TabControlStyle.xaml" />
+        <ResourceDictionary Source="/Themes/TextBoxStyle.xaml" />
+        <ResourceDictionary Source="/Themes/ToggleButtonStyle.xaml" />
+
 
     </ResourceDictionary.MergedDictionaries>
 
