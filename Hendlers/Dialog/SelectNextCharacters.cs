@@ -32,6 +32,8 @@ namespace DialogEngine
 
         #region - Private methods -
 
+
+
         private static void _enqueLatestCharacters(int _ch1, int _ch2)
         {
             RssiStable = true;
@@ -62,17 +64,34 @@ namespace DialogEngine
         {
             if ((msRandom.NextDouble() > 0.5) && RssiStable)
             {
-                NextCharacter1 = _tempCh1;
-                NextCharacter2 = _tempCh2;
+                NextCharacter1 = _getCharacterMappedIndex(_tempCh1);
+                NextCharacter2 = _getCharacterMappedIndex(_tempCh2);
             }
             else if (RssiStable)
             {
-                NextCharacter1 = _tempCh2;
-                NextCharacter2 = _tempCh1;
+                NextCharacter1 = _getCharacterMappedIndex(_tempCh2);
+                NextCharacter2 = _getCharacterMappedIndex(_tempCh1);
             }
 
 
         }
+
+
+        private static int _getCharacterMappedIndex(int _radioNum)
+        {
+            int length = DialogViewModel.Instance.CharacterCollection.Count;
+
+            for(int i=0;i<length; i++)
+            {
+                if(DialogViewModel.Instance.CharacterCollection[i].RadioNum == _radioNum)
+                {
+                    return i;
+                }
+            }
+
+            return 0;
+        }
+
 
         public static int GetNextCharacter(params int[] _indexToSkip)
         {
