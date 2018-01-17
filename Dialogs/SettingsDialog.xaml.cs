@@ -175,9 +175,9 @@ namespace DialogEngine.Controls
                 Configuration _config = ConfigurationManager.OpenExeConfiguration(_configPath);
 
 
-                int _rowsCount = this.MainGrid.RowDefinitions.Count -1;
+                int _rowsCount = this.MainGrid.RowDefinitions.Count -2;
 
-                for (int i = 0; i < _rowsCount; i++)
+                for (int i = 1; i <= _rowsCount; i++)
                 {
                     Label _label = _getChildAt(i, 0) as Label;
 
