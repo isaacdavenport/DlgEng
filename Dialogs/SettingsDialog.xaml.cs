@@ -20,6 +20,7 @@ using System.Windows.Shapes;
 namespace DialogEngine.Controls
 {
     using log4net;
+    using System.Reflection;
 
     /// <summary>
     /// Interaction logic for SettingsDialog.xaml
@@ -52,7 +53,27 @@ namespace DialogEngine.Controls
 
             NameValueCollection _settings = ConfigurationManager.AppSettings;
 
-            int _index = 0;
+            int _index = 1;
+
+            MainGrid.RowDefinitions.Add(new RowDefinition());
+
+            Label _versionLabel = new Label();
+            _versionLabel.HorizontalAlignment = HorizontalAlignment.Right;
+            _versionLabel.Margin = new Thickness(0.0, 5.0, 0.0, 0.0);
+            _versionLabel.Content = "Application version";
+
+            MainGrid.Children.Add(_versionLabel);
+            Grid.SetRow(_versionLabel, 0);
+            Grid.SetColumn(_versionLabel, 0);
+
+            Label _versionNumber = new Label();
+            _versionNumber.HorizontalAlignment = HorizontalAlignment.Left;
+            _versionNumber.Margin = new Thickness(0.0, 5.0, 0.0, 0.0);
+            _versionNumber.Content = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+
+            MainGrid.Children.Add(_versionNumber);
+            Grid.SetRow(_versionNumber, 0);
+            Grid.SetColumn(_versionNumber, 1);
 
             foreach (var _key in _settings.AllKeys)
             {
@@ -170,8 +191,7 @@ namespace DialogEngine.Controls
                     {
                         _config.AppSettings.Settings[_label.Content.ToString()].Value = (_value as TextBox)?.Text;
                     }
-
-                    
+                 
                 }
 
                 

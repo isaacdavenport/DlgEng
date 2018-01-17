@@ -2,15 +2,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:DialogEngine.Themes">
 
-    <ControlTemplate x:Key="ComboBoxTextBox" TargetType="TextBox">
-        <Border x:Name="PART_ContentHost" Width="150" CornerRadius="1" BorderBrush="White" Focusable="False" />
-    </ControlTemplate>
-
-
-    <!--TextBox Template-->
-    <ControlTemplate x:Key="ComboBoxTextBox1" TargetType="TextBox">
-        <ScrollViewer x:Name="PART_ContentHost" Focusable="False" />
-    </ControlTemplate>
 
     <!-- Text box -->
     <Style x:Key="TextBoxStyle1" TargetType="TextBox">

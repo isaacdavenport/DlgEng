@@ -877,7 +877,9 @@
                                         HorizontalGridLinesBrush="LightGray" 
                                         BorderBrush="LightGray" 
                                         BorderThickness="1" 
-                                        CanUserAddRows="False"                              
+                                        CanUserAddRows="False"
+                                        IsReadOnly="True"
+                                        IsHitTestVisible="False"
                                         ItemsSource="{Binding HeatMap, Converter={StaticResource MatrixToDataViewConverter}}">
                                 
                                 <DataGrid.CellStyle>

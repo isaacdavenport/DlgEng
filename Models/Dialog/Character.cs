@@ -33,6 +33,7 @@ namespace DialogEngine.Models.Dialog
 
         private CharacterState mState;
 
+        // assigned radio number - unassigned value is -1
         private int mRadioNum = -1;
 
 

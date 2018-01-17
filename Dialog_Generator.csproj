@@ -137,7 +137,6 @@
     <Compile Include="FirmwareDebuggingTools.cs" />
     <Compile Include="Helpers\AppSet.cs" />
     <Compile Include="Models\Dialog\Character.cs" />
-    <Compile Include="Models\Dialog\CharacterInfo.cs" />
     <Compile Include="Models\Dialog\DialogItem.cs" />
     <Compile Include="Models\Dialog\HistoricalDialog.cs" />
     <Compile Include="Models\Dialog\HistoricalPhrase.cs" />

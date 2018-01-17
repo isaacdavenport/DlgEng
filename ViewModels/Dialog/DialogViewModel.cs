@@ -627,6 +627,8 @@ namespace DialogEngine.ViewModels.Dialog
 
             (tb.Tag as Character).RadioNum = -1;
 
+            tb.Tag = null;
+
             mView.CharactersListBox.Items.Refresh();
         }
 
@@ -638,9 +640,9 @@ namespace DialogEngine.ViewModels.Dialog
 
         private void _dropCommand(DragEventArgs e)
         {
-            if (e.Data.GetDataPresent("myFormat"))
+            if (e.Data.GetDataPresent("characterFormat"))
             {
-                Character character = e.Data.GetData("myFormat") as Character;
+                Character character = e.Data.GetData("characterFormat") as Character;
 
                 // if radioNum == -1 then character is already assigned
                 if (character.RadioNum < 0)
@@ -670,7 +672,7 @@ namespace DialogEngine.ViewModels.Dialog
 
         private void _dragEnterCommand(DragEventArgs e)
         {
-            if (!e.Data.GetDataPresent("myFormat") || !(e.Source is TextBox))
+            if (!e.Data.GetDataPresent("characterFormat") || !(e.Source is TextBox))
             {
                 e.Effects = DragDropEffects.None;
             }
@@ -695,8 +697,7 @@ namespace DialogEngine.ViewModels.Dialog
 
                 Character character = (Character)_listBox.ItemContainerGenerator.ItemFromContainer(_listBoxItem);
 
-                DataObject _dragData = new DataObject("myFormat", character);
-
+                DataObject _dragData = new DataObject("characterFormat", character);
 
                 DragDrop.DoDragDrop(_listBoxItem, _dragData, DragDropEffects.Copy);
             }
@@ -762,46 +763,6 @@ namespace DialogEngine.ViewModels.Dialog
 
 
 
-        private void writeStartupInfo()
-        {
-            if (SessionVariables.WriteSerialLog)
-            {
-                var _versionTimeStr = "Dialog Engine ver 0.67 " + DateTime.Now;
-
-
-                AddItem(new InfoMessage(_versionTimeStr));
-
-                using (var _serialLog =
-                    new StreamWriter(SessionVariables.LogsDirectory + SessionVariables.HexLogFileName, true))
-                {
-                    _serialLog.WriteLine("");
-                    _serialLog.WriteLine("");
-                    _serialLog.WriteLine(_versionTimeStr);
-                    _serialLog.Close();
-                }
-
-                using (var _serialLogDec =
-                    new StreamWriter(SessionVariables.LogsDirectory + SessionVariables.DecimalLogFileName, true))
-                {
-                    _serialLogDec.WriteLine("");
-                    _serialLogDec.WriteLine("");
-                    _serialLogDec.WriteLine(_versionTimeStr);
-                    _serialLogDec.Close();
-                }
-
-                using (var _serialLogDialog =
-                    new StreamWriter(SessionVariables.LogsDirectory + SessionVariables.DialogLogFileName, true))
-                {
-                    _serialLogDialog.WriteLine("");
-                    _serialLogDialog.WriteLine("");
-                    _serialLogDialog.WriteLine(_versionTimeStr);
-                    _serialLogDialog.Close();
-                }
-            }
-        }
-
-
-
         private void checkForMissingPhrases()
         {
             if (!SessionVariables.AudioDialogsOn)
@@ -854,56 +815,7 @@ namespace DialogEngine.ViewModels.Dialog
         }
 
 
-        // loads information about characters
-        private async Task<ObservableCollection<CharacterInfo>> _loadAllCharacterNames(string _path)
-        {
 
-            var _charactersInfo = new ObservableCollection<CharacterInfo>();
-
-
-            await Task.Run(() =>
-            {
-                var _directoryInfo = new DirectoryInfo(_path);
-
-
-                foreach (var _file in _directoryInfo.GetFiles("*.json")) //file of type FileInfo for each .json in directory
-                {
-                    string _inChar;
-
-                    try
-                    {
-                        var _fs = _file.OpenRead(); //open a read-only FileStream
-
-                        using (var _reader = new StreamReader(_fs)) //creates new streamerader for fs stream. Could also construct with filename...
-                        {
-                            try
-                            {
-                                _inChar = _reader.ReadToEnd();
-
-                                var _deserializedCharacterJson = JsonConvert.DeserializeObject<CharacterInfo>(_inChar);
-
-                                _deserializedCharacterJson.FileName = _file.Name;
-
-                                if(_deserializedCharacterJson.CharacterName != null)
-                                _charactersInfo.Add(_deserializedCharacterJson);
-                            }
-                            catch (Exception ex)
-                            {
-                                mcLogger.Error(ex.Message);
-                            }
-                        }
-                    }
-
-                    catch (Exception ex)
-                    {
-                        mcLogger.Error(ex.Message);
-                    }
-                }
-            });
-
-
-            return _charactersInfo;
-        }
 
 
 
@@ -1067,6 +979,7 @@ namespace DialogEngine.ViewModels.Dialog
                               _SelectedCharacters[1] = SelectedIndex2;
 
                               mcTheDialogs.GenerateADialog(_cancellationToken, _SelectedCharacters);
+
                           }
                           else if(SelectedCharactersOn == 1)
                           {
@@ -1082,15 +995,15 @@ namespace DialogEngine.ViewModels.Dialog
                           else
                           {
 
-                                  mcTheDialogs.GenerateADialog(_cancellationToken); //normal operation
+                              mcTheDialogs.GenerateADialog(_cancellationToken); //normal operation
 
-                                  Thread.Sleep(1100); 
+                              Thread.Sleep(1100); 
 
-                                  Thread.Sleep(mRandom.Next(0, 2000)); 
+                              Thread.Sleep(mRandom.Next(0, 2000)); 
 
-                                  FirmwareDebuggingTools.PrintHeatMap();
+                              FirmwareDebuggingTools.PrintHeatMap();
 
-                                  Thread.Sleep(400); 
+                              Thread.Sleep(400); 
                               
                           }
                       }
@@ -1138,8 +1051,6 @@ namespace DialogEngine.ViewModels.Dialog
 
             await InitModelDialogs.SetDefaults(mcTheDialogs);
 
-            //await mcTheDialogs.IntakeCharacters();
-
             Task<ObservableCollection<Character>> _charactersTask = mcTheDialogs.IntakeCharacters();
             Task<ObservableCollection<ModelDialogInfo>> _modelDialogTask = _loadAllDialogModels(SessionVariables.DialogsDirectory);
 
@@ -1155,7 +1066,6 @@ namespace DialogEngine.ViewModels.Dialog
         {
             await Task.Run(() =>
             {
-                writeStartupInfo();
 
                 if (SessionVariables.TagUsageCheck)
                     checkTagsUsed(mcTheDialogs);
@@ -1171,12 +1081,8 @@ namespace DialogEngine.ViewModels.Dialog
 
             CharacterCollection = await mcTheDialogs.IntakeCharacters();
 
-
-           // Task<ObservableCollection<CharacterInfo>> _charactersTask = _loadAllCharacterNames(SessionVariables.CharactersDirectory);
             Task<ObservableCollection<ModelDialogInfo>> _modelDialogTask = _loadAllDialogModels(SessionVariables.DialogsDirectory);
 
-
-           // CharacterCollection = await _charactersTask;
             DialogModelCollection = await _modelDialogTask;
 
             SerialComs.InitSerial();

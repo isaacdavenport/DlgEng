@@ -13,6 +13,7 @@ namespace DialogEngine.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+
             Character character = value as Character;
 
             string _displayValue = character.RadioNum >= 0 ? "R"+character.RadioNum.ToString() : "";
