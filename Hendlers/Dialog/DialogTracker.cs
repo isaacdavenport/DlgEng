@@ -8,14 +8,11 @@ using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Media;
-using System.Windows.Threading;
 using DialogEngine.Helpers;
 using DialogEngine.Models.Dialog;
 using log4net;
 using Newtonsoft.Json;
 using DialogEngine.Models.Logger;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using DialogEngine.ViewModels.Dialog;
 using System.Collections.ObjectModel;
@@ -931,7 +928,7 @@ namespace DialogEngine
             if (SessionVariables.DebugFlag)
                 WriteDialogInfo(Character1Num, Character2Num);
 
-            HeatMap.PrintHeatMap();
+            HeatMapUpdate.PrintHeatMap();
 
         }
 

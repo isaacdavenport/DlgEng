@@ -83,19 +83,6 @@ namespace DialogEngine.Helpers
             }
         }
 
-        public static bool ForceCharactersAndDialogModel
-        {
-            get
-            {
-                bool result = false;
-
-                if (ConfigurationManager.AppSettings["ForceCharactersAndDialogModel"] != null)
-                    result = Convert.ToBoolean(AppSet.ReadSetting("ForceCharactersAndDialogModel"));
-
-                return result;
-            }
-        }
-
         public static  bool WaitIndefinatelyForMove
         {
             get

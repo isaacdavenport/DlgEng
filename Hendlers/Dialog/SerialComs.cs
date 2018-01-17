@@ -144,7 +144,7 @@ namespace DialogEngine
 
                 if (_cycleCount > 80)
                 {
-                    HeatMap.PrintHeatMap();
+                    HeatMapUpdate.PrintHeatMap();
                     _cycleCount = 0;
                 }
             }

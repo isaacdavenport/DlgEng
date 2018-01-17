@@ -5,7 +5,7 @@ using DialogEngine.ViewModels.Dialog;
 
 namespace DialogEngine
 {
-    public static class HeatMap
+    public static class HeatMapUpdate
     {
         #region - Static methods -
 

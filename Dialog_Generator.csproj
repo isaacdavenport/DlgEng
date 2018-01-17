@@ -134,7 +134,7 @@
     <Compile Include="Events\SimpleEventSubscription.cs" />
     <Compile Include="Helpers\LoggerHelper.cs" />
     <Compile Include="Hendlers\Dialog\DialogTracker.cs" />
-    <Compile Include="HeatMap.cs" />
+    <Compile Include="HeatMapUpdate.cs" />
     <Compile Include="Helpers\AppSet.cs" />
     <Compile Include="Models\Dialog\Character.cs" />
     <Compile Include="Models\Dialog\DialogItem.cs" />

@@ -176,7 +176,7 @@ namespace DialogEngine.ViewModels.Dialog
             {
                 mHeatMap = value;
 
-                OnPropertyChanged("HeatMap");
+                OnPropertyChanged("HeatMapUpdate");
 
             }
         }
@@ -1001,7 +1001,7 @@ namespace DialogEngine.ViewModels.Dialog
 
                               Thread.Sleep(mRandom.Next(0, 2000)); 
 
-                              FirmwareDebuggingTools.PrintHeatMap();
+                              HeatMapUpdate.PrintHeatMap();
 
                               Thread.Sleep(400); 
                               

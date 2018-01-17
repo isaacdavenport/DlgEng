@@ -856,7 +856,7 @@
 
                     <TabItem.Header>
                         <StackPanel  Orientation="Horizontal" >
-                            <Label Content="HeatMap"/>
+                            <Label Content="HeatMapUpdate"/>
                         </StackPanel>
                     </TabItem.Header>
 
