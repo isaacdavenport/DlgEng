@@ -1,6 +1,8 @@
 ﻿//  Confidential Source Code Property Toys2Life LLC Colorado 2017
 //  www.toys2life.org
 
+using DialogEngine.Events;
+using DialogEngine.Events.DialogEvents;
 using DialogEngine.Models.Enums;
 using System;
 using System.Collections.Generic;
@@ -15,8 +17,25 @@ namespace DialogEngine.Models.Dialog
     /// </summary>
     public class ModelDialogInfo
     {
+        private ModelDialogState mState;
+
         public string FileName { set; get; }
 
-        public ModelDialogState State { set; get; } // default State is On
+        // default State is On
+        public ModelDialogState State
+        {
+            set
+            {
+                mState = value;
+
+                EventAggregator.Instance.GetEvent<ChangedModelDialogStateEvent>().Publish();
+
+            }
+            get
+            {
+                return mState;
+            }
+
+        } 
     }
 }

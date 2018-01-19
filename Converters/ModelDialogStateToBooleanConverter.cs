@@ -44,8 +44,6 @@ namespace DialogEngine.Converters
         /// <returns>new ModelDialogState</returns>
         public object ConvertBack(object _value, Type _targetType, object _parameter, CultureInfo _culture)
         {
-            EventAggregator.Instance.GetEvent<ChangedModelDialogStateEvent>().Publish();
-
 
             return (ModelDialogState)_parameter;
         }

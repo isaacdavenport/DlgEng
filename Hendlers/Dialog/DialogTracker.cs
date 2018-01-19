@@ -306,7 +306,7 @@ namespace DialogEngine
                 {
 
 
-                    string _beginReadMessage = " Begin read of " + _file.Name;
+                    string _beginReadMessage = "Begin read of " + _file.Name;
 
                     AddItem(new InfoMessage(_beginReadMessage));
 
@@ -315,7 +315,7 @@ namespace DialogEngine
                     if (SessionVariables.WriteSerialLog)
                     {
 
-                        LoggerHelper.Info("LogDialog"," Begin read of " + _file.Name);
+                        LoggerHelper.Info("LogDialog","Begin read of " + _file.Name);
 
                     }
 
@@ -388,7 +388,7 @@ namespace DialogEngine
 
                                 //list Chars as they come in.
 
-                                string _finishReadMessage = " Finish read of " + _deserializedCharacterJson.CharacterName;
+                                string _finishReadMessage = "Finish read of " + _deserializedCharacterJson.CharacterName;
 
                                 //WriteStatusBarInfo(_finishReadMessage,Brushes.Black);
 
@@ -397,7 +397,7 @@ namespace DialogEngine
 
                                 if (SessionVariables.WriteSerialLog)
                                 {
-                                    LoggerHelper.Info("LogDialog"," Finish read of " + _deserializedCharacterJson.CharacterName);
+                                    LoggerHelper.Info("LogDialog","Finish read of " + _deserializedCharacterJson.CharacterName);
                                 }
 
 

@@ -99,11 +99,11 @@ namespace DialogEngine
 
 
 
-                        AddItem(new InfoMessage(" opening dialog models in " + _file.Name));
+                        AddItem(new InfoMessage("Opening dialog models in " + _file.Name));
 
 
                         if (SessionVariables.WriteSerialLog)
-                            LoggerHelper.Info("LogDialog"," opening dialog models in " + _file.Name);
+                            LoggerHelper.Info("LogDialog","Opening dialog models in " + _file.Name);
 
 
 
@@ -144,7 +144,7 @@ namespace DialogEngine
 
 
                             if (SessionVariables.WriteSerialLog)
-                                LoggerHelper.Info("LogDialog"," completed " + _file.Name);
+                                LoggerHelper.Info("LogDialog","Completed " + _file.Name);
 
 
                         }

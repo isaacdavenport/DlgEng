@@ -384,11 +384,20 @@ namespace DialogEngine.ViewModels.Dialog
                 // send notification to view (model is changed)
                 OnPropertyChanged("DialogModelCollection");
 
-                ObservableCollection<ModelDialogInfo> _dialogModelCollectionCopy = new ObservableCollection<ModelDialogInfo>(mDialogModelCollection);
+                ObservableCollection<ModelDialogInfo> _dialogModelCollectionCopy = new ObservableCollection<ModelDialogInfo>();
+
+                foreach(ModelDialogInfo dialogInfo in mDialogModelCollection)
+                {
+                    if(dialogInfo.State == Models.Enums.ModelDialogState.On)
+                    {
+                        _dialogModelCollectionCopy.Add(dialogInfo);
+                    }
+                }
 
                 _dialogModelCollectionCopy.Insert(0, new ModelDialogInfo() { FileName = "-- No selected dialog model --" });
                 mView.DialogModelComboBox.ItemsSource = _dialogModelCollectionCopy;
 
+                if(mView.DialogModelComboBox.HasItems)
                 mView.DialogModelComboBox.SelectedIndex = 0;
 
             }
@@ -555,6 +564,22 @@ namespace DialogEngine.ViewModels.Dialog
         private void _onChangedModelDialogState()
         {
             mIsModelsDialogChanged = true;
+
+            ObservableCollection<ModelDialogInfo> _dialogModelCollectionCopy = new ObservableCollection<ModelDialogInfo>();
+
+            foreach (ModelDialogInfo dialogInfo in mDialogModelCollection)
+            {
+                if (dialogInfo.State == Models.Enums.ModelDialogState.On)
+                {
+                    _dialogModelCollectionCopy.Add(dialogInfo);
+                }
+            }
+
+            _dialogModelCollectionCopy.Insert(0, new ModelDialogInfo() { FileName = "-- No selected dialog model --" });
+            mView.DialogModelComboBox.ItemsSource = _dialogModelCollectionCopy;
+
+            if (mView.DialogModelComboBox.HasItems)
+                mView.DialogModelComboBox.SelectedIndex = 0;
         }
 
 
