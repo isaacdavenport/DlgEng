@@ -12,5 +12,6 @@
     <converters:MatrixToDataViewConverter x:Key="MatrixToDataViewConverter" />
     <converters:ValueToColorConverter x:Key="ValueToColorConverter" />
     <converters:ListBoxItemConverter x:Key="ListBoxItemConverter" />
+    <converters:RadioNumToStringConverter x:Key="RadioNumToStringConverter" />
 
 </ResourceDictionary>

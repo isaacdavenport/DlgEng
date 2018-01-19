@@ -157,14 +157,14 @@ namespace DialogEngine
             if (!importClosestSerialComsCharacters())
                 return;
 
-            processDebugFlags(_dialogDirectives);
-
-
 
             CurrentDialogModel = pickAWeightedDialog(Character1Num, Character2Num);
 
+
             if (waitingForMovement() || SameCharactersAsLast && SessionVariables.WaitIndefinatelyForMove)
                 return;
+
+            processDebugFlags(_dialogDirectives);
 
 
             addDialogModelToHistory(CurrentDialogModel, Character1Num, Character2Num);
@@ -907,23 +907,45 @@ namespace DialogEngine
 
         private void processDebugFlags(params int[] _dialogDirectives)
         {
-
-            //if the array input is correct size and inputs don't exceed bounds set dialog parameters 
-            if (_dialogDirectives.Count() == 2)
+            
+            switch (_dialogDirectives.Count())
             {
+                case 0:  // we didn't pass characters and dialog model
 
-                if (_dialogDirectives[0] < CharacterList.Count)
+                    Character1Num = SelectNextCharacters.NextCharacter1;
+                    Character2Num = SelectNextCharacters.NextCharacter2;
+
+                    break;
+
+                case 1:  // only dialog model selected
+
+                    CurrentDialogModel = _dialogDirectives[0];
+
+                    Character1Num = SelectNextCharacters.NextCharacter1;
+                    Character2Num = SelectNextCharacters.NextCharacter2;
+
+                    break;
+
+                case 2: // only characters selected
+
                     Character1Num = _dialogDirectives[0];
 
-
-                if (_dialogDirectives[1] < CharacterList.Count)
                     Character2Num = _dialogDirectives[1];
+
+                    break;
+
+                case 3: // both characters and dialog model selected
+
+                    Character1Num = _dialogDirectives[0];
+
+                    Character2Num = _dialogDirectives[1];
+
+                    CurrentDialogModel = _dialogDirectives[2];
+
+                    break;
+                                                    
             }
-            else
-            {
-                Character1Num = SelectNextCharacters.NextCharacter1;
-                Character2Num = SelectNextCharacters.NextCharacter2;
-            }
+
 
             if (SessionVariables.DebugFlag)
                 WriteDialogInfo(Character1Num, Character2Num);

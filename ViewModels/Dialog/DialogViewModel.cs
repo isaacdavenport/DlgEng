@@ -64,6 +64,7 @@ namespace DialogEngine.ViewModels.Dialog
         private string mCharacter2Prefix = "";
         private bool mRSSIstable;
         private int mRSSIsum;
+        private int mSelectedDialogModelIndex ;
 
         private bool mIsDialogStopped = true;
 
@@ -289,6 +290,24 @@ namespace DialogEngine.ViewModels.Dialog
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        public int SelectedDialogModelIndex
+        {
+            get
+            {
+                return mSelectedDialogModelIndex;
+            }
+
+            set
+            {
+                this.mSelectedDialogModelIndex = value;
+
+                OnPropertyChanged("SelectedDialogModelIndex");
+            }
+        }
+
+        /// <summary>
         /// Counter for characters in "On" state
         /// </summary>
         public static int SelectedCharactersOn
@@ -361,8 +380,17 @@ namespace DialogEngine.ViewModels.Dialog
             {
                 mDialogModelCollection = value;
 
+                
                 // send notification to view (model is changed)
                 OnPropertyChanged("DialogModelCollection");
+
+                ObservableCollection<ModelDialogInfo> _dialogModelCollectionCopy = new ObservableCollection<ModelDialogInfo>(mDialogModelCollection);
+
+                _dialogModelCollectionCopy.Insert(0, new ModelDialogInfo() { FileName = "-- No selected dialog model --" });
+                mView.DialogModelComboBox.ItemsSource = _dialogModelCollectionCopy;
+
+                mView.DialogModelComboBox.SelectedIndex = 0;
+
             }
         }
 
@@ -619,6 +647,8 @@ namespace DialogEngine.ViewModels.Dialog
             DragOverCommand = new RelayCommand<DragEventArgs>(_dragOverCommand);
         }
 
+
+
         private void _clearRadioBindingCommand(string _elementName)
         {
             TextBox tb = mView.FindName(_elementName) as TextBox;
@@ -664,6 +694,28 @@ namespace DialogEngine.ViewModels.Dialog
 
                     tb.Text = character.CharacterName;
                     tb.Tag = character;
+
+                    mView.CharactersListBox.Items.Refresh();
+                }
+                else
+                {
+
+                    TextBox tbClear =mView.FindName("Radio_"+character.RadioNum) as TextBox;
+
+                    TextBox tbDrop = e.Source as TextBox;
+
+                    string[] _nameRadioNum = tbDrop.Name.Split('_');
+
+                    int _numRadio = int.Parse(_nameRadioNum[1]);
+
+                    character.RadioNum = _numRadio;
+
+                    tbClear.Text = "";
+                    tbClear.Tag = null;
+
+                    tbDrop.Text = character.CharacterName;
+                    (tbDrop.Tag as Character).RadioNum = -1;
+                    tbDrop.Tag = character;
 
                     mView.CharactersListBox.Items.Refresh();
                 }
@@ -972,30 +1024,65 @@ namespace DialogEngine.ViewModels.Dialog
 
                           if (SelectedCharactersOn == 2)
                           {
-                              var _SelectedCharacters = new int[2];
 
-                              _SelectedCharacters[0] = SelectedIndex1;
+                              int[] _selectedCharactersAndModel;
 
-                              _SelectedCharacters[1] = SelectedIndex2;
+                              // 0 index is index of placeholder 
+                              if(SelectedDialogModelIndex > 0)
+                              {
+                                  _selectedCharactersAndModel = new int[3];
 
-                              mcTheDialogs.GenerateADialog(_cancellationToken, _SelectedCharacters);
+                                  _selectedCharactersAndModel[2] = SelectedDialogModelIndex - 1; // we need to sub 1 because first item i placeholder
+                              }
+                              else
+                              {
+                                  _selectedCharactersAndModel = new int[2];
+                              }
+
+                              _selectedCharactersAndModel[0] = SelectedIndex1;
+
+                              _selectedCharactersAndModel[1] = SelectedIndex2;
+
+                              mcTheDialogs.GenerateADialog(_cancellationToken, _selectedCharactersAndModel);
 
                           }
                           else if(SelectedCharactersOn == 1)
                           {
-                              var _SelectedCharacters = new int[2];
+                              int[] _selectedCharactersAndModel;
 
-                              _SelectedCharacters[0] = SelectedIndex1 == -1 ? SelectedIndex2 : SelectedIndex1;
+                              // 0 index is index of placeholder 
+                              if (SelectedDialogModelIndex > 0)
+                              {
+                                  _selectedCharactersAndModel = new int[3];
 
-                              _SelectedCharacters[1] = SelectNextCharacters.GetNextCharacter(_SelectedCharacters[0]);
+                                  _selectedCharactersAndModel[2] = SelectedDialogModelIndex - 1; // we need to sub 1 because first item i placeholder
+                              }
+                              else
+                              {
+                                  _selectedCharactersAndModel = new int[2];
+                              }
 
-                              mcTheDialogs.GenerateADialog(_cancellationToken, _SelectedCharacters);
+
+                              _selectedCharactersAndModel[0] = SelectedIndex1 == -1 ? SelectedIndex2 : SelectedIndex1;
+
+                              _selectedCharactersAndModel[1] = SelectNextCharacters.GetNextCharacter(_selectedCharactersAndModel[0]);
+
+                              mcTheDialogs.GenerateADialog(_cancellationToken, _selectedCharactersAndModel);
 
                           }
                           else
                           {
 
-                              mcTheDialogs.GenerateADialog(_cancellationToken); //normal operation
+                              if(SelectedDialogModelIndex > 0)
+                              {
+                                  mcTheDialogs.GenerateADialog(_cancellationToken, new int[] { SelectedDialogModelIndex-1 }); 
+
+                              }
+                              else
+                              {
+                                  mcTheDialogs.GenerateADialog(_cancellationToken); //normal operation
+                              }
+
 
                               Thread.Sleep(1100); 
 

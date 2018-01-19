@@ -11,6 +11,8 @@
         <ResourceDictionary Source="/Themes/TabControlStyle.xaml" />
         <ResourceDictionary Source="/Themes/TextBoxStyle.xaml" />
         <ResourceDictionary Source="/Themes/ToggleButtonStyle.xaml" />
+        <ResourceDictionary Source="/Themes/ComboBoxStyle.xaml" />
+
 
 
     </ResourceDictionary.MergedDictionaries>

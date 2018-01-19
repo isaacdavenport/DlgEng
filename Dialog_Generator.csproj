@@ -114,6 +114,7 @@
     <Compile Include="Converters\ListBoxItemConverter.cs" />
     <Compile Include="Converters\MatrixToDataViewConverter.cs" />
     <Compile Include="Converters\ModelDialogStateToBooleanConverter.cs" />
+    <Compile Include="Converters\RadioNumToStringConverter.cs" />
     <Compile Include="Converters\RowIndexConverter.cs" />
     <Compile Include="Converters\StarWidthConverter.cs" />
     <Compile Include="Converters\ValueToColorConverter.cs" />
@@ -237,6 +238,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\ButtonStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\ComboBoxStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
