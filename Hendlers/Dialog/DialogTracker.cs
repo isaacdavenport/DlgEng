@@ -34,6 +34,7 @@ namespace DialogEngine
         private static int mCurrentDialogModel;
         private static readonly object mcPadlock = new object();
 
+        private DialogViewModel mDialogViewModel;
         private int mPriorCharacter1Num = 100;
         private int mPriorCharacter2Num = 100;
         private Random mRandom = new Random();
@@ -57,7 +58,6 @@ namespace DialogEngine
         public bool LastPhraseImpliedMovement;
         public bool SameCharactersAsLast;
 
-        public ObservableCollection<Character> CharacterList =new ObservableCollection<Character>();
         public List<HistoricalDialog> HistoricalDialogs = new List<HistoricalDialog>();
         public List<HistoricalPhrase> HistoricalPhrases = new List<HistoricalPhrase>();
         public List<ModelDialog> ModelDialogs = new List<ModelDialog>();
@@ -71,9 +71,29 @@ namespace DialogEngine
 
         #region - Constructor- 
 
+
+        public DialogTracker(DialogViewModel _dialogViewModel)
+        {
+            mDialogViewModel = _dialogViewModel;
+        }
+
         #endregion
 
         #region - Singleton -
+
+        public static DialogTracker GetInstance(DialogViewModel _dialogViewModel)
+        {
+
+                lock (mcPadlock)
+                {
+                    if (msInstance == null)
+                    {
+                        msInstance = new DialogTracker(_dialogViewModel);
+                    }
+                    return msInstance;
+                }
+            
+        }
 
         /// <summary>
         /// Implementation of singleton pattern for DialogTracker class
@@ -86,8 +106,9 @@ namespace DialogEngine
                 {
                     if (msInstance == null)
                     {
-                        msInstance = new DialogTracker();
+                        throw new Exception("DialogTracker.cs is not created.");
                     }
+
                     return msInstance;
                 }
             }
@@ -172,7 +193,7 @@ namespace DialogEngine
             var _speakingCharacter = Character1Num;
 
 
-            var _selectedPhrase = CharacterList[_speakingCharacter].Phrases[0]; //initialize to unused placeholder phrase
+            var _selectedPhrase = mDialogViewModel.CharacterCollection[_speakingCharacter].Phrases[0]; //initialize to unused placeholder phrase
 
 
             foreach (var _currentPhraseType in ModelDialogs[CurrentDialogModel].PhraseTypeSequence)
@@ -183,16 +204,16 @@ namespace DialogEngine
                     return;
                 }
 
-                if (CharacterList[_speakingCharacter].PhraseTotals.PhraseWeights.ContainsKey(_currentPhraseType))
+                if (mDialogViewModel.CharacterCollection[_speakingCharacter].PhraseTotals.PhraseWeights.ContainsKey(_currentPhraseType))
                     if (SessionVariables.TextDialogsOn)
                     {
 
                         if (SessionVariables.TextDialogsOn)
                         {
-                            AddItem(new InfoMessage(CharacterList[_speakingCharacter].CharacterName + ": "));
+                            AddItem(new InfoMessage(mDialogViewModel.CharacterCollection[_speakingCharacter].CharacterName + ": "));
                         }
 
-                        if (CharacterList[_speakingCharacter].PhraseTotals.PhraseWeights[_currentPhraseType] < 0.01f)
+                        if (mDialogViewModel.CharacterCollection[_speakingCharacter].PhraseTotals.PhraseWeights[_currentPhraseType] < 0.01f)
                         {
                             AddItem(new WarningMessage("Missing PhraseType: " + _currentPhraseType));
                         }
@@ -205,13 +226,13 @@ namespace DialogEngine
                             AddItem(new InfoMessage(_selectedPhrase.DialogStr));
                         }
 
-                        AddItem(new DialogItem() { Character = CharacterList[_speakingCharacter], PhraseEntry = _selectedPhrase  });
+                        AddItem(new DialogItem() { Character = mDialogViewModel.CharacterCollection[_speakingCharacter], PhraseEntry = _selectedPhrase  });
 
 
                         addPhraseToHistory(_selectedPhrase, _speakingCharacter);
 
                         var _pathAndFileName =  SessionVariables.AudioDirectory 
-                                                + CharacterList[_speakingCharacter].CharacterPrefix 
+                                                + mDialogViewModel.CharacterCollection[_speakingCharacter].CharacterPrefix 
                                                 + "_" + _selectedPhrase.FileName + ".mp3";
 
                         playAudio(_pathAndFileName); // vb: code stops here so commented out for debugging purpose
@@ -258,8 +279,8 @@ namespace DialogEngine
 
                 var _dialogModelString = " --DiMod " + CurrentDialogModel + " "
                                          + ModelDialogs[CurrentDialogModel].Name
-                                         + " NextChars: " + CharacterList[_character1Num].CharacterPrefix + " "
-                                         + CharacterList[_character2Num].CharacterPrefix + " " + DateTime.Now;
+                                         + " NextChars: " + mDialogViewModel.CharacterCollection[_character1Num].CharacterPrefix + " "
+                                         + mDialogViewModel.CharacterCollection[_character2Num].CharacterPrefix + " " + DateTime.Now;
 
 
                 AddItem(new InfoMessage(_dialogModelString));
@@ -287,7 +308,7 @@ namespace DialogEngine
         }
 
 
-        public async Task<ObservableCollection<Character>> IntakeCharacters()
+        public async Task IntakeCharactersAsync()
         {
             ObservableCollection<Character> _characterList = new ObservableCollection<Character>();
 
@@ -390,7 +411,6 @@ namespace DialogEngine
 
                                 string _finishReadMessage = "Finish read of " + _deserializedCharacterJson.CharacterName;
 
-                                //WriteStatusBarInfo(_finishReadMessage,Brushes.Black);
 
                                 AddItem(new InfoMessage(_finishReadMessage));
 
@@ -449,30 +469,26 @@ namespace DialogEngine
                 }
 
 
-
-
-
                 // Fill the queue with greeting dialogs
                 for (var _i = 0; _i < RecentDialogsQueSize; _i++)
                 {
                     RecentDialogs.Enqueue(0); // Fill the que with greeting dialogs
                 }
 
+                mDialogViewModel.CharacterCollection = _characterList;
+
+
+                if (mDialogViewModel.CharacterCollection.Count < 2)
+                {
+                    string _errorMessage = "Insufficient readable character json files found in "
+                                           + SessionVariables.CharactersDirectory + " .  Exiting.";
+
+                    AddItem(new ErrorMessage(_errorMessage));
+
+                }
+
 
             });
-
-            CharacterList = _characterList;
-
-            if (CharacterList.Count < 2)
-            {
-                string _errorMessage = "Insufficient readable character json files found in "
-                                       + SessionVariables.CharactersDirectory + " .  Exiting.";
-
-                AddItem(new ErrorMessage(_errorMessage));
-
-            }
-
-            return _characterList;
 
         }
 
@@ -514,7 +530,7 @@ namespace DialogEngine
         /// <returns></returns>
         public PhraseEntry PickAWeightedPhrase(int _speakingCharacter, string _currentPhraseType)
         {
-            var _selectedPhrase = CharacterList[_speakingCharacter].Phrases[0]; //initialize to unused phrase
+            var _selectedPhrase = mDialogViewModel.CharacterCollection[_speakingCharacter].Phrases[0]; //initialize to unused phrase
 
             //Randomly select a phrase of correct Type
             var _phraseIsDuplicate = true;
@@ -526,13 +542,13 @@ namespace DialogEngine
 
                 var _phraseTableWeightedIndex = mRandom.NextDouble(); // rand 0.0 - 1.0
 
-                _phraseTableWeightedIndex *= CharacterList[_speakingCharacter].PhraseTotals.PhraseWeights[_currentPhraseType];
+                _phraseTableWeightedIndex *= mDialogViewModel.CharacterCollection[_speakingCharacter].PhraseTotals.PhraseWeights[_currentPhraseType];
 
                 double _amountOfCurrentPhraseType = 0;
 
 
 
-                foreach (var _currentPhraseTableEntry in CharacterList[_speakingCharacter].Phrases)
+                foreach (var _currentPhraseTableEntry in mDialogViewModel.CharacterCollection[_speakingCharacter].Phrases)
                 {
                     if (_currentPhraseTableEntry.PhraseWeights.ContainsKey(_currentPhraseType))
                     {
@@ -547,7 +563,7 @@ namespace DialogEngine
                 }
 
 
-                foreach (var _recentPhraseQueueEntry in CharacterList[_speakingCharacter].RecentPhrases)
+                foreach (var _recentPhraseQueueEntry in mDialogViewModel.CharacterCollection[_speakingCharacter].RecentPhrases)
                 {
                     if (_recentPhraseQueueEntry.Equals(_selectedPhrase))
                     {
@@ -558,9 +574,9 @@ namespace DialogEngine
             }
 
             //eventually overload enque to remove first to keep size same or create a replace
-            CharacterList[_speakingCharacter].RecentPhrases.Dequeue();
+            mDialogViewModel.CharacterCollection[_speakingCharacter].RecentPhrases.Dequeue();
 
-            CharacterList[_speakingCharacter].RecentPhrases.Enqueue(_selectedPhrase);
+            mDialogViewModel.CharacterCollection[_speakingCharacter].RecentPhrases.Enqueue(_selectedPhrase);
 
 
             return _selectedPhrase;
@@ -689,9 +705,9 @@ namespace DialogEngine
             foreach (var _element in ModelDialogs[_dialogModel].PhraseTypeSequence)
             {
                 //try again if characters lack phrases for this model
-                if (CharacterList[_currentCharacter].PhraseTotals.PhraseWeights.ContainsKey(_element))
+                if (mDialogViewModel.CharacterCollection[_currentCharacter].PhraseTotals.PhraseWeights.ContainsKey(_element))
                 {
-                    if (CharacterList[_currentCharacter].PhraseTotals.PhraseWeights[_element] < 0.015f)
+                    if (mDialogViewModel.CharacterCollection[_currentCharacter].PhraseTotals.PhraseWeights[_element] < 0.015f)
                         return false;
 
                     if (_currentCharacter == _character1Num)
@@ -805,14 +821,14 @@ namespace DialogEngine
             HistoricalPhrases.Add(new HistoricalPhrase
             {
                 CharacterIndex = _speakingCharacter,
-                CharacterPrefix = CharacterList[_speakingCharacter].CharacterPrefix,
-                PhraseIndex = CharacterList[_speakingCharacter].Phrases.IndexOf(_selectedPhrase),
+                CharacterPrefix = mDialogViewModel.CharacterCollection[_speakingCharacter].CharacterPrefix,
+                PhraseIndex = mDialogViewModel.CharacterCollection[_speakingCharacter].Phrases.IndexOf(_selectedPhrase),
                 PhraseFile = _selectedPhrase.FileName,
                 StartedTime = DateTime.Now
             });
 
             if (SessionVariables.WriteSerialLog)
-                LoggerHelper.Info("LogDialog",CharacterList[_speakingCharacter].CharacterName + ": " + _selectedPhrase.DialogStr);
+                LoggerHelper.Info("LogDialog", mDialogViewModel.CharacterCollection[_speakingCharacter].CharacterName + ": " + _selectedPhrase.DialogStr);
 
         }
 
@@ -887,7 +903,7 @@ namespace DialogEngine
             var _tempChar1 = SelectNextCharacters.NextCharacter1;
             var _tempChar2 = SelectNextCharacters.NextCharacter2;
 
-            if (_tempChar1 == _tempChar2 || _tempChar1 >= CharacterList.Count || _tempChar2 >= CharacterList.Count)
+            if (_tempChar1 == _tempChar2 || _tempChar1 >= mDialogViewModel.CharacterCollection.Count || _tempChar2 >= mDialogViewModel.CharacterCollection.Count)
                 return false;
 
 
@@ -969,10 +985,10 @@ namespace DialogEngine
                     AddItem(new InfoMessage("Wait3"));
 
 
-                    AddItem(new DialogItem() { Character = CharacterList[Character1Num], PhraseEntry = _ch1RetreatPhrase });
+                    AddItem(new DialogItem() { Character = mDialogViewModel.CharacterCollection[Character1Num], PhraseEntry = _ch1RetreatPhrase });
 
 
-                    playAudio(SessionVariables.AudioDirectory + CharacterList[Character1Num].CharacterPrefix +
+                    playAudio(SessionVariables.AudioDirectory + mDialogViewModel.CharacterCollection[Character1Num].CharacterPrefix +
                               "_" + _ch1RetreatPhrase.FileName + ".mp3");
 
                     return true;
@@ -987,11 +1003,11 @@ namespace DialogEngine
 
                     AddItem(new InfoMessage("Wait5"));
 
-                    AddItem(new DialogItem() { Character = CharacterList[Character2Num], PhraseEntry = _ch2RetreatPhrase });
+                    AddItem(new DialogItem() { Character = mDialogViewModel.CharacterCollection[Character2Num], PhraseEntry = _ch2RetreatPhrase });
 
 
                     playAudio( SessionVariables.AudioDirectory 
-                               + CharacterList[Character2Num].CharacterPrefix 
+                               + mDialogViewModel.CharacterCollection[Character2Num].CharacterPrefix 
                                + "_" + _ch2RetreatPhrase.FileName + ".mp3");
 
 

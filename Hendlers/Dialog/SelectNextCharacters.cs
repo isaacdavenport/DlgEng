@@ -14,7 +14,6 @@ namespace DialogEngine
         #region  - Fields -
 
         private static Random msRandom = new Random();
-        private static DialogTracker msDialogTracker = DialogTracker.Instance;
         private static int[,] msStrongRssiCharacterPairBuf = new int[2, StrongRssiBufDepth];
 
         public const int StrongRssiBufDepth = 12;
@@ -101,7 +100,7 @@ namespace DialogEngine
             Random random = new Random(); 
             do
             {
-                index = random.Next(0, msDialogTracker.CharacterList.Count);
+                index = random.Next(0, DialogViewModel.Instance.CharacterCollection.Count);
                 _isIndexTheSame = false;
 
                 if( _indexToSkip.Length > 0 )
@@ -114,6 +113,7 @@ namespace DialogEngine
 
             return index;
         }
+
 
         private static bool _isSelectedCharacterAvailable(int index)
         {
@@ -161,7 +161,7 @@ namespace DialogEngine
             }
 
 
-            if (_tempCh1 <= msDialogTracker.CharacterList.Count && _tempCh2 <= msDialogTracker.CharacterList.Count)
+            if (_tempCh1 <= DialogViewModel.Instance.CharacterCollection.Count && _tempCh2 <= DialogViewModel.Instance.CharacterCollection.Count)
             {
                 _enqueLatestCharacters(_tempCh1, _tempCh2);
                 _assignNextCharacters(_tempCh1, _tempCh2);

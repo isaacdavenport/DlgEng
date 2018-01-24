@@ -28,7 +28,8 @@ namespace DialogEngine.Views.Dialog
 
         protected override void onPageLoaded()
         {
-            DialogTracker.Instance.AddItem = new DialogTracker.PrintMethod((this.DataContext as DialogViewModel).AddItem);
+            
+            DialogTracker.GetInstance(DialogViewModel.Instance).AddItem = new DialogTracker.PrintMethod((this.DataContext as DialogViewModel).AddItem);
 
             InitModelDialogs.AddItem = new InitModelDialogs.PrintMethod(((this.DataContext as DialogViewModel).AddItem));
 

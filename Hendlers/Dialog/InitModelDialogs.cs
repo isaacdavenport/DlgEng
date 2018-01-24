@@ -15,6 +15,8 @@ using System.Collections.ObjectModel;
 using DialogEngine.Models.Enums;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using DialogEngine.ViewModels.Dialog;
+using System.Linq;
 
 namespace DialogEngine
 {
@@ -41,18 +43,18 @@ namespace DialogEngine
         /// Loads models dialog
         /// </summary>
         /// <param name="_inObj"><see cref="DialogTracker"/></param>
-        /// <param name="_arguments"> If arguments lenght > 0 then we need to reload models dialog because state is changed </param>
-        public static async  Task SetDefaults(DialogTracker _inObj,params object[] _arguments) //TODO is there a good way to identify orphaned tags? (dialog lines)
+        public static async  Task SetDefaultsAsync(DialogTracker _inObj) //TODO is there a good way to identify orphaned tags? (dialog lines)
         {
-            //Dialogs JSON parse here.
+
+        //Dialogs JSON parse here.
+        List<ModelDialogInfo> _modelDialogsInfo = new List<ModelDialogInfo>();
+
         List<ModelDialog> _modelDialogs = new List<ModelDialog>();
+
         double _dialogModelPopularitySum = 0.0;
 
         await Task.Run(() =>
             {
-
-                int _index = 0;
-
 
                 try
                 {
@@ -69,41 +71,16 @@ namespace DialogEngine
                     var _inFiles = _dialogsD.GetFiles("*.json");
 
 
+                    int _filesLenght = _inFiles.Count();
 
-                    ObservableCollection<ModelDialogInfo> _modelDialogsState = null;
-
-                    if (_arguments.Length > 0)
-                    {
-                        _modelDialogsState = (ObservableCollection<ModelDialogInfo>)_arguments[0];
-                    }
-
-
-                    foreach (var _file in _inFiles) //file of type FileInfo for each .json in directory
+                    for (int i = 0; i < _filesLenght; i++) //file of type FileInfo for each .json in directory
                     {
 
-                        if (_modelDialogsState != null)
-                        {
-
-                            if (_modelDialogsState[_index].State == ModelDialogState.Off)
-                            {
-                                _index++;
-
-                                continue;  // if modelDialog state is off, ignore this file
-                            }
-                            else
-                            {
-                                _index++;
-                            }
-
-                        }
-
-
-
-                        AddItem(new InfoMessage("Opening dialog models in " + _file.Name));
+                        AddItem(new InfoMessage("Opening dialog models in " + _inFiles[i].Name));
 
 
                         if (SessionVariables.WriteSerialLog)
-                            LoggerHelper.Info("LogDialog","Opening dialog models in " + _file.Name);
+                            LoggerHelper.Info("LogDialog","Opening dialog models in " + _inFiles[i].Name);
 
 
 
@@ -111,7 +88,7 @@ namespace DialogEngine
 
                         try
                         {
-                            var _fs = _file.OpenRead(); //open a read-only FileStream
+                            var _fs = _inFiles[i].OpenRead(); //open a read-only FileStream
 
                             //creates new streamerader for fs stream. Could also construct with filename...
                             using (var _reader = new StreamReader(_fs))
@@ -120,43 +97,46 @@ namespace DialogEngine
                                 {
                                     _inDialog = _reader.ReadToEnd(); //create string of JSON file
 
-                                    var _dialogsInClass = JsonConvert.DeserializeObject<ModelDialogInput>(_inDialog); //string to Object.
+                                    var _dialogsInClass = JsonConvert.DeserializeObject<ModelDialogInfo>(_inDialog); //string to Object.
 
+                                    _dialogsInClass.FileName = Path.GetFileNameWithoutExtension( _inFiles[i].Name);
 
-                                    foreach (var _curDialog in _dialogsInClass.InList)
+                                    _dialogModelPopularitySum += _dialogsInClass.InList.Sum(_modelDialogItem => _modelDialogItem.Popularity);
+
+                                    _modelDialogsInfo.Add(_dialogsInClass);
+
+                                    // add dialog models to DialogTracker.cs
+                                    foreach(ModelDialog _dialog in _dialogsInClass.InList)
                                     {
-                                        //Add to dialog List
-                                        _modelDialogs.Add(_curDialog);
-
-                                        //population sums
-                                        _dialogModelPopularitySum += _curDialog.Popularity;
+                                        _modelDialogs.Add(_dialog);
                                     }
+
                                 }
                                 catch (JsonReaderException _e)
                                 {
-                                    AddItem(new ErrorMessage("Error reading " + _file.Name));
+                                    AddItem(new ErrorMessage("Error reading " + _inFiles[i].Name));
                                     mcLogger.Error(_e.Message);
                                 }
                             }
 
 
-                            AddItem(new InfoMessage("Completed " + _file.Name));
+                            AddItem(new InfoMessage("Completed " + _inFiles[i].Name));
 
 
                             if (SessionVariables.WriteSerialLog)
-                                LoggerHelper.Info("LogDialog","Completed " + _file.Name);
+                                LoggerHelper.Info("LogDialog","Completed " + _inFiles[i].Name);
 
 
                         }
                         catch (UnauthorizedAccessException _e)
                         {
-                            AddItem(new ErrorMessage("Unauthorized access exception while reading: " + _file.FullName));
+                            AddItem(new ErrorMessage("Unauthorized access exception while reading: " + _inFiles[i].FullName));
 
                             mcLogger.Error(_e.Message);
                         }
                         catch (DirectoryNotFoundException __e)
                         {
-                            AddItem(new ErrorMessage("Directory not found exception while reading: " + _file.FullName));
+                            AddItem(new ErrorMessage("Directory not found exception while reading: " + _inFiles[i].FullName));
                             mcLogger.Error(__e.Message);
                         }
                     }
@@ -168,11 +148,16 @@ namespace DialogEngine
                     AddItem(new ErrorMessage("You probably need to restart your computer..."));
 
                     mcLogger.Error(_e.Message);
+
+                    MessageBox.Show("You probably need to restart your computer...");
                 }
 
+                DialogViewModel.Instance.DialogModelCollection = new  ObservableCollection<ModelDialogInfo>(_modelDialogsInfo);
+
+                _inObj.DialogModelPopularitySum = _dialogModelPopularitySum;
 
                 _inObj.ModelDialogs = _modelDialogs;
-                _inObj.DialogModelPopularitySum = _dialogModelPopularitySum;
+
 
                 if (_inObj.ModelDialogs.Count < 2)
                     MessageBox.Show("Insufficient dialog models found in " + SessionVariables.DialogsDirectory + " exiting.");
@@ -181,6 +166,33 @@ namespace DialogEngine
             });
         }
 
+
+        public static async Task RefreshDialogModels(DialogTracker _dialogTracker)
+        {
+            await Task.Run(() =>
+            {
+
+                List<ModelDialog> _modelDialogsList = new List<ModelDialog>();
+
+
+                foreach(ModelDialogInfo _dialogInfo in DialogViewModel.Instance.DialogModelCollection)
+                {
+                    if(_dialogInfo.State == ModelDialogState.On)
+                    {
+                        foreach(ModelDialog _dialog in _dialogInfo.InList)
+                        {
+                            _modelDialogsList.Add(_dialog);
+                        }
+                    }
+                }
+
+
+                _dialogTracker.ModelDialogs = _modelDialogsList;
+
+                _dialogTracker.DialogModelPopularitySum = _modelDialogsList.Sum(_modelDialogItem => _modelDialogItem.Popularity);
+
+            });
+        } 
 
         #endregion
     }

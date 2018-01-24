@@ -222,6 +222,8 @@
     <Resource Include="Resources\Images\warning.png" />
     <Resource Include="Resources\Images\info.png" />
     <Resource Include="Resources\Images\clearAll.png" />
+    <Resource Include="Resources\Images\more-button-of-three-dots.png" />
+    <Resource Include="Resources\Images\minus.png" />
     <Content Include="TheGeneratedLogFilesGoHere.txt" />
   </ItemGroup>
   <ItemGroup>
@@ -234,6 +236,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Brushes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

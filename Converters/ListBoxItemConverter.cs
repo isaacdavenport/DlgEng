@@ -18,7 +18,7 @@ namespace DialogEngine.Converters
 
             string _displayValue = character.RadioNum >= 0 ? "R"+character.RadioNum.ToString() : "";
 
-            return  _displayValue + " " + character.CharacterName;
+            return  _displayValue + "  " + character.CharacterName;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

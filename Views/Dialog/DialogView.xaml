@@ -141,6 +141,7 @@
                                                                     Header="" 
                                                                     Width="auto" 
                                                                     Binding ="{Binding RelativeSource={RelativeSource FindAncestor,  AncestorType={x:Type DataGridRow}},Converter={StaticResource RowIndexConverter}}">
+                                                
                                             </DataGridTextColumn>
 
 
@@ -150,63 +151,63 @@
                                                                     >
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
-                                                        <TextBlock Text="{Binding CharacterName}" >
-                                                            <TextBlock.ToolTip>
-                                                                <Grid>
-                                                                    <Grid.ColumnDefinitions>
-                                                                        <ColumnDefinition/>
-                                                                        <ColumnDefinition />
-                                                                    </Grid.ColumnDefinitions>
+                                                        <TextBlock Grid.Column="0" Text="{Binding CharacterName}" >
+                                                                <TextBlock.ToolTip>
+                                                                    <Grid>
+                                                                        <Grid.ColumnDefinitions>
+                                                                            <ColumnDefinition/>
+                                                                            <ColumnDefinition />
+                                                                        </Grid.ColumnDefinitions>
 
-                                                                    <Grid.RowDefinitions>
-                                                                        <RowDefinition />
-                                                                        <RowDefinition />
-                                                                        <RowDefinition />
-                                                                        <RowDefinition />
-                                                                        
-                                                                    </Grid.RowDefinitions>
+                                                                        <Grid.RowDefinitions>
+                                                                            <RowDefinition />
+                                                                            <RowDefinition />
+                                                                            <RowDefinition />
+                                                                            <RowDefinition />
 
-                                                                    <Label Content="Character name:" 
+                                                                        </Grid.RowDefinitions>
+
+                                                                        <Label Content="Character name:" 
                                                                            HorizontalAlignment="Right"
                                                                            Grid.Row="0"
                                                                            Grid.Column="0"/>
 
-                                                                    <Label Content="{Binding CharacterName}" 
+                                                                        <Label Content="{Binding CharacterName}" 
                                                                            Grid.Row="0"
                                                                            Grid.Column="1" />
 
 
-                                                                    <Label Content="Character prefix:" 
+                                                                        <Label Content="Character prefix:" 
                                                                            HorizontalAlignment="Right"
                                                                            Grid.Row="1"
                                                                            Grid.Column="0"/>
 
-                                                                    <Label Content="{Binding CharacterPrefix}" 
+                                                                        <Label Content="{Binding CharacterPrefix}" 
                                                                            Grid.Row="1"
                                                                            Grid.Column="1" />
 
 
-                                                                    <Label Content="Character state:" 
+                                                                        <Label Content="Character state:" 
                                                                            HorizontalAlignment="Right"
                                                                            Grid.Row="2"
                                                                            Grid.Column="0"/>
 
-                                                                    <Label Content="{Binding State}" 
+                                                                        <Label Content="{Binding State}" 
                                                                            Grid.Row="2"
                                                                            Grid.Column="1" />
 
-                                                                    <Label Content="Assigned radio:" 
+                                                                        <Label Content="Assigned radio:" 
                                                                            HorizontalAlignment="Right"
                                                                            Grid.Row="3"
                                                                            Grid.Column="0"/>
 
-                                                                    <Label Content="{Binding RadioNum, Converter={StaticResource RadioNumToStringConverter}}" 
+                                                                        <Label Content="{Binding RadioNum, Converter={StaticResource RadioNumToStringConverter}}" 
                                                                            Grid.Row="3"
                                                                            Grid.Column="1" />
 
-                                                                </Grid>
-                                                            </TextBlock.ToolTip>
-                                                        </TextBlock>
+                                                                    </Grid>
+                                                                </TextBlock.ToolTip>
+                                                            </TextBlock>
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.CellTemplate>
                                             </DataGridTemplateColumn>
@@ -214,7 +215,7 @@
                                             <DataGridTemplateColumn Header="Available" Width="auto">
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
-                                                        <RadioButton HorizontalAlignment="Center" 
+                                                        <RadioButton VerticalAlignment="Center" HorizontalAlignment="Center" 
                                                                          IsChecked="{Binding State, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter = {StaticResource CharacterStateToBooleanConverter}, ConverterParameter={x:Static enums:CharacterState.Available}}">
                                                             <RadioButton.GroupName>
                                                                 <MultiBinding Converter="{StaticResource DynamicGroupNameConverter}">
@@ -231,7 +232,7 @@
                                                                         Width="auto">
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
-                                                        <RadioButton IsChecked="{Binding State, 
+                                                        <RadioButton VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding State, 
                                                                                             Mode=TwoWay,
                                                                                             UpdateSourceTrigger=PropertyChanged, 
                                                                                             Converter = {StaticResource CharacterStateToBooleanConverter}, 
@@ -254,7 +255,7 @@
                                                                         Width="auto">
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
-                                                        <RadioButton IsChecked="{Binding State, 
+                                                        <RadioButton HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding State, 
                                                                                          Mode=TwoWay,
                                                                                          UpdateSourceTrigger=PropertyChanged, 
                                                                                          Converter = {StaticResource CharacterStateToBooleanConverter}, 
@@ -527,29 +528,22 @@
                                 </Grid.ColumnDefinitions>
 
                             
-                                <Label Content="Choose dialog model:" Grid.Column="0" Grid.Row="0" />
-                                <ComboBox ItemsSource="{Binding DialogModelCollection}"
-                                          x:Name="DialogModelComboBox"
-                                          IsEnabled="{Binding IsDialogStopped}"
-                                          SelectedIndex="{Binding SelectedDialogModelIndex, Mode=TwoWay}"
-                                          DisplayMemberPath="FileName"
-                                          Grid.Row="0" Grid.Column="1" />
-
-                                <DataGrid ItemsSource="{Binding DialogModelCollection}" 
-                                      IsEnabled="{Binding IsDialogStopped}" 
-                                      HeadersVisibility="Column" 
-                                      CanUserAddRows="False" 
-                                      EnableRowVirtualization="True"  
-                                      Background="White" 
-                                      VerticalGridLinesBrush="LightGray" 
-                                      HorizontalGridLinesBrush="LightGray" 
-                                      BorderBrush="LightGray" 
-                                      BorderThickness="1" 
-                                      AutoGenerateColumns="False"
-                                      Grid.Row="1"
-                                      Margin="0,20,0,0"
-                                      Grid.ColumnSpan="2"
-                                      MaxHeight="200">
+                                <DataGrid ItemsSource="{Binding DialogModelCollection}"
+                                          x:Name="DialogSettingsGrid"
+                                          IsEnabled="{Binding IsDialogStopped}" 
+                                          HeadersVisibility="Column" 
+                                          CanUserAddRows="False" 
+                                          EnableRowVirtualization="True"  
+                                          Background="White" 
+                                          VerticalGridLinesBrush="LightGray" 
+                                          HorizontalGridLinesBrush="LightGray" 
+                                          BorderBrush="LightGray" 
+                                          BorderThickness="1" 
+                                          AutoGenerateColumns="False"
+                                          Grid.Row="1"
+                                          Margin="0,20,0,0"
+                                          Grid.ColumnSpan="2"
+                                          MaxHeight="200">
 
 
                                 <DataGrid.Columns>
@@ -567,7 +561,7 @@
                                                                         Width="auto">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <RadioButton HorizontalAlignment="Center" 
+                                                <RadioButton VerticalAlignment="Center" HorizontalAlignment="Center" 
                                                                          IsChecked="{Binding State, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, Converter = {StaticResource ModelDialogStateToBooleanConverter}, ConverterParameter={x:Static enums:ModelDialogState.On}}" >
                                                     <RadioButton.GroupName>
                                                         <MultiBinding Converter="{StaticResource DynamicGroupNameConverter}">
@@ -584,7 +578,7 @@
                                                                         Width="auto">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <RadioButton HorizontalAlignment="Center" 
+                                                <RadioButton VerticalAlignment="Center" HorizontalAlignment="Center" 
                                                                          IsChecked="{Binding State, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, Converter = {StaticResource ModelDialogStateToBooleanConverter} , ConverterParameter={x:Static enums:ModelDialogState.Off}}" >
                                                     <RadioButton.GroupName>
                                                         <MultiBinding Converter="{StaticResource DynamicGroupNameConverter}">
@@ -596,6 +590,61 @@
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
+
+                                        <DataGridTemplateColumn>
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="auto" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+
+                                                        <ToggleButton x:Name="MoreInfoButton" IsEnabled="{Binding State, Converter = {StaticResource ModelDialogStateToBooleanConverter} , ConverterParameter={x:Static enums:ModelDialogState.On}}"  >
+                                                            <ToggleButton.Template>
+                                                                <ControlTemplate>
+
+                                                                    <Label x:Name="MoreInfoLabel" Margin="2,0,0,0" HorizontalAlignment="Center">
+                                                                        <Label.Background>
+                                                                            <ImageBrush  ImageSource="pack://application:,,,/Resources/Images/more-button-of-three-dots.png" />
+                                                                        </Label.Background>
+                                                                        <Label.ToolTip>
+                                                                            <TextBlock Text="Choose dialog model..." />
+                                                                        </Label.ToolTip>
+                                                                    </Label>
+                                                                    
+                                                                    <ControlTemplate.Triggers>
+                                                                        <Trigger Property="ToggleButton.IsChecked" Value="true">
+                                                                            <Setter TargetName="MoreInfoLabel" Property="Background" Value="{StaticResource HideIcon}" />
+                                                                        </Trigger>
+                                                                    </ControlTemplate.Triggers>
+                                                                </ControlTemplate>
+                                                            </ToggleButton.Template>
+                                                            
+                                                        </ToggleButton>
+
+                                                        <Popup  Grid.Column="1" Width="auto" Visibility="Visible" Height="20" IsOpen="{Binding IsChecked, ElementName=MoreInfoButton}" Placement="Right">
+                                                            <ComboBox Text="-- Choose dialog model --" Tag="{Binding}"  IsEditable="True" ItemsSource="{Binding InList}" Foreground="Black" DisplayMemberPath="Name" >
+                                                                <ComboBox.ItemsPanel>
+                                                                    <ItemsPanelTemplate>
+                                                                        <VirtualizingStackPanel/>
+                                                                    </ItemsPanelTemplate>
+                                                                </ComboBox.ItemsPanel>
+
+                                                                <i:Interaction.Triggers>
+                                                                    <i:EventTrigger EventName="SelectionChanged">
+                                                                        <cmd:EventToCommand Command="{Binding DataContext.DialogModelSelectionChangedCommand , RelativeSource={RelativeSource AncestorType=local:DialogView}}" PassEventArgsToCommand="true"/>
+                                                                    </i:EventTrigger>
+                                                                </i:Interaction.Triggers>
+                                                            </ComboBox>
+                                                        </Popup>
+
+                                                    </Grid>
+                                                    
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                        
                                 </DataGrid.Columns>
                             </DataGrid>
 

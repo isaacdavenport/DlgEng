@@ -12,6 +12,7 @@
         <ResourceDictionary Source="/Themes/TextBoxStyle.xaml" />
         <ResourceDictionary Source="/Themes/ToggleButtonStyle.xaml" />
         <ResourceDictionary Source="/Themes/ComboBoxStyle.xaml" />
+        <ResourceDictionary Source="/Themes/Brushes.xaml" />
 
 
 

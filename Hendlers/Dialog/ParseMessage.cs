@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DialogEngine.Helpers;
 using DialogEngine.Models.Dialog;
+using DialogEngine.ViewModels.Dialog;
 
 namespace DialogEngine
 {
@@ -28,7 +29,7 @@ namespace DialogEngine
         static void addMessageToReceivedBuffer(int _characterRowNum, int[] _rw, DateTime _timeStamp)
         {
 
-            if (_characterRowNum > DialogTracker.CharacterList.Count - 1)  //was omiting character 5 from log when it was Count - 2
+            if (_characterRowNum > DialogViewModel.Instance.CharacterCollection.Count - 1)  //was omiting character 5 from log when it was Count - 2
             {
                 return;
             }
@@ -37,7 +38,7 @@ namespace DialogEngine
             {
                 ReceivedTime = _timeStamp,
                 SequenceNum = _rw[SerialComs.NumRadios],
-                CharacterPrefix = DialogTracker.CharacterList[_characterRowNum].CharacterPrefix
+                CharacterPrefix = DialogViewModel.Instance.CharacterCollection[_characterRowNum].CharacterPrefix
             });
 
 

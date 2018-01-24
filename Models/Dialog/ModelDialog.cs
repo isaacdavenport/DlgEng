@@ -23,7 +23,7 @@ namespace DialogEngine.Models.Dialog
 
 
         [JsonProperty("DialogName")]
-        public string Name;
+        private string mName;
 
         [JsonProperty("PhraseTypeSequence")]
         public List<string> PhraseTypeSequence = new List<string>();
@@ -38,6 +38,18 @@ namespace DialogEngine.Models.Dialog
         public List<string> Requires = new List<string>();
 
 
+        public string Name
+        {
+            get
+            {
+                return mName;
+            }
+
+            set
+            {
+                mName = value;
+            }
+        }
 
 
         public bool AreDialogsRequirementsMet()
