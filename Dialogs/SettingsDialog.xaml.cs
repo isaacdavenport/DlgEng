@@ -174,7 +174,7 @@ namespace DialogEngine.Controls
 
                 Configuration _config = ConfigurationManager.OpenExeConfiguration(_configPath);
 
-
+                // -2 because we have row for application version and row for buttons
                 int _rowsCount = this.MainGrid.RowDefinitions.Count -2;
 
                 for (int i = 1; i <= _rowsCount; i++)

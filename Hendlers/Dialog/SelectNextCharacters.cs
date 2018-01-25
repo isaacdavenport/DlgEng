@@ -6,6 +6,8 @@ using System.Timers;
 using System.Threading;
 using DialogEngine.Helpers;
 using DialogEngine.ViewModels.Dialog;
+using DialogEngine.Events;
+using DialogEngine.Events.DialogEvents;
 
 namespace DialogEngine
 {
@@ -72,7 +74,7 @@ namespace DialogEngine
                 NextCharacter2 = _getCharacterMappedIndex(_tempCh1);
             }
 
-
+            EventAggregator.Instance.GetEvent<StopPlayingCurrentDialogLineEvent>().Publish();
         }
 
 

@@ -2,38 +2,106 @@
 //  www.toys2life.org
 
 using DialogEngine.Events.DialogEvents;
+using DialogEngine.Helpers;
 using log4net;
 using System;
 using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Windows;
-using System.Windows.Media;
+using System.Timers;
 using WMPLib;
 
 namespace DialogEngine
 {
-    public class WindowsMediaPlayerMp3
+    public class MP3Player
     {
+
+
         private static readonly ILog mcLogger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
+        private static readonly object mcPadlock = new object();
+        private static MP3Player msInstance = null;
+
+        private TimeSpan mStartedTime;
+        private double mDuration;
+        private Timer mTimer = new Timer(1000);
+        private Timer mVolumeTimer = new Timer(500);
 
         public WMPLib.WindowsMediaPlayer Player;
 
+
         /// <summary>
-        /// Creates instance of WindowsMediaPlayerMp3
+        /// Creates instance of MP3Player
         /// </summary>
-        public WindowsMediaPlayerMp3()
+        public MP3Player()
         {
-            Player = new WMPLib.WindowsMediaPlayer();
-            Player.MediaError += Player_MediaError;
             Events.EventAggregator.Instance.GetEvent<StopPlayingCurrentDialogLineEvent>().Subscribe(StopPlayingCurrentDialogLine);
+
+            Player = new WMPLib.WindowsMediaPlayer();
+            Player.MediaError += _player_MediaError;
+            Player.PlayStateChange += _playState_Change;
+
+            mTimer.Elapsed += _timer_Tick;
+            mVolumeTimer.Elapsed += _volumeTimer_Tick;
+
+        }
+
+        private void _playState_Change(int NewState)
+        {
+            // state 3 - playing
+            if(NewState == 3)
+            mDuration = Player.currentMedia.duration;
+        }
+
+        private void _volumeTimer_Tick(object sender, EventArgs e)
+        {
+            if (Player.settings.volume == 0)
+            {
+                mVolumeTimer.Stop();
+
+                Player.controls.stop();
+
+                return;
+            }
+            else
+            {
+                Player.settings.volume -= 5;
+            }
+        }
+
+
+
+        private void _timer_Tick(object sender, EventArgs e)
+        {
+            double _durationOfPlaying = DateTime.Now.TimeOfDay.TotalSeconds - mStartedTime.TotalSeconds;
+
+            if (_durationOfPlaying > SessionVariables.MaxTimeToPlayFile)
+            {
+                mTimer.Stop();
+
+                mVolumeTimer.Start();
+            }
 
         }
 
 
 
+        public static MP3Player Instance
+        {
+            get
+            {
+                lock (mcPadlock)
+                {
+                    if (msInstance == null)
+                    {
+                        msInstance = new MP3Player();
+                    }
+                    return msInstance;
+                }
+            }
+        }
 
-        private void Player_MediaError(object pMediaObject)
+
+
+        private void _player_MediaError(object pMediaObject)
         {
             mcLogger.Error("Incorrect .mp3 file.");
         }
@@ -51,8 +119,12 @@ namespace DialogEngine
         {
             try
             {
+
+                Player.settings.volume = 100;
                 Player.URL = _path;
-                Player.controls.play();
+
+                mStartedTime = DateTime.Now.TimeOfDay;
+
                 return 0;  //TODO add error handling    
             }
             catch(Exception ex)
@@ -96,6 +168,7 @@ namespace DialogEngine
         public int Status()
         {
             int _code = 1000;
+
             try
             {
                 _code = (int)Player.playState;
@@ -107,20 +180,24 @@ namespace DialogEngine
             return _code;
         }
 
+
         /// <summary>
         /// Stops player
         /// </summary>
         public void StopPlayingCurrentDialogLine()
         {
-            try
+            if (IsPlaying())
             {
-                Player.controls.stop();
-            }
-            catch (Exception ex)
-            {
-                mcLogger.Error(ex.Message);
+
+                if (mDuration > SessionVariables.MaxTimeToPlayFile)
+                {
+                    mTimer.Start();
+                }
             }
         }
+
+
+
 
     }
 }

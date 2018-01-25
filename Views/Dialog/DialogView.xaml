@@ -216,7 +216,7 @@
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
                                                         <RadioButton VerticalAlignment="Center" HorizontalAlignment="Center" 
-                                                                         IsChecked="{Binding State, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter = {StaticResource CharacterStateToBooleanConverter}, ConverterParameter={x:Static enums:CharacterState.Available}}">
+                                                                     IsChecked="{Binding State, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter = {StaticResource CharacterStateToBooleanConverter}, ConverterParameter={x:Static enums:CharacterState.Available}}">
                                                             <RadioButton.GroupName>
                                                                 <MultiBinding Converter="{StaticResource DynamicGroupNameConverter}">
                                                                     <Binding Path="CharacterName" />
@@ -232,11 +232,12 @@
                                                                         Width="auto">
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
-                                                        <RadioButton VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding State, 
-                                                                                            Mode=TwoWay,
-                                                                                            UpdateSourceTrigger=PropertyChanged, 
-                                                                                            Converter = {StaticResource CharacterStateToBooleanConverter}, 
-                                                                                            ConverterParameter={x:Static enums:CharacterState.On}}" >
+                                                        <RadioButton VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                                                     IsChecked="{Binding State, 
+                                                                                         Mode=TwoWay,
+                                                                                         UpdateSourceTrigger=PropertyChanged, 
+                                                                                         Converter = {StaticResource CharacterStateToBooleanConverter}, 
+                                                                                         ConverterParameter={x:Static enums:CharacterState.On}}" >
                                                             <RadioButton.GroupName>
                                                                 <MultiBinding Converter="{StaticResource DynamicGroupNameConverter}">
                                                                     <Binding Path="CharacterName" />
@@ -255,7 +256,8 @@
                                                                         Width="auto">
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
-                                                        <RadioButton HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding State, 
+                                                        <RadioButton HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                                     IsChecked="{Binding State, 
                                                                                          Mode=TwoWay,
                                                                                          UpdateSourceTrigger=PropertyChanged, 
                                                                                          Converter = {StaticResource CharacterStateToBooleanConverter}, 
@@ -494,11 +496,11 @@
                                                     </i:Interaction.Triggers>
                                                 </TextBox>
                                                 <Button Height="20" 
-                                                            IsEnabled="{Binding ElementName=Radio_5, Path=Text.Length}"                                                            
-                                                            Command="{Binding ClearRadioBindingCommand}" 
-                                                            CommandParameter="{Binding ElementName=Radio_5, Path=Name}" 
-                                                            Background="White" 
-                                                            Width="20">
+                                                        IsEnabled="{Binding ElementName=Radio_5, Path=Text.Length}"                                                            
+                                                        Command="{Binding ClearRadioBindingCommand}" 
+                                                        CommandParameter="{Binding ElementName=Radio_5, Path=Name}" 
+                                                        Background="White" 
+                                                        Width="20">
                                                     <Image Source="pack://application:,,,/Resources/Images/error.png" />
                                                 </Button>
                                             </StackPanel>
@@ -686,6 +688,7 @@
 
                     </Grid>
 
+
                 </StackPanel>
 
             </Grid>
@@ -829,11 +832,11 @@
 
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectionChanged">
-                        <i:InvokeCommandAction Command="{Binding RefreshTabItem}" />
+                        <cmd:EventToCommand Command="{Binding RefreshTabItem}" PassEventArgsToCommand="true"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
-                
-                <TabItem BorderThickness="0">
+
+                <TabItem Tag="Errors" BorderThickness="0">
 
                     <TabItem.ContextMenu>
 
@@ -890,7 +893,7 @@
 
                 </TabItem>
 
-                <TabItem >
+                <TabItem Tag = "Warnings" >
 
                     <TabItem.ContextMenu>
 
@@ -946,7 +949,7 @@
                     </ListView>
                 </TabItem>
 
-                <TabItem  >
+                <TabItem  Tag="Info" >
 
                     <TabItem.ContextMenu>
 
@@ -1014,7 +1017,7 @@
                     </ListView>
                 </TabItem>
 
-                <TabItem  >
+                <TabItem Tag="HeatMapUpdate" >
 
                     <TabItem.Header>
                         <StackPanel  Orientation="Horizontal" >

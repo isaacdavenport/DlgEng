@@ -3,6 +3,7 @@ using DialogEngine;
 using System.Collections.Generic;
 using DialogEngine.Helpers;
 using DialogEngine.Models.Dialog;
+using DialogEngine.ViewModels.Dialog;
 
 namespace UnitTests
 {
@@ -10,14 +11,13 @@ namespace UnitTests
     public class TestDialogTracker
     {
         [TestMethod]
-        public void TestintakeCharacters()
+        public async void TestintakeCharacters()
         {
-            DialogTracker _instanceForTests = new DialogTracker();
-            _instanceForTests.IntakeCharacters();
-            Assert.IsTrue(_instanceForTests.CharacterList.Count > 1);
+            await DialogTracker.GetInstance(DialogViewModel.Instance).IntakeCharactersAsync();
+            Assert.IsTrue(DialogViewModel.Instance.CharacterCollection.Count > 1);
 
             //charlist is of objects type chararcter
-            foreach(char _type in _instanceForTests.CharacterList.ToString())
+            foreach(char _type in DialogViewModel.Instance.CharacterCollection.ToString())
             {
                 Assert.IsTrue(_type.ToString() == "Character");
             }
@@ -25,7 +25,7 @@ namespace UnitTests
             //characters in charlist have not null values.
             //volume of content per character.
             List<string> _seen = new List<string>();
-            foreach (Character _element in _instanceForTests.CharacterList)
+            foreach (Character _element in DialogViewModel.Instance.CharacterCollection)
             {
                 //test that character is only in charlist once.
                 Assert.IsFalse(_seen.Contains(_element.CharacterPrefix));
@@ -43,10 +43,10 @@ namespace UnitTests
         }
 
         [TestMethod]
-        public void TestSwapChars1And2()
+        public async void TestSwapChars1And2()
         {
-            DialogTracker _instanceForTests = new DialogTracker();
-            _instanceForTests.IntakeCharacters();
+            DialogTracker _instanceForTests = DialogTracker.Instance;
+            await _instanceForTests.IntakeCharactersAsync();
             //initial state. Vals are not equal
             Assert.IsTrue(_instanceForTests.Character1Num != _instanceForTests.Character2Num);
             int _char1Num = _instanceForTests.Character1Num;
@@ -60,14 +60,14 @@ namespace UnitTests
         }
 
         [TestMethod]
-        public void TestRemovePhrasesOverParentalRating()
+        public async void TestRemovePhrasesOverParentalRating()
         {
-            DialogTracker _instanceForTests = new DialogTracker();
-            _instanceForTests.IntakeCharacters();
+            DialogTracker _instanceForTests = DialogTracker.Instance;
+            await _instanceForTests.IntakeCharactersAsync();
             //check rating of all dialogs.
             // all phrases are now below the threshold.
             Dictionary<string, int> _ratings = new Dictionary<string, int> { { "G", 1 }, { "PG", 2 }, { "PG13", 3 }, { "R", 4 }, { "1", 1 }, { "2", 2 }, { "3", 3 }, { "4", 4 } };  //future proof if notation changes
-            foreach (Character _character in _instanceForTests.CharacterList)
+            foreach (Character _character in DialogViewModel.Instance.CharacterCollection)
             {
                 foreach(PhraseEntry _dialog in _character.Phrases)
                 {
@@ -77,10 +77,10 @@ namespace UnitTests
         }
 
         [TestMethod]
-        public void TestPlayAudio()
+        public async void TestPlayAudio()
         {
-            DialogTracker _instanceForTests = new DialogTracker();
-            _instanceForTests.IntakeCharacters();
+            DialogTracker _instanceForTests = DialogTracker.Instance;
+            await _instanceForTests.IntakeCharactersAsync();
             //make sure audio plays
             //chars are changed (?)
             //audio does not overlap.

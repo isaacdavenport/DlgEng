@@ -16,6 +16,8 @@ using DialogEngine.Models.Logger;
 using System.Threading.Tasks;
 using DialogEngine.ViewModels.Dialog;
 using System.Collections.ObjectModel;
+using DialogEngine.Events;
+using DialogEngine.Events.DialogEvents;
 
 // ReSharper disable ConditionIsAlwaysTrueOrFalse
 
@@ -50,7 +52,6 @@ namespace DialogEngine
 
         #region - Public fields -
     
-        public WindowsMediaPlayerMp3 Audio = new WindowsMediaPlayerMp3();
 
         public int Character1Num = 0;
         public int Character2Num = 1;
@@ -236,6 +237,7 @@ namespace DialogEngine
                                                 + "_" + _selectedPhrase.FileName + ".mp3";
 
                         playAudio(_pathAndFileName); // vb: code stops here so commented out for debugging purpose
+
 
                         if ( !DialogTrackerAndSerialComsCharactersSame()
                             && DialogViewModel.SelectedCharactersOn != 1)
@@ -611,7 +613,7 @@ namespace DialogEngine
 
             if (File.Exists(_pathAndFileName))
             {
-                var _playSuccess = Audio.PlayMp3(_pathAndFileName);
+                var _playSuccess = MP3Player.Instance.PlayMp3(_pathAndFileName);
 
                 if (_playSuccess != 0)
                 {
@@ -623,7 +625,7 @@ namespace DialogEngine
                 Thread.Sleep(600);
                 
 
-                while (Audio.IsPlaying() && i < 250)
+                while (MP3Player.Instance.IsPlaying() && i < 250)
                 {
                     // 20 seconds is max
                     Thread.Sleep(100);

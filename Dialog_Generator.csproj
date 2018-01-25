@@ -126,6 +126,7 @@
     <Compile Include="Events\CompositeEvent.cs" />
     <Compile Include="Events\DialogEvents\ChangedCharactersStateEvent.cs" />
     <Compile Include="Events\DialogEvents\ChangedModelDialogStateEvent.cs" />
+    <Compile Include="Events\DialogEvents\StopImmediatelyPlayingCurrentDialogLIne.cs" />
     <Compile Include="Events\DialogEvents\StopPlayingCurrentDialogLineEvent.cs" />
     <Compile Include="Events\EventAggregator.cs" />
     <Compile Include="Events\EventBase.cs" />

@@ -30,6 +30,20 @@ namespace DialogEngine.Helpers
         public static string HexLogFileName = "HexSerialLog.txt";
         public static string DialogLogFileName = "LogDialog.txt";
 
+        public static double MaxTimeToPlayFile
+        {
+            get
+            {
+                double result = -1;
+                //Verify the flags and strings in the app settings config file
+                if (ConfigurationManager.AppSettings["MaxTimeToPlayFile"] != null)
+                    result = Convert.ToDouble(AppSet.ReadSetting("MaxTimeToPlayFile"));
+
+                return result;
+            }
+
+        }
+
         public static bool DebugFlag
         {
             get

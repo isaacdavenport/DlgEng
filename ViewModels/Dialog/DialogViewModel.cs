@@ -375,6 +375,8 @@ namespace DialogEngine.ViewModels.Dialog
             {
                 mCharacterCollection = value;
 
+
+
                 if (Application.Current.Dispatcher.CheckAccess())
                 {
                     if (string.IsNullOrEmpty(mView.Radio_0.Text))
@@ -534,7 +536,6 @@ namespace DialogEngine.ViewModels.Dialog
         /// <summary>
         /// Update bindings for columns width with <see cref="StarWidthConverter"/>
         /// </summary>
-        public Core.RelayCommand RefreshTabItem { get; set; }
 
         /// <summary>
         /// Stops dialog
@@ -555,6 +556,9 @@ namespace DialogEngine.ViewModels.Dialog
         public RelayCommand<DragEventArgs> DragOverCommand { get; set; }
 
         public RelayCommand<SelectionChangedEventArgs> DialogModelSelectionChangedCommand { get; set; }
+
+        public RelayCommand<SelectionChangedEventArgs> RefreshTabItem { get; set; }
+
 
 
 
@@ -679,8 +683,6 @@ namespace DialogEngine.ViewModels.Dialog
 
             ClearAllMessages = new Core.RelayCommand(x => _clearAllMessages((string)x));
 
-            RefreshTabItem = new Core.RelayCommand(x => _refreshTabItem());
-
             StopDialog = new Core.RelayCommand(x => _stopDialog());
 
             ClearRadioBindingCommand = new Core.RelayCommand(x => _clearRadioBindingCommand((string)x));
@@ -696,6 +698,9 @@ namespace DialogEngine.ViewModels.Dialog
             DragOverCommand = new RelayCommand<DragEventArgs>(_dragOverCommand);
 
             DialogModelSelectionChangedCommand = new RelayCommand<SelectionChangedEventArgs>(_dialogModelSelectionChanged);
+
+            RefreshTabItem = new RelayCommand<SelectionChangedEventArgs>(_refreshTabItem);
+
         }
 
 
@@ -845,11 +850,17 @@ namespace DialogEngine.ViewModels.Dialog
 
 
         // force TabItem to refresh binding for GridView columns width
-        private void _refreshTabItem()
+        private void _refreshTabItem(SelectionChangedEventArgs e)
         {
-            GridViewColumn column = mView.InfoGridViewColumn;
+            string tag = (e.AddedItems[0] as TabItem).Tag?.ToString();
 
-            BindingOperations.GetBindingExpression(column, GridViewColumn.WidthProperty).UpdateTarget();
+            if(tag != null && !tag.Equals("HeatMapUpdate"))
+            {
+                GridViewColumn column = mView.InfoGridViewColumn;
+
+                BindingOperations.GetBindingExpression(column, GridViewColumn.WidthProperty).UpdateTarget();
+            }
+
         }
 
 
@@ -1067,7 +1078,7 @@ namespace DialogEngine.ViewModels.Dialog
         {
             IsDialogStopped = true;
 
-            EventAggregator.Instance.GetEvent<StopPlayingCurrentDialogLineEvent>().Publish();
+            EventAggregator.Instance.GetEvent<StopImmediatelyPlayingCurrentDialogLIne>().Publish();
 
             DialogLinesCollection.Clear();
 
