@@ -88,18 +88,20 @@ namespace DialogEngine
 
                         try
                         {
-                            var _fs = _inFiles[i].OpenRead(); //open a read-only FileStream
+                            var fs = _inFiles[i].OpenRead(); //open a read-only FileStream
 
                             //creates new streamerader for fs stream. Could also construct with filename...
-                            using (var _reader = new StreamReader(_fs))
+                            using (var _reader = new StreamReader(fs))
                             {
                                 try
                                 {
                                     _inDialog = _reader.ReadToEnd(); //create string of JSON file
 
+                                    string _fileName = Path.GetFileNameWithoutExtension(_inFiles[i].Name);
+
                                     var _dialogsInClass = JsonConvert.DeserializeObject<ModelDialogInfo>(_inDialog); //string to Object.
 
-                                    _dialogsInClass.FileName = Path.GetFileNameWithoutExtension( _inFiles[i].Name);
+                                    _dialogsInClass.FileName = _fileName;
 
                                     _dialogModelPopularitySum += _dialogsInClass.InList.Sum(_modelDialogItem => _modelDialogItem.Popularity);
 
@@ -108,14 +110,15 @@ namespace DialogEngine
                                     // add dialog models to DialogTracker.cs
                                     foreach(ModelDialog _dialog in _dialogsInClass.InList)
                                     {
+                                        _dialog.FileName = _fileName;
                                         _modelDialogs.Add(_dialog);
                                     }
 
                                 }
-                                catch (JsonReaderException _e)
+                                catch (JsonReaderException e)
                                 {
                                     AddItem(new ErrorMessage("Error reading " + _inFiles[i].Name));
-                                    mcLogger.Error(_e.Message);
+                                    mcLogger.Error(e.Message);
                                 }
                             }
 
@@ -128,26 +131,26 @@ namespace DialogEngine
 
 
                         }
-                        catch (UnauthorizedAccessException _e)
+                        catch (UnauthorizedAccessException e)
                         {
                             AddItem(new ErrorMessage("Unauthorized access exception while reading: " + _inFiles[i].FullName));
 
-                            mcLogger.Error(_e.Message);
+                            mcLogger.Error(e.Message);
                         }
-                        catch (DirectoryNotFoundException __e)
+                        catch (DirectoryNotFoundException e)
                         {
                             AddItem(new ErrorMessage("Directory not found exception while reading: " + _inFiles[i].FullName));
-                            mcLogger.Error(__e.Message);
+                            mcLogger.Error(e.Message);
                         }
                     }
 
 
                 }
-                catch (OutOfMemoryException _e)
+                catch (OutOfMemoryException e)
                 {
                     AddItem(new ErrorMessage("You probably need to restart your computer..."));
 
-                    mcLogger.Error(_e.Message);
+                    mcLogger.Error(e.Message);
 
                     MessageBox.Show("You probably need to restart your computer...");
                 }
@@ -166,11 +169,33 @@ namespace DialogEngine
             });
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="_dialogTracker"></param>
+        /// <returns></returns>
         public static async Task RefreshDialogModels(DialogTracker _dialogTracker)
         {
             await Task.Run(() =>
             {
+
+                int _historicalDialogsSize = DialogTracker.Instance.HistoricalDialogs.Count;
+
+                List <string> _selectedDialogFiles = DialogViewModel.Instance.DialogModelCollection.Where(dialog => dialog.State == ModelDialogState.On)
+                                                                                                   .Select(dialog => dialog.FileName)
+                                                                                                   .ToList();
+
+
+                for(int i = _historicalDialogsSize-1; i >= 0; i--)
+                {
+                    string _dialogFileName = DialogTracker.Instance.ModelDialogs[DialogTracker.Instance.HistoricalDialogs[i].DialogIndex].FileName;
+
+                    if (!_selectedDialogFiles.Contains(_dialogFileName))
+                    {
+                        DialogTracker.Instance.HistoricalDialogs.RemoveAt(i);
+                    }
+                }
+
 
                 List<ModelDialog> _modelDialogsList = new List<ModelDialog>();
 
@@ -181,6 +206,14 @@ namespace DialogEngine
                     {
                         foreach(ModelDialog _dialog in _dialogInfo.InList)
                         {
+                            HistoricalDialog _historicalDialog = DialogTracker.Instance.HistoricalDialogs.Where(historicalDialog => historicalDialog.DialogName.Equals(_dialog.Name))
+                                                                                                         .FirstOrDefault();
+
+                            if(_historicalDialog != null)
+                            {
+                                _historicalDialog.DialogIndex = _modelDialogsList.Count;
+                            }
+
                             _modelDialogsList.Add(_dialog);
                         }
                     }

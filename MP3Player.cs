@@ -13,7 +13,7 @@ namespace DialogEngine
 {
     public class MP3Player
     {
-
+        #region - fields -
 
         private static readonly ILog mcLogger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
@@ -23,19 +23,24 @@ namespace DialogEngine
         private TimeSpan mStartedTime;
         private double mDuration;
         private Timer mTimer = new Timer(1000);
-        private Timer mVolumeTimer = new Timer(500);
+        private Timer mVolumeTimer = new Timer(200);
 
         public WMPLib.WindowsMediaPlayer Player;
 
+        #endregion
+
+        #region - constructor -
 
         /// <summary>
         /// Creates instance of MP3Player
         /// </summary>
         public MP3Player()
         {
-            Events.EventAggregator.Instance.GetEvent<StopPlayingCurrentDialogLineEvent>().Subscribe(StopPlayingCurrentDialogLine);
+            Events.EventAggregator.Instance.GetEvent<StopPlayingCurrentDialogLineEvent>().Subscribe(_stopPlayingCurrentDialogLine);
+            Events.EventAggregator.Instance.GetEvent<StopImmediatelyPlayingCurrentDialogLIne>().Subscribe(_stopImmediatelyPlayingCurrentDialogLine);
 
             Player = new WMPLib.WindowsMediaPlayer();
+
             Player.MediaError += _player_MediaError;
             Player.PlayStateChange += _playState_Change;
 
@@ -44,12 +49,27 @@ namespace DialogEngine
 
         }
 
+        #endregion
+
+        #region - event handlers -
+
         private void _playState_Change(int NewState)
         {
             // state 3 - playing
             if(NewState == 3)
             mDuration = Player.currentMedia.duration;
         }
+
+
+        private void _player_MediaError(object pMediaObject)
+        {
+            mcLogger.Error("Incorrect .mp3 file.");
+        }
+
+        #endregion
+
+        #region - private functions -
+
 
         private void _volumeTimer_Tick(object sender, EventArgs e)
         {
@@ -63,17 +83,17 @@ namespace DialogEngine
             }
             else
             {
-                Player.settings.volume -= 5;
+                Player.settings.volume -= 10;
             }
         }
-
 
 
         private void _timer_Tick(object sender, EventArgs e)
         {
             double _durationOfPlaying = DateTime.Now.TimeOfDay.TotalSeconds - mStartedTime.TotalSeconds;
 
-            if (_durationOfPlaying > SessionVariables.MaxTimeToPlayFile)
+            // 2 seconds we need to mute player 200 ms for  10 %
+            if (_durationOfPlaying > (SessionVariables.MaxTimeToPlayFile - 2))
             {
                 mTimer.Stop();
 
@@ -82,8 +102,41 @@ namespace DialogEngine
 
         }
 
+        private void _stopPlayingCurrentDialogLine()
+        {
+            if (IsPlaying())
+            {
 
+                if (mDuration > SessionVariables.MaxTimeToPlayFile)
+                {
+                    mTimer.Start();
+                }
+            }
+        }
 
+        
+        private void _stopImmediatelyPlayingCurrentDialogLine()
+        {
+            if (IsPlaying())
+            {
+                try
+                {
+                    Player.controls.stop();
+                }
+                catch (Exception ex)
+                {
+                    mcLogger.Error("StopImmediatelyPlayingCurrentDialogLine error. Message: " + ex.Message);
+                }
+            }
+        }
+
+        #endregion
+
+        #region - properties -
+
+        /// <summary>
+        /// Instance of MP3Player - Singleton
+        /// </summary>
         public static MP3Player Instance
         {
             get
@@ -99,16 +152,12 @@ namespace DialogEngine
             }
         }
 
+        #endregion
 
-
-        private void _player_MediaError(object pMediaObject)
-        {
-            mcLogger.Error("Incorrect .mp3 file.");
-        }
-
+        #region - public functions -
 
         /// <summary>
-        /// 
+        /// Starts with .mp3 file
         /// </summary>
         /// <param name="_path">Path to .mp3 file</param>
         /// <returns>
@@ -180,24 +229,6 @@ namespace DialogEngine
             return _code;
         }
 
-
-        /// <summary>
-        /// Stops player
-        /// </summary>
-        public void StopPlayingCurrentDialogLine()
-        {
-            if (IsPlaying())
-            {
-
-                if (mDuration > SessionVariables.MaxTimeToPlayFile)
-                {
-                    mTimer.Start();
-                }
-            }
-        }
-
-
-
-
+        #endregion
     }
 }

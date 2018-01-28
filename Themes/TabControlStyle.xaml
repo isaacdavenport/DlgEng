@@ -17,7 +17,7 @@
                             <TabPanel IsItemsHost="True"/>
                         </StackPanel>
                         <Border Grid.Row="1" 
-                                BorderBrush="LightGray" 
+                                BorderBrush="Red" 
                                 BorderThickness="0" 
                                 CornerRadius="0,5,5,5" 
                                 Margin="0,0,5,5" 

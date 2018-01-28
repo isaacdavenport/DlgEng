@@ -6,19 +6,15 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Configuration;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+
 
 namespace DialogEngine.Controls
 {
+    using DialogEngine.Events;
+    using DialogEngine.Events.DialogEvents;
     using log4net;
     using System.Reflection;
 
@@ -29,8 +25,13 @@ namespace DialogEngine.Controls
     {
         #region -fields-
 
-        private static readonly ILog mcLogger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog mcLogger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
+        private delegate void mPropertyChanged();
+
+        private Dictionary<string, mPropertyChanged> mHandlers = new Dictionary<string, mPropertyChanged>();
+
+        private NameValueCollection mSettings;
 
         #endregion
 
@@ -42,16 +43,28 @@ namespace DialogEngine.Controls
             InitializeComponent();
 
             _generateDialog();
+
+            _populateEvents();
         }
 
 
         #region -private functions-
 
+        private void _populateEvents()
+        {
+            mHandlers.Add("UseSerialPort", _useSerialPortChanged);
+
+        }
         
+        private void _useSerialPortChanged()
+        {
+            EventAggregator.Instance.GetEvent<UseSerialPortChanged>().Publish();
+        }
+
         private void _generateDialog()
         {
 
-            NameValueCollection _settings = ConfigurationManager.AppSettings;
+            mSettings = ConfigurationManager.AppSettings;
 
             int _index = 1;
 
@@ -75,7 +88,7 @@ namespace DialogEngine.Controls
             Grid.SetRow(_versionNumber, 0);
             Grid.SetColumn(_versionNumber, 1);
 
-            foreach (var _key in _settings.AllKeys)
+            foreach (var _key in mSettings.AllKeys)
             {
                 this.MainGrid.RowDefinitions.Add(new RowDefinition());
 
@@ -92,7 +105,7 @@ namespace DialogEngine.Controls
 
                 bool _flag;
 
-                if (Boolean.TryParse(_settings[_key], out _flag))
+                if (Boolean.TryParse(mSettings[_key], out _flag))
                 {
                     ToggleButton _toggleButton=new ToggleButton();
                     _toggleButton.HorizontalAlignment = HorizontalAlignment.Left;
@@ -111,7 +124,7 @@ namespace DialogEngine.Controls
                     TextBox _textBox=new TextBox();
                     _textBox.Style= this.FindResource("TextBoxStyle1") as Style;
                     
-                    _textBox.Text = _settings[_key];
+                    _textBox.Text = mSettings[_key];
                     _textBox.Margin=new Thickness(0.0,5.0,10.0,5.0);
 
                     MainGrid.Children.Add(_textBox);
@@ -129,6 +142,7 @@ namespace DialogEngine.Controls
             this.MainGrid.RowDefinitions.Add(new RowDefinition());
             this.MainGrid.RowDefinitions[this.MainGrid.RowDefinitions.Count-1].Height=new GridLength(80);
 
+            // close button
             Button _closeButton =new Button();
             _closeButton.Style = this.FindResource("btn-primary") as Style;
             _closeButton.HorizontalAlignment = HorizontalAlignment.Right;
@@ -143,7 +157,7 @@ namespace DialogEngine.Controls
             Grid.SetColumn(_closeButton,0);
 
 
-
+            // save changes button
             Button _saveChangesButton = new Button();
             _saveChangesButton.Style = this.FindResource("btn-primary") as Style;
             _saveChangesButton.HorizontalAlignment = HorizontalAlignment.Left;
@@ -158,9 +172,7 @@ namespace DialogEngine.Controls
             Grid.SetRow(_saveChangesButton, this.MainGrid.RowDefinitions.Count - 1);
             Grid.SetColumn(_saveChangesButton, 1);
 
-
             this.Height = this.MainGrid.RowDefinitions.Count * 50;
-
         }
 
 
@@ -168,7 +180,7 @@ namespace DialogEngine.Controls
         {
             try
             {
-                
+                List<mPropertyChanged> _propertyChangedHandlers = new List<mPropertyChanged>();
 
                 string _configPath = System.IO.Path.Combine(System.Environment.CurrentDirectory, "DialogEngine.exe");
 
@@ -185,7 +197,21 @@ namespace DialogEngine.Controls
 
                     if (_value is ToggleButton)
                     {
-                        _config.AppSettings.Settings[_label.Content.ToString()].Value = (_value as ToggleButton).IsChecked.ToString();
+                        
+                        string _propertyLabel = _label.Content.ToString();
+
+                        if(!mSettings[i-1].Equals((_value as ToggleButton).IsChecked.ToString()))
+                        {
+                            if (mHandlers.ContainsKey(_propertyLabel))
+                            {
+                                mPropertyChanged _propertyChangedHandler = mHandlers[_propertyLabel];
+
+                                if (_propertyChangedHandler != null)
+                                    _propertyChangedHandlers.Add(_propertyChangedHandler);
+                            }
+                        }
+
+                        _config.AppSettings.Settings[_propertyLabel].Value = (_value as ToggleButton).IsChecked.ToString();
                     }
                     else
                     {
@@ -200,6 +226,11 @@ namespace DialogEngine.Controls
                 ConfigurationManager.RefreshSection("appSettings");
 
                 this.Close();
+
+                foreach(mPropertyChanged handler in _propertyChangedHandlers)
+                {
+                    handler();
+                }
             }
             catch (Exception _ex)
             {
@@ -209,7 +240,6 @@ namespace DialogEngine.Controls
             }
 
         }
-
 
 
         private void _closeDialog_Click(object sender, RoutedEventArgs e)

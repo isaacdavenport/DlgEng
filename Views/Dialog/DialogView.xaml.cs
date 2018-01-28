@@ -26,7 +26,7 @@ namespace DialogEngine.Views.Dialog
         }
 
 
-        protected override void onPageLoaded()
+        protected async override void onPageLoaded()
         {
             
             DialogTracker.GetInstance(DialogViewModel.Instance).AddItem = new DialogTracker.PrintMethod((this.DataContext as DialogViewModel).AddItem);
@@ -35,7 +35,7 @@ namespace DialogEngine.Views.Dialog
 
             (this.DataContext as DialogViewModel).View = this;
 
-            (this.DataContext as DialogViewModel).InitDialogData();
+            await (this.DataContext as DialogViewModel).InitDialogDataAsync();
             
         }
 

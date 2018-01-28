@@ -1,10 +1,7 @@
 ﻿//  Confidential Source Code Property Toys2Life LLC Colorado 2017
 //  www.toys2life.org
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Newtonsoft.Json;
 using DialogEngine.Models.Enums;
 using DialogEngine.ViewModels.Dialog;
@@ -52,6 +49,11 @@ namespace DialogEngine.Models.Dialog
         [JsonProperty("CharacterPrefix")]
         public string CharacterPrefix { get; protected set; }
 
+
+        /// <summary>
+        /// Radio number assigned to character
+        /// Default value is unassigned ( -1 )
+        /// </summary>
         [JsonIgnore]
         public int RadioNum
         {
@@ -65,6 +67,14 @@ namespace DialogEngine.Models.Dialog
             }
         }
 
+        /// <summary>
+        /// Represents state of character
+        /// Default state is Available
+        /// States are [Avaialble,On,Off]
+        /// Available - character can be random selected
+        /// On - character is forced in selection
+        /// Off - character can't be selected
+        /// </summary>
         [JsonIgnore]
         public CharacterState State
         {

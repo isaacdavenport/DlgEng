@@ -118,6 +118,9 @@
     <Compile Include="Converters\RowIndexConverter.cs" />
     <Compile Include="Converters\StarWidthConverter.cs" />
     <Compile Include="Converters\ValueToColorConverter.cs" />
+    <Compile Include="Dialogs\SerialComPortErrorDialog.xaml.cs">
+      <DependentUpon>SerialComPortErrorDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\SettingsDialog.xaml.cs">
       <DependentUpon>SettingsDialog.xaml</DependentUpon>
     </Compile>
@@ -128,6 +131,7 @@
     <Compile Include="Events\DialogEvents\ChangedModelDialogStateEvent.cs" />
     <Compile Include="Events\DialogEvents\StopImmediatelyPlayingCurrentDialogLIne.cs" />
     <Compile Include="Events\DialogEvents\StopPlayingCurrentDialogLineEvent.cs" />
+    <Compile Include="Events\DialogEvents\UseSerialPortChanged.cs" />
     <Compile Include="Events\EventAggregator.cs" />
     <Compile Include="Events\EventBase.cs" />
     <Compile Include="Events\EventSubscription.cs" />
@@ -225,6 +229,8 @@
     <Resource Include="Resources\Images\clearAll.png" />
     <Resource Include="Resources\Images\more-button-of-three-dots.png" />
     <Resource Include="Resources\Images\minus.png" />
+    <Resource Include="Resources\Images\grid.png" />
+    <Resource Include="Resources\Images\signalReception.png" />
     <Content Include="TheGeneratedLogFilesGoHere.txt" />
   </ItemGroup>
   <ItemGroup>
@@ -232,6 +238,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Dialogs\SerialComPortErrorDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Dialogs\SettingsDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

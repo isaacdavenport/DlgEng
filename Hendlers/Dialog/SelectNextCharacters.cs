@@ -8,6 +8,11 @@ using DialogEngine.Helpers;
 using DialogEngine.ViewModels.Dialog;
 using DialogEngine.Events;
 using DialogEngine.Events.DialogEvents;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Collections.Generic;
+using DialogEngine.Models.Dialog;
+using System.Linq;
 
 namespace DialogEngine
 {
@@ -61,59 +66,55 @@ namespace DialogEngine
         }
 
 
+
         static void _assignNextCharacters(int _tempCh1, int _tempCh2)
         {
             if ((msRandom.NextDouble() > 0.5) && RssiStable)
             {
-                NextCharacter1 = _getCharacterMappedIndex(_tempCh1);
-                NextCharacter2 = _getCharacterMappedIndex(_tempCh2);
+                int _nextCharacter1MappedIndex1 = _getCharacterMappedIndex(_tempCh1);
+                int _nextCharacter1MappedIndex2 = _getCharacterMappedIndex(_tempCh2);
+
+
+                NextCharacter1 = _nextCharacter1MappedIndex1 >= 0 ? _nextCharacter1MappedIndex1 : NextCharacter1;
+                NextCharacter2 = _nextCharacter1MappedIndex2 >= 0 ? _nextCharacter1MappedIndex2 : NextCharacter2;
             }
             else if (RssiStable)
             {
-                NextCharacter1 = _getCharacterMappedIndex(_tempCh2);
-                NextCharacter2 = _getCharacterMappedIndex(_tempCh1);
+                int _nextCharacter1MappedIndex1 = _getCharacterMappedIndex(_tempCh2);
+                int _nextCharacter1MappedIndex2 = _getCharacterMappedIndex(_tempCh1);
+
+
+                NextCharacter1 = _nextCharacter1MappedIndex1 >= 0 ? _nextCharacter1MappedIndex1 : NextCharacter1;
+                NextCharacter2 = _nextCharacter1MappedIndex2 >= 0 ? _nextCharacter1MappedIndex2 : NextCharacter2;
             }
 
             EventAggregator.Instance.GetEvent<StopPlayingCurrentDialogLineEvent>().Publish();
+
+            DialogViewModel.Instance.CancellationTokenGenerateDialogSource.Cancel();
+
+            DialogViewModel.Instance.CancellationTokenGenerateDialogSource = new CancellationTokenSource();
         }
 
 
         private static int _getCharacterMappedIndex(int _radioNum)
         {
-            int length = DialogViewModel.Instance.CharacterCollection.Count;
 
-            for(int i=0;i<length; i++)
+            try
             {
-                if(DialogViewModel.Instance.CharacterCollection[i].RadioNum == _radioNum)
-                {
-                    return i;
-                }
+                int index = DialogViewModel.Instance.CharacterCollection.Select((c, i) => new { Character = c, Index = i })
+                                                                        .Where(x => x.Character.RadioNum == _radioNum)
+                                                                        .Select(x => x.Index).First();
+
+                return index;
+            }
+            catch(Exception ex)
+            {
+
+                MessageBox.Show("No character assigned to radio with number " + _radioNum + " .");
+
+                return -1;
             }
 
-            return 0;
-        }
-
-
-        public static int GetNextCharacter(params int[] _indexToSkip)
-        {
-            int index;
-            bool _isIndexTheSame;
-
-            Random random = new Random(); 
-            do
-            {
-                index = random.Next(0, DialogViewModel.Instance.CharacterCollection.Count);
-                _isIndexTheSame = false;
-
-                if( _indexToSkip.Length > 0 )
-                {
-                    if (index == _indexToSkip[0])
-                        _isIndexTheSame = true;
-                }
-            }
-            while (!_isSelectedCharacterAvailable(index) || _isIndexTheSame);
-
-            return index;
         }
 
 
@@ -127,6 +128,84 @@ namespace DialogEngine
 
 
         #region - Public methods -
+
+        /// <summary>
+        /// Random selection of next available character
+        /// </summary>
+        /// <param name="_indexToSkip"> Number which must be ignored, so we can avoid the same index of selected characters </param>
+        /// <returns> Character index </returns>
+        public static int GetNextCharacter(params int[] _indexToSkip)
+        {
+            int index;
+
+
+            // list with indexes of available characters
+            List<int> _allowedIndexes = DialogViewModel.Instance.CharacterCollection.Select((c, i) => new { Character = c, Index = i })
+                                             .Where(x => x.Character.State == Models.Enums.CharacterState.Available)
+                                             .Select(x => x.Index).ToList();
+
+
+            int result = -1;
+
+            switch (_allowedIndexes.Count)
+            {
+                case 0:  // no avaialbe characters
+                    {
+                        MessageBox.Show("No available characters. Please change characters settings.");
+
+                        return -1;
+
+                        break;
+                    }
+
+                case 1: // 1 available character
+                    {
+                        // if we don't want duplicate index
+                        if (_indexToSkip.Length > 0)
+                        {
+                            if (_allowedIndexes[0] == _indexToSkip[0])
+                            {
+                                return -1;
+                            }
+                        }
+                        else
+                        {
+                            return _allowedIndexes[0];
+                        }
+
+                        break;
+                    }
+
+                default:  // more than 1 available characters 
+                    {
+                        Random random = new Random();
+                        bool _isIndexTheSame;
+
+
+                        do
+                        {
+
+                            index = _allowedIndexes[random.Next(0, _allowedIndexes.Count)];
+
+                            _isIndexTheSame = false;
+
+                            if (_indexToSkip.Length > 0)
+                            {
+                                if (index == _indexToSkip[0])
+                                    _isIndexTheSame = true;
+                            }
+                        }
+                        while (_isIndexTheSame);
+
+                        return index;
+
+                    }
+            }
+
+            return result;
+
+        }
+
 
         public static void FindBiggestRssiPair()
         {
@@ -170,54 +249,67 @@ namespace DialogEngine
             }
         }
 
-        public static void OccasionallyChangeToRandNewCharacter()
-        {   
-            // used for computers with no serial input radio for random, or forceCharacter mode
-            // does not include final character the silent schoolhouse, not useful in noSerial mode 
-            bool _userHasForcedCharacters = false;
 
-            DateTime _nextCharacterSwapTime = new DateTime();
+        public async  static Task OccasionallyChangeToRandNewCharacterAsync(CancellationToken _cancellationToken)
+        {
 
-            _nextCharacterSwapTime = DateTime.Now;
-
-            _nextCharacterSwapTime.AddSeconds(12);
-
-
-            while (true)
+            await Task.Run(() =>
             {
-                if (SessionVariables.DebugFlag)
+                // used for computers with no serial input radio for random, or forceCharacter mode
+                // does not include final character the silent schoolhouse, not useful in noSerial mode 
+                bool _userHasForcedCharacters;
+
+                DateTime _nextCharacterSwapTime = new DateTime();
+
+                _nextCharacterSwapTime = DateTime.Now;
+
+                _nextCharacterSwapTime.AddSeconds(12);
+
+
+                while (true)
                 {
+                    if (_cancellationToken.IsCancellationRequested)
+                        return;
+
+                    _userHasForcedCharacters = false;
 
 
-                    if (DialogViewModel.SelectedCharactersOn == 2)
-                    {  //two three letter inital sets should be less than7 w space
-
-                        _userHasForcedCharacters = true;
+                    if (SessionVariables.DebugFlag)
+                    {
 
 
-                        NextCharacter1 = DialogViewModel.Instance.SelectedIndex1;
+                        if (DialogViewModel.SelectedCharactersOn == 2)
+                        {  //two three letter inital sets should be less than7 w space
 
-                        NextCharacter2 = DialogViewModel.Instance.SelectedIndex2;
+                            _userHasForcedCharacters = true;
 
+
+                            NextCharacter1 = DialogViewModel.Instance.SelectedIndex1;
+
+                            NextCharacter2 = DialogViewModel.Instance.SelectedIndex2;
+
+                        }
+                    }
+
+
+                    Thread.Sleep(1000);
+
+
+                    if (!_userHasForcedCharacters && _nextCharacterSwapTime.CompareTo(DateTime.Now) < 0)
+                    {
+
+                        int _nextCharacter1Index = GetNextCharacter();
+                        int _nextCharacter2Index = GetNextCharacter(_nextCharacter1Index >= 0 ?_nextCharacter1Index : NextCharacter1);
+
+                        NextCharacter1 = _nextCharacter1Index >= 0 ? _nextCharacter1Index : NextCharacter1; //lower bound inclusive, upper exclusive
+                        NextCharacter2 = _nextCharacter2Index >= 0 ? _nextCharacter2Index : NextCharacter2; //lower bound inclusive, upper exclusive
+
+                        _nextCharacterSwapTime = DateTime.Now;
+                        _nextCharacterSwapTime = _nextCharacterSwapTime.AddSeconds(8 + msRandom.Next(0, 34));
                     }
                 }
 
-
-                Thread.Sleep(1000);
-
-
-                if (!_userHasForcedCharacters && _nextCharacterSwapTime.CompareTo(DateTime.Now) < 0)
-                {
-
-                    NextCharacter1 = GetNextCharacter(); //lower bound inclusive, upper exclusive
-                    NextCharacter2 = GetNextCharacter(NextCharacter1); //lower bound inclusive, upper exclusive
-                    _nextCharacterSwapTime = DateTime.Now;
-                    _nextCharacterSwapTime = _nextCharacterSwapTime.AddSeconds(8 + msRandom.Next(0, 34));
-                }
-
-
-
-            }
+            });
         }
 
         #endregion

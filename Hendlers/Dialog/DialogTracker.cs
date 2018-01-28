@@ -52,7 +52,6 @@ namespace DialogEngine
 
         #region - Public fields -
     
-
         public int Character1Num = 0;
         public int Character2Num = 1;
         public double DialogModelPopularitySum;
@@ -70,9 +69,12 @@ namespace DialogEngine
 
         #endregion
 
-        #region - Constructor- 
+        #region - Constructor - 
 
-
+        /// <summary>
+        /// Creates instance of DialogTracker.cs
+        /// </summary>
+        /// <param name="_dialogViewModel"></param>
         public DialogTracker(DialogViewModel _dialogViewModel)
         {
             mDialogViewModel = _dialogViewModel;
@@ -82,6 +84,11 @@ namespace DialogEngine
 
         #region - Singleton -
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="_dialogViewModel"></param>
+        /// <returns>Instance of DialogTracker.cs</returns>
         public static DialogTracker GetInstance(DialogViewModel _dialogViewModel)
         {
 
@@ -130,6 +137,9 @@ namespace DialogEngine
         }
 
 
+        /// <summary>
+        /// Delegate which is used to externally set log method to debug console
+        /// </summary>
         public PrintMethod AddItem
         {
             get
@@ -146,26 +156,11 @@ namespace DialogEngine
 
         #region - Public methods -
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="_charFile"></param>
-        /// <returns></returns>
-        public Character ParseCharJson(FileInfo _charFile)
-        {
-            using (var _fi = File.OpenText(_charFile.FullName))
-            {
-                var _serializer = new JsonSerializer();
-                var _charObj = (Character)_serializer.Deserialize(_fi, typeof(Character));
-
-                return _charObj;
-            }
-        }
 
         /// <summary>
-        /// 
+        /// Generates dialog 
         /// </summary>
-        /// <param name="_dialogDirectives"></param>
+        /// <param name="_dialogDirectives">If not empty, we passed characters and dialog model indexes</param>
         // TODO generate parallel dialogs, using string tags.
         public void GenerateADialog(CancellationToken _cancellationToken,params int[] _dialogDirectives)
         {
@@ -209,11 +204,8 @@ namespace DialogEngine
                     if (SessionVariables.TextDialogsOn)
                     {
 
-                        if (SessionVariables.TextDialogsOn)
-                        {
-                            AddItem(new InfoMessage(mDialogViewModel.CharacterCollection[_speakingCharacter].CharacterName + ": "));
-                        }
-
+                        AddItem(new InfoMessage(mDialogViewModel.CharacterCollection[_speakingCharacter].CharacterName + ": "));
+                        
                         if (mDialogViewModel.CharacterCollection[_speakingCharacter].PhraseTotals.PhraseWeights[_currentPhraseType] < 0.01f)
                         {
                             AddItem(new WarningMessage("Missing PhraseType: " + _currentPhraseType));
@@ -222,11 +214,9 @@ namespace DialogEngine
 
                         _selectedPhrase = PickAWeightedPhrase(_speakingCharacter, _currentPhraseType);
 
-                        if (SessionVariables.TextDialogsOn)
-                        {
-                            AddItem(new InfoMessage(_selectedPhrase.DialogStr));
-                        }
 
+                        AddItem(new InfoMessage(_selectedPhrase.DialogStr));
+                        
                         AddItem(new DialogItem() { Character = mDialogViewModel.CharacterCollection[_speakingCharacter], PhraseEntry = _selectedPhrase  });
 
 
@@ -270,7 +260,7 @@ namespace DialogEngine
 
 
         /// <summary>
-        /// 
+        /// Writes dialog info
         /// </summary>
         /// <param name="_character1Num"></param>
         /// <param name="_character2Num"></param>
@@ -493,26 +483,6 @@ namespace DialogEngine
             });
 
         }
-
-
-        //    if (CharacterList.Count < 2)
-        //    {
-        //        ((MainWindow) Application.Current.MainWindow).TestOutput.Text +=
-        //            "  Insufficient readable character json files found in "
-        //            + SessionVariables.CharactersDirectory + " .  Exiting." + Environment.NewLine;
-        //        //Console.WriteLine("  Insufficient readable character json files found in "
-        //        //    + SessionVariables.CharactersDirectory + " .  Exiting.");
-        //        //Console.ReadLine();
-        //        Environment.Exit(0);
-        //    }
-
-        //    // Fill the queue with greeting dialogs
-        //    for (var i = 0; i < RecentDialogsQueSize; i++)
-        //        RecentDialogs.Enqueue(0); // Fill the que with greeting dialogs
-
-        //    ((MainWindow) Application.Current.MainWindow).TestOutput.Text += "" + Environment.NewLine;
-        //    //Console.WriteLine();    //for break beofer dialogs intake in console.
-        //}
 
 
         public void SwapCharactersOneAndTwo()
@@ -835,10 +805,10 @@ namespace DialogEngine
         }
 
 
+
         private int pickAWeightedDialog(int _character1Num, int _character2Num)
         {
-           
-
+    
             //TODO check that all characters/phrasetypes required for adventure are included before starting adventure?
             var _dialogModel = 0;
 

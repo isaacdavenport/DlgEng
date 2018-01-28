@@ -132,9 +132,9 @@ namespace DialogEngine
 
         #endregion
 
-        private void _reloadFiles_Click(object sender, RoutedEventArgs e)
+        private async void _reloadFiles_Click(object sender, RoutedEventArgs e)
         {
-            DialogViewModel.Instance.ReloadDialogData();
+            await DialogViewModel.Instance.ReloadDialogDataAsync();
         }
     }
 }

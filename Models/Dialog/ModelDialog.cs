@@ -15,6 +15,8 @@ namespace DialogEngine.Models.Dialog
     /// </summary>
     public class ModelDialog
     {
+        private string mFileName;
+
         [JsonProperty("AddedOnDateTime")]
         public DateTime AddedOnDateTime = new DateTime(2016, 1, 2, 3, 4, 5);
 
@@ -38,7 +40,10 @@ namespace DialogEngine.Models.Dialog
         public List<string> Requires = new List<string>();
 
 
-        public string Name
+        /// <summary>
+        /// Name of model dialog
+        /// </summary>
+        public string Name 
         {
             get
             {
@@ -48,6 +53,21 @@ namespace DialogEngine.Models.Dialog
             set
             {
                 mName = value;
+            }
+        }
+
+        /// <summary>
+        /// Json file name where is located model dialog
+        /// </summary>
+        public string FileName
+        {
+            get
+            {
+                return mFileName;
+            }
+            set
+            {
+                mFileName = value;
             }
         }
 

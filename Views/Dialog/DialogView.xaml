@@ -61,9 +61,9 @@
                                 <Setter Property="Template">
                                     <Setter.Value>
                                         <ControlTemplate TargetType="TabItem">
-                                            <Grid Name="Panel">
+                                            <Grid Name="Panel" >
                                                 <ContentPresenter x:Name="ContentSite"
-                                                                  VerticalAlignment="Center"
+                                                                  VerticalAlignment="Center"                                                                 
                                                                   HorizontalAlignment="Center"
                                                                   ContentSource="Header"
                                                                   Height="20"
@@ -84,6 +84,7 @@
                             </Style>
                         </TabControl.Resources>
 
+                        
                         <TabItem Header="Characters settings"   BorderBrush="White">
 
 
@@ -97,7 +98,7 @@
                                                     <Grid Name="Panel">
                                                         <ContentPresenter x:Name="ContentSite"
                                                                                   VerticalAlignment="Center"
-                                                                                  HorizontalAlignment="Center"
+                                                                                  HorizontalAlignment="Center"                                                                                
                                                                                   ContentSource="Header"
                                                                                   Height="20"
                                                                                   Margin="5,2"/>
@@ -117,7 +118,7 @@
                                     </Style>
                                 </TabControl.Resources>
 
-                                <TabItem Header="Random mode" HorizontalAlignment="Stretch" BorderThickness="0" BorderBrush="White">
+                                <TabItem Header="Random mode" HorizontalAlignment="Stretch" BorderThickness="5" BorderBrush="Red">
 
 
                                     <DataGrid 
@@ -140,7 +141,9 @@
                                             <DataGridTextColumn IsReadOnly="True" 
                                                                     Header="" 
                                                                     Width="auto" 
-                                                                    Binding ="{Binding RelativeSource={RelativeSource FindAncestor,  AncestorType={x:Type DataGridRow}},Converter={StaticResource RowIndexConverter}}">
+                                                                    Binding ="{Binding RelativeSource={RelativeSource FindAncestor,  
+                                                                                       AncestorType={x:Type DataGridRow}},
+                                                                                       Converter={StaticResource RowIndexConverter}}">
                                                 
                                             </DataGridTextColumn>
 
@@ -216,7 +219,11 @@
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
                                                         <RadioButton VerticalAlignment="Center" HorizontalAlignment="Center" 
-                                                                     IsChecked="{Binding State, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter = {StaticResource CharacterStateToBooleanConverter}, ConverterParameter={x:Static enums:CharacterState.Available}}">
+                                                                     IsChecked="{Binding State,
+                                                                                         Mode=TwoWay, 
+                                                                                         UpdateSourceTrigger=PropertyChanged, 
+                                                                                         Converter = {StaticResource CharacterStateToBooleanConverter}, 
+                                                                                         ConverterParameter={x:Static enums:CharacterState.Available}}">
                                                             <RadioButton.GroupName>
                                                                 <MultiBinding Converter="{StaticResource DynamicGroupNameConverter}">
                                                                     <Binding Path="CharacterName" />
@@ -552,7 +559,9 @@
                                     <DataGridTextColumn IsReadOnly="True" 
                                                                     Header="" 
                                                                     Width="auto" 
-                                                                    Binding ="{Binding RelativeSource={RelativeSource FindAncestor,  AncestorType={x:Type DataGridRow}},Converter={StaticResource RowIndexConverter}}" />
+                                                                    Binding ="{Binding  RelativeSource={RelativeSource FindAncestor,  
+                                                                                        AncestorType={x:Type DataGridRow}},
+                                                                                        Converter={StaticResource RowIndexConverter}}" />
 
                                     <DataGridTextColumn IsReadOnly="True" 
                                                                     Width="*" 
@@ -564,7 +573,11 @@
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
                                                 <RadioButton VerticalAlignment="Center" HorizontalAlignment="Center" 
-                                                                         IsChecked="{Binding State, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, Converter = {StaticResource ModelDialogStateToBooleanConverter}, ConverterParameter={x:Static enums:ModelDialogState.On}}" >
+                                                                         IsChecked="{Binding State, 
+                                                                                            Mode=TwoWay,
+                                                                                            UpdateSourceTrigger=PropertyChanged, 
+                                                                                            Converter = {StaticResource ModelDialogStateToBooleanConverter}, 
+                                                                                            ConverterParameter={x:Static enums:ModelDialogState.On}}" >
                                                     <RadioButton.GroupName>
                                                         <MultiBinding Converter="{StaticResource DynamicGroupNameConverter}">
                                                             <Binding Path="FileName" />
@@ -581,7 +594,11 @@
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
                                                 <RadioButton VerticalAlignment="Center" HorizontalAlignment="Center" 
-                                                                         IsChecked="{Binding State, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, Converter = {StaticResource ModelDialogStateToBooleanConverter} , ConverterParameter={x:Static enums:ModelDialogState.Off}}" >
+                                                                         IsChecked="{Binding State, 
+                                                                                             Mode=TwoWay,
+                                                                                             UpdateSourceTrigger=PropertyChanged, 
+                                                                                             Converter = {StaticResource ModelDialogStateToBooleanConverter} , 
+                                                                                             ConverterParameter={x:Static enums:ModelDialogState.Off}}" >
                                                     <RadioButton.GroupName>
                                                         <MultiBinding Converter="{StaticResource DynamicGroupNameConverter}">
                                                             <Binding Path="FileName" />
@@ -625,7 +642,7 @@
                                                             
                                                         </ToggleButton>
 
-                                                        <Popup  Grid.Column="1" Width="auto" Visibility="Visible" Height="20" IsOpen="{Binding IsChecked, ElementName=MoreInfoButton}" Placement="Right">
+                                                        <Popup  Grid.Column="1" Width="auto" Visibility="Visible" Height="20" StaysOpen="False" IsOpen="{Binding IsChecked, ElementName=MoreInfoButton}" Placement="Right">
                                                             <ComboBox Text="-- Choose dialog model --" Tag="{Binding}"  IsEditable="True" ItemsSource="{Binding InList}" Foreground="Black" DisplayMemberPath="Name" >
                                                                 <ComboBox.ItemsPanel>
                                                                     <ItemsPanelTemplate>
@@ -802,7 +819,13 @@
             
             <!-- Debug view -->
             
-            <TabControl  Grid.Row="2" BorderThickness="0"  HorizontalAlignment="Stretch" TabStripPlacement="Bottom" VerticalAlignment="Stretch" x:Name="LoggerMessages">
+            <TabControl  Grid.Row="2" 
+                         BorderThickness="0"  
+                         HorizontalAlignment="Stretch" 
+                         TabStripPlacement="Bottom" 
+                         VerticalAlignment="Stretch" 
+                         x:Name="LoggerMessages">
+
                 <TabControl.Resources>
                     <Style TargetType="TabItem">
                         <Setter Property="Template">
@@ -842,7 +865,10 @@
 
                         <ContextMenu Background="White">
 
-                            <MenuItem Header="Clear All" Command="{Binding ClearAllMessages}" CommandParameter="ErrorMessagesCollection"  Background="White" >
+                            <MenuItem Header="Clear All" 
+                                      Command="{Binding ClearAllMessages}" 
+                                      CommandParameter="ErrorMessagesCollection"  
+                                      Background="White" >
                                 <MenuItem.Icon>
                                     <Image Source="pack://application:,,,/Resources/Images/clearAll.png" />
                                 </MenuItem.Icon>
@@ -883,7 +909,10 @@
                         <ListView.View>
                             <GridView >
                                 <GridViewColumn x:Name="ErrorGridViewColumn" Header="Description"
-                                                Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}, Converter={StaticResource StarWidthConverter}}" 
+                                                Width="{Binding RelativeSource={RelativeSource 
+                                                                Mode=FindAncestor, 
+                                                                AncestorType=ListView}, 
+                                                                Converter={StaticResource StarWidthConverter}}"                                               
                                                 DisplayMemberBinding="{Binding Message}" />
                                 <GridViewColumn Header="File" Width="200"  DisplayMemberBinding="{Binding SourceFile}" />
                                 <GridViewColumn Header="Line" Width="100" DisplayMemberBinding="{Binding Line}" />
@@ -899,7 +928,10 @@
 
                         <ContextMenu Background="White">
 
-                            <MenuItem Header="Clear All" Command="{Binding ClearAllMessages}" CommandParameter="WarningMessagesCollection"  Background="White" >
+                            <MenuItem Header="Clear All" 
+                                      Command="{Binding ClearAllMessages}" 
+                                      CommandParameter="WarningMessagesCollection"  
+                                      Background="White" >
                                 <MenuItem.Icon>
                                     <Image Source="pack://application:,,,/Resources/Images/clearAll.png" />
                                 </MenuItem.Icon>
@@ -940,8 +972,11 @@
                         <ListView.View>
                             <GridView >
                                 <GridViewColumn x:Name="WarningGridViewColumn" Header="Description"
-                                                Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}, Converter={StaticResource StarWidthConverter}}" 
+                                                Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor,
+                                                                AncestorType=ListView}, 
+                                                                Converter={StaticResource StarWidthConverter}}" 
                                                 DisplayMemberBinding="{Binding Message}" />
+                                
                                 <GridViewColumn Header="File" Width="200"  DisplayMemberBinding="{Binding SourceFile}" />
                                 <GridViewColumn Header="Line" Width="100" DisplayMemberBinding="{Binding Line}" />
                             </GridView>
@@ -955,7 +990,11 @@
 
                         <ContextMenu Background="White">
 
-                            <MenuItem Header="Clear All" Command="{Binding ClearAllMessages}" CommandParameter="InfoMessagesCollection"  Background="White" >
+                            <MenuItem Header="Clear All" 
+                                      Command="{Binding ClearAllMessages}" 
+                                      CommandParameter="InfoMessagesCollection"  
+                                      Background="White" >
+                                
                                 <MenuItem.Icon>
                                     <Image Source="pack://application:,,,/Resources/Images/clearAll.png" />
                                 </MenuItem.Icon>
@@ -996,7 +1035,10 @@
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn x:Name="InfoGridViewColumn" Header="Description" 
-                                                Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}, Converter={StaticResource StarWidthConverter}}" 
+                                                Width="{Binding RelativeSource={RelativeSource 
+                                                                Mode=FindAncestor, 
+                                                                AncestorType=ListView}, 
+                                                                Converter={StaticResource StarWidthConverter}}" 
                                                 DisplayMemberBinding="{Binding Message}">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
@@ -1021,6 +1063,7 @@
 
                     <TabItem.Header>
                         <StackPanel  Orientation="Horizontal" >
+                            <Image Width="20" Height="20"  Source="pack://application:,,,/Resources/Images/signalReception.png" />
                             <Label Content="HeatMapUpdate"/>
                         </StackPanel>
                     </TabItem.Header>
@@ -1033,6 +1076,8 @@
                         </Grid.RowDefinitions>
 
                         <StackPanel Orientation="Horizontal" Grid.Row="0">
+                            
+                            
                             <DataGrid   Margin="0,0,5,0" 
                                         x:Name="DebugGrid"
                                         Width="auto"
