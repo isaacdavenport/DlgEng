@@ -40,7 +40,7 @@ namespace DialogEngine
 
         #region - Private functions -
 
-        // 
+        // method is executed when filed "UseSerialPort" is changed in configuration
         private async  static void _useSerialPortChanged()
         {
             if (SessionVariables.UseSerialPort)
@@ -52,7 +52,7 @@ namespace DialogEngine
                 msSerialTokenSource.Cancel();
             }
 
-             InitCharacterSelection();
+            await InitCharacterSelection();
         }
 
 
@@ -134,8 +134,6 @@ namespace DialogEngine
 
             if (SessionVariables.UseSerialPort)
             {
-
-
                 try
                 {
                      await _initSerial();

@@ -56,10 +56,12 @@ namespace DialogEngine.Controls
 
         }
         
+
         private void _useSerialPortChanged()
         {
             EventAggregator.Instance.GetEvent<UseSerialPortChanged>().Publish();
         }
+
 
         private void _generateDialog()
         {

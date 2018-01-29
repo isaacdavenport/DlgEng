@@ -5,12 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:DialogEngine.Views.Dialog"
       xmlns:core="clr-namespace:DialogEngine.Core"
-      xmlns:dialog="clr-namespace:DialogEngine.ViewModels.Dialog"
       xmlns:dialogModel="clr-namespace:DialogEngine.Models.Dialog"
-      xmlns:loggerModel ="clr-namespace:DialogEngine.Models.Logger"
-      xmlns:sys="clr-namespace:System;assembly=mscorlib"
-      xmlns:fa="http://schemas.fontawesome.io/icons/"
-      xmlns:converters ="clr-namespace:DialogEngine.Converters"
       xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
       xmlns:enums ="clr-namespace:DialogEngine.Models.Enums"
       xmlns:cmd="http://www.galasoft.ch/mvvmlight"
@@ -619,7 +614,9 @@
                                                             <ColumnDefinition Width="*" />
                                                         </Grid.ColumnDefinitions>
 
-                                                        <ToggleButton x:Name="MoreInfoButton" IsEnabled="{Binding State, Converter = {StaticResource ModelDialogStateToBooleanConverter} , ConverterParameter={x:Static enums:ModelDialogState.On}}"  >
+                                                        <ToggleButton x:Name="MoreInfoButton" IsEnabled="{Binding State, 
+                                                                                                                  Converter = {StaticResource ModelDialogStateToBooleanConverter} , 
+                                                                                                                  ConverterParameter={x:Static enums:ModelDialogState.On}}"  >
                                                             <ToggleButton.Template>
                                                                 <ControlTemplate>
 
@@ -642,8 +639,21 @@
                                                             
                                                         </ToggleButton>
 
-                                                        <Popup  Grid.Column="1" Width="auto" Visibility="Visible" Height="20" StaysOpen="False" IsOpen="{Binding IsChecked, ElementName=MoreInfoButton}" Placement="Right">
-                                                            <ComboBox Text="-- Choose dialog model --" Tag="{Binding}"  IsEditable="True" ItemsSource="{Binding InList}" Foreground="Black" DisplayMemberPath="Name" >
+                                                        <Popup  Grid.Column="1" 
+                                                                Width="auto" 
+                                                                Visibility="Visible" 
+                                                                Height="20" 
+                                                                StaysOpen="False" 
+                                                                IsOpen="{Binding IsChecked, ElementName=MoreInfoButton}" 
+                                                                Placement="Right">
+                                                            
+                                                            <ComboBox Text="-- Choose dialog model --" 
+                                                                      Tag="{Binding}"  
+                                                                      IsEditable="True" 
+                                                                      ItemsSource="{Binding InList}" 
+                                                                      Foreground="Black" 
+                                                                      DisplayMemberPath="Name" >
+                                                                
                                                                 <ComboBox.ItemsPanel>
                                                                     <ItemsPanelTemplate>
                                                                         <VirtualizingStackPanel/>
@@ -1090,7 +1100,7 @@
                                         CanUserAddRows="False"
                                         IsReadOnly="True"
                                         IsHitTestVisible="False"
-                                        ItemsSource="{Binding HeatMap, Converter={StaticResource MatrixToDataViewConverter}}">
+                                        ItemsSource="{Binding HeatMapUpdate, Converter={StaticResource MatrixToDataViewConverter}}">
                                 
                                 <DataGrid.CellStyle>
                                     <Style TargetType="DataGridCell">

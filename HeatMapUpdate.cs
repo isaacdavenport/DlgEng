@@ -13,7 +13,7 @@ namespace DialogEngine
         public static void PrintHeatMap()
         #pragma warning restore 1591
         {
-            DialogViewModel.Instance.HeatMap = SelectNextCharacters.HeatMap;
+            DialogViewModel.Instance.HeatMapUpdate = SelectNextCharacters.HeatMap;
             DialogViewModel.Instance.Character1Prefix = DialogViewModel.Instance.CharacterCollection[SelectNextCharacters.NextCharacter1].CharacterPrefix;
             DialogViewModel.Instance.Character2Prefix = DialogViewModel.Instance.CharacterCollection[SelectNextCharacters.NextCharacter2].CharacterPrefix;
             DialogViewModel.Instance.RSSIsum = SelectNextCharacters.BigRssi;

@@ -88,6 +88,8 @@ namespace DialogEngine
                 NextCharacter2 = _nextCharacter1MappedIndex2 >= 0 ? _nextCharacter1MappedIndex2 : NextCharacter2;
             }
 
+            // break current dialog and restart player
+
             EventAggregator.Instance.GetEvent<StopPlayingCurrentDialogLineEvent>().Publish();
 
             DialogViewModel.Instance.CancellationTokenGenerateDialogSource.Cancel();
@@ -101,6 +103,7 @@ namespace DialogEngine
 
             try
             {
+                // if we find character return its index , or throw exception if there is no character with specified radio assigned
                 int index = DialogViewModel.Instance.CharacterCollection.Select((c, i) => new { Character = c, Index = i })
                                                                         .Where(x => x.Character.RadioNum == _radioNum)
                                                                         .Select(x => x.Index).First();
@@ -133,7 +136,7 @@ namespace DialogEngine
         /// Random selection of next available character
         /// </summary>
         /// <param name="_indexToSkip"> Number which must be ignored, so we can avoid the same index of selected characters </param>
-        /// <returns> Character index </returns>
+        /// <returns> Character index or -1 if there is not available characters </returns>
         public static int GetNextCharacter(params int[] _indexToSkip)
         {
             int index;
@@ -141,8 +144,9 @@ namespace DialogEngine
 
             // list with indexes of available characters
             List<int> _allowedIndexes = DialogViewModel.Instance.CharacterCollection.Select((c, i) => new { Character = c, Index = i })
-                                             .Where(x => x.Character.State == Models.Enums.CharacterState.Available)
-                                             .Select(x => x.Index).ToList();
+                                                                                    .Where(x => x.Character.State == Models.Enums.CharacterState.Available)
+                                                                                    .Select(x => x.Index)
+                                                                                    .ToList();
 
 
             int result = -1;
@@ -181,10 +185,9 @@ namespace DialogEngine
                         Random random = new Random();
                         bool _isIndexTheSame;
 
-
+                        // get random element form list with indexes of available characters
                         do
                         {
-
                             index = _allowedIndexes[random.Next(0, _allowedIndexes.Count)];
 
                             _isIndexTheSame = false;
