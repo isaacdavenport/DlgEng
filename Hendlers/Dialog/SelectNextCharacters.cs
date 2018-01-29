@@ -54,14 +54,10 @@ namespace DialogEngine
             msStrongRssiCharacterPairBuf[0, StrongRssiBufDepth - 1] = _ch1;
             msStrongRssiCharacterPairBuf[1, StrongRssiBufDepth - 1] = _ch2;
 
-            for (int _i = 0; _i < StrongRssiBufDepth - 1; _i++)
+            for (int _i = 0; _i < StrongRssiBufDepth - 2; _i++)
             {
-                if (  (msStrongRssiCharacterPairBuf[0,_i] != msStrongRssiCharacterPairBuf[0,_i + 1] 
-                    || msStrongRssiCharacterPairBuf[1,_i] != msStrongRssiCharacterPairBuf[1,_i + 1])                
-                    &&   
-                      (msStrongRssiCharacterPairBuf[0,_i] != msStrongRssiCharacterPairBuf[1,_i+1] 
-                    || msStrongRssiCharacterPairBuf[1,_i] != msStrongRssiCharacterPairBuf[0,_i+1])
-                    )
+               if (msStrongRssiCharacterPairBuf[0, _i] != msStrongRssiCharacterPairBuf[0, _i + 1] || 
+                    msStrongRssiCharacterPairBuf[1, _i] != msStrongRssiCharacterPairBuf[1, _i + 1])  
                 {
                     RssiStable = false;
                     break;
@@ -73,32 +69,37 @@ namespace DialogEngine
 
         static void _assignNextCharacters(int _tempCh1, int _tempCh2)
         {
-            if ((msRandom.NextDouble() > 0.5) && RssiStable)
+            if (!RssiStable)
+                return;
+
+            int _nextCharacter1MappedIndex1, _nextCharacter1MappedIndex2;
+
+            if (msRandom.NextDouble() > 0.5)
             {
-                int _nextCharacter1MappedIndex1 = _getCharacterMappedIndex(_tempCh1);
-                int _nextCharacter1MappedIndex2 = _getCharacterMappedIndex(_tempCh2);
-
-
-                NextCharacter1 = _nextCharacter1MappedIndex1 >= 0 ? _nextCharacter1MappedIndex1 : NextCharacter1;
-                NextCharacter2 = _nextCharacter1MappedIndex2 >= 0 ? _nextCharacter1MappedIndex2 : NextCharacter2;
+                 _nextCharacter1MappedIndex1 = _getCharacterMappedIndex(_tempCh1);
+                 _nextCharacter1MappedIndex2 = _getCharacterMappedIndex(_tempCh2);
             }
-            else if (RssiStable)
+            else
             {
-                int _nextCharacter1MappedIndex1 = _getCharacterMappedIndex(_tempCh2);
-                int _nextCharacter1MappedIndex2 = _getCharacterMappedIndex(_tempCh1);
-
-
-                NextCharacter1 = _nextCharacter1MappedIndex1 >= 0 ? _nextCharacter1MappedIndex1 : NextCharacter1;
-                NextCharacter2 = _nextCharacter1MappedIndex2 >= 0 ? _nextCharacter1MappedIndex2 : NextCharacter2;
+                _nextCharacter1MappedIndex1 = _getCharacterMappedIndex(_tempCh2);
+                _nextCharacter1MappedIndex2 = _getCharacterMappedIndex(_tempCh1);
             }
 
-            // break current dialog and restart player
+            if (_nextCharacter1MappedIndex1 >= 0 && _nextCharacter1MappedIndex2 >= 0)
+            {
+                NextCharacter1 = _nextCharacter1MappedIndex1;
+                NextCharacter2 = _nextCharacter1MappedIndex2;
 
-            EventAggregator.Instance.GetEvent<StopPlayingCurrentDialogLineEvent>().Publish();
+                // break current dialog and restart player
+                if ((NextCharacter1 != DialogTracker.Instance.Character1Num || NextCharacter2 != DialogTracker.Instance.Character2Num) &&
+                    (NextCharacter2 != DialogTracker.Instance.Character1Num || NextCharacter1 != DialogTracker.Instance.Character2Num))
+                {
+                    EventAggregator.Instance.GetEvent<StopPlayingCurrentDialogLineEvent>().Publish();
+                    DialogViewModel.Instance.CancellationTokenGenerateDialogSource.Cancel();
+                    DialogViewModel.Instance.CancellationTokenGenerateDialogSource = new CancellationTokenSource();
+                }
+            }
 
-            DialogViewModel.Instance.CancellationTokenGenerateDialogSource.Cancel();
-
-            DialogViewModel.Instance.CancellationTokenGenerateDialogSource = new CancellationTokenSource();
         }
 
 
@@ -245,9 +246,7 @@ namespace DialogEngine
                         _tempCh2 = j;
                     }
                 }
-
             }
-
 
             if (_tempCh1 <= DialogViewModel.Instance.CharacterCollection.Count && _tempCh2 <= DialogViewModel.Instance.CharacterCollection.Count)
             {
@@ -283,28 +282,19 @@ namespace DialogEngine
 
                     if (SessionVariables.DebugFlag)
                     {
-
-
                         if (DialogViewModel.SelectedCharactersOn == 2)
                         {  //two three letter inital sets should be less than7 w space
 
                             _userHasForcedCharacters = true;
-
-
                             NextCharacter1 = DialogViewModel.Instance.SelectedIndex1;
-
                             NextCharacter2 = DialogViewModel.Instance.SelectedIndex2;
-
                         }
                     }
 
-
                     Thread.Sleep(1000);
-
 
                     if (!_userHasForcedCharacters && _nextCharacterSwapTime.CompareTo(DateTime.Now) < 0)
                     {
-
                         int _nextCharacter1Index = GetNextCharacter();
                         int _nextCharacter2Index = GetNextCharacter(_nextCharacter1Index >= 0 ?_nextCharacter1Index : NextCharacter1);
 
@@ -318,10 +308,6 @@ namespace DialogEngine
 
             });
         }
-
         #endregion
-
-
-
     }
 }
