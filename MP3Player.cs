@@ -23,7 +23,7 @@ namespace DialogEngine
         private TimeSpan mStartedTime;
         private double mDuration;
         private Timer mTimer = new Timer(1000);
-        private Timer mVolumeTimer = new Timer(200);
+        private Timer mVolumeTimer = new Timer(200); //ms
 
         public WMPLib.WindowsMediaPlayer Player;
 
@@ -83,7 +83,7 @@ namespace DialogEngine
             }
             else
             {
-                Player.settings.volume -= 10;
+                Player.settings.volume -= 10; // percentage
             }
         }
 
