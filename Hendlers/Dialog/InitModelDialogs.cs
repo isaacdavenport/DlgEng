@@ -36,11 +36,10 @@ namespace DialogEngine
 
         #endregion
 
-
         #region - Public methods -
 
         /// <summary>
-        /// Loads models dialog
+        /// Loads models dialogs
         /// </summary>
         /// <param name="_inObj"><see cref="DialogTracker"/></param>
         public static async  Task SetDefaultsAsync(DialogTracker _inObj) //TODO is there a good way to identify orphaned tags? (dialog lines)
@@ -174,7 +173,7 @@ namespace DialogEngine
         /// </summary>
         /// <param name="_dialogTracker"></param>
         /// <returns></returns>
-        public static async Task RefreshDialogModels(DialogTracker _dialogTracker)
+        public static async Task RefreshDialogModelsAsync(DialogTracker _dialogTracker)
         {
             await Task.Run(() =>
             {
@@ -206,9 +205,9 @@ namespace DialogEngine
                     {
                         foreach(ModelDialog _dialog in _dialogInfo.InList)
                         {
+                            // query will return null if no data found
                             HistoricalDialog _historicalDialog = DialogTracker.Instance.HistoricalDialogs.Where(historicalDialog => historicalDialog.DialogName.Equals(_dialog.Name))
                                                                                                          .FirstOrDefault();
-
                             if(_historicalDialog != null)
                             {
                                 _historicalDialog.DialogIndex = _modelDialogsList.Count;

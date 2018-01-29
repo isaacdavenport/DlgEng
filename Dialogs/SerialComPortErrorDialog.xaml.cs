@@ -1,20 +1,13 @@
-﻿using log4net;
+﻿//  Confidential Source Code Property Toys2Life LLC Colorado 2017
+//  www.toys2life.org
+
+using log4net;
 using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Configuration;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+
 
 namespace DialogEngine.Dialogs
 {
@@ -43,17 +36,21 @@ namespace DialogEngine.Dialogs
 
         #region - private functions -
 
+
         private void _populateComPortsComboBox()
         {
+            // add list of all valid COM port names to combobox
             foreach(string port in System.IO.Ports.SerialPort.GetPortNames())
             {
                 this.SerialPortsComboBox.Items.Add(port);
             }
 
+            // if there no valid COM port we add item with message
             if(SerialPortsComboBox.Items.Count == 0)
             {
                 this.SerialPortsComboBox.Items.Add("No valid com ports");
             }
+
 
             SerialPortsComboBox.SelectedIndex = 0;
         }

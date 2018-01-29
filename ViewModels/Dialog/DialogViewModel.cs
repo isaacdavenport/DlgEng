@@ -1206,7 +1206,7 @@ namespace DialogEngine.ViewModels.Dialog
             {
                 if (mIsModelsDialogChanged == true)
                 {
-                    await InitModelDialogs.RefreshDialogModels(DialogTracker.Instance);
+                    await InitModelDialogs.RefreshDialogModelsAsync(DialogTracker.Instance);
 
                     mIsModelsDialogChanged = false;
                 }

@@ -16,8 +16,7 @@ using DialogEngine.Models.Logger;
 using System.Threading.Tasks;
 using DialogEngine.ViewModels.Dialog;
 using System.Collections.ObjectModel;
-using DialogEngine.Events;
-using DialogEngine.Events.DialogEvents;
+
 
 // ReSharper disable ConditionIsAlwaysTrueOrFalse
 
@@ -33,7 +32,7 @@ namespace DialogEngine
 
         private static DialogTracker msInstance = null;
         private static int msMovementWaitCount;
-        private static int mCurrentDialogModel;
+        private static int msCurrentDialogModel;
         private static readonly object mcPadlock = new object();
 
         private DialogViewModel mDialogViewModel;
@@ -131,9 +130,9 @@ namespace DialogEngine
         /// </summary>
         public int CurrentDialogModel
         {
-            get { return mCurrentDialogModel; }
+            get { return msCurrentDialogModel; }
 
-            set { mCurrentDialogModel = value; }
+            set { msCurrentDialogModel = value; }
         }
 
 

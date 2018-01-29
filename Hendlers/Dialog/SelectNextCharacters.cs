@@ -56,8 +56,12 @@ namespace DialogEngine
 
             for (int _i = 0; _i < StrongRssiBufDepth - 1; _i++)
             {
-                if (msStrongRssiCharacterPairBuf[0, _i] != msStrongRssiCharacterPairBuf[0, _i + 1] ||
-                    msStrongRssiCharacterPairBuf[1, _i] != msStrongRssiCharacterPairBuf[1, _i + 1])
+                if (  (msStrongRssiCharacterPairBuf[0,_i] != msStrongRssiCharacterPairBuf[0,_i + 1] 
+                    || msStrongRssiCharacterPairBuf[1,_i] != msStrongRssiCharacterPairBuf[1,_i + 1])                
+                    &&   
+                      (msStrongRssiCharacterPairBuf[0,_i] != msStrongRssiCharacterPairBuf[1,_i+1] 
+                    || msStrongRssiCharacterPairBuf[1,_i] != msStrongRssiCharacterPairBuf[0,_i+1])
+                    )
                 {
                     RssiStable = false;
                     break;
