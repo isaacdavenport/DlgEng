@@ -12,6 +12,8 @@ using DialogEngine.Dialogs;
 using System.Threading.Tasks;
 using DialogEngine.Events;
 using DialogEngine.Events.DialogEvents;
+using System.Windows;
+using System.Linq;
 
 namespace DialogEngine
 {
@@ -27,16 +29,76 @@ namespace DialogEngine
         private static CancellationTokenSource msSerialTokenSource = new CancellationTokenSource();
         private static CancellationTokenSource msRandomTokenSource = new CancellationTokenSource();
 
+        private static bool mIsSerialMode;
+
         public const int NumRadios = 6;  //includes dongle
 
         #endregion
+
+        #region - Static constructor -
 
         static SerialComs()
         {
             EventAggregator.Instance.GetEvent<UseSerialPortChanged>().Subscribe(_useSerialPortChanged);
         }
 
-        
+        #endregion
+
+        #region - Properties -
+
+        /// <summary>
+        /// Indicates which selection mode is active
+        /// true - serial mode
+        /// false - random mode
+        /// </summary>
+        public static bool IsSerialMode
+        {
+            get
+            {
+                return mIsSerialMode;
+            }
+
+            set
+            {
+                mIsSerialMode = value;
+
+                try
+                {
+                    if(Application.Current.Dispatcher.CheckAccess())
+                    {
+                        if (mIsSerialMode)
+                        {
+                            Application.Current.Windows.OfType<MainWindow>().FirstOrDefault().SelectionModeLabel.Content = "Serial";
+                        }
+                        else
+                        {
+                            Application.Current.Windows.OfType<MainWindow>().FirstOrDefault().SelectionModeLabel.Content = "Random";
+                        }
+                    }
+                    else
+                    {
+                       Application.Current.Dispatcher.BeginInvoke((Action)(() =>
+                       {
+                           if (mIsSerialMode)
+                           {
+                               Application.Current.Windows.OfType<MainWindow>().FirstOrDefault().SelectionModeLabel.Content = "Serial";
+                           }
+                           else
+                           {
+                               Application.Current.Windows.OfType<MainWindow>().FirstOrDefault().SelectionModeLabel.Content = "Random";
+                           }
+                       }));
+                    }
+                }
+                catch(Exception ex)
+                {
+                    mcLogger.Error("IsSerialMode changed. " + ex.Message );
+                }
+            }
+        }
+           
+
+        #endregion
 
         #region - Private functions -
 
@@ -117,9 +179,6 @@ namespace DialogEngine
 
         #endregion
 
-
-
-
         #region - Public methods -
 
         
@@ -185,6 +244,8 @@ namespace DialogEngine
 
                 int[] _newRow = new int[NumRadios + 1];
                 int _cycleCount = 0;
+
+                IsSerialMode = true;
 
                 while (true)
                 {

@@ -102,6 +102,7 @@ namespace DialogEngine
 
         }
 
+
         private void _stopPlayingCurrentDialogLine()
         {
             if (IsPlaying())
@@ -114,7 +115,7 @@ namespace DialogEngine
             }
         }
 
-        
+        // when this function is inveoked, we stops player without any condition
         private void _stopImmediatelyPlayingCurrentDialogLine()
         {
             if (IsPlaying())

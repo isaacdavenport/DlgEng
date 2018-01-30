@@ -6,7 +6,6 @@
     <converters:CharacterStateToBooleanConverter x:Key="CharacterStateToBooleanConverter" />
     <converters:ModelDialogStateToBooleanConverter x:Key="ModelDialogStateToBooleanConverter" />
     <converters:StarWidthConverter x:Key="StarWidthConverter" />
-    <converters:DynamicGroupNameConverter x:Key="DynamicGroupNameConverter" />
     <converters:RowIndexConverter x:Key="RowIndexConverter" />
     <converters:InvertBooleanConverter x:Key="InvertBooleanConverter" />
     <converters:MatrixToDataViewConverter x:Key="MatrixToDataViewConverter" />

@@ -169,10 +169,11 @@ namespace DialogEngine
         }
 
         /// <summary>
-        /// 
+        /// It realoads dialog modes from .json files
+        /// Also it remove all historical dialogs from DialogTracker.cs which are not 
         /// </summary>
         /// <param name="_dialogTracker"></param>
-        /// <returns></returns>
+        /// <returns>Task</returns>
         public static async Task RefreshDialogModelsAsync(DialogTracker _dialogTracker)
         {
             await Task.Run(() =>
@@ -198,7 +199,7 @@ namespace DialogEngine
 
                 List<ModelDialog> _modelDialogsList = new List<ModelDialog>();
 
-
+                // 
                 foreach(ModelDialogInfo _dialogInfo in DialogViewModel.Instance.DialogModelCollection)
                 {
                     if(_dialogInfo.State == ModelDialogState.On)

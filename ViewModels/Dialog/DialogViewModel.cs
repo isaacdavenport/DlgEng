@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.IO;
 using System.Reflection;
 using System.Threading;
@@ -14,13 +13,11 @@ using DialogEngine.Core;
 using DialogEngine.Helpers;
 using DialogEngine.Models.Dialog;
 using log4net;
-using Newtonsoft.Json;
 using DialogEngine.Models.Logger;
 using System.Threading.Tasks;
 using DialogEngine.Events;
 using DialogEngine.Events.DialogEvents;
 using System.Windows.Data;
-using DialogEngine.Converters;
 using DialogEngine.Views.Dialog;
 using GalaSoft.MvvmLight.CommandWpf;
 using System.Windows.Input;
@@ -48,9 +45,10 @@ namespace DialogEngine.ViewModels.Dialog
 
         // reference on view
         private Views.Dialog.DialogView mView;
-
+        
         private readonly Random mRandom = new Random();
 
+        // start position of drag and drop operation
         private Point mStartPosition;
 
         // detect is dialog model changed, true value force application to reload dialog model
@@ -59,18 +57,23 @@ namespace DialogEngine.ViewModels.Dialog
         private int mSelectedIndex1;
         private int mSelectedIndex2;
 
+        // variables for debuging selection of characters in serial mode
+
         private string mCharacter1Prefix = "--";
         private string mCharacter2Prefix = "--";
         private bool mRSSIstable;
         private int mRSSIsum;
-
-        private bool mIsDialogStopped = true;
-
         private int[,] mHeatMap = new int[SerialComs.NumRadios, SerialComs.NumRadios];
 
+
+        // indicate when dialog is active or no
+        private bool mIsDialogStopped = true;
+
+        // selected dialog model .json file
         private ModelDialogInfo mSelectedDialogModel;
 
         // create token which we pass to background method, so we can force method to finish executing
+
         private CancellationTokenSource mCancellationTokenDialogWorkerSource = new CancellationTokenSource();
         private CancellationTokenSource mCancellationTokenGenerateDialogSource = new CancellationTokenSource();
 
@@ -78,10 +81,12 @@ namespace DialogEngine.ViewModels.Dialog
         private ObservableCollection<object> mDialogLinesCollection;
 
         // Combobox item sources
+
         private ObservableCollection<Character> mCharacterCollection;
         private ObservableCollection<ModelDialogInfo> mDialogModelCollection;
 
         // Collections of debug messages
+
         private ObservableCollection<InfoMessage> mInfoMessagesCollection;
         private ObservableCollection<WarningMessage> mWarningMessagesCollection;
         private ObservableCollection<ErrorMessage> mErrorMessagesCollection;
@@ -330,13 +335,15 @@ namespace DialogEngine.ViewModels.Dialog
 
                 int result = 0;
 
+                // iterate over dialog model files
                 for(int i=0; i<DialogModelCollection.Count; i++)
                 {
+                    // if we found selected file, then get its selected dialog model 
                     if (DialogModelCollection[i].FileName.Equals(SelectedDialogModel.FileName))
                     {
                         return result + SelectedDialogModel.SelectedModelDialogIndex;
                     }
-                    else
+                    else  // add number of its dialog models
                     {
                         if(DialogModelCollection[i].State == Models.Enums.ModelDialogState.On)
                         {
@@ -601,6 +608,8 @@ namespace DialogEngine.ViewModels.Dialog
 
                 int index = 0;
 
+                // iterate over characters and try to find characters in ON state
+                // then assign indexes to mSelectedIndex 
                 foreach (Character characterInfo in CharacterCollection)
                 {
                     if (characterInfo.State == Models.Enums.CharacterState.On)
@@ -624,6 +633,8 @@ namespace DialogEngine.ViewModels.Dialog
                 SelectedCharactersOn = result;
 
                 OnPropertyChanged("SelectedCharactersOn");
+
+                // when state of character changed, we want to cancel current dialog and reset MP3 player
 
                 mCancellationTokenGenerateDialogSource.Cancel();
 
@@ -670,7 +681,7 @@ namespace DialogEngine.ViewModels.Dialog
 
                     if (_length > 300 && _length > 0)
                     {
-                        WarningMessagesCollection.RemoveAt(_length - 1);
+                        InfoMessagesCollection.RemoveAt(_length - 1);
                     }
 
                     OnPropertyChanged("InfoMessagesCollection");
@@ -705,9 +716,9 @@ namespace DialogEngine.ViewModels.Dialog
                     OnPropertyChanged("ErrorMessagesCollection");
                 }
             }
-            catch (Exception _e)
+            catch (Exception e)
             {
-                mcLogger.Error(_e.Message);
+                mcLogger.Error("processAddItem " + e.Message);
             }
         }
 
@@ -761,7 +772,7 @@ namespace DialogEngine.ViewModels.Dialog
         }
 
 
-
+        // unassign character from radio
         private void _clearRadioBindingCommand(string _elementName)
         {
             TextBox tb = mView.FindName(_elementName) as TextBox;
@@ -807,6 +818,8 @@ namespace DialogEngine.ViewModels.Dialog
 
                     }
 
+
+                    // TextBox has name in form of "Radio_x"  x - radio number
 
                     string[] _nameRadioNum = tb.Name.Split('_');
 
@@ -1252,7 +1265,7 @@ namespace DialogEngine.ViewModels.Dialog
                                       {
                                           _selectedCharactersAndModel = new int[3];
 
-                                          _selectedCharactersAndModel[2] = SelectedDialogModelIndex; // we need to sub 1 because first item i placeholder
+                                          _selectedCharactersAndModel[2] = SelectedDialogModelIndex; // we need to sub 1 because first item is placeholder
                                       }
                                       else
                                       {
@@ -1262,8 +1275,10 @@ namespace DialogEngine.ViewModels.Dialog
 
                                       _selectedCharactersAndModel[0] = SelectedIndex1 == -1 ? SelectedIndex2 : SelectedIndex1;
 
+                                      int _nextCharacter2 = SelectNextCharacters.GetNextCharacter(_selectedCharactersAndModel[0]);
+
                                       //we have to select second character random
-                                      _selectedCharactersAndModel[1] = SelectNextCharacters.GetNextCharacter(_selectedCharactersAndModel[0]);
+                                      _selectedCharactersAndModel[1] = _nextCharacter2 == -1 ? DialogTracker.Instance.Character2Num : _nextCharacter2;
 
                                       DialogTracker.Instance.GenerateADialog(mCancellationTokenGenerateDialogSource.Token, _selectedCharactersAndModel);
 
@@ -1359,8 +1374,8 @@ namespace DialogEngine.ViewModels.Dialog
             }
             catch(Exception ex)
             {
-                mcLogger.Error("Error during relaoding dialog data.");
-                MessageBox.Show("Error during relaoding dialog data." + ex.Message);
+                mcLogger.Error("Error during relaoding dialog data." + ex.Message);
+                MessageBox.Show("Error during relaoding dialog data.");
             }
 
         }

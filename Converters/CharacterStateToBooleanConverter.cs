@@ -19,15 +19,17 @@ namespace DialogEngine.Converters
         /// <summary>
         /// Checks radio button if CharacterState enum value is equal to casted CharacterState string value
         /// </summary>
-        /// <param name="_value"></param>
+        /// <param name="_value">Character state</param>
         /// <param name="_targetType"></param>
-        /// <param name="_parameter"></param>
+        /// <param name="_parameter">Expected stete</param>
         /// <param name="_culture"></param>
         /// <returns> bool </returns>
         public object Convert(object _value, Type _targetType, object _parameter, CultureInfo _culture)
         {
+            // get expected state
             CharacterState _state = (CharacterState)_parameter;
 
+            // character state
             CharacterState _enumValue = (CharacterState)_value;
 
             return _state == _enumValue;

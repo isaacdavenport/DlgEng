@@ -1,4 +1,8 @@
-﻿
+﻿//  Confidential Source Code Property Toys2Life LLC Colorado 2017
+//  www.toys2life.org
+
+//  Converters convert input parameter to a value expected by a gui item  
+
 using System;
 using System.Globalization;
 using System.Windows.Controls;
@@ -14,23 +18,30 @@ namespace DialogEngine.Converters
     public class ValueToColorConverter : IValueConverter
     {
         /// <summary>
-        /// 
+        /// Calculate background color for datagrid cell
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">DataGridCell</param>
         /// <param name="targetType"></param>
         /// <param name="parameter"></param>
         /// <param name="culture"></param>
         /// <returns></returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var gridCell = value as DataGridCell;
+            var _gridCell = value as DataGridCell;
 
-            int row = DataGridRow.GetRowContainingElement(gridCell).GetIndex();
+            int row = DataGridRow.GetRowContainingElement(_gridCell).GetIndex();
 
-            // we have one column for row header so we need to sub 1
-            int column = gridCell.Column.DisplayIndex > 0 ? gridCell.Column.DisplayIndex - 1 : gridCell.Column.DisplayIndex;
+            int column = _gridCell.Column.DisplayIndex;
 
-            if( row == column && SelectNextCharacters.HeatMap[row,column] > 0)
+            if(column == 0)
+            {
+                return Brushes.LightGray;
+            }
+
+            // first column is row header so we need to sub for 1
+            int _heatMapColumn = column - 1;
+
+            if( row == _heatMapColumn && SelectNextCharacters.HeatMap[row, _heatMapColumn] > 0)
             {
                 if( row == SelectNextCharacters.NextCharacter1 || row == SelectNextCharacters.NextCharacter2)
                 {

@@ -9,14 +9,14 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-
+using DialogEngine.Events;
+using DialogEngine.Events.DialogEvents;
+using log4net;
+using System.Reflection;
 
 namespace DialogEngine.Controls
 {
-    using DialogEngine.Events;
-    using DialogEngine.Events.DialogEvents;
-    using log4net;
-    using System.Reflection;
+
 
     /// <summary>
     /// Interaction logic for SettingsDialog.xaml

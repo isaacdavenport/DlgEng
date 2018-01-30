@@ -49,6 +49,8 @@ namespace DialogEngine.Dialogs
             if(SerialPortsComboBox.Items.Count == 0)
             {
                 this.SerialPortsComboBox.Items.Add("No valid com ports");
+
+                this.SaveChangesBtn.IsEnabled = false;
             }
 
 
@@ -96,18 +98,7 @@ namespace DialogEngine.Dialogs
         }
 
 
-        private void _comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (!(e.Source as ComboBox).SelectedValue.ToString().Contains("No valid com ports"))
-            {
-                SaveChangesBtn.IsEnabled = true;
-            }
-            else
-            {
-                SaveChangesBtn.IsEnabled = false;
-            }
 
-        }
 
         #endregion
 

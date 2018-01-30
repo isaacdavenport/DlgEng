@@ -35,8 +35,7 @@ namespace DialogEngine.Views.Dialog
 
             (this.DataContext as DialogViewModel).View = this;
 
-            await (this.DataContext as DialogViewModel).InitDialogDataAsync();
-            
+            await (this.DataContext as DialogViewModel).InitDialogDataAsync();         
         }
 
 

@@ -109,7 +109,6 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\CharacterStateToBooleanConverter.cs" />
-    <Compile Include="Converters\DynamicGroupNameConverter.cs" />
     <Compile Include="Converters\InvertBooleanConverter.cs" />
     <Compile Include="Converters\ListBoxItemConverter.cs" />
     <Compile Include="Converters\MatrixToDataViewConverter.cs" />

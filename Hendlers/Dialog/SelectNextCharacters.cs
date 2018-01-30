@@ -2,7 +2,6 @@
 //www.toys2life.org
 
 using System;
-using System.Timers;
 using System.Threading;
 using DialogEngine.Helpers;
 using DialogEngine.ViewModels.Dialog;
@@ -11,7 +10,6 @@ using DialogEngine.Events.DialogEvents;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Collections.Generic;
-using DialogEngine.Models.Dialog;
 using System.Linq;
 
 namespace DialogEngine
@@ -56,8 +54,11 @@ namespace DialogEngine
 
             for (int _i = 0; _i < StrongRssiBufDepth - 2; _i++)
             {
-               if (msStrongRssiCharacterPairBuf[0, _i] != msStrongRssiCharacterPairBuf[0, _i + 1] || 
-                    msStrongRssiCharacterPairBuf[1, _i] != msStrongRssiCharacterPairBuf[1, _i + 1])  
+               if((msStrongRssiCharacterPairBuf[0, _i] != msStrongRssiCharacterPairBuf[0, _i + 1] || 
+                   msStrongRssiCharacterPairBuf[1, _i] != msStrongRssiCharacterPairBuf[1, _i + 1])
+                                                                                                  &&
+                  (msStrongRssiCharacterPairBuf[0, _i] != msStrongRssiCharacterPairBuf[1, _i + 1] ||
+                   msStrongRssiCharacterPairBuf[1, _i] != msStrongRssiCharacterPairBuf[0, _i+1]))
                 {
                     RssiStable = false;
                     break;
@@ -90,10 +91,11 @@ namespace DialogEngine
                 NextCharacter1 = _nextCharacter1MappedIndex1;
                 NextCharacter2 = _nextCharacter1MappedIndex2;
 
-                // break current dialog and restart player
                 if ((NextCharacter1 != DialogTracker.Instance.Character1Num || NextCharacter2 != DialogTracker.Instance.Character2Num) &&
                     (NextCharacter2 != DialogTracker.Instance.Character1Num || NextCharacter1 != DialogTracker.Instance.Character2Num))
                 {
+                    // break current dialog and restart player
+
                     EventAggregator.Instance.GetEvent<StopPlayingCurrentDialogLineEvent>().Publish();
                     DialogViewModel.Instance.CancellationTokenGenerateDialogSource.Cancel();
                     DialogViewModel.Instance.CancellationTokenGenerateDialogSource = new CancellationTokenSource();
@@ -162,24 +164,19 @@ namespace DialogEngine
                     {
                         MessageBox.Show("No available characters. Please change characters settings.");
 
-                        return -1;
-
                         break;
                     }
 
                 case 1: // 1 available character
                     {
                         // if we don't want duplicate index
-                        if (_indexToSkip.Length > 0)
+                        if (_indexToSkip.Length > 0  && _allowedIndexes[0] == _indexToSkip[0])
                         {
-                            if (_allowedIndexes[0] == _indexToSkip[0])
-                            {
-                                return -1;
-                            }
+                            break;
                         }
                         else
                         {
-                            return _allowedIndexes[0];
+                            result = _allowedIndexes[0];
                         }
 
                         break;
@@ -205,16 +202,19 @@ namespace DialogEngine
                         }
                         while (_isIndexTheSame);
 
-                        return index;
+                        result = index;
 
+                        break;
                     }
             }
 
-            return result;
+            return result ;
 
         }
 
-
+        /// <summary>
+        /// Finds the closest 2 characters depend on rssi values received from toys
+        /// </summary>
         public static void FindBiggestRssiPair()
         {
             //  This method takes the RSSI values and combines them so that the RSSI for Ch2 looking at 
@@ -255,7 +255,11 @@ namespace DialogEngine
             }
         }
 
-
+        /// <summary>
+        /// Used for random selection of active characters
+        /// </summary>
+        /// <param name="_cancellationToken">CancellationToken which is used to detect when we want to break background operation</param>
+        /// <returns>Task</returns>
         public async  static Task OccasionallyChangeToRandNewCharacterAsync(CancellationToken _cancellationToken)
         {
 
@@ -271,11 +275,14 @@ namespace DialogEngine
 
                 _nextCharacterSwapTime.AddSeconds(12);
 
+                SerialComs.IsSerialMode = false;
 
                 while (true)
                 {
                     if (_cancellationToken.IsCancellationRequested)
+                    {
                         return;
+                    }
 
                     _userHasForcedCharacters = false;
 

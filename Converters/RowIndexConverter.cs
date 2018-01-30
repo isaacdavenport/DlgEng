@@ -18,7 +18,7 @@ namespace DialogEngine.Converters
         /// <summary>
         /// Converts current DataGridRow to its index in DataGrid
         /// </summary>
-        /// <param name="_value"></param>
+        /// <param name="_value">DataGridRow</param>
         /// <param name="_targetType"></param>
         /// <param name="_parameter"></param>
         /// <param name="_culture"></param>
