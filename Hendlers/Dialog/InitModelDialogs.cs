@@ -5,7 +5,7 @@ using System;
 using System.IO;
 using System.Reflection;
 using System.Windows;
-using System.Windows.Media;
+using System.Threading;
 using DialogEngine.Helpers;
 using DialogEngine.Models.Dialog;
 using log4net;
@@ -57,6 +57,8 @@ namespace DialogEngine
 
                 try
                 {
+                    Thread.CurrentThread.Name = "SetDefaultsAsyncTask";
+
                     var _dialogsD = new DirectoryInfo(SessionVariables.DialogsDirectory);
 
                     AddItem(new InfoMessage("Dialog JSON in: " + SessionVariables.DialogsDirectory));
@@ -178,6 +180,7 @@ namespace DialogEngine
         {
             await Task.Run(() =>
             {
+                Thread.CurrentThread.Name = "RefreshDialogModelsAsyncThread";
 
                 int _historicalDialogsSize = DialogTracker.Instance.HistoricalDialogs.Count;
 

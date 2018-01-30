@@ -69,7 +69,7 @@ namespace DialogEngine.Models.Dialog
         /// Represents state of dialog .json file
         /// States are [On, Off]
         /// Default state is On
-        /// On - we want to laod dialog models from dialog .json file
+        /// On - we want to load dialog models from dialog .json file
         /// Off - ignore dilogs from dialog .json file
         /// </summary>
         public ModelDialogState State

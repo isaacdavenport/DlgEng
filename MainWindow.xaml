@@ -82,7 +82,7 @@
                         <fa:ImageAwesome Icon="Refresh" />
                     </Button.Content>
                     <Button.ToolTip>
-                        <TextBlock Text="Relaod files"></TextBlock>
+                        <TextBlock Text="Reload files"></TextBlock>
                     </Button.ToolTip>
                 </Button>
 

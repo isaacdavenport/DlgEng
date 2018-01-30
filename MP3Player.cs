@@ -23,7 +23,7 @@ namespace DialogEngine
         private TimeSpan mStartedTime;
         private double mDuration;
         private Timer mTimer = new Timer(1000);
-        private Timer mVolumeTimer = new Timer(200); //ms
+        private Timer mVolumeTimer = new Timer(100); //ms
 
         public WMPLib.WindowsMediaPlayer Player;
 
@@ -83,7 +83,7 @@ namespace DialogEngine
             }
             else
             {
-                Player.settings.volume -= 10; // percentage
+                Player.settings.volume -= 20; // percentage
             }
         }
 
@@ -93,7 +93,7 @@ namespace DialogEngine
             double _durationOfPlaying = DateTime.Now.TimeOfDay.TotalSeconds - mStartedTime.TotalSeconds;
 
             // 2 seconds we need to mute player 200 ms for  10 %
-            if (_durationOfPlaying > (SessionVariables.MaxTimeToPlayFile - 2))
+            if (_durationOfPlaying > (SessionVariables.MaxTimeToPlayFile - 0.5))
             {
                 mTimer.Stop();
 

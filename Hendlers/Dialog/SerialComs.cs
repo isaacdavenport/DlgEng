@@ -228,7 +228,7 @@ namespace DialogEngine
 
                 }
             }
-            else // user choose NoSerialPort so we initialize random selection
+            else // user chose NoSerialPort so we initialize random selection
             {
                  await SelectNextCharacters.OccasionallyChangeToRandNewCharacterAsync(msRandomTokenSource.Token);
             }
@@ -237,10 +237,11 @@ namespace DialogEngine
         }
 
 
-        private async static Task _regularylyReadSerialAsync(CancellationToken _cancllationToken)
+        private async static Task _regularylyReadSerialAsync(CancellationToken _cancellationToken)
         {
             await Task.Run(() =>
             {
+                Thread.CurrentThread.Name = "SerialThread";
 
                 int[] _newRow = new int[NumRadios + 1];
                 int _cycleCount = 0;
@@ -249,7 +250,7 @@ namespace DialogEngine
 
                 while (true)
                 {
-                    if (_cancllationToken.IsCancellationRequested)
+                    if (_cancellationToken.IsCancellationRequested)
                     {
                         return;
                     }

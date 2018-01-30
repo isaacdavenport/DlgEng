@@ -265,6 +265,8 @@ namespace DialogEngine
 
             await Task.Run(() =>
             {
+                Thread.CurrentThread.Name = "OccasionallyChangeToRandNewCharacterAsyncThread";
+
                 // used for computers with no serial input radio for random, or forceCharacter mode
                 // does not include final character the silent schoolhouse, not useful in noSerial mode 
                 bool _userHasForcedCharacters;

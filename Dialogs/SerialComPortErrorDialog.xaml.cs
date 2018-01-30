@@ -63,15 +63,14 @@ namespace DialogEngine.Dialogs
 
         private void _saveChanges_Click(object sender, RoutedEventArgs e)
         {
-            if(SerialPortsComboBox.SelectedIndex > 0)
-            {
+
                 try
                 {
                     string _configPath = System.IO.Path.Combine(System.Environment.CurrentDirectory, "DialogEngine.exe");
 
                     Configuration _config = ConfigurationManager.OpenExeConfiguration(_configPath);
 
-                    _config.AppSettings.Settings["UseSerialPort"].Value = SerialPortsComboBox.SelectedValue.ToString();
+                    _config.AppSettings.Settings["ComPortName"].Value = SerialPortsComboBox.SelectedValue.ToString();
 
                     _config.Save();
 
@@ -85,9 +84,7 @@ namespace DialogEngine.Dialogs
                 {
                     mcLogger.Error("Error during saving COM port name. "+ ex.Message);
                     MessageBox.Show("Error during saving COM port name.");
-                }
-
-            }
+                }            
         }
 
 

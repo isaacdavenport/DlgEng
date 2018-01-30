@@ -173,7 +173,7 @@ namespace DialogEngine
         {
             if (!SessionVariables.AudioDialogsOn)
             {
-                Thread.Sleep(2200);
+                Thread.Sleep(3200);
                 return;
             }
 
@@ -189,7 +189,7 @@ namespace DialogEngine
 
 
                 var i = 0;
-                Thread.Sleep(600);
+                Thread.Sleep(300);
 
 
                 while (MP3Player.Instance.IsPlaying() && i < 250)
@@ -198,7 +198,7 @@ namespace DialogEngine
                     Thread.Sleep(100);
                 }
 
-                Thread.Sleep(1600); // wait around a second after the audio is done for between phrase pause
+                Thread.Sleep(800); // wait around a second after the audio is done for between phrase pause
             }
             else
             {
@@ -539,11 +539,11 @@ namespace DialogEngine
 
         }
 
-        private bool _waitingForMovement()
-        {
+        private bool _waitingForMovement()  // this method breaks that paradigm that we are always in a dialog model
+        {                                      // unless waiting to start a dialog model, that may be an issue eventually
             if (LastPhraseImpliedMovement && SameCharactersAsLast && SessionVariables.UseSerialPort)
             {
-                Thread.Sleep(mRandom.Next(0, 3000));
+                Thread.Sleep(mRandom.Next(0, 2000));
                 msMovementWaitCount++;
 
 
@@ -552,11 +552,8 @@ namespace DialogEngine
                     var _ch1RetreatPhrase = PickAWeightedPhrase(Character1Num, "Retreat");
 
                     AddItem(new InfoMessage("Wait3"));
-
-
                     AddItem(new DialogItem() { Character = mDialogViewModel.CharacterCollection[Character1Num], PhraseEntry = _ch1RetreatPhrase });
-
-
+                    
                     _playAudio(SessionVariables.AudioDirectory + mDialogViewModel.CharacterCollection[Character1Num].CharacterPrefix +
                               "_" + _ch1RetreatPhrase.FileName + ".mp3");
 
@@ -567,19 +564,14 @@ namespace DialogEngine
                 if (msMovementWaitCount == 7)
                 {
                     LastPhraseImpliedMovement = false;
-
                     var _ch2RetreatPhrase = PickAWeightedPhrase(Character2Num, "Retreat");
-
                     AddItem(new InfoMessage("Wait5"));
-
                     AddItem(new DialogItem() { Character = mDialogViewModel.CharacterCollection[Character2Num], PhraseEntry = _ch2RetreatPhrase });
-
-
+                    
                     _playAudio(SessionVariables.AudioDirectory
                                + mDialogViewModel.CharacterCollection[Character2Num].CharacterPrefix
                                + "_" + _ch2RetreatPhrase.FileName + ".mp3");
-
-
+                    
                     return true;
                 }
                 if (msMovementWaitCount > 11)
@@ -587,7 +579,6 @@ namespace DialogEngine
                     msMovementWaitCount = 0;
                     LastPhraseImpliedMovement = false; //reset the wait for movement flag after waiting a long time
                 }
-
 
                 return true;
             }
@@ -640,37 +631,26 @@ namespace DialogEngine
         // TODO generate parallel dialogs, using string tags.
         public void GenerateADialog(CancellationToken _cancellationToken,params int[] _dialogDirectives)
         {
-
-            //check is async method canceled
+            //check is async method cancelled
             if (_cancellationToken.IsCancellationRequested)
-            {
                 return;
-            }
             
             if (!_importClosestSerialComsCharacters())
                 return;
-
-
+            
             CurrentDialogModel = _pickAWeightedDialog(Character1Num, Character2Num);
-
-
+            
             if (_waitingForMovement() || SameCharactersAsLast && SessionVariables.WaitIndefinatelyForMove)
                 return;
 
             _processDebugFlags(_dialogDirectives);
-
-
             _addDialogModelToHistory(CurrentDialogModel, Character1Num, Character2Num);
-
             var _speakingCharacter = Character1Num;
-
-
             var _selectedPhrase = mDialogViewModel.CharacterCollection[_speakingCharacter].Phrases[0]; //initialize to unused placeholder phrase
-
-
+            
             foreach (var _currentPhraseType in ModelDialogs[CurrentDialogModel].PhraseTypeSequence)
             {
-                //check is async method canceled
+                //check is async method cancelled
                 if (_cancellationToken.IsCancellationRequested)
                 {
                     return;
@@ -679,7 +659,6 @@ namespace DialogEngine
                 if (mDialogViewModel.CharacterCollection[_speakingCharacter].PhraseTotals.PhraseWeights.ContainsKey(_currentPhraseType))
                     if (SessionVariables.TextDialogsOn)
                     {
-
                         AddItem(new InfoMessage(mDialogViewModel.CharacterCollection[_speakingCharacter].CharacterName + ": "));
                         
                         if (mDialogViewModel.CharacterCollection[_speakingCharacter].PhraseTotals.PhraseWeights[_currentPhraseType] < 0.01f)
@@ -687,9 +666,7 @@ namespace DialogEngine
                             AddItem(new WarningMessage("Missing PhraseType: " + _currentPhraseType));
                         }
 
-
                         _selectedPhrase = PickAWeightedPhrase(_speakingCharacter, _currentPhraseType);
-
 
                         AddItem(new InfoMessage(_selectedPhrase.DialogStr));
                         
@@ -704,12 +681,10 @@ namespace DialogEngine
 
                         _playAudio(_pathAndFileName); // vb: code stops here so commented out for debugging purpose
 
-
                         if ( !DialogTrackerAndSerialComsCharactersSame()
                             && DialogViewModel.SelectedCharactersOn != 1)
                         {
                             SameCharactersAsLast = false;
-
                             return; // the characters have moved  TODO break into charactersSame() and use also with prior
                         }
                         //Toggle character
@@ -723,7 +698,6 @@ namespace DialogEngine
 
                 if (HistoricalDialogs.Count > 2000)
                     HistoricalDialogs.RemoveRange(0, 100);
-
 
                 if (HistoricalPhrases.Count > 8000)
                     HistoricalPhrases.RemoveRange(0, 100);
@@ -786,6 +760,7 @@ namespace DialogEngine
 
             await Task.Run(() =>
             {
+                Thread.CurrentThread.Name = "IntakeCharactersAsyncThread";
 
                 var _d = new DirectoryInfo(SessionVariables.CharactersDirectory);
 

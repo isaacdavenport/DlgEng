@@ -1015,9 +1015,10 @@ namespace DialogEngine.ViewModels.Dialog
 
         private async Task _checkForMissingPhrasesAsync()
         {
-
             await Task.Run(() =>
             {
+                Thread.CurrentThread.Name = "_checkForMissingPhrasesAsyncThread";
+
                 if (!SessionVariables.AudioDialogsOn)
                     return;
 
@@ -1053,6 +1054,7 @@ namespace DialogEngine.ViewModels.Dialog
 
             await Task.Run(() =>
             {
+                Thread.CurrentThread.Name = "_checkTagsUsedAsyncThread";
 
                 foreach (var _dialog in _dialogTracker.ModelDialogs)
                 {
@@ -1225,7 +1227,9 @@ namespace DialogEngine.ViewModels.Dialog
                 }
 
                 await Task.Run(() =>
-                  {
+                {
+                     Thread.CurrentThread.Name = "DialogWorkerThread";
+
                       while (!_cancellationToken.IsCancellationRequested)
                       {
 
@@ -1296,36 +1300,25 @@ namespace DialogEngine.ViewModels.Dialog
                                           DialogTracker.Instance.GenerateADialog(mCancellationTokenGenerateDialogSource.Token); //normal operation
                                       }
 
-
-                                      Thread.Sleep(1100);
-
-                                      Thread.Sleep(mRandom.Next(0, 2000));
-
+                                      Thread.Sleep(300);
+                                      Thread.Sleep(mRandom.Next(0, 600));
                                       DialogEngine.HeatMapUpdate.PrintHeatMap();
-
-                                      Thread.Sleep(400);
-
+                                      Thread.Sleep(200);
                                       break;
                                   }
-                                                                        
                           }
-
                       }
                   }, _cancellationToken);
-
             }
-            catch (TaskCanceledException ex)
+            catch (TaskCanceledException ex) 
             {
                 mcLogger.Error("TaskCanceledException.  " + ex.Message);
-
             }
             catch (Exception ex)
             {
                 mcLogger.Error("Dialog worker method. "+ ex.Message);
             }
-
         }
-
 
         #endregion
 
@@ -1374,8 +1367,8 @@ namespace DialogEngine.ViewModels.Dialog
             }
             catch(Exception ex)
             {
-                mcLogger.Error("Error during relaoding dialog data." + ex.Message);
-                MessageBox.Show("Error during relaoding dialog data.");
+                mcLogger.Error("Error during reloading dialog data." + ex.Message);
+                MessageBox.Show("Error during reloading dialog data.");
             }
 
         }
