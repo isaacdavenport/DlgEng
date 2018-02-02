@@ -112,15 +112,16 @@ namespace DialogEngine
             try
             {
                 // if we find character return its index , or throw exception if there is no character with specified radio assigned
+                // First() - throws exception if no items found
+                // FirstOrDefault() - returns first value or default value (for reference type it is null)
                 int index = DialogViewModel.Instance.CharacterCollection.Select((c, i) => new { Character = c, Index = i })
                                                                         .Where(x => x.Character.RadioNum == _radioNum)
                                                                         .Select(x => x.Index).First();
 
                 return index;
             }
-            catch(Exception ex)
+            catch(Exception)
             {
-
                 MessageBox.Show("No character assigned to radio with number " + _radioNum + " .");
 
                 return -1;
@@ -284,17 +285,18 @@ namespace DialogEngine
                 SerialComs.IsSerialMode = false;
 
 
+                if (SessionVariables.UseSerialPort)
+                {
+                    string _configPath = System.IO.Path.Combine(System.Environment.CurrentDirectory, "DialogEngine.exe");
 
-                string _configPath = System.IO.Path.Combine(System.Environment.CurrentDirectory, "DialogEngine.exe");
+                    Configuration _config = ConfigurationManager.OpenExeConfiguration(_configPath);
 
-                Configuration _config = ConfigurationManager.OpenExeConfiguration(_configPath);
+                    _config.AppSettings.Settings["UseSerialPort"].Value = false.ToString();
 
-                _config.AppSettings.Settings["UseSerialPort"].Value = false.ToString();
+                    _config.Save();
 
-                _config.Save();
-
-                ConfigurationManager.RefreshSection("appSettings");
-
+                    ConfigurationManager.RefreshSection("appSettings");
+                }
 
 
                 while (true)

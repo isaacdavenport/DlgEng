@@ -8,6 +8,8 @@ using System.Linq;
 using DialogEngine.Helpers;
 using DialogEngine.Models.Dialog;
 using DialogEngine.ViewModels.Dialog;
+using log4net;
+using System.Reflection;
 
 namespace DialogEngine
 {
@@ -16,11 +18,9 @@ namespace DialogEngine
     {
 
         #region - Fields -
-
-        public  static  DialogTracker DialogTracker=DialogTracker.Instance;
+        private static readonly ILog mcLogger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         public static List<ReceivedMessage> ReceivedMessages = new List<ReceivedMessage>();
-
 
         #endregion
 
@@ -50,21 +50,21 @@ namespace DialogEngine
 
             if (SessionVariables.WriteSerialLog)
             {
-                using (StreamWriter _serialLogDecimal = new StreamWriter((SessionVariables.LogsDirectory + SessionVariables.DecimalLogFileName), true))
+
+                string _debugString = ReceivedMessages[ReceivedMessages.Count - 1].CharacterPrefix + "  " +
+                                      ReceivedMessages[ReceivedMessages.Count - 1].ReceivedTime.ToString("mm.ss.fff") + "  ";
+
+                for (var j = 0; j < SerialComs.NumRadios; j++)
                 {
-                    _serialLogDecimal.Write(ReceivedMessages[ReceivedMessages.Count - 1].CharacterPrefix + "  ");
-                    _serialLogDecimal.Write(ReceivedMessages[ReceivedMessages.Count - 1].ReceivedTime.ToString("mm.ss.fff") + "  ");
-
-                    for (var _j = 0; _j < SerialComs.NumRadios; _j++)
-                    {
-                        _serialLogDecimal.Write("{0:D3}", ReceivedMessages[ReceivedMessages.Count - 1].Rssi[_j]);
-                        _serialLogDecimal.Write(" ");
-                    }
-
-                    _serialLogDecimal.Write("{0:D3}", ReceivedMessages[ReceivedMessages.Count - 1].SequenceNum);
-                    _serialLogDecimal.WriteLine();
-                    _serialLogDecimal.Close();
+                    _debugString += ReceivedMessages[ReceivedMessages.Count - 1].Rssi[j].ToString("D3");
+                    _debugString += " "; 
                 }
+
+                _debugString += ReceivedMessages[ReceivedMessages.Count - 1].SequenceNum.ToString("D3");
+
+
+                LoggerHelper.Info(SessionVariables.DecimalLogFileName,_debugString);
+                LoggerHelper.Info(SessionVariables.DecimalLogFileName, "");
             }
 
             if (ReceivedMessages.Count > 30000)
@@ -77,11 +77,7 @@ namespace DialogEngine
 
         #region - Public functions -
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="_rowNum"></param>
-        /// <param name="_newRow"></param>
+
         public static void ProcessMessage(int _rowNum, int[] _newRow)
         {
 
@@ -99,12 +95,6 @@ namespace DialogEngine
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="_message"></param>
-        /// <param name="_rssiRow"></param>
-        /// <returns></returns>
         public static int Parse(string _message, int[] _rssiRow)
         {
             // rssiRow also has seqNum from FW at end
@@ -123,7 +113,7 @@ namespace DialogEngine
                 _rssiRow[SerialComs.NumRadios] = int.Parse(_message.Substring(SerialComs.NumRadios * 2 + 4, 2), System.Globalization.NumberStyles.HexNumber);
 
             }
-            if (_rowNumber == -1 && SessionVariables.MonitorMessageParseFails) Console.WriteLine("Failed to parse message.");
+            if (_rowNumber == -1 && SessionVariables.MonitorMessageParseFails) mcLogger.Error("Failed to parse message.");
 
             return _rowNumber;
         }

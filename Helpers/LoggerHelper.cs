@@ -13,11 +13,10 @@ namespace DialogEngine.Helpers
     /// </summary>
     public class LoggerHelper
     {
-        private static readonly ILog mcDecimalSerialLog = LogManager.GetLogger("DecimalSerialLog");
+        private static readonly ILog mcDecimalSerialLog = LogManager.GetLogger(SessionVariables.DecimalLogFileName);
 
-        private static readonly ILog mcLogDialog = LogManager.GetLogger("LogDialog");
+        private static readonly ILog mcLogDialog = LogManager.GetLogger(SessionVariables.DialogLogFileName);
 
-        private static readonly ILog mcHexSerialLog = LogManager.GetLogger("HexSerialLog");
 
 
         // returns logger depends on type
@@ -27,18 +26,15 @@ namespace DialogEngine.Helpers
             {
                 return null;
             }
-            else if( string.Equals(type,"DecimalSerialLog",StringComparison.OrdinalIgnoreCase))
+            else if( string.Equals(type, SessionVariables.DecimalLogFileName, StringComparison.OrdinalIgnoreCase))
             {
                 return mcDecimalSerialLog;
             }
-            else if(string.Equals(type, "LogDialog", StringComparison.OrdinalIgnoreCase))
+            else if(string.Equals(type, SessionVariables.DialogLogFileName, StringComparison.OrdinalIgnoreCase))
             {
                 return mcLogDialog;
             }
-            else if (string.Equals(type, "HexSerialLog", StringComparison.OrdinalIgnoreCase))
-            {
-                return mcHexSerialLog;
-            }
+
 
             return null;
         }

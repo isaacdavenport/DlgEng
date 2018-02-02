@@ -69,7 +69,8 @@
                   HorizontalAlignment="Left" />
 
             <Button Height="25" 
-                    Width="25" 
+                    Width="25"
+                    Background="Transparent"
                     Click="_refresh_Click"
                     Margin="5,0,0,0">
                 <Button.Content>

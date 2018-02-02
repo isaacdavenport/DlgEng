@@ -6,7 +6,6 @@ using System;
 using System.Configuration;
 using System.Reflection;
 using System.Windows;
-using System.Windows.Controls;
 
 
 namespace DialogEngine.Dialogs
@@ -109,7 +108,6 @@ namespace DialogEngine.Dialogs
 
 
         #endregion
-
 
     }
 }

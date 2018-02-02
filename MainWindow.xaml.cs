@@ -45,15 +45,7 @@ namespace DialogEngine
 
         #endregion
 
-        #region - private methods -
-
-        private void _settings_Click(object sender, RoutedEventArgs e)
-        {
-            var _settingsDialog = new SettingsDialog();
-            _settingsDialog.Owner = this;
-
-            _settingsDialog.ShowDialog();
-        }
+        #region - event handlers -
 
         // Click on main menu item dialog
         private void _dialog_Click(object sender, RoutedEventArgs e)
@@ -118,6 +110,20 @@ namespace DialogEngine
             }
         }
 
+        private async void _reloadFiles_Click(object sender, RoutedEventArgs e)
+        {
+            await DialogViewModel.Instance.ReloadDialogDataAsync();
+        }
+
+
+        private void _settings_Click(object sender, RoutedEventArgs e)
+        {
+            var _settingsDialog = new SettingsDialog();
+            _settingsDialog.Owner = this;
+
+            _settingsDialog.ShowDialog();
+        }
+
         #endregion
 
         #region - public methods -
@@ -131,10 +137,5 @@ namespace DialogEngine
 
 
         #endregion
-
-        private async void _reloadFiles_Click(object sender, RoutedEventArgs e)
-        {
-            await DialogViewModel.Instance.ReloadDialogDataAsync();
-        }
     }
 }

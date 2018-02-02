@@ -170,7 +170,7 @@ namespace DialogEngine.ViewModels.Dialog
 
 
         /// <summary>
-        /// 
+        /// Signal strengh received from toys 
         /// </summary>
         public int[,] HeatMapUpdate
         {
@@ -395,44 +395,6 @@ namespace DialogEngine.ViewModels.Dialog
             {
                 mCharacterCollection = value;
 
-
-
-                if (Application.Current.Dispatcher.CheckAccess())
-                {
-                    if (string.IsNullOrEmpty(mView.Radio_0.Text))
-                    {
-                        for (int i = 0; i < SerialComs.NumRadios && i < mCharacterCollection.Count; i++)
-                        {
-                            mCharacterCollection[i].RadioNum = i;
-
-                            string textBoxName = "Radio_" + i.ToString();
-                            (mView.FindName(textBoxName) as TextBox).Text = mCharacterCollection[i].CharacterName;
-
-                            (mView.FindName(textBoxName) as TextBox).Tag = mCharacterCollection[i];
-                        }
-                    }
-                }
-                else
-                {
-                    Application.Current.Dispatcher.BeginInvoke((Action)(() =>
-                    {
-                        if (string.IsNullOrEmpty(mView.Radio_0.Text))
-                        {
-                            for (int i = 0; i < SerialComs.NumRadios && i < mCharacterCollection.Count; i++)
-                            {
-                                mCharacterCollection[i].RadioNum = i;
-
-                                string textBoxName = "Radio_" + i.ToString();
-                                (mView.FindName(textBoxName) as TextBox).Text = mCharacterCollection[i].CharacterName;
-
-                                (mView.FindName(textBoxName) as TextBox).Tag = mCharacterCollection[i];
-                            }
-                        }
-
-                    }));
-                }
-
-
                 OnPropertyChanged("CharacterCollection");
             }
         }
@@ -560,12 +522,12 @@ namespace DialogEngine.ViewModels.Dialog
         #region - Commands -
 
         /// <summary>
-        /// Start dialog 
+        /// Starts dialog 
         /// </summary>
         public Core.RelayCommand GenerateDialog { get; set; }
 
         /// <summary>
-        /// Clear messages depends on message type
+        /// Clears messages from dialog or debug console depends on message type
         /// </summary>
         public Core.RelayCommand ClearAllMessages { get; set; }
 
@@ -574,21 +536,40 @@ namespace DialogEngine.ViewModels.Dialog
         /// </summary>
         public Core.RelayCommand StopDialog { get; set; }
 
+        /// <summary>
+        /// Unbinds radio from character
+        /// </summary>
         public Core.RelayCommand ClearRadioBindingCommand { get; set; }
 
+        // MVVM light commands where we can pass event object
 
         public RelayCommand<MouseButtonEventArgs> PreviewMouseLeftButtonDownCommand { get; set; }
 
         public RelayCommand<MouseEventArgs> PreviewMouseMoveCommand { get; set; }
 
+        /// <summary>
+        /// Fires when dragging character from characters listbox enter textbox
+        /// </summary>
         public RelayCommand<DragEventArgs> DragEnterCommand { get; set; }
 
+        /// <summary>
+        /// Fires when character from characters listbox dropped to textbox
+        /// </summary>
         public RelayCommand<DragEventArgs> DropCommand { get; set; }
 
+        /// <summary>
+        /// Fires during dragging item form characters listbox to detect where it can be dropped  
+        /// </summary>
         public RelayCommand<DragEventArgs> DragOverCommand { get; set; }
 
+        /// <summary>
+        /// Selected  dialog model from specified dialog .json file
+        /// </summary>
         public RelayCommand<SelectionChangedEventArgs> DialogModelSelectionChangedCommand { get; set; }
 
+        /// <summary>
+        /// Recalculate width for TabItem columns in debug view
+        /// </summary>
         public RelayCommand<SelectionChangedEventArgs> RefreshTabItem { get; set; }
 
         #endregion
@@ -656,6 +637,51 @@ namespace DialogEngine.ViewModels.Dialog
 
         }
 
+
+        private async void _setCharacterToRadioBidnings()
+        {
+            // reset radio textboxes
+            if (Application.Current.Dispatcher.CheckAccess())
+            {
+                foreach (TextBox tb in VisualHelper.FindVisualChildren<TextBox>(this.View.RadioTextBoxesContainer))
+                {
+                    tb.Tag = null;
+                    tb.Text = "";
+                }
+
+                for (int i = 0; i < SerialComs.NumRadios && i < mCharacterCollection.Count; i++)
+                {
+                    mCharacterCollection[i].RadioNum = i;
+
+                    string textBoxName = "Radio_" + i.ToString();
+                    (mView.FindName(textBoxName) as TextBox).Text = mCharacterCollection[i].CharacterName;
+
+                    (mView.FindName(textBoxName) as TextBox).Tag = mCharacterCollection[i];
+                }
+            }
+            else
+            {
+                await Application.Current.Dispatcher.BeginInvoke((Action)(() =>
+                {
+                    foreach (TextBox tb in VisualHelper.FindVisualChildren<TextBox>(this.View.RadioTextBoxesContainer))
+                    {
+                        tb.Tag = null;
+                        tb.Text = "";
+                    }
+
+                    for (int i = 0; i < SerialComs.NumRadios && i < mCharacterCollection.Count; i++)
+                    {
+                        mCharacterCollection[i].RadioNum = i;
+
+                        string textBoxName = "Radio_" + i.ToString();
+                        (mView.FindName(textBoxName) as TextBox).Text = mCharacterCollection[i].CharacterName;
+
+                        (mView.FindName(textBoxName) as TextBox).Tag = mCharacterCollection[i];
+                    }
+                }));
+            }
+
+        }
 
         // choose collection where to add object depend on type of argument
         private void _processAddItem(object _entry)
@@ -1036,7 +1062,7 @@ namespace DialogEngine.ViewModels.Dialog
 
 
                             if (SessionVariables.WriteSerialLog)
-                                LoggerHelper.Info("LogDialog", "missing " + _character.CharacterPrefix + "_" + _phrase.FileName + ".mp3 " + _phrase.DialogStr);
+                                LoggerHelper.Info(SessionVariables.DialogLogFileName, "missing " + _character.CharacterPrefix + "_" + _phrase.FileName + ".mp3 " + _phrase.DialogStr);
 
                         }
                     }
@@ -1063,7 +1089,7 @@ namespace DialogEngine.ViewModels.Dialog
 
                     if (SessionVariables.WriteSerialLog)
                     {
-                        LoggerHelper.Info("LogDialog", " " + _dialogTracker.ModelDialogs.IndexOf(_dialog) + " : " + _dialog.Name);
+                        LoggerHelper.Info(SessionVariables.DialogLogFileName, " " + _dialogTracker.ModelDialogs.IndexOf(_dialog) + " : " + _dialog.Name);
                     }
 
                 }
@@ -1102,7 +1128,7 @@ namespace DialogEngine.ViewModels.Dialog
 
                                 if (SessionVariables.WriteSerialLog)
                                 {
-                                    LoggerHelper.Info("LogDialog", " " + _phrasetag + " is not used.");
+                                    LoggerHelper.Info(SessionVariables.DialogLogFileName, " " + _phrasetag + " is not used.");
                                 }
 
                             }
@@ -1145,7 +1171,7 @@ namespace DialogEngine.ViewModels.Dialog
 
 
                             if (SessionVariables.WriteSerialLog)
-                                LoggerHelper.Info("LogDialog", " " + _dialogtag + " not used in " + _dialog.Name);
+                                LoggerHelper.Info(SessionVariables.DialogLogFileName, " " + _dialogtag + " not used in " + _dialog.Name);
 
                         }
                     }
@@ -1187,10 +1213,11 @@ namespace DialogEngine.ViewModels.Dialog
             {
                 try
                 {
+                    // .First() will throw exception if data not found
                     var _dialogModelInfo = DialogModelCollection.Where(x => x.State == Models.Enums.ModelDialogState.On)
                                                                 .First();
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     MessageBox.Show("No allowed dialog model files. Please change settings for dialog models.");
 
@@ -1364,32 +1391,13 @@ namespace DialogEngine.ViewModels.Dialog
         {
             try
             {
-                // reset radio textboxes
-                if (Application.Current.Dispatcher.CheckAccess())
-                {
-                    foreach (TextBox tb in VisualHelper.FindVisualChildren<TextBox>(this.View.RadioTextBoxesContainer))
-                    {
-                        tb.Tag = null;
-                        tb.Text = "";
-                    }
-                }
-                else
-                {
-                    await Application.Current.Dispatcher.BeginInvoke((Action)(() =>
-                    {
-                        foreach (TextBox tb in VisualHelper.FindVisualChildren<TextBox>(this.View.RadioTextBoxesContainer))
-                        {
-                            tb.Tag = null;
-                            tb.Text = "";
-                        }
-                    }));
-                }
-
                 Task loadDialogModelsTask = InitModelDialogs.SetDefaultsAsync(DialogTracker.Instance);
                 Task loadCharactersTask = DialogTracker.Instance.IntakeCharactersAsync();
 
                 await loadDialogModelsTask;
                 await loadCharactersTask;
+
+                _setCharacterToRadioBidnings();
             }
             catch(Exception ex)
             {
@@ -1417,6 +1425,9 @@ namespace DialogEngine.ViewModels.Dialog
 
 
                 await _loadCharactersTask;
+
+                // wait untill loading of character complete and then set character to radio bindings
+                _setCharacterToRadioBidnings();
 
                 if (SessionVariables.DebugFlag)
                     await _checkForMissingPhrasesAsync();

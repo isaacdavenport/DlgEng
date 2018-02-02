@@ -133,21 +133,13 @@ namespace DialogEngine
                         // got behind for some reason
                         msSerialPort.DiscardInBuffer();
 
-                        Console.WriteLine("serial buffer over run.");
+                        mcLogger.Debug("serial buffer over run.");
                     }
-                    if (SessionVariables.WriteSerialLog)
-                    {
-                        using (StreamWriter _serialLog = new StreamWriter(SessionVariables.LogsDirectory + SessionVariables.HexLogFileName, true))
-                        {
-                            _serialLog.Write(DateTime.Now.ToString("mm.ss.fff") + "  ");
-                            _serialLog.Write(_message);
-                            _serialLog.Close();
-                        }
-                    }
+
                 }
             }
             catch (TimeoutException) {
-                Console.WriteLine("serial timeout.");
+                mcLogger.Debug("serial buffer over run.");
             }
             return _message;
         }

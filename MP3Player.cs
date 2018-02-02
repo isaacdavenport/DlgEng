@@ -11,6 +11,7 @@ using WMPLib;
 
 namespace DialogEngine
 {
+
     public class MP3Player
     {
         #region - fields -
@@ -20,8 +21,12 @@ namespace DialogEngine
         private static readonly object mcPadlock = new object();
         private static MP3Player msInstance = null;
 
+        // started time of playing .mp3 file
         private TimeSpan mStartedTime;
+
+        // length of .mp3 file in s
         private double mDuration;
+
         private Timer mTimer = new Timer(1000);
         private Timer mVolumeTimer = new Timer(100); //ms
 
@@ -73,18 +78,26 @@ namespace DialogEngine
 
         private void _volumeTimer_Tick(object sender, EventArgs e)
         {
-            if (Player.settings.volume == 0)
+            try
             {
-                mVolumeTimer.Stop();
+                if (Player.settings.volume == 0)
+                {
+                    mVolumeTimer.Stop();
 
-                Player.controls.stop();
+                    Player.controls.stop();
 
-                return;
+                    return;
+                }
+                else
+                {
+                    Player.settings.volume -= 20; // percentage
+                }
             }
-            else
+            catch (Exception ex)
             {
-                Player.settings.volume -= 20; // percentage
-            }
+                mcLogger.Error("VolumeTimer. " +ex.Message);
+            };
+
         }
 
 
@@ -107,7 +120,6 @@ namespace DialogEngine
         {
             if (IsPlaying())
             {
-
                 if (mDuration > SessionVariables.MaxTimeToPlayFile)
                 {
                     mTimer.Start();
@@ -169,7 +181,6 @@ namespace DialogEngine
         {
             try
             {
-
                 Player.settings.volume = 100;
                 Player.URL = _path;
 
@@ -180,7 +191,7 @@ namespace DialogEngine
             catch(Exception ex)
             {
                 //player is busy
-                mcLogger.Error(ex.Message);
+                mcLogger.Error("PlayMp3 error. "+ ex.Message);
                 return 1;
 
             }
@@ -203,7 +214,7 @@ namespace DialogEngine
                 }
                 return false;
             }
-            catch(Exception _ex)
+            catch(Exception)
             {
                 // application is busy
                 return true;

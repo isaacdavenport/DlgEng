@@ -1,6 +1,5 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:DialogEngine.Themes">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Style x:Key="DefaultTabControlItem" TargetType="{x:Type TabControl}">
         <Setter Property="Margin" Value="5,0,0,0" />
@@ -17,10 +16,37 @@
                             <TabPanel IsItemsHost="True"/>
                         </StackPanel>
                         <Border Grid.Row="1" 
-                                BorderBrush="Red" 
                                 BorderThickness="0" 
-                                CornerRadius="0,5,5,5" 
                                 Margin="0,0,5,5" 
+                                Background="Transparent" 
+                                SnapsToDevicePixels="True">
+                            <!--Using ContentSource set to SelectedContent we will focus the content of the tabitem -->
+                            <ContentPresenter ContentSource="SelectedContent" HorizontalAlignment="Center"/>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="DefaultTabControlItem2" TargetType="{x:Type TabControl}">
+        <Setter Property="Margin" Value="5,0,0,0" />
+        <Setter Property="Template" >
+            <Setter.Value>
+                <ControlTemplate TargetType="TabControl">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0">
+                            <!--Allow to host the tabitem header within the first row of the grid -->
+                            <TabPanel IsItemsHost="True"/>
+                        </StackPanel>
+                        <Border Grid.Row="1" 
+                                BorderBrush="LightGray" 
+                                BorderThickness="1" 
+                                CornerRadius="2,2,2,2" 
                                 Background="Transparent" 
                                 SnapsToDevicePixels="True">
                             <!--Using ContentSource set to SelectedContent we will focus the content of the tabitem -->

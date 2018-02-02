@@ -412,7 +412,7 @@ namespace DialogEngine
             });
 
             if (SessionVariables.WriteSerialLog)
-                LoggerHelper.Info("LogDialog", mDialogViewModel.CharacterCollection[_speakingCharacter].CharacterName + ": " + _selectedPhrase.DialogStr);
+                LoggerHelper.Info(SessionVariables.DialogLogFileName, mDialogViewModel.CharacterCollection[_speakingCharacter].CharacterName + ": " + _selectedPhrase.DialogStr);
 
         }
 
@@ -781,7 +781,7 @@ namespace DialogEngine
 
                 if (SessionVariables.WriteSerialLog)
                 {
-                    LoggerHelper.Info("LogDialog",_dialogModelString);
+                    LoggerHelper.Info(SessionVariables.DialogLogFileName, _dialogModelString);
                 }
             }
         }
@@ -832,11 +832,8 @@ namespace DialogEngine
 
                     if (SessionVariables.WriteSerialLog)
                     {
-
-                        LoggerHelper.Info("LogDialog","Begin read of " + _file.Name);
-
+                        LoggerHelper.Info(SessionVariables.DialogLogFileName, "Begin read of " + _file.Name);
                     }
-
 
 
                     string _inChar;
@@ -914,7 +911,7 @@ namespace DialogEngine
 
                                 if (SessionVariables.WriteSerialLog)
                                 {
-                                    LoggerHelper.Info("LogDialog","Finish read of " + _deserializedCharacterJson.CharacterName);
+                                    LoggerHelper.Info(SessionVariables.DialogLogFileName, "Finish read of " + _deserializedCharacterJson.CharacterName);
                                 }
 
 

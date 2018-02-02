@@ -22,14 +22,19 @@ namespace DialogEngine.Helpers
         public static bool MonitorReceiveBufferSize;
         public static bool MonitorMessageParseFails;
         public static string BaseDirectory;
-        public static string LogsDirectory;
         public static string CharactersDirectory;
         public static string DialogsDirectory;
         public static string AudioDirectory;
-        public static string DecimalLogFileName = "DecimalSerialLog.txt";
-        public static string HexLogFileName = "HexSerialLog.txt";
-        public static string DialogLogFileName = "LogDialog.txt";
 
+        // !!! IMPORTANT !!!  If you change name, you must also change name in log4net.config 
+        public static string DecimalLogFileName = "DecimalSerialLog";
+
+        // !!! IMPORTANT !!! If you change name, you must also change name in log4net.config 
+        public static string DialogLogFileName = "LogDialog";
+
+        /// <summary>
+        /// 
+        /// </summary>
         public static double MaxTimeToPlayFile
         {
             get
@@ -124,7 +129,9 @@ namespace DialogEngine.Helpers
             }
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
         public static bool UseSerialPort
         {
             get
@@ -151,6 +158,9 @@ namespace DialogEngine.Helpers
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public static string ComPortName
         {
             get
@@ -195,27 +205,17 @@ namespace DialogEngine.Helpers
                 MonitorMessageParseFails = false;
 
 
-
-
             //get executable path of DialogGenerator.exe
             string _path = Environment.CurrentDirectory;
 
             //path is  "solutionDir/bin/outputDir", so we need to go back 2 times to solutionDir
             BaseDirectory = Path.GetFullPath(Path.Combine(_path, @"..\..\"));
 
-            LogsDirectory = BaseDirectory + @"Logs\";
             DialogsDirectory = BaseDirectory + @"DialogJSON\";
             AudioDirectory = BaseDirectory + @"DialogAudio\";
             CharactersDirectory = BaseDirectory + @"CharacterJSON\";
 
             
-            if (LogsDirectory == null && WriteSerialLog)
-            {
-                mcLogger.Debug("Valid LogsDirectory path not found in config file exiting.");
-                Environment.Exit(0);
-            }
-        
-
             if (ConfigurationManager.AppSettings["CharactersDirectory"] != null)
                 CharactersDirectory = AppSet.ReadSetting("CharactersDirectory");
 
@@ -253,10 +253,6 @@ namespace DialogEngine.Helpers
             }
 
 
-
-            DecimalLogFileName = "DecimalSerialLog.txt";  //TODO are these redundant?
-            HexLogFileName = "HexSerialLog.txt";
-            DialogLogFileName = "LogDialog.txt";
         }
     }
 }

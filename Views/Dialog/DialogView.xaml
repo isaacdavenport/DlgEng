@@ -1,5 +1,4 @@
-﻿ 
-    
+﻿
     <core:PageBase x:Class="DialogEngine.Views.Dialog.DialogView"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -86,7 +85,7 @@
                         <TabItem Header="Characters settings"   BorderBrush="White">
 
 
-                            <TabControl Margin="0,-10,0,0">
+                            <TabControl Margin="0,-10,0,0"  Style="{StaticResource DefaultTabControlItem2}">
 
                                 <TabControl.Resources>
                                     <Style TargetType="TabItem">
@@ -100,7 +99,10 @@
                                                                                   ContentSource="Header"
                                                                                   Height="20"
                                                                                   Margin="5,2"/>
+                                                        
                                                     </Grid>
+
+                                                    
                                                     <ControlTemplate.Triggers>
                                                         <Trigger Property="IsSelected" Value="True">
                                                             <Setter TargetName="Panel" Property="Background" Value="#428bca" />
@@ -116,7 +118,7 @@
                                     </Style>
                                 </TabControl.Resources>
 
-                                <TabItem Header="Random mode" HorizontalAlignment="Stretch" BorderThickness="5" BorderBrush="Red">
+                                <TabItem Header="Random mode" HorizontalAlignment="Stretch"   BorderBrush="Red">
 
 
                                     <DataGrid 
@@ -125,13 +127,14 @@
                                                   HeadersVisibility="Column"  
                                                   CanUserAddRows="False" 
                                                   Background="White" 
-                                                  HorizontalAlignment="Stretch"
                                                   VerticalGridLinesBrush="LightGray" 
                                                   HorizontalGridLinesBrush="LightGray" 
                                                   BorderBrush="LightGray" 
-                                                  BorderThickness="1" 
+                                                  BorderThickness="0"
+                                                  Height="220"
+                                                  VerticalAlignment="Stretch"
                                                   AutoGenerateColumns="False"  
-                                                  MaxHeight="200" >
+                                                  MaxHeight="220" >
                                                   
 
                                         <DataGrid.Columns>
@@ -275,7 +278,7 @@
                                 
                                 <TabItem Header="Serial mode" BorderBrush="White" BorderThickness="0">
 
-                                    <Grid Width="400" Margin="5,10,5,10" Height="200">
+                                    <Grid Width="390" Margin="5,10,5,10" Height="200">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*" />
                                             <ColumnDefinition Width="auto" />
@@ -701,15 +704,11 @@
 
         </Border>
 
-
-        <GridSplitter Grid.Column="1" 
-                      Grid.Row="0" 
-                      Width="10" 
-                      BorderThickness="1,0,0,0" 
-                      Background="White" 
-                      BorderBrush="LightGray" 
-                      VerticalAlignment="Stretch" 
-                      HorizontalAlignment="Stretch" />
+        <Separator Grid.Column="1" BorderBrush="LightGray" BorderThickness="1" VerticalAlignment="Stretch" >
+            <Separator.LayoutTransform>
+                <RotateTransform Angle="90" />
+            </Separator.LayoutTransform>
+        </Separator>
 
         <Grid Grid.Row="0" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <Grid.RowDefinitions>

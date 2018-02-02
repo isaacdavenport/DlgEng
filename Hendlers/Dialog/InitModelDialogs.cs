@@ -65,7 +65,7 @@ namespace DialogEngine
 
 
                     if (SessionVariables.WriteSerialLog)
-                        LoggerHelper.Info("LogDialog","Dialog JSON in: " + SessionVariables.DialogsDirectory);
+                        LoggerHelper.Info(SessionVariables.DialogLogFileName, "Dialog JSON in: " + SessionVariables.DialogsDirectory);
 
 
 
@@ -81,7 +81,7 @@ namespace DialogEngine
 
 
                         if (SessionVariables.WriteSerialLog)
-                            LoggerHelper.Info("LogDialog","Opening dialog models in " + _inFiles[i].Name);
+                            LoggerHelper.Info(SessionVariables.DialogLogFileName, "Opening dialog models in " + _inFiles[i].Name);
 
 
 
@@ -128,7 +128,7 @@ namespace DialogEngine
 
 
                             if (SessionVariables.WriteSerialLog)
-                                LoggerHelper.Info("LogDialog","Completed " + _inFiles[i].Name);
+                                LoggerHelper.Info(SessionVariables.DialogLogFileName, "Completed " + _inFiles[i].Name);
 
 
                         }
