@@ -10,6 +10,19 @@
         "GiveSilence": 1		
       },
       "PhraseRating": "PG"
+    },
+    {
+      "DialogStr": "Who wishes to enter the castle?",
+      "FileName": "WhoWishesToEnter",
+      "PhraseWeights": {	  
+        "RequestAffirmation": 1,
+        "RequestWho": 1,
+        "Accuse": 1,
+        "Threat": 1,
+        "Greeting": 1,
+        "ShutUp": 1		
+      },
+      "PhraseRating": "PG"
     }
   ]
 }

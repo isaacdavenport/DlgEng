@@ -23,7 +23,7 @@ namespace DialogEngine
         private static int[,] msStrongRssiCharacterPairBuf = new int[2, StrongRssiBufDepth];
 
         public const int StrongRssiBufDepth = 12;
-        public static readonly TimeSpan MaxLastSeenInterval = new TimeSpan(0, 0, 0, 2, 100);
+        public static readonly TimeSpan MaxLastSeenInterval = new TimeSpan(0, 0, 0, 3, 100);
 
         public static int BigRssi = 0;
         public static bool RssiStable = false;
@@ -102,21 +102,19 @@ namespace DialogEngine
                     DialogViewModel.Instance.CancellationTokenGenerateDialogSource = new CancellationTokenSource();
                 }
             }
-
         }
 
 
         private static int _getCharacterMappedIndex(int _radioNum)
         {
-
             try
             {
-                // if we find character return its index , or throw exception if there is no character with specified radio assigned
-                // First() - throws exception if no items found
+                // if we find character return its index , or throw exception if there is no character with 
+                //specified radio assigned.  First() - throws exception if no items found
                 // FirstOrDefault() - returns first value or default value (for reference type it is null)
-                int index = DialogViewModel.Instance.CharacterCollection.Select((c, i) => new { Character = c, Index = i })
-                                                                        .Where(x => x.Character.RadioNum == _radioNum)
-                                                                        .Select(x => x.Index).First();
+                int index = DialogViewModel.Instance.CharacterCollection.Select((c, i) => 
+                                new { Character = c, Index = i })
+                                .Where(x => x.Character.RadioNum == _radioNum).Select(x => x.Index).First();
 
                 return index;
             }
@@ -126,13 +124,11 @@ namespace DialogEngine
 
                 return -1;
             }
-
         }
 
 
         private static bool _isSelectedCharacterAvailable(int index)
         {
-
             return DialogViewModel.Instance.CharacterCollection[index].State == Models.Enums.CharacterState.Available;
         }
 
@@ -150,12 +146,11 @@ namespace DialogEngine
         {
             int index;
 
-
             // list with indexes of available characters
-            List<int> _allowedIndexes = DialogViewModel.Instance.CharacterCollection.Select((c, i) => new { Character = c, Index = i })
-                                                                                    .Where(x => x.Character.State == Models.Enums.CharacterState.Available)
-                                                                                    .Select(x => x.Index)
-                                                                                    .ToList();
+            List<int> _allowedIndexes = DialogViewModel.Instance.CharacterCollection.Select(
+                                      (c, i) => new { Character = c, Index = i })
+                                      .Where(x => x.Character.State == Models.Enums.CharacterState.Available)
+                                      .Select(x => x.Index).ToList();
 
 
             int result = -1;
@@ -228,23 +223,31 @@ namespace DialogEngine
             _tempCh1 = NextCharacter1;
             _tempCh2 = NextCharacter2;
 
-            if (_tempCh1 < 0 || _tempCh2 < 0)
-                return;
+            if (_tempCh1 > SerialComs.NumRadios - 1 || _tempCh2 > SerialComs.NumRadios - 1 || 
+                _tempCh1 < 0 || _tempCh2 < 0)
+            {
+                _tempCh1 = 0;
+                _tempCh2 = 1;
+            }
 
-            BigRssi = HeatMap[_tempCh1, _tempCh2] + HeatMap[_tempCh2, _tempCh1];  //only pick up new characters if bigRssi greater not =
-
-
+            //only pick up new characters if bigRssi greater not =
+            BigRssi = HeatMap[_tempCh1, _tempCh2] + HeatMap[_tempCh2, _tempCh1];  
+            
             for ( i = 0; i < SerialComs.NumRadios; i++)
-            {  // the sixth radio is the computer's receiver now included for adventures
-
-                for ( j = i + 1; j < SerialComs.NumRadios; j++)
-                {   
+            {  
+                // it shouldn't happen often that a character has dissapeared, if so zero him out
+                if (_currentTime - CharactersLastHeatMapUpdateTime[i] > MaxLastSeenInterval)
+                {
+                    for (j = 0; j < SerialComs.NumRadios; j++)
+                    {
+                        HeatMap[i, j] = 0;
+                    }
+                }
+                for (j = i + 1; j < SerialComs.NumRadios; j++)
+                {
                     // only need data above the matrix diagonal
-
-                    if (   HeatMap[i, j] + HeatMap[j, i] > BigRssi 
-                        && _currentTime - CharactersLastHeatMapUpdateTime[i] < MaxLastSeenInterval
-                        && _currentTime - CharactersLastHeatMapUpdateTime[j] < MaxLastSeenInterval)
-                    {  
+                    if (HeatMap[i, j] + HeatMap[j, i] > BigRssi)
+                    {
                         // look at both characters view of each other
                         BigRssi = HeatMap[i, j] + HeatMap[j, i];
                         _tempCh1 = i;
@@ -252,12 +255,8 @@ namespace DialogEngine
                     }
                 }
             }
-
-            if (_tempCh1 <= DialogViewModel.Instance.CharacterCollection.Count && _tempCh2 <= DialogViewModel.Instance.CharacterCollection.Count)
-            {
-                _enqueLatestCharacters(_tempCh1, _tempCh2);
-                _assignNextCharacters(_tempCh1, _tempCh2);
-            }
+            _enqueLatestCharacters(_tempCh1, _tempCh2);
+            _assignNextCharacters(_tempCh1, _tempCh2);
         }
 
         /// <summary>

@@ -149,6 +149,12 @@ namespace DialogEngine
         {
             try
             {
+                // can we do something like this
+
+                SelectNextCharacters.NextCharacter1 = 0;
+
+                SelectNextCharacters.NextCharacter2 = 0;
+
                 msSerialPort = new SerialPort();
 
                 msSerialPort.PortName = SessionVariables.ComPortName;

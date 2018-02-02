@@ -115,20 +115,6 @@ namespace DialogEngine.Helpers
             }
         }
 
-        public static bool WriteSerialLog
-        {
-            get
-            {
-                bool result = false;
-
-                if (ConfigurationManager.AppSettings["WriteSerialLog"] != null)
-                    result = Convert.ToBoolean(AppSet.ReadSetting("WriteSerialLog"));
-
-                return result;
-
-            }
-        }
-
         /// <summary>
         /// 
         /// </summary>

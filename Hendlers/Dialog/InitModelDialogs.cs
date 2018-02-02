@@ -63,27 +63,17 @@ namespace DialogEngine
 
                     AddItem(new InfoMessage("Dialog JSON in: " + SessionVariables.DialogsDirectory));
 
-
-                    if (SessionVariables.WriteSerialLog)
-                        LoggerHelper.Info(SessionVariables.DialogLogFileName, "Dialog JSON in: " + SessionVariables.DialogsDirectory);
-
-
+                    LoggerHelper.Info(SessionVariables.DialogLogFileName, "Dialog JSON in: " + SessionVariables.DialogsDirectory);
 
                     var _inFiles = _dialogsD.GetFiles("*.json");
-
-
+                    
                     int _filesLenght = _inFiles.Count();
 
                     for (int i = 0; i < _filesLenght; i++) //file of type FileInfo for each .json in directory
                     {
-
                         AddItem(new InfoMessage("Opening dialog models in " + _inFiles[i].Name));
 
-
-                        if (SessionVariables.WriteSerialLog)
-                            LoggerHelper.Info(SessionVariables.DialogLogFileName, "Opening dialog models in " + _inFiles[i].Name);
-
-
+                        LoggerHelper.Info(SessionVariables.DialogLogFileName, "Opening dialog models in " + _inFiles[i].Name);
 
                         string _inDialog;
 
@@ -123,14 +113,10 @@ namespace DialogEngine
                                 }
                             }
 
-
                             AddItem(new InfoMessage("Completed " + _inFiles[i].Name));
 
-
-                            if (SessionVariables.WriteSerialLog)
-                                LoggerHelper.Info(SessionVariables.DialogLogFileName, "Completed " + _inFiles[i].Name);
-
-
+                            LoggerHelper.Info(SessionVariables.DialogLogFileName, "Completed " + _inFiles[i].Name);
+                            
                         }
                         catch (UnauthorizedAccessException e)
                         {
@@ -150,23 +136,18 @@ namespace DialogEngine
                 catch (OutOfMemoryException e)
                 {
                     AddItem(new ErrorMessage("You probably need to restart your computer..."));
-
                     mcLogger.Error(e.Message);
-
                     MessageBox.Show("You probably need to restart your computer...");
                 }
 
                 DialogViewModel.Instance.DialogModelCollection = new  ObservableCollection<ModelDialogInfo>(_modelDialogsInfo);
 
                 _inObj.DialogModelPopularitySum = _dialogModelPopularitySum;
-
                 _inObj.ModelDialogs = _modelDialogs;
-
-
+                
                 if (_inObj.ModelDialogs.Count < 2)
                     MessageBox.Show("Insufficient dialog models found in " + SessionVariables.DialogsDirectory + " exiting.");
-
-
+                
             });
         }
 

@@ -411,8 +411,7 @@ namespace DialogEngine
                 StartedTime = DateTime.Now
             });
 
-            if (SessionVariables.WriteSerialLog)
-                LoggerHelper.Info(SessionVariables.DialogLogFileName, mDialogViewModel.CharacterCollection[_speakingCharacter].CharacterName + ": " + _selectedPhrase.DialogStr);
+            LoggerHelper.Info(SessionVariables.DialogLogFileName, mDialogViewModel.CharacterCollection[_speakingCharacter].CharacterName + ": " + _selectedPhrase.DialogStr);
 
         }
 
@@ -779,10 +778,7 @@ namespace DialogEngine
 
                 //var _result = MessageBox.Show(_dialogModelString);
 
-                if (SessionVariables.WriteSerialLog)
-                {
-                    LoggerHelper.Info(SessionVariables.DialogLogFileName, _dialogModelString);
-                }
+                LoggerHelper.Info(SessionVariables.DialogLogFileName, _dialogModelString);
             }
         }
 
@@ -828,12 +824,7 @@ namespace DialogEngine
 
                     AddItem(new InfoMessage(_beginReadMessage));
 
-
-
-                    if (SessionVariables.WriteSerialLog)
-                    {
-                        LoggerHelper.Info(SessionVariables.DialogLogFileName, "Begin read of " + _file.Name);
-                    }
+                    LoggerHelper.Info(SessionVariables.DialogLogFileName, "Begin read of " + _file.Name);
 
 
                     string _inChar;
@@ -908,12 +899,7 @@ namespace DialogEngine
 
                                 AddItem(new InfoMessage(_finishReadMessage));
 
-
-                                if (SessionVariables.WriteSerialLog)
-                                {
-                                    LoggerHelper.Info(SessionVariables.DialogLogFileName, "Finish read of " + _deserializedCharacterJson.CharacterName);
-                                }
-
+                                LoggerHelper.Info(SessionVariables.DialogLogFileName, "Finish read of " + _deserializedCharacterJson.CharacterName);
 
 
                                 //Add to Char List

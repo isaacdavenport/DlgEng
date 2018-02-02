@@ -1060,9 +1060,7 @@ namespace DialogEngine.ViewModels.Dialog
 
                             AddItem(new WarningMessage(_debugMessage));
 
-
-                            if (SessionVariables.WriteSerialLog)
-                                LoggerHelper.Info(SessionVariables.DialogLogFileName, "missing " + _character.CharacterPrefix + "_" + _phrase.FileName + ".mp3 " + _phrase.DialogStr);
+                            LoggerHelper.Info(SessionVariables.DialogLogFileName, "missing " + _character.CharacterPrefix + "_" + _phrase.FileName + ".mp3 " + _phrase.DialogStr);
 
                         }
                     }
@@ -1085,13 +1083,7 @@ namespace DialogEngine.ViewModels.Dialog
                 foreach (var _dialog in _dialogTracker.ModelDialogs)
                 {
                     AddItem(new InfoMessage(" " + _dialogTracker.ModelDialogs.IndexOf(_dialog) + " : " + _dialog.Name));
-
-
-                    if (SessionVariables.WriteSerialLog)
-                    {
-                        LoggerHelper.Info(SessionVariables.DialogLogFileName, " " + _dialogTracker.ModelDialogs.IndexOf(_dialog) + " : " + _dialog.Name);
-                    }
-
+                    LoggerHelper.Info(SessionVariables.DialogLogFileName, " " + _dialogTracker.ModelDialogs.IndexOf(_dialog) + " : " + _dialog.Name);
                 }
 
                 //test that all character tags are used by a dialog model.
@@ -1124,13 +1116,7 @@ namespace DialogEngine.ViewModels.Dialog
                             if (!_usedFlag)
                             {
                                 AddItem(new InfoMessage(" " + _phrasetag + " is not used."));
-
-
-                                if (SessionVariables.WriteSerialLog)
-                                {
-                                    LoggerHelper.Info(SessionVariables.DialogLogFileName, " " + _phrasetag + " is not used.");
-                                }
-
+                                LoggerHelper.Info(SessionVariables.DialogLogFileName, " " + _phrasetag + " is not used.");
                             }
                         }
 
@@ -1168,11 +1154,7 @@ namespace DialogEngine.ViewModels.Dialog
                         if (!_usedFlag)
                         {
                             AddItem(new InfoMessage(" " + _dialogtag + " not used in " + _dialog.Name));
-
-
-                            if (SessionVariables.WriteSerialLog)
-                                LoggerHelper.Info(SessionVariables.DialogLogFileName, " " + _dialogtag + " not used in " + _dialog.Name);
-
+                            LoggerHelper.Info(SessionVariables.DialogLogFileName, " " + _dialogtag + " not used in " + _dialog.Name);
                         }
                     }
 
