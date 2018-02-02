@@ -9,6 +9,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DialogEngine.Dialogs"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         mc:Ignorable="d"
@@ -50,18 +51,33 @@
                VerticalAlignment="Center"
                VerticalContentAlignment="Center"
                HorizontalAlignment="Right" />
-        
-        
-        
-        <ComboBox x:Name="SerialPortsComboBox"
+
+
+        <StackPanel Grid.Row="1" 
+                    Grid.Column="1"
+                    Orientation="Horizontal"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Left">
+
+            <ComboBox x:Name="SerialPortsComboBox"
                   Grid.Row="1" 
                   Grid.Column="1" 
                   Height="25"
-                  Margin="0,0,0,5"
                   Width="auto"
                   VerticalAlignment="Center"
                   VerticalContentAlignment="Center"
                   HorizontalAlignment="Left" />
+
+            <Button Height="25" 
+                    Width="25" 
+                    Click="_refresh_Click"
+                    Margin="5,0,0,0">
+                <Button.Content>
+                    <fa:ImageAwesome Icon="Refresh" />
+                </Button.Content>
+            </Button>
+        </StackPanel>
+
 
         <Button Content="Close" 
                 Grid.Row="2" 

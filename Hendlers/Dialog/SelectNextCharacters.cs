@@ -226,6 +226,9 @@ namespace DialogEngine
             _tempCh1 = NextCharacter1;
             _tempCh2 = NextCharacter2;
 
+            if (_tempCh1 < 0 || _tempCh2 < 0)
+                return;
+
             BigRssi = HeatMap[_tempCh1, _tempCh2] + HeatMap[_tempCh2, _tempCh1];  //only pick up new characters if bigRssi greater not =
 
 

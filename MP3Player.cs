@@ -92,7 +92,7 @@ namespace DialogEngine
         {
             double _durationOfPlaying = DateTime.Now.TimeOfDay.TotalSeconds - mStartedTime.TotalSeconds;
 
-            // 2 seconds we need to mute player 200 ms for  10 %
+            // 0.5 seconds we need to mute player
             if (_durationOfPlaying > (SessionVariables.MaxTimeToPlayFile - 0.5))
             {
                 mTimer.Stop();
@@ -231,5 +231,7 @@ namespace DialogEngine
         }
 
         #endregion
+
+
     }
 }

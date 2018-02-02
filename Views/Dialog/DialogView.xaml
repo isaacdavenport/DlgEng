@@ -37,6 +37,7 @@
             <ColumnDefinition Width="2.5*" />
         </Grid.ColumnDefinitions>
 
+
         <Border CornerRadius="5" BorderBrush="LightGray" BorderThickness="1" Grid.Column="0" Grid.Row="0" Margin="17,17,17,17">
 
             <Grid  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" >
@@ -313,7 +314,7 @@
                                         
                                         
 
-                                        <StackPanel Grid.Column="2" Margin="30,0,20,0" AllowDrop="True">
+                                        <StackPanel x:Name="RadioTextBoxesContainer" Grid.Column="2" Margin="30,0,20,0" AllowDrop="True">
 
 
                                             <StackPanel  Orientation="Horizontal" >

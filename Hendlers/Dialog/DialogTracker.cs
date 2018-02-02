@@ -171,6 +171,9 @@ namespace DialogEngine
 
         private void _playAudio(string _pathAndFileName)
         {
+            mcLogger.Debug("Start _addPhraseToHistory method");
+
+
             if (!SessionVariables.AudioDialogsOn)
             {
                 Thread.Sleep(3200);
@@ -204,11 +207,17 @@ namespace DialogEngine
             {
                 AddItem(new ErrorMessage("Could not find: " + _pathAndFileName));
             }
+
+            mcLogger.Debug("End _addPhraseToHistory method");
+
         }
 
 
         private void _addDialogModelToHistory(int _dialogModelIndex, int _ch1, int _ch2)
         {
+            mcLogger.Debug("Start _addDialogModelToHistory method.");
+
+
             HistoricalDialogs.Add(new HistoricalDialog
             {
                 DialogIndex = _dialogModelIndex,
@@ -218,6 +227,9 @@ namespace DialogEngine
                 Character1 = _ch1,
                 Character2 = _ch2
             });
+
+            mcLogger.Debug("End _addDialogModelToHistory method.");
+
         }
 
 
@@ -387,6 +399,9 @@ namespace DialogEngine
 
         private void _addPhraseToHistory(PhraseEntry _selectedPhrase, int _speakingCharacter)
         {
+            mcLogger.Debug("Start _addPhraseToHistory method");
+
+
             HistoricalPhrases.Add(new HistoricalPhrase
             {
                 CharacterIndex = _speakingCharacter,
@@ -405,6 +420,7 @@ namespace DialogEngine
 
         private int _pickAWeightedDialog(int _character1Num, int _character2Num)
         {
+            mcLogger.Debug("Start _pickAWeightedDialog method.");
 
             //TODO check that all characters/phrasetypes required for adventure are included before starting adventure?
             var _dialogModel = 0;
@@ -469,6 +485,8 @@ namespace DialogEngine
 
         private bool _importClosestSerialComsCharacters()
         {
+            mcLogger.Debug("Start _importClosestSerialComsCharacters() method.");
+
             var _tempChar1 = SelectNextCharacters.NextCharacter1;
             var _tempChar2 = SelectNextCharacters.NextCharacter2;
 
@@ -485,6 +503,8 @@ namespace DialogEngine
             mPriorCharacter1Num = Character1Num;
             mPriorCharacter2Num = Character2Num;
 
+            mcLogger.Debug("End _importClosestSerialComsCharacters() method.");
+
 
             return true;
         }
@@ -492,6 +512,8 @@ namespace DialogEngine
 
         private void _processDebugFlags(params int[] _dialogDirectives)
         {
+            mcLogger.Debug("Start _processDebugFlags method.");
+
 
             switch (_dialogDirectives.Count())
             {
@@ -537,10 +559,17 @@ namespace DialogEngine
 
             HeatMapUpdate.PrintHeatMap();
 
+            mcLogger.Debug("End _processDebugFlags method.");
+
+
         }
 
         private bool _waitingForMovement()  // this method breaks that paradigm that we are always in a dialog model
-        {                                      // unless waiting to start a dialog model, that may be an issue eventually
+        {
+            // unless waiting to start a dialog model, that may be an issue eventually
+
+            mcLogger.Debug("Start _waitingForMovement method.");
+
             if (LastPhraseImpliedMovement && SameCharactersAsLast && SessionVariables.UseSerialPort)
             {
                 Thread.Sleep(mRandom.Next(0, 2000));
@@ -550,6 +579,12 @@ namespace DialogEngine
                 if (msMovementWaitCount == 3)
                 {
                     var _ch1RetreatPhrase = PickAWeightedPhrase(Character1Num, "Retreat");
+
+                    if(_ch1RetreatPhrase == null)
+                    {
+                        AddItem(new WarningMessage("Retreat phrase  was not found in " + mDialogViewModel.CharacterCollection[Character1Num].CharacterName) + ".");
+                        return false;
+                    }
 
                     AddItem(new InfoMessage("Wait3"));
                     AddItem(new DialogItem() { Character = mDialogViewModel.CharacterCollection[Character1Num], PhraseEntry = _ch1RetreatPhrase });
@@ -565,6 +600,13 @@ namespace DialogEngine
                 {
                     LastPhraseImpliedMovement = false;
                     var _ch2RetreatPhrase = PickAWeightedPhrase(Character2Num, "Retreat");
+
+                    if (_ch2RetreatPhrase == null)
+                    {
+                        AddItem(new WarningMessage("Retreat phrase  was not found in " + mDialogViewModel.CharacterCollection[Character2Num].CharacterName) + ".");
+                        return false;
+                    }
+
                     AddItem(new InfoMessage("Wait5"));
                     AddItem(new DialogItem() { Character = mDialogViewModel.CharacterCollection[Character2Num], PhraseEntry = _ch2RetreatPhrase });
                     
@@ -589,6 +631,7 @@ namespace DialogEngine
 
             msMovementWaitCount = 0;
 
+            mcLogger.Debug("End _waitingForMovement method.");
 
 
             return false;
@@ -667,6 +710,13 @@ namespace DialogEngine
                         }
 
                         _selectedPhrase = PickAWeightedPhrase(_speakingCharacter, _currentPhraseType);
+
+                        if(_selectedPhrase == null)
+                        {
+                            AddItem(new WarningMessage("Phrase type " + _currentPhraseType + " was not found."));
+
+                            continue;
+                        }
 
                         AddItem(new InfoMessage(_selectedPhrase.DialogStr));
                         
@@ -951,53 +1001,68 @@ namespace DialogEngine
 
         public PhraseEntry PickAWeightedPhrase(int _speakingCharacter, string _currentPhraseType)
         {
-            var _selectedPhrase = mDialogViewModel.CharacterCollection[_speakingCharacter].Phrases[0]; //initialize to unused phrase
+            mcLogger.Debug("Start PickAWeightedPhrase method");
 
-            //Randomly select a phrase of correct Type
-            var _phraseIsDuplicate = true;
+            PhraseEntry _selectedPhrase = null;
 
-
-            for (var k = 0; k < 6 && _phraseIsDuplicate; k++) //do retries if selected phrase is recently used
+            try
             {
-                _phraseIsDuplicate = false;
+                _selectedPhrase = mDialogViewModel.CharacterCollection[_speakingCharacter].Phrases[0]; //initialize to unused phrase
 
-                var _phraseTableWeightedIndex = mRandom.NextDouble(); // rand 0.0 - 1.0
-
-                _phraseTableWeightedIndex *= mDialogViewModel.CharacterCollection[_speakingCharacter].PhraseTotals.PhraseWeights[_currentPhraseType];
-
-                double _amountOfCurrentPhraseType = 0;
+                //Randomly select a phrase of correct Type
+                var _phraseIsDuplicate = true;
 
 
-
-                foreach (var _currentPhraseTableEntry in mDialogViewModel.CharacterCollection[_speakingCharacter].Phrases)
+                for (var k = 0; k < 6 && _phraseIsDuplicate; k++) //do retries if selected phrase is recently used
                 {
-                    if (_currentPhraseTableEntry.PhraseWeights.ContainsKey(_currentPhraseType))
+                    _phraseIsDuplicate = false;
+
+                    var _phraseTableWeightedIndex = mRandom.NextDouble(); // rand 0.0 - 1.0
+
+                    _phraseTableWeightedIndex *= mDialogViewModel.CharacterCollection[_speakingCharacter].PhraseTotals.PhraseWeights[_currentPhraseType];
+
+                    double _amountOfCurrentPhraseType = 0;
+
+
+
+                    foreach (var _currentPhraseTableEntry in mDialogViewModel.CharacterCollection[_speakingCharacter].Phrases)
                     {
-                        _amountOfCurrentPhraseType += _currentPhraseTableEntry.PhraseWeights[_currentPhraseType];
+                        if (_currentPhraseTableEntry.PhraseWeights.ContainsKey(_currentPhraseType))
+                        {
+                            _amountOfCurrentPhraseType += _currentPhraseTableEntry.PhraseWeights[_currentPhraseType];
+                        }
+
+                        if (_amountOfCurrentPhraseType > _phraseTableWeightedIndex)
+                        {
+                            _selectedPhrase = _currentPhraseTableEntry;
+                            break; //inner foreach since we have the phrase we want
+                        }
                     }
 
-                    if (_amountOfCurrentPhraseType > _phraseTableWeightedIndex)
+
+                    foreach (var _recentPhraseQueueEntry in mDialogViewModel.CharacterCollection[_speakingCharacter].RecentPhrases)
                     {
-                        _selectedPhrase = _currentPhraseTableEntry;
-                        break; //inner foreach since we have the phrase we want
+                        if (_recentPhraseQueueEntry.Equals(_selectedPhrase))
+                        {
+                            _phraseIsDuplicate = true; //send through retry loop k again
+                            break; // doesn't matter if duplicated more than once
+                        }
                     }
                 }
 
+                //eventually overload enque to remove first to keep size same or create a replace
+                mDialogViewModel.CharacterCollection[_speakingCharacter].RecentPhrases.Dequeue();
 
-                foreach (var _recentPhraseQueueEntry in mDialogViewModel.CharacterCollection[_speakingCharacter].RecentPhrases)
-                {
-                    if (_recentPhraseQueueEntry.Equals(_selectedPhrase))
-                    {
-                        _phraseIsDuplicate = true; //send through retry loop k again
-                        break; // doesn't matter if duplicated more than once
-                    }
-                }
+                mDialogViewModel.CharacterCollection[_speakingCharacter].RecentPhrases.Enqueue(_selectedPhrase);
+
+                mcLogger.Debug("End PickAWeightedPhrase method");
+            }
+            catch (Exception ex)
+            {
+                mcLogger.Error("PickAWeightedPhrase " + ex.Message);
             }
 
-            //eventually overload enque to remove first to keep size same or create a replace
-            mDialogViewModel.CharacterCollection[_speakingCharacter].RecentPhrases.Dequeue();
 
-            mDialogViewModel.CharacterCollection[_speakingCharacter].RecentPhrases.Enqueue(_selectedPhrase);
 
 
             return _selectedPhrase;

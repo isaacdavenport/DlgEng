@@ -172,60 +172,67 @@ namespace DialogEngine
 
         /// <summary>
         /// It realoads dialog modes from .json files
-        /// Also it remove all historical dialogs from DialogTracker.cs which are not 
+        /// Also it remove all historical dialogs from DialogTracker.cs which are not part of new loaded dialog models
         /// </summary>
-        /// <param name="_dialogTracker"></param>
         /// <returns>Task</returns>
-        public static async Task RefreshDialogModelsAsync(DialogTracker _dialogTracker)
+        public static async Task RefreshDialogModelsAsync()
         {
             await Task.Run(() =>
             {
                 Thread.CurrentThread.Name = "RefreshDialogModelsAsyncThread";
 
-                int _historicalDialogsSize = DialogTracker.Instance.HistoricalDialogs.Count;
+                DialogTracker _dialogTracker = DialogTracker.Instance;
 
                 List <string> _selectedDialogFiles = DialogViewModel.Instance.DialogModelCollection.Where(dialog => dialog.State == ModelDialogState.On)
                                                                                                    .Select(dialog => dialog.FileName)
                                                                                                    .ToList();
 
+                int _historicalDialogsSize = _dialogTracker.HistoricalDialogs.Count;
 
-                for(int i = _historicalDialogsSize-1; i >= 0; i--)
+                for (int i = _historicalDialogsSize -1; i >= 0 ; i--)
                 {
-                    string _dialogFileName = DialogTracker.Instance.ModelDialogs[DialogTracker.Instance.HistoricalDialogs[i].DialogIndex].FileName;
+                    string _dialogFileName = _dialogTracker.ModelDialogs[_dialogTracker.HistoricalDialogs[i].DialogIndex].FileName;
 
                     if (!_selectedDialogFiles.Contains(_dialogFileName))
                     {
-                        DialogTracker.Instance.HistoricalDialogs.RemoveAt(i);
+                        _dialogTracker.HistoricalDialogs.RemoveAt(i);
                     }
                 }
 
 
                 List<ModelDialog> _modelDialogsList = new List<ModelDialog>();
 
-                // 
+
                 foreach(ModelDialogInfo _dialogInfo in DialogViewModel.Instance.DialogModelCollection)
                 {
                     if(_dialogInfo.State == ModelDialogState.On)
                     {
                         foreach(ModelDialog _dialog in _dialogInfo.InList)
                         {
-                            // query will return null if no data found
-                            HistoricalDialog _historicalDialog = DialogTracker.Instance.HistoricalDialogs.Where(historicalDialog => historicalDialog.DialogName.Equals(_dialog.Name))
-                                                                                                         .FirstOrDefault();
-                            if(_historicalDialog != null)
-                            {
-                                _historicalDialog.DialogIndex = _modelDialogsList.Count;
-                            }
 
                             _modelDialogsList.Add(_dialog);
                         }
                     }
                 }
 
-
                 _dialogTracker.ModelDialogs = _modelDialogsList;
-
                 _dialogTracker.DialogModelPopularitySum = _modelDialogsList.Sum(_modelDialogItem => _modelDialogItem.Popularity);
+
+
+                int _updatedHistoricalDialogList = _dialogTracker.HistoricalDialogs.Count;
+
+                // update historicaldialog list
+                for (int i = 0; i < _updatedHistoricalDialogList; i++)
+                {
+
+                    int index = _dialogTracker.ModelDialogs.FindIndex(_dialog => _dialog.Name.Equals(_dialogTracker.HistoricalDialogs[i].DialogName));
+
+                    if (index != -1)
+                    {
+                        _dialogTracker.HistoricalDialogs[i].DialogIndex = index;
+                    }
+
+                }
 
             });
         } 

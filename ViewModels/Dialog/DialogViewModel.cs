@@ -375,7 +375,7 @@ namespace DialogEngine.ViewModels.Dialog
         }
 
         /// <summary>
-        /// Collection of <see cref="CharacterInfo"/>
+        /// Collection of <see cref="Character"/>
         /// Source for characters combobox
         /// </summary>
         public ObservableCollection<Character> CharacterCollection
@@ -1221,7 +1221,7 @@ namespace DialogEngine.ViewModels.Dialog
             {
                 if (mIsModelsDialogChanged == true)
                 {
-                    await InitModelDialogs.RefreshDialogModelsAsync(DialogTracker.Instance);
+                    await InitModelDialogs.RefreshDialogModelsAsync();
 
                     mIsModelsDialogChanged = false;
                 }
@@ -1232,6 +1232,8 @@ namespace DialogEngine.ViewModels.Dialog
 
                       while (!_cancellationToken.IsCancellationRequested)
                       {
+
+                        mcLogger.Debug("Start DialogWorkerThread");
 
                           switch (SelectedCharactersOn)
                           {
@@ -1307,8 +1309,11 @@ namespace DialogEngine.ViewModels.Dialog
                                       break;
                                   }
                           }
-                      }
-                  }, _cancellationToken);
+
+                        mcLogger.Debug("End DialogWorkerThread");
+
+                    }
+                }, _cancellationToken);
             }
             catch (TaskCanceledException ex) 
             {
@@ -1359,6 +1364,27 @@ namespace DialogEngine.ViewModels.Dialog
         {
             try
             {
+                // reset radio textboxes
+                if (Application.Current.Dispatcher.CheckAccess())
+                {
+                    foreach (TextBox tb in VisualHelper.FindVisualChildren<TextBox>(this.View.RadioTextBoxesContainer))
+                    {
+                        tb.Tag = null;
+                        tb.Text = "";
+                    }
+                }
+                else
+                {
+                    await Application.Current.Dispatcher.BeginInvoke((Action)(() =>
+                    {
+                        foreach (TextBox tb in VisualHelper.FindVisualChildren<TextBox>(this.View.RadioTextBoxesContainer))
+                        {
+                            tb.Tag = null;
+                            tb.Text = "";
+                        }
+                    }));
+                }
+
                 Task loadDialogModelsTask = InitModelDialogs.SetDefaultsAsync(DialogTracker.Instance);
                 Task loadCharactersTask = DialogTracker.Instance.IntakeCharactersAsync();
 

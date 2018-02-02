@@ -4,6 +4,7 @@
 using DialogEngine.Core;
 using System.Windows.Controls;
 using DialogEngine.ViewModels.Dialog;
+using System.Threading.Tasks;
 
 namespace DialogEngine.Views.Dialog
 {

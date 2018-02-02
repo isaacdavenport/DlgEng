@@ -1,6 +1,7 @@
 ﻿//Confidential Source Code Property Toys2Life LLC Colorado 2017
 //www.toys2life.org
 
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
 
@@ -62,6 +63,30 @@ namespace DialogEngine.Helpers
             return _child;
         }
 
+        /// <summary>
+        /// Recursive goes through children of control and yield to result child of specified type
+        /// </summary>
+        /// <typeparam name="T">Type</typeparam>
+        /// <param name="depObj">Container</param>
+        /// <returns>List with children of specified type T</returns>
+        public static IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject
+        {
+            if (depObj != null)
+            {
+                for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
+                {
+                    DependencyObject child = VisualTreeHelper.GetChild(depObj, i);
+                    if (child != null && child is T)
+                    {
+                        yield return (T)child;
+                    }
 
+                    foreach (T childOfChild in FindVisualChildren<T>(child))
+                    {
+                        yield return childOfChild;
+                    }
+                }
+            }
+        }
     }
 }

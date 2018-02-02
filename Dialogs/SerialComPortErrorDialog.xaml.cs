@@ -39,6 +39,13 @@ namespace DialogEngine.Dialogs
 
         private void _populateComPortsComboBox()
         {
+            if (SerialPortsComboBox.HasItems)
+            {
+                SerialPortsComboBox.Items.Clear();
+            }
+
+            this.SaveChangesBtn.IsEnabled = true;
+
             // add list of all valid COM port names to combobox
             foreach(string port in System.IO.Ports.SerialPort.GetPortNames())
             {
@@ -95,6 +102,10 @@ namespace DialogEngine.Dialogs
         }
 
 
+        private void _refresh_Click(object sender, RoutedEventArgs e)
+        {
+            _populateComPortsComboBox();
+        }
 
 
         #endregion
