@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Collections.Generic;
 using System.Linq;
+using System.Configuration;
 
 namespace DialogEngine
 {
@@ -281,6 +282,20 @@ namespace DialogEngine
                 _nextCharacterSwapTime.AddSeconds(12);
 
                 SerialComs.IsSerialMode = false;
+
+
+
+                string _configPath = System.IO.Path.Combine(System.Environment.CurrentDirectory, "DialogEngine.exe");
+
+                Configuration _config = ConfigurationManager.OpenExeConfiguration(_configPath);
+
+                _config.AppSettings.Settings["UseSerialPort"].Value = false.ToString();
+
+                _config.Save();
+
+                ConfigurationManager.RefreshSection("appSettings");
+
+
 
                 while (true)
                 {
