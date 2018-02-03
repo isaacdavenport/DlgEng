@@ -33,41 +33,10 @@ namespace DialogEngine
         public static int NextCharacter2 = 2;
         public static int[,] HeatMap = new int[SerialComs.NumRadios, SerialComs.NumRadios];
         public static DateTime[] CharactersLastHeatMapUpdateTime = new DateTime[SerialComs.NumRadios];
-        public static System.Timers.Timer Timer = new System.Timers.Timer(1000);
-        public static object Lock = new object();
-
-
-        #endregion
-
-        #region - Static constructor -
-
-        static SelectNextCharacters()
-        {
-            Timer.Elapsed += _timer_Tick;
-        }
 
         #endregion
 
         #region - Private methods -
-
-
-        private static void _timer_Tick(object sender, ElapsedEventArgs e)
-        {
-            for(int i = 0; i < CharactersLastHeatMapUpdateTime.Length; i++)
-            {
-                double _lastUpdate = DateTime.Now.TimeOfDay.TotalSeconds - CharactersLastHeatMapUpdateTime[i].TimeOfDay.TotalSeconds;
-
-                if (_lastUpdate > 8)
-                {
-                    for (int j = 0; j < SerialComs.NumRadios; j++)
-                    {
-                        HeatMap[i, j] = 0;
-                    }
-
-                    DialogViewModel.Instance.HeatMapUpdate = HeatMap;
-                }
-            }
-        }
 
 
         private static void _enqueLatestCharacters(int _ch1, int _ch2)
@@ -313,7 +282,6 @@ namespace DialogEngine
 
                 SerialComs.IsSerialMode = false;
 
-                SelectNextCharacters.Timer.Stop();
 
                 if (SessionVariables.UseSerialPort)
                 {
@@ -333,6 +301,7 @@ namespace DialogEngine
                 {
                     if (_cancellationToken.IsCancellationRequested)
                     {
+                        Thread.CurrentThread.Abort();
                         return;
                     }
 

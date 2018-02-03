@@ -13,6 +13,8 @@ using DialogEngine.Events;
 using DialogEngine.Events.DialogEvents;
 using System.Windows;
 using System.Linq;
+using DialogEngine.ViewModels.Dialog;
+using DialogEngine.Models.Logger;
 
 namespace DialogEngine
 {
@@ -140,6 +142,12 @@ namespace DialogEngine
             catch (TimeoutException) {
                 mcLogger.Debug("serial buffer over run.");
             }
+            catch (InvalidOperationException ex)
+            {
+                mcLogger.Debug("readSerialInLine invalid operation " + ex.Message);
+
+                DialogViewModel.Instance.AddItem(new ErrorMessage("The port is closed"));
+            }
             return _message;
         }
 
@@ -245,13 +253,11 @@ namespace DialogEngine
 
                 IsSerialMode = true;
 
-                SelectNextCharacters.Timer.Start();
 
                 while (true)
                 {
                     if (_cancellationToken.IsCancellationRequested)
                     {
-                        SelectNextCharacters.Timer.Stop();
                         return;
                     }
 
