@@ -184,7 +184,7 @@ namespace DialogEngine.Controls
             {
                 List<mPropertyChanged> _propertyChangedHandlers = new List<mPropertyChanged>();
 
-                string _configPath = System.IO.Path.Combine(System.Environment.CurrentDirectory, "DialogEngine.exe");
+                string _configPath = System.IO.Path.Combine(Environment.CurrentDirectory, "DialogEngine.exe");
 
                 Configuration _config = ConfigurationManager.OpenExeConfiguration(_configPath);
 

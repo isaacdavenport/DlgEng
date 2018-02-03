@@ -3,7 +3,6 @@
 
 using System.IO.Ports;
 using System;
-using System.IO;
 using System.Threading;
 using DialogEngine.Helpers;
 using log4net;
@@ -240,10 +239,13 @@ namespace DialogEngine
 
                 IsSerialMode = true;
 
+                SelectNextCharacters.Timer.Start();
+
                 while (true)
                 {
                     if (_cancellationToken.IsCancellationRequested)
                     {
+                        SelectNextCharacters.Timer.Stop();
                         return;
                     }
 

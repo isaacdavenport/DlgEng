@@ -209,11 +209,11 @@ namespace DialogEngine.Helpers
             string _path = Environment.CurrentDirectory;
 
             //path is  "solutionDir/bin/outputDir", so we need to go back 2 times to solutionDir
-            BaseDirectory = Path.GetFullPath(Path.Combine(_path, @"..\..\"));
+            BaseDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
-            DialogsDirectory = BaseDirectory + @"DialogJSON\";
-            AudioDirectory = BaseDirectory + @"DialogAudio\";
-            CharactersDirectory = BaseDirectory + @"CharacterJSON\";
+            DialogsDirectory = BaseDirectory + @"\DialogJSON\";
+            AudioDirectory = BaseDirectory + @"\DialogAudio\";
+            CharactersDirectory = BaseDirectory + @"\CharacterJSON\";
 
             
             if (ConfigurationManager.AppSettings["CharactersDirectory"] != null)

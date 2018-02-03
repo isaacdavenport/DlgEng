@@ -12,6 +12,7 @@ using System.Windows;
 using System.Collections.Generic;
 using System.Linq;
 using System.Configuration;
+using System.Timers;
 
 namespace DialogEngine
 {
@@ -21,6 +22,7 @@ namespace DialogEngine
 
         private static Random msRandom = new Random();
         private static int[,] msStrongRssiCharacterPairBuf = new int[2, StrongRssiBufDepth];
+        
 
         public const int StrongRssiBufDepth = 12;
         public static readonly TimeSpan MaxLastSeenInterval = new TimeSpan(0, 0, 0, 2, 100);
@@ -31,12 +33,41 @@ namespace DialogEngine
         public static int NextCharacter2 = 2;
         public static int[,] HeatMap = new int[SerialComs.NumRadios, SerialComs.NumRadios];
         public static DateTime[] CharactersLastHeatMapUpdateTime = new DateTime[SerialComs.NumRadios];
+        public static System.Timers.Timer Timer = new System.Timers.Timer(1000);
+        public static object Lock = new object();
+
 
         #endregion
 
+        #region - Static constructor -
+
+        static SelectNextCharacters()
+        {
+            Timer.Elapsed += _timer_Tick;
+        }
+
+        #endregion
 
         #region - Private methods -
 
+
+        private static void _timer_Tick(object sender, ElapsedEventArgs e)
+        {
+            for(int i = 0; i < CharactersLastHeatMapUpdateTime.Length; i++)
+            {
+                double _lastUpdate = DateTime.Now.TimeOfDay.TotalSeconds - CharactersLastHeatMapUpdateTime[i].TimeOfDay.TotalSeconds;
+
+                if (_lastUpdate > 8)
+                {
+                    for (int j = 0; j < SerialComs.NumRadios; j++)
+                    {
+                        HeatMap[i, j] = 0;
+                    }
+
+                    DialogViewModel.Instance.HeatMapUpdate = HeatMap;
+                }
+            }
+        }
 
 
         private static void _enqueLatestCharacters(int _ch1, int _ch2)
@@ -137,7 +168,6 @@ namespace DialogEngine
         }
 
         #endregion
-
 
         #region - Public methods -
 
@@ -284,6 +314,7 @@ namespace DialogEngine
 
                 SerialComs.IsSerialMode = false;
 
+                SelectNextCharacters.Timer.Stop();
 
                 if (SessionVariables.UseSerialPort)
                 {
