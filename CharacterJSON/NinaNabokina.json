@@ -1,0 +1,1042 @@
+{
+   "CharacterName" : "Nina Nabokina",
+   "CharacterPrefix" : "NN",
+   "Phrases" : [
+      {
+         "DialogStr" : "Nina Nabokina has not been initialized.",
+         "FileName" : "NinaNabokinaHasNotBeen",
+         "PhraseWeights" : {
+            "Exclamation" : 0.01
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "Now that I have my pirouette perfectly polished, I am working my tutu off to perfect my grand jete. When I can finally perform a graceful grand jete, I am going to go far. I will show the world how I can fly through the air with my magical pink ballet slippers.",
+         "FileName" : "WorkingMyTutuOff",
+         "PhraseWeights" : {
+            "GiveRecentHistory" : 8,
+            "Ramble" : 2
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "Yes, I am thinking the same way.",
+         "FileName" : "ThinkingTheSameWay",
+         "PhraseWeights" : {
+            "GiveAgreement" : 6,
+            "AcceptPlan" : 6
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "You should follow your dreams. Life does not always smell like roses, but if you work hard you can be a star! Just don't be a bigger star than me, because that will get you trouble! Tee hee!",
+         "FileName" : "FollowYourDreams",
+         "PhraseWeights" : {
+            "GiveAdvice" : 8
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "I don't feel very graceful today. I don't even feel like twirling. Sniff.",
+         "FileName" : "DontFeelGracefulToday",
+         "PhraseWeights" : {
+            "RequestAffirmation" : 5
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "Pleased to meet you, I am Nina Nabokina. Let me do my best curtsey for you.",
+         "FileName" : "PleasedToMeetYou",
+         "PhraseWeights" : {
+            "Greeting" : 8
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "Hello, beautiful person.",
+         "FileName" : "HelloBeautiful",
+         "PhraseWeights" : {
+            "Greeting" : 4,
+            "GiveAffirmation" : 2
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "Someone hid my tutu just before curtain time! I had to pirouette as the Sugar Plum Fairy in my yoga pants! I know it was you who hid my tutu. I know it was you because you are jealous of my beauty and talent.",
+         "FileName" : "SomeoneHidMyTutu",
+         "PhraseWeights" : {
+            "Accuse" : 8
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "The Great Madame Marinka is so cross with me. She did not approve of the small skip I added in today's performance. I just thought the dance routine could use a little something extra. But, it was so much more beautiful the way I did it, wasn't it?.",
+         "FileName" : "MadameMarinkaIsCross",
+         "PhraseWeights" : {
+            "RequestAffirmation" : 2,
+            "RequestAdvice" : 2
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "Oh! When you least expect it, you will find itching powder in your tights!",
+         "FileName" : "ItchingPowderInTights",
+         "PhraseWeights" : {
+            "Threat" : 8,
+            "ShutUp" : 1
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "I must go to my dressing room now. I don't want to miss curtain call.",
+         "FileName" : "GoToMyDressingRoom",
+         "PhraseWeights" : {
+            "Retreat" : 8
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "Watch me do this pirouette. See, I've added my own special bit at the end. What do you think, will I be a famous ballerina someday?",
+         "FileName" : "WillIBeFamous",
+         "PhraseWeights" : {
+            "YesNoQuestion" : 9,
+            "RequestAffirmation" : 2
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "Da! I mean yes, of course!",
+         "FileName" : "DaYes",
+         "PhraseWeights" : {
+            "Yes" : 8
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "Nyet! I mean no, definitely not!",
+         "FileName" : "NyetNo",
+         "PhraseWeights" : {
+            "No" : 8
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "How are you my friend? What have you been doing besides working hard at following your dreams?",
+         "FileName" : "WhatHaveYouBeenDoing",
+         "PhraseWeights" : {
+            "RequestCatchup" : 8,
+            "RequestActivity" : 5
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "If you landed in the orchestra pit while performing a grand jete, I would stop, mid-polonaise, and pull you out.",
+         "FileName" : "PullYouOut",
+         "PhraseWeights" : {
+            "GiveAffirmation" : 8
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "Oh! That is ridiculous!",
+         "FileName" : "ThatIsRidiculous",
+         "PhraseWeights" : {
+            "GiveDisbelief" : 8,
+            "Deny" : 5
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "Don't tell Madame Marinka this, but sometimes I imagine how nice it would be to be terrible at ballet. Then I could  play all day instead of having to take ballet lessons and then practice in my room from morning until night time.",
+         "FileName" : "ToBeTerribleAtBallet",
+         "PhraseWeights" : {
+            "GiveSurprisingStatement" : 2
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "I wonder if there is a place where would I could fly through the air even when I don't have my magical pink ballet slippers on.",
+         "FileName" : "SomewhereICouldFly",
+         "PhraseWeights" : {
+            "RequestLocation" : 8
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "Dreaming of seeing the great big world below as I fly across the sky in my magical pink ballet slippers.",
+         "FileName" : "FlyAcrossTheSky",
+         "PhraseWeights" : {
+            "GiveActivity" : 8
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "Doesn't this new ballet dress make me look like the star that I am?",
+         "FileName" : "LookLikeTheStartThatIAm",
+         "PhraseWeights" : {
+            "YesNoQuestion" : 5,
+            "RequestAffirmation" : 2
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "A turtle could do a plie better than you!",
+         "FileName" : "TurtlePlie",
+         "PhraseWeights" : {
+            "Insult" : 5,
+            "YesNoQuestion" : 1
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "Spasibo! That is Thank You in my Russian language.",
+         "FileName" : "ThankYou",
+         "PhraseWeights" : {
+            "ThankYou" : 8
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "Pojalusta. That's you're welcome in my Russian language﻿",
+         "FileName" : "YoureWelcome",
+         "PhraseWeights" : {
+            "YoureWelcome" : 8
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "Who knows where in the world I shall be when a ballet company finally asks me to be their prima ballerina.",
+         "FileName" : "WhereInTheWorld",
+         "PhraseWeights" : {
+            "RequestLocation" : 8
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "I have been practising my pirouette all day. I must say that I am starting to get dizzy! In fact, the room is spinning, or is it just me?",
+         "FileName" : "PractisingPirouette",
+         "PhraseWeights" : {
+            "GiveRecentHistory" : 8,
+            "YesNoQuestion" : 5,
+            "Ramble" : 2,
+            "RequestAdvice" : 1
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "Tell me more of this interesting fairy tale.",
+         "FileName" : "TellMeMore",
+         "PhraseWeights" : {
+            "GoOnNeutral" : 8,
+            "Maybe" : 2
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "I truly don't know how such things are allowed to happen!",
+         "FileName" : "HowSuchThingsAllowedToHappen",
+         "PhraseWeights" : {
+            "Deny" : 8,
+            "GiveDisbelief" : 5,
+            "GoOnDisapproval" : 2
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "I imagine someone would look beautiful in this truly ugly ballet dress, just not me!",
+         "FileName" : "TrulyUglyBalletDress",
+         "PhraseWeights" : {
+            "RequestWho" : 8
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "That is incredible!",
+         "FileName" : "Incredible",
+         "PhraseWeights" : {
+            "Exclamation" : 8,
+            "GoOnSurprise" : 5,
+            "GiveAffirmation" : 2
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "Honestly! Are you speaking the truth when you say such things?",
+         "FileName" : "SaySuchThings",
+         "PhraseWeights" : {
+            "GoOnNeutral" : 4,
+            "GiveDisbelief" : 3,
+            "YesNoQuestion" : 2,
+            "GoOnDisapproval" : 1
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "Oh! That makes me so mad!",
+         "FileName" : "MakesMeSoMad",
+         "PhraseWeights" : {
+            "GoOnAngry" : 8,
+            "GoOnDisgust" : 5,
+            "GiveDisbelief" : 3,
+            "GoOnDisapproval" : 1
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "I felt like that when I had to go on stage as the Sugar Plum Fairy wearing my yoga pants!",
+         "FileName" : "SugarPlumFairyInYogaPants",
+         "PhraseWeights" : {
+            "GoOnFear" : 8
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "I don't think I'm going to feel like doing pirouettes ever ever again.",
+         "FileName" : "FeelLikeDoingPirouettes",
+         "PhraseWeights" : {
+            "GoOnSad" : 6,
+            "GoOnFear" : 5,
+            "GoOnDissaproval" : 4,
+            "GoOnDisgust" : 3
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "How can I ever repay you for such kindness?",
+         "FileName" : "RepayYouForSuchKindness",
+         "PhraseWeights" : {
+            "ThankYou" : 8,
+            "GiveCredit" : 4
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "The way you performed that grand jete up there on stage, you looked almost as talented as me!",
+         "FileName" : "AlmostAsTalented",
+         "PhraseWeights" : {
+            "GiveCredit" : 4
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "Oh, I was thinking of doing something awful like cutting the ribbons on your pointe shoes. But instead I might have done some teeny, tiny, itty, bitty, small thing that was only sort of terrible.",
+         "FileName" : "SortOfTerrible",
+         "PhraseWeights" : {
+            "Admit" : 8
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "My head is always full of ideas of how I can make ballet more dramatic and oh so beautiful. But sometimes I get the feeling my personal touches are not appreciated. Why can't Madame Marinka see how much more beautiful my added flourishes make her dance routines?",
+         "FileName" : "PersonalTouchesNotAppreciated",
+         "PhraseWeights" : {
+            "RequestMotivation" : 8,
+            "RequestAffirmation" : 2,
+            "Ramble" : 2
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "Not everyone sees the world the same way, my friend. For many years I thought the world looked to everyone as pink and as beautiful as it looks to me. But then I learned that what look like magical pink ballet slippers to me may look to someone else like terrible monsters that no one would ever want to put onto their feet.",
+         "FileName" : "SeesTheWorldTheSameWay",
+         "PhraseWeights" : {
+            "GiveMotivation" : 8,
+            "Ramble" : 2
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "I nearly jumped out of my tutu!",
+         "FileName" : "JumpOutOfTutu",
+         "PhraseWeights" : {
+            "Exclamation" : 5
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "I am thinking that you would make a wonderful dance partner. Would you like to Pas de Deux with me?",
+         "FileName" : "PasDeDeuxWithMe",
+         "PhraseWeights" : {
+            "YesNoQuestion" : 4,
+            "GiveAffirmation" : 2
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "Twirling across the stage?",
+         "FileName" : "TwirlingAcrossStage",
+         "PhraseWeights" : {
+            "GiveActivity" : 8
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "Maybe they were just following their dreams. That's okay with me as long as their dreams don't get in the way of my dreams!",
+         "FileName" : "FollowingTheirDreams",
+         "PhraseWeights" : {
+            "GiveMotivation" : 8
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "Every night in my dreams, I am flying through the air. It is so beautiful!",
+         "FileName" : "FlyThorughTheAir",
+         "PhraseWeights" : {
+            "GiveSurprisingStatement" : 2
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "But of course, my beautiful friend!",
+         "FileName" : "ButOfCourse",
+         "PhraseWeights" : {
+            "YoureWelcome" : 6
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "I need to feel like a bubble, light and floaty, so I can go on stage and leave my troubles in the wings. Can you tell me something so silly to make me feel like a bubble that wants to float up into the air?",
+         "FileName" : "SillyToMakeMeFeelLikeABubble",
+         "PhraseWeights" : {
+            "RequestJoke" : 8,
+            "RequestAffirmation" : 2
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "I am afraid there may be a troll hiding under the bridge in this story...",
+         "FileName" : "TrollHidingUnderTheBridge",
+         "PhraseWeights" : {
+            "GoOnFear" : 6,
+            "GoOnSad" : 1
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "What is it that I am doing that blinds Madame Marinka from seeing how talented I am?",
+         "FileName" : "SeeHowTalentedIAm",
+         "PhraseWeights" : {
+            "RequestActivity" : 8,
+            "RequestAdvice" : 6,
+            "RequestAffirmation" : 2
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "I need to concentrate on my warm up now or I won't be ready for my role as the beautiful dancing princess.",
+         "FileName" : "ConcentrateOnMyWarmup",
+         "PhraseWeights" : {
+            "Retreat" : 8
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "Of course!",
+         "FileName" : "OfCourse",
+         "PhraseWeights" : {
+            "Yes" : 3
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "It is true that Paulina Pavlova is a very graceful ballet dancer, but certainly not more graceful than me! She can probably do most things she sets her mind to, just like I do!",
+         "FileName" : "PaulinaPavlova",
+         "PhraseWeights" : {
+            "GiveWho" : 8
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "You can find anything in your imagination, if you know where to look!",
+         "FileName" : "FindAnythingInYourImagination",
+         "PhraseWeights" : {
+            "GiveLocation" : 8
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "No! How could you think such a terrible thing?",
+         "FileName" : "ThinkSuchATerribleThing",
+         "PhraseWeights" : {
+            "No" : 6,
+            "Deny" : 4
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "What routines are you practicing today, friend?",
+         "FileName" : "WhatRoutines",
+         "PhraseWeights" : {
+            "RequestCatchup" : 8,
+            "RequestActivity" : 4
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "You're about as graceful as a hippopotamus!",
+         "FileName" : "AsGracefulAsAHippopotamus",
+         "PhraseWeights" : {
+            "Insult" : 8,
+            "GoOnDisapproval" : 5
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "I don't have time for amatuers.",
+         "FileName" : "NoTimeForAmatuers",
+         "PhraseWeights" : {
+            "ShutUp" : 5,
+            "Retreat" : 2
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "That Paulina Pavlova stole the role of Juliet. She can't even hold an arabesque for more than three seconds without fidgeting. That role was to be mine! Please tell me something that will make me forget that I just heard this horrible news.",
+         "FileName" : "ThatRoleWasToBeMine",
+         "PhraseWeights" : {
+            "RequestJoke" : 8,
+            "RequestAffirmation" : 5
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "How can I win back the role of Juliet that Paulina Pavlova stole from me? I really don't want to do something mean and nasty, but I am afraid I might!",
+         "FileName" : "WinBackTheRole",
+         "PhraseWeights" : {
+            "RequestAdvice" : 8,
+            "RequestAffirmation" : 5
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "What made Madame Marinka think that Paulina Pavlova would be a better Juliet than me? I have been practicing the waltz all winter. And besides, I just look like a Juliet.",
+         "FileName" : "WhatMadeMadameMarinkaThink",
+         "PhraseWeights" : {
+            "RequestMotivation" : 4,
+            "RequestAffirmation" : 2
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "That makes my tummy feel like it does when I twirl too many times!",
+         "FileName" : "TwirlTooManyTimes",
+         "PhraseWeights" : {
+            "GoOnDisgust" : 2
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "Wherever you'd feel safe leaving your leotards laying about, that's where I'd look.",
+         "FileName" : "LeotardsLayingAbout",
+         "PhraseWeights" : {
+            "GiveLocation" : 8
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "I hear the beauty of the words you are speaking.",
+         "FileName" : "BeautyOfTheWords",
+         "PhraseWeights" : {
+            "GoOnUnderstanding" : 6
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "It's like putting on your new ballet slippers and they are five sizes too small! It makes me want to cry.",
+         "FileName" : "FiveSizeTooSmall",
+         "PhraseWeights" : {
+            "GoOnSad" : 8
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "Are you the dancer who suggested that terrible Paulina Pavlova should have the most perfect ballerina role of Juliet instead of me?",
+         "FileName" : "TheDancerWhoSuggested",
+         "PhraseWeights" : {
+            "Accuse" : 8,
+            "YesNoQuestion" : 2
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "Oh I believe that the most beautiful boy ballet dancer, Nicolai Nininsky, can perform any role, from any ballet, and do just about anything he wants to most gracefully.",
+         "FileName" : "NicolaiNininsky",
+         "PhraseWeights" : {
+            "GiveWho" : 8
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "Oh, how wonderfully dramatic!",
+         "FileName" : "WonderfullyDramatic",
+         "PhraseWeights" : {
+            "GoOnSurprise" : 4,
+            "Exclamation" : 2
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "I wouldn't have been able to fly through the air like that if I didn't have you to catch me. Thank you for being such a steadfast friend, and a truly graceful ballet partner.",
+         "FileName" : "HaveYouToCatchMe",
+         "PhraseWeights" : {
+            "GiveCredit" : 8
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "Who can pirouette better than me?",
+         "FileName" : "PirouetteBetter",
+         "PhraseWeights" : {
+            "RequestWho" : 8
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "That was so un-professional of me. I must have lost my gracefulness for a moment.",
+         "FileName" : "LostMyGracefulness",
+         "PhraseWeights" : {
+            "Admit" : 8
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "...",
+         "FileName" : "HalfSecSilence",
+         "PhraseWeights" : {
+            "GiveSilence" : 1
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "You wouldn't be hanging noodles on my ears, would you?",
+         "FileName" : "HangingNoodles",
+         "PhraseWeights" : {
+            "GiveDisbelief" : 8
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "Hmmm. I can't decide if I should wear my pink tutu or my white tutu. Do I dance better in one than the other I wonder?",
+         "FileName" : "MyPinkTutu",
+         "PhraseWeights" : {
+            "RequestAdvice" : 2
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "Someone sent roses to my dressing room. I am trying to think who it could have been. Oh! Maybe it was the beautiful Nicolai Nininsky! Perhaps he was overcome by my grace and talent as The Swan in yesterday's performance of Swan Lake. I did such a perfect grand jete, I felt as if I was flying through the air, flapping my invisible swan wings.",
+         "FileName" : "RosesToMyDressingRoom",
+         "PhraseWeights" : {
+            "GiveRecentHistory" : 4,
+            "Ramble" : 2
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "I think someone slipped on their leotards and hit their head badly.",
+         "FileName" : "SlippedOnTheirLeoards",
+         "PhraseWeights" : {
+            "GiveDisbelief" : 2
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "You know, when I was at ballet practice today, I noticed that Paulina was getting very distracted while working on her polonaise with Nicolai. I think she wants him to be Romeo as she is now Juliet. I must find a way to make Madame Marinka think I would make a better Juliet. I have been working so hard for that role to be mine! I got a standing ovation for dancing the Sugar Plum Fairy in my yoga pants, after all!",
+         "FileName" : "PaulinaPolonaiseWithNicolai ",
+         "PhraseWeights" : {
+            "Ramble" : 1
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "I believe it to be so.",
+         "FileName" : "ItToBeSo",
+         "PhraseWeights" : {
+            "GiveAgreement" : 8
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "I was in fifth position today when a fly landed on my nose!",
+         "FileName" : "FlyLandedOnMyNose",
+         "PhraseWeights" : {
+            "GiveSurprisingStatement" : 5
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "Never ever, I think not.",
+         "FileName" : "NeverEver",
+         "PhraseWeights" : {
+            "No" : 7
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "It is of no trouble.",
+         "FileName" : "NoTrouble",
+         "PhraseWeights" : {
+            "YoureWelcome" : 4
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "It is a pleasure to see you, friend.",
+         "FileName" : "PleasureToSeeYou",
+         "PhraseWeights" : {
+            "Greeting" : 8
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "The world is such a beautiful place when you have fans! Thank you!",
+         "FileName" : "WorldIsSuchABeautifulPlace",
+         "PhraseWeights" : {
+            "ThankYou" : 6
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "Don't worry, you will go far. I promise. Just not as far as me. ",
+         "FileName" : "YouWillGoFar",
+         "PhraseWeights" : {
+            "GiveAffirmation" : 8
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "You will be sorry when you find your tutu has gone missing. Oh, I wonder where it could have gone to?",
+         "FileName" : "TutuHasGoneMissing",
+         "PhraseWeights" : {
+            "Threat" : 6
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "You be careful, next time I grand jete, do you know where I will land?",
+         "FileName" : "GrandJete",
+         "PhraseWeights" : {
+            "Threat" : 8
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "Oh, I think we shoud dance together someday! We would be so beautiful together!",
+         "FileName" : "BeautifulTogether",
+         "PhraseWeights" : {
+            "GiveAffirmation" : 4
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "Tell me, what did I miss while I was rehearsing in my dressing room?",
+         "FileName" : "RehearsingInDressingRoom",
+         "PhraseWeights" : {
+            "RequestCatchup" : 6
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "You should have seen the look on Paulina Pavlova's face when she stepped out onto stage with itching powder in her tights! Oh it was so hard for her to conentrate on her arabesque with her legs just screaming to be itched! It was so funny it was beautiful!",
+         "FileName" : "BlowsRasberry",
+         "PhraseWeights" : {
+            "GiveJoke" : 2,
+            "Ramble" : 1
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "I won't listen to any more of this.",
+         "FileName" : "IWontListen",
+         "PhraseWeights" : {
+            "ShutUp" : 8
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "I want to have something else to think about besides that horrible Paulina stealing my role.",
+         "FileName" : "SomethingElseToThinkAbout",
+         "PhraseWeights" : {
+            "RequestJoke" : 8
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : " Knock knock. Who’s there? Doris. Doris who? Door is locked, that’s why I knocked.",
+         "FileName" : "KnockKnock",
+         "PhraseWeights" : {
+            "GiveJoke" : 8
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "I will fly all the way to Mars someday with my magical pink ballerina slippers! You will see!",
+         "FileName" : "AllTheWayToMars",
+         "PhraseWeights" : {
+            "Insult" : 8,
+            "GiveSurprisingStatement" : 2
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "If I do one more plie today I think I will forever walk as if I am riding a horse. I think I did a hundred plies today and I may not be able to bring my knees together unil next Monday. I don't understand why some ballet moves are so un-graceful.",
+         "FileName" : "HundredPlies",
+         "PhraseWeights" : {
+            "GiveRecentHistory" : 9,
+            "Ramble" : 8
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "I am writing my very first ballet. I have completed the beginning and the end, but I don't know what to put in the middle. What do you think would be the most beautiful movement to lead the audience straight into to my wonderfully dramatic ending?",
+         "FileName" : "MyVeryFirstBallet",
+         "PhraseWeights" : {
+            "RequestActivity" : 8,
+            "RequestAdvice" : 2
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "Tying the ribbons on someone's ballet slippers into knots.",
+         "FileName" : "IntoKnots",
+         "PhraseWeights" : {
+            "GiveActivity" : 4
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "Skipping across the stage of life.",
+         "FileName" : "TheStageOfLife",
+         "PhraseWeights" : {
+            "GiveActivity" : 8
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "If Nicolai will not be my dance partner, well then who will I dance with?",
+         "FileName" : "DancePartner",
+         "PhraseWeights" : {
+            "RequestWho" : 8
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "I wonder how long I need to practice my routine for. My toes are starting to turn blue and my head is spinning. I'm just not sure if I have practiced enough to be the best ballerina in the world. Sigh.",
+         "FileName" : "PracticedEnough",
+         "PhraseWeights" : {
+            "RequestAdvice" : 8
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "Oh, is it better to be graceful than to be beautiful?",
+         "FileName" : "IsItBetter",
+         "PhraseWeights" : {
+            "YesNoQuestion" : 8,
+            "RequestAdvice" : 4
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "Why would someone have stolen my tutu? It doesn't make any sense. I am such a beautiful ballet dancer, why would someone want to see me dance the Sugar Plum Fairy in my yoga pants?",
+         "FileName" : "StolenMyTutu",
+         "PhraseWeights" : {
+            "RequestMotivation" : 8,
+            "Accuse" : 2
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "I am going to do some leaps and twirls for a bit. I don't feel like standing still.",
+         "FileName" : "LeapsAndTwirls",
+         "PhraseWeights" : {
+            "GoOnNeutral" : 2
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "Maybe there was something about her pirouette that they didn't like.",
+         "FileName" : "SomethingAboutHerPirouette",
+         "PhraseWeights" : {
+            "GiveMotivation" : 8
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "I am going to go far. But I don't know where that is.",
+         "FileName" : "GoingToGoFarWhere",
+         "PhraseWeights" : {
+            "RequestLocation" : 8
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "Under the table in the dressing room, that's where I find little pink dust bunnies.",
+         "FileName" : "DustBunnies",
+         "PhraseWeights" : {
+            "GiveLocation" : 8
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "Maybe the seamstress who stitched up your leotards is stitching up something else.",
+         "FileName" : "StitchingUpSomethingElse",
+         "PhraseWeights" : {
+            "GiveWho" : 8
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "I was being tossed through the air like a floaty bubble all night long by the graceful arms of Nicolai Ninisky. Didn't you see my most beautiful performance in Swan Lake last night? How could it I have managed to do such a thing if I had been wearing a swan suit all night?",
+         "FileName" : "FloatyBubbleAllNightLong",
+         "PhraseWeights" : {
+            "Deny" : 8
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "So it was me. My career will be over now I suppose. Just send me to the gulag why don't you?",
+         "FileName" : "SendMeToTheGulag",
+         "PhraseWeights" : {
+            "Admit" : 4
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "Whoever stitched up my tutu for me last night must have put some magic powder in my leotards while they were at it. Did you see me fly so through the air on stage tonight? I thought I would never touch down! I owe that someone a million standing ovations!",
+         "FileName" : "MillionStandingOvations",
+         "PhraseWeights" : {
+            "GiveCredit" : 3,
+            "RequestWho" : 2
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "That is terrible and awful at the same time!",
+         "FileName" : "TerribelAndAwful",
+         "PhraseWeights" : {
+            "GoOnAngry" : 6,
+            "GoOnDisapproval" : 2
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "Tell me more, I will try not to get dizzy.",
+         "FileName" : "TellMeMore",
+         "PhraseWeights" : {
+            "GoOnNeutral" : 4,
+            "GoOnUnderstanding" : 4
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "Don't mind me, I'm just practicing my promenade while you explain.",
+         "FileName" : "PracticingMyPromenade",
+         "PhraseWeights" : {
+            "GoOnNeutral" : 4,
+            "GoOnUnderstanding" : 4
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "Even my tutu looks sad.",
+         "FileName" : "TutuIsSad",
+         "PhraseWeights" : {
+            "GoOnSad" : 6
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "Oh my!",
+         "FileName" : "OhMy",
+         "PhraseWeights" : {
+            "GoOnSurprise" : 8
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "Ooh! I want to throw my ballet shoes at someone!",
+         "FileName" : "ThrowMyBalletShoes",
+         "PhraseWeights" : {
+            "GoOnAngry" : 4,
+            "GoOnDisapproval" : 4
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "Sometimes life does a perfect grand jete!",
+         "FileName" : "PerfectGrandJete",
+         "PhraseWeights" : {
+            "GoOnJoyful" : 8
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "Oh! I may have to close my ears this time.",
+         "FileName" : "CloseMyEars",
+         "PhraseWeights" : {
+            "GoOnDisgust" : 9
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "I am afraid to open my beautiful blue eyes!",
+         "FileName" : "AfraidToOpenEyes",
+         "PhraseWeights" : {
+            "GoOnFear" : 8
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "You said it beautifully.",
+         "FileName" : "SaidItBeautifully",
+         "PhraseWeights" : {
+            "GiveAgreement" : 8,
+            "GiveAffirmation" : 1
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "Simply beautiful!",
+         "FileName" : "SimplyBeautiful",
+         "PhraseWeights" : {
+            "GoOnJoyful" : 2
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "Tell me how your career is going while I do some stretches.",
+         "FileName" : "HowYourCareerIsGoing",
+         "PhraseWeights" : {
+            "RequestCatchup" : 2
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "This doesn't end like Romeo and Juliet, does it? Sniff, sniff.",
+         "FileName" : "RomeoAndJuliet",
+         "PhraseWeights" : {
+            "GoOnSad" : 2
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "Oh my, this is starting to sound ridiculous.",
+         "FileName" : "SoundRidiculous",
+         "PhraseWeights" : {
+            "GiveDisbelief" : 5,
+            "GoOnDisapproval" : 2,
+            "ShutUp" : 1
+         },
+         "PhraseRating" : "G"
+      },
+      {
+         "DialogStr" : "What's the latest news from the great stage of life, my friend?",
+         "FileName" : "StageOfLife",
+         "PhraseWeights" : {
+            "RequestCatchup" : 3
+         },
+         "PhraseRating" : "G"
+      }
+   ]
+}

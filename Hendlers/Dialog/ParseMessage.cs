@@ -40,31 +40,24 @@ namespace DialogEngine
                 CharacterPrefix = DialogViewModel.Instance.CharacterCollection[_characterRowNum].CharacterPrefix
             });
 
-
             //TODO add a lock around this
             for (int _i = 0; _i < SerialComs.NumRadios; _i++)
             {
                 ReceivedMessages.Last().Rssi[_i] = _rw[_i];
             }
 
-            if (SessionVariables.WriteSerialLog)
+            string _debugString = ReceivedMessages[ReceivedMessages.Count - 1].CharacterPrefix + "  " +
+                                    ReceivedMessages[ReceivedMessages.Count - 1].ReceivedTime.ToString("mm.ss.fff") + "  ";
+
+            for (var j = 0; j < SerialComs.NumRadios; j++)
             {
-
-                string _debugString = ReceivedMessages[ReceivedMessages.Count - 1].CharacterPrefix + "  " +
-                                      ReceivedMessages[ReceivedMessages.Count - 1].ReceivedTime.ToString("mm.ss.fff") + "  ";
-
-                for (var j = 0; j < SerialComs.NumRadios; j++)
-                {
-                    _debugString += ReceivedMessages[ReceivedMessages.Count - 1].Rssi[j].ToString("D3");
-                    _debugString += " "; 
-                }
-
-                _debugString += ReceivedMessages[ReceivedMessages.Count - 1].SequenceNum.ToString("D3");
-
-
-                LoggerHelper.Info(SessionVariables.DecimalLogFileName,_debugString);
-                LoggerHelper.Info(SessionVariables.DecimalLogFileName, "");
+                _debugString += ReceivedMessages[ReceivedMessages.Count - 1].Rssi[j].ToString("D3");
+                _debugString += " "; 
             }
+
+            _debugString += ReceivedMessages[ReceivedMessages.Count - 1].SequenceNum.ToString("D3");
+            
+            LoggerHelper.Info(SessionVariables.DecimalLogFileName,_debugString);
 
             if (ReceivedMessages.Count > 30000)
             {
