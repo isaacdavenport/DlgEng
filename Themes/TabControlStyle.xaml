@@ -21,7 +21,7 @@
                                 Background="Transparent" 
                                 SnapsToDevicePixels="True">
                             <!--Using ContentSource set to SelectedContent we will focus the content of the tabitem -->
-                            <ContentPresenter ContentSource="SelectedContent" HorizontalAlignment="Center"/>
+                            <ContentPresenter ContentSource="SelectedContent" HorizontalAlignment="Stretch"/>
                         </Border>
                     </Grid>
                 </ControlTemplate>
@@ -46,11 +46,11 @@
                         <Border Grid.Row="1" 
                                 BorderBrush="LightGray" 
                                 BorderThickness="1" 
-                                CornerRadius="2,2,2,2" 
+                                CornerRadius="2,2,2,2"
                                 Background="Transparent" 
                                 SnapsToDevicePixels="True">
                             <!--Using ContentSource set to SelectedContent we will focus the content of the tabitem -->
-                            <ContentPresenter ContentSource="SelectedContent" HorizontalAlignment="Center"/>
+                            <ContentPresenter ContentSource="SelectedContent"  HorizontalAlignment="Stretch" />
                         </Border>
                     </Grid>
                 </ControlTemplate>

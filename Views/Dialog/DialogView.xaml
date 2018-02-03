@@ -85,7 +85,7 @@
                         <TabItem Header="Characters settings"   BorderBrush="White">
 
 
-                            <TabControl Margin="0,-10,0,0"  Style="{StaticResource DefaultTabControlItem2}">
+                            <TabControl Margin="0,-10,0,0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"  Style="{StaticResource DefaultTabControlItem2}">
 
                                 <TabControl.Resources>
                                     <Style TargetType="TabItem">
@@ -94,8 +94,8 @@
                                                 <ControlTemplate TargetType="TabItem">
                                                     <Grid Name="Panel">
                                                         <ContentPresenter x:Name="ContentSite"
-                                                                                  VerticalAlignment="Center"
-                                                                                  HorizontalAlignment="Center"                                                                                
+                                                                                  VerticalAlignment="Stretch"
+                                                                                  HorizontalAlignment="Stretch"                                                                                
                                                                                   ContentSource="Header"
                                                                                   Height="20"
                                                                                   Margin="5,2"/>
@@ -276,13 +276,15 @@
                                 </TabItem>
 
                                 
-                                <TabItem Header="Serial mode" BorderBrush="White" BorderThickness="0">
+                                <TabItem Header="Serial mode" HorizontalAlignment="Stretch"  HorizontalContentAlignment="Stretch" BorderBrush="White" BorderThickness="0">
 
-                                    <Grid Width="390" Margin="5,10,5,10" Height="200">
+                                    <Grid  Margin="5,10,5,10" HorizontalAlignment="Stretch" Height="200">
+                                        <Grid.RowDefinitions>
+                                            
+                                        </Grid.RowDefinitions>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="auto" />
-                                            <ColumnDefinition Width="1.5*" />
+                                            <ColumnDefinition Width="*" />
                                         </Grid.ColumnDefinitions>
 
                                         <!-- Listbox populated with characters -->
@@ -314,192 +316,192 @@
                                         </ListBox>
 
                                         <!-- Textboxes -->
-                                        
-                                        
 
-                                        <StackPanel x:Name="RadioTextBoxesContainer" Grid.Column="2" Margin="30,0,20,0" AllowDrop="True">
+                                        <Grid HorizontalAlignment="Stretch" x:Name="RadioTextBoxesContainer" Height="auto"  Margin="20,0,0,0" Grid.Column="1">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="auto" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="auto" />
+                                            </Grid.ColumnDefinitions>
 
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition />
+                                                <RowDefinition />
+                                                <RowDefinition />
+                                                <RowDefinition />
+                                                <RowDefinition />
+                                                <RowDefinition />
+                                            </Grid.RowDefinitions>
 
-                                            <StackPanel  Orientation="Horizontal" >
-                                                <TextBlock Text="R0: " Foreground="Black" VerticalAlignment="Center"   HorizontalAlignment="Left"  />
-                                                <TextBox x:Name="Radio_0"  IsReadOnly="True" AllowDrop="True" Height="20"  Width="130">
+                                            <TextBlock Text="R0: " Foreground="Black" Grid.Column="0" VerticalAlignment="Center"   HorizontalAlignment="Left"  />
+                                            <TextBox x:Name="Radio_0" Grid.Column="1" Height="20" IsReadOnly="True" AllowDrop="True"   >
 
-                                                    <i:Interaction.Triggers>
-                                                        <i:EventTrigger EventName="PreviewDragEnter">
-                                                            <cmd:EventToCommand Command="{Binding DragEnterCommand}" PassEventArgsToCommand="true"/>
-                                                        </i:EventTrigger>
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="PreviewDragEnter">
+                                                        <cmd:EventToCommand Command="{Binding DragEnterCommand}" PassEventArgsToCommand="true"/>
+                                                    </i:EventTrigger>
 
-                                                        <i:EventTrigger EventName="PreviewDrop">
-                                                            <cmd:EventToCommand Command="{Binding DropCommand}" PassEventArgsToCommand="true"/>
-                                                        </i:EventTrigger>
+                                                    <i:EventTrigger EventName="PreviewDrop">
+                                                        <cmd:EventToCommand Command="{Binding DropCommand}" PassEventArgsToCommand="true"/>
+                                                    </i:EventTrigger>
 
-                                                        <i:EventTrigger EventName="PreviewDragOver">
-                                                            <cmd:EventToCommand Command="{Binding DragOverCommand}" PassEventArgsToCommand="true"/>
-                                                        </i:EventTrigger>
+                                                    <i:EventTrigger EventName="PreviewDragOver">
+                                                        <cmd:EventToCommand Command="{Binding DragOverCommand}" PassEventArgsToCommand="true"/>
+                                                    </i:EventTrigger>
 
-                                                    </i:Interaction.Triggers>
-                                                </TextBox>
-                                                <Button Height="20"
+                                                </i:Interaction.Triggers>
+                                            </TextBox>
+                                            <Button Grid.Column="2" Height="20"
                                                             IsEnabled="{Binding ElementName=Radio_0, Path=Text.Length}"
                                                             Command="{Binding ClearRadioBindingCommand}" 
                                                             CommandParameter="{Binding ElementName=Radio_0, Path=Name}" 
                                                             Background="White" 
                                                             Width="20">
-                                                    <Image Source="pack://application:,,,/Resources/Images/error.png" />
-                                                </Button>
-                                            </StackPanel>
+                                                <Image Source="pack://application:,,,/Resources/Images/error.png" />
+                                            </Button>
 
-                                            <StackPanel  Margin="0,10,0,0" Orientation="Horizontal" >
-                                                <TextBlock Text="R1: "  Foreground="Black" VerticalAlignment="Center"   HorizontalAlignment="Right"  />
-                                                <TextBox x:Name="Radio_1" IsReadOnly="True" AllowDrop="True" Height="20" Width="130">
 
-                                                    <i:Interaction.Triggers>
-                                                        <i:EventTrigger EventName="PreviewDragEnter">
-                                                            <cmd:EventToCommand Command="{Binding DragEnterCommand}" PassEventArgsToCommand="true"/>
-                                                        </i:EventTrigger>
+                                            <TextBlock Text="R1: " Grid.Column="0" Grid.Row="1"   Foreground="Black" VerticalAlignment="Center"   HorizontalAlignment="Right"  />
+                                            <TextBox x:Name="Radio_1"  Grid.Column="1" Grid.Row="1" Height="20"  IsReadOnly="True" AllowDrop="True"  >
 
-                                                        <i:EventTrigger EventName="PreviewDrop">
-                                                            <cmd:EventToCommand Command="{Binding DropCommand}" PassEventArgsToCommand="true"/>
-                                                        </i:EventTrigger>
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="PreviewDragEnter">
+                                                        <cmd:EventToCommand Command="{Binding DragEnterCommand}" PassEventArgsToCommand="true"/>
+                                                    </i:EventTrigger>
 
-                                                        <i:EventTrigger EventName="PreviewDragOver">
-                                                            <cmd:EventToCommand Command="{Binding DragOverCommand}" PassEventArgsToCommand="true"/>
-                                                        </i:EventTrigger>
+                                                    <i:EventTrigger EventName="PreviewDrop">
+                                                        <cmd:EventToCommand Command="{Binding DropCommand}" PassEventArgsToCommand="true"/>
+                                                    </i:EventTrigger>
 
-                                                    </i:Interaction.Triggers>
-                                                </TextBox>
-                                                <Button Height="20" 
+                                                    <i:EventTrigger EventName="PreviewDragOver">
+                                                        <cmd:EventToCommand Command="{Binding DragOverCommand}" PassEventArgsToCommand="true"/>
+                                                    </i:EventTrigger>
+
+                                                </i:Interaction.Triggers>
+                                            </TextBox>
+                                            <Button  Grid.Column="2" Grid.Row="1"  Height="20"
                                                             IsEnabled="{Binding ElementName=Radio_1, Path=Text.Length}"
                                                             Command="{Binding ClearRadioBindingCommand}" 
                                                             CommandParameter="{Binding ElementName=Radio_1, Path=Name}" 
                                                             Background="White" 
                                                             Width="20">
-                                                    <Image Source="pack://application:,,,/Resources/Images/error.png" />
-                                                </Button>
-                                            </StackPanel>
+                                                <Image Source="pack://application:,,,/Resources/Images/error.png" />
+                                            </Button>
 
 
+                                            <TextBlock Text="R2: " Grid.Column="0" Grid.Row="2"   Foreground="Black"  VerticalAlignment="Center"   HorizontalAlignment="Right"  />
+                                            <TextBox x:Name="Radio_2" Grid.Column="1" Grid.Row="2" Height="20"  IsReadOnly="True" AllowDrop="True"  >
 
-                                            <StackPanel  Margin="0,10,0,0" Orientation="Horizontal" >
-                                                <TextBlock Text="R2: " Foreground="Black"  VerticalAlignment="Center"   HorizontalAlignment="Right"  />
-                                                <TextBox x:Name="Radio_2"  IsReadOnly="True" AllowDrop="True"  Width="130">
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="PreviewDragEnter">
+                                                        <cmd:EventToCommand Command="{Binding DragEnterCommand}" PassEventArgsToCommand="true"/>
+                                                    </i:EventTrigger>
 
-                                                    <i:Interaction.Triggers>
-                                                        <i:EventTrigger EventName="PreviewDragEnter">
-                                                            <cmd:EventToCommand Command="{Binding DragEnterCommand}" PassEventArgsToCommand="true"/>
-                                                        </i:EventTrigger>
+                                                    <i:EventTrigger EventName="PreviewDrop">
+                                                        <cmd:EventToCommand Command="{Binding DropCommand}" PassEventArgsToCommand="true"/>
+                                                    </i:EventTrigger>
 
-                                                        <i:EventTrigger EventName="PreviewDrop">
-                                                            <cmd:EventToCommand Command="{Binding DropCommand}" PassEventArgsToCommand="true"/>
-                                                        </i:EventTrigger>
+                                                    <i:EventTrigger EventName="PreviewDragOver">
+                                                        <cmd:EventToCommand Command="{Binding DragOverCommand}" PassEventArgsToCommand="true"/>
+                                                    </i:EventTrigger>
 
-                                                        <i:EventTrigger EventName="PreviewDragOver">
-                                                            <cmd:EventToCommand Command="{Binding DragOverCommand}" PassEventArgsToCommand="true"/>
-                                                        </i:EventTrigger>
-
-                                                    </i:Interaction.Triggers>
-                                                </TextBox>
-                                                <Button Height="20" 
+                                                </i:Interaction.Triggers>
+                                            </TextBox>
+                                            <Button  Grid.Column="2" Grid.Row="2" Height="20"
                                                             IsEnabled="{Binding ElementName=Radio_2, Path=Text.Length}"                                                            
                                                             Command="{Binding ClearRadioBindingCommand}" 
                                                             CommandParameter="{Binding ElementName=Radio_2, Path=Name}" 
                                                             Background="White" 
                                                             Width="20">
-                                                    <Image Source="pack://application:,,,/Resources/Images/error.png" />
-                                                </Button>
-                                            </StackPanel>
+                                                <Image Source="pack://application:,,,/Resources/Images/error.png" />
+                                            </Button>
 
 
-                                            <StackPanel  Margin="0,10,0,0" Orientation="Horizontal">
-                                                <TextBlock Text="R3: " Foreground="Black"  VerticalAlignment="Center"   HorizontalAlignment="Right"  />
-                                                <TextBox x:Name="Radio_3"  IsReadOnly="True" AllowDrop="True" Height="20"  Width="130">
+                                            <TextBlock Text="R3: " Grid.Column="0" Grid.Row="3" Foreground="Black"  VerticalAlignment="Center"   HorizontalAlignment="Right"  />
+                                            <TextBox x:Name="Radio_3" Grid.Column="1" Grid.Row="3"  IsReadOnly="True" AllowDrop="True" Height="20" >
 
-                                                    <i:Interaction.Triggers>
-                                                        <i:EventTrigger EventName="PreviewDragEnter">
-                                                            <cmd:EventToCommand Command="{Binding DragEnterCommand}" PassEventArgsToCommand="true"/>
-                                                        </i:EventTrigger>
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="PreviewDragEnter">
+                                                        <cmd:EventToCommand Command="{Binding DragEnterCommand}" PassEventArgsToCommand="true"/>
+                                                    </i:EventTrigger>
 
-                                                        <i:EventTrigger EventName="PreviewDrop">
-                                                            <cmd:EventToCommand Command="{Binding DropCommand}" PassEventArgsToCommand="true"/>
-                                                        </i:EventTrigger>
+                                                    <i:EventTrigger EventName="PreviewDrop">
+                                                        <cmd:EventToCommand Command="{Binding DropCommand}" PassEventArgsToCommand="true"/>
+                                                    </i:EventTrigger>
 
-                                                        <i:EventTrigger EventName="PreviewDragOver">
-                                                            <cmd:EventToCommand Command="{Binding DragOverCommand}" PassEventArgsToCommand="true"/>
-                                                        </i:EventTrigger>
+                                                    <i:EventTrigger EventName="PreviewDragOver">
+                                                        <cmd:EventToCommand Command="{Binding DragOverCommand}" PassEventArgsToCommand="true"/>
+                                                    </i:EventTrigger>
 
-                                                    </i:Interaction.Triggers>
-                                                </TextBox>
-                                                <Button Height="20" 
+                                                </i:Interaction.Triggers>
+                                            </TextBox>
+                                            <Button Height="20" Grid.Column="2" Grid.Row="3"
                                                             IsEnabled="{Binding ElementName=Radio_3, Path=Text.Length}"                                                            
                                                             Command="{Binding ClearRadioBindingCommand}" 
                                                             CommandParameter="{Binding ElementName=Radio_3, Path=Name}" 
                                                             Background="White" 
                                                             Width="20">
-                                                    <Image Source="pack://application:,,,/Resources/Images/error.png" />
-                                                </Button>
-                                            </StackPanel>
+                                                <Image Source="pack://application:,,,/Resources/Images/error.png" />
+                                            </Button>
 
-                                            <StackPanel  Margin="0,10,0,0" Orientation="Horizontal" >
-                                                <TextBlock Text="R4: " Foreground="Black" VerticalAlignment="Center"   HorizontalAlignment="Right"  />
-                                                <TextBox x:Name="Radio_4"  IsReadOnly="True" AllowDrop="True" Height="20"  Width="130">
 
-                                                    <i:Interaction.Triggers>
-                                                        <i:EventTrigger EventName="PreviewDragEnter">
-                                                            <cmd:EventToCommand Command="{Binding DragEnterCommand}" PassEventArgsToCommand="true"/>
-                                                        </i:EventTrigger>
+                                            <TextBlock Text="R4: " Grid.Column="0" Grid.Row="4" Foreground="Black" VerticalAlignment="Center"   HorizontalAlignment="Right"  />
+                                            <TextBox x:Name="Radio_4"  Grid.Column="1" Grid.Row="4"  IsReadOnly="True" AllowDrop="True" Height="20"  >
 
-                                                        <i:EventTrigger EventName="PreviewDrop">
-                                                            <cmd:EventToCommand Command="{Binding DropCommand}" PassEventArgsToCommand="true"/>
-                                                        </i:EventTrigger>
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="PreviewDragEnter">
+                                                        <cmd:EventToCommand Command="{Binding DragEnterCommand}" PassEventArgsToCommand="true"/>
+                                                    </i:EventTrigger>
 
-                                                        <i:EventTrigger EventName="PreviewDragOver">
-                                                            <cmd:EventToCommand Command="{Binding DragOverCommand}" PassEventArgsToCommand="true"/>
-                                                        </i:EventTrigger>
+                                                    <i:EventTrigger EventName="PreviewDrop">
+                                                        <cmd:EventToCommand Command="{Binding DropCommand}" PassEventArgsToCommand="true"/>
+                                                    </i:EventTrigger>
 
-                                                    </i:Interaction.Triggers>
-                                                </TextBox>
-                                                <Button Background="White" 
+                                                    <i:EventTrigger EventName="PreviewDragOver">
+                                                        <cmd:EventToCommand Command="{Binding DragOverCommand}" PassEventArgsToCommand="true"/>
+                                                    </i:EventTrigger>
+
+                                                </i:Interaction.Triggers>
+                                            </TextBox>
+                                            <Button Background="White"  Grid.Column="2" Grid.Row="4"
                                                             IsEnabled="{Binding ElementName=Radio_4, Path=Text.Length}"                                                            
                                                             Command="{Binding ClearRadioBindingCommand}" 
                                                             CommandParameter="{Binding ElementName=Radio_4, Path=Name}" 
                                                             Height="20" 
                                                             Width="20">
-                                                    <Image Source="pack://application:,,,/Resources/Images/error.png" />
-                                                </Button>
-                                            </StackPanel>
+                                                <Image Source="pack://application:,,,/Resources/Images/error.png" />
+                                            </Button>
 
-                                            <StackPanel  Margin="0,10" Orientation="Horizontal" >
-                                                <TextBlock Text="R5: "  Foreground="Black" VerticalAlignment="Center"   HorizontalAlignment="Right"  />
-                                                <TextBox x:Name="Radio_5"  IsReadOnly="True" AllowDrop="True" Height="20"  Width="130">
 
-                                                    <i:Interaction.Triggers>
-                                                        <i:EventTrigger EventName="PreviewDragEnter">
-                                                            <cmd:EventToCommand Command="{Binding DragEnterCommand}" PassEventArgsToCommand="true"/>
-                                                        </i:EventTrigger>
+                                            <TextBlock Text="R5: " Grid.Column="0" Grid.Row="5" Foreground="Black" VerticalAlignment="Center"   HorizontalAlignment="Right"  />
+                                            <TextBox x:Name="Radio_5"  Grid.Column="1" Grid.Row="5"  IsReadOnly="True" AllowDrop="True" Height="20"  >
 
-                                                        <i:EventTrigger EventName="PreviewDrop">
-                                                            <cmd:EventToCommand Command="{Binding DropCommand}" PassEventArgsToCommand="true"/>
-                                                        </i:EventTrigger>
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="PreviewDragEnter">
+                                                        <cmd:EventToCommand Command="{Binding DragEnterCommand}" PassEventArgsToCommand="true"/>
+                                                    </i:EventTrigger>
 
-                                                        <i:EventTrigger EventName="PreviewDragOver">
-                                                            <cmd:EventToCommand Command="{Binding DragOverCommand}" PassEventArgsToCommand="true"/>
-                                                        </i:EventTrigger>
+                                                    <i:EventTrigger EventName="PreviewDrop">
+                                                        <cmd:EventToCommand Command="{Binding DropCommand}" PassEventArgsToCommand="true"/>
+                                                    </i:EventTrigger>
 
-                                                    </i:Interaction.Triggers>
-                                                </TextBox>
-                                                <Button Height="20" 
+                                                    <i:EventTrigger EventName="PreviewDragOver">
+                                                        <cmd:EventToCommand Command="{Binding DragOverCommand}" PassEventArgsToCommand="true"/>
+                                                    </i:EventTrigger>
+
+                                                </i:Interaction.Triggers>
+                                            </TextBox>
+                                            <Button Height="20" Grid.Column="2" Grid.Row="5" 
                                                         IsEnabled="{Binding ElementName=Radio_5, Path=Text.Length}"                                                            
                                                         Command="{Binding ClearRadioBindingCommand}" 
                                                         CommandParameter="{Binding ElementName=Radio_5, Path=Name}" 
                                                         Background="White" 
                                                         Width="20">
-                                                    <Image Source="pack://application:,,,/Resources/Images/error.png" />
-                                                </Button>
-                                            </StackPanel>
+                                                <Image Source="pack://application:,,,/Resources/Images/error.png" />
+                                            </Button>
 
-                                            
-                                        </StackPanel>
-
+                                        </Grid>
+                                                                           
                                     </Grid>
 
                                 </TabItem>
@@ -535,6 +537,7 @@
                                           BorderThickness="1" 
                                           AutoGenerateColumns="False"
                                           Grid.Row="1"
+                                          Height="200"
                                           Margin="0,20,0,0"
                                           Grid.ColumnSpan="2"
                                           MaxHeight="200">
