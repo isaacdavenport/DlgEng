@@ -1416,6 +1416,8 @@ namespace DialogEngine.ViewModels.Dialog
 
 
                 await SerialComs.InitCharacterSelection();
+
+                mcLogger.Debug("SerialComs.InitCharacterSelection done");
             }
             catch(Exception ex)
             {
