@@ -226,7 +226,7 @@ namespace DialogEngine
                 _tempCh1 < 0 || _tempCh2 < 0)
             {
                 _tempCh1 = 0;
-                _tempCh2 = 1;
+                _tempCh2 = 0;
             }
 
             //only pick up new characters if bigRssi greater not =
