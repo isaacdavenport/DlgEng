@@ -58,8 +58,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>
-    </StartupObject>
+    <StartupObject>DialogEngine.App</StartupObject>
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup>
@@ -87,6 +86,9 @@
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
+    <Reference Include="NAudio, Version=1.8.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\NAudio.1.8.4\lib\net35\NAudio.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>packages\Newtonsoft.Json.10.0.2\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -97,7 +99,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms.DataVisualization" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Input.Manipulations" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>packages\MvvmLightLibs.5.3.0.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
@@ -112,6 +114,10 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ViewModels\VoiceRecorderViewModel.cs" />
+    <Compile Include="Controls\Views\VoiceRecoreder.xaml.cs">
+      <DependentUpon>VoiceRecoreder.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\CharacterStateToBooleanConverter.cs" />
     <Compile Include="Converters\InvertBooleanConverter.cs" />
     <Compile Include="Converters\ListBoxItemConverter.cs" />
@@ -121,6 +127,7 @@
     <Compile Include="Converters\RowIndexConverter.cs" />
     <Compile Include="Converters\StarWidthConverter.cs" />
     <Compile Include="Converters\ValueToColorConverter.cs" />
+    <Compile Include="Converters\WaterMarkTextBoxConverter.cs" />
     <Compile Include="Dialogs\SerialComPortErrorDialog.xaml.cs">
       <DependentUpon>SerialComPortErrorDialog.xaml</DependentUpon>
     </Compile>
@@ -134,6 +141,7 @@
     <Compile Include="Events\DialogEvents\ChangedModelDialogStateEvent.cs" />
     <Compile Include="Events\DialogEvents\StopImmediatelyPlayingCurrentDialogLIne.cs" />
     <Compile Include="Events\DialogEvents\StopPlayingCurrentDialogLineEvent.cs" />
+    <Compile Include="Events\DialogEvents\UpdateCanvasEvent.cs" />
     <Compile Include="Events\DialogEvents\UseSerialPortChanged.cs" />
     <Compile Include="Events\EventAggregator.cs" />
     <Compile Include="Events\EventBase.cs" />
@@ -176,6 +184,9 @@
     </Compile>
     <Compile Include="Helpers\VisualHelper.cs" />
     <Compile Include="ViewModels\Dialog\DialogViewModel.cs" />
+    <Compile Include="Views\Character\CreateCharacter.xaml.cs">
+      <DependentUpon>CreateCharacter.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Dialog\DialogView.xaml.cs">
       <DependentUpon>DialogView.xaml</DependentUpon>
     </Compile>
@@ -266,6 +277,12 @@
     <Resource Include="Resources\Images\minus.png" />
     <Resource Include="Resources\Images\grid.png" />
     <Resource Include="Resources\Images\signalReception.png" />
+    <Resource Include="Resources\Images\play-button.png" />
+    <Resource Include="Resources\Images\stop.png" />
+    <Resource Include="Resources\Images\pause-button.png" />
+    <Resource Include="Resources\Images\stop-button.png" />
+    <Resource Include="Resources\Images\microphone.png" />
+    <Content Include="Resources\Videos\videoplayback.webm" />
     <Content Include="TheGeneratedLogFilesGoHere.txt" />
   </ItemGroup>
   <ItemGroup>
@@ -273,6 +290,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Controls\Views\VoiceRecoreder.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Dialogs\SerialComPortErrorDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -322,6 +343,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\ToggleButtonStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Character\CreateCharacter.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
