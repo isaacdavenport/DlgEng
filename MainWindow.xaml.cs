@@ -13,6 +13,7 @@ using log4net.Config;
 using Microsoft.Win32;
 using DialogEngine.Helpers;
 using DialogEngine.ViewModels.Dialog;
+using DialogEngine.Views.Character;
 
 namespace DialogEngine
 {
@@ -59,7 +60,7 @@ namespace DialogEngine
             Process.Start("https://sites.google.com/isaacdavenport.com/toys2life/home");
         }
 
-        private void _addCharacter_Click(object sender, RoutedEventArgs e)
+        private void _importCharacter_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog _openFileDialog = new OpenFileDialog();
 
@@ -85,7 +86,7 @@ namespace DialogEngine
 
         }
 
-        private void _addDialogModel_Click(object sender, RoutedEventArgs e)
+        private void _importDialogModel_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog _openFileDialog = new OpenFileDialog();
 
@@ -137,5 +138,12 @@ namespace DialogEngine
 
 
         #endregion
+
+        private void _createCharacter_Click(object sender, RoutedEventArgs e)
+        {
+            mainFrame.Source = new Uri("Views/Character/CreateCharacter.xaml", UriKind.Relative);
+
+            e.Handled = true;
+        }
     }
 }

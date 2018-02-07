@@ -392,20 +392,7 @@
                                             <TextBlock Text="R2: " Grid.Column="0" Grid.Row="2"   Foreground="Black"  VerticalAlignment="Center"   HorizontalAlignment="Right"  />
                                             <TextBox x:Name="Radio_2" Grid.Column="1" Grid.Row="2" Height="20"  IsReadOnly="True" AllowDrop="True"  >
 
-                                                <i:Interaction.Triggers>
-                                                    <i:EventTrigger EventName="PreviewDragEnter">
-                                                        <cmd:EventToCommand Command="{Binding DragEnterCommand}" PassEventArgsToCommand="true"/>
-                                                    </i:EventTrigger>
 
-                                                    <i:EventTrigger EventName="PreviewDrop">
-                                                        <cmd:EventToCommand Command="{Binding DropCommand}" PassEventArgsToCommand="true"/>
-                                                    </i:EventTrigger>
-
-                                                    <i:EventTrigger EventName="PreviewDragOver">
-                                                        <cmd:EventToCommand Command="{Binding DragOverCommand}" PassEventArgsToCommand="true"/>
-                                                    </i:EventTrigger>
-
-                                                </i:Interaction.Triggers>
                                             </TextBox>
                                             <Button  Grid.Column="2" Grid.Row="2" Height="20"
                                                             IsEnabled="{Binding ElementName=Radio_2, Path=Text.Length}"                                                            

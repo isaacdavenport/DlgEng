@@ -34,10 +34,12 @@
 
                 <MenuItem Header="_View" Background="White">
 
-                    <MenuItem Header="_Dialog"  Click="_dialog_Click">
+                    <MenuItem Header="_Dialog"  >
                         
-                        <MenuItem Header="_Add character"  Click="_addCharacter_Click"></MenuItem>
-                        <MenuItem Header="_Add dialog model"  Click="_addDialogModel_Click"></MenuItem>
+                        <MenuItem Header="_Create character"  Click="_createCharacter_Click"></MenuItem>
+
+                        <MenuItem Header="_Import character"  Click="_importCharacter_Click"></MenuItem>
+                        <MenuItem Header="_Import dialog model"  Click="_importDialogModel_Click"></MenuItem>
 
                     </MenuItem>
 
@@ -154,7 +156,6 @@
         <!-- Main frame -->
         <Frame x:Name="mainFrame"
                NavigationUIVisibility="Hidden"
-               Margin="0,5,0,5"
                Grid.Row="2"
                HorizontalAlignment="Stretch"
                VerticalAlignment="Stretch"
