@@ -25,7 +25,8 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <Grid Margin="50,50,100,40">
+        
+        <Grid Grid.Column="0" Margin="50,50,100,40">
             <Grid.RowDefinitions>
                 <RowDefinition Height="2*"/>
                 <RowDefinition Height="*" />
@@ -89,7 +90,7 @@
         </Grid>
         
 
-        <Grid Grid.Column="2" Margin="100,50,50,40">
+        <Grid Grid.Column="1" Margin="100,50,50,40">
             
             <Grid.RowDefinitions>
                 <RowDefinition Height="2*"/>
@@ -112,16 +113,17 @@
                         <RowDefinition Height="auto" />
                     </Grid.RowDefinitions>
 
- 
-                    <MediaElement Grid.Row="0"
+                    <Border Grid.Row="0" Background="#545348">
+                        <MediaElement Grid.Row="0"
                                   Margin="0,0,0,0"
                                   Grid.ColumnSpan="3"
                                   x:Name="VideoPlayer"
-                                  Stretch="Fill"
-                                  Source="C:\Users\sbstb\OneDrive\Pictures\Camera Roll\WIN_20180204_17_08_40_Pro.mp4" 
+                                  Stretch="Fill" 
                                   HorizontalAlignment="Stretch" 
                                   LoadedBehavior="Manual" 
                                   VerticalAlignment="Stretch"  />
+                    </Border>
+
 
                     <Grid Grid.Row="1" >
 
@@ -133,34 +135,24 @@
                         </Grid.Background>
                         
                         <StackPanel HorizontalAlignment="Center"  Orientation="Horizontal">
-                            <Button  Width="40" Height="40" Click="_startVideo_Click" Margin="10,10,10,10">
+                            
+                            <Button Style="{StaticResource PlayerBtn}" 
+                                    Width="40" 
+                                    Height="40" 
+                                    Click="_startVideo_Click" 
+                                    Margin="10,10,10,10">
 
                                 <Button.Content>
-                                    <Image Width="25" Margin="5,0,0,0" Height="25"  Source="pack://application:,,,/Resources/Images/play-button.png" />
+                                    <Image Width="25" 
+                                           Margin="5,0,0,0" 
+                                           Height="25"  
+                                           Source="pack://application:,,,/Resources/Images/play-button.png" />
+                                    
                                 </Button.Content>
                                 
-                                <Button.Template>
-                                    <ControlTemplate TargetType="{x:Type Button}">
-                                        <Grid>
-                                            <Ellipse Stroke="DarkGray"
-                                                    StrokeThickness="1">
-                                                <Ellipse.Fill>
-                                                    <RadialGradientBrush>
-                                                        <GradientStop Offset="0.5"
-                                                                      Color="DarkGray" />
-                                                        <GradientStop Offset="0.9"
-                                                                      Color="LightGray" />
-                                                    </RadialGradientBrush>
-                                                </Ellipse.Fill>
-                                            </Ellipse>
-                                            <ContentPresenter   HorizontalAlignment="Center"
-                                                                VerticalAlignment="Center"/>
-                                        </Grid>
-                                    </ControlTemplate>
-                                </Button.Template>
                             </Button>
 
-                            <Button 
+                            <Button Style="{StaticResource PlayerBtn}"
                                     Width="40" 
                                     Height="40" 
                                     Margin="10,10,10,10" 
@@ -169,27 +161,8 @@
                                 <Button.Content>
                                     <Image Width="25" Margin="0,0,0,0" Height="25"  Source="pack://application:,,,/Resources/Images/pause-button.png" />
                                 </Button.Content>
-                                
-                                <Button.Template>
-                                    <ControlTemplate TargetType="{x:Type Button}">
-                                        <Grid>
-                                            <Ellipse Stroke="DarkGray"
-                                                     StrokeThickness="1">
-                                                <Ellipse.Fill>
-                                                    <RadialGradientBrush>
-                                                        <GradientStop   Offset="0.5"
-                                                                        Color="DarkGray" />
-                                                        <GradientStop   Offset="0.9"
-                                                                        Color="LightGray" />
-                                                    </RadialGradientBrush>
-                                                </Ellipse.Fill>
-                                            </Ellipse>
-                                            <ContentPresenter   HorizontalAlignment="Center"
-                                                                VerticalAlignment="Center"/>
-                                        </Grid>
-                                    </ControlTemplate>
-                                </Button.Template>
                             </Button>
+                            
                         </StackPanel>
                     </Grid>
                     

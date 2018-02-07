@@ -94,7 +94,6 @@
                 <Button BorderThickness="1" 
                         BorderBrush="LightGray" 
                         FontSize="12"
-                        IsEnabled="False"
                         Foreground="LightGray" 
                         Click="_dialog_Click" 
                         Background="White"  

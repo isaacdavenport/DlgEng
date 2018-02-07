@@ -24,7 +24,11 @@
         </Grid.RowDefinitions>
 
 
-        <Canvas x:Name="waveCanvas" Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+        <Canvas x:Name="waveCanvas" 
+                Grid.Row="0" 
+                Grid.ColumnSpan="2" 
+                HorizontalAlignment="Stretch" 
+                VerticalAlignment="Stretch"
                 Margin="0,0,0,0" 
                 Background="#545348">
         </Canvas>
@@ -47,116 +51,22 @@
             <StackPanel Grid.Row="1" HorizontalAlignment="Center"  Orientation="Horizontal">
 
 
-                <Button Margin="0,10,0,10"  Command="{Binding StartRecording}" IsEnabled="{Binding IsRecording, Converter={StaticResource InvertBooleanConverter}}" Width="40" Height="40" BorderThickness="0" >
+                <Button Margin="0,10,0,10" Style="{StaticResource PlayerBtn}"  Command="{Binding StartRecording}"  Width="40" Height="40" BorderThickness="0" >
                     <Button.Content>
                         <Image Width="25" Height="25"  Source="pack://application:,,,/Resources/Images/microphone.png" />
                     </Button.Content>
-                    <Button.Template>
-                        <ControlTemplate TargetType="{x:Type Button}">
-                            <Grid>
-                                <Ellipse Stroke="DarkGray" x:Name="StartRecordingEllipe"
-                                    StrokeThickness="1">
-                                    <Ellipse.Fill>
-                                        <RadialGradientBrush>
-                                            <GradientStop Offset="0.5"
-                                          Color="DarkGray" />
-                                            <GradientStop Offset="0.9"
-                                          Color="LightGray" />
-                                        </RadialGradientBrush>
-                                    </Ellipse.Fill>
-                                </Ellipse>
-                                <ContentPresenter HorizontalAlignment="Center"
-                                  VerticalAlignment="Center"/>
-                            </Grid>
-                        </ControlTemplate>
-                    </Button.Template>
-
-                    <Button.Style>
-                        <Style TargetType="Button">
-
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="Button">
-                                        <Grid>
-                                            <Ellipse Stroke="DarkGray" x:Name="StartRecordingEllipe"
-                                                     StrokeThickness="1">
-                                                <Ellipse.Fill>
-                                                    <RadialGradientBrush>
-                                                        <GradientStop   Offset="0.5"
-                                                                        Color="DarkGray" />
-                                                        <GradientStop   Offset="0.9"
-                                                                        Color="LightGray" />
-                                                    </RadialGradientBrush>
-                                                </Ellipse.Fill>
-                                            </Ellipse>
-                                            <ContentPresenter   HorizontalAlignment="Center"
-                                                                VerticalAlignment="Center"/>
-                                        </Grid>
-
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="Button.IsMouseOver" Value="True">
-                                                <Setter TargetName="StartRecordingEllipe" Property="Ellipse.Fill" Value="Red" />
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                          
-                        </Style>
-                    </Button.Style>
-                    
                 </Button>
 
-                <Button  Margin="20,10,0,10" Command="{Binding StopRecording}" IsEnabled="{Binding IsRecording}"  Width="40" Height="40" BorderThickness="0" >
+                <Button  Margin="20,10,0,10" Style="{StaticResource PlayerBtn}" Command="{Binding StopRecording}" IsEnabled="{Binding IsRecording}"  Width="40" Height="40" BorderThickness="0" >
                     <Button.Content>
                         <Image Width="20" Height="20"  Source="pack://application:,,,/Resources/Images/stop-button.png"  />
                     </Button.Content>
-
-                    <Button.Template>
-                        <ControlTemplate TargetType="{x:Type Button}">
-                            <Grid>
-                                <Ellipse Stroke="DarkGray"
-                                    StrokeThickness="1">
-                                    <Ellipse.Fill>
-                                        <RadialGradientBrush>
-                                            <GradientStop Offset="0.5"
-                                          Color="DarkGray" />
-                                            <GradientStop Offset="0.9"
-                                          Color="LightGray" />
-                                        </RadialGradientBrush>
-                                    </Ellipse.Fill>
-                                </Ellipse>
-                                <ContentPresenter HorizontalAlignment="Center"
-                                  VerticalAlignment="Center"/>
-                            </Grid>
-                        </ControlTemplate>
-                    </Button.Template>
                 </Button>
 
-                <Button Margin="20,10,0,10" IsEnabled="{Binding IsRecording, Converter={StaticResource InvertBooleanConverter}}" Command="{Binding PlayContent}" Width="40" Height="40" BorderThickness="0" >
+                <Button Margin="20,10,0,10" Style="{StaticResource PlayerBtn}" IsEnabled="{Binding IsRecording, Converter={StaticResource InvertBooleanConverter}}" Command="{Binding PlayContent}" Width="40" Height="40" BorderThickness="0" >
                     <Button.Content>
                         <Image Width="25" Margin="5,0,0,0" Height="25"  Source="pack://application:,,,/Resources/Images/play-button.png" />
                     </Button.Content>
-
-                    <Button.Template>
-                        <ControlTemplate TargetType="{x:Type Button}">
-                            <Grid>
-                                <Ellipse Stroke="DarkGray"
-                                    StrokeThickness="1">
-                                    <Ellipse.Fill>
-                                        <RadialGradientBrush>
-                                            <GradientStop Offset="0.5"
-                                          Color="DarkGray" />
-                                            <GradientStop Offset="0.9"
-                                          Color="LightGray" />
-                                        </RadialGradientBrush>
-                                    </Ellipse.Fill>
-                                </Ellipse>
-                                <ContentPresenter HorizontalAlignment="Center"
-                                  VerticalAlignment="Center"/>
-                            </Grid>
-                        </ControlTemplate>
-                    </Button.Template>
                 </Button>
 
             </StackPanel>

@@ -51,8 +51,10 @@ namespace DialogEngine
         // Click on main menu item dialog
         private void _dialog_Click(object sender, RoutedEventArgs e)
         {
-            e.Handled = true;
             mainFrame.Source = new Uri("Views/Dialog/DialogView.xaml", UriKind.Relative);
+
+            e.Handled = true;
+
         }
 
         private void _aboutDialogEngine_Click(object sender, RoutedEventArgs e)

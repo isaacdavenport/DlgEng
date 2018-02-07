@@ -4,6 +4,7 @@ using NAudio.Wave;
 using System;
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
@@ -36,10 +37,11 @@ namespace DialogEngine.Controls.ViewModels
 
 
         private long mCount = 0;
+
+        //sample 1/100, display for 5 seconds
         private int mNumtodisplay = 2205;
 
         private bool mIsRecording;
-        //sample 1/100, display for 5 seconds
 
         #endregion
 
@@ -89,6 +91,52 @@ namespace DialogEngine.Controls.ViewModels
             //StopRecording = new RelayCommand(x => _stopRecording());
         }
 
+        private void _setLimitLines()
+        {
+            double canH = mView.waveCanvas.ActualHeight;
+            double canW = mView.waveCanvas.ActualWidth;
+
+            Line upLimit = new Line();
+            upLimit.Stroke = Brushes.Yellow;
+            upLimit.X1 = 0;
+            upLimit.Y1 = canH / 4;
+            upLimit.X2 = canW;
+            upLimit.StrokeDashArray = new DoubleCollection( new double[] {2,2 } );
+
+            upLimit.Y2 = upLimit.Y1;
+            upLimit.StrokeThickness = 1;
+
+            Line downLimit = new Line();
+            downLimit.Stroke = Brushes.Yellow;
+            downLimit.X1 = 0;
+            downLimit.Y1 = canH - upLimit.Y1;
+            downLimit.X2 = canW;
+            downLimit.Y2 = canH - upLimit.Y1;
+            downLimit.StrokeThickness = 1;
+
+            Line legend = new Line();
+            legend.Stroke = Brushes.Yellow;
+            legend.X1 = canW - 100;
+            legend.Y1 = 10;
+            legend.X2 = canW - 70;
+            legend.Y2 = 10;
+            legend.StrokeThickness = 4;
+
+            TextBlock tb = new TextBlock();
+            tb.Text = "Optimal";
+            tb.Foreground = Brushes.White;
+            Canvas.SetLeft(tb, canW - 60);
+            Canvas.SetRight(tb, 30);
+
+            mView.waveCanvas.Children.Add(upLimit);
+            mView.waveCanvas.Children.Add(downLimit);
+            mView.waveCanvas.Children.Add(legend);
+            mView.waveCanvas.Children.Add(tb);
+
+        }
+
+
+
         private void _startRecording()
         {
             mWavein = new WaveIn();
@@ -124,6 +172,7 @@ namespace DialogEngine.Controls.ViewModels
             //displaysht = new Queue<short>();
             mDisplaysht = new Queue<Int32>();
 
+            //_setLimitLines();
 
             mWavein.StartRecording();
         }
@@ -171,10 +220,13 @@ namespace DialogEngine.Controls.ViewModels
                 }
                 else
                 {
+                    if(mDisplaypts.Count > 0)
                     mDisplaysht.Dequeue();
+
                     mDisplaysht.Enqueue(BitConverter.ToInt32(shts, 0));
                 }
             }
+
             this.mView.waveCanvas.Children.Clear();
             mPolyline.Points.Clear();
 
@@ -184,7 +236,6 @@ namespace DialogEngine.Controls.ViewModels
             {
                 mPolyline.Points.Add(_normalize(x, shts2[x]));
             }
-
 
 
             this.mView.waveCanvas.Children.Add(mPolyline);
@@ -205,14 +256,6 @@ namespace DialogEngine.Controls.ViewModels
         }
 
         #endregion
-
-
-
-
-
-
-
-
 
 
     }

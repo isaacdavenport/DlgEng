@@ -4,6 +4,58 @@
 
 
 
+    <Style x:Key="PlayerBtn" TargetType="Button">
+        <Style.Resources>
+
+            <RadialGradientBrush x:Key="NormalButton">
+                <GradientStop   Offset="0.5"
+                                            Color="DarkGray" />
+                <GradientStop   Offset="0.9"
+                                            Color="LightGray" />
+            </RadialGradientBrush>
+
+            <RadialGradientBrush x:Key="MouseOverButton">
+                <GradientStop   Offset="0.2"
+                                            Color="DarkGray" />
+                <GradientStop   Offset="0.4"
+                                            Color="LightGray" />
+            </RadialGradientBrush>
+
+            <RadialGradientBrush x:Key="DisabledButton">
+                <GradientStop   Offset="0.8"
+                                            Color="DarkGray" />
+                <GradientStop   Offset="0.2"
+                                            Color="LightGray" />
+            </RadialGradientBrush>
+
+        </Style.Resources>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <Ellipse Stroke="DarkGray" x:Name="StartRecordingEllipe"
+                                                     StrokeThickness="1" Fill="{StaticResource NormalButton}" />
+
+                        <ContentPresenter   HorizontalAlignment="Center"
+                                                                VerticalAlignment="Center"/>
+
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="StartRecordingEllipe" Property="Fill" Value="{StaticResource MouseOverButton}"></Setter>
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="StartRecordingEllipe" Property="Fill" Value="{StaticResource DisabledButton}"></Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
     <Style x:Key="btn" TargetType="Button">
         <Setter Property="FontFamily" Value="Helvetica Neue,Helvetica,Arial,sans-serif"/>
         <Setter Property="FontSize" Value="14"/>

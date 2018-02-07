@@ -1,5 +1,6 @@
 ﻿using DialogEngine.Core;
-
+using System;
+using System.Windows;
 
 namespace DialogEngine.Views.Character
 {
@@ -26,6 +27,14 @@ namespace DialogEngine.Views.Character
         private void _stopVideo_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             VideoPlayer.Stop();
+        }
+
+        private void _back_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+
+             (Application.Current.MainWindow as MainWindow).mainFrame.Source = new Uri("Views/Dialog/DialogView.xaml", UriKind.Relative);
+
+            e.Handled = true;
         }
     }
 }
