@@ -21,7 +21,12 @@ app.config
 x64/
 x86/
 bld/
-[Bb]in/
+#[Bb]in/
+[Bb]in/*.config
+[Bb]in/*.exe
+[Bb]in/*.dll
+[Bb]in/*.xml
+[Bb]in/*.pdb
 [Oo]bj/
 [Ll]og/
 [Ll]ogs/
