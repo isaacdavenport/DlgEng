@@ -283,7 +283,6 @@
     <Resource Include="Resources\Images\stop-button.png" />
     <Resource Include="Resources\Images\microphone.png" />
     <Content Include="Resources\Videos\videoplayback.webm" />
-    <Content Include="TheGeneratedLogFilesGoHere.txt" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
