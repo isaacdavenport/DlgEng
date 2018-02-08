@@ -1,0 +1,77 @@
+﻿<UserControl x:Class="DialogEngine.Controls.Views.VoiceRecoreder"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:cmd="http://www.galasoft.ch/mvvmlight"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:local="clr-namespace:DialogEngine.Controls.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Themes/Generic.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>    
+    </UserControl.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto"  />
+        </Grid.RowDefinitions>
+
+
+        <Canvas x:Name="waveCanvas" 
+                Grid.Row="0" 
+                Grid.ColumnSpan="2" 
+                HorizontalAlignment="Stretch" 
+                VerticalAlignment="Stretch"
+                Margin="0,0,0,0" 
+                Background="#545348">
+        </Canvas>
+
+        <Grid Grid.Row="1" Grid.Column="1" >
+            <Grid.Background>
+                <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03">
+                    <GradientStop Color="#FFFFFFFF" Offset="-0.1"/>
+                    <GradientStop Color="DarkGray" Offset="0.7"/>
+                </LinearGradientBrush>
+            </Grid.Background>
+
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock x:Name="timerTb" Text="{Binding DisplayedTime}" Foreground="Red" FontSize="16" HorizontalAlignment="Center"  />
+
+            <StackPanel Grid.Row="1" HorizontalAlignment="Center"  Orientation="Horizontal">
+
+
+                <Button Margin="0,10,0,10" Style="{StaticResource PlayerBtn}"  Command="{Binding StartRecording}"  Width="40" Height="40" BorderThickness="0" >
+                    <Button.Content>
+                        <Image Width="25" Height="25"  Source="pack://application:,,,/Resources/Images/microphone.png" />
+                    </Button.Content>
+                </Button>
+
+                <Button  Margin="20,10,0,10" Style="{StaticResource PlayerBtn}" Command="{Binding StopRecording}" IsEnabled="{Binding IsRecording}"  Width="40" Height="40" BorderThickness="0" >
+                    <Button.Content>
+                        <Image Width="20" Height="20"  Source="pack://application:,,,/Resources/Images/stop-button.png"  />
+                    </Button.Content>
+                </Button>
+
+                <Button Margin="20,10,0,10" Style="{StaticResource PlayerBtn}" IsEnabled="{Binding IsRecording, Converter={StaticResource InvertBooleanConverter}}" Command="{Binding PlayContent}" Width="40" Height="40" BorderThickness="0" >
+                    <Button.Content>
+                        <Image Width="25" Margin="5,0,0,0" Height="25"  Source="pack://application:,,,/Resources/Images/play-button.png" />
+                    </Button.Content>
+                </Button>
+
+            </StackPanel>
+        </Grid>
+
+
+    </Grid>
+</UserControl>

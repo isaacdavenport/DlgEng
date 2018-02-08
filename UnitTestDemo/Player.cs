@@ -4,19 +4,19 @@
     {
         public int CurrentHitPoints { get; private set; }
 
-        public Player(int hitPoints)
+        public Player(int _hitPoints)
         {
-            CurrentHitPoints = hitPoints;
+            CurrentHitPoints = _hitPoints;
         }
 
-        public void ReceiveDamage(int hitPointsOfDamage)
+        public void ReceiveDamage(int _hitPointsOfDamage)
         {
-            if (hitPointsOfDamage < 0)
+            if (_hitPointsOfDamage < 0)
             {
                 return;
             }
 
-            CurrentHitPoints = (CurrentHitPoints - hitPointsOfDamage);
+            CurrentHitPoints = (CurrentHitPoints - _hitPointsOfDamage);
 
             if (CurrentHitPoints < 0)
             {
