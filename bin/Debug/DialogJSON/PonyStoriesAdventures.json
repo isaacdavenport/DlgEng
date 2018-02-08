@@ -1,0 +1,1253 @@
+
+{"inList" : 
+[
+{
+  "DialogName": "Starlight Glimmer New Home story (NH)",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 1.3,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "NH1",
+    "Greeting",
+    "NH2",
+    "GiveLocation",
+    "NH3",
+    "GiveAffirmation",
+    "NH4",
+    "GoOnNeutral",
+    "NH5",
+    "GiveAffirmation",
+    "NH6"
+  ]
+},{
+  "DialogName": "Starlight Glimmer Runaway Pony story (FP)",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 1.3,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "FP1",
+    "GiveMotivation",
+    "FP2",
+    "Yes",
+    "FP3",
+    "No",
+    "FP4",
+    "GiveAffirmation",
+    "FP5",
+    "GiveAffirmation",
+    "FP6",
+    "No",
+    "FP7"
+  ]
+},{
+  "DialogName": "Pinkie Pie -- Best Friend Forever Story (PPBFF)",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 2,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "PPBFF1",
+    "Yes",
+    "PPBFF2",
+    "Greeting",
+    "PPBFF3",
+    "GiveRecentHistory",
+    "PPBFF4",
+    "Ramble",
+    "PPBFF5",
+    "ThankYou",
+    "YoureWelcome"
+  ]
+},{
+  "DialogName": "Pinkie Pie -- Cutie Mark Story (PPCM)",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 2.6,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "PPCM1",
+    "Yes",
+    "PPCM2",
+    "GoOnDisgust",
+    "PPCM3",
+    "GoOnSurprise",
+    "PPCM4",
+    "GiveActivity",
+    "PPCM5",
+    "GoOnJoyful",
+    "PPCM6"
+  ]
+},{
+  "DialogName": "Pinkie Pie -- Surprise Party Story (PPSP)",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 2.6,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "PPSP1",
+    "GoOnUnderstanding",
+    "PPSP2",
+    "GoOnSurprise",
+    "PPSP3",
+    "GoOnAngry",
+    "PPSP4",
+    "GoOnSad",
+    "PPSP5",
+    "GoOnFear",
+    "PPSP6",
+    "GoOnNeutral",
+    "PPSP7",
+    "GoOnJoyful",
+    "PPSP8"
+  ]
+},{
+  "DialogName": "Fluttershy -- Cutie Mark Story (FSCM)",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 2.6,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "FSCM1",
+    "No",
+    "FSCM2",
+    "GoOnUnderstanding",
+    "FSCM3",
+    "GoOnSurprise",
+    "FSCM4",
+    "GoOnFear",
+    "FSCM5",
+    "GoOnJoyful",
+    "FSCM6"
+  ]
+},{
+  "DialogName": "Fluttershy -- Friends With A Bear Story (FSFB)",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 2.6,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "FSFB1",
+    "Yes",
+    "FSFB2",
+    "GiveDisbelief",
+    "FSFB3",
+    "GoOnNeutral",
+    "FSFB4",
+    "GiveSurprisingStatement",
+    "FSFB5",
+    "GiveActivity",
+    "FSFB6",
+    "ThankYou",
+    "YoureWelcome"
+  ]
+},{
+  "DialogName": "Fluttershy -- Hurricane Fluttershy Story (FSH)",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 2.6,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "FSH1",
+    "GoOnNeutral",
+    "FSH2",
+    "GoOnDisapproval",
+    "FSH3",
+    "GoOnFear",
+    "FSH4",
+    "GoOnJoyful",
+    "FSH5"
+  ]
+},{
+  "DialogName": "Rarity -- Cutie Mark Story [RYCM]",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 2.6,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "RYCM1",
+    "GoOnNeutral",
+    "RYCM2",
+    "GoOnJoyful",
+    "RYCM3",
+    "GoOnUnderstanding",
+    "RYCM4",
+    "GoOnSad",
+    "RYCM5",
+    "GoOnSurprise",
+    "RYCM6",
+    "GoOnDisgust",
+    "RYCM7"
+  ]
+},{
+  "DialogName": "Starlight Glimmer -- Mind Control Story [SGMC]",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 2.6,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "SGMC1",
+    "GiveDisbelief",
+    "SGMC2",
+    "GiveLocation",
+    "SGMC3",
+    "GiveWho",
+    "SGMC4",
+    "GiveActivity",
+    "SGMC5",
+    "Insult",
+    "SGMC6"
+  ]
+},{
+  "DialogName": "Starlight Glimmer -- Life Story [SGLS]",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 2.6,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "SGLS1",
+    "GoOnSad",
+    "SGLS2",
+    "GiveAffirmation",
+    "SGLS3",
+    "GoOnSurprise",
+    "SGLS4",
+    "YoureWelcome"
+  ]
+},{
+  "DialogName": "QET1--RY+SG_Discuss_Geology",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 7,
+  "Adventure": "QET",
+  "Requires": [],
+  "Provides": [
+    "QET1--RY+SG_Discuss_Geology"
+  ],
+  "PhraseTypeSequence": [
+    "QET1A",
+    "QET1B",
+    "QET1C",
+    "QET1D",
+    "QET1E",
+    "QET1F",
+    "QET1G",
+    "QET1H"
+  ]
+},{
+  "DialogName": "QET2--RY+FS_Discuss_Bears",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 4.2,
+  "Adventure": "QET",
+  "Requires": ["QET1--RY+SG_Discuss_Geology"],
+  "Provides": [
+    "QET2--RY+FS_Discuss_Bears"
+  ],
+  "PhraseTypeSequence": [
+    "QET2A",
+    "QET2B",
+    "QET2C"
+  ]
+},{
+  "DialogName": "QET3--RY_Heads_To_CL",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 2.2,
+  "Adventure": "QET",
+  "Requires": ["QET2--RY+FS_Discuss_Bears"],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "QET3A",
+    "CL_HalfSecSilence"
+  ]
+},{
+  "DialogName": "QET4--RY_And_SG_Massage_A_Bear",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 2.2,
+  "Adventure": "QET",
+  "Requires": ["QET2--RY+FS_Discuss_Bears"],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "QET4A",
+    "QET4B",
+    "QET4C"
+  ]
+},{
+  "DialogName": "QET5--RY+PP_Discuss_Bears",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 2.2,
+  "Adventure": "QET",
+  "Requires": ["QET1--RY+SG_Discuss_Geology"],
+  "Provides": ["QET5--RY+PP_Discuss_Bears"],
+  "PhraseTypeSequence": [
+    "QET5A",
+    "QET5B",
+    "QET5C",
+    "QET5D",
+    "QET5E",
+    "QET5F",
+    "QET5G",
+    "QET5H"
+  ]
+},{
+  "DialogName": "QET6--RY+SG_Serenade_A_Bear",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 2.2,
+  "Adventure": "QET",
+  "Requires": ["QET5--RY+PP_Discuss_Bears"],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "QET6A",
+    "QET6B",
+    "QET6C"
+  ]
+},{
+  "DialogName": "QET7--RY_Heads_To_CL",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 2.2,
+  "Adventure": "QET",
+  "Requires": ["QET5--RY+PP_Discuss_Bears"],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "QET3A",
+    "CL_HalfSecSilence"
+  ]
+},{
+  "DialogName": "Fluttershy and Skylar Dialogue 1 (FSSC1)",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 5,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "FSSC1A",
+    "FSSC1B",
+    "FSSC1C",
+    "FSSC1D",
+    "FSSC1E",
+    "FSSC1F"
+  ]
+},{
+  "DialogName": "Fluttershy and Skylar Dialogue 2 (FSSC2)",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 5,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "FSSC2A",
+    "FSSC2B",
+    "FSSC2C"
+  ]
+},{
+  "DialogName": "Rarity and Skylar Dialogue 1 (RYSC1)",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 5,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "RYSC1A",
+    "RYSC1B",
+    "RYSC1C",
+    "RYSC1D"
+  ]
+
+},{
+  "DialogName": "Pinkie Pie and Skylar Dialogue 1 (PPSC1)",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 5,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "PPSC1A",
+    "PPSC1B",
+    "PPSC1C",
+    "PPSC1D"
+  ]
+},{
+  "DialogName": "Starlight Glimmer and Skylar Dialogue 1 (SGSC1)",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 5,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "SGSC1A",
+    "SGSC1B",
+    "SGSC1C",
+    "SGSC1D"
+  ]
+},{
+  "DialogName": "PPC1 Skylar and the Cake",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 5,
+  "Adventure": "PPC",
+  "Requires": [],
+  "Provides": ["PPC1"],
+  "PhraseTypeSequence": [
+    "PPC1A",
+    "PPC1B",
+    "PPC1C",
+    "PPC1D",
+    "PPC1E"
+  ]
+},{
+  "DialogName": "PPC2 Frosting Shopping At Canterlot",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 5,
+  "Adventure": "PPC",
+  "Requires": ["PPC1"],
+  "Provides": ["PPC2"],
+  "PhraseTypeSequence": [
+    "PPC2A",
+	"CL_HalfSecSilence"
+  ]
+},{
+  "DialogName": "PPC3 Skylar gets the rest of the frosting",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 5,
+  "Adventure": "PPC",
+  "Requires": ["PPC2"],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "PPC3A",
+    "PPC3B"
+  ]
+},{
+  "DialogName": "PPC4 Fluttershy gets apple cinnamon",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 5,
+  "Adventure": "PPC",
+  "Requires": ["PPC2"],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "PPC4A",
+    "PPC4B",
+    "PPC4C",
+    "PPC4D",
+    "PPC4E",
+    "PPC4F",
+    "PPC4G"
+  ]
+},{
+  "DialogName": "PPC5 Borrowing Frosting From Rarity",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 5,
+  "Adventure": "PPC",
+  "Requires": ["PPC1"],
+  "Provides": ["PPC5"],
+  "PhraseTypeSequence": [
+    "PPC5A",
+    "PPC5B",
+    "PPC5C"
+  ]
+},{
+  "DialogName": "PPC6 Skylar Gets the Extract",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 5,
+  "Adventure": "PPC",
+  "Requires": ["PPC5"],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "PPC6A",
+    "PPC6B"
+  ]
+},{
+  "DialogName": "PPC7 Fluttershy Gets the Extract",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 5,
+  "Adventure": "PPC",
+  "Requires": ["PPC5"],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "PPC7A",
+    "PPC7B"
+  ]
+},{
+  "DialogName": "SGMSA1 Starlight Glimmer Gets Suspicious",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 5,
+  "Adventure": "SGMSA",
+  "Requires": [],
+  "Provides": ["SGMSA1"],
+  "PhraseTypeSequence": [
+    "SGMSA1A",
+    "SGMSA1B",
+    "SGMSA1C",
+    "SGMSA1D"
+  ]
+},{
+  "DialogName": "SGMSA2 Fluttershy Acts Suspicious",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 5,
+  "Adventure": "SGMSA",
+  "Requires": ["SGMSA1"],
+  "Provides": ["SGMSA2"],
+  "PhraseTypeSequence": [
+    "SGMSA2A",
+    "SGMSA2B",
+    "SGMSA2C",
+    "SGMSA2D",
+    "SGMSA2E"
+  ]
+},{
+  "DialogName": "SGMSA3 Going to Canterlot for Help",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 5,
+  "Adventure": "SGMSA",
+  "Requires": ["SGMSA2"],
+  "Provides": ["SGMSA3"],
+  "PhraseTypeSequence": [
+    "SGMSA3A",
+    "CL_HalfSecSilence"
+  ]
+},{
+  "DialogName": "SGMSA4 Bringing the Spell to Pinkie Pie",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 5,
+  "Adventure": "SGMSA",
+  "Requires": ["SGMSA3"],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "SGMSA4A",
+    "SGMSA4B",
+    "SGMSA4C",
+    "SGMSA4D",
+    "SGMSA4E",
+    "SGMSA4F",
+    "SGMSA4G",
+    "SGMSA4H"
+  ]
+},{
+  "DialogName": "SGMSA5 Bringing the Spell to Fluttershy",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 5,
+  "Adventure": "SGMSA",
+  "Requires": ["SGMSA3"],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "SGMSA5A",
+    "SGMSA5B",
+    "SGMSA5C",
+    "SGMSA5D",
+    "SGMSA5E"
+  ]
+},{
+  "DialogName": "SGMSA6 Asking Rarity about Pinkie Pie",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 5,
+  "Adventure": "SGMSA",
+  "Requires": ["SGMSA1"],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "SGMSA6A",
+    "SGMSA6B",
+    "SGMSA6C",
+    "SGMSA6D",
+    "SGMSA6E"
+  ]
+},{
+  "DialogName": "SGMSA7 Asking Rarity about Pinkie Pie and Fluttershy",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 5,
+  "Adventure": "SGMSA",
+  "Requires": ["SGMSA2"],
+  "Provides": ["SGMSA7"],
+  "PhraseTypeSequence": [
+    "SGMSA7A",
+    "SGMSA7B",
+    "SGMSA7C"
+  ]
+},{
+  "DialogName": "SGMSA8 Starlight goes to Canterlot after Talking with Everyone",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 5,
+  "Adventure": "SGMSA",
+  "Requires": ["SGMSA7"],
+  "Provides": ["SGMSA8"],
+  "PhraseTypeSequence": [
+    "SGMSA3A",
+    "CL_HalfSecSilence"
+  ]
+},{
+  "DialogName": "SGMSA9 Starlight brings the Spell to Rarity",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 5,
+  "Adventure": "SGMSA",
+  "Requires": ["SGMSA8"],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "SGMSA9A",
+    "SGMSA9B",
+    "SGMSA9C",
+    "SGMSA9D",
+    "SGMSA9E"
+  ]
+},{
+  "DialogName": "SGMSA10 Starlight brings the spell to Pinkie Pie after talking with everyone",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 5,
+  "Adventure": "SGMSA",
+  "Requires": ["SGMSA8"],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "SGMSA4A",
+    "SGMSA4B",
+    "SGMSA4C",
+    "SGMSA4D",
+    "SGMSA4E",
+    "SGMSA4F",
+    "SGMSA4G",
+    "SGMSA4H"
+  ]
+},{
+  "DialogName": "SGMSA11 Starlight brings the spell to Fluttershy after talking with everyone",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 5,
+  "Adventure": "SGMSA",
+  "Requires": ["SGMSA8"],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "SGMSA5A",
+    "SGMSA5B",
+    "SGMSA5C",
+    "SGMSA5D",
+    "SGMSA5E"
+  ]
+},{
+  "DialogName": "RYBA1 Rarity Discussing the boutique with Skylar",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 5,
+  "Adventure": "RYBA",
+  "Requires": [],
+  "Provides": ["RYBA1"],
+  "PhraseTypeSequence": [
+    "RYBA1A",
+    "RYBA1B",
+    "RYBA1C"
+  ]
+},{
+  "DialogName": "RYBA2 Rarity Discussing the boutique with Starlight Glimmer",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 5,
+  "Adventure": "RYBA",
+  "Requires": ["RYBA1"],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "RYBA2A",
+    "RYBA2B",
+    "RYBA2C",
+    "RYBA2D",
+    "RYBA2E"
+  ]
+},{
+  "DialogName": "RYBA3 Rarity Discussing the boutique with Pinkie Pie",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 5,
+  "Adventure": "RYBA",
+  "Requires": ["RYBA1"],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "RYBA3A",
+    "RYBA3B",
+    "RYBA3C",
+    "RYBA3D",
+    "RYBA3E"
+  ]
+},{
+  "DialogName": "RYBA4 Rarity Discussing the boutique with Fluttershy",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 5,
+  "Adventure": "RYBA",
+  "Requires": ["RYBA4A"],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "RYBA4A",
+    "RYBA4B",
+    "RYBA4C",
+    "RYBA4D",
+    "RYBA4E"
+  ]
+},{
+  "DialogName": "SGQF1 Starlight Glimmer Discusses Forgiveness with Skylar",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 5,
+  "Adventure": "SGQF",
+  "Requires": [],
+  "Provides": ["SGQF1"],
+  "PhraseTypeSequence": [
+    "SGQF1A",
+    "SGQF1B",
+    "SGQF1C",
+    "SGQF1D",
+    "SGQF1E",
+    "SGQF1F"
+  ]
+},{
+  "DialogName": "SGQF2 Starlight Glimmer asks for Forgiveness from Fluttershy",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 5,
+  "Adventure": "SGQF",
+  "Requires": ["SGQF1"],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "SGQF2A",
+    "SGQF2B",
+    "SGQF2C",
+    "SGQF2D",
+    "SGQF2E",
+    "SGQF2F"
+  ]
+},{
+  "DialogName": "SGQF3 Starlight Glimmer asks for Forgiveness from Rarity",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 5,
+  "Adventure": "SGQF",
+  "Requires": ["SGQF1"],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "SGQF3A",
+    "SGQF3B",
+    "SGQF3C",
+    "SGQF3D"
+  ]
+},{
+  "DialogName": "SGQF4 Starlight Glimmer asks for Forgiveness from Pinkie Pie",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 5,
+  "Adventure": "SGQF",
+  "Requires": ["SGQF1"],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "SGQF4A",
+    "SGQF4B",
+    "SGQF4C",
+    "SGQF4D"
+  ]
+},{
+  "DialogName": "FSSA1 Fluttershy and Starlight discuss Sloths",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 5,
+  "Adventure": "FSSA",
+  "Requires": [],
+  "Provides": ["FSSA1"],
+  "PhraseTypeSequence": [
+    "FSSA1A",
+    "FSSA1B",
+    "FSSA1C",
+    "FSSA1D",
+    "FSSA1E",
+    "FSSA1F",
+    "FSSA1G",
+    "FSSA1H",
+    "FSSA1I",
+    "FSSA1J",
+    "FSSA1K"
+  ]
+},{
+  "DialogName": "FSSA2 Pinkie Pie and Sloths",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 5,
+  "Adventure": "FSSA",
+  "Requires": ["FSSA1"],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "FSSA2A",
+    "FSSA2B",
+    "FSSA2C",
+    "FSSA2D",
+    "FSSA2E"
+  ]
+},{
+  "DialogName": "FSSA3 Rarity and Sloths",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 5,
+  "Adventure": "FSSA",
+  "Requires": ["FSSA1"],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "FSSA3A",
+    "FSSA3B",
+    "FSSA3C"
+  ]
+},{
+  "DialogName": "FSSA4 Canterlot and Sloths",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 5,
+  "Adventure": "FSSA",
+  "Requires": ["FSSA1"],
+  "Provides": ["FSSA4"],
+  "PhraseTypeSequence": [
+    "FSSA4A",
+    "CL_HalfSecSilence"
+  ]
+},{
+  "DialogName": "FSSA5 Pinkie Pie and Sloths",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 5,
+  "Adventure": "FSSA",
+  "Requires": ["FSSA4"],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "FSSA2A",
+    "FSSA2B",
+    "FSSA2C",
+    "FSSA2D",
+    "FSSA2E"
+  ]
+},{
+  "DialogName": "FSSA6 Rarity and Sloths",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 5,
+  "Adventure": "FSSA",
+  "Requires": ["FSSA4"],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "FSSA3A",
+    "FSSA3B",
+    "FSSA3C"
+  ]
+},{
+  "DialogName": "PPBC1 Bouncy Castle Adventure",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 5,
+  "Adventure": "PPBC",
+  "Requires": [],
+  "Provides": ["PPBC1"],
+  "PhraseTypeSequence": [
+    "PPBC1A",
+    "PPBC1B",
+    "PPBC1C",
+    "PPBC1D"
+  ]
+},{
+  "DialogName": "PPBC2 -- Pinkie Pie goes to Canterlot",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 5,
+  "Adventure": "PPBC",
+  "Requires": ["PPBC1"],
+  "Provides": ["PPBC2"],
+  "PhraseTypeSequence": [
+    "PPBC2A",
+    "CL_HalfSecSilence"
+  ]
+},{
+  "DialogName": "PPBC3 -- Pinkie Pie catches up with Fluttershy",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 5,
+  "Adventure": "PPBC",
+  "Requires": ["PPBC1"],
+  "Provides": ["PPBC3"],
+  "PhraseTypeSequence": [
+    "PPBC3A",
+    "PPBC3B",
+    "PPBC3C",
+    "PPBC3D",
+    "PPBC3E",
+    "PPBC3F"
+  ]
+},{
+  "DialogName": "PPBC4 -- Fluttershy flies to Canterlot",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 5,
+  "Adventure": "PPBC",
+  "Requires": ["PPBC3"],
+  "Provides": ["PPBC4"],
+  "PhraseTypeSequence": [
+    "PPBC4A",
+    "CL_HalfSecSilence"
+  ]
+},{
+  "DialogName": "PPBC5 -- Fluttershy saves Skylar",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 5,
+  "Adventure": "PPBC",
+  "Requires": ["PPBC4"],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "PPBC5A",
+    "PPBC5B",
+    "PPBC5C",
+    "PPBC5D"
+  ]
+},{
+  "DialogName": "PPBC6 -- Fluttershy saves Skylar",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 5,
+  "Adventure": "PPBC",
+  "Requires": ["PPBC3"],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "PPBC5A",
+    "PPBC5B",
+    "PPBC5C",
+    "PPBC5D"
+  ]
+},{
+  "DialogName": "PPBC7 -- Pinkie Pie saves Skylar",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 5,
+  "Adventure": "PPBC",
+  "Requires": ["PPBC2"],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "PPBC7A",
+    "PPBC7B",
+    "PPBC7C",
+    "PPBC7D",
+    "PPBC7E",
+    "PPBC7F"
+  ]
+},{
+  "DialogName": "Rarity--Inspiration Story",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 5,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "RYISA",
+    "GoOnJoyful",
+    "RYISB",
+    "GoOnDisapproval",
+    "RYISC",
+    "GoOnUnderstanding",
+    "RYISD"
+  ]
+},{
+  "DialogName": "Rarity--Serpent Story",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 5,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "RYSSA",
+    "GoOnFear",
+    "RYSSB",
+    "GoOnSad",
+    "RYSSC"
+  ]
+},{
+  "DialogName": "BjornDannyMother",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 8,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "BjornDannyMother1",
+    "BjornDannyMother2",
+    "BjornDannyMother3",
+    "BjornDannyEnemies4",
+    "BjornDannyEnemies5"
+  ]
+},{
+  "DialogName": "BjornDannyEnemies",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 8,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "BjornDannyEnemies1",
+    "BjornDannyEnemies2",
+    "BjornDannyEnemies3",
+    "BjornDannyEnemies4",
+    "BjornDannyEnemies5"
+  ]
+},{
+  "DialogName": "Rarity,PinkiePie",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 8,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "RarityToPinkiePie",
+    "PinkiePieToRarity"
+  ]
+},{
+  "DialogName": "PinkiePie,Rarity",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 8,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "PinkiePieToRarity",
+    "RarityToPinkiePie"
+  ]
+},{
+  "DialogName": "Rarity,StarlightGlimmer",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 8,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "RarityToStarlightGlimmer",
+    "StarlightGlimmerToRarity"
+  ]
+},{
+  "DialogName": "StarlightGlimmer,Rarity",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 8,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "StarlightGlimmerToRarity",
+    "RarityToStarlightGlimmer"
+  ]
+},{
+  "DialogName": "Rarity,Fluttershy",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 8,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "RarityToFluttershy",
+    "FluttershyToRarity"
+  ]
+},{
+  "DialogName": "Fluttershy,Rarity",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 8,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "FluttershyToRarity",
+    "RarityToFluttershy"
+  ]
+},{
+  "DialogName": "Rarity,Skylar",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 8,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "RarityToSkylar",
+    "SkylarToRarity"
+  ]
+},{
+  "DialogName": "Skylar,Rarity",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 8,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "SkylarToRarity",
+    "RarityToSkylar"
+  ]
+},{
+  "DialogName": "PinkiePie,StarlightGlimmer",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 8,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "PinkiePieToStarlightGlimmer",
+    "StarlightGlimmerToPinkiePie"
+  ]
+},{
+  "DialogName": "StarlightGlimmer,PinkiePie",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 8,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "StarlightGlimmerToPinkiePie",
+    "PinkiePieToStarlightGlimmer"
+  ]
+},{
+  "DialogName": "PinkiePie,Fluttershy",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 8,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "PinkiePieToFluttershy",
+    "FluttershyToPinkiePie"
+  ]
+},{
+  "DialogName": "Fluttershy,PinkiePie",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 8,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "PinkiePieToFluttershy",
+    "FluttershyToPinkiePie"
+  ]
+},{
+  "DialogName": "PinkiePie,Skylar",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 8,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "PinkiePieToSkylar",
+    "SkylarToPinkiePie"
+  ]
+},{
+  "DialogName": "Skylar,PinkiePie",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 8,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "SkylarToPinkiePie",
+    "PinkiePieToSkylar"
+  ]
+},{
+  "DialogName": "Skylar,Fluttershy",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 8,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "SkylarToFluttershy",
+    "FluttershyToSkylar"
+  ]
+},{
+  "DialogName": "Fluttershy,Skylar",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 8,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "FluttershyToSkylar",
+    "SkylarToFluttershy"
+  ]
+},{
+  "DialogName": "Skylar,StarlightGlimmer",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 8,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "SkylarToStarlightGlimmer",
+    "StarlightGlimmerToSkylar"
+  ]
+},{
+  "DialogName": "StarlightGlimmer,Skylar",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 8,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "StarlightGlimmerToSkylar",
+    "SkylarToStarlightGlimmer"
+  ]
+},{
+  "DialogName": "Fluttershy,StarlightGlimmer",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 8,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "FluttershyToStarlightGlimmer",
+    "StarlightGlimmerToFluttershy"
+  ]
+},{
+  "DialogName": "StarlightGlimmer,Fluttershy",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 8,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "StarlightGlimmerToFluttershy",
+    "FluttershyToStarlightGlimmer"
+  ]
+},{
+  "DialogName": "Pinkie Pie Twenty Million Questions (PPTM)",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 8,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "PPTM1",
+    "Yes",
+    "PPTM2",
+    "No",
+    "PPTM3",
+    "Yes",
+    "PPTM4",
+    "No",
+    "PPTM5",
+    "GiveObject",
+    "PPTM6"
+  ]
+},{
+  "DialogName": "Bjorn,Danny",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 9,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "BjornToDanny",
+    "DannyToBjorn"
+  ]
+},{
+  "DialogName": "Danny,Bjorn",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 9,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "DannyToBjorn",
+    "BjornToDanny"
+  ]
+},{
+  "DialogName": "DannySuperpowersStory",
+  "AddedOnDateTime": "2016-09-17T00:00:00",
+  "Popularity": 8,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "DannySuperpowers1",
+    "AcceptPlan",
+    "DannySuperpowers2",
+    "No",
+    "DannySuperpowers3",
+    "GiveActivity",
+    "DannySuperpowers4",
+    "GiveCredit",
+    "DannySuperpowers5"
+  ]
+}
+]
+}

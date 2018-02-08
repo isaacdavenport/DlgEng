@@ -1,0 +1,99 @@
+
+{"inList" : 
+[
+{
+  "DialogName": "Greeting, Greeting",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 12.0,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "Greeting",
+    "Greeting"
+  ]
+},{
+  "DialogName": "YesNoQuestion, No",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 4,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "YesNoQuestion",
+    "No"
+  ]
+},{
+  "DialogName": "YesNoQuestion, Yes",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 4,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "YesNoQuestion",
+    "Yes"
+  ]
+},{
+  "DialogName": "Request Affirmation, Give Affirmation, Thank You, Youre Welcome",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 1,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "RequestAffirmation",
+    "GiveAffirmation",
+    "ThankYou",
+    "YoureWelcome"
+  ]
+},{
+  "DialogName": "Give Credit, Youre Welcome, Thank You",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 5,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "GiveCredit",
+    "YoureWelcome",
+	"ThankYou"
+  ]
+},{
+  "DialogName": "Give Affirmation, Thank You, Youre Welcome",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 1,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "GiveAffirmation",
+    "ThankYou",
+    "YoureWelcome"
+  ]
+},{
+  "DialogName": "RequestAffirmation, GiveAffirmation",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 6.2,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "RequestAffirmation",
+    "GiveAffirmation"
+  ]
+},{
+  "DialogName": "Give Affirmation, Thank You, Youre Welcome",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 1,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "GiveAffirmation",
+    "ThankYou",
+    "YoureWelcome"
+  ]
+}
+]
+}

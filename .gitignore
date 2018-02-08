@@ -13,23 +13,20 @@ app.config
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
-# Build results
-[Dd]ebug/
-[Dd]ebugPublic/
-[Rr]elease/
-[Rr]eleases/
+
 x64/
 x86/
 bld/
-#[Bb]in/
-[Bb]in/*.config
-[Bb]in/*.exe
-[Bb]in/*.dll
-[Bb]in/*.xml
-[Bb]in/*.pdb
+# [Bb]in/
 [Oo]bj/
 [Ll]og/
 [Ll]ogs/
+
+/bin/Debug/*.xml
+/bin/Debug/*.dll
+/bin/Debug/*.config
+/bin/Debug/*.exe
+
 
 # Visual Studio 2015 cache/options directory
 .vs/
@@ -293,3 +290,4 @@ __pycache__/
 *.btm.cs
 *.odx.cs
 *.xsd.cs
+

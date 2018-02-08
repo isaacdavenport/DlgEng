@@ -1,0 +1,222 @@
+
+{"inList" : 
+[
+{
+  "DialogName": "Threat Retreat",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 3,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "Threat",
+    "Retreat"
+  ]
+},{
+  "DialogName": "Insult, Insult, Insult",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 0.5,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "Insult",
+    "Insult",
+    "Insult"
+  ]
+},{
+  "DialogName": "RequestAffirmation, Insult, Insult",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 0.1,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "RequestAffirmation",
+    "Insult",
+    "Insult"
+  ]
+},{
+  "DialogName": "YesNoQuestion, Insult",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 0.1,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "YesNoQuestion",
+    "Insult"
+  ]
+},{
+  "DialogName": "RequestCatchup, Insult, Retreat",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 0.1,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "RequestCatchup",
+    "Insult",
+    "Retreat"
+  ]
+},{
+  "DialogName": "GiveJoke, Insult",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 0.2,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "GiveJoke",
+    "Insult"
+  ]
+},{
+  "DialogName": "RequestAff GiveAff ReqCat Ramble retreat",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 1.8,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "RequestAffirmation",
+    "GiveAffirmation",
+    "RequestCatchup",
+    "Ramble",
+    "Retreat"
+  ]
+},{
+  "DialogName": "Insult, Shutup",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 0.1,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "Insult",
+    "ShutUp"
+  ]
+},{
+  "DialogName": "Insult, Insult, Insult, Exc",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 0.2,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "Insult",
+    "Insult",
+    "Insult",
+    "Exclamation"
+  ]
+},{
+  "DialogName": "Insult, Threat, Retreat",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 0.1,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "Insult",
+    "Threat",
+    "Retreat"
+  ]
+},{
+  "DialogName": "Accuse Deny",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 4,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "Accuse",
+    "Deny"
+  ]
+},{
+  "DialogName": "Accuse Admit",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 4,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "Accuse",
+    "Admit"
+  ]
+},{
+  "DialogName": "Accuse, Deny, Shift Blame",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 0.1,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "Accuse",
+    "Deny",
+	"GiveSilence",
+	"GiveWho",
+	"GiveDisbelief"
+  ]
+},{
+  "DialogName": "Give Credit, Deny",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 0.3,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "GiveCredit",
+    "Deny"
+  ]
+},{
+  "DialogName": "Give Credit, Deny, GiveDisbelief",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 0.2,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "GiveCredit",
+    "Deny",
+	"GiveDisbelief"
+  ]
+},{
+  "DialogName": "RequestWho, GiveWho, GiveAgreement, ThankYou",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 0.5,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "RequestWho",
+    "GiveWho",
+    "GiveAgreement",
+    "ThankYou"
+  ]
+},{
+  "DialogName": "RequestAdvice, GiveAdvice, GiveAgreement, YourWelcome",
+  "AddedOnDateTime": "2016-05-18T00:00:00",
+  "Popularity": 0.5,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "RequestAdvice",
+    "GiveAdvice",
+    "GiveAgreement",
+	"YoureWelcome"
+  ]
+},{
+  "DialogName": "GiveSurprisingStatement, GiveAgreement, ThankYou",
+  "AddedOnDateTime": "2017-04-24T18:00:00",
+  "Popularity": 0.2,
+  "Adventure": "",
+  "Requires": [],
+  "Provides": [],
+  "PhraseTypeSequence": [
+    "GiveSurprisingStatement",
+    "GiveAgreement",
+	"ThankYou"
+  ]
+}
+]
+}
