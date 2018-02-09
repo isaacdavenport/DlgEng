@@ -178,7 +178,7 @@ namespace DialogEngine
             }
             catch(Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw new Exception("InitSerial error "+ex.Message);
             }
         }
 

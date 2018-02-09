@@ -176,7 +176,7 @@ namespace DialogEngine
 
             if (!SessionVariables.AudioDialogsOn)
             {
-                Thread.Sleep(3200);
+                Task.Delay(3200);
                 return;
             }
 
@@ -192,16 +192,16 @@ namespace DialogEngine
 
 
                 var i = 0;
-                Thread.Sleep(300);
+                Task.Delay(300);
 
 
                 while (MP3Player.Instance.IsPlaying() && i < 250)
                 {
                     // 20 seconds is max
-                    Thread.Sleep(100);
+                    Task.Delay(100);
                 }
 
-                Thread.Sleep(800); // wait around a second after the audio is done for between phrase pause
+                Task.Delay(800); // wait around a second after the audio is done for between phrase pause
             }
             else
             {
@@ -571,7 +571,7 @@ namespace DialogEngine
 
             if (LastPhraseImpliedMovement && SameCharactersAsLast && SessionVariables.UseSerialPort)
             {
-                Thread.Sleep(mRandom.Next(0, 2000));
+                Task.Delay(mRandom.Next(0, 2000));
                 msMovementWaitCount++;
 
 

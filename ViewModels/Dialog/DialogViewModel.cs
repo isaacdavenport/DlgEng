@@ -1311,10 +1311,10 @@ namespace DialogEngine.ViewModels.Dialog
                                           DialogTracker.Instance.GenerateADialog(mCancellationTokenGenerateDialogSource.Token); //normal operation
                                       }
 
-                                      Thread.Sleep(300);
-                                      Thread.Sleep(mRandom.Next(0, 600));
+                                      Task.Delay(300);
+                                      Task.Delay(mRandom.Next(0, 600));
                                       DialogEngine.HeatMapUpdate.PrintHeatMap();
-                                      Thread.Sleep(200);
+                                      Task.Delay(200);
                                       break;
                                   }
                           }

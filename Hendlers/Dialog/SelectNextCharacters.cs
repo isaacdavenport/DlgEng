@@ -12,6 +12,8 @@ using System.Linq;
 using System.Configuration;
 using System.Reflection;
 using System.Timers;
+using DialogEngine.Events;
+using DialogEngine.Events.DialogEvents;
 using log4net;
 
 namespace DialogEngine
@@ -99,19 +101,21 @@ namespace DialogEngine
                if ((NextCharacter1 != DialogTracker.Instance.Character1Num || NextCharacter2 != DialogTracker.Instance.Character2Num) &&
                     (NextCharacter2 != DialogTracker.Instance.Character1Num || NextCharacter1 != DialogTracker.Instance.Character2Num))
                 {
-                    // break current dialog and restart player
-                    //mcLogger.Debug("start StopPlayingCurrentDialogLineEvent ");
+                    //break current dialog and restart player
+                    mcLogger.Debug("start StopPlayingCurrentDialogLineEvent ");
 
-                    //EventAggregator.Instance.GetEvent<StopPlayingCurrentDialogLineEvent>().Publish();
+                    Application.Current.Dispatcher.BeginInvoke((Action) (() =>
+                    {
+                        EventAggregator.Instance.GetEvent<StopPlayingCurrentDialogLineEvent>().Publish();
+                    }));
+                    mcLogger.Debug("start CancellationTokenGenerateDialogSource.Cancel ");
+                    DialogViewModel.Instance.CancellationTokenGenerateDialogSource.Cancel();
 
-                    //mcLogger.Debug("start CancellationTokenGenerateDialogSource.Cancel ");
-                    //DialogViewModel.Instance.CancellationTokenGenerateDialogSource.Cancel();
+                    mcLogger.Debug("start new CancellationTokenSource ");
 
-                    //mcLogger.Debug("start new CancellationTokenSource ");
+                    DialogViewModel.Instance.CancellationTokenGenerateDialogSource = new CancellationTokenSource();
 
-                    //DialogViewModel.Instance.CancellationTokenGenerateDialogSource = new CancellationTokenSource();
-
-                    //mcLogger.Debug("start finish StopPlayingCurrentDialogLineEvent");
+                    mcLogger.Debug("start finish StopPlayingCurrentDialogLineEvent");
 
                 }
 
@@ -355,7 +359,7 @@ namespace DialogEngine
                             }
                         }
 
-                        Thread.Sleep(1000);
+                        Task.Delay(1000);
 
                         if (!_userHasForcedCharacters && _nextCharacterSwapTime.CompareTo(DateTime.Now) < 0)
                         {

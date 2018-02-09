@@ -78,6 +78,7 @@ namespace DialogEngine
 
         private void _volumeTimer_Tick(object sender, EventArgs e)
         {
+            mcLogger.Info("start volumeTimer_Tick");
             try
             {
                 if (Player.settings.volume == 0)
@@ -98,11 +99,14 @@ namespace DialogEngine
                 mcLogger.Error("VolumeTimer. " +ex.Message);
             };
 
+            mcLogger.Info("end volumeTimer_Tick");
+
         }
 
 
         private void _timer_Tick(object sender, EventArgs e)
         {
+            mcLogger.Info("start _timer_Tick");
             double _durationOfPlaying = DateTime.Now.TimeOfDay.TotalSeconds - mStartedTime.TotalSeconds;
 
             // 0.5 seconds we need to mute player
@@ -113,6 +117,7 @@ namespace DialogEngine
                 mVolumeTimer.Start();
             }
 
+            mcLogger.Info("end _timer_Tick");
         }
 
 
