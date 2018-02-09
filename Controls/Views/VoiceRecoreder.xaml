@@ -29,8 +29,31 @@
                 Grid.ColumnSpan="2" 
                 HorizontalAlignment="Stretch" 
                 VerticalAlignment="Stretch"
+                RenderTransformOrigin="0,40"
                 Margin="0,0,0,0" 
                 Background="#545348">
+
+            <Canvas.Resources>
+
+                <LinearGradientBrush x:Key="waveBrush" MappingMode="Absolute"   StartPoint="350,0" EndPoint="350,150">
+                    <GradientStop Color="Blue" Offset="0.15" />
+                    <GradientStop Color="Red" Offset="0.7" />
+                    <GradientStop Color="Yellow" Offset="0.00" />
+                </LinearGradientBrush>
+                
+            </Canvas.Resources>
+
+            <Canvas.CacheMode>
+                <BitmapCache EnableClearType="False" 
+                 RenderAtScale="1" 
+                 SnapsToDevicePixels="False"  />
+            </Canvas.CacheMode>
+
+            <Canvas.LayoutTransform>
+                <TransformGroup>
+                    <ScaleTransform  ScaleY="-1" CenterY="-50" />
+                </TransformGroup>
+            </Canvas.LayoutTransform>
         </Canvas>
 
         <Grid Grid.Row="1" Grid.Column="1" >
@@ -51,7 +74,7 @@
             <StackPanel Grid.Row="1" HorizontalAlignment="Center"  Orientation="Horizontal">
 
 
-                <Button Margin="0,10,0,10" Style="{StaticResource PlayerBtn}"  Command="{Binding StartRecording}"  Width="40" Height="40" BorderThickness="0" >
+                <Button Margin="0,10,0,10" Style="{StaticResource PlayerBtn}" Command="{Binding StartRecording}"   Width="40" Height="40" BorderThickness="0" >
                     <Button.Content>
                         <Image Width="25" Height="25"  Source="pack://application:,,,/Resources/Images/microphone.png" />
                     </Button.Content>

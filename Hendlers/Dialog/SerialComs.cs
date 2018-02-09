@@ -248,6 +248,7 @@ namespace DialogEngine
             {
                 Thread.CurrentThread.Name = "SerialThread";
 
+
                 int[] _newRow = new int[NumRadios + 1];
                 int _cycleCount = 0;
 
@@ -256,35 +257,45 @@ namespace DialogEngine
 
                 while (true)
                 {
-                    if (_cancellationToken.IsCancellationRequested)
+                    try
                     {
-                        return;
-                    }
 
-                    var _processCurrentMessage = true;
-                    int _rowNum = -1;
-                    var _message = readSerialInLine();
+                        if (_cancellationToken.IsCancellationRequested)
+                        {
+                            return;
+                        }
 
-                    if (_message != null)
-                    {
-                        _rowNum = ParseMessage.Parse(_message, _newRow);
-                    }
-                    else
-                    {
-                        _processCurrentMessage = false;  //we are in here a great deal
-                    }
+                        var _processCurrentMessage = true;
+                        int _rowNum = -1;
+                        var _message = readSerialInLine();
 
-                    if (_rowNum > -1 && _rowNum < NumRadios && _processCurrentMessage)
-                    {
-                        _cycleCount++;
-                        ParseMessage.ProcessMessage(_rowNum, _newRow);
-                        SelectNextCharacters.FindBiggestRssiPair();
-                    }
+                        if (_message != null)
+                        {
+                            _rowNum = ParseMessage.Parse(_message, _newRow);
+                        }
+                        else
+                        {
+                            _processCurrentMessage = false;  //we are in here a great deal
+                        }
 
-                    if (_cycleCount > 80)
+                        if (_rowNum > -1 && _rowNum < NumRadios && _processCurrentMessage)
+                        {
+                            _cycleCount++;
+                            ParseMessage.ProcessMessage(_rowNum, _newRow);
+                            SelectNextCharacters.FindBiggestRssiPair();
+                        }
+
+                        if (_cycleCount > 80)
+                        {
+                            HeatMapUpdate.PrintHeatMap();
+                            _cycleCount = 0;
+                        }
+                    }
+                    catch(Exception ex)
                     {
-                        HeatMapUpdate.PrintHeatMap();
-                        _cycleCount = 0;
+                        mcLogger.Error("_regularylyReadSerialAsync " + ex.Message);
+
+                        DialogViewModel.Instance.AddItem(new ErrorMessage("Error in serial communication."));
                     }
                 }
 

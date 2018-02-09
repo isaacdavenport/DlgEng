@@ -74,7 +74,7 @@ namespace DialogEngine.Helpers
         /// <param name="_line">Line in file where method is called</param>
         public static void Info(string _loggerType, string _message, [CallerFilePath] string _file = "", [CallerLineNumber] int _line = 0)
         {
-            _getLogger(_loggerType)?.Info(_file + " " + _line + " Message : " + _message);
+            _getLogger(_loggerType)?.Info( _message);
         }
     }
 }
