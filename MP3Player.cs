@@ -123,6 +123,9 @@ namespace DialogEngine
 
         private void _stopPlayingCurrentDialogLine()
         {
+            mTimer.Stop();
+            mVolumeTimer.Stop();
+
             if (IsPlaying())
             {
                 if (mDuration > SessionVariables.MaxTimeToPlayFile)
@@ -186,6 +189,9 @@ namespace DialogEngine
         {
             try
             {
+                mTimer.Stop();
+                mVolumeTimer.Stop();
+
                 Player.settings.volume = 100;
                 Player.URL = _path;
 
@@ -219,8 +225,9 @@ namespace DialogEngine
                 }
                 return false;
             }
-            catch(Exception)
+            catch(Exception ex)
             {
+                mcLogger.Error("IsPlaying " + ex.Message);
                 // application is busy
                 return true;
             }
