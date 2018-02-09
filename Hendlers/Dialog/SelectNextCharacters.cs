@@ -5,8 +5,6 @@ using System;
 using System.Threading;
 using DialogEngine.Helpers;
 using DialogEngine.ViewModels.Dialog;
-using DialogEngine.Events;
-using DialogEngine.Events.DialogEvents;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Collections.Generic;
@@ -15,7 +13,6 @@ using System.Configuration;
 using System.Reflection;
 using System.Timers;
 using log4net;
-using System.Reflection;
 
 namespace DialogEngine
 {
@@ -24,7 +21,6 @@ namespace DialogEngine
         #region  - Fields -
         private static readonly ILog mcLogger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-        private static readonly ILog mcLogger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         private static Random msRandom = new Random();
         private static int[,] msStrongRssiCharacterPairBuf = new int[2, StrongRssiBufDepth];
@@ -280,14 +276,13 @@ namespace DialogEngine
                     }
                 }
             }
-            mcLogger.Debug("finished loops");
+                mcLogger.Debug("finished loops");
 
-            _calculateRssiStable(_tempCh1, _tempCh2);
-            mcLogger.Debug("finished _calculateRssiStable");
-            _assignNextCharacters(_tempCh1, _tempCh2);
-            mcLogger.Debug("end FindBiggestRssiPair");
-        }
-
+                _calculateRssiStable(_tempCh1, _tempCh2);
+                mcLogger.Debug("finished _calculateRssiStable");
+                _assignNextCharacters(_tempCh1, _tempCh2);
+                mcLogger.Debug("end FindBiggestRssiPair");
+        
             }
             catch (Exception ex)
             {
