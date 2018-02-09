@@ -141,7 +141,6 @@
     <Compile Include="Events\DialogEvents\ChangedModelDialogStateEvent.cs" />
     <Compile Include="Events\DialogEvents\StopImmediatelyPlayingCurrentDialogLIne.cs" />
     <Compile Include="Events\DialogEvents\StopPlayingCurrentDialogLineEvent.cs" />
-    <Compile Include="Events\DialogEvents\UpdateCanvasEvent.cs" />
     <Compile Include="Events\DialogEvents\UseSerialPortChanged.cs" />
     <Compile Include="Events\EventAggregator.cs" />
     <Compile Include="Events\EventBase.cs" />
@@ -283,6 +282,7 @@
     <Resource Include="Resources\Images\stop-button.png" />
     <Resource Include="Resources\Images\microphone.png" />
     <Content Include="Resources\Videos\videoplayback.webm" />
+    <Content Include="TheGeneratedLogFilesGoHere.txt" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -356,6 +356,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\MP3Player\" />
+    <Folder Include="Resources\Videos\" />
     <Folder Include="ViewModels\MP3Player\" />
     <Folder Include="Views\MP3Player\" />
   </ItemGroup>

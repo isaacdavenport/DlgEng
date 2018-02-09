@@ -30,7 +30,6 @@ namespace DialogEngine.Controls.ViewModels
         private double mSeconds = 0;
 
 
-
         private List<byte> mTotalbytes;
         private Queue<Point> mDisplaypts;
         private Queue<Int32> mDisplaysht;
@@ -88,7 +87,11 @@ namespace DialogEngine.Controls.ViewModels
         private void _bindCommands()
         {
             StartRecording = new RelayCommand(x => _startRecording());
-            //StopRecording = new RelayCommand(x => _stopRecording());
+            StopRecording = new RelayCommand(x => _stopRecording());
+        }
+
+        private void _stopRecording()
+        {
         }
 
         private void _setLimitLines()
@@ -148,14 +151,19 @@ namespace DialogEngine.Controls.ViewModels
             mWaveFileWriter = new WaveFileWriter(@"C:\Users\sbstb\Desktop\Output\temp.mp3", mWavein.WaveFormat);
 
 
-            mCanvasH = mView.waveCanvas.ActualHeight;
+            mCanvasH = mView.waveCanvas.ActualHeight - 20;
             mCanvasW = mView.waveCanvas.ActualWidth;
 
+            TranslateTransform transform = new TranslateTransform();
+            transform.X = 0;
+            transform.Y = 20;
 
            mPolyline = new Polyline();
-           mPolyline.Stroke = Brushes.Blue;
+            mPolyline.Stroke = mView.waveCanvas.FindResource("waveBrush") as Brush;
+            mPolyline.RenderTransform = transform; 
+           //mPolyline.Stroke =
            mPolyline.Name = "waveform";
-           mPolyline.StrokeThickness = 1;
+           mPolyline.StrokeThickness = 2;
            mPolyline.MaxHeight = mCanvasH - 4;
            mPolyline.MaxWidth = mCanvasW - 4;
 
@@ -172,7 +180,7 @@ namespace DialogEngine.Controls.ViewModels
             //displaysht = new Queue<short>();
             mDisplaysht = new Queue<Int32>();
 
-            //_setLimitLines();
+           // _setLimitLines();
 
             mWavein.StartRecording();
         }
@@ -220,26 +228,26 @@ namespace DialogEngine.Controls.ViewModels
                 }
                 else
                 {
-                    if(mDisplaypts.Count > 0)
                     mDisplaysht.Dequeue();
 
                     mDisplaysht.Enqueue(BitConverter.ToInt32(shts, 0));
                 }
             }
 
+            // this.mView.waveCanvas.Children.RemoveRange(4, mView.waveCanvas.Children.Count-1);
             this.mView.waveCanvas.Children.Clear();
             mPolyline.Points.Clear();
+
 
             //short[] shts2 = displaysht.ToArray();
             Int32[] shts2 = mDisplaysht.ToArray();
             for (Int32 x = 0; x < shts2.Length; ++x)
             {
-                mPolyline.Points.Add(_normalize(x, shts2[x]));
+                    mPolyline.Points.Add(_normalize(x, shts2[x]));
             }
 
 
             this.mView.waveCanvas.Children.Add(mPolyline);
-
 
         }
 
@@ -248,10 +256,9 @@ namespace DialogEngine.Controls.ViewModels
         {
             Point p = new Point();
 
-
             p.X = 1.0 * x / mNumtodisplay * mPolylineW;
 
-            p.Y = mPolylineH / 2.0 - y / (Int32.MaxValue * 1.0) * (mPolylineH / 2.0);
+            p.Y = ((1.0  * mPolylineH)  * ( y / (Int32.MaxValue * 1.0))) ;
             return p;
         }
 

@@ -5,8 +5,6 @@ using System;
 using System.Threading;
 using DialogEngine.Helpers;
 using DialogEngine.ViewModels.Dialog;
-using DialogEngine.Events;
-using DialogEngine.Events.DialogEvents;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Collections.Generic;
@@ -22,6 +20,7 @@ namespace DialogEngine
     {
         #region  - Fields -
         private static readonly ILog mcLogger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
 
         private static Random msRandom = new Random();
         private static int[,] msStrongRssiCharacterPairBuf = new int[2, StrongRssiBufDepth];
@@ -234,6 +233,10 @@ namespace DialogEngine
             //  Ch1 is added to the RSSI for Ch1 looking at Ch2
             mcLogger.Debug("start FindBiggestRssiPair");
 
+            try
+            {
+
+
             int _tempCh1 = 0, _tempCh2 = 0, i = 0, j = 0;
 
             var _currentTime = DateTime.Now;
@@ -273,12 +276,19 @@ namespace DialogEngine
                     }
                 }
             }
-            mcLogger.Debug("finished loops");
+                mcLogger.Debug("finished loops");
 
-            _calculateRssiStable(_tempCh1, _tempCh2);
-            mcLogger.Debug("finished _calculateRssiStable");
-            _assignNextCharacters(_tempCh1, _tempCh2);
-            mcLogger.Debug("end FindBiggestRssiPair");
+                _calculateRssiStable(_tempCh1, _tempCh2);
+                mcLogger.Debug("finished _calculateRssiStable");
+                _assignNextCharacters(_tempCh1, _tempCh2);
+                mcLogger.Debug("end FindBiggestRssiPair");
+        
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
         }
 
         /// <summary>
@@ -295,68 +305,77 @@ namespace DialogEngine
 
                 // used for computers with no serial input radio for random, or forceCharacter mode
                 // does not include final character the silent schoolhouse, not useful in noSerial mode 
-                bool _userHasForcedCharacters;
 
-                DateTime _nextCharacterSwapTime = new DateTime();
-
-                _nextCharacterSwapTime = DateTime.Now;
-
-                _nextCharacterSwapTime.AddSeconds(12);
-
-                SerialComs.IsSerialMode = false;
-
-
-                if (SessionVariables.UseSerialPort)
+                try
                 {
-                    string _configPath = System.IO.Path.Combine(System.Environment.CurrentDirectory, "DialogEngine.exe");
+                    bool _userHasForcedCharacters;
 
-                    Configuration _config = ConfigurationManager.OpenExeConfiguration(_configPath);
+                    DateTime _nextCharacterSwapTime = new DateTime();
 
-                    _config.AppSettings.Settings["UseSerialPort"].Value = false.ToString();
+                    _nextCharacterSwapTime = DateTime.Now;
 
-                    _config.Save();
+                    _nextCharacterSwapTime.AddSeconds(12);
 
-                    ConfigurationManager.RefreshSection("appSettings");
-                }
+                    SerialComs.IsSerialMode = false;
 
 
-                while (true)
-                {
-                    if (_cancellationToken.IsCancellationRequested)
+                    if (SessionVariables.UseSerialPort)
                     {
-                        Thread.CurrentThread.Abort();
-                        return;
+                        string _configPath = System.IO.Path.Combine(System.Environment.CurrentDirectory, "DialogEngine.exe");
+
+                        Configuration _config = ConfigurationManager.OpenExeConfiguration(_configPath);
+
+                        _config.AppSettings.Settings["UseSerialPort"].Value = false.ToString();
+
+                        _config.Save();
+
+                        ConfigurationManager.RefreshSection("appSettings");
                     }
 
-                    _userHasForcedCharacters = false;
 
-
-                    if (SessionVariables.DebugFlag)
+                    while (true)
                     {
-                        if (DialogViewModel.SelectedCharactersOn == 2)
-                        {  //two three letter inital sets should be less than7 w space
+                        if (_cancellationToken.IsCancellationRequested)
+                        {
+                            Thread.CurrentThread.Abort();
+                            return;
+                        }
 
-                            _userHasForcedCharacters = true;
-                            NextCharacter1 = DialogViewModel.Instance.SelectedIndex1;
-                            NextCharacter2 = DialogViewModel.Instance.SelectedIndex2;
+                        _userHasForcedCharacters = false;
+
+
+                        if (SessionVariables.DebugFlag)
+                        {
+                            if (DialogViewModel.SelectedCharactersOn == 2)
+                            {  //two three letter inital sets should be less than7 w space
+
+                                _userHasForcedCharacters = true;
+                                NextCharacter1 = DialogViewModel.Instance.SelectedIndex1;
+                                NextCharacter2 = DialogViewModel.Instance.SelectedIndex2;
+                            }
+                        }
+
+                        Thread.Sleep(1000);
+
+                        if (!_userHasForcedCharacters && _nextCharacterSwapTime.CompareTo(DateTime.Now) < 0)
+                        {
+                            int _nextCharacter1Index = GetNextCharacter();
+                            int _nextCharacter2Index = GetNextCharacter(_nextCharacter1Index >= 0 ? _nextCharacter1Index : NextCharacter1);
+
+                            NextCharacter1 = _nextCharacter1Index >= 0 ? _nextCharacter1Index : NextCharacter1; //lower bound inclusive, upper exclusive
+                            NextCharacter2 = _nextCharacter2Index >= 0 ? _nextCharacter2Index : NextCharacter2; //lower bound inclusive, upper exclusive
+
+                            _nextCharacterSwapTime = DateTime.Now;
+                            _nextCharacterSwapTime = _nextCharacterSwapTime.AddSeconds(8 + msRandom.Next(0, 34));
                         }
                     }
-
-                    Thread.Sleep(1000);
-
-                    if (!_userHasForcedCharacters && _nextCharacterSwapTime.CompareTo(DateTime.Now) < 0)
-                    {
-                        int _nextCharacter1Index = GetNextCharacter();
-                        int _nextCharacter2Index = GetNextCharacter(_nextCharacter1Index >= 0 ?_nextCharacter1Index : NextCharacter1);
-
-                        NextCharacter1 = _nextCharacter1Index >= 0 ? _nextCharacter1Index : NextCharacter1; //lower bound inclusive, upper exclusive
-                        NextCharacter2 = _nextCharacter2Index >= 0 ? _nextCharacter2Index : NextCharacter2; //lower bound inclusive, upper exclusive
-
-                        _nextCharacterSwapTime = DateTime.Now;
-                        _nextCharacterSwapTime = _nextCharacterSwapTime.AddSeconds(8 + msRandom.Next(0, 34));
-                    }
                 }
+                catch (Exception ex)
+                {
+                    mcLogger.Error("OccasionallyChangeToRandNewCharacterAsync " + ex.Message);
 
+                    DialogViewModel.Instance.AddItem("Error in random selection of characters.");
+                }
             });
         }
         #endregion
