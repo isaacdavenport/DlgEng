@@ -186,58 +186,67 @@ namespace DialogEngine
 
         #region - Public methods -
 
-        
+
 
         /// <summary>
         /// Initialize characters selection method
         /// </summary>
-        public async  static Task  InitCharacterSelection()
-        {
+        public async static Task InitCharacterSelection() {
             msSerialTokenSource = new CancellationTokenSource();
             msRandomTokenSource = new CancellationTokenSource();
 
-            if (SessionVariables.UseSerialPort)
+            try
             {
-                try
+
+
+                if (SessionVariables.UseSerialPort)
                 {
-                     await _initSerial();
+                    try
+                    {
+                        await _initSerial();
+                    }
+                    catch (Exception ex)
+                    {
+                        mcLogger.Error("Serial port error " + ex.Message);
+
+                        // if COM port name is not valid, we show dialog to user with valid COM ports 
+                        SerialComPortErrorDialog dialog = new SerialComPortErrorDialog();
+
+                        dialog.ShowDialog();
+
+                        // if user clicked on "Save changes" we try to again initialize serial
+                        if (dialog.DialogResult.HasValue && dialog.DialogResult.Value)
+                        {
+                            try
+                            {
+                                await _initSerial();
+                            }
+                            catch (Exception innerEx)
+                            {
+                                mcLogger.Error("Init serial COM port error after changing of COM port. " + innerEx.Message);
+
+                                // if again error occured we initialize random selection, so we need to see log file check error
+                                await SelectNextCharacters.OccasionallyChangeToRandNewCharacterAsync(msRandomTokenSource.Token);
+                            }
+                        }
+                        else // if user closed dialog we initialize random selection
+                        {
+                            await SelectNextCharacters.OccasionallyChangeToRandNewCharacterAsync(msRandomTokenSource.Token);
+                        }
+
+                    }
                 }
-                catch (Exception ex)
+                else // user chose NoSerialPort so we initialize random selection
                 {
-                    mcLogger.Error("Serial port error " + ex.Message);
-
-                    // if COM port name is not valid, we show dialog to user with valid COM ports 
-                    SerialComPortErrorDialog dialog = new SerialComPortErrorDialog();
-
-                    dialog.ShowDialog();
-
-                    // if user clicked on "Save changes" we try to again initialize serial
-                    if(dialog.DialogResult.HasValue && dialog.DialogResult.Value)
-                    {
-                        try
-                        {
-                           await _initSerial();
-                        }
-                        catch(Exception innerEx)
-                        {
-                          mcLogger.Error("Init serial COM port error after changing of COM port. " + innerEx.Message);
-                          
-                          // if again error occured we initialize random selection, so we need to see log file check error
-                           await SelectNextCharacters.OccasionallyChangeToRandNewCharacterAsync(msRandomTokenSource.Token);
-                        }
-                    }
-                    else  // if user closed dialog we initialize random selection
-                    {
-                         await SelectNextCharacters.OccasionallyChangeToRandNewCharacterAsync(msRandomTokenSource.Token);
-                    }
-
+                    await SelectNextCharacters.OccasionallyChangeToRandNewCharacterAsync(msRandomTokenSource.Token);
                 }
             }
-            else // user chose NoSerialPort so we initialize random selection
+            catch (Exception e)
             {
-                 await SelectNextCharacters.OccasionallyChangeToRandNewCharacterAsync(msRandomTokenSource.Token);
-            }
+                mcLogger.Error("InitCharacterSelection " + e.Message);
 
+               DialogViewModel.Instance.AddItem(new ErrorMessage("Error in character selection method."));
+            }
             //worry about stopping cleanly later TODO
         }
 

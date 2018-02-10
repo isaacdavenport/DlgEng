@@ -14,6 +14,7 @@ using System.Reflection;
 using System.Timers;
 using DialogEngine.Events;
 using DialogEngine.Events.DialogEvents;
+using DialogEngine.Models.Logger;
 using log4net;
 
 namespace DialogEngine
@@ -96,30 +97,30 @@ namespace DialogEngine
                 NextCharacter1 = _nextCharacter1MappedIndex1;
                 NextCharacter2 = _nextCharacter1MappedIndex2;
 
-                mcLogger.Debug("start break current dialog");
+                //mcLogger.Debug("start break current dialog");
                  
                if ((NextCharacter1 != DialogTracker.Instance.Character1Num || NextCharacter2 != DialogTracker.Instance.Character2Num) &&
                     (NextCharacter2 != DialogTracker.Instance.Character1Num || NextCharacter1 != DialogTracker.Instance.Character2Num))
                 {
                     //break current dialog and restart player
-                    mcLogger.Debug("start StopPlayingCurrentDialogLineEvent ");
+                    //mcLogger.Debug("start StopPlayingCurrentDialogLineEvent ");
 
                     Application.Current.Dispatcher.BeginInvoke((Action) (() =>
                     {
                         EventAggregator.Instance.GetEvent<StopPlayingCurrentDialogLineEvent>().Publish();
                     }));
-                    mcLogger.Debug("start CancellationTokenGenerateDialogSource.Cancel ");
+                    //mcLogger.Debug("start CancellationTokenGenerateDialogSource.Cancel ");
                     DialogViewModel.Instance.CancellationTokenGenerateDialogSource.Cancel();
 
-                    mcLogger.Debug("start new CancellationTokenSource ");
+                    //mcLogger.Debug("start new CancellationTokenSource ");
 
                     DialogViewModel.Instance.CancellationTokenGenerateDialogSource = new CancellationTokenSource();
 
-                    mcLogger.Debug("start finish StopPlayingCurrentDialogLineEvent");
+                    //mcLogger.Debug("start finish StopPlayingCurrentDialogLineEvent");
 
                 }
 
-                mcLogger.Debug("end break current dialog");
+                //mcLogger.Debug("end break current dialog");
 
             }
         }
@@ -235,7 +236,7 @@ namespace DialogEngine
         {
             //  This method takes the RSSI values and combines them so that the RSSI for Ch2 looking at 
             //  Ch1 is added to the RSSI for Ch1 looking at Ch2
-            mcLogger.Debug("start FindBiggestRssiPair");
+            //mcLogger.Debug("start FindBiggestRssiPair");
 
             try
             {
@@ -280,12 +281,12 @@ namespace DialogEngine
                     }
                 }
             }
-                mcLogger.Debug("finished loops");
+                //mcLogger.Debug("finished loops");
 
                 _calculateRssiStable(_tempCh1, _tempCh2);
-                mcLogger.Debug("finished _calculateRssiStable");
+                //mcLogger.Debug("finished _calculateRssiStable");
                 _assignNextCharacters(_tempCh1, _tempCh2);
-                mcLogger.Debug("end FindBiggestRssiPair");
+                //mcLogger.Debug("end FindBiggestRssiPair");
         
             }
             catch (Exception ex)
@@ -378,7 +379,7 @@ namespace DialogEngine
                 {
                     mcLogger.Error("OccasionallyChangeToRandNewCharacterAsync " + ex.Message);
 
-                    DialogViewModel.Instance.AddItem("Error in random selection of characters.");
+                    DialogViewModel.Instance.AddItem(new ErrorMessage("Error in random selection of characters."));
                 }
             });
         }
