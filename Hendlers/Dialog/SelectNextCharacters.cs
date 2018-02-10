@@ -360,7 +360,7 @@ namespace DialogEngine
                             }
                         }
 
-                        Task.Delay(1000);
+                        Thread.Sleep(1000);
 
                         if (!_userHasForcedCharacters && _nextCharacterSwapTime.CompareTo(DateTime.Now) < 0)
                         {

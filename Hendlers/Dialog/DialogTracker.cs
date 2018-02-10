@@ -16,6 +16,7 @@ using DialogEngine.Models.Logger;
 using System.Threading.Tasks;
 using DialogEngine.ViewModels.Dialog;
 using System.Collections.ObjectModel;
+using System.Windows.Threading;
 
 
 // ReSharper disable ConditionIsAlwaysTrueOrFalse
@@ -176,13 +177,16 @@ namespace DialogEngine
 
             if (!SessionVariables.AudioDialogsOn)
             {
-                Task.Delay(3200);
+                Thread.Sleep(3200);
                 return;
             }
 
 
             if (File.Exists(_pathAndFileName))
             {
+
+                Application.Current.Dispatcher.Invoke(() => { 
+
                 var _playSuccess = MP3Player.Instance.PlayMp3(_pathAndFileName);
 
                 if (_playSuccess != 0)
@@ -190,18 +194,34 @@ namespace DialogEngine
                     AddItem(new ErrorMessage("MP3 Play Error  ---  " + _playSuccess));
                 }
 
+                });
 
                 var i = 0;
-                Task.Delay(300);
+                Thread.Sleep(300);
 
 
-                while (MP3Player.Instance.IsPlaying() && i < 250)
+                bool isPlaying = false;
+
+                do
                 {
-                    // 20 seconds is max
-                    Task.Delay(100);
-                }
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
 
-                Task.Delay(800); // wait around a second after the audio is done for between phrase pause
+                        isPlaying = MP3Player.Instance.IsPlaying();
+
+
+                    });
+
+                    Thread.Sleep(100);
+
+                    i++;
+
+                }
+                while (isPlaying && i < 250);
+
+
+
+                Thread.Sleep(800); // wait around a second after the audio is done for between phrase pause
             }
             else
             {
@@ -573,7 +593,7 @@ namespace DialogEngine
 
             if (LastPhraseImpliedMovement && SameCharactersAsLast && SessionVariables.UseSerialPort)
             {
-                Task.Delay(mRandom.Next(0, 2000));
+                Thread.Sleep(mRandom.Next(0, 2000));
                 msMovementWaitCount++;
 
 

@@ -3,11 +3,13 @@
 
 using DialogEngine.Events.DialogEvents;
 using DialogEngine.Helpers;
+using DialogEngine.Models.Logger;
+using DialogEngine.ViewModels.Dialog;
 using log4net;
 using System;
 using System.Reflection;
-using System.Timers;
-using WMPLib;
+using System.Windows.Media;
+using System.Windows.Threading;
 
 namespace DialogEngine
 {
@@ -27,10 +29,10 @@ namespace DialogEngine
         // length of .mp3 file in s
         private double mDuration;
 
-        private Timer mTimer = new Timer(1000);
-        private Timer mVolumeTimer = new Timer(100); //ms
+        private DispatcherTimer mTimer = new DispatcherTimer();
+        private DispatcherTimer mVolumeTimer = new DispatcherTimer(); //ms
 
-        public WMPLib.WindowsMediaPlayer Player;
+        public MediaPlayer Player = new MediaPlayer();
 
         #endregion
 
@@ -44,36 +46,37 @@ namespace DialogEngine
             Events.EventAggregator.Instance.GetEvent<StopPlayingCurrentDialogLineEvent>().Subscribe(_stopPlayingCurrentDialogLine);
             Events.EventAggregator.Instance.GetEvent<StopImmediatelyPlayingCurrentDialogLIne>().Subscribe(_stopImmediatelyPlayingCurrentDialogLine);
 
-            Player = new WMPLib.WindowsMediaPlayer();
 
-            Player.MediaError += _player_MediaError;
-            Player.PlayStateChange += _playState_Change;
+            Player.MediaOpened += Player_MediaOpened;
+            Player.MediaFailed += Player_MediaFailed;
 
-            mTimer.Elapsed += _timer_Tick;
-            mVolumeTimer.Elapsed += _volumeTimer_Tick;
+            mTimer.Interval = TimeSpan.FromSeconds(1);
 
+            mVolumeTimer.Interval = TimeSpan.FromMilliseconds(100);
+            mTimer.Tick += _timer_Tick;
+            mVolumeTimer.Tick += _volumeTimer_Tick;
         }
 
         #endregion
 
         #region - event handlers -
 
-        private void _playState_Change(int NewState)
+        private void Player_BufferingEnded(object sender, EventArgs e)
         {
-            // state 3 - playing
-            if(NewState == 3)
-            mDuration = Player.currentMedia.duration;
+            mDuration = Player.NaturalDuration.TimeSpan.TotalSeconds;
         }
 
 
-        private void _player_MediaError(object pMediaObject)
+        private void Player_MediaOpened(object sender, EventArgs e)
         {
-            mcLogger.Error("Incorrect .mp3 file.");
+            mDuration = Player.NaturalDuration.TimeSpan.TotalSeconds;
         }
 
-        #endregion
 
-        #region - private functions -
+        private void Player_MediaFailed(object sender, ExceptionEventArgs e)
+        {
+            DialogViewModel.Instance.AddItem(new ErrorMessage("Media filed."));
+        }
 
 
         private void _volumeTimer_Tick(object sender, EventArgs e)
@@ -81,22 +84,22 @@ namespace DialogEngine
             mcLogger.Info("start volumeTimer_Tick");
             try
             {
-                if (Player.settings.volume == 0)
+                if (Player.Volume == 0)
                 {
                     mVolumeTimer.Stop();
 
-                    Player.controls.stop();
+                    Player.Stop();
 
                     return;
                 }
                 else
                 {
-                    Player.settings.volume -= 20; // percentage
+                    Player.Volume -= 0.2; // percentage
                 }
             }
             catch (Exception ex)
             {
-                mcLogger.Error("VolumeTimer. " +ex.Message);
+                mcLogger.Error("VolumeTimer. " + ex.Message);
             };
 
             mcLogger.Info("end volumeTimer_Tick");
@@ -120,6 +123,10 @@ namespace DialogEngine
             mcLogger.Info("end _timer_Tick");
         }
 
+        #endregion
+
+        #region - private functions -
+
 
         private void _stopPlayingCurrentDialogLine()
         {
@@ -142,7 +149,7 @@ namespace DialogEngine
             {
                 try
                 {
-                    Player.controls.stop();
+                    Player.Stop();
                 }
                 catch (Exception ex)
                 {
@@ -192,9 +199,11 @@ namespace DialogEngine
                 mTimer.Stop();
                 mVolumeTimer.Stop();
 
-                Player.settings.volume = 100;
-                Player.URL = _path;
+                Player.Volume = 0.8;
+                Player.Open(new Uri(_path));
+                //mDuration = Player.NaturalDuration.TimeSpan.TotalSeconds;
 
+                Player.Play();
                 mStartedTime = DateTime.Now.TimeOfDay;
 
                 return 0;  //TODO add error handling    
@@ -216,14 +225,14 @@ namespace DialogEngine
         {
             try
             {
-                WMPPlayState _currentPlayState = Player.playState;
+                double position = Player.Position.TotalSeconds;
 
-                if (_currentPlayState == WMPPlayState.wmppsPlaying || _currentPlayState == WMPPlayState.wmppsBuffering
-                        || _currentPlayState == WMPPlayState.wmppsTransitioning)
+                if( position == 0)
                 {
-                    return true;
+                    return false;
                 }
-                return false;
+
+                return Player.NaturalDuration.TimeSpan.TotalSeconds != Player.Position.TotalSeconds;
             }
             catch(Exception ex)
             {
@@ -233,28 +242,6 @@ namespace DialogEngine
             }
         }
 
-
-        /// <summary>
-        /// Check status of player
-        /// </summary>
-        /// <returns>Status of mp3 player</returns>
-        public int Status()
-        {
-            int _code = 1000;
-
-            try
-            {
-                _code = (int)Player.playState;
-            }
-            catch
-            {
-                mcLogger.Error("MP3 Player Status not readable");
-            }
-            return _code;
-        }
-
         #endregion
-
-
     }
 }
