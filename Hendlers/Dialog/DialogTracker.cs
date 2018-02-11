@@ -172,7 +172,7 @@ namespace DialogEngine
 
         private void _playAudio(string _pathAndFileName)
         {
-            mcLogger.Debug("Start _addPhraseToHistory method");
+            mcLogger.Debug("Start _playAudio method");
 
 
             if (!SessionVariables.AudioDialogsOn)
@@ -228,7 +228,7 @@ namespace DialogEngine
                 AddItem(new ErrorMessage("Could not find: " + _pathAndFileName));
             }
 
-            mcLogger.Debug("End _addPhraseToHistory method");
+            mcLogger.Debug("End _playAudio method");
 
         }
 
@@ -432,6 +432,8 @@ namespace DialogEngine
             });
 
             LoggerHelper.Info(SessionVariables.DialogLogFileName, mDialogViewModel.CharacterCollection[_speakingCharacter].CharacterName + ": " + _selectedPhrase.DialogStr);
+
+            mcLogger.Debug("End _addPhraseToHistory method");
 
         }
 
@@ -693,6 +695,8 @@ namespace DialogEngine
         // TODO generate parallel dialogs, using string tags.
         public void GenerateADialog(CancellationToken _cancellationToken,params int[] _dialogDirectives)
         {
+
+            mcLogger.Info("start GenerateADialog");
             //check is async method cancelled
             if (_cancellationToken.IsCancellationRequested)
                 return;
@@ -775,6 +779,9 @@ namespace DialogEngine
                 RecentDialogs.Enqueue(CurrentDialogModel);
                 LastPhraseImpliedMovement = _determineIfMovementImplied(_selectedPhrase);
             }
+
+            mcLogger.Info("end GenerateADialog");
+
         }
 
 

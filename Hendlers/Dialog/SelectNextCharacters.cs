@@ -14,6 +14,7 @@ using System.Reflection;
 using System.Timers;
 using DialogEngine.Events;
 using DialogEngine.Events.DialogEvents;
+using DialogEngine.Models.Logger;
 using log4net;
 
 namespace DialogEngine
@@ -380,7 +381,7 @@ namespace DialogEngine
                 {
                     mcLogger.Error("OccasionallyChangeToRandNewCharacterAsync " + ex.Message);
 
-                    DialogViewModel.Instance.AddItem("Error in random selection of characters.");
+                    DialogViewModel.Instance.AddItem(new ErrorMessage("Error in random selection of characters."));
                 }
             });
         }
