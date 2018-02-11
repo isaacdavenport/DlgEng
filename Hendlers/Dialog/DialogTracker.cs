@@ -235,7 +235,7 @@ namespace DialogEngine
 
         private void _addDialogModelToHistory(int _dialogModelIndex, int _ch1, int _ch2)
         {
-            mcLogger.Debug("Start _addDialogModelToHistory method.");
+            //mcLogger.Debug("Start _addDialogModelToHistory method.");
 
 
             HistoricalDialogs.Add(new HistoricalDialog
@@ -248,7 +248,7 @@ namespace DialogEngine
                 Character2 = _ch2
             });
 
-            mcLogger.Debug("End _addDialogModelToHistory method.");
+            //mcLogger.Debug("End _addDialogModelToHistory method.");
 
         }
 
@@ -419,7 +419,7 @@ namespace DialogEngine
 
         private void _addPhraseToHistory(PhraseEntry _selectedPhrase, int _speakingCharacter)
         {
-            mcLogger.Debug("Start _addPhraseToHistory method");
+            //mcLogger.Debug("Start _addPhraseToHistory method");
 
 
             HistoricalPhrases.Add(new HistoricalPhrase
@@ -433,7 +433,7 @@ namespace DialogEngine
 
             LoggerHelper.Info(SessionVariables.DialogLogFileName, mDialogViewModel.CharacterCollection[_speakingCharacter].CharacterName + ": " + _selectedPhrase.DialogStr);
 
-            mcLogger.Debug("End _addPhraseToHistory method");
+            //mcLogger.Debug("End _addPhraseToHistory method");
 
         }
 
@@ -441,7 +441,7 @@ namespace DialogEngine
 
         private int _pickAWeightedDialog(int _character1Num, int _character2Num)
         {
-            mcLogger.Debug("Start _pickAWeightedDialog method.");
+            //mcLogger.Debug("Start _pickAWeightedDialog method.");
 
             //TODO check that all characters/phrasetypes required for adventure are included before starting adventure?
             var _dialogModel = 0;
@@ -506,7 +506,7 @@ namespace DialogEngine
 
         private bool _importClosestSerialComsCharacters()
         {
-            mcLogger.Debug("Start _importClosestSerialComsCharacters() method.");
+            //mcLogger.Debug("Start _importClosestSerialComsCharacters() method.");
 
             var _tempChar1 = SelectNextCharacters.NextCharacter1;
             var _tempChar2 = SelectNextCharacters.NextCharacter2;
@@ -524,7 +524,7 @@ namespace DialogEngine
             mPriorCharacter1Num = Character1Num;
             mPriorCharacter2Num = Character2Num;
 
-            mcLogger.Debug("End _importClosestSerialComsCharacters() method.");
+            //mcLogger.Debug("End _importClosestSerialComsCharacters() method.");
 
 
             return true;
@@ -533,7 +533,7 @@ namespace DialogEngine
 
         private void _processDebugFlags(params int[] _dialogDirectives)
         {
-            mcLogger.Debug("Start _processDebugFlags method.");
+            //mcLogger.Debug("Start _processDebugFlags method.");
 
 
             switch (_dialogDirectives.Count())
@@ -580,7 +580,7 @@ namespace DialogEngine
 
             HeatMapUpdate.PrintHeatMap();
 
-            mcLogger.Debug("End _processDebugFlags method.");
+            //mcLogger.Debug("End _processDebugFlags method.");
 
 
         }
@@ -589,7 +589,7 @@ namespace DialogEngine
         {
             // unless waiting to start a dialog model, that may be an issue eventually
 
-            mcLogger.Debug("Start _waitingForMovement method.");
+            //mcLogger.Debug("Start _waitingForMovement method.");
 
             if (LastPhraseImpliedMovement && SameCharactersAsLast && SessionVariables.UseSerialPort)
             {
@@ -652,7 +652,7 @@ namespace DialogEngine
 
             msMovementWaitCount = 0;
 
-            mcLogger.Debug("End _waitingForMovement method.");
+            //mcLogger.Debug("End _waitingForMovement method.");
 
 
             return false;
@@ -696,7 +696,7 @@ namespace DialogEngine
         public void GenerateADialog(CancellationToken _cancellationToken,params int[] _dialogDirectives)
         {
 
-            mcLogger.Info("start GenerateADialog");
+            //mcLogger.Info("start GenerateADialog");
             //check is async method cancelled
             if (_cancellationToken.IsCancellationRequested)
                 return;
@@ -780,7 +780,7 @@ namespace DialogEngine
                 LastPhraseImpliedMovement = _determineIfMovementImplied(_selectedPhrase);
             }
 
-            mcLogger.Info("end GenerateADialog");
+            //mcLogger.Info("end GenerateADialog");
 
         }
 
@@ -1011,7 +1011,7 @@ namespace DialogEngine
 
         public PhraseEntry PickAWeightedPhrase(int _speakingCharacter, string _currentPhraseType)
         {
-            mcLogger.Debug("Start PickAWeightedPhrase method");
+            //mcLogger.Debug("Start PickAWeightedPhrase method");
 
             PhraseEntry _selectedPhrase = null;
 
@@ -1065,7 +1065,7 @@ namespace DialogEngine
 
                 mDialogViewModel.CharacterCollection[_speakingCharacter].RecentPhrases.Enqueue(_selectedPhrase);
 
-                mcLogger.Debug("End PickAWeightedPhrase method");
+                //mcLogger.Debug("End PickAWeightedPhrase method");
             }
             catch (Exception ex)
             {
