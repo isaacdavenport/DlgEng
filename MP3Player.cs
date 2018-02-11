@@ -204,6 +204,9 @@ namespace DialogEngine
                 //mDuration = Player.NaturalDuration.TimeSpan.TotalSeconds;
 
                 Player.Play();
+
+                mcLogger.Debug("Current .mp3 file " + _path );
+
                 mStartedTime = DateTime.Now.TimeOfDay;
 
                 return 0;  //TODO add error handling    
