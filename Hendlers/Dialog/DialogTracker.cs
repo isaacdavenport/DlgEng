@@ -217,10 +217,8 @@ namespace DialogEngine
                     i++;
 
                 }
-                while (isPlaying && i < 250);
-
-
-
+                while (isPlaying && i < 400);  // don't get stuck,, 40 seconds max phrase
+                
                 Thread.Sleep(800); // wait around a second after the audio is done for between phrase pause
             }
             else
