@@ -1,10 +1,10 @@
 {
-   "CharacterName" : "SampleCharacterRarity",
-   "CharacterPrefix" : "SCRY",
+   "CharacterName" : "Intermediate Character Example",
+   "CharacterPrefix" : "INTC",
    "Phrases" : [
       {
          "DialogStr" : "That sounds sublime!",
-         "FileName" : "SoundSublime",
+         "FileName" : "AcceptPlan",
          "PhraseWeights" : {
             "AcceptPlan" : 5
          },
@@ -12,7 +12,7 @@
       },
       {
          "DialogStr" : "Don't I look beautiful?",
-         "FileName" : "DontILookBeautiful",
+         "FileName" : "Brag",
          "PhraseWeights" : {
             "Brag" : 4
          },
@@ -20,7 +20,7 @@
       },
       {
          "DialogStr" : "I think I feel a pimple coming on",
-         "FileName" : "PimpleComingOn",
+         "FileName" : "Complain",
          "PhraseWeights" : {
             "Complain" : 5
          },
@@ -28,7 +28,7 @@
       },
       {
          "DialogStr" : "I beg your pardon!",
-         "FileName" : "IBegYourPardon",
+         "FileName" : "Deny",
          "PhraseWeights" : {
             "Deny" : 1
          },
@@ -36,15 +36,15 @@
       },
       {
          "DialogStr" : "Leave me be!",
-         "FileName" : "LeaveMeBe",
+         "FileName" : "Exasperation",
          "PhraseWeights" : {
             "Exasperation" : 2
-		},
+         },
          "PhraseRating" : "PG"
       },
       {
          "DialogStr" : "You're in style!",
-         "FileName" : "YoureInStyle",
+         "FileName" : "Exclamation",
          "PhraseWeights" : {
             "Exclamation" : 5
          },
@@ -52,23 +52,23 @@
       },
       {
          "DialogStr" : "Hard work's all worthwhile!",
-         "FileName" : "HardWorksAllWorthwhile",
+         "FileName" : "GiveAdvice",
          "PhraseWeights" : {
             "GiveAdvice" : 4
          },
          "PhraseRating" : "PG"
       },
       {
-		  "DialogStr": "We're friends!",
-		  "FileName": "WereFriends",
-		  "PhraseWeights": {
-			"GiveAffirmation": 3
-		  }, 
-		  "PhraseRating": "PG"
-	  },
+         "DialogStr" : "We're friends!",
+         "FileName" : "GiveAffirmation",
+         "PhraseWeights" : {
+            "GiveAffirmation" : 3
+         },
+         "PhraseRating" : "PG"
+      },
       {
          "DialogStr" : "Too true, too true",
-         "FileName" : "TooTrue",
+         "FileName" : "GiveAgreement",
          "PhraseWeights" : {
             "GiveAgreement" : 4
          },
@@ -76,15 +76,15 @@
       },
       {
          "DialogStr" : "Right by the cake!",
-         "FileName" : "ByTheCake",
+         "FileName" : "GiveLocation",
          "PhraseWeights" : {
             "GiveLocation" : 5
          },
          "PhraseRating" : "PG"
-      }, 
+      },
       {
          "DialogStr" : "These dresses are my responsibility!",
-         "FileName" : "TheseDressesAreMy",
+         "FileName" : "GiveSurprisingStatement",
          "PhraseWeights" : {
             "GiveSurprisingStatement" : 2
          },
@@ -92,15 +92,15 @@
       },
       {
          "DialogStr" : "Justin Bieber is a favorite of many ponies.",
-         "FileName" : "JustinBieberIsA",
+         "FileName" : "GiveWho",
          "PhraseWeights" : {
             "GiveWho" : 2
          },
          "PhraseRating" : "PG"
       },
-	  {
+      {
          "DialogStr" : "Hi, I'm Rarity",
-         "FileName" : "HiImRarity",
+         "FileName" : "Greeting",
          "PhraseWeights" : {
             "Greeting" : 5
          },
@@ -108,35 +108,35 @@
       },
       {
          "DialogStr" : "You've never liked me!",
-         "FileName" : "NeverLikedMe",
+         "FileName" : "HurtFeelings",
          "PhraseWeights" : {
             "HurtFeelings" : 7
          },
          "PhraseRating" : "PG"
       },
-	  {
-        "DialogStr": "I'm as happy as when Photo Finish liked my designs",
-        "FileName": "HappyAsWhen",
-        "PhraseWeights": {
-          "ImHappy": 5
-        },
-        "PhraseRating": "PG"
-      },      
       {
-		  "DialogStr": "Well, I'm in an awful state. May as well consign me to the dustbin of Equestrian history",
-		  "FileName": "InAnAwfulState",
-		  "PhraseWeights": {
-			"ImSad": 5
-		  },
-         "PhraseRating": "PG"
+         "DialogStr" : "I'm as happy as when Photo Finish liked my designs",
+         "FileName" : "ImHappy",
+         "PhraseWeights" : {
+            "ImHappy" : 5
+         },
+         "PhraseRating" : "PG"
       },
-	  {
-		  "DialogStr": "Now I'm as anxious as when that tri-horned bunyip was attempting to sink our sailing vessel",
-		  "FileName": "TriHornedBunyip",
-		  "PhraseWeights": {
-			"ImScared": 5
-		  },
-		  "PhraseRating": "PG"
+      {
+         "DialogStr" : "Well, I'm in an awful state. May as well consign me to the dustbin of Equestrian history",
+         "FileName" : "InAnAwfulState",
+         "PhraseWeights" : {
+            "ImSad" : 5
+         },
+         "PhraseRating" : "PG"
+      },
+      {
+         "DialogStr" : "Now I'm as anxious as when that tri-horned bunyip was attempting to sink our sailing vessel",
+         "FileName" : "TriHornedBunyip",
+         "PhraseWeights" : {
+            "ImScared" : 5
+         },
+         "PhraseRating" : "PG"
       },
       {
          "DialogStr" : "Dumb rock!",
@@ -146,21 +146,21 @@
          },
          "PhraseRating" : "PG"
       },
-	  {
-		  "DialogStr": "Oh my. [giggles]",
-		  "FileName": "Giggles",
-		  "PhraseWeights": {
-			"Laugh": 5
-		  },
-		  "PhraseRating": "PG"
-	  },
-	  {
-		  "DialogStr": "Take my dresses, take my jewels. Possessions can be replaced, but you cannot!",
-		  "FileName": "TakeMyDresses",
-		  "PhraseWeights": {
-			"MakeUp": 2
-		  }, 
-		  "PhraseRating": "PG"
+      {
+         "DialogStr" : "Oh my. [giggles]",
+         "FileName" : "Giggles",
+         "PhraseWeights" : {
+            "Laugh" : 5
+         },
+         "PhraseRating" : "PG"
+      },
+      {
+         "DialogStr" : "Take my dresses, take my jewels. Possessions can be replaced, but you cannot!",
+         "FileName" : "TakeMyDresses",
+         "PhraseWeights" : {
+            "MakeUp" : 2
+         },
+         "PhraseRating" : "PG"
       },
       {
          "DialogStr" : "No.",
@@ -178,7 +178,7 @@
          },
          "PhraseRating" : "PG"
       },
-	  {
+      {
          "DialogStr" : "Have you seen the glitter?",
          "FileName" : "HaveYouSeenTheGlitter",
          "PhraseWeights" : {
@@ -202,7 +202,7 @@
          },
          "PhraseRating" : "PG"
       },
-       {
+      {
          "DialogStr" : "Good heavens! Your breath smells simply dreadful!",
          "FileName" : "YourBreathSmells",
          "PhraseWeights" : {
