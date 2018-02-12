@@ -8,6 +8,8 @@ using DialogEngine.ViewModels.Dialog;
 using log4net;
 using System;
 using System.Reflection;
+using System.Threading;
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Threading;
 
@@ -29,8 +31,9 @@ namespace DialogEngine
         // length of .mp3 file in s
         private double mDuration;
 
-        private DispatcherTimer mTimer = new DispatcherTimer();
-        private DispatcherTimer mVolumeTimer = new DispatcherTimer(); //ms
+        private System.Threading.Timer mTimer;
+
+        private System.Threading.Timer mVolumeTimer;
 
         public MediaPlayer Player = new MediaPlayer();
 
@@ -46,20 +49,79 @@ namespace DialogEngine
             Events.EventAggregator.Instance.GetEvent<StopPlayingCurrentDialogLineEvent>().Subscribe(_stopPlayingCurrentDialogLine);
             Events.EventAggregator.Instance.GetEvent<StopImmediatelyPlayingCurrentDialogLIne>().Subscribe(_stopImmediatelyPlayingCurrentDialogLine);
 
+             mVolumeTimer= new System.Threading.Timer(_volumeTimerElapsed, null, Timeout.Infinite, Timeout.Infinite);
+
+            mTimer = new System.Threading.Timer(_timerElapsed, null,Timeout.Infinite, Timeout.Infinite);
 
             Player.MediaOpened += Player_MediaOpened;
             Player.MediaFailed += Player_MediaFailed;
 
-            mTimer.Interval = TimeSpan.FromSeconds(1);
+            //mTimer.Interval = TimeSpan.FromSeconds(1);
 
-            mVolumeTimer.Interval = TimeSpan.FromMilliseconds(100);
-            mTimer.Tick += _timer_Tick;
-            mVolumeTimer.Tick += _volumeTimer_Tick;
+            //mVolumeTimer.Interval = TimeSpan.FromMilliseconds(100);
+            //mTimer.Tick += _timer_Tick;
+            //mVolumeTimer.Tick += _volumeTimer_Tick;
         }
 
         #endregion
 
         #region - event handlers -
+
+        private  void _timerElapsed(object state)
+        {
+
+
+            Application.Current.Dispatcher.BeginInvoke(() =>
+            {
+                mcLogger.Info("start _timer_Tick");
+
+                double _durationOfPlaying = DateTime.Now.TimeOfDay.TotalSeconds - mStartedTime.TotalSeconds;
+
+                // 0.5 seconds we need to mute player
+                if (_durationOfPlaying > (SessionVariables.MaxTimeToPlayFile - 0.5))
+                {
+                    mTimer.Change(Timeout.Infinite,Timeout.Infinite);
+
+                    mVolumeTimer.Change(0,100);
+                }
+
+                mcLogger.Info("end _timer_Tick");
+            }, DispatcherPriority.Send);
+        }
+
+
+        private  void _volumeTimerElapsed(object state)
+        {
+            mcLogger.Info("start volumeTimer_Tick");
+
+            try
+            {
+                Application.Current.Dispatcher.BeginInvoke(() => {
+
+                    if (Player.Volume == 0)
+                    {
+                        mVolumeTimer.Change(Timeout.Infinite,Timeout.Infinite);
+
+                        Player.Stop();
+
+                        return;
+                    }
+                    else
+                    {
+                        Player.Volume -= 0.2; // percentage
+                    }
+
+                }, DispatcherPriority.Send);
+            }
+            catch (Exception ex)
+            {
+                mcLogger.Error("VolumeTimer. " + ex.Message);
+            };
+
+            mcLogger.Info("end volumeTimer_Tick");
+
+        }
+
 
         private void Player_BufferingEnded(object sender, EventArgs e)
         {
@@ -79,49 +141,49 @@ namespace DialogEngine
         }
 
 
-        private void _volumeTimer_Tick(object sender, EventArgs e)
-        {
-            mcLogger.Info("start volumeTimer_Tick");
-            try
-            {
-                if (Player.Volume == 0)
-                {
-                    mVolumeTimer.Stop();
+        //private void _volumeTimer_Tick(object sender, EventArgs e)
+        //{
+        //    mcLogger.Info("start volumeTimer_Tick");
+        //    try
+        //    {
+        //        if (Player.Volume == 0)
+        //        {
+        //            //mVolumeTimer.Stop();
 
-                    Player.Stop();
+        //            Player.Stop();
 
-                    return;
-                }
-                else
-                {
-                    Player.Volume -= 0.2; // percentage
-                }
-            }
-            catch (Exception ex)
-            {
-                mcLogger.Error("VolumeTimer. " + ex.Message);
-            };
+        //            return;
+        //        }
+        //        else
+        //        {
+        //            Player.Volume -= 0.2; // percentage
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        mcLogger.Error("VolumeTimer. " + ex.Message);
+        //    };
 
-            mcLogger.Info("end volumeTimer_Tick");
+        //    mcLogger.Info("end volumeTimer_Tick");
 
-        }
+        //}
 
 
-        private void _timer_Tick(object sender, EventArgs e)
-        {
-            mcLogger.Info("start _timer_Tick");
-            double _durationOfPlaying = DateTime.Now.TimeOfDay.TotalSeconds - mStartedTime.TotalSeconds;
+        //private void _timer_Tick(object sender, EventArgs e)
+        //{
+        //    mcLogger.Info("start _timer_Tick");
+        //    double _durationOfPlaying = DateTime.Now.TimeOfDay.TotalSeconds - mStartedTime.TotalSeconds;
 
-            // 0.5 seconds we need to mute player
-            if (_durationOfPlaying > (SessionVariables.MaxTimeToPlayFile - 0.5))
-            {
-                mTimer.Stop();
+        //    // 0.5 seconds we need to mute player
+        //    if (_durationOfPlaying > (SessionVariables.MaxTimeToPlayFile - 0.5))
+        //    {
+        //        mTimer.Change(Timeout.Infinite,Timeout.Infinite);
 
-                mVolumeTimer.Start();
-            }
+        //        mVolumeTimer.Change(0,100);
+        //    }
 
-            mcLogger.Info("end _timer_Tick");
-        }
+        //    mcLogger.Info("end _timer_Tick");
+        //}
 
         #endregion
 
@@ -130,14 +192,14 @@ namespace DialogEngine
 
         private void _stopPlayingCurrentDialogLine()
         {
-            mTimer.Stop();
-            mVolumeTimer.Stop();
+            mTimer.Change(Timeout.Infinite,Timeout.Infinite);
+            mVolumeTimer.Change(Timeout.Infinite,Timeout.Infinite);
 
             if (IsPlaying())
             {
                 if (mDuration > SessionVariables.MaxTimeToPlayFile)
                 {
-                    mTimer.Start();
+                    mTimer.Change(0,1000);
                 }
             }
         }
@@ -196,8 +258,8 @@ namespace DialogEngine
         {
             try
             {
-                mTimer.Stop();
-                mVolumeTimer.Stop();
+                mTimer.Change(Timeout.Infinite,Timeout.Infinite);
+                mVolumeTimer.Change(Timeout.Infinite,Timeout.Infinite);
 
                 Player.Volume = 0.8;
                 Player.Open(new Uri(_path));

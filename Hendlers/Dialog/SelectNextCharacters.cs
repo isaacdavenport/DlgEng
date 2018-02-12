@@ -16,6 +16,7 @@ using DialogEngine.Events;
 using DialogEngine.Events.DialogEvents;
 using DialogEngine.Models.Logger;
 using log4net;
+using System.Windows.Threading;
 
 namespace DialogEngine
 {
@@ -105,12 +106,12 @@ namespace DialogEngine
                     //break current dialog and restart player
                     //mcLogger.Debug("start StopPlayingCurrentDialogLineEvent ");
 
-                    Application.Current.Dispatcher.BeginInvoke((Action) (() =>
+                    Application.Current.Dispatcher.BeginInvoke(() =>
                     {
                         mcLogger.Debug("Finish current line : " + "nc1: " + NextCharacter1 + " nc2: " + NextCharacter2 );
 
                         EventAggregator.Instance.GetEvent<StopPlayingCurrentDialogLineEvent>().Publish();
-                    }));
+                    },DispatcherPriority.Send);
                     //mcLogger.Debug("start CancellationTokenGenerateDialogSource.Cancel ");
                     DialogViewModel.Instance.CancellationTokenGenerateDialogSource.Cancel();
 
