@@ -22,6 +22,7 @@ namespace DialogEngine
 
         private void _application_Startup(object sender, StartupEventArgs e)
         {
+           
             MessageFilter.Register();
         }
 

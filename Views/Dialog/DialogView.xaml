@@ -132,6 +132,7 @@
                                                   BorderBrush="LightGray" 
                                                   BorderThickness="0"
                                                   Height="220"
+                                                  EnableRowVirtualization="False"
                                                   VerticalAlignment="Stretch"
                                                   AutoGenerateColumns="False"  
                                                   MaxHeight="220" >
