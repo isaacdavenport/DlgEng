@@ -284,7 +284,7 @@
       },
       {
          "DialogStr" : "Do you know what my favorite thing is?",
-         "FileName" : "SC_DoYouKnowWhatFavorite",
+         "FileName" : "DoYouKnowWhatFavorite",
          "PhraseWeights" : {
             "RequestActivity" : 0.4
          },
