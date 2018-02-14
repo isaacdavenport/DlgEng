@@ -14,6 +14,8 @@ using Microsoft.Win32;
 using DialogEngine.Helpers;
 using DialogEngine.ViewModels.Dialog;
 using DialogEngine.Views.Character;
+using System.Windows.Navigation;
+using DialogEngine.Views.Dialog;
 
 namespace DialogEngine
 {
@@ -27,6 +29,7 @@ namespace DialogEngine
         // Default application logger
         private static readonly ILog mcLogger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
+
         #endregion
 
         #region - constructor -
@@ -39,9 +42,8 @@ namespace DialogEngine
 
             InitializeComponent();
 
-            mainFrame.Source = new Uri("Views/Dialog/DialogView.xaml", UriKind.Relative);
+            mainFrame.NavigationService.Navigate(new DialogView(DateTime.Now));
 
-            
         }
 
         #endregion
@@ -51,10 +53,10 @@ namespace DialogEngine
         // Click on main menu item dialog
         private void _dialog_Click(object sender, RoutedEventArgs e)
         {
-            mainFrame.Source = new Uri("Views/Dialog/DialogView.xaml", UriKind.Relative);
+            if(!mainFrame.Content.ToString().Contains("DialogView"))
+            mainFrame.NavigationService.GoBack();
 
             e.Handled = true;
-
         }
 
         private void _aboutDialogEngine_Click(object sender, RoutedEventArgs e)

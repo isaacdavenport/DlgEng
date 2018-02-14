@@ -695,7 +695,7 @@
 
         </Border>
 
-        <Separator Grid.Column="1" BorderBrush="LightGray" BorderThickness="1" VerticalAlignment="Stretch" >
+        <Separator Grid.Column="1" BorderBrush="LightGray" BorderThickness="1"  VerticalAlignment="Stretch" >
             <Separator.LayoutTransform>
                 <RotateTransform Angle="90" />
             </Separator.LayoutTransform>

@@ -4,7 +4,7 @@
                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                   xmlns:core="clr-namespace:DialogEngine.Core"
-                  xmlns:recorder="clr-namespace:DialogEngine.Controls.Views"
+                  xmlns:controls="clr-namespace:DialogEngine.Controls.Views"
                   mc:Ignorable="d" 
                   Title="CreateCharacter">
 
@@ -25,10 +25,15 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0"/>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="100" />
+        </Grid.RowDefinitions>
         
-        <Grid Grid.Column="0" Margin="50,50,100,40">
+        <Grid Grid.Column="0" Grid.Row="1" Margin="50,50,100,0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="2*"/>
+                <RowDefinition Height="2.5*"/>
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
@@ -90,10 +95,10 @@
         </Grid>
         
 
-        <Grid Grid.Column="1" Margin="100,50,50,40">
+        <Grid Grid.Column="1" Grid.Row="1" Margin="100,50,50,0">
             
             <Grid.RowDefinitions>
-                <RowDefinition Height="2*"/>
+                <RowDefinition Height="2.5*"/>
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
@@ -104,79 +109,26 @@
                     BorderThickness="2" 
                     CornerRadius="2,2,2,2">
 
-                <Grid HorizontalAlignment="Stretch"  VerticalAlignment="Stretch">
-
-
-                    
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition Height="auto" />
-                    </Grid.RowDefinitions>
-
-                    <Border Grid.Row="0" Background="#545348">
-                        <MediaElement Grid.Row="0"
-                                  Margin="0,0,0,0"
-                                  Grid.ColumnSpan="3"
-                                  x:Name="VideoPlayer"
-                                  Stretch="Fill" 
-                                  HorizontalAlignment="Stretch" 
-                                  LoadedBehavior="Manual" 
-                                  VerticalAlignment="Stretch"  />
-                    </Border>
-
-
-                    <Grid Grid.Row="1" >
-
-                        <Grid.Background>
-                            <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03">
-                                <GradientStop Color="#FFFFFFFF" Offset="-0.1"/>
-                                <GradientStop Color="DarkGray" Offset="0.7"/>
-                            </LinearGradientBrush>
-                        </Grid.Background>
-                        
-                        <StackPanel HorizontalAlignment="Center"  Orientation="Horizontal">
-                            
-                            <Button Style="{StaticResource PlayerBtn}" 
-                                    Width="40" 
-                                    Height="40" 
-                                    Click="_startVideo_Click" 
-                                    Margin="10,10,10,10">
-
-                                <Button.Content>
-                                    <Image Width="25" 
-                                           Margin="5,0,0,0" 
-                                           Height="25"  
-                                           Source="pack://application:,,,/Resources/Images/play-button.png" />
-                                    
-                                </Button.Content>
-                                
-                            </Button>
-
-                            <Button Style="{StaticResource PlayerBtn}"
-                                    Width="40" 
-                                    Height="40" 
-                                    Margin="10,10,10,10" 
-                                    Click="_stopVideo_Click">
-
-                                <Button.Content>
-                                    <Image Width="25" Margin="0,0,0,0" Height="25"  Source="pack://application:,,,/Resources/Images/pause-button.png" />
-                                </Button.Content>
-                            </Button>
-                            
-                        </StackPanel>
-                    </Grid>
-                    
-
-                    
-                </Grid>
+                <controls:MediaPlayer />
             </Border>
 
             <!-- recorder -->
             <Border Grid.Row="1" BorderThickness="2" CornerRadius="5,5,5,5" BorderBrush="LightGray">
-                <recorder:VoiceRecoreder></recorder:VoiceRecoreder>
+                <controls:VoiceRecoreder />
             </Border>
 
         </Grid>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+
+            <Button Style="{StaticResource btn-primary}" Content="Cancel"   Margin="20,0,0,0"  />
+
+            <Button Style="{StaticResource btn-primary}" Content="Skip" Margin="20,0,0,0"  />
+
+            <Button Style="{StaticResource btn-primary}" Content="Save and next" Margin="20,0,0,0"  />
+
+
+        </StackPanel>
   
     </Grid>
 </core:PageBase>

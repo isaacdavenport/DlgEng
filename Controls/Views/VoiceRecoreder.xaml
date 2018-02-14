@@ -16,15 +16,41 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>    
     </UserControl.Resources>
-    
-    <Grid>
+
+    <Grid Background="#545348">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto"  />
         </Grid.RowDefinitions>
 
+        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
 
-        <Canvas x:Name="waveCanvas" 
+            <ProgressBar Style="{StaticResource VolumeProgressBar}" 
+                         Grid.Row="1"  
+                         HorizontalAlignment="Stretch" 
+                         VerticalAlignment="Center" 
+                         Height="30" 
+                         Background="#545348" 
+                         Value="{Binding ProgressBarValue}" />
+
+            <!--<TextBlock Grid.Row="2" 
+                       VerticalAlignment="Top" 
+                       HorizontalAlignment="Left" 
+                       Foreground="White"
+                       Margin="10,0,0,0"
+                       FontSize="16"
+                       Text="{Binding TimerText}" />-->
+
+            <!--<ProgressBar Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Height="10" />-->
+        </Grid>
+        
+
+        <!--<Canvas x:Name="waveCanvas" 
                 Grid.Row="0" 
                 Grid.ColumnSpan="2" 
                 HorizontalAlignment="Stretch" 
@@ -54,7 +80,7 @@
                     <ScaleTransform  ScaleY="-1" CenterY="-50" />
                 </TransformGroup>
             </Canvas.LayoutTransform>
-        </Canvas>
+        </Canvas>-->
 
         <Grid Grid.Row="1" Grid.Column="1" >
             <Grid.Background>
@@ -69,12 +95,12 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <TextBlock x:Name="timerTb" Text="{Binding DisplayedTime}" Foreground="Red" FontSize="16" HorizontalAlignment="Center"  />
+            <TextBlock x:Name="timerTb" Margin="10" Text="{Binding TimerText}" Foreground="Red" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Top"  />
 
             <StackPanel Grid.Row="1" HorizontalAlignment="Center"  Orientation="Horizontal">
 
 
-                <Button Margin="0,10,0,10" Style="{StaticResource PlayerBtn}" Command="{Binding StartRecording}"   Width="40" Height="40" BorderThickness="0" >
+                <Button Margin="0,10,0,10" Style="{StaticResource PlayerBtn}" IsEnabled="{Binding IsRecording, Converter={StaticResource InvertBooleanConverter}}" Command="{Binding StartRecording}"   Width="40" Height="40" BorderThickness="0" >
                     <Button.Content>
                         <Image Width="25" Height="25"  Source="pack://application:,,,/Resources/Images/microphone.png" />
                     </Button.Content>
@@ -84,6 +110,7 @@
                     <Button.Content>
                         <Image Width="20" Height="20"  Source="pack://application:,,,/Resources/Images/stop-button.png"  />
                     </Button.Content>
+
                 </Button>
 
                 <Button Margin="20,10,0,10" Style="{StaticResource PlayerBtn}" IsEnabled="{Binding IsRecording, Converter={StaticResource InvertBooleanConverter}}" Command="{Binding PlayContent}" Width="40" Height="40" BorderThickness="0" >

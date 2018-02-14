@@ -2,6 +2,7 @@
 //  www.toys2life.org
 
 using System.Windows;
+using System.Windows.Navigation;
 
 namespace DialogEngine
 {
@@ -10,9 +11,7 @@ namespace DialogEngine
     /// </summary>
     public partial class App : Application
     {
-
-        
-
+       
         // Handling all unhandled exceptions in application
         private void _application_DisptatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
@@ -29,6 +28,10 @@ namespace DialogEngine
         private void _application_Deactivated(object sender, System.EventArgs e)
         {
             MessageFilter.Revoke();
+        }
+
+        private void _app_Navigated(object sender, NavigationEventArgs e)
+        {
         }
     }
 }

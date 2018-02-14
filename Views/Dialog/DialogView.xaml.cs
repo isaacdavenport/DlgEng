@@ -5,6 +5,7 @@ using DialogEngine.Core;
 using System.Windows.Controls;
 using DialogEngine.ViewModels.Dialog;
 using System.Threading.Tasks;
+using System;
 
 namespace DialogEngine.Views.Dialog
 {
@@ -18,27 +19,26 @@ namespace DialogEngine.Views.Dialog
         /// <summary>
         /// Creates instance of DialogView
         /// </summary>
-        public DialogView()
+        public  DialogView(DateTime dateTime)
         {
             InitializeComponent();
            
             DataContext = DialogViewModel.Instance;
+
 
         }
 
 
         protected async override void onPageLoaded()
         {
-            
-            DialogTracker.GetInstance(DialogViewModel.Instance).AddItem = new DialogTracker.PrintMethod((this.DataContext as DialogViewModel).AddItem);
+                DialogTracker.GetInstance(DialogViewModel.Instance).AddItem = new DialogTracker.PrintMethod((this.DataContext as DialogViewModel).AddItem);
 
-            InitModelDialogs.AddItem = new InitModelDialogs.PrintMethod(((this.DataContext as DialogViewModel).AddItem));
+                InitModelDialogs.AddItem = new InitModelDialogs.PrintMethod(((this.DataContext as DialogViewModel).AddItem));
 
-            (this.DataContext as DialogViewModel).View = this;
+                (this.DataContext as DialogViewModel).View = this;
 
-            await (this.DataContext as DialogViewModel).InitDialogDataAsync();         
+                await (this.DataContext as DialogViewModel).InitDialogDataAsync();
         }
-
 
     }
 }

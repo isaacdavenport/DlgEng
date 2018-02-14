@@ -114,7 +114,11 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ViewModels\MediaPlayerViewModel.cs" />
     <Compile Include="Controls\ViewModels\VoiceRecorderViewModel.cs" />
+    <Compile Include="Controls\Views\MediaPlayer.xaml.cs">
+      <DependentUpon>MediaPlayer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Views\VoiceRecoreder.xaml.cs">
       <DependentUpon>VoiceRecoreder.xaml</DependentUpon>
     </Compile>
@@ -288,6 +292,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Controls\Views\MediaPlayer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\Views\VoiceRecoreder.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -324,6 +332,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Themes\ProgressBarStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\RadioButtonStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -353,11 +365,7 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\MP3Player\" />
-    <Folder Include="ViewModels\MP3Player\" />
-    <Folder Include="Views\MP3Player\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

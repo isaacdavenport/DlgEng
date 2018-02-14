@@ -4,10 +4,7 @@
 // Base classes for mvvm, enabling gui decoupling from other logic
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Threading;
 
