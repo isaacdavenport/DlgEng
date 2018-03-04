@@ -124,7 +124,7 @@
       },
       {
          "DialogStr" : "Well, I'm in an awful state. May as well consign me to the dustbin of Equestrian history",
-         "FileName" : "InAnAwfulState",
+         "FileName" : "ImSad",
          "PhraseWeights" : {
             "ImSad" : 5
          },
@@ -132,7 +132,7 @@
       },
       {
          "DialogStr" : "Now I'm as anxious as when that tri-horned bunyip was attempting to sink our sailing vessel",
-         "FileName" : "TriHornedBunyip",
+         "FileName" : "ImScared",
          "PhraseWeights" : {
             "ImScared" : 5
          },
@@ -140,7 +140,7 @@
       },
       {
          "DialogStr" : "Dumb rock!",
-         "FileName" : "DumbRock",
+         "FileName" : "ImScared",
          "PhraseWeights" : {
             "Insult" : 5
          },
@@ -148,7 +148,7 @@
       },
       {
          "DialogStr" : "Oh my. [giggles]",
-         "FileName" : "Giggles",
+         "FileName" : "Laugh",
          "PhraseWeights" : {
             "Laugh" : 5
          },
@@ -156,7 +156,7 @@
       },
       {
          "DialogStr" : "Take my dresses, take my jewels. Possessions can be replaced, but you cannot!",
-         "FileName" : "TakeMyDresses",
+         "FileName" : "MakeUp",
          "PhraseWeights" : {
             "MakeUp" : 2
          },
@@ -172,7 +172,7 @@
       },
       {
          "DialogStr" : "Every pony is laughing at me!",
-         "FileName" : "LaughingAtMe",
+         "FileName" : "RequestAffirmation",
          "PhraseWeights" : {
             "RequestAffirmation" : 2
          },
@@ -180,7 +180,7 @@
       },
       {
          "DialogStr" : "Have you seen the glitter?",
-         "FileName" : "HaveYouSeenTheGlitter",
+         "FileName" : "RequestLocation",
          "PhraseWeights" : {
             "RequestLocation" : 5
          },
@@ -188,7 +188,7 @@
       },
       {
          "DialogStr" : "I am trying to picture who would look most splendid in this new dress I made.",
-         "FileName" : "IAmTryingTo",
+         "FileName" : "RequestWho",
          "PhraseWeights" : {
             "RequestWho" : 2
          },
@@ -196,7 +196,7 @@
       },
       {
          "DialogStr" : "I just finished five cartons of vanilla oat swirl. I'm not certain I'm up to this conversation.",
-         "FileName" : "NotCertainImUp2",
+         "FileName" : "Retreat",
          "PhraseWeights" : {
             "Retreat" : 6
          },
@@ -204,7 +204,7 @@
       },
       {
          "DialogStr" : "Good heavens! Your breath smells simply dreadful!",
-         "FileName" : "YourBreathSmells",
+         "FileName" : "ShutUp",
          "PhraseWeights" : {
             "ShutUp" : 4
          },
@@ -212,7 +212,7 @@
       },
       {
          "DialogStr" : "This I can assure you!",
-         "FileName" : "ThisICanAssureYou",
+         "FileName" : "Yes",
          "PhraseWeights" : {
             "Yes" : 2
          },
@@ -220,7 +220,7 @@
       },
       {
          "DialogStr" : "Have you seen my gown?",
-         "FileName" : "HaveYouSeenMy",
+         "FileName" : "YesNoQuestion",
          "PhraseWeights" : {
             "YesNoQuestion" : 2
          },
