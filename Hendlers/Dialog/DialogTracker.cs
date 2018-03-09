@@ -14,9 +14,9 @@ using log4net;
 using Newtonsoft.Json;
 using DialogEngine.Models.Logger;
 using System.Threading.Tasks;
-using DialogEngine.ViewModels.Dialog;
+using DialogEngine.ViewModels;
 using System.Collections.ObjectModel;
-using System.Windows.Threading;
+
 
 
 // ReSharper disable ConditionIsAlwaysTrueOrFalse
@@ -91,7 +91,6 @@ namespace DialogEngine
         /// <returns>Instance of DialogTracker.cs</returns>
         public static DialogTracker GetInstance(DialogViewModel _dialogViewModel)
         {
-
                 lock (mcPadlock)
                 {
                     if (msInstance == null)
@@ -99,8 +98,7 @@ namespace DialogEngine
                         msInstance = new DialogTracker(_dialogViewModel);
                     }
                     return msInstance;
-                }
-            
+                }           
         }
 
         /// <summary>

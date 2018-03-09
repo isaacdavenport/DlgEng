@@ -16,6 +16,5 @@ namespace DialogEngine.Models.Dialog
         public int DialogIndex;
         public string DialogName = "";
         public DateTime StartedTime = DateTime.MinValue;
-
     }
 }

@@ -23,7 +23,6 @@ namespace DialogEngine.Models.Dialog
         [JsonProperty("Adventure")]
         public string Adventure = "";
 
-
         [JsonProperty("DialogName")]
         private string mName;
 
@@ -49,7 +48,6 @@ namespace DialogEngine.Models.Dialog
             {
                 return mName;
             }
-
             set
             {
                 mName = value;

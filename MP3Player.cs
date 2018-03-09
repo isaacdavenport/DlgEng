@@ -4,7 +4,7 @@
 using DialogEngine.Events.DialogEvents;
 using DialogEngine.Helpers;
 using DialogEngine.Models.Logger;
-using DialogEngine.ViewModels.Dialog;
+using DialogEngine.ViewModels;
 using log4net;
 using System;
 using System.Reflection;
@@ -21,20 +21,14 @@ namespace DialogEngine
         #region - fields -
 
         private static readonly ILog mcLogger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-
         private static readonly object mcPadlock = new object();
         private static MP3Player msInstance = null;
-
         // started time of playing .mp3 file
         private TimeSpan mStartedTime;
-
         // length of .mp3 file in s
         private double mDuration;
-
         private Timer mTimer;
-
         private Timer mVolumeTimer;
-
         public MediaPlayer Player = new MediaPlayer();
 
         #endregion

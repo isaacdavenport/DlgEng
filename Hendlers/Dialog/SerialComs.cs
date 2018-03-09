@@ -7,14 +7,15 @@ using System.Threading;
 using DialogEngine.Helpers;
 using log4net;
 using System.Reflection;
-using DialogEngine.Dialogs;
 using System.Threading.Tasks;
 using DialogEngine.Events;
 using DialogEngine.Events.DialogEvents;
 using System.Windows;
 using System.Linq;
-using DialogEngine.ViewModels.Dialog;
+using DialogEngine.ViewModels;
 using DialogEngine.Models.Logger;
+using DialogEngine.Dialogs;
+using MaterialDesignThemes.Wpf;
 
 namespace DialogEngine
 {
@@ -24,14 +25,10 @@ namespace DialogEngine
         #region - Fields -
 
         private static readonly ILog mcLogger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-
         private static SerialPort msSerialPort;
-
         private static CancellationTokenSource msSerialTokenSource = new CancellationTokenSource();
         private static CancellationTokenSource msRandomTokenSource = new CancellationTokenSource();
-
         private static bool mIsSerialMode;
-
         public const int NumRadios = 6;  //includes dongle
 
         #endregion
@@ -58,7 +55,6 @@ namespace DialogEngine
             {
                 return mIsSerialMode;
             }
-
             set
             {
                 mIsSerialMode = value;
@@ -117,7 +113,6 @@ namespace DialogEngine
 
             await InitCharacterSelection();
         }
-
 
         private static string readSerialInLine()
         {
@@ -186,8 +181,6 @@ namespace DialogEngine
 
         #region - Public methods -
 
-
-
         /// <summary>
         /// Initialize characters selection method
         /// </summary>
@@ -197,8 +190,6 @@ namespace DialogEngine
 
             try
             {
-
-
                 if (SessionVariables.UseSerialPort)
                 {
                     try
@@ -210,12 +201,10 @@ namespace DialogEngine
                         mcLogger.Error("Serial port error " + ex.Message);
 
                         // if COM port name is not valid, we show dialog to user with valid COM ports 
-                        SerialComPortErrorDialog dialog = new SerialComPortErrorDialog();
-
-                        dialog.ShowDialog();
+                        var result = await DialogHost.Show(new SerialComPortErrorDialogControl());
 
                         // if user clicked on "Save changes" we try to again initialize serial
-                        if (dialog.DialogResult.HasValue && dialog.DialogResult.Value)
+                        if (result == null)
                         {
                             try
                             {
@@ -233,7 +222,6 @@ namespace DialogEngine
                         {
                             await SelectNextCharacters.OccasionallyChangeToRandNewCharacterAsync(msRandomTokenSource.Token);
                         }
-
                     }
                 }
                 else // user chose NoSerialPort so we initialize random selection
@@ -257,18 +245,14 @@ namespace DialogEngine
             {
                 Thread.CurrentThread.Name = "SerialThread";
 
-
                 int[] _newRow = new int[NumRadios + 1];
                 int _cycleCount = 0;
 
                 IsSerialMode = true;
-
-
                 while (true)
                 {
                     try
                     {
-
                         if (_cancellationToken.IsCancellationRequested)
                         {
                             return;
@@ -307,13 +291,10 @@ namespace DialogEngine
                         DialogViewModel.Instance.AddItem(new ErrorMessage("Error in serial communication."));
                     }
                 }
-
             });
         }
 
         #endregion
-
-
     }
 }
 

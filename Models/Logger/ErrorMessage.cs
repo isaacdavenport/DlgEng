@@ -27,6 +27,5 @@ namespace DialogEngine.Models.Logger
             SourceFile = Path.GetFileName(_file);
             Line = _line;
         }
-
     }
 }

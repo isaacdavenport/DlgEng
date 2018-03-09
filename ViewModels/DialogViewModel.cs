@@ -18,12 +18,12 @@ using System.Threading.Tasks;
 using DialogEngine.Events;
 using DialogEngine.Events.DialogEvents;
 using System.Windows.Data;
-using DialogEngine.Views.Dialog;
+using DialogEngine.Views;
 using GalaSoft.MvvmLight.CommandWpf;
 using System.Windows.Input;
 using System.Linq;
 
-namespace DialogEngine.ViewModels.Dialog
+namespace DialogEngine.ViewModels
 {
     /// <summary>
     ///     Implementation of <see cref="ViewModelBase" />
@@ -35,28 +35,19 @@ namespace DialogEngine.ViewModels.Dialog
 
         //default application logger
         private static readonly ILog mcLogger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-
         // counter for characters in On state
         private static int mSelectedCharactersOn;
-
         private static DialogViewModel msInstance = null;
-
         private static readonly object mcPadlock = new object();
-
         // reference on view
-        private Views.Dialog.DialogView mView;
-        
+        private Views.DialogView mView; 
         private readonly Random mRandom = new Random();
-
         // start position of drag and drop operation
         private Point mStartPosition;
-
         // detect is dialog model changed, true value force application to reload dialog model
         private bool mIsModelsDialogChanged;
-
         private int mSelectedIndex1;
         private int mSelectedIndex2;
-
         // variables for debuging selection of characters in serial mode
 
         private string mCharacter1Prefix = "--";
@@ -65,13 +56,10 @@ namespace DialogEngine.ViewModels.Dialog
         private int mRSSIsum;
         private int[,] mHeatMap = new int[SerialComs.NumRadios, SerialComs.NumRadios];
 
-
         // indicate when dialog is active or no
         private bool mIsDialogStopped = true;
-
         // selected dialog model .json file
         private ModelDialogInfo mSelectedDialogModel;
-
         // create token which we pass to background method, so we can force method to finish executing
 
         private CancellationTokenSource mCancellationTokenDialogWorkerSource = new CancellationTokenSource();
@@ -79,7 +67,6 @@ namespace DialogEngine.ViewModels.Dialog
 
         // collection of dialog lines
         private ObservableCollection<object> mDialogLinesCollection;
-
         // Combobox item sources
 
         private ObservableCollection<Character> mCharacterCollection;
@@ -128,8 +115,6 @@ namespace DialogEngine.ViewModels.Dialog
             _bindCommands();
         }
 
-
-
         #endregion
 
         #region - Properties -
@@ -148,11 +133,9 @@ namespace DialogEngine.ViewModels.Dialog
 
                 return mDialogLinesCollection;
             }
-
             set
             {
                 mDialogLinesCollection = value;
-
                 // send notification to view (model is changed)
                 OnPropertyChanged("DialogLinesCollection");
             }
@@ -181,9 +164,7 @@ namespace DialogEngine.ViewModels.Dialog
             set
             {
                 mHeatMap = value;
-
                 OnPropertyChanged("HeatMapUpdate");
-
             }
         }
 
@@ -200,7 +181,6 @@ namespace DialogEngine.ViewModels.Dialog
             set
             {
                 mIsDialogStopped = value;
-
                 OnPropertyChanged("IsDialogStopped");
             }
         }
@@ -219,9 +199,7 @@ namespace DialogEngine.ViewModels.Dialog
             set
             {
                 mCharacter1Prefix = value;
-
                 OnPropertyChanged("Character1Prefix");
-
             }
         }
 
@@ -239,9 +217,7 @@ namespace DialogEngine.ViewModels.Dialog
             set
             {
                 mRSSIstable = value;
-
                 OnPropertyChanged("RSSIstable");
-
             }
         }
 
@@ -255,13 +231,10 @@ namespace DialogEngine.ViewModels.Dialog
             {
                 return mRSSIsum;
             }
-
             set
             {
                 mRSSIsum = value;
-
                 OnPropertyChanged("RSSIsum");
-
             }
         }
 
@@ -275,13 +248,10 @@ namespace DialogEngine.ViewModels.Dialog
             {
                 return mCharacter2Prefix;
             }
-
             set
             {
                 mCharacter2Prefix = value;
-
                 OnPropertyChanged("Character2Prefix");
-
             }
         }
 
@@ -295,7 +265,6 @@ namespace DialogEngine.ViewModels.Dialog
             {
                 return mView;
             }
-
             set
             {
                 this.mView = value;
@@ -311,15 +280,12 @@ namespace DialogEngine.ViewModels.Dialog
             {
                 return mSelectedDialogModel;
             }
-
             set
             {
                 this.mSelectedDialogModel = value;
-
                 OnPropertyChanged("SelectedDialogModel");
             }
         }
-
 
         /// <summary>
         /// Index of selected dialog model from selected dialog .json file
@@ -353,9 +319,7 @@ namespace DialogEngine.ViewModels.Dialog
                 }
 
                 return -1;
-
             }
-
         }
 
         /// <summary>
@@ -367,7 +331,6 @@ namespace DialogEngine.ViewModels.Dialog
             {
                 return mSelectedCharactersOn;
             }
-
             set
             {
                 mSelectedCharactersOn = value;
@@ -387,18 +350,14 @@ namespace DialogEngine.ViewModels.Dialog
                     mCharacterCollection = new ObservableCollection<Character>();
 
                 }
-
                 return mCharacterCollection;
             }
-
             set
             {
                 mCharacterCollection = value;
-
                 OnPropertyChanged("CharacterCollection");
             }
         }
-
 
         /// <summary>
         /// Collection of <see cref="ModelDialogInfo"/>
@@ -413,15 +372,11 @@ namespace DialogEngine.ViewModels.Dialog
 
                 return mDialogModelCollection;
             }
-
             set
             {
-                mDialogModelCollection = value;
-
-                
+                mDialogModelCollection = value;              
                 // send notification to view (model is changed)
                 OnPropertyChanged("DialogModelCollection");
-
             }
         }
 
@@ -440,13 +395,10 @@ namespace DialogEngine.ViewModels.Dialog
 
                 return mErrorMessagesCollection;
             }
-
             set
             {
                 mErrorMessagesCollection = value;
-
                 OnPropertyChanged("ErrorMessagesCollection");
-
             }
         }
 
@@ -469,9 +421,7 @@ namespace DialogEngine.ViewModels.Dialog
             set
             {
                 mWarningMessagesCollection = value;
-
                 OnPropertyChanged("WarningMessagesCollection");
-
             }
         }
 
@@ -490,13 +440,10 @@ namespace DialogEngine.ViewModels.Dialog
 
                 return mInfoMessagesCollection;
             }
-
             set
             {
                 mInfoMessagesCollection = value;
-
                 OnPropertyChanged("InfoMessagesCollection");
-
             }
         }
 
@@ -509,7 +456,6 @@ namespace DialogEngine.ViewModels.Dialog
             {
                 return mCancellationTokenGenerateDialogSource;
             }
-
             set
             {
                 mCancellationTokenGenerateDialogSource = value;
@@ -583,10 +529,8 @@ namespace DialogEngine.ViewModels.Dialog
             {
                 int result = 0;
                 SelectedCharactersOn = 0;
-
                 SelectedIndex1 = -1;
                 SelectedIndex2 = -1;
-
                 int index = 0;
 
                 // iterate over characters and try to find characters in ON state
@@ -596,18 +540,14 @@ namespace DialogEngine.ViewModels.Dialog
                     if (characterInfo.State == Models.Enums.CharacterState.On)
                     {
                         string fieldName = "mSelectedIndex" + (result + 1);
-
                         // get field using reflection
                         var field = this.GetType().GetField(fieldName, BindingFlags.Instance | BindingFlags.NonPublic);
-
                         field.SetValue(this, index);
-
                         result += 1;
-
+    
                         if (result == 2)
                             break;
                     }
-
                     index++;
                 }
 
@@ -616,11 +556,8 @@ namespace DialogEngine.ViewModels.Dialog
                 OnPropertyChanged("SelectedCharactersOn");
 
                 // when state of character changed, we want to cancel current dialog and reset MP3 player
-
                 mCancellationTokenGenerateDialogSource.Cancel();
-
                 mCancellationTokenGenerateDialogSource = new CancellationTokenSource();
-
                 EventAggregator.Instance.GetEvent<StopPlayingCurrentDialogLineEvent>().Publish();
             }
             catch (Exception ex)
@@ -634,7 +571,6 @@ namespace DialogEngine.ViewModels.Dialog
         private void _onChangedModelDialogState()
         {
             mIsModelsDialogChanged = true;
-
         }
 
 
@@ -655,7 +591,6 @@ namespace DialogEngine.ViewModels.Dialog
 
                     string textBoxName = "Radio_" + i.ToString();
                     (mView.FindName(textBoxName) as TextBox).Text = mCharacterCollection[i].CharacterName;
-
                     (mView.FindName(textBoxName) as TextBox).Tag = mCharacterCollection[i];
                 }
             }
@@ -675,12 +610,10 @@ namespace DialogEngine.ViewModels.Dialog
 
                         string textBoxName = "Radio_" + i.ToString();
                         (mView.FindName(textBoxName) as TextBox).Text = mCharacterCollection[i].CharacterName;
-
                         (mView.FindName(textBoxName) as TextBox).Tag = mCharacterCollection[i];
                     }
                 }));
             }
-
         }
 
         // choose collection where to add object depend on type of argument
@@ -749,7 +682,6 @@ namespace DialogEngine.ViewModels.Dialog
         }
 
 
-
         private void _bindCommands()
         {
             GenerateDialog = new Core.RelayCommand(_x => _startDialog());
@@ -789,7 +721,6 @@ namespace DialogEngine.ViewModels.Dialog
                 SelectedDialogModel = source.Tag as ModelDialogInfo;
 
                 SelectedDialogModel.SelectedModelDialogIndex = source.SelectedIndex;
-
             }
             else
             {
@@ -802,11 +733,8 @@ namespace DialogEngine.ViewModels.Dialog
         private void _clearRadioBindingCommand(string _elementName)
         {
             TextBox tb = mView.FindName(_elementName) as TextBox;
-
             tb.Text = "";
-
             (tb.Tag as Character).RadioNum = -1;
-
             tb.Tag = null;
 
             mView.CharactersListBox.Items.Refresh();
@@ -838,24 +766,17 @@ namespace DialogEngine.ViewModels.Dialog
                         if ((tb.Tag as Character).CharacterName.Equals(character.CharacterName))
                         {
                             e.Handled = true;
-
                             return;
                         }
-
                     }
 
-
                     // TextBox has name in form of "Radio_x"  x - radio number
-
                     string[] _nameRadioNum = tb.Name.Split('_');
-
                     int _numRadio = int.Parse(_nameRadioNum[1]);
-
 
                     // if radioNum == -1 then character is already assigned
                     if (character.RadioNum < 0)
                     {
-
                         character.RadioNum = _numRadio;
 
                         if (tb.Tag != null)
@@ -865,7 +786,6 @@ namespace DialogEngine.ViewModels.Dialog
 
                         tb.Text = character.CharacterName;
                         tb.Tag = character;
-
                     }
                     else
                     {
@@ -888,11 +808,9 @@ namespace DialogEngine.ViewModels.Dialog
                         }
 
                         tb.Tag = character;
-
                     }
 
                     mView.CharactersListBox.Items.Refresh();
-
                 }
             }
             catch (Exception ex)
@@ -932,7 +850,6 @@ namespace DialogEngine.ViewModels.Dialog
         {
             try
             {
-
                 Point _mousePos = e.GetPosition(null);
                 Vector diff = mStartPosition - _mousePos;
 
@@ -961,12 +878,10 @@ namespace DialogEngine.ViewModels.Dialog
         }
 
 
-
         private void _previewMouseLeftButtonCommand(MouseButtonEventArgs e)
         {
             mStartPosition = e.GetPosition(null);
         }
-
 
 
         // forces TabItem to refresh binding for GridView columns width
@@ -1002,36 +917,28 @@ namespace DialogEngine.ViewModels.Dialog
                 case "DialogLinesCollection":
                     {
                         DialogLinesCollection.Clear();
-
                         OnPropertyChanged(type);
-
                         break;
                     }
 
                 case "InfoMessagesCollection":
                     {
                         InfoMessagesCollection.Clear();
-
                         OnPropertyChanged(type);
-
                         break;
                     }
 
                 case "WarningMessagesCollection":
                     {
                         WarningMessagesCollection.Clear();
-
                         OnPropertyChanged(type);
-
                         break;
                     }
 
                 case "ErrorMessagesCollection":
                     {
                         ErrorMessagesCollection.Clear();
-
                         OnPropertyChanged(type);
-
                         break;
                     }
             }
@@ -1066,8 +973,6 @@ namespace DialogEngine.ViewModels.Dialog
                     }
 
                 }
-
-
             });
             //TODO check that all dialog models have unique names
         }
@@ -1075,7 +980,6 @@ namespace DialogEngine.ViewModels.Dialog
 
         private async Task _checkTagsUsedAsync(DialogTracker _dialogTracker)
         {
-
             await Task.Run(() =>
             {
                 Thread.CurrentThread.Name = "_checkTagsUsedAsyncThread";
@@ -1202,7 +1106,6 @@ namespace DialogEngine.ViewModels.Dialog
                 catch (Exception)
                 {
                     MessageBox.Show("No allowed dialog model files. Please change settings for dialog models.");
-
                     return;
                 }
 
@@ -1214,18 +1117,12 @@ namespace DialogEngine.ViewModels.Dialog
             catch (Exception ex)
             {
                 mcLogger.Error("Start dialog exception. "+ ex.Message);
-            }
-
-
-
-         
+            }         
         }
-
 
 
         private async Task _dialogWorkerMethodAsync(CancellationToken _cancellationToken)
         {
-
             try
             {
                 if (mIsModelsDialogChanged == true)
@@ -1362,8 +1259,6 @@ namespace DialogEngine.ViewModels.Dialog
             {
                 mcLogger.Error("Error during adding an item. " + ex.Message);
             }
-
-
         }
 
         /// <summary>
@@ -1386,7 +1281,6 @@ namespace DialogEngine.ViewModels.Dialog
                 mcLogger.Error("Error during reloading dialog data." + ex.Message);
                 MessageBox.Show("Error during reloading dialog data.");
             }
-
         }
 
 
@@ -1424,10 +1318,8 @@ namespace DialogEngine.ViewModels.Dialog
                 mcLogger.Error("Error during initializing dialog data. " + ex.Message);
                 MessageBox.Show("Error during initializing dialog data.");
             }
-
         }
 
         #endregion
-
     }
 }

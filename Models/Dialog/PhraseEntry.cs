@@ -16,7 +16,6 @@ namespace DialogEngine.Models.Dialog
         /// </summary>
         public string DialogStr { get; set; }
 
-
         /// <summary>
         /// When you make an audio recording of dialogue, you'll use this to name the file
         /// </summary>
@@ -26,7 +25,6 @@ namespace DialogEngine.Models.Dialog
         ///  G: General Audiences - PG: Parental Guidance Suggested
         /// </summary>
         public string PhraseRating;
-
 
         /// <summary>
         /// "Key" represents phrase type. Phrase type determines what situations your character will say the dialogue in
@@ -41,8 +39,5 @@ namespace DialogEngine.Models.Dialog
         /// the number, the more often they will say this phrase.
         /// </summary>
         public Dictionary<string, double> PhraseWeights; //to replace PhraseWeights, uses string tags.
-
-
-
     }
 }

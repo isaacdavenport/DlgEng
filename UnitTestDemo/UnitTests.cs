@@ -3,7 +3,7 @@ using DialogEngine;
 using System.Collections.Generic;
 using DialogEngine.Helpers;
 using DialogEngine.Models.Dialog;
-using DialogEngine.ViewModels.Dialog;
+using DialogEngine.ViewModels;
 
 namespace UnitTests
 {

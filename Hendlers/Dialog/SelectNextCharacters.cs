@@ -4,14 +4,13 @@
 using System;
 using System.Threading;
 using DialogEngine.Helpers;
-using DialogEngine.ViewModels.Dialog;
+using DialogEngine.ViewModels;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Collections.Generic;
 using System.Linq;
 using System.Configuration;
 using System.Reflection;
-using System.Timers;
 using DialogEngine.Events;
 using DialogEngine.Events.DialogEvents;
 using DialogEngine.Models.Logger;
@@ -24,15 +23,10 @@ namespace DialogEngine
     {
         #region  - Fields -
         private static readonly ILog mcLogger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-
-
         private static Random msRandom = new Random();
         private static int[,] msStrongRssiCharacterPairBuf = new int[2, StrongRssiBufDepth];
-        
-
         public const int StrongRssiBufDepth = 12;
         public static readonly TimeSpan MaxLastSeenInterval = new TimeSpan(0, 0, 0, 3, 100);
-
         public static int BigRssi = 0;
         public static bool RssiStable = false;
         public static int NextCharacter1 = 1;

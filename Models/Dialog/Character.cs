@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using DialogEngine.Models.Enums;
-using DialogEngine.ViewModels.Dialog;
+using DialogEngine.ViewModels;
 using DialogEngine.Events;
 using DialogEngine.Events.DialogEvents;
 
@@ -33,7 +33,6 @@ namespace DialogEngine.Models.Dialog
         // assigned radio number - unassigned value is -1
         private int mRadioNum = -1;
 
-
         [JsonProperty("Phrases")]
         public List<PhraseEntry> Phrases = new List<PhraseEntry>(); //entry now has string phraseweight tags.
 
@@ -48,7 +47,6 @@ namespace DialogEngine.Models.Dialog
 
         [JsonProperty("CharacterPrefix")]
         public string CharacterPrefix { get; protected set; }
-
 
         /// <summary>
         /// Radio number assigned to character
@@ -86,23 +84,19 @@ namespace DialogEngine.Models.Dialog
                     if (value != CharacterState.On)
                     {
                         mState = value;
-
                         EventAggregator.Instance.GetEvent<ChangedCharactersStateEvent>().Publish();
                     }
                 }
                 else
                 {
                     mState = value;
-
                     EventAggregator.Instance.GetEvent<ChangedCharactersStateEvent>().Publish();
                 }
             }
-
             get
             {
                 return mState;
             }
         }
-
     }
 }

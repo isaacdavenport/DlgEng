@@ -13,5 +13,6 @@
     <converters:ValueToColorConverter x:Key="ValueToColorConverter" />
     <converters:ListBoxItemConverter x:Key="ListBoxItemConverter" />
     <converters:RadioNumToStringConverter x:Key="RadioNumToStringConverter" />
+    <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
 </ResourceDictionary>

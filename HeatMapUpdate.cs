@@ -1,7 +1,7 @@
 ﻿//Confidential Source Code Property Toys2Life LLC Colorado 2017
 //www.toys2life.org
 
-using DialogEngine.ViewModels.Dialog;
+using DialogEngine.ViewModels;
 
 namespace DialogEngine
 {

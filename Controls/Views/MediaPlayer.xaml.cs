@@ -27,5 +27,6 @@ namespace DialogEngine.Controls.Views
 
             this.DataContext = new MediaPlayerViewModel(this);
         }
+
     }
 }

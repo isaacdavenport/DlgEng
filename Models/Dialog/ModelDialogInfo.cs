@@ -15,20 +15,14 @@ namespace DialogEngine.Models.Dialog
     /// </summary>
     public class ModelDialogInfo
     {
-
         #region - fields -
 
         private List<ModelDialog> mInList = new List<ModelDialog>();
-
         private int mSelectedModelDialogIndex = -1;
-
         private ModelDialogState mState;
-
         public string FileName { set; get; }
 
-
         #endregion
-
 
         #region - properties -
 
@@ -41,7 +35,6 @@ namespace DialogEngine.Models.Dialog
             {
                 return mInList;
             }
-
             set
             {
                 mInList = value;
@@ -57,7 +50,6 @@ namespace DialogEngine.Models.Dialog
             {
                 return mSelectedModelDialogIndex;
             }
-
             set
             {
                 mSelectedModelDialogIndex = value;
@@ -77,7 +69,6 @@ namespace DialogEngine.Models.Dialog
             set
             {
                 mState = value;
-
                 EventAggregator.Instance.GetEvent<ChangedModelDialogStateEvent>().Publish();
             }
             get

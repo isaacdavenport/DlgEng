@@ -3,11 +3,10 @@
 
 using DialogEngine.Core;
 using System.Windows.Controls;
-using DialogEngine.ViewModels.Dialog;
-using System.Threading.Tasks;
+using DialogEngine.ViewModels;
 using System;
 
-namespace DialogEngine.Views.Dialog
+namespace DialogEngine.Views
 {
     /// <summary>
     /// Implementation of <see cref="PageBase"/>

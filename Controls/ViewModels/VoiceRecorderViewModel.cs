@@ -1,14 +1,12 @@
-﻿using DialogEngine.Controls.Views;
-using DialogEngine.Core;
-using NAudio.Wave;
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Shapes;
+﻿//  Confidential Source Code Property Toys2Life LLC Colorado 2017
+//  www.toys2life.org
 
+using DialogEngine.Controls.Views;
+using DialogEngine.Controls.VoiceRecorder;
+using DialogEngine.Core;
+using DialogEngine.Helpers;
+using System.ComponentModel;
+using System.IO;
 
 namespace DialogEngine.Controls.ViewModels
 {
@@ -17,35 +15,42 @@ namespace DialogEngine.Controls.ViewModels
         #region - fields -
 
         private VoiceRecoreder mView;
-
-        private WaveIn mWavein;
-        private WaveFileWriter mWaveFileWriter;
-        private DateTime mStartTime;
-        private List<byte> mTotalbytes;
-        private Queue<Point> mDisplaypts;
-        private Queue<Int32> mDisplaysht;
-
-        private long mCount = 0;
-
-        //sample 1/100, display for 5 seconds
-        private int mNumtodisplay = 2205;
-
+        private NAudioEngine mSoundPlayer;
+        private double mChannelPosition;
         private bool mIsRecording;
-        private int mProgressBarValue;
-        private string mTimerText;
-        private Timer mTimer;
+        private bool mIsPlaying;
 
         #endregion
 
         #region - contructor -
-
-        public VoiceRecorderViewModel(VoiceRecoreder view)
+        public VoiceRecorderViewModel(VoiceRecoreder view,NAudioEngine player)
         {
             this.mView = view;
-            mTimer = new Timer(_timerElapsed, null, Timeout.Infinite, Timeout.Infinite);
+            this.mSoundPlayer = player;
+            this.mSoundPlayer.PropertyChanged += _soundPlayer_PropertyChanged;
 
             _bindCommands();
+            mView.spectrumAnalyzer.RegisterSoundPlayer(player);
+        }
 
+        private void _soundPlayer_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case "ChannelPosition":
+                    ChannelPosition = (double)mSoundPlayer.ActiveStream.Position /(double) mSoundPlayer.ActiveStream.Length;
+                    break;
+                case "IsPlaying":
+                    if (!mSoundPlayer.IsPlaying)
+                    {
+                        if(mSoundPlayer.ChannelPosition == mSoundPlayer.ChannelLength)                       
+                        ChannelPosition = 0;
+
+                        IsPlaying = false;
+                        mView.PlayingBtn.Content = mView.FindResource("PlayBtn");
+                    }
+                    break;
+            }
         }
 
         #endregion
@@ -54,45 +59,31 @@ namespace DialogEngine.Controls.ViewModels
 
         public bool IsRecording
         {
-            get
-            {
-                return mIsRecording;
-            }
+            get { return mIsRecording; }
             set
             {
                 mIsRecording = value;
-
                 OnPropertyChanged("IsRecording");
             }
         }
 
-        public int ProgressBarValue
+        public bool IsPlaying
         {
-            get
-            {
-                return mProgressBarValue;
-            }
-
+            get { return mIsPlaying; }
             set
             {
-                mProgressBarValue = value;
-
-                OnPropertyChanged("ProgressBarValue");
+                mIsPlaying = value;
+                OnPropertyChanged("IsPlaying");
             }
         }
 
-        public string TimerText
+        public double ChannelPosition
         {
-            get
-            {
-                return mTimerText;
-            }
-
+            get { return mChannelPosition; }
             set
             {
-                mTimerText = value;
-
-                OnPropertyChanged("TimerText");
+                mChannelPosition = value  * 100;
+                OnPropertyChanged("ChannelPosition");
             }
         }
 
@@ -112,100 +103,49 @@ namespace DialogEngine.Controls.ViewModels
         {
             StartRecording = new RelayCommand(x => _startRecording());
             StopRecording = new RelayCommand(x => _stopRecording());
-            PlayContent = new RelayCommand(x => _playMP3());
+            PlayContent = new RelayCommand(x => _play());
         }
 
-        private void _playMP3()
+        private void _play()
         {
+            if (IsPlaying)
+            {
+                IsPlaying = false;
+                mView.PlayingBtn.Content = mView.FindResource("PlayBtn");
+                if(mSoundPlayer.CanPause)
+                mSoundPlayer.Pause();
+            }
+            else
+            {
+                IsPlaying = true;
+                mView.PlayingBtn.Content = mView.FindResource("PauseBtn");
 
-            MP3Player.Instance.PlayMp3(@"C:\Users\sbstb\Desktop\Output\temp.mp3");
-        }
+                if(ChannelPosition == 0)
+                mSoundPlayer.OpenFile(Path.Combine(SessionVariables.AudioDirectory,"BO_AllowedToDye.mp3"));
 
-        private void _timerElapsed(object state)
-        {
-            TimeSpan recordedTime = DateTime.Now - mStartTime;
-
-            TimerText = recordedTime.ToString(@"hh\:mm\:ss");
+                mSoundPlayer.Play();
+            }
         }
 
         private void _stopRecording()
         {
             IsRecording = false;
-            mTimer.Change(Timeout.Infinite, Timeout.Infinite);
-            TimerText = "";
-
-            mWavein.Dispose();
-            mWavein = null;
-            mWaveFileWriter.Close();
-            mWaveFileWriter.Dispose();
-            mWaveFileWriter = null;
         }
-
 
         private void _startRecording()
         {
-            mWavein = new WaveIn();
-            mWavein.DataAvailable += new EventHandler<WaveInEventArgs>(_wavein_DataAvailable);
-            mWavein.WaveFormat = new WaveFormat(44100, 32, 2);
-
-            mWaveFileWriter = new WaveFileWriter(@"C:\Users\sbstb\Desktop\Output\temp.mp3", mWavein.WaveFormat);
-
-            mDisplaypts = new Queue<Point>();
-            mTotalbytes = new List<byte>();
-            mDisplaysht = new Queue<Int32>();
-
-            mWavein.StartRecording();
-
-            IsRecording = true;
-            mStartTime = DateTime.Now;
-            mTimer.Change(1000, 1000);
-        }
-
-
-
-        private void _wavein_DataAvailable(object sender, WaveInEventArgs e)
-        {
-            mWaveFileWriter.Write(e.Buffer, 0, e.BytesRecorded);
-            mTotalbytes.AddRange(e.Buffer);
-
-
-            byte[] shts = new byte[4];
-
-
-            for (int i = 0; i < e.BytesRecorded - 1; i += 100)
+            if (IsRecording)
             {
-                shts[0] = e.Buffer[i];
-                shts[1] = e.Buffer[i + 1];
-                shts[2] = e.Buffer[i + 2];
-                shts[3] = e.Buffer[i + 3];
-                if (mCount < mNumtodisplay)
-                {
-                    mDisplaysht.Enqueue(BitConverter.ToInt32(shts, 0));
-                    ++mCount;
-                }
-                else
-                {
-                    mDisplaysht.Dequeue();
-
-                    mDisplaysht.Enqueue(BitConverter.ToInt32(shts, 0));
-                }
+                IsRecording = false;
+                mView.RecordingBtn.Content = mView.FindResource("Microphone");
+                mSoundPlayer.StopRecording();
             }
-
-
-            Int32[] shts2 = mDisplaysht.ToArray();
-            for (Int32 x = 0; x < shts2.Length; ++x)
+            else
             {
-                if(shts2[x] >=0)
-                ProgressBarValue =(int) _normalizeWave(shts2[x]);
+                IsRecording = true;
+                mView.RecordingBtn.Content = mView.FindResource("StopBtn");
+                mSoundPlayer.StartRecording();
             }
-        }
-
-
-        private double _normalizeWave(Int32 strength)
-        {
-            double value = (strength *1.0 / Int32.MaxValue * 1.0) * 100.0;
-
-            return value;
         }
 
         #endregion

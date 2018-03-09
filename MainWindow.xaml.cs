@@ -7,15 +7,15 @@ using System.IO;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Media;
-using DialogEngine.Controls;
 using log4net;
 using log4net.Config;
 using Microsoft.Win32;
 using DialogEngine.Helpers;
-using DialogEngine.ViewModels.Dialog;
-using DialogEngine.Views.Character;
-using System.Windows.Navigation;
-using DialogEngine.Views.Dialog;
+using DialogEngine.ViewModels;
+using DialogEngine.Views;
+using DialogEngine.Dialogs;
+using MaterialDesignThemes.Wpf;
+using MaterialDesignColors;
 
 namespace DialogEngine
 {
@@ -39,6 +39,8 @@ namespace DialogEngine
             XmlConfigurator.Configure(new FileInfo("log4net.config"));
 
             mcLogger.Info("Application started.");
+
+            _initializeMaterialDesign();
 
             InitializeComponent();
 
@@ -123,10 +125,7 @@ namespace DialogEngine
 
         private void _settings_Click(object sender, RoutedEventArgs e)
         {
-            var _settingsDialog = new SettingsDialog();
-            _settingsDialog.Owner = this;
-
-            _settingsDialog.ShowDialog();
+            DialogHost.OpenDialogCommand.Execute(new SettingsDialogControl(),this.SettingsBtn);
         }
 
         #endregion
@@ -139,15 +138,23 @@ namespace DialogEngine
             StatusBarTextBox.Text = _infoMessage;
         }
 
-
-
         #endregion
 
         private void _createCharacter_Click(object sender, RoutedEventArgs e)
         {
-            mainFrame.Source = new Uri("Views/Character/CreateCharacter.xaml", UriKind.Relative);
+            mainFrame.Source = new Uri("Views/CreateCharacter.xaml", UriKind.Relative);
 
             e.Handled = true;
+        }
+
+        private  void _initializeMaterialDesign()
+        {
+            // Create dummy objects to force the MaterialDesign assemblies to be loaded
+            // from this assembly, which causes the MaterialDesign assemblies to be searched
+            // relative to this assembly's path. Otherwise, the MaterialDesign assemblies
+            // are searched relative to Eclipse's path, so they're not found.
+            var card = new Card();
+            var hue = new Hue("Dummy", Colors.Black, Colors.White);
         }
     }
 }

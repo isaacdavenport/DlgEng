@@ -18,6 +18,5 @@ namespace DialogEngine.Models.Dialog
 
         // Current spekaing phrase
         public PhraseEntry PhraseEntry { get; set; }
-
     }
 }
