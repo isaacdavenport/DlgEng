@@ -17,7 +17,8 @@
                   TextOptions.TextRenderingMode="Auto"
                   xmlns:core="clr-namespace:DialogEngine.Core"
                   xmlns:controls="clr-namespace:DialogEngine.Controls.Views"
-                  mc:Ignorable="d" 
+                  mc:Ignorable="d"
+                  MaxHeight="1000"
                   Title="CreateCharacter">
     <Page.Resources>
         <ResourceDictionary>
