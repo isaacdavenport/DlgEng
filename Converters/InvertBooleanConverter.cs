@@ -1,6 +1,8 @@
 ﻿//  Confidential Source Code Property Toys2Life LLC Colorado 2017
 //  www.toys2life.org
 
+//  Converters convert input parameter to a value expected by a gui item  
+
 using System;
 using System.Globalization;
 using System.Windows.Data;

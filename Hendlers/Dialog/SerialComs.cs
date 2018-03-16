@@ -16,6 +16,7 @@ using DialogEngine.ViewModels;
 using DialogEngine.Models.Logger;
 using DialogEngine.Dialogs;
 using MaterialDesignThemes.Wpf;
+using System.Windows.Threading;
 
 namespace DialogEngine
 {
@@ -25,6 +26,7 @@ namespace DialogEngine
         #region - Fields -
 
         private static readonly ILog mcLogger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly DispatcherTimer mcHeatMapUpdateTimer = new DispatcherTimer();
         private static SerialPort msSerialPort;
         private static CancellationTokenSource msSerialTokenSource = new CancellationTokenSource();
         private static CancellationTokenSource msRandomTokenSource = new CancellationTokenSource();
@@ -38,62 +40,18 @@ namespace DialogEngine
         static SerialComs()
         {
             EventAggregator.Instance.GetEvent<UseSerialPortChanged>().Subscribe(_useSerialPortChanged);
+            mcHeatMapUpdateTimer.Interval = TimeSpan.FromSeconds(3);
+            mcHeatMapUpdateTimer.Tick += _heatMapUpdateTimer_Tick;
         }
 
         #endregion
 
-        #region - Properties -
+        #region - Event handlers -
 
-        /// <summary>
-        /// Indicates which selection mode is active
-        /// true - serial mode
-        /// false - random mode
-        /// </summary>
-        public static bool IsSerialMode
+        private static void _heatMapUpdateTimer_Tick(object sender, EventArgs e)
         {
-            get
-            {
-                return mIsSerialMode;
-            }
-            set
-            {
-                mIsSerialMode = value;
-
-                try
-                {
-                    if(Application.Current.Dispatcher.CheckAccess())
-                    {
-                        if (mIsSerialMode)
-                        {
-                            Application.Current.Windows.OfType<MainWindow>().FirstOrDefault().SelectionModeLabel.Content = "Serial";
-                        }
-                        else
-                        {
-                            Application.Current.Windows.OfType<MainWindow>().FirstOrDefault().SelectionModeLabel.Content = "Random";
-                        }
-                    }
-                    else
-                    {
-                       Application.Current.Dispatcher.BeginInvoke((Action)(() =>
-                       {
-                           if (mIsSerialMode)
-                           {
-                               Application.Current.Windows.OfType<MainWindow>().FirstOrDefault().SelectionModeLabel.Content = "Serial";
-                           }
-                           else
-                           {
-                               Application.Current.Windows.OfType<MainWindow>().FirstOrDefault().SelectionModeLabel.Content = "Random";
-                           }
-                       }));
-                    }
-                }
-                catch(Exception ex)
-                {
-                    mcLogger.Error("IsSerialMode changed. " + ex.Message );
-                }
-            }
+            HeatMapUpdate.PrintHeatMap();
         }
-           
 
         #endregion
 
@@ -108,7 +66,11 @@ namespace DialogEngine
             }
             else
             {
+                if(msSerialPort != null && msSerialPort.IsOpen)
+                msSerialPort.Close();
+
                 msSerialTokenSource.Cancel();
+                mcHeatMapUpdateTimer.Stop();
             }
 
             await InitCharacterSelection();
@@ -131,7 +93,6 @@ namespace DialogEngine
 
                         mcLogger.Debug("serial buffer over run.");
                     }
-
                 }
             }
             catch (TimeoutException) {
@@ -151,23 +112,21 @@ namespace DialogEngine
         {
             try
             {
-                // can we do something like this
-
                 SelectNextCharacters.NextCharacter1 = 0;
-
                 SelectNextCharacters.NextCharacter2 = 0;
 
                 msSerialPort = new SerialPort();
-
                 msSerialPort.PortName = SessionVariables.ComPortName;
-
                 msSerialPort.BaudRate = 460800;
-
                 msSerialPort.ReadTimeout = 500;
-
+                if (msSerialPort.IsOpen)
+                {
+                    msSerialPort.Close();
+                }
                 msSerialPort.Open();
-
                 msSerialPort.DiscardInBuffer();
+
+                mcHeatMapUpdateTimer.Start();
 
                 await _regularylyReadSerialAsync(msSerialTokenSource.Token);
             }
@@ -232,7 +191,6 @@ namespace DialogEngine
             catch (Exception e)
             {
                 mcLogger.Error("InitCharacterSelection " + e.Message);
-
                DialogViewModel.Instance.AddItem(new ErrorMessage("Error in character selection method."));
             }
             //worry about stopping cleanly later TODO
@@ -277,22 +235,66 @@ namespace DialogEngine
                             ParseMessage.ProcessMessage(_rowNum, _newRow);
                             SelectNextCharacters.FindBiggestRssiPair();
                         }
-
-                        if (_cycleCount > 80)
-                        {
-                            HeatMapUpdate.PrintHeatMap();
-                            _cycleCount = 0;
-                        }
                     }
                     catch(Exception ex)
                     {
                         mcLogger.Error("_regularylyReadSerialAsync " + ex.Message);
-
                         DialogViewModel.Instance.AddItem(new ErrorMessage("Error in serial communication."));
                     }
                 }
             });
         }
+
+        #endregion
+
+        #region - Properties -
+
+        /// <summary>
+        /// Indicates which selection mode is active
+        /// true - serial mode
+        /// false - random mode
+        /// </summary>
+        public static bool IsSerialMode
+        {
+            get { return mIsSerialMode; }
+            set
+            {
+                mIsSerialMode = value;
+                try
+                {
+                    if (Application.Current.Dispatcher.CheckAccess())
+                    {
+                        if (mIsSerialMode)
+                        {
+                            Application.Current.Windows.OfType<MainWindow>().FirstOrDefault().SelectionModeLabel.Content = "Serial";
+                        }
+                        else
+                        {
+                            Application.Current.Windows.OfType<MainWindow>().FirstOrDefault().SelectionModeLabel.Content = "Random";
+                        }
+                    }
+                    else
+                    {
+                        Application.Current.Dispatcher.BeginInvoke((Action)(() =>
+                        {
+                            if (mIsSerialMode)
+                            {
+                                Application.Current.Windows.OfType<MainWindow>().FirstOrDefault().SelectionModeLabel.Content = "Serial";
+                            }
+                            else
+                            {
+                                Application.Current.Windows.OfType<MainWindow>().FirstOrDefault().SelectionModeLabel.Content = "Random";
+                            }
+                        }));
+                    }
+                }
+                catch (Exception ex)
+                {
+                    mcLogger.Error("IsSerialMode changed. " + ex.Message);
+                }
+            }
+        }
+
 
         #endregion
     }

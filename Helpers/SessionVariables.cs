@@ -1,6 +1,7 @@
 ﻿//Confidential Source Code Property Toys2Life LLC Colorado 2017
 //www.toys2life.org
 
+using DialogEngine.Models.Dialog;
 using log4net;
 using System;
 using System.Configuration;
@@ -15,8 +16,6 @@ namespace DialogEngine.Helpers
     public static class SessionVariables
     {
         private static readonly ILog mcLogger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-
-
         public static bool ShowDupePhrases;
         public static bool CheckStuckTransmissions;
         public static bool MonitorReceiveBufferSize;
@@ -33,7 +32,7 @@ namespace DialogEngine.Helpers
         public static string DialogLogFileName = "LogDialog";
 
         /// <summary>
-        /// 
+        /// Maximum time to play current dialog after speaker characters changed in seconds
         /// </summary>
         public static double MaxTimeToPlayFile
         {
@@ -116,7 +115,7 @@ namespace DialogEngine.Helpers
         }
 
         /// <summary>
-        /// 
+        /// Serial or random selection of characters
         /// </summary>
         public static bool UseSerialPort
         {
@@ -131,6 +130,9 @@ namespace DialogEngine.Helpers
             }
         }
 
+        /// <summary>
+        /// <see cref="ParentalRatings"/>
+        /// </summary>
         public static string CurrentParentalRating
         {
             get
@@ -145,7 +147,7 @@ namespace DialogEngine.Helpers
         }
 
         /// <summary>
-        /// 
+        /// COM port name
         /// </summary>
         public static string ComPortName
         {
@@ -168,7 +170,6 @@ namespace DialogEngine.Helpers
         /// </summary>
         static SessionVariables()
         {
-
             if (ConfigurationManager.AppSettings["ShowDupePhrases"] != null)
                 ShowDupePhrases = Convert.ToBoolean(AppSet.ReadSetting("ShowDupePhrases"));
             else
@@ -190,7 +191,6 @@ namespace DialogEngine.Helpers
             else
                 MonitorMessageParseFails = false;
 
-
             //get executable path of DialogGenerator.exe
             string _path = Environment.CurrentDirectory;
 
@@ -200,8 +200,7 @@ namespace DialogEngine.Helpers
             DialogsDirectory = BaseDirectory + @"\DialogJSON\";
             AudioDirectory = BaseDirectory + @"\DialogAudio\";
             CharactersDirectory = BaseDirectory + @"\CharacterJSON\";
-
-            
+        
             if (ConfigurationManager.AppSettings["CharactersDirectory"] != null)
                 CharactersDirectory = AppSet.ReadSetting("CharactersDirectory");
 
@@ -231,14 +230,11 @@ namespace DialogEngine.Helpers
                 Environment.Exit(0);
             }
 
-
             if (ComPortName == null && UseSerialPort)
             {
                 mcLogger.Debug("Valid ComPortName  not found in config file exiting.");
                 Environment.Exit(0);
             }
-
-
         }
     }
 }

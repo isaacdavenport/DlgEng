@@ -2,44 +2,47 @@
 //  www.toys2life.org
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Threading;
 using NAudio.Wave;
-using System.Windows;
+
 
 namespace DialogEngine.Controls.VoiceRecorder
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class NAudioEngine : INotifyPropertyChanged, ISpectrumPlayer, IDisposable
     {
         #region - Fields -
-        private const int mcWaveformCompressedPointCount = 2000;
-        private const int mcRepeatThreshold = 200;
+        private readonly int mcRepeatThreshold = 200;
         private readonly DispatcherTimer mcPositionTimer = new DispatcherTimer(DispatcherPriority.ApplicationIdle);
-        private readonly BackgroundWorker mcWaveformGenerateWorker = new BackgroundWorker();
         private readonly int mcfftDataSize = (int)FFTDataSize.FFT2048;
-
+        // singleton instance
         private static NAudioEngine msInstance;
-
         private bool mDisposed;
+        // player's conditions
         private bool mCanPlay;
         private bool mCanPause;
         private bool mCanStop;
+
+        // player's state
         private bool mIsPlaying;
+        private bool msIsRecording;
+
         private bool mInChannelTimerUpdate;
         private double mChannelLength;
         private double mChannelPosition;
         private bool mInChannelSet;
+        // records sound 
         private WaveIn mWaveInDevice;
+        // writes recorded bytes to .mp3 file
         private WaveFileWriter mWaveFileWriter;
+        // plays .mp3 file
         private WaveOut mWaveOutDevice;
         private WaveStream mActiveStream;
         private WaveChannel32 mInputStream;
         private SampleAggregator mSampleAggregator;
-        private SampleAggregator mWaveformAggregator;
-        private string mPendingWaveformPath;        
-        private float[] mFullLevelData;
-        private float[] mWaveformData;
         private TagLib.File mFileTag;
         private TimeSpan mRepeatStart;
         private TimeSpan mRepeatStop;
@@ -48,7 +51,9 @@ namespace DialogEngine.Controls.VoiceRecorder
         #endregion
 
         #region  - Singleton -
-
+        /// <summary>
+        /// Singleton
+        /// </summary>
         public static NAudioEngine Instance
         {
             get
@@ -62,34 +67,35 @@ namespace DialogEngine.Controls.VoiceRecorder
         #endregion
 
         #region - Constructor -
-
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         private NAudioEngine()
         {
             mcPositionTimer.Interval = TimeSpan.FromMilliseconds(50);
-            mcPositionTimer.Tick += positionTimer_Tick;
-
-            mcWaveformGenerateWorker.DoWork += waveformGenerateWorker_DoWork;
-            mcWaveformGenerateWorker.RunWorkerCompleted += waveformGenerateWorker_RunWorkerCompleted;
-            mcWaveformGenerateWorker.WorkerSupportsCancellation = true;
+            mcPositionTimer.Tick += _positionTimer_Tick;
         }
         
         #endregion
 
         #region - IDisposable -
 
+        /// <summary>
+        /// Destructor
+        /// </summary>
         public void Dispose()
         {
-            Dispose(true);            
+            dispose(true);            
             GC.SuppressFinalize(this);
         }
 
-        protected virtual void Dispose(bool disposing)
+        protected virtual void dispose(bool disposing)
         {
             if(!mDisposed)
             {
                 if(disposing)
                 {
-                    StopAndCloseStream();
+                    _stopAndCloseStream();
                 }
 
                 mDisposed = true;
@@ -100,19 +106,33 @@ namespace DialogEngine.Controls.VoiceRecorder
 
         #region - ISpectrumPlayer -
 
-        public bool GetFFTData(float[] fftDataBuffer)
+        public bool GetFFTData(float[] _fftDataBuffer)
         {
-            mSampleAggregator.GetFFTResults(fftDataBuffer);
-            return mIsPlaying;
+            bool status = IsPlaying || IsRecording;
+
+            if (status)
+            {
+                mSampleAggregator.GetFFTResults(_fftDataBuffer);
+            }
+            return status;
         }
 
         public int GetFFTFrequencyIndex(int frequency)
-        {
+        {         
             double _maxFrequency;
-            if (ActiveStream != null)
-                _maxFrequency = ActiveStream.WaveFormat.SampleRate / 2.0d;
+
+            if (IsRecording)
+            {
+                _maxFrequency = mWaveInDevice.WaveFormat.SampleRate / 2.0d;
+            }
             else
-                _maxFrequency = 22050; // Assume a default 44.1 kHz sample rate.
+            {
+                if (ActiveStream != null)
+                    _maxFrequency = ActiveStream.WaveFormat.SampleRate / 2.0d;
+                else
+                    _maxFrequency = 22050; // Assume a default 44.1 kHz sample rate.
+            }
+
             return (int)((frequency / _maxFrequency) * (mcfftDataSize / 2));
         }
 
@@ -156,18 +176,6 @@ namespace DialogEngine.Controls.VoiceRecorder
             }
         }        
 
-        public float[] WaveformData
-        {
-            get { return mWaveformData; }
-            protected set
-            {
-                float[] _oldValue = mWaveformData;
-                mWaveformData = value;
-
-                if (_oldValue != mWaveformData)
-                    NotifyPropertyChanged("WaveformData");
-            }
-        }
 
         public double ChannelLength
         {
@@ -218,123 +226,9 @@ namespace DialogEngine.Controls.VoiceRecorder
 
         #endregion
 
-        #region - Waveform Generation -
-
-        private class WaveformGenerationParams
-        {
-            public WaveformGenerationParams(int points, string path)
-            {
-                Points = points;
-                Path = path;
-            }
-
-            public int Points { get; protected set; }
-            public string Path { get; protected set; }
-        }
-
-        private void GenerateWaveformData(string path)
-        {
-            if (mcWaveformGenerateWorker.IsBusy)
-            {
-                mPendingWaveformPath = path;
-                mcWaveformGenerateWorker.CancelAsync();
-                return;
-            }
-
-            if (!mcWaveformGenerateWorker.IsBusy && mcWaveformCompressedPointCount != 0)
-                mcWaveformGenerateWorker.RunWorkerAsync(new WaveformGenerationParams(mcWaveformCompressedPointCount, path));
-        }
-
-        private void waveformGenerateWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            if (e.Cancelled)
-            {
-                if (!mcWaveformGenerateWorker.IsBusy && mcWaveformCompressedPointCount != 0)
-                    mcWaveformGenerateWorker.RunWorkerAsync(new WaveformGenerationParams(mcWaveformCompressedPointCount, mPendingWaveformPath));
-            }
-        }        
-
-        private void waveformGenerateWorker_DoWork(object sender, DoWorkEventArgs e)
-        {
-            WaveformGenerationParams _waveformParams = e.Argument as WaveformGenerationParams;
-            Mp3FileReader _waveformMp3Stream = new Mp3FileReader(_waveformParams.Path);
-            WaveChannel32 _waveformInputStream = new WaveChannel32(_waveformMp3Stream);            
-            _waveformInputStream.Sample += waveStream_Sample;
-            
-            int _frameLength = mcfftDataSize;
-            int _frameCount = (int)((double)_waveformInputStream.Length / (double)_frameLength);
-            int _waveformLength = _frameCount * 2;
-            byte[] readBuffer = new byte[_frameLength];
-            mWaveformAggregator = new SampleAggregator(_frameLength);
-   
-            float _maxLeftPointLevel = float.MinValue;
-            float _maxRightPointLevel = float.MinValue;
-            int _currentPointIndex = 0;
-            float[] _waveformCompressedPoints = new float[_waveformParams.Points];
-            List<float> _waveformData = new List<float>();
-            List<int> _waveMaxPointIndexes = new List<int>();
-            
-            for (int i = 1; i <= _waveformParams.Points; i++)
-            {
-                _waveMaxPointIndexes.Add((int)Math.Round(_waveformLength * ((double)i / (double)_waveformParams.Points), 0));
-            }
-            int readCount = 0;
-            while (_currentPointIndex * 2 < _waveformParams.Points)
-            {
-                _waveformInputStream.Read(readBuffer, 0, readBuffer.Length);
-
-                _waveformData.Add(mWaveformAggregator.LeftMaxVolume);
-                _waveformData.Add(mWaveformAggregator.RightMaxVolume);
-
-                if (mWaveformAggregator.LeftMaxVolume > _maxLeftPointLevel)
-                    _maxLeftPointLevel = mWaveformAggregator.LeftMaxVolume;
-                if (mWaveformAggregator.RightMaxVolume > _maxRightPointLevel)
-                    _maxRightPointLevel = mWaveformAggregator.RightMaxVolume;
-
-                if (readCount > _waveMaxPointIndexes[_currentPointIndex])
-                {
-                    _waveformCompressedPoints[(_currentPointIndex * 2)] = _maxLeftPointLevel;
-                    _waveformCompressedPoints[(_currentPointIndex * 2) + 1] = _maxRightPointLevel;
-                    _maxLeftPointLevel = float.MinValue;
-                    _maxRightPointLevel = float.MinValue;
-                    _currentPointIndex++;
-                }
-                if (readCount % 3000 == 0)
-                {
-                    float[] clonedData = (float[])_waveformCompressedPoints.Clone();
-                    Application.Current.Dispatcher.Invoke(new Action(() =>
-                    {
-                        WaveformData = clonedData;
-                    }));
-                }
-
-                if (mcWaveformGenerateWorker.CancellationPending)
-                {
-                    e.Cancel = true;
-                    break;
-                }
-                readCount++;
-            }
-
-            float[] finalClonedData = (float[])_waveformCompressedPoints.Clone();
-            Application.Current.Dispatcher.Invoke(new Action(() =>
-            {
-                mFullLevelData = _waveformData.ToArray();
-                WaveformData = finalClonedData;
-            }));
-            _waveformInputStream.Close();
-            _waveformInputStream.Dispose();
-            _waveformInputStream = null;
-            _waveformMp3Stream.Close();
-            _waveformMp3Stream.Dispose();
-            _waveformMp3Stream = null;
-        }
-
-        #endregion
-
         #region - Event Handlers -
 
-        private void inputStream_Sample(object sender, SampleEventArgs e)
+        private void _inputStream_Sample(object sender, SampleEventArgs e)
         {
             mSampleAggregator.Add(e.Left, e.Right);
             long _repeatStartPosition = (long)((SelectionBegin.TotalSeconds / ActiveStream.TotalTime.TotalSeconds) * ActiveStream.Length);
@@ -346,28 +240,48 @@ namespace DialogEngine.Controls.VoiceRecorder
             }
         }
 
-        void waveStream_Sample(object sender, SampleEventArgs e)
+        void _positionTimer_Tick(object sender, EventArgs e)
         {
-            mWaveformAggregator.Add(e.Left, e.Right);
+            if (!IsRecording)
+            {
+                mInChannelTimerUpdate = true;
+                ChannelPosition = ((double)ActiveStream.Position / (double)ActiveStream.Length) * ActiveStream.TotalTime.TotalSeconds;
+                mInChannelTimerUpdate = false;
+
+                if (ChannelPosition == ActiveStream.TotalTime.TotalSeconds)
+                {
+                    Stop();
+                }
+            }
         }
 
-        void positionTimer_Tick(object sender, EventArgs e)
+        private void _waveIn_DataAvailable(object sender, WaveInEventArgs e)
         {
-            mInChannelTimerUpdate = true;
-            ChannelPosition = ((double)ActiveStream.Position / (double)ActiveStream.Length) * ActiveStream.TotalTime.TotalSeconds;
-            mInChannelTimerUpdate = false;
+            mWaveFileWriter.Write(e.Buffer, 0, e.BytesRecorded);
 
-            if(ChannelPosition == ActiveStream.TotalTime.TotalSeconds)
+            byte[] buffer = e.Buffer;
+            int bytesRecorded = e.BytesRecorded;
+            int bufferIncrement = mWaveInDevice.WaveFormat.BlockAlign;
+
+            for (int index = 0; index < bytesRecorded; index += bufferIncrement)
             {
-                Stop();
+                float sample32 = BitConverter.ToSingle(buffer, index);
+                mSampleAggregator.Add(sample32, 0.0f);
             }
+
+            mWaveFileWriter.Flush();
+        }
+
+        private void _waveIn_RecordingStopped(object sender, EventArgs e)
+        {
+            //throw new NotImplementedException();
         }
 
         #endregion
 
-        #region - Private Utility Methods -
+        #region - private functions -
 
-        private void StopAndCloseStream()
+        private void _stopAndCloseStream()
         {
             if (mWaveOutDevice != null)
             {
@@ -391,16 +305,26 @@ namespace DialogEngine.Controls.VoiceRecorder
 
         #region - Public Methods -
 
+        /// <summary>
+        /// Starts recording sound
+        /// </summary>
         public void StartRecording()
         {
             mWaveInDevice = new WaveIn();
-            mWaveInDevice.DataAvailable += new EventHandler<WaveInEventArgs>(_waveIn_DataAvailable);
-            //mWaveInDevice.RecordingStopped += new EventHandler(_waveIn_RecordingStopped);
-            mWaveInDevice.WaveFormat = new WaveFormat(44100, 32, 2);
+            mWaveInDevice.WaveFormat = WaveFormat.CreateIeeeFloatWaveFormat(44100,2);
+            mWaveInDevice.DataAvailable += _waveIn_DataAvailable;
 
-            mWaveFileWriter = new WaveFileWriter(@"C:\Users\sbstb\Desktop\Output\temp.mp3", mWaveInDevice.WaveFormat);
+            mSampleAggregator = new SampleAggregator(mcfftDataSize);
+            mWaveFileWriter = new WaveFileWriter(@"C:\Users\sbstb\Desktop\Output\tempSasa.mp3", mWaveInDevice.WaveFormat);
+
+            mWaveInDevice.StartRecording();
+            IsRecording = true;    
         }
 
+
+        /// <summary>
+        /// Stops recording sound
+        /// </summary>
         public void StopRecording()
         {
             mWaveInDevice.Dispose();
@@ -408,18 +332,12 @@ namespace DialogEngine.Controls.VoiceRecorder
             mWaveFileWriter.Close();
             mWaveFileWriter.Dispose();
             mWaveFileWriter = null;
+            IsRecording = false;
         }
 
-        private void _waveIn_RecordingStopped(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void _waveIn_DataAvailable(object sender, WaveInEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
+        /// <summary>
+        /// Stops playing of .mp3 file
+        /// </summary>
         public void Stop()
         {
             if (mWaveOutDevice != null)
@@ -432,6 +350,9 @@ namespace DialogEngine.Controls.VoiceRecorder
             CanPause = false;
         }
 
+        /// <summary>
+        /// Pauses playing of .mp3 file
+        /// </summary>
         public void Pause()
         {
             if (IsPlaying && CanPause)
@@ -443,6 +364,9 @@ namespace DialogEngine.Controls.VoiceRecorder
             }
         }
 
+        /// <summary>
+        /// Starts playing of .mp3 file
+        /// </summary>
         public void Play()
         {
             if (CanPlay)
@@ -455,6 +379,10 @@ namespace DialogEngine.Controls.VoiceRecorder
             }
         }
 
+        /// <summary>
+        /// Opens .mp3 file and prepares for playing 
+        /// </summary>
+        /// <param name="path"></param>
         public void OpenFile(string path)
         {
             Stop();
@@ -466,7 +394,7 @@ namespace DialogEngine.Controls.VoiceRecorder
                 ChannelPosition = 0;
             }
             
-            StopAndCloseStream();            
+            _stopAndCloseStream();            
 
             if (System.IO.File.Exists(path))
             {
@@ -479,11 +407,10 @@ namespace DialogEngine.Controls.VoiceRecorder
                     ActiveStream = new Mp3FileReader(path);
                     mInputStream = new WaveChannel32(ActiveStream);
                     mSampleAggregator = new SampleAggregator(mcfftDataSize);
-                    mInputStream.Sample += inputStream_Sample;
+                    mInputStream.Sample += _inputStream_Sample;
                     mWaveOutDevice.Init(mInputStream);
                     ChannelLength = mInputStream.TotalTime.TotalSeconds;
                     FileTag = TagLib.File.Create(path);
-                    GenerateWaveformData(path);
                     CanPlay = true;
                 }
                 catch
@@ -496,6 +423,10 @@ namespace DialogEngine.Controls.VoiceRecorder
         #endregion
 
         #region - Properties -
+
+        /// <summary>
+        /// Information about .mp3 file
+        /// </summary>
         public TagLib.File FileTag
         {
             get { return mFileTag; }
@@ -508,6 +439,9 @@ namespace DialogEngine.Controls.VoiceRecorder
             }
         }
 
+        /// <summary>
+        /// Stream of loaded .mp3 file
+        /// </summary>
         public WaveStream ActiveStream
         {
             get { return mActiveStream; }
@@ -520,6 +454,9 @@ namespace DialogEngine.Controls.VoiceRecorder
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public bool CanPlay
         {
             get { return mCanPlay; }
@@ -532,6 +469,9 @@ namespace DialogEngine.Controls.VoiceRecorder
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public bool CanPause
         {
             get { return mCanPause; }
@@ -544,6 +484,9 @@ namespace DialogEngine.Controls.VoiceRecorder
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public bool CanStop
         {
             get { return mCanStop; }
@@ -556,7 +499,9 @@ namespace DialogEngine.Controls.VoiceRecorder
             }
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
         public bool IsPlaying
         {
             get { return mIsPlaying; }
@@ -568,8 +513,20 @@ namespace DialogEngine.Controls.VoiceRecorder
                     NotifyPropertyChanged("IsPlaying");
                 mcPositionTimer.IsEnabled = value;
             }
-        }    
+        }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool IsRecording
+        {
+            get { return msIsRecording; }
+            set
+            {
+                msIsRecording = value;
+                NotifyPropertyChanged("IsRecording");
+            }
+        }
         #endregion
-
     }
 }

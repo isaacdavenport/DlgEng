@@ -6,14 +6,13 @@ using NAudio.Dsp;
 
 namespace DialogEngine.Controls.VoiceRecorder
 {
+    /// <summary>
+    /// Collects data from <see cref="ISoundPlayer"/> and calculates FFT of data
+    /// </summary>
     public class SampleAggregator
     {
         #region - fields -
 
-        private float mVolumeLeftMaxValue;
-        private float mVolumeLeftMinValue;
-        private float mVolumeRightMaxValue;
-        private float mVolumeRightMinValue;
         private Complex[] mChannelData;
         private int mBufferSize;
         private int mBinaryExponentitation;
@@ -23,47 +22,26 @@ namespace DialogEngine.Controls.VoiceRecorder
 
         #region - constructor -
 
-        public SampleAggregator(int bufferSize)
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="_bufferSize">buffer size</param>
+        public SampleAggregator(int _bufferSize)
         {
-            this.mBufferSize = bufferSize;
-            mBinaryExponentitation = (int)Math.Log(bufferSize, 2);
-            mChannelData = new Complex[bufferSize];
-        }
-
-        #endregion
-
-        #region - properties -
-
-        public float LeftMaxVolume
-        {
-            get { return mVolumeLeftMaxValue; }
-        }
-
-        public float LeftMinVolume
-        {
-            get { return mVolumeLeftMinValue; }
-        }
-
-        public float RightMaxVolume
-        {
-            get { return mVolumeRightMaxValue; }
-        }
-
-        public float RightMinVolume
-        {
-            get { return mVolumeRightMinValue; }
+            this.mBufferSize = _bufferSize;
+            mBinaryExponentitation = (int)Math.Log(_bufferSize, 2);
+            mChannelData = new Complex[_bufferSize];
         }
 
         #endregion
 
         #region - public methods -
 
+        /// <summary>
+        /// Resets position 
+        /// </summary>
         public void Clear()
         {
-            mVolumeLeftMaxValue = float.MinValue;
-            mVolumeRightMaxValue = float.MinValue;
-            mVolumeLeftMinValue = float.MaxValue;
-            mVolumeRightMinValue = float.MaxValue;
             mChannelDataPosition = 0;
         }
              
@@ -73,23 +51,10 @@ namespace DialogEngine.Controls.VoiceRecorder
         /// <param name="value">The value of the sample.</param>
         public void Add(float leftValue, float rightValue)
         {            
-            if (mChannelDataPosition == 0)
-            {
-                mVolumeLeftMaxValue = float.MinValue;
-                mVolumeRightMaxValue = float.MinValue;
-                mVolumeLeftMinValue = float.MaxValue;
-                mVolumeRightMinValue = float.MaxValue;
-            }
-
             // Make stored channel data stereo by averaging left and right values.
             mChannelData[mChannelDataPosition].X = (leftValue + rightValue) / 2.0f;
             mChannelData[mChannelDataPosition].Y = 0;
             mChannelDataPosition++;
-
-            mVolumeLeftMaxValue = Math.Max(mVolumeLeftMaxValue, leftValue);
-            mVolumeLeftMinValue = Math.Min(mVolumeLeftMinValue, leftValue);
-            mVolumeRightMaxValue = Math.Max(mVolumeRightMaxValue, rightValue);
-            mVolumeRightMinValue = Math.Min(mVolumeRightMinValue, rightValue);
 
             if (mChannelDataPosition >= mChannelData.Length)
             {
@@ -106,6 +71,7 @@ namespace DialogEngine.Controls.VoiceRecorder
             Complex[] _channelDataClone = new Complex[mBufferSize];
             mChannelData.CopyTo(_channelDataClone, 0);
             FastFourierTransform.FFT(true, mBinaryExponentitation, _channelDataClone);
+
             for (int i = 0; i < _channelDataClone.Length / 2; i++)
             {
                 // Calculate actual intensities for the FFT results.

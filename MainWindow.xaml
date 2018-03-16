@@ -108,7 +108,7 @@
                 </Button>
 
                 <!-- MP3 player btn -->
-                <Button  Click="_createCharacter_Click" ToolTip="Create new character" >
+                <Button  Click="_createCharacter_Click" ToolTip="Run a Wizard" >
                     <materialDesign:PackIcon Kind="AccountPlus" />
                 </Button>
 

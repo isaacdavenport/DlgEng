@@ -1,4 +1,9 @@
-﻿<UserControl x:Class="DialogEngine.Dialogs.SettingsDialogControl"
+﻿<!--
+   Confidential Source Code Property Toys2Life LLC Colorado 2017
+   www.toys2life.org
+-->
+    
+    <UserControl x:Class="DialogEngine.Dialogs.SettingsDialogControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 

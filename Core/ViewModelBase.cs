@@ -17,15 +17,6 @@ namespace DialogEngine.Core
     /// </summary>
     public abstract class ViewModelBase : INotifyPropertyChanged, IDisposable
     {
-        #region - Events  -
-
-        /// <summary>
-        /// Property changed event.
-        /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        #endregion
-
         #region - Constructor -
 
         /// <summary>
@@ -35,6 +26,73 @@ namespace DialogEngine.Core
         {
 
         }
+
+        #endregion
+
+        #region - IDisposable implementation -
+
+        ~ViewModelBase()
+        {
+            this.dispose(false);
+        }
+
+
+        protected void dispose(bool disposing)
+        {
+
+            if (disposing)
+            {
+                onDisposing();
+            }
+        }
+
+        protected virtual void onDisposing() { }
+
+        /// <summary>
+        /// Dispose the object
+        /// </summary>
+        public void Dispose()
+        {
+            this.dispose(true);
+
+            GC.SuppressFinalize(this);
+        }
+
+        #endregion
+
+        #region - Events  -
+
+        /// <summary>
+        /// Property changed event.
+        /// </summary>
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        #endregion
+
+        #region - Public methods -
+
+        /// <summary>
+        /// Notifies of property changed.
+        /// </summary>
+        /// <param name="_propertyName">Name of changed property.</param>
+        public virtual void OnPropertyChanged(string _propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(_propertyName));
+            }
+        }
+
+        /// <summary>
+        /// Used to execute methods on application close.
+        /// </summary>
+        /// <param name="_e">Closing event.</param>
+        /// <remarks>Call method on overriden OnClosing() method in application main window.</remarks>
+        public virtual void OnClose(CancelEventArgs _e)
+        {
+
+        }
+
 
         #endregion
 
@@ -68,64 +126,5 @@ namespace DialogEngine.Core
         }
 
         #endregion
-
-        #region - Public methods -
-
-        /// <summary>
-        /// Notifies of property changed.
-        /// </summary>
-        /// <param name="_propertyName">Name of changed property.</param>
-        public virtual void OnPropertyChanged(string _propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(_propertyName));
-            }
-        }
-
-        /// <summary>
-        /// Used to execute methods on application close.
-        /// </summary>
-        /// <param name="_e">Closing event.</param>
-        /// <remarks>Call method on overriden OnClosing() method in application main window.</remarks>
-        public virtual void OnClose(CancelEventArgs _e)
-        {
-
-        }
-
-
-        #endregion
-
-        #region - IDisposable implementation -
-
-        ~ViewModelBase()
-        {
-            this.Dispose(false);
-        }
-
-
-        protected void Dispose(bool _disposing)
-        {
-
-            if (_disposing)
-            {
-                OnDisposing();
-            }
-        }
-
-        protected virtual void OnDisposing() { }
-
-        /// <summary>
-        /// Dispose the object
-        /// </summary>
-        public void Dispose()
-        {
-            this.Dispose(true);
-
-            GC.SuppressFinalize(this);
-        }
-
-        #endregion
-
     }
 }

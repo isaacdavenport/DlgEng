@@ -11,6 +11,10 @@ using System.Windows.Threading;
 
 namespace DialogEngine.Controls.ViewModels
 {
+    /// <summary>
+    /// Implementation of <see cref="ViewModelBase" />
+    /// DataContext for MediaPlayer.xaml/>     
+    /// </summary>
     public class MediaPlayerViewModel : ViewModelBase
     {
         #region - fields -
@@ -26,6 +30,10 @@ namespace DialogEngine.Controls.ViewModels
 
         #region - constructor -
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="view">Reference on View <see cref="MediaPlayer"/></param>
         public MediaPlayerViewModel(MediaPlayer view)
         {
             this.mView = view;
@@ -43,23 +51,16 @@ namespace DialogEngine.Controls.ViewModels
 
         #endregion
 
-        #region - properties -
-
-        public bool IsPlaying
-        {
-            get { return mIsPlaying; }
-            set
-            {
-                mIsPlaying = value;
-                OnPropertyChanged("IsPlaying");
-            }
-        }
-
-        #endregion
-
         #region - commands-
 
+        /// <summary>
+        /// Starts video
+        /// </summary>
         public RelayCommand StartVideo { get; set; }
+
+        /// <summary>
+        /// Stops video
+        /// </summary>
         public RelayCommand StopVideo  { get; set; }
 
         #endregion
@@ -120,6 +121,23 @@ namespace DialogEngine.Controls.ViewModels
                 mcMediaTimer.Start();
             }
         }
+        #endregion
+
+        #region - properties -
+
+        /// <summary>
+        /// Is media player playing
+        /// </summary>
+        public bool IsPlaying
+        {
+            get { return mIsPlaying; }
+            set
+            {
+                mIsPlaying = value;
+                OnPropertyChanged("IsPlaying");
+            }
+        }
+
         #endregion
     }
 }

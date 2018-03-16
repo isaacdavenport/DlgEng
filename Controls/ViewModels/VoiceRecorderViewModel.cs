@@ -10,6 +10,10 @@ using System.IO;
 
 namespace DialogEngine.Controls.ViewModels
 {
+    /// <summary>
+    /// Implementation of <see cref="ViewModelBase" />
+    /// DataContext for VoiceRecorder.xaml/> 
+    /// </summary>
     public class VoiceRecorderViewModel : ViewModelBase
     {
         #region - fields -
@@ -23,6 +27,12 @@ namespace DialogEngine.Controls.ViewModels
         #endregion
 
         #region - contructor -
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="view">Instance of <see cref="VoiceRecoreder"/></param>
+        /// <param name="player">Instance of <see cref="ISoundPlayer"/></param>
         public VoiceRecorderViewModel(VoiceRecoreder view,NAudioEngine player)
         {
             this.mView = view;
@@ -33,67 +43,46 @@ namespace DialogEngine.Controls.ViewModels
             mView.spectrumAnalyzer.RegisterSoundPlayer(player);
         }
 
+        #endregion
+
+        #region - commands -
+
+        /// <summary>
+        /// Starts or stops recording
+        /// </summary>
+        public RelayCommand StartRecording { get; set; }
+
+        /// <summary>
+        /// Starts or stops playing
+        /// </summary>
+        public RelayCommand PlayContent { get; set; }
+
+        #endregion
+
+        #region - event handlers-
+
         private void _soundPlayer_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
             {
                 case "ChannelPosition":
-                    ChannelPosition = (double)mSoundPlayer.ActiveStream.Position /(double) mSoundPlayer.ActiveStream.Length;
+                    ChannelPosition = (double)mSoundPlayer.ActiveStream.Position / (double)mSoundPlayer.ActiveStream.Length;
                     break;
                 case "IsPlaying":
                     if (!mSoundPlayer.IsPlaying)
                     {
-                        if(mSoundPlayer.ChannelPosition == mSoundPlayer.ChannelLength)                       
-                        ChannelPosition = 0;
+                        if (mSoundPlayer.ChannelPosition == mSoundPlayer.ChannelLength)
+                            ChannelPosition = 0;
 
                         IsPlaying = false;
                         mView.PlayingBtn.Content = mView.FindResource("PlayBtn");
                     }
                     break;
+                case "IsRecording":
+                    IsRecording = mSoundPlayer.IsRecording;
+                    break;
             }
         }
-
-        #endregion
-
-        #region - properties -
-
-        public bool IsRecording
-        {
-            get { return mIsRecording; }
-            set
-            {
-                mIsRecording = value;
-                OnPropertyChanged("IsRecording");
-            }
-        }
-
-        public bool IsPlaying
-        {
-            get { return mIsPlaying; }
-            set
-            {
-                mIsPlaying = value;
-                OnPropertyChanged("IsPlaying");
-            }
-        }
-
-        public double ChannelPosition
-        {
-            get { return mChannelPosition; }
-            set
-            {
-                mChannelPosition = value  * 100;
-                OnPropertyChanged("ChannelPosition");
-            }
-        }
-
-        #endregion
-
-        #region - commands -
-
-        public RelayCommand StartRecording { get; set; }
-        public RelayCommand StopRecording { get; set; }
-        public RelayCommand PlayContent { get; set; }
 
         #endregion
 
@@ -102,7 +91,6 @@ namespace DialogEngine.Controls.ViewModels
         private void _bindCommands()
         {
             StartRecording = new RelayCommand(x => _startRecording());
-            StopRecording = new RelayCommand(x => _stopRecording());
             PlayContent = new RelayCommand(x => _play());
         }
 
@@ -127,11 +115,6 @@ namespace DialogEngine.Controls.ViewModels
             }
         }
 
-        private void _stopRecording()
-        {
-            IsRecording = false;
-        }
-
         private void _startRecording()
         {
             if (IsRecording)
@@ -145,6 +128,49 @@ namespace DialogEngine.Controls.ViewModels
                 IsRecording = true;
                 mView.RecordingBtn.Content = mView.FindResource("StopBtn");
                 mSoundPlayer.StartRecording();
+            }
+        }
+
+        #endregion
+
+        #region - properties -
+
+        /// <summary>
+        /// Is player recording
+        /// </summary>
+        public bool IsRecording
+        {
+            get { return mIsRecording; }
+            set
+            {
+                mIsRecording = value;
+                OnPropertyChanged("IsRecording");
+            }
+        }
+
+        /// <summary>
+        /// Is player playing
+        /// </summary>
+        public bool IsPlaying
+        {
+            get { return mIsPlaying; }
+            set
+            {
+                mIsPlaying = value;
+                OnPropertyChanged("IsPlaying");
+            }
+        }
+
+        /// <summary>
+        /// Position of current stream
+        /// </summary>
+        public double ChannelPosition
+        {
+            get { return mChannelPosition; }
+            set
+            {
+                mChannelPosition = value * 100;
+                OnPropertyChanged("ChannelPosition");
             }
         }
 

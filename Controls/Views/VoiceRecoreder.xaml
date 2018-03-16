@@ -3,7 +3,7 @@
    www.toys2life.org
 -->
     
-    <UserControl x:Class="DialogEngine.Controls.Views.VoiceRecoreder"
+<UserControl x:Class="DialogEngine.Controls.Views.VoiceRecoreder"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -57,7 +57,7 @@
             <StackPanel Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Center"  Orientation="Horizontal">
                 <Button x:Name="RecordingBtn"
                     Margin="10,10,10,10"  
-                    IsEnabled="False" 
+                    IsEnabled="False"
                     Command="{Binding StartRecording}"   
                     Width="25"
                     Content="{StaticResource Microphone}"

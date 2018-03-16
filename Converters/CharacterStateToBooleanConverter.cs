@@ -28,7 +28,6 @@ namespace DialogEngine.Converters
         {
             // get expected state
             CharacterState _state = (CharacterState)_parameter;
-
             // character state
             CharacterState _enumValue = (CharacterState)_value;
 
@@ -46,7 +45,7 @@ namespace DialogEngine.Converters
         /// <returns>New character state as enum value</returns>
         public object ConvertBack(object _value, Type _targetType, object _parameter, CultureInfo _culture)
         {         
-            return (CharacterState)_parameter; ;
+            return (CharacterState)_parameter;
         }
     }
 }

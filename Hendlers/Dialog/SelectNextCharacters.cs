@@ -22,6 +22,7 @@ namespace DialogEngine
     public static class SelectNextCharacters
     {
         #region  - Fields -
+
         private static readonly ILog mcLogger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private static Random msRandom = new Random();
         private static int[,] msStrongRssiCharacterPairBuf = new int[2, StrongRssiBufDepth];
@@ -37,7 +38,6 @@ namespace DialogEngine
         #endregion
 
         #region - Private methods -
-
 
         private static void _calculateRssiStable(int _ch1, int _ch2)
         {
@@ -68,7 +68,6 @@ namespace DialogEngine
         }
 
 
-
         static void _assignNextCharacters(int _tempCh1, int _tempCh2)
         {
             if (!RssiStable)
@@ -91,34 +90,19 @@ namespace DialogEngine
             {
                 NextCharacter1 = _nextCharacter1MappedIndex1;
                 NextCharacter2 = _nextCharacter1MappedIndex2;
-
-                //mcLogger.Debug("start break current dialog");
                  
                if ((NextCharacter1 != DialogTracker.Instance.Character1Num || NextCharacter2 != DialogTracker.Instance.Character2Num) &&
                     (NextCharacter2 != DialogTracker.Instance.Character1Num || NextCharacter1 != DialogTracker.Instance.Character2Num))
                 {
                     //break current dialog and restart player
-                    //mcLogger.Debug("start StopPlayingCurrentDialogLineEvent ");
-
                     Application.Current.Dispatcher.BeginInvoke(() =>
                     {
-                        mcLogger.Debug("Finish current line : " + "nc1: " + NextCharacter1 + " nc2: " + NextCharacter2 );
-
                         EventAggregator.Instance.GetEvent<StopPlayingCurrentDialogLineEvent>().Publish();
                     },DispatcherPriority.Send);
-                    //mcLogger.Debug("start CancellationTokenGenerateDialogSource.Cancel ");
+
                     DialogViewModel.Instance.CancellationTokenGenerateDialogSource.Cancel();
-
-                    //mcLogger.Debug("start new CancellationTokenSource ");
-
                     DialogViewModel.Instance.CancellationTokenGenerateDialogSource = new CancellationTokenSource();
-
-                    //mcLogger.Debug("start finish StopPlayingCurrentDialogLineEvent");
-
                 }
-
-                //mcLogger.Debug("end break current dialog");
-
             }
         }
 
@@ -139,7 +123,6 @@ namespace DialogEngine
             catch(Exception)
             {
                 MessageBox.Show("No character assigned to radio with number " + _radioNum + " .");
-
                 return -1;
             }
         }
@@ -169,7 +152,6 @@ namespace DialogEngine
                                       .Where(x => x.Character.State == Models.Enums.CharacterState.Available)
                                       .Select(x => x.Index).ToList();
 
-
             int result = -1;
 
             switch (_allowedIndexes.Count)
@@ -177,10 +159,8 @@ namespace DialogEngine
                 case 0:  // no avaialbe characters
                     {
                         MessageBox.Show("No available characters. Please change characters settings.");
-
                         break;
                     }
-
                 case 1: // 1 available character
                     {
                         // if we don't want duplicate index
@@ -192,7 +172,6 @@ namespace DialogEngine
                         {
                             result = _allowedIndexes[0];
                         }
-
                         break;
                     }
 
@@ -200,12 +179,10 @@ namespace DialogEngine
                     {
                         Random random = new Random();
                         bool _isIndexTheSame;
-
                         // get random element form list with indexes of available characters
                         do
                         {
                             index = _allowedIndexes[random.Next(0, _allowedIndexes.Count)];
-
                             _isIndexTheSame = false;
 
                             if (_indexToSkip.Length > 0)
@@ -215,15 +192,12 @@ namespace DialogEngine
                             }
                         }
                         while (_isIndexTheSame);
-
+               
                         result = index;
-
                         break;
                     }
             }
-
             return result ;
-
         }
 
         /// <summary>
@@ -233,12 +207,9 @@ namespace DialogEngine
         {
             //  This method takes the RSSI values and combines them so that the RSSI for Ch2 looking at 
             //  Ch1 is added to the RSSI for Ch1 looking at Ch2
-            //mcLogger.Debug("start FindBiggestRssiPair");
 
             try
             {
-
-
             int _tempCh1 = 0, _tempCh2 = 0, i = 0, j = 0;
 
             var _currentTime = DateTime.Now;
@@ -250,7 +221,6 @@ namespace DialogEngine
             {
                 _tempCh1 = 0;
                 _tempCh2 = 1;
-                mcLogger.Debug("NextCharacter Error Ch1 " + _tempCh1 + "  Ch2 " + _tempCh2);
             }
 
             //only pick up new characters if bigRssi greater not =
@@ -278,19 +248,13 @@ namespace DialogEngine
                     }
                 }
             }
-                //mcLogger.Debug("finished loops");
-
                 _calculateRssiStable(_tempCh1, _tempCh2);
-                //mcLogger.Debug("finished _calculateRssiStable");
-                _assignNextCharacters(_tempCh1, _tempCh2);
-                //mcLogger.Debug("end FindBiggestRssiPair");
-        
+                _assignNextCharacters(_tempCh1, _tempCh2);        
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
-
         }
 
         /// <summary>
@@ -300,7 +264,6 @@ namespace DialogEngine
         /// <returns>Task</returns>
         public async  static Task OccasionallyChangeToRandNewCharacterAsync(CancellationToken _cancellationToken)
         {
-
             await Task.Run(() =>
             {
                 Thread.CurrentThread.Name = "OccasionallyChangeToRandNewCharacterAsyncThread";
@@ -311,26 +274,17 @@ namespace DialogEngine
                 try
                 {
                     bool _userHasForcedCharacters;
-
                     DateTime _nextCharacterSwapTime = new DateTime();
-
                     _nextCharacterSwapTime = DateTime.Now;
-
                     _nextCharacterSwapTime.AddSeconds(12);
-
                     SerialComs.IsSerialMode = false;
-
 
                     if (SessionVariables.UseSerialPort)
                     {
                         string _configPath = System.IO.Path.Combine(System.Environment.CurrentDirectory, "DialogEngine.exe");
-
                         Configuration _config = ConfigurationManager.OpenExeConfiguration(_configPath);
-
                         _config.AppSettings.Settings["UseSerialPort"].Value = false.ToString();
-
                         _config.Save();
-
                         ConfigurationManager.RefreshSection("appSettings");
                     }
 
@@ -345,12 +299,10 @@ namespace DialogEngine
 
                         _userHasForcedCharacters = false;
 
-
                         if (SessionVariables.DebugFlag)
                         {
                             if (DialogViewModel.SelectedCharactersOn == 2)
                             {  //two three letter inital sets should be less than7 w space
-
                                 _userHasForcedCharacters = true;
                                 NextCharacter1 = DialogViewModel.Instance.SelectedIndex1;
                                 NextCharacter2 = DialogViewModel.Instance.SelectedIndex2;
@@ -375,7 +327,6 @@ namespace DialogEngine
                 catch (Exception ex)
                 {
                     mcLogger.Error("OccasionallyChangeToRandNewCharacterAsync " + ex.Message);
-
                     DialogViewModel.Instance.AddItem(new ErrorMessage("Error in random selection of characters."));
                 }
             });

@@ -3,7 +3,7 @@
    www.toys2life.org
 -->
     
-    <core:PageBase  x:Class="DialogEngine.Views.CreateCharacter"
+    <core:PageBase  x:Class="DialogEngine.Views.WizardView"
                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -11,7 +11,7 @@
                   TextElement.Foreground="{DynamicResource MaterialDesignBody}"
                   xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
                   TextElement.FontWeight="Regular"
-                  SizeChanged="CreateCharacter_SizeChanged"
+                  SizeChanged="WizardView_SizeChanged"
                   TextElement.FontSize="13"
                   TextOptions.TextFormattingMode="Ideal" 
                   TextOptions.TextRenderingMode="Auto"

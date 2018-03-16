@@ -75,6 +75,9 @@
                                                 <Trigger Property="IsSelected" Value="True">
                                                     <Setter TargetName="HeaderRectangle" Property="Fill" Value="{DynamicResource PrimaryHueMidBrush}" />
                                                 </Trigger>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="HeaderRectangle" Property="Fill" Value="{DynamicResource PrimaryHueMidBrush}" />
+                                                </Trigger>
                                             </ControlTemplate.Triggers>
                                         </ControlTemplate>
                                     </Setter.Value>
@@ -105,7 +108,8 @@
                             <DataGrid     x:Name="dataGrid"  
                                                   ItemsSource="{Binding CharacterCollection}"                                                  
                                                   HeadersVisibility="Column"  
-                                                  CanUserAddRows="False" 
+                                                  CanUserAddRows="False"
+                                                  Padding="0,0,0,4"
                                                   EnableRowVirtualization="False"
                                                   Background="White"
                                                   VerticalContentAlignment="Stretch"
@@ -501,7 +505,8 @@
                                           x:Name="DialogSettingsGrid"
                                           IsEnabled="{Binding IsDialogStopped}" 
                                           HeadersVisibility="Column" 
-                                          CanUserAddRows="False" 
+                                          CanUserAddRows="False"
+                                          Padding="0,0,0,4"
                                           EnableRowVirtualization="True"  
                                           AutoGenerateColumns="False"
                                           Background="White"
@@ -770,7 +775,7 @@
                                                             HorizontalAlignment="Center"
                                                             ContentSource="Header"
                                                             Height="auto"
-                                                            Margin="10,0,10,0"/>
+                                                            Margin="10,3,10,3"/>
                                     </Grid>
                                     <ControlTemplate.Triggers>
                                         <Trigger Property="IsSelected" Value="True">

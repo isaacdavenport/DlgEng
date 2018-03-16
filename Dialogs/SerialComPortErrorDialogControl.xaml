@@ -1,4 +1,9 @@
-﻿<UserControl x:Class="DialogEngine.Dialogs.SerialComPortErrorDialogControl"
+﻿<!--
+   Confidential Source Code Property Toys2Life LLC Colorado 2017
+   www.toys2life.org
+-->
+    
+    <UserControl x:Class="DialogEngine.Dialogs.SerialComPortErrorDialogControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -62,6 +67,7 @@
                     Grid.Column="1" 
                     materialDesign:HintAssist.Hint="Search"
                     IsEditable="True"
+                    Margin="20,0,20,0"
                     Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                     Width="auto"
                     VerticalAlignment="Center"

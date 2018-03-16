@@ -23,8 +23,6 @@ namespace DialogEngine.Views
             InitializeComponent();
            
             DataContext = DialogViewModel.Instance;
-
-
         }
 
 

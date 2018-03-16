@@ -4,7 +4,6 @@
                     xmlns:local="clr-namespace:DialogEngine.Themes">
 
     <converters:CharacterStateToBooleanConverter x:Key="CharacterStateToBooleanConverter" />
-    <converters:WaterMarkTextBoxConverter x:Key="WaterMarkTextBoxConverter" />
     <converters:ModelDialogStateToBooleanConverter x:Key="ModelDialogStateToBooleanConverter" />
     <converters:StarWidthConverter x:Key="StarWidthConverter" />
     <converters:RowIndexConverter x:Key="RowIndexConverter" />
@@ -13,6 +12,5 @@
     <converters:ValueToColorConverter x:Key="ValueToColorConverter" />
     <converters:ListBoxItemConverter x:Key="ListBoxItemConverter" />
     <converters:RadioNumToStringConverter x:Key="RadioNumToStringConverter" />
-    <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
 </ResourceDictionary>

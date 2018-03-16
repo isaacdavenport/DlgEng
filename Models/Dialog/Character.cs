@@ -55,14 +55,8 @@ namespace DialogEngine.Models.Dialog
         [JsonIgnore]
         public int RadioNum
         {
-            set
-            {
-                mRadioNum = value;
-            }
-            get
-            {
-                return mRadioNum;
-            }
+            get { return mRadioNum; }
+            set { mRadioNum = value;}
         }
 
         /// <summary>
@@ -76,11 +70,11 @@ namespace DialogEngine.Models.Dialog
         [JsonIgnore]
         public CharacterState State
         {
+            get { return mState; }
             set
             {
                 if (DialogViewModel.SelectedCharactersOn == mcMaxAllowedCharactersOn)
                 {
-
                     if (value != CharacterState.On)
                     {
                         mState = value;
@@ -92,10 +86,6 @@ namespace DialogEngine.Models.Dialog
                     mState = value;
                     EventAggregator.Instance.GetEvent<ChangedCharactersStateEvent>().Publish();
                 }
-            }
-            get
-            {
-                return mState;
             }
         }
     }

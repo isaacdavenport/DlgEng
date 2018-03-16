@@ -29,7 +29,6 @@ namespace DialogEngine
         // Default application logger
         private static readonly ILog mcLogger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-
         #endregion
 
         #region - constructor -
@@ -45,7 +44,6 @@ namespace DialogEngine
             InitializeComponent();
 
             mainFrame.NavigationService.Navigate(new DialogView(DateTime.Now));
-
         }
 
         #endregion
@@ -130,6 +128,27 @@ namespace DialogEngine
 
         #endregion
 
+        #region - private methods -
+
+        private void _createCharacter_Click(object sender, RoutedEventArgs e)
+        {
+            mainFrame.Source = new Uri("Views/WizardView.xaml", UriKind.Relative);
+
+            e.Handled = true;
+        }
+
+        private void _initializeMaterialDesign()
+        {
+            // Create dummy objects to force the MaterialDesign assemblies to be loaded
+            // from this assembly, which causes the MaterialDesign assemblies to be searched
+            // relative to this assembly's path. Otherwise, the MaterialDesign assemblies
+            // are searched relative to Eclipse's path, so they're not found.
+            var card = new Card();
+            var hue = new Hue("Dummy", Colors.Black, Colors.White);
+        }
+
+        #endregion
+
         #region - public methods -
 
         public void WriteStatusInfo(string _infoMessage, Brush _infoColor)
@@ -139,22 +158,5 @@ namespace DialogEngine
         }
 
         #endregion
-
-        private void _createCharacter_Click(object sender, RoutedEventArgs e)
-        {
-            mainFrame.Source = new Uri("Views/CreateCharacter.xaml", UriKind.Relative);
-
-            e.Handled = true;
-        }
-
-        private  void _initializeMaterialDesign()
-        {
-            // Create dummy objects to force the MaterialDesign assemblies to be loaded
-            // from this assembly, which causes the MaterialDesign assemblies to be searched
-            // relative to this assembly's path. Otherwise, the MaterialDesign assemblies
-            // are searched relative to Eclipse's path, so they're not found.
-            var card = new Card();
-            var hue = new Hue("Dummy", Colors.Black, Colors.White);
-        }
     }
 }

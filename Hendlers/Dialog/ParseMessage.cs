@@ -71,7 +71,14 @@ namespace DialogEngine
         {
             for (int _k = 0; _k < SerialComs.NumRadios; _k++)
             {
-                SelectNextCharacters.HeatMap[_rowNum, _k] = _newRow[_k];
+                if (DialogViewModel.Instance.RadiosState[_rowNum])
+                {
+                    SelectNextCharacters.HeatMap[_rowNum, _k] = _newRow[_k];
+                }
+                else
+                {
+                    SelectNextCharacters.HeatMap[_rowNum, _k] = 0;
+                }
             }
 
             var _currentDateTime = DateTime.Now;

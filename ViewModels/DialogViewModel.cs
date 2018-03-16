@@ -78,6 +78,8 @@ namespace DialogEngine.ViewModels
         private ObservableCollection<WarningMessage> mWarningMessagesCollection;
         private ObservableCollection<ErrorMessage> mErrorMessagesCollection;
 
+        private bool[] mRadiosState = new bool[6];
+
         #endregion
 
         #region - Singleton - 
@@ -114,354 +116,6 @@ namespace DialogEngine.ViewModels
 
             _bindCommands();
         }
-
-        #endregion
-
-        #region - Properties -
-
-
-        /// <summary>
-        /// Dynamic collection of objects, objects can be added,removed or updated, and UI is automatically updated
-        /// Source for ItemsControl where we display dialog lines
-        /// </summary>
-        public ObservableCollection<object> DialogLinesCollection
-        {
-            get
-            {
-                if (mDialogLinesCollection == null)
-                    mDialogLinesCollection = new ObservableCollection<object>();
-
-                return mDialogLinesCollection;
-            }
-            set
-            {
-                mDialogLinesCollection = value;
-                // send notification to view (model is changed)
-                OnPropertyChanged("DialogLinesCollection");
-            }
-        }
-
-        /// <summary>
-        /// Contains index of selected character 1 in ON state
-        /// </summary>
-        public int SelectedIndex1 { get => mSelectedIndex1; set => mSelectedIndex1 = value; }
-
-        /// <summary>
-        /// Contains index of selected character 2 in ON state
-        /// </summary>
-        public int SelectedIndex2 { get => mSelectedIndex2; set => mSelectedIndex2 = value; }
-
-
-        /// <summary>
-        /// Signal strengh received from toys 
-        /// </summary>
-        public int[,] HeatMapUpdate
-        {
-            get
-            {
-                return mHeatMap;
-            }
-            set
-            {
-                mHeatMap = value;
-                OnPropertyChanged("HeatMapUpdate");
-            }
-        }
-
-
-        /// <summary>
-        /// Represents dialog started state
-        /// </summary>
-        public bool IsDialogStopped
-        {
-            get
-            {
-                return mIsDialogStopped;
-            }
-            set
-            {
-                mIsDialogStopped = value;
-                OnPropertyChanged("IsDialogStopped");
-            }
-        }
-
-
-        /// <summary>
-        /// Selected character 1 - CharacterPrefix
-        /// </summary>
-        public string Character1Prefix
-        {
-            get
-            {
-                return mCharacter1Prefix;
-            }
-
-            set
-            {
-                mCharacter1Prefix = value;
-                OnPropertyChanged("Character1Prefix");
-            }
-        }
-
-
-        /// <summary>
-        /// RSSIstable
-        /// </summary>
-        public bool RSSIstable
-        {
-            get
-            {
-                return mRSSIstable;
-            }
-
-            set
-            {
-                mRSSIstable = value;
-                OnPropertyChanged("RSSIstable");
-            }
-        }
-
-
-        /// <summary>
-        /// RSSIsum
-        /// </summary>
-        public int RSSIsum
-        {
-            get
-            {
-                return mRSSIsum;
-            }
-            set
-            {
-                mRSSIsum = value;
-                OnPropertyChanged("RSSIsum");
-            }
-        }
-
-
-        /// <summary>
-        /// Selected character 2 - CharacterPrefix
-        /// </summary>
-        public string Character2Prefix
-        {
-            get
-            {
-                return mCharacter2Prefix;
-            }
-            set
-            {
-                mCharacter2Prefix = value;
-                OnPropertyChanged("Character2Prefix");
-            }
-        }
-
-
-        /// <summary>
-        /// Reference on View (DialogView.xaml)
-        /// </summary>
-        public DialogView View
-        {
-            get
-            {
-                return mView;
-            }
-            set
-            {
-                this.mView = value;
-            }
-        }
-
-        /// <summary>
-        /// Selected dialog model .json file
-        /// </summary>
-        public ModelDialogInfo SelectedDialogModel
-        {
-            get
-            {
-                return mSelectedDialogModel;
-            }
-            set
-            {
-                this.mSelectedDialogModel = value;
-                OnPropertyChanged("SelectedDialogModel");
-            }
-        }
-
-        /// <summary>
-        /// Index of selected dialog model from selected dialog .json file
-        /// </summary>
-        public int SelectedDialogModelIndex
-        {
-            get
-            {
-                if(SelectedDialogModel == null)
-                {
-                    return -1;
-                }
-
-                int result = 0;
-
-                // iterate over dialog model files
-                for(int i=0; i<DialogModelCollection.Count; i++)
-                {
-                    // if we found selected file, then get its selected dialog model 
-                    if (DialogModelCollection[i].FileName.Equals(SelectedDialogModel.FileName))
-                    {
-                        return result + SelectedDialogModel.SelectedModelDialogIndex;
-                    }
-                    else  // add number of its dialog models
-                    {
-                        if(DialogModelCollection[i].State == Models.Enums.ModelDialogState.On)
-                        {
-                            result += DialogModelCollection[i].InList.Count;
-                        }
-                    }
-                }
-
-                return -1;
-            }
-        }
-
-        /// <summary>
-        /// Counter for characters in "On" state
-        /// </summary>
-        public static int SelectedCharactersOn
-        {
-            get
-            {
-                return mSelectedCharactersOn;
-            }
-            set
-            {
-                mSelectedCharactersOn = value;
-            }
-        }
-
-        /// <summary>
-        /// Collection of <see cref="Character"/>
-        /// Source for characters combobox
-        /// </summary>
-        public ObservableCollection<Character> CharacterCollection
-        {
-            get
-            {
-                if (mCharacterCollection == null)
-                {
-                    mCharacterCollection = new ObservableCollection<Character>();
-
-                }
-                return mCharacterCollection;
-            }
-            set
-            {
-                mCharacterCollection = value;
-                OnPropertyChanged("CharacterCollection");
-            }
-        }
-
-        /// <summary>
-        /// Collection of <see cref="ModelDialogInfo"/>
-        /// Source for model dialogs combobox
-        /// </summary>
-        public ObservableCollection<ModelDialogInfo> DialogModelCollection
-        {
-            get
-            {
-                if (mDialogModelCollection == null)
-                    mDialogModelCollection = new ObservableCollection<ModelDialogInfo>();
-
-                return mDialogModelCollection;
-            }
-            set
-            {
-                mDialogModelCollection = value;              
-                // send notification to view (model is changed)
-                OnPropertyChanged("DialogModelCollection");
-            }
-        }
-
-        /// <summary>
-        /// Collection of <see cref="ErrorMessage"/>
-        /// Source for GridView in "ErrorMessage" TabItem
-        /// </summary>
-        public ObservableCollection<ErrorMessage> ErrorMessagesCollection
-        {
-            get
-            {
-                if (mErrorMessagesCollection == null)
-                {
-                    mErrorMessagesCollection = new ObservableCollection<ErrorMessage>();
-                }
-
-                return mErrorMessagesCollection;
-            }
-            set
-            {
-                mErrorMessagesCollection = value;
-                OnPropertyChanged("ErrorMessagesCollection");
-            }
-        }
-
-        /// <summary>
-        /// Collection of <see cref="WarningMessage"/>
-        /// Source for GridView in "WarningMessage" TabItem
-        /// </summary>
-        public ObservableCollection<WarningMessage> WarningMessagesCollection
-        {
-            get
-            {
-                if (mWarningMessagesCollection == null)
-                {
-                    mWarningMessagesCollection = new ObservableCollection<WarningMessage>();
-                }
-
-                return mWarningMessagesCollection;
-            }
-
-            set
-            {
-                mWarningMessagesCollection = value;
-                OnPropertyChanged("WarningMessagesCollection");
-            }
-        }
-
-        /// <summary>
-        /// Collection of <see cref="InfoMessage"/>
-        /// Source for GridView in "InfoMessage" TabItem
-        /// </summary>
-        public ObservableCollection<InfoMessage> InfoMessagesCollection
-        {
-            get
-            {
-                if (mInfoMessagesCollection == null)
-                {
-                    mInfoMessagesCollection = new ObservableCollection<InfoMessage>();
-                }
-
-                return mInfoMessagesCollection;
-            }
-            set
-            {
-                mInfoMessagesCollection = value;
-                OnPropertyChanged("InfoMessagesCollection");
-            }
-        }
-
-        /// <summary>
-        /// CancellationTokenSource which we need to cancel 
-        /// </summary>
-        public CancellationTokenSource CancellationTokenGenerateDialogSource
-        {
-            get
-            {
-                return mCancellationTokenGenerateDialogSource;
-            }
-            set
-            {
-                mCancellationTokenGenerateDialogSource = value;
-            }
-        }
-
 
         #endregion
 
@@ -592,6 +246,7 @@ namespace DialogEngine.ViewModels
                     string textBoxName = "Radio_" + i.ToString();
                     (mView.FindName(textBoxName) as TextBox).Text = mCharacterCollection[i].CharacterName;
                     (mView.FindName(textBoxName) as TextBox).Tag = mCharacterCollection[i];
+                    mRadiosState[i] = true;
                 }
             }
             else
@@ -611,6 +266,7 @@ namespace DialogEngine.ViewModels
                         string textBoxName = "Radio_" + i.ToString();
                         (mView.FindName(textBoxName) as TextBox).Text = mCharacterCollection[i].CharacterName;
                         (mView.FindName(textBoxName) as TextBox).Tag = mCharacterCollection[i];
+                        mRadiosState[i] = true;
                     }
                 }));
             }
@@ -733,10 +389,13 @@ namespace DialogEngine.ViewModels
         private void _clearRadioBindingCommand(string _elementName)
         {
             TextBox tb = mView.FindName(_elementName) as TextBox;
+            string[] _nameRadioNum = tb.Name.Split('_');
+            int _numRadio = int.Parse(_nameRadioNum[1]);
             tb.Text = "";
             (tb.Tag as Character).RadioNum = -1;
             tb.Tag = null;
 
+            mRadiosState[_numRadio] = false;
             mView.CharactersListBox.Items.Refresh();
         }
 
@@ -810,6 +469,10 @@ namespace DialogEngine.ViewModels
                         tb.Tag = character;
                     }
 
+                    if (!mRadiosState[_numRadio])
+                    {
+                        mRadiosState[_numRadio] = true;
+                    }
                     mView.CharactersListBox.Items.Refresh();
                 }
             }
@@ -1318,6 +981,314 @@ namespace DialogEngine.ViewModels
                 mcLogger.Error("Error during initializing dialog data. " + ex.Message);
                 MessageBox.Show("Error during initializing dialog data.");
             }
+        }
+
+        #endregion
+
+        #region - Properties -
+
+        /// <summary>
+        /// Dynamic collection of objects, objects can be added,removed or updated, and UI is automatically updated
+        /// Source for ItemsControl where we display dialog lines
+        /// </summary>
+        public ObservableCollection<object> DialogLinesCollection
+        {
+            get
+            {
+                if (mDialogLinesCollection == null)
+                    mDialogLinesCollection = new ObservableCollection<object>();
+
+                return mDialogLinesCollection;
+            }
+            set
+            {
+                mDialogLinesCollection = value;
+                // send notification to view (model is changed)
+                OnPropertyChanged("DialogLinesCollection");
+            }
+        }
+
+        /// <summary>
+        /// Contains index of selected character 1 in ON state
+        /// </summary>
+        public int SelectedIndex1 { get => mSelectedIndex1; set => mSelectedIndex1 = value; }
+
+        /// <summary>
+        /// Contains index of selected character 2 in ON state
+        /// </summary>
+        public int SelectedIndex2 { get => mSelectedIndex2; set => mSelectedIndex2 = value; }
+
+
+        /// <summary>
+        /// Signal strengh received from toys 
+        /// </summary>
+        public int[,] HeatMapUpdate
+        {
+            get { return mHeatMap; }
+            set
+            {
+                mHeatMap = value;
+                OnPropertyChanged("HeatMapUpdate");
+            }
+        }
+
+
+        /// <summary>
+        /// Represents dialog started state
+        /// </summary>
+        public bool IsDialogStopped
+        {
+            get { return mIsDialogStopped; }
+            set
+            {
+                mIsDialogStopped = value;
+                OnPropertyChanged("IsDialogStopped");
+            }
+        }
+
+
+        /// <summary>
+        /// Selected character 1 - CharacterPrefix
+        /// </summary>
+        public string Character1Prefix
+        {
+            get { return mCharacter1Prefix; }
+            set
+            {
+                mCharacter1Prefix = value;
+                OnPropertyChanged("Character1Prefix");
+            }
+        }
+
+
+        /// <summary>
+        /// RSSIstable
+        /// </summary>
+        public bool RSSIstable
+        {
+            get { return mRSSIstable; }
+            set
+            {
+                mRSSIstable = value;
+                OnPropertyChanged("RSSIstable");
+            }
+        }
+
+
+        /// <summary>
+        /// RSSIsum
+        /// </summary>
+        public int RSSIsum
+        {
+            get { return mRSSIsum; }
+            set
+            {
+                mRSSIsum = value;
+                OnPropertyChanged("RSSIsum");
+            }
+        }
+
+
+        /// <summary>
+        /// Selected character 2 - CharacterPrefix
+        /// </summary>
+        public string Character2Prefix
+        {
+            get { return mCharacter2Prefix; }
+            set
+            {
+                mCharacter2Prefix = value;
+                OnPropertyChanged("Character2Prefix");
+            }
+        }
+
+
+        /// <summary>
+        /// Reference on View (DialogView.xaml)
+        /// </summary>
+        public DialogView View
+        {
+            get { return mView; }
+            set { this.mView = value; }
+        }
+
+        /// <summary>
+        /// Selected dialog model .json file
+        /// </summary>
+        public ModelDialogInfo SelectedDialogModel
+        {
+            get { return mSelectedDialogModel; }
+            set
+            {
+                this.mSelectedDialogModel = value;
+                OnPropertyChanged("SelectedDialogModel");
+            }
+        }
+
+        /// <summary>
+        /// Index of selected dialog model from selected dialog .json file
+        /// </summary>
+        public int SelectedDialogModelIndex
+        {
+            get
+            {
+                if (SelectedDialogModel == null)
+                {
+                    return -1;
+                }
+
+                int result = 0;
+
+                // iterate over dialog model files
+                for (int i = 0; i < DialogModelCollection.Count; i++)
+                {
+                    // if we found selected file, then get its selected dialog model 
+                    if (DialogModelCollection[i].FileName.Equals(SelectedDialogModel.FileName))
+                    {
+                        return result + SelectedDialogModel.SelectedModelDialogIndex;
+                    }
+                    else  // add number of its dialog models
+                    {
+                        if (DialogModelCollection[i].State == Models.Enums.ModelDialogState.On)
+                        {
+                            result += DialogModelCollection[i].InList.Count;
+                        }
+                    }
+                }
+
+                return -1;
+            }
+        }
+
+        /// <summary>
+        /// Counter for characters in "On" state
+        /// </summary>
+        public static int SelectedCharactersOn
+        {
+            get { return mSelectedCharactersOn;  }
+            set { mSelectedCharactersOn = value; }
+        }
+
+        /// <summary>
+        /// Collection of <see cref="Character"/>
+        /// Source for characters combobox
+        /// </summary>
+        public ObservableCollection<Character> CharacterCollection
+        {
+            get
+            {
+                if (mCharacterCollection == null)
+                {
+                    mCharacterCollection = new ObservableCollection<Character>();
+                }
+                return mCharacterCollection;
+            }
+            set
+            {
+                mCharacterCollection = value;
+                OnPropertyChanged("CharacterCollection");
+            }
+        }
+
+        /// <summary>
+        /// Collection of <see cref="ModelDialogInfo"/>
+        /// Source for model dialogs combobox
+        /// </summary>
+        public ObservableCollection<ModelDialogInfo> DialogModelCollection
+        {
+            get
+            {
+                if (mDialogModelCollection == null)
+                    mDialogModelCollection = new ObservableCollection<ModelDialogInfo>();
+
+                return mDialogModelCollection;
+            }
+            set
+            {
+                mDialogModelCollection = value;
+                // send notification to view (model is changed)
+                OnPropertyChanged("DialogModelCollection");
+            }
+        }
+
+        /// <summary>
+        /// Collection of <see cref="ErrorMessage"/>
+        /// Source for GridView in "ErrorMessage" TabItem
+        /// </summary>
+        public ObservableCollection<ErrorMessage> ErrorMessagesCollection
+        {
+            get
+            {
+                if (mErrorMessagesCollection == null)
+                {
+                    mErrorMessagesCollection = new ObservableCollection<ErrorMessage>();
+                }
+                return mErrorMessagesCollection;
+            }
+            set
+            {
+                mErrorMessagesCollection = value;
+                OnPropertyChanged("ErrorMessagesCollection");
+            }
+        }
+
+        /// <summary>
+        /// Collection of <see cref="WarningMessage"/>
+        /// Source for GridView in "WarningMessage" TabItem
+        /// </summary>
+        public ObservableCollection<WarningMessage> WarningMessagesCollection
+        {
+            get
+            {
+                if (mWarningMessagesCollection == null)
+                {
+                    mWarningMessagesCollection = new ObservableCollection<WarningMessage>();
+                }
+                return mWarningMessagesCollection;
+            }
+            set
+            {
+                mWarningMessagesCollection = value;
+                OnPropertyChanged("WarningMessagesCollection");
+            }
+        }
+
+        /// <summary>
+        /// Collection of <see cref="InfoMessage"/>
+        /// Source for GridView in "InfoMessage" TabItem
+        /// </summary>
+        public ObservableCollection<InfoMessage> InfoMessagesCollection
+        {
+            get
+            {
+                if (mInfoMessagesCollection == null)
+                {
+                    mInfoMessagesCollection = new ObservableCollection<InfoMessage>();
+                }
+                return mInfoMessagesCollection;
+            }
+            set
+            {
+                mInfoMessagesCollection = value;
+                OnPropertyChanged("InfoMessagesCollection");
+            }
+        }
+
+        /// <summary>
+        /// CancellationTokenSource which we need to cancel 
+        /// </summary>
+        public CancellationTokenSource CancellationTokenGenerateDialogSource
+        {
+            get { return mCancellationTokenGenerateDialogSource; }
+            set { mCancellationTokenGenerateDialogSource = value; }
+        }
+
+        /// <summary>
+        /// Radios states
+        /// </summary>
+        public bool[] RadiosState
+        {
+            get { return mRadiosState; }
         }
 
         #endregion

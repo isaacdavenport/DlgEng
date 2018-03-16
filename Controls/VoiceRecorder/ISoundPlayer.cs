@@ -16,5 +16,9 @@ namespace DialogEngine.Controls.VoiceRecorder
         /// Gets whether the sound player is currently playing audio.
         /// </summary>
         bool IsPlaying { get; }
+        /// <summary>
+        /// Gets whether the sound player is currently recording audio.
+        /// </summary>
+        bool IsRecording { get; }
     }
 }

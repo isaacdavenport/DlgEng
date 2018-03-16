@@ -21,9 +21,9 @@ namespace DialogEngine.Controls.VoiceRecorder
     [TemplatePart(Name = "PART_SpectrumCanvas", Type = typeof(Canvas))]
     public class SpectrumAnalyzer : Control
     {
-        #region Fields
+        #region - fields - 
 
-        #region Constants
+        #region - constants -
         private const int mcScaleFactorLinear = 9;
         private const int mcScaleFactorSqr = 2;
         private const double mcMinDBValue = -90;
@@ -39,7 +39,7 @@ namespace DialogEngine.Controls.VoiceRecorder
         private readonly List<Shape> mcPeakShapes = new List<Shape>();
         private double[] mBarHeights;
         private double[] mPeakHeights;
-        private float[] channelData = new float[2048];
+        private float[] mChannelData = new float[2048];
         private float[] channelPeakData;
         private double mBandWidth = 1.0;
         private double mBarWidth = 1;
@@ -49,7 +49,7 @@ namespace DialogEngine.Controls.VoiceRecorder
         private int[] mBarLogScaleIndexMax;
         #endregion
 
-        #region Dependency Properties
+        #region - dependency properties -
         #region MaximumFrequency
         /// <summary>
         /// Identifies the <see cref="MaximumFrequency" /> dependency property. 
@@ -832,9 +832,9 @@ namespace DialogEngine.Controls.VoiceRecorder
         /// </summary>
         /// <param name="oldValue">The previous value of <see cref="FFTComplexity"/></param>
         /// <param name="newValue">The new value of <see cref="FFTComplexity"/></param>
-        protected virtual void OnFFTComplexityChanged(FFTDataSize oldValue, FFTDataSize newValue)
+        protected virtual void OnFFTComplexityChanged(FFTDataSize _oldValue, FFTDataSize _newValue)
         {
-            channelData = new float[((int)newValue / 2)];
+            mChannelData = new float[((int)_newValue / 2)];
         }
 
         /// <summary>
@@ -858,7 +858,7 @@ namespace DialogEngine.Controls.VoiceRecorder
 
         #endregion
 
-        #region Template Overrides
+        #region - template overrides -
         /// <summary>
         /// When overridden in a derived class, is invoked whenever application code
         /// or internal processes call System.Windows.FrameworkElement.ApplyTemplate().
@@ -866,7 +866,7 @@ namespace DialogEngine.Controls.VoiceRecorder
         public override void OnApplyTemplate()
         {
             mSpectrumCanvas = GetTemplateChild("PART_SpectrumCanvas") as Canvas;
-            mSpectrumCanvas.SizeChanged += spectrumCanvas_SizeChanged;
+            mSpectrumCanvas.SizeChanged += _spectrumCanvas_SizeChanged;
             UpdateBarLayout();
         }
 
@@ -879,11 +879,11 @@ namespace DialogEngine.Controls.VoiceRecorder
         {
             base.OnTemplateChanged(oldTemplate, newTemplate);
             if (mSpectrumCanvas != null)
-                mSpectrumCanvas.SizeChanged -= spectrumCanvas_SizeChanged;
+                mSpectrumCanvas.SizeChanged -= _spectrumCanvas_SizeChanged;
         }
         #endregion
 
-        #region Constructors
+        #region - constructor -
         static SpectrumAnalyzer()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(SpectrumAnalyzer), new FrameworkPropertyMetadata(typeof(SpectrumAnalyzer)));
@@ -898,26 +898,11 @@ namespace DialogEngine.Controls.VoiceRecorder
             {
                 Interval = TimeSpan.FromMilliseconds(mcDefaultUpdateInterval),
             };
-            mcAnimationTimer.Tick += animationTimer_Tick;
+            mcAnimationTimer.Tick += _animationTimer_Tick;
         }
         #endregion
 
-        #region Public Methods
-        /// <summary>
-        /// Register a sound player from which the spectrum analyzer
-        /// can get the necessary playback data.
-        /// </summary>
-        /// <param name="soundPlayer">A sound player that provides spectrum data through the ISpectrumPlayer interface methods.</param>
-        public void RegisterSoundPlayer(ISpectrumPlayer _soundPlayer)
-        {
-            this.mSoundPlayer = _soundPlayer;
-            mSoundPlayer.PropertyChanged += soundPlayer_PropertyChanged;
-            UpdateBarLayout();
-            mcAnimationTimer.Start();
-        }
-        #endregion
-
-        #region Event Overrides
+        #region - event overrides -
         /// <summary>
         /// When overridden in a derived class, participates in rendering operations that are directed by the layout system. 
         /// The rendering instructions for this element are not used directly when this method is invoked, and are 
@@ -943,13 +928,44 @@ namespace DialogEngine.Controls.VoiceRecorder
         }
         #endregion
 
-        #region Private Drawing Methods
+        #region - event handlers -
+        private void soundPlayer_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case "IsPlaying":
+                    if (mSoundPlayer.IsPlaying && !mcAnimationTimer.IsEnabled)
+                    {
+                        mcAnimationTimer.Start();
+                    }
+                    break;
+                case "IsRecording":
+                    if (!mcAnimationTimer.IsEnabled && mSoundPlayer.IsRecording)
+                        mcAnimationTimer.Start();
+                    break;
+            }
+        }
+
+
+
+        private void _animationTimer_Tick(object sender, EventArgs e)
+        {
+            UpdateSpectrum();
+        }
+
+        private void _spectrumCanvas_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            UpdateBarLayout();
+        }
+        #endregion
+
+        #region - private functions -
         private void UpdateSpectrum()
         {
             if (mSoundPlayer == null || mSpectrumCanvas == null || mSpectrumCanvas.RenderSize.Width < 1 || mSpectrumCanvas.RenderSize.Height < 1)
                 return;
 
-            if (mSoundPlayer.IsPlaying && !mSoundPlayer.GetFFTData(channelData))
+            if (((mSoundPlayer.IsPlaying || mSoundPlayer.IsRecording) &&  !mSoundPlayer.GetFFTData(mChannelData)))
                 return;
 
             UpdateSpectrumShapes();
@@ -971,7 +987,7 @@ namespace DialogEngine.Controls.VoiceRecorder
             for (int i = mMinimumFrequencyIndex; i <= mMaximumFrequencyIndex; i++)
             {
                 // If we're paused, keep drawing, but set the current height to 0 so the peaks fall.
-                if (!mSoundPlayer.IsPlaying)
+                if (!mSoundPlayer.IsPlaying && !mSoundPlayer.IsRecording)
                 {
                     _barHeight = 0f;
                 }
@@ -980,14 +996,14 @@ namespace DialogEngine.Controls.VoiceRecorder
                     switch (BarHeightScaling)
                     {
                         case BarHeightScalingStyles.Decibel:
-                            double dbValue = 20 * Math.Log10((double)channelData[i]);
+                            double dbValue = 20 * Math.Log10((double)mChannelData[i]);
                             _fftBucketHeight = ((dbValue - mcMinDBValue) / mcDBScale) * _barHeightScale;
                             break;
                         case BarHeightScalingStyles.Linear:
-                            _fftBucketHeight = (channelData[i] * mcScaleFactorLinear) * _barHeightScale;
+                            _fftBucketHeight = (mChannelData[i] * mcScaleFactorLinear) * _barHeightScale;
                             break;
                         case BarHeightScalingStyles.Sqrt:
-                            _fftBucketHeight = (((Math.Sqrt((double)channelData[i])) * mcScaleFactorSqr) * _barHeightScale);
+                            _fftBucketHeight = (((Math.Sqrt((double)mChannelData[i])) * mcScaleFactorSqr) * _barHeightScale);
                             break;
                     }
 
@@ -1031,7 +1047,7 @@ namespace DialogEngine.Controls.VoiceRecorder
                 }
             }
 
-            if (_allZero && !mSoundPlayer.IsPlaying)
+            if (_allZero && (!mSoundPlayer.IsPlaying && !mSoundPlayer.IsRecording))
                 mcAnimationTimer.Stop();
         }
 
@@ -1107,29 +1123,20 @@ namespace DialogEngine.Controls.VoiceRecorder
         }
         #endregion
 
-        #region Event Handlers
-        private void soundPlayer_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        #region - public functions -
+        /// <summary>
+        /// Register a sound player from which the spectrum analyzer
+        /// can get the necessary playback data.
+        /// </summary>
+        /// <param name="soundPlayer">A sound player that provides spectrum data through the ISpectrumPlayer interface methods.</param>
+        public void RegisterSoundPlayer(ISpectrumPlayer _soundPlayer)
         {
-            switch (e.PropertyName)
-            {
-                case "IsPlaying":
-                    if (mSoundPlayer.IsPlaying && !mcAnimationTimer.IsEnabled)
-                    {
-                        mcAnimationTimer.Start();
-                    }
-                    break;
-            }
-        }
-
-        private void animationTimer_Tick(object sender, EventArgs e)
-        {
-            UpdateSpectrum();
-        }
-
-        private void spectrumCanvas_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
+            this.mSoundPlayer = _soundPlayer;
+            mSoundPlayer.PropertyChanged += soundPlayer_PropertyChanged;
             UpdateBarLayout();
+            mcAnimationTimer.Start();
         }
         #endregion
+
     }
 }
