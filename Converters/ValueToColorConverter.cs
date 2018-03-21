@@ -3,6 +3,7 @@
 
 //  Converters convert input parameter to a value expected by a gui item  
 
+using DialogEngine.ViewModels;
 using System;
 using System.Globalization;
 using System.Windows.Controls;
@@ -28,9 +29,7 @@ namespace DialogEngine.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var _gridCell = value as DataGridCell;
-
             int row = DataGridRow.GetRowContainingElement(_gridCell).GetIndex();
-
             int column = _gridCell.Column.DisplayIndex;
 
             if(column == 0)
@@ -43,14 +42,14 @@ namespace DialogEngine.Converters
 
             if( row == _heatMapColumn && SelectNextCharacters.HeatMap[row, _heatMapColumn] > 0)
             {
-                if( row == SelectNextCharacters.NextCharacter1 || row == SelectNextCharacters.NextCharacter2)
+                if(  row == DialogViewModel.Instance.CharacterCollection[SelectNextCharacters.NextCharacter1].RadioNum 
+                  || row == DialogViewModel.Instance.CharacterCollection[SelectNextCharacters.NextCharacter2].RadioNum)
                 {
                     return Brushes.Red;
                 }
             }
 
             return null;
-
         }
 
 

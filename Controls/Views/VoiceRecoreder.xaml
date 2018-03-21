@@ -57,7 +57,7 @@
             <StackPanel Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Center"  Orientation="Horizontal">
                 <Button x:Name="RecordingBtn"
                     Margin="10,10,10,10"  
-                    IsEnabled="False"
+                    IsEnabled="True"
                     Command="{Binding StartRecording}"   
                     Width="25"
                     Content="{StaticResource Microphone}"

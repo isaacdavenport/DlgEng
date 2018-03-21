@@ -61,7 +61,7 @@ namespace DialogEngine
 
         private void _aboutDialogEngine_Click(object sender, RoutedEventArgs e)
         {
-            Process.Start("https://sites.google.com/isaacdavenport.com/toys2life/home");
+            Process.Start("www.toys2life.net");
         }
 
         private void _importCharacter_Click(object sender, RoutedEventArgs e)

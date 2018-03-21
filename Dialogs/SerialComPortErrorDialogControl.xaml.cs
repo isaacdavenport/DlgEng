@@ -77,17 +77,13 @@ namespace DialogEngine.Dialogs
         {
             try
             {
-                string _configPath = System.IO.Path.Combine(System.Environment.CurrentDirectory, "DialogEngine.exe");
+                string _configPath = System.IO.Path.Combine(Environment.CurrentDirectory, "DialogEngine.exe");
 
                 Configuration _config = ConfigurationManager.OpenExeConfiguration(_configPath);
-
                 _config.AppSettings.Settings["ComPortName"].Value = SerialPortsComboBox.SelectedValue.ToString();
-
                 _config.Save();
 
                 ConfigurationManager.RefreshSection("appSettings");
-
-                //DialogResult = true;
 
                 DialogHost.CloseDialogCommand.Execute(null, sender as Button);
             }
@@ -101,7 +97,6 @@ namespace DialogEngine.Dialogs
 
         private void _close_Click(object sender, RoutedEventArgs e)
         {
-            //DialogResult = false;
             DialogHost.CloseDialogCommand.Execute(null, sender as Button);
         }
 

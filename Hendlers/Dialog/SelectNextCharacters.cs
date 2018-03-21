@@ -55,11 +55,11 @@ namespace DialogEngine
 
             for (int _i = 0; _i < StrongRssiBufDepth - 2; _i++)
             {
-               if((msStrongRssiCharacterPairBuf[0, _i] != msStrongRssiCharacterPairBuf[0, _i + 1] || 
-                   msStrongRssiCharacterPairBuf[1, _i] != msStrongRssiCharacterPairBuf[1, _i + 1])
-                                                                                                  &&
-                  (msStrongRssiCharacterPairBuf[0, _i] != msStrongRssiCharacterPairBuf[1, _i + 1] ||
-                   msStrongRssiCharacterPairBuf[1, _i] != msStrongRssiCharacterPairBuf[0, _i+1]))
+               if((   msStrongRssiCharacterPairBuf[0, _i] != msStrongRssiCharacterPairBuf[0, _i + 1]
+                   || msStrongRssiCharacterPairBuf[1, _i] != msStrongRssiCharacterPairBuf[1, _i + 1])
+                   &&
+                     (msStrongRssiCharacterPairBuf[0, _i] != msStrongRssiCharacterPairBuf[1, _i + 1]
+                   || msStrongRssiCharacterPairBuf[1, _i] != msStrongRssiCharacterPairBuf[0, _i+1]))
                 {
                     RssiStable = false;
                     break;
@@ -114,9 +114,10 @@ namespace DialogEngine
                 // if we find character return its index , or throw exception if there is no character with 
                 //specified radio assigned.  First() - throws exception if no items found
                 // FirstOrDefault() - returns first value or default value (for reference type it is null)
-                int index = DialogViewModel.Instance.CharacterCollection.Select((c, i) => 
-                                new { Character = c, Index = i })
-                                .Where(x => x.Character.RadioNum == _radioNum).Select(x => x.Index).First();
+                int index = DialogViewModel.Instance.CharacterCollection.Select((c, i) => new { Character = c, Index = i })
+                                                                        .Where(x => x.Character.RadioNum == _radioNum)
+                                                                        .Select(x => x.Index)
+                                                                        .First();
 
                 return index;
             }
@@ -281,7 +282,7 @@ namespace DialogEngine
 
                     if (SessionVariables.UseSerialPort)
                     {
-                        string _configPath = System.IO.Path.Combine(System.Environment.CurrentDirectory, "DialogEngine.exe");
+                        string _configPath = System.IO.Path.Combine(Environment.CurrentDirectory, "DialogEngine.exe");
                         Configuration _config = ConfigurationManager.OpenExeConfiguration(_configPath);
                         _config.AppSettings.Settings["UseSerialPort"].Value = false.ToString();
                         _config.Save();
@@ -291,11 +292,7 @@ namespace DialogEngine
 
                     while (true)
                     {
-                        if (_cancellationToken.IsCancellationRequested)
-                        {
-                            Thread.CurrentThread.Abort();
-                            return;
-                        }
+                        _cancellationToken.ThrowIfCancellationRequested();
 
                         _userHasForcedCharacters = false;
 
@@ -323,6 +320,10 @@ namespace DialogEngine
                             _nextCharacterSwapTime = _nextCharacterSwapTime.AddSeconds(8 + msRandom.Next(0, 34));
                         }
                     }
+                }
+                catch(OperationCanceledException ex)
+                {
+                    mcLogger.Error("OccasionallyChangeToRandNewCharacterAsync " + ex.Message);
                 }
                 catch (Exception ex)
                 {

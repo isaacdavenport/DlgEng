@@ -43,8 +43,7 @@ namespace DialogEngine
                 ReceivedMessages.Last().Rssi[_i] = _rw[_i];
             }
 
-            string _debugString = ReceivedMessages[ReceivedMessages.Count - 1].CharacterPrefix + "  " +
-                                    ReceivedMessages[ReceivedMessages.Count - 1].ReceivedTime.ToString("mm.ss.fff") + "  ";
+            string _debugString = ReceivedMessages[ReceivedMessages.Count - 1].CharacterPrefix + "  ";
 
             for (var j = 0; j < SerialComs.NumRadios; j++)
             {

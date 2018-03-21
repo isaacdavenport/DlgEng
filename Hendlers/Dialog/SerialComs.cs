@@ -17,6 +17,7 @@ using DialogEngine.Models.Logger;
 using DialogEngine.Dialogs;
 using MaterialDesignThemes.Wpf;
 using System.Windows.Threading;
+using System.Configuration;
 
 namespace DialogEngine
 {
@@ -58,7 +59,7 @@ namespace DialogEngine
         #region - Private functions -
 
         // method is executed when filed "UseSerialPort" is changed in configuration
-        private async  static void _useSerialPortChanged()
+        private async static void _useSerialPortChanged()
         {
             if (SessionVariables.UseSerialPort)
             {
@@ -76,13 +77,13 @@ namespace DialogEngine
             await InitCharacterSelection();
         }
 
-        private static string readSerialInLine()
+        private static  string _readSerialInLine()
         {
             string _message = null;
 
             try
             {
-                if (msSerialPort.BytesToRead > 18)
+                if (msSerialPort.IsOpen && msSerialPort.BytesToRead > 18)
                 {
                     _message = msSerialPort.ReadLine();
 
@@ -101,8 +102,19 @@ namespace DialogEngine
             catch (InvalidOperationException ex)
             {
                 mcLogger.Debug("readSerialInLine invalid operation " + ex.Message);
+            }
+            catch(Exception ex)   // this is happened when usb is plug
+            {
+                DialogViewModel.Instance.AddItem(new ErrorMessage("Device is disconnected."));
 
-                DialogViewModel.Instance.AddItem(new ErrorMessage("The port is closed"));
+                // COM port is closed, so we will run random selection
+                string _configPath = System.IO.Path.Combine(Environment.CurrentDirectory, "DialogEngine.exe");
+                Configuration _config = ConfigurationManager.OpenExeConfiguration(_configPath);
+                _config.AppSettings.Settings["UseSerialPort"].Value = false.ToString();
+                _config.Save();
+                ConfigurationManager.RefreshSection("appSettings");
+
+                _useSerialPortChanged();
             }
             return _message;
         }
@@ -191,7 +203,7 @@ namespace DialogEngine
             catch (Exception e)
             {
                 mcLogger.Error("InitCharacterSelection " + e.Message);
-               DialogViewModel.Instance.AddItem(new ErrorMessage("Error in character selection method."));
+                DialogViewModel.Instance.AddItem(new ErrorMessage("Error in character selection method."));
             }
             //worry about stopping cleanly later TODO
         }
@@ -218,7 +230,8 @@ namespace DialogEngine
 
                         var _processCurrentMessage = true;
                         int _rowNum = -1;
-                        var _message = readSerialInLine();
+
+                        var _message = _readSerialInLine();
 
                         if (_message != null)
                         {
