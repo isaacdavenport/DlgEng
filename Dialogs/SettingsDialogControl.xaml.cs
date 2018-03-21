@@ -1,4 +1,7 @@
-﻿using DialogEngine.Events;
+﻿//  Confidential Source Code Property Toys2Life LLC Colorado 2017
+//  www.toys2life.org
+
+using DialogEngine.Events;
 using DialogEngine.Events.DialogEvents;
 using log4net;
 using MaterialDesignThemes.Wpf;
@@ -95,14 +98,12 @@ namespace DialogEngine.Dialogs
                 Grid.SetColumn(_label, 0);
 
                 bool _flag;
-                int _number;
 
                 if (Boolean.TryParse(mSettings[_key], out _flag))
                 {
                     ToggleButton _toggleButton = new ToggleButton();
                     _toggleButton.HorizontalAlignment = HorizontalAlignment.Left;
                     _toggleButton.IsChecked = _flag;
-                    // _toggleButton.Style=this.FindResource("ToggleButtonTwoOptionsStyle") as Style;
                     _toggleButton.Width = 100;
 
                     MainGrid.Children.Add(_toggleButton);
@@ -113,8 +114,6 @@ namespace DialogEngine.Dialogs
                 else
                 {
                     TextBox _textBox = new TextBox();
-                    //_textBox.Style= this.FindResource("TextBoxStyle1") as Style;
-
                     _textBox.Text = mSettings[_key];
                     _textBox.Width = 100;
                     _textBox.HorizontalAlignment = HorizontalAlignment.Left;
@@ -167,9 +166,7 @@ namespace DialogEngine.Dialogs
             try
             {
                 List<mPropertyChanged> _propertyChangedHandlers = new List<mPropertyChanged>();
-
                 string _configPath = System.IO.Path.Combine(Environment.CurrentDirectory, "DialogEngine.exe");
-
                 Configuration _config = ConfigurationManager.OpenExeConfiguration(_configPath);
 
                 // -2 because we have row for application version and row for buttons
@@ -178,12 +175,10 @@ namespace DialogEngine.Dialogs
                 for (int i = 1; i <= _rowsCount; i++)
                 {
                     Label _label = _getChildAt(i, 0) as Label;
-
                     UIElement _value = _getChildAt(i, 1);
 
                     if (_value is ToggleButton)
                     {
-
                         string _propertyLabel = _label.Content.ToString();
 
                         if (!mSettings[i - 1].Equals((_value as ToggleButton).IsChecked.ToString()))
@@ -196,7 +191,6 @@ namespace DialogEngine.Dialogs
                                     _propertyChangedHandlers.Add(_propertyChangedHandler);
                             }
                         }
-
                         _config.AppSettings.Settings[_propertyLabel].Value = (_value as ToggleButton).IsChecked.ToString();
                     }
                     else
@@ -206,11 +200,8 @@ namespace DialogEngine.Dialogs
 
                 }
 
-
                 _config.Save();
-
                 ConfigurationManager.RefreshSection("appSettings");
-
                 DialogHost.CloseDialogCommand.Execute(null, sender as Button);
 
                 foreach (mPropertyChanged handler in _propertyChangedHandlers)
@@ -224,7 +215,6 @@ namespace DialogEngine.Dialogs
                 MessageBox.Show("Error during saving changes.");
 
             }
-
         }
 
 
@@ -242,8 +232,6 @@ namespace DialogEngine.Dialogs
 
             return _childElement;
         }
-
-
 
         #endregion
 

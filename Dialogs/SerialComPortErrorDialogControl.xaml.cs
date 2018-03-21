@@ -1,21 +1,14 @@
-﻿using log4net;
+﻿//  Confidential Source Code Property Toys2Life LLC Colorado 2017
+//  www.toys2life.org
+
+using log4net;
 using MaterialDesignThemes.Wpf;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+
 
 namespace DialogEngine.Dialogs
 {
@@ -32,41 +25,14 @@ namespace DialogEngine.Dialogs
 
         #region - constructor -
 
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public SerialComPortErrorDialogControl()
         {
             InitializeComponent();
 
             _populateComPortsComboBox();
-        }
-
-        #endregion
-
-        #region - private functions -
-
-        private void _populateComPortsComboBox()
-        {
-            if (SerialPortsComboBox.HasItems)
-            {
-                SerialPortsComboBox.Items.Clear();
-            }
-
-            this.SaveChangesBtn.IsEnabled = true;
-
-            // add list of all valid COM port names to combobox
-            foreach (string port in System.IO.Ports.SerialPort.GetPortNames())
-            {
-                this.SerialPortsComboBox.Items.Add(port);
-            }
-
-            // if there no valid COM port we add item with message
-            if (SerialPortsComboBox.Items.Count == 0)
-            {
-                this.SerialPortsComboBox.Items.Add("No valid com ports");
-
-                this.SaveChangesBtn.IsEnabled = false;
-            }
-
-            SerialPortsComboBox.SelectedIndex = 0;
         }
 
         #endregion
@@ -104,6 +70,35 @@ namespace DialogEngine.Dialogs
         private void _refresh_Click(object sender, RoutedEventArgs e)
         {
             _populateComPortsComboBox();
+        }
+
+        #endregion
+
+        #region - private functions -
+
+        private void _populateComPortsComboBox()
+        {
+            if (SerialPortsComboBox.HasItems)
+            {
+                SerialPortsComboBox.Items.Clear();
+            }
+
+            this.SaveChangesBtn.IsEnabled = true;
+
+            // add list of all valid COM port names to combobox
+            foreach (string port in System.IO.Ports.SerialPort.GetPortNames())
+            {
+                this.SerialPortsComboBox.Items.Add(port);
+            }
+
+            // if there no valid COM port we add item with message
+            if (SerialPortsComboBox.Items.Count == 0)
+            {
+                this.SerialPortsComboBox.Items.Add("No valid com ports");
+                this.SaveChangesBtn.IsEnabled = false;
+            }
+
+            SerialPortsComboBox.SelectedIndex = 0;
         }
 
         #endregion

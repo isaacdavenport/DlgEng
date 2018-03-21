@@ -76,7 +76,7 @@
                                                     <Setter TargetName="HeaderRectangle" Property="Fill" Value="{DynamicResource PrimaryHueMidBrush}" />
                                                 </Trigger>
                                                 <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter TargetName="HeaderRectangle" Property="Fill" Value="{DynamicResource PrimaryHueMidBrush}" />
+                                                    <Setter TargetName="HeaderRectangle" Property="Fill" Value="{DynamicResource SecondaryAccentBrush}" />
                                                 </Trigger>
                                             </ControlTemplate.Triggers>
                                         </ControlTemplate>
@@ -342,6 +342,7 @@
                                         </i:Interaction.Triggers>
                                     </TextBox>
                                     <Button Grid.Column="2" Height="20"
+                                                            BorderThickness="0"
                                                             IsEnabled="{Binding ElementName=Radio_0, Path=Text.Length}"
                                                             Command="{Binding ClearRadioBindingCommand}" 
                                                             CommandParameter="{Binding ElementName=Radio_0, Path=Name}" 
@@ -369,6 +370,7 @@
                                         </i:Interaction.Triggers>
                                     </TextBox>
                                     <Button  Grid.Column="2" Grid.Row="1"  Height="20"
+                                                            BorderThickness="0"
                                                             IsEnabled="{Binding ElementName=Radio_1, Path=Text.Length}"
                                                             Command="{Binding ClearRadioBindingCommand}" 
                                                             CommandParameter="{Binding ElementName=Radio_1, Path=Name}" 
@@ -397,6 +399,7 @@
 
                                     </TextBox>
                                     <Button  Grid.Column="2" Grid.Row="2" Height="20"
+                                                            BorderThickness="0"
                                                             IsEnabled="{Binding ElementName=Radio_2, Path=Text.Length}"                                                            
                                                             Command="{Binding ClearRadioBindingCommand}" 
                                                             CommandParameter="{Binding ElementName=Radio_2, Path=Name}" 
@@ -424,6 +427,7 @@
                                         </i:Interaction.Triggers>
                                     </TextBox>
                                     <Button Height="20" Grid.Column="2" Grid.Row="3"
+                                                            BorderThickness="0"
                                                             IsEnabled="{Binding ElementName=Radio_3, Path=Text.Length}"                                                            
                                                             Command="{Binding ClearRadioBindingCommand}" 
                                                             CommandParameter="{Binding ElementName=Radio_3, Path=Name}" 
@@ -453,6 +457,7 @@
                                     <Button   Background="Red"  
                                                       Grid.Column="2" 
                                                       Grid.Row="4"
+                                                      BorderThickness="0"
                                                       IsEnabled="{Binding ElementName=Radio_4, Path=Text.Length}"                                                            
                                                       Command="{Binding ClearRadioBindingCommand}" 
                                                       CommandParameter="{Binding ElementName=Radio_4, Path=Name}" 
@@ -480,6 +485,7 @@
                                         </i:Interaction.Triggers>
                                     </TextBox>
                                     <Button Height="20" Grid.Column="2" Grid.Row="5" 
+                                                        BorderThickness="0"
                                                         IsEnabled="{Binding ElementName=Radio_5, Path=Text.Length}"                                                            
                                                         Command="{Binding ClearRadioBindingCommand}" 
                                                         CommandParameter="{Binding ElementName=Radio_5, Path=Name}" 
@@ -780,6 +786,10 @@
                                     <ControlTemplate.Triggers>
                                         <Trigger Property="IsSelected" Value="True">
                                             <Setter TargetName="Panel" Property="Background" Value="{DynamicResource PrimaryHueMidBrush}" />
+                                            <Setter Property="Foreground" Value="White" />
+                                        </Trigger>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="Panel" Property="Background" Value="{DynamicResource SecondaryAccentBrush}" />
                                             <Setter Property="Foreground" Value="White" />
                                         </Trigger>
                                     </ControlTemplate.Triggers>

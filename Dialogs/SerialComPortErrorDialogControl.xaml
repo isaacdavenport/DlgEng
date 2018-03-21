@@ -17,6 +17,7 @@
              xmlns:local="clr-namespace:DialogEngine.Dialogs"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+        
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -27,7 +28,7 @@
 
     <GroupBox Header="COM port error"  BorderThickness="0" Style="{DynamicResource MaterialDesignGroupBox}"  UseLayoutRounding="True" SnapsToDevicePixels="True">
 
-        <Grid>
+        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 
             <Grid.RowDefinitions>
                 <RowDefinition />
@@ -36,8 +37,8 @@
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
             <StackPanel HorizontalAlignment="Center"  VerticalAlignment="Bottom" Grid.Row="0" Grid.ColumnSpan="2" Orientation="Horizontal">
@@ -76,6 +77,7 @@
                 
                 <Button Height="25" 
                     Width="25"
+                    BorderThickness="0"
                     Background="{DynamicResource PrimaryHueMidBrush}"
                     Click="_refresh_Click"
                     Margin="5,5,0,0">
