@@ -23,7 +23,6 @@ namespace DialogEngine.Models.Dialog
         [JsonProperty("Adventure")]
         public string Adventure = "";
 
-
         [JsonProperty("DialogName")]
         private string mName;
 
@@ -45,15 +44,8 @@ namespace DialogEngine.Models.Dialog
         /// </summary>
         public string Name 
         {
-            get
-            {
-                return mName;
-            }
-
-            set
-            {
-                mName = value;
-            }
+            get { return mName;  }
+            set { mName = value; }
         }
 
         /// <summary>
@@ -61,16 +53,9 @@ namespace DialogEngine.Models.Dialog
         /// </summary>
         public string FileName
         {
-            get
-            {
-                return mFileName;
-            }
-            set
-            {
-                mFileName = value;
-            }
+            get { return mFileName;  }
+            set { mFileName = value; }
         }
-
 
         public bool AreDialogsRequirementsMet()
         {

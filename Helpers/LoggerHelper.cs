@@ -14,10 +14,7 @@ namespace DialogEngine.Helpers
     public class LoggerHelper
     {
         private static readonly ILog mcDecimalSerialLog = LogManager.GetLogger(SessionVariables.DecimalLogFileName);
-
         private static readonly ILog mcLogDialog = LogManager.GetLogger(SessionVariables.DialogLogFileName);
-
-
 
         // returns logger depends on type
         private static ILog _getLogger(string type)
@@ -34,7 +31,6 @@ namespace DialogEngine.Helpers
             {
                 return mcLogDialog;
             }
-
 
             return null;
         }

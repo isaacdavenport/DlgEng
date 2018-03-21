@@ -21,12 +21,7 @@
                                             Color="LightGray" />
             </RadialGradientBrush>
 
-            <RadialGradientBrush x:Key="DisabledButton">
-                <GradientStop   Offset="0.8"
-                                            Color="DarkGray" />
-                <GradientStop   Offset="0.2"
-                                            Color="LightGray" />
-            </RadialGradientBrush>
+            <SolidColorBrush x:Key="DisabledButton" Color="Gray" Opacity="0.5" />
 
         </Style.Resources>
         <Setter Property="Template">

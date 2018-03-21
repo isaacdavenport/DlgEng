@@ -2,7 +2,6 @@
 //  www.toys2life.org
 
 using log4net;
-using System;
 using System.Configuration;
 using System.Reflection;
 
@@ -13,9 +12,7 @@ namespace DialogEngine.Helpers
     /// </summary>
     class AppSet
     {
-
         private static readonly ILog mcLogger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-
 
         /// <summary>
         /// Try to find value in ConfigurationManager.AppSettings for a specified key
@@ -24,9 +21,6 @@ namespace DialogEngine.Helpers
         /// <returns>Value in App.config for a specified key, or null if key not found</returns>
         public static string ReadSetting(string _key)
         {
-
-
-
             try
             {
                 var _AppSettings = ConfigurationManager.AppSettings;

@@ -3,8 +3,7 @@
 
 //  Converters convert input parameter to a value expected by a gui item  
 
-using DialogEngine.Events;
-using DialogEngine.Events.DialogEvents;
+
 using DialogEngine.Models.Enums;
 using System;
 using System.Globalization;

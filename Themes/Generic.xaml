@@ -4,15 +4,17 @@
 
     <ResourceDictionary.MergedDictionaries>
 
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Indigo.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Indigo.xaml" />
         <ResourceDictionary Source="/Themes/Converters.xaml" />
         <ResourceDictionary Source="/Themes/ButtonStyle.xaml" />
         <ResourceDictionary Source="/Themes/RadioButtonStyle.xaml" />
-        <ResourceDictionary Source="/Themes/ScrollBarStyle.xaml" />
         <ResourceDictionary Source="/Themes/TabControlStyle.xaml" />
-        <ResourceDictionary Source="/Themes/TextBoxStyle.xaml" />
         <ResourceDictionary Source="/Themes/ToggleButtonStyle.xaml" />
         <ResourceDictionary Source="/Themes/ComboBoxStyle.xaml" />
-        <ResourceDictionary Source="/Themes/Brushes.xaml" />
+        <ResourceDictionary Source="/Themes/VoiceRecorderStyle.xaml" />
 
     </ResourceDictionary.MergedDictionaries>
 

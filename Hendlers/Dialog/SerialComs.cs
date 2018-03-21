@@ -7,14 +7,17 @@ using System.Threading;
 using DialogEngine.Helpers;
 using log4net;
 using System.Reflection;
-using DialogEngine.Dialogs;
 using System.Threading.Tasks;
 using DialogEngine.Events;
 using DialogEngine.Events.DialogEvents;
 using System.Windows;
 using System.Linq;
-using DialogEngine.ViewModels.Dialog;
+using DialogEngine.ViewModels;
 using DialogEngine.Models.Logger;
+using DialogEngine.Dialogs;
+using MaterialDesignThemes.Wpf;
+using System.Windows.Threading;
+using System.Configuration;
 
 namespace DialogEngine
 {
@@ -24,14 +27,11 @@ namespace DialogEngine
         #region - Fields -
 
         private static readonly ILog mcLogger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-
+        private static readonly DispatcherTimer mcHeatMapUpdateTimer = new DispatcherTimer();
         private static SerialPort msSerialPort;
-
         private static CancellationTokenSource msSerialTokenSource = new CancellationTokenSource();
         private static CancellationTokenSource msRandomTokenSource = new CancellationTokenSource();
-
         private static bool mIsSerialMode;
-
         public const int NumRadios = 6;  //includes dongle
 
         #endregion
@@ -41,70 +41,25 @@ namespace DialogEngine
         static SerialComs()
         {
             EventAggregator.Instance.GetEvent<UseSerialPortChanged>().Subscribe(_useSerialPortChanged);
+            mcHeatMapUpdateTimer.Interval = TimeSpan.FromSeconds(3);
+            mcHeatMapUpdateTimer.Tick += _heatMapUpdateTimer_Tick;
         }
 
         #endregion
 
-        #region - Properties -
+        #region - Event handlers -
 
-        /// <summary>
-        /// Indicates which selection mode is active
-        /// true - serial mode
-        /// false - random mode
-        /// </summary>
-        public static bool IsSerialMode
+        private static void _heatMapUpdateTimer_Tick(object sender, EventArgs e)
         {
-            get
-            {
-                return mIsSerialMode;
-            }
-
-            set
-            {
-                mIsSerialMode = value;
-
-                try
-                {
-                    if(Application.Current.Dispatcher.CheckAccess())
-                    {
-                        if (mIsSerialMode)
-                        {
-                            Application.Current.Windows.OfType<MainWindow>().FirstOrDefault().SelectionModeLabel.Content = "Serial";
-                        }
-                        else
-                        {
-                            Application.Current.Windows.OfType<MainWindow>().FirstOrDefault().SelectionModeLabel.Content = "Random";
-                        }
-                    }
-                    else
-                    {
-                       Application.Current.Dispatcher.BeginInvoke((Action)(() =>
-                       {
-                           if (mIsSerialMode)
-                           {
-                               Application.Current.Windows.OfType<MainWindow>().FirstOrDefault().SelectionModeLabel.Content = "Serial";
-                           }
-                           else
-                           {
-                               Application.Current.Windows.OfType<MainWindow>().FirstOrDefault().SelectionModeLabel.Content = "Random";
-                           }
-                       }));
-                    }
-                }
-                catch(Exception ex)
-                {
-                    mcLogger.Error("IsSerialMode changed. " + ex.Message );
-                }
-            }
+            HeatMapUpdate.PrintHeatMap();
         }
-           
 
         #endregion
 
         #region - Private functions -
 
         // method is executed when filed "UseSerialPort" is changed in configuration
-        private async  static void _useSerialPortChanged()
+        private async static void _useSerialPortChanged()
         {
             if (SessionVariables.UseSerialPort)
             {
@@ -112,20 +67,23 @@ namespace DialogEngine
             }
             else
             {
+                if(msSerialPort != null && msSerialPort.IsOpen)
+                msSerialPort.Close();
+
                 msSerialTokenSource.Cancel();
+                mcHeatMapUpdateTimer.Stop();
             }
 
             await InitCharacterSelection();
         }
 
-
-        private static string readSerialInLine()
+        private static  string _readSerialInLine()
         {
             string _message = null;
 
             try
             {
-                if (msSerialPort.BytesToRead > 18)
+                if (msSerialPort.IsOpen && msSerialPort.BytesToRead > 18)
                 {
                     _message = msSerialPort.ReadLine();
 
@@ -136,7 +94,6 @@ namespace DialogEngine
 
                         mcLogger.Debug("serial buffer over run.");
                     }
-
                 }
             }
             catch (TimeoutException) {
@@ -145,8 +102,19 @@ namespace DialogEngine
             catch (InvalidOperationException ex)
             {
                 mcLogger.Debug("readSerialInLine invalid operation " + ex.Message);
+            }
+            catch(Exception ex)   // this is happened when usb is plug
+            {
+                DialogViewModel.Instance.AddItem(new ErrorMessage("Device is disconnected."));
 
-                DialogViewModel.Instance.AddItem(new ErrorMessage("The port is closed"));
+                // COM port is closed, so we will run random selection
+                string _configPath = System.IO.Path.Combine(Environment.CurrentDirectory, "DialogEngine.exe");
+                Configuration _config = ConfigurationManager.OpenExeConfiguration(_configPath);
+                _config.AppSettings.Settings["UseSerialPort"].Value = false.ToString();
+                _config.Save();
+                ConfigurationManager.RefreshSection("appSettings");
+
+                _useSerialPortChanged();
             }
             return _message;
         }
@@ -156,23 +124,21 @@ namespace DialogEngine
         {
             try
             {
-                // can we do something like this
-
                 SelectNextCharacters.NextCharacter1 = 0;
-
                 SelectNextCharacters.NextCharacter2 = 0;
 
                 msSerialPort = new SerialPort();
-
                 msSerialPort.PortName = SessionVariables.ComPortName;
-
                 msSerialPort.BaudRate = 460800;
-
                 msSerialPort.ReadTimeout = 500;
-
+                if (msSerialPort.IsOpen)
+                {
+                    msSerialPort.Close();
+                }
                 msSerialPort.Open();
-
                 msSerialPort.DiscardInBuffer();
+
+                mcHeatMapUpdateTimer.Start();
 
                 await _regularylyReadSerialAsync(msSerialTokenSource.Token);
             }
@@ -186,8 +152,6 @@ namespace DialogEngine
 
         #region - Public methods -
 
-
-
         /// <summary>
         /// Initialize characters selection method
         /// </summary>
@@ -197,8 +161,6 @@ namespace DialogEngine
 
             try
             {
-
-
                 if (SessionVariables.UseSerialPort)
                 {
                     try
@@ -210,12 +172,10 @@ namespace DialogEngine
                         mcLogger.Error("Serial port error " + ex.Message);
 
                         // if COM port name is not valid, we show dialog to user with valid COM ports 
-                        SerialComPortErrorDialog dialog = new SerialComPortErrorDialog();
-
-                        dialog.ShowDialog();
+                        var result = await DialogHost.Show(new SerialComPortErrorDialogControl());
 
                         // if user clicked on "Save changes" we try to again initialize serial
-                        if (dialog.DialogResult.HasValue && dialog.DialogResult.Value)
+                        if (result == null)
                         {
                             try
                             {
@@ -233,7 +193,6 @@ namespace DialogEngine
                         {
                             await SelectNextCharacters.OccasionallyChangeToRandNewCharacterAsync(msRandomTokenSource.Token);
                         }
-
                     }
                 }
                 else // user chose NoSerialPort so we initialize random selection
@@ -244,8 +203,7 @@ namespace DialogEngine
             catch (Exception e)
             {
                 mcLogger.Error("InitCharacterSelection " + e.Message);
-
-               DialogViewModel.Instance.AddItem(new ErrorMessage("Error in character selection method."));
+                DialogViewModel.Instance.AddItem(new ErrorMessage("Error in character selection method."));
             }
             //worry about stopping cleanly later TODO
         }
@@ -257,18 +215,14 @@ namespace DialogEngine
             {
                 Thread.CurrentThread.Name = "SerialThread";
 
-
                 int[] _newRow = new int[NumRadios + 1];
                 int _cycleCount = 0;
 
                 IsSerialMode = true;
-
-
                 while (true)
                 {
                     try
                     {
-
                         if (_cancellationToken.IsCancellationRequested)
                         {
                             return;
@@ -276,7 +230,8 @@ namespace DialogEngine
 
                         var _processCurrentMessage = true;
                         int _rowNum = -1;
-                        var _message = readSerialInLine();
+
+                        var _message = _readSerialInLine();
 
                         if (_message != null)
                         {
@@ -293,27 +248,68 @@ namespace DialogEngine
                             ParseMessage.ProcessMessage(_rowNum, _newRow);
                             SelectNextCharacters.FindBiggestRssiPair();
                         }
-
-                        if (_cycleCount > 80)
-                        {
-                            HeatMapUpdate.PrintHeatMap();
-                            _cycleCount = 0;
-                        }
                     }
                     catch(Exception ex)
                     {
                         mcLogger.Error("_regularylyReadSerialAsync " + ex.Message);
-
                         DialogViewModel.Instance.AddItem(new ErrorMessage("Error in serial communication."));
                     }
                 }
-
             });
         }
 
         #endregion
 
+        #region - Properties -
 
+        /// <summary>
+        /// Indicates which selection mode is active
+        /// true - serial mode
+        /// false - random mode
+        /// </summary>
+        public static bool IsSerialMode
+        {
+            get { return mIsSerialMode; }
+            set
+            {
+                mIsSerialMode = value;
+                try
+                {
+                    if (Application.Current.Dispatcher.CheckAccess())
+                    {
+                        if (mIsSerialMode)
+                        {
+                            Application.Current.Windows.OfType<MainWindow>().FirstOrDefault().SelectionModeLabel.Content = "Serial";
+                        }
+                        else
+                        {
+                            Application.Current.Windows.OfType<MainWindow>().FirstOrDefault().SelectionModeLabel.Content = "Random";
+                        }
+                    }
+                    else
+                    {
+                        Application.Current.Dispatcher.BeginInvoke((Action)(() =>
+                        {
+                            if (mIsSerialMode)
+                            {
+                                Application.Current.Windows.OfType<MainWindow>().FirstOrDefault().SelectionModeLabel.Content = "Serial";
+                            }
+                            else
+                            {
+                                Application.Current.Windows.OfType<MainWindow>().FirstOrDefault().SelectionModeLabel.Content = "Random";
+                            }
+                        }));
+                    }
+                }
+                catch (Exception ex)
+                {
+                    mcLogger.Error("IsSerialMode changed. " + ex.Message);
+                }
+            }
+        }
+
+
+        #endregion
     }
 }
 

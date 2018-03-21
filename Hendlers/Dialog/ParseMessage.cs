@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DialogEngine.Helpers;
 using DialogEngine.Models.Dialog;
-using DialogEngine.ViewModels.Dialog;
+using DialogEngine.ViewModels;
 using log4net;
 using System.Reflection;
 
@@ -15,10 +15,8 @@ namespace DialogEngine
 
     public static class ParseMessage
     {
-
         #region - Fields -
         private static readonly ILog mcLogger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-
         public static List<ReceivedMessage> ReceivedMessages = new List<ReceivedMessage>();
 
         #endregion
@@ -27,7 +25,6 @@ namespace DialogEngine
 
         static void addMessageToReceivedBuffer(int _characterRowNum, int[] _rw, DateTime _timeStamp)
         {
-
             if (_characterRowNum > DialogViewModel.Instance.CharacterCollection.Count - 1)  //was omiting character 5 from log when it was Count - 2
             {
                 return;
@@ -46,8 +43,7 @@ namespace DialogEngine
                 ReceivedMessages.Last().Rssi[_i] = _rw[_i];
             }
 
-            string _debugString = ReceivedMessages[ReceivedMessages.Count - 1].CharacterPrefix + "  " +
-                                    ReceivedMessages[ReceivedMessages.Count - 1].ReceivedTime.ToString("mm.ss.fff") + "  ";
+            string _debugString = ReceivedMessages[ReceivedMessages.Count - 1].CharacterPrefix + "  ";
 
             for (var j = 0; j < SerialComs.NumRadios; j++)
             {
@@ -72,10 +68,16 @@ namespace DialogEngine
 
         public static void ProcessMessage(int _rowNum, int[] _newRow)
         {
-
             for (int _k = 0; _k < SerialComs.NumRadios; _k++)
             {
-                SelectNextCharacters.HeatMap[_rowNum, _k] = _newRow[_k];
+                if (DialogViewModel.Instance.RadiosState[_rowNum])
+                {
+                    SelectNextCharacters.HeatMap[_rowNum, _k] = _newRow[_k];
+                }
+                else
+                {
+                    SelectNextCharacters.HeatMap[_rowNum, _k] = 0;
+                }
             }
 
             var _currentDateTime = DateTime.Now;
@@ -83,7 +85,6 @@ namespace DialogEngine
             SelectNextCharacters.CharactersLastHeatMapUpdateTime[_rowNum] = _currentDateTime;
 
             addMessageToReceivedBuffer(_rowNum, _newRow, _currentDateTime);
-
         }
 
 
@@ -112,7 +113,6 @@ namespace DialogEngine
 
 
         #endregion
-
     }
 }
 

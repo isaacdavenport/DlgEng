@@ -15,7 +15,7 @@ using System.Collections.ObjectModel;
 using DialogEngine.Models.Enums;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using DialogEngine.ViewModels.Dialog;
+using DialogEngine.ViewModels;
 using System.Linq;
 
 namespace DialogEngine
@@ -28,10 +28,7 @@ namespace DialogEngine
         #region - Fields -
 
         private static readonly ILog mcLogger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-
-
         public delegate void PrintMethod(object _message);
-
         public static PrintMethod AddItem;
 
         #endregion
@@ -44,18 +41,13 @@ namespace DialogEngine
         /// <param name="_inObj"><see cref="DialogTracker"/></param>
         public static async  Task SetDefaultsAsync(DialogTracker _inObj) //TODO is there a good way to identify orphaned tags? (dialog lines)
         {
-
         //Dialogs JSON parse here.
         List<ModelDialogInfo> _modelDialogsInfo = new List<ModelDialogInfo>();
-
         List<ModelDialog> _modelDialogs = new List<ModelDialog>();
-
         double _dialogModelPopularitySum = 0.0;
 
         await Task.Run(() =>
-            {
-
-                try
+            { try
                 {
                     Thread.CurrentThread.Name = "SetDefaultsAsyncTask";
 

@@ -14,9 +14,9 @@ using log4net;
 using Newtonsoft.Json;
 using DialogEngine.Models.Logger;
 using System.Threading.Tasks;
-using DialogEngine.ViewModels.Dialog;
+using DialogEngine.ViewModels;
 using System.Collections.ObjectModel;
-using System.Windows.Threading;
+
 
 
 // ReSharper disable ConditionIsAlwaysTrueOrFalse
@@ -91,7 +91,6 @@ namespace DialogEngine
         /// <returns>Instance of DialogTracker.cs</returns>
         public static DialogTracker GetInstance(DialogViewModel _dialogViewModel)
         {
-
                 lock (mcPadlock)
                 {
                     if (msInstance == null)
@@ -99,8 +98,7 @@ namespace DialogEngine
                         msInstance = new DialogTracker(_dialogViewModel);
                     }
                     return msInstance;
-                }
-            
+                }           
         }
 
         /// <summary>
@@ -124,39 +122,7 @@ namespace DialogEngine
 
         #endregion
 
-        #region - Properties -
-
-        /// <summary>
-        /// Curent dialog model
-        /// </summary>
-        public int CurrentDialogModel
-        {
-            get { return msCurrentDialogModel; }
-
-            set { msCurrentDialogModel = value; }
-        }
-
-
-        /// <summary>
-        /// Delegate which is used to externally set log method to debug console
-        /// </summary>
-        public PrintMethod AddItem
-        {
-            get
-            {
-                return mAddItem;               
-            }
-            set
-            {
-                mAddItem = value;
-            }
-        }
-
-        #endregion
-
         #region - Private methods -
-
-
 
         private static void _removePhrasesOverParentalRating(Character _inCharacter)
         {
@@ -172,28 +138,20 @@ namespace DialogEngine
 
         private void _playAudio(string _pathAndFileName)
         {
-            mcLogger.Debug("Start _playAudio method");
-
-
             if (!SessionVariables.AudioDialogsOn)
             {
                 Thread.Sleep(3200);
                 return;
             }
 
-
             if (File.Exists(_pathAndFileName))
             {
-
                 Application.Current.Dispatcher.Invoke(() => { 
-
                 var _playSuccess = MP3Player.Instance.PlayMp3(_pathAndFileName);
-
                 if (_playSuccess != 0)
                 {
                     AddItem(new ErrorMessage("MP3 Play Error  ---  " + _playSuccess));
                 }
-
                 });
 
                 var i = 0;
@@ -206,16 +164,11 @@ namespace DialogEngine
                 {
                     Application.Current.Dispatcher.Invoke(() =>
                     {
-
                         isPlaying = MP3Player.Instance.IsPlaying();
-
-
                     });
 
                     Thread.Sleep(100);
-
                     i++;
-
                 }
                 while (isPlaying && i < 400);  // don't get stuck,, 40 seconds max phrase
                 
@@ -225,17 +178,11 @@ namespace DialogEngine
             {
                 AddItem(new ErrorMessage("Could not find: " + _pathAndFileName));
             }
-
-            mcLogger.Debug("End _playAudio method");
-
         }
 
 
         private void _addDialogModelToHistory(int _dialogModelIndex, int _ch1, int _ch2)
         {
-            //mcLogger.Debug("Start _addDialogModelToHistory method.");
-
-
             HistoricalDialogs.Add(new HistoricalDialog
             {
                 DialogIndex = _dialogModelIndex,
@@ -245,9 +192,6 @@ namespace DialogEngine
                 Character1 = _ch1,
                 Character2 = _ch2
             });
-
-            //mcLogger.Debug("End _addDialogModelToHistory method.");
-
         }
 
 
@@ -417,9 +361,6 @@ namespace DialogEngine
 
         private void _addPhraseToHistory(PhraseEntry _selectedPhrase, int _speakingCharacter)
         {
-            //mcLogger.Debug("Start _addPhraseToHistory method");
-
-
             HistoricalPhrases.Add(new HistoricalPhrase
             {
                 CharacterIndex = _speakingCharacter,
@@ -430,9 +371,6 @@ namespace DialogEngine
             });
 
             LoggerHelper.Info(SessionVariables.DialogLogFileName, mDialogViewModel.CharacterCollection[_speakingCharacter].CharacterName + ": " + _selectedPhrase.DialogStr);
-
-            //mcLogger.Debug("End _addPhraseToHistory method");
-
         }
 
 
@@ -531,45 +469,33 @@ namespace DialogEngine
 
         private void _processDebugFlags(params int[] _dialogDirectives)
         {
-            //mcLogger.Debug("Start _processDebugFlags method.");
-
-
             switch (_dialogDirectives.Count())
             {
                 case 0:  // we didn't pass characters and dialog model
-
                     Character1Num = SelectNextCharacters.NextCharacter1;
                     Character2Num = SelectNextCharacters.NextCharacter2;
 
                     break;
 
                 case 1:  // only dialog model selected
-
                     CurrentDialogModel = _dialogDirectives[0];
-
                     Character1Num = SelectNextCharacters.NextCharacter1;
                     Character2Num = SelectNextCharacters.NextCharacter2;
 
                     break;
 
                 case 2: // only characters selected
-
                     Character1Num = _dialogDirectives[0];
-
                     Character2Num = _dialogDirectives[1];
 
                     break;
 
                 case 3: // both characters and dialog model selected
-
                     Character1Num = _dialogDirectives[0];
-
                     Character2Num = _dialogDirectives[1];
-
                     CurrentDialogModel = _dialogDirectives[2];
 
                     break;
-
             }
 
 
@@ -577,17 +503,11 @@ namespace DialogEngine
                 WriteDialogInfo(Character1Num, Character2Num);
 
             HeatMapUpdate.PrintHeatMap();
-
-            //mcLogger.Debug("End _processDebugFlags method.");
-
-
         }
 
         private bool _waitingForMovement()  // this method breaks that paradigm that we are always in a dialog model
         {
             // unless waiting to start a dialog model, that may be an issue eventually
-
-            //mcLogger.Debug("Start _waitingForMovement method.");
 
             if (LastPhraseImpliedMovement && SameCharactersAsLast && SessionVariables.UseSerialPort)
             {
@@ -644,14 +564,9 @@ namespace DialogEngine
                 return true;
             }
 
-
             //reset the wait for movement flag when we are no longer same characters as last time
             LastPhraseImpliedMovement = false;
-
             msMovementWaitCount = 0;
-
-            //mcLogger.Debug("End _waitingForMovement method.");
-
 
             return false;
         }
@@ -693,8 +608,6 @@ namespace DialogEngine
         // TODO generate parallel dialogs, using string tags.
         public void GenerateADialog(CancellationToken _cancellationToken,params int[] _dialogDirectives)
         {
-
-            //mcLogger.Info("start GenerateADialog");
             //check is async method cancelled
             if (_cancellationToken.IsCancellationRequested)
                 return;
@@ -721,49 +634,47 @@ namespace DialogEngine
                 }
 
                 if (mDialogViewModel.CharacterCollection[_speakingCharacter].PhraseTotals.PhraseWeights.ContainsKey(_currentPhraseType))
-                    if (SessionVariables.TextDialogsOn)
+                {
+                    AddItem(new InfoMessage(mDialogViewModel.CharacterCollection[_speakingCharacter].CharacterName + ": "));
+
+                    if (mDialogViewModel.CharacterCollection[_speakingCharacter].PhraseTotals.PhraseWeights[_currentPhraseType] < 0.01f)
                     {
-                        AddItem(new InfoMessage(mDialogViewModel.CharacterCollection[_speakingCharacter].CharacterName + ": "));
-                        
-                        if (mDialogViewModel.CharacterCollection[_speakingCharacter].PhraseTotals.PhraseWeights[_currentPhraseType] < 0.01f)
-                        {
-                            AddItem(new WarningMessage("Missing PhraseType: " + _currentPhraseType));
-                        }
-
-                        _selectedPhrase = PickAWeightedPhrase(_speakingCharacter, _currentPhraseType);
-
-                        if(_selectedPhrase == null)
-                        {
-                            AddItem(new WarningMessage("Phrase type " + _currentPhraseType + " was not found."));
-
-                            continue;
-                        }
-
-                        AddItem(new InfoMessage(_selectedPhrase.DialogStr));
-                        
-                        AddItem(new DialogItem() { Character = mDialogViewModel.CharacterCollection[_speakingCharacter], PhraseEntry = _selectedPhrase  });
-
-
-                        _addPhraseToHistory(_selectedPhrase, _speakingCharacter);
-
-                        var _pathAndFileName =  SessionVariables.AudioDirectory 
-                                                + mDialogViewModel.CharacterCollection[_speakingCharacter].CharacterPrefix 
-                                                + "_" + _selectedPhrase.FileName + ".mp3";
-
-                        _playAudio(_pathAndFileName); // vb: code stops here so commented out for debugging purpose
-
-                        if ( !DialogTrackerAndSerialComsCharactersSame()
-                            && DialogViewModel.SelectedCharactersOn != 1)
-                        {
-                            SameCharactersAsLast = false;
-                            return; // the characters have moved  TODO break into charactersSame() and use also with prior
-                        }
-                        //Toggle character
-                        if (_speakingCharacter == Character1Num) //toggle which character is speaking next
-                            _speakingCharacter = Character2Num;
-                        else
-                            _speakingCharacter = Character1Num;
+                        AddItem(new WarningMessage("Missing PhraseType: " + _currentPhraseType));
                     }
+
+                    _selectedPhrase = PickAWeightedPhrase(_speakingCharacter, _currentPhraseType);
+
+                    if (_selectedPhrase == null)
+                    {
+                        AddItem(new WarningMessage("Phrase type " + _currentPhraseType + " was not found."));
+                        continue;
+                    }
+
+                    AddItem(new InfoMessage(_selectedPhrase.DialogStr));
+
+                    if(SessionVariables.TextDialogsOn)
+                    AddItem(new DialogItem() { Character = mDialogViewModel.CharacterCollection[_speakingCharacter], PhraseEntry = _selectedPhrase });
+
+                    _addPhraseToHistory(_selectedPhrase, _speakingCharacter);
+
+                    var _pathAndFileName = SessionVariables.AudioDirectory
+                                          + mDialogViewModel.CharacterCollection[_speakingCharacter].CharacterPrefix
+                                          + "_" + _selectedPhrase.FileName + ".mp3";
+
+                    _playAudio(_pathAndFileName); // vb: code stops here so commented out for debugging purpose
+
+                    if (!DialogTrackerAndSerialComsCharactersSame()
+                        && DialogViewModel.SelectedCharactersOn != 1)
+                    {
+                        SameCharactersAsLast = false;
+                        return; // the characters have moved  TODO break into charactersSame() and use also with prior
+                    }
+                    //Toggle character
+                    if (_speakingCharacter == Character1Num) //toggle which character is speaking next
+                        _speakingCharacter = Character2Num;
+                    else
+                        _speakingCharacter = Character1Num;
+                }
 
                 HistoricalDialogs[HistoricalDialogs.Count - 1].Completed = true;
 
@@ -777,9 +688,6 @@ namespace DialogEngine
                 RecentDialogs.Enqueue(CurrentDialogModel);
                 LastPhraseImpliedMovement = _determineIfMovementImplied(_selectedPhrase);
             }
-
-            //mcLogger.Info("end GenerateADialog");
-
         }
 
 
@@ -843,14 +751,9 @@ namespace DialogEngine
 
                 foreach (var _file in _d.GetFiles("*.json")) //file of type FileInfo for each .json in directory
                 {
-
-
                     string _beginReadMessage = "Begin read of " + _file.Name;
-
                     AddItem(new InfoMessage(_beginReadMessage));
-
                     LoggerHelper.Info(SessionVariables.DialogLogFileName, "Begin read of " + _file.Name);
-
 
                     string _inChar;
 
@@ -873,21 +776,13 @@ namespace DialogEngine
                                 }
 
                                 _deserializedCharacterJson.PhraseTotals = new PhraseEntry(); //init PhraseTotals
-
                                 _deserializedCharacterJson.PhraseTotals.DialogStr = "phrase weights";
-
                                 _deserializedCharacterJson.PhraseTotals.FileName = "silence";
-
                                 _deserializedCharacterJson.PhraseTotals.PhraseRating = "G";
-
                                 _deserializedCharacterJson.PhraseTotals.PhraseWeights = new Dictionary<string, double>();
-
                                 _deserializedCharacterJson.PhraseTotals.PhraseWeights.Add("Greeting", 0.0f);
 
-
                                 _removePhrasesOverParentalRating(_deserializedCharacterJson);
-
-
 
                                 //Calculate Phrase Weight Totals here.
                                 foreach (var _curPhrase in _deserializedCharacterJson.Phrases)
@@ -907,46 +802,32 @@ namespace DialogEngine
                                     }
                                 }
 
-
-
                                 for (var i = 0; i < Character.RecentPhrasesQueueSize; i++)
                                 {
                                     // we always deque after enque so this sets que size
                                     _deserializedCharacterJson.RecentPhrases.Enqueue(_deserializedCharacterJson.Phrases[0]);
                                 }
 
-
-
                                 //list Chars as they come in.
 
                                 string _finishReadMessage = "Finish read of " + _deserializedCharacterJson.CharacterName;
-
-
                                 AddItem(new InfoMessage(_finishReadMessage));
-
                                 LoggerHelper.Info(SessionVariables.DialogLogFileName, "Finish read of " + _deserializedCharacterJson.CharacterName);
-
 
                                 //Add to Char List
                                 _characterList.Add(_deserializedCharacterJson);
-
-
                             }
                             catch (JsonReaderException e)
                             {
                                 string _errorReadingMessage = "Error reading " + _file.Name;
-
                                 AddItem(new ErrorMessage(_errorReadingMessage));
 
-
                                 string _jsonParseErrorMessage = "JSON Parse error at " + e.LineNumber + ", " + e.LinePosition;
-
                                 AddItem(new ErrorMessage(_jsonParseErrorMessage));
                             }
                             catch (Exception ex)
                             {
                                 mcLogger.Error("Error during parsing json file " + ex.Message);
-
                                 AddItem(new ErrorMessage("Error during parsing json file."));
                             }
                         }
@@ -954,25 +835,20 @@ namespace DialogEngine
                     catch (UnauthorizedAccessException e)
                     {
                         mcLogger.Error(e.Message);
-
                         AddItem(new ErrorMessage("Unauthorized access exception while reading: " + _file.FullName));
 
                     }
                     catch (DirectoryNotFoundException e)
                     {
                         mcLogger.Error(e.Message);
-
                         AddItem(new ErrorMessage("Directory not found exception while reading: " + _file.FullName));
-
                     }
                     catch (OutOfMemoryException e)
                     {
                         mcLogger.Error(e.Message);
-
                         AddItem(new ErrorMessage("You probably need to restart your computer..."));
                     }
                 }
-
 
                 // Fill the queue with greeting dialogs
                 for (var _i = 0; _i < RecentDialogsQueSize; _i++)
@@ -989,10 +865,7 @@ namespace DialogEngine
                                            + SessionVariables.CharactersDirectory + " .  Exiting.";
 
                     AddItem(new ErrorMessage(_errorMessage));
-
                 }
-
-
             });
 
         }
@@ -1009,14 +882,11 @@ namespace DialogEngine
 
         public PhraseEntry PickAWeightedPhrase(int _speakingCharacter, string _currentPhraseType)
         {
-            //mcLogger.Debug("Start PickAWeightedPhrase method");
-
             PhraseEntry _selectedPhrase = null;
 
             try
             {
                 _selectedPhrase = mDialogViewModel.CharacterCollection[_speakingCharacter].Phrases[0]; //initialize to unused phrase
-
                 //Randomly select a phrase of correct Type
                 var _phraseIsDuplicate = true;
 
@@ -1024,14 +894,9 @@ namespace DialogEngine
                 for (var k = 0; k < 6 && _phraseIsDuplicate; k++) //do retries if selected phrase is recently used
                 {
                     _phraseIsDuplicate = false;
-
                     var _phraseTableWeightedIndex = mRandom.NextDouble(); // rand 0.0 - 1.0
-
                     _phraseTableWeightedIndex *= mDialogViewModel.CharacterCollection[_speakingCharacter].PhraseTotals.PhraseWeights[_currentPhraseType];
-
                     double _amountOfCurrentPhraseType = 0;
-
-
 
                     foreach (var _currentPhraseTableEntry in mDialogViewModel.CharacterCollection[_speakingCharacter].Phrases)
                     {
@@ -1047,7 +912,6 @@ namespace DialogEngine
                         }
                     }
 
-
                     foreach (var _recentPhraseQueueEntry in mDialogViewModel.CharacterCollection[_speakingCharacter].RecentPhrases)
                     {
                         if (_recentPhraseQueueEntry.Equals(_selectedPhrase))
@@ -1062,16 +926,11 @@ namespace DialogEngine
                 mDialogViewModel.CharacterCollection[_speakingCharacter].RecentPhrases.Dequeue();
 
                 mDialogViewModel.CharacterCollection[_speakingCharacter].RecentPhrases.Enqueue(_selectedPhrase);
-
-                //mcLogger.Debug("End PickAWeightedPhrase method");
             }
             catch (Exception ex)
             {
                 mcLogger.Error("PickAWeightedPhrase " + ex.Message);
             }
-
-
-
 
             return _selectedPhrase;
         }
@@ -1108,6 +967,29 @@ namespace DialogEngine
 
         #endregion
 
+        #region - Properties -
+
+        /// <summary>
+        /// Curent dialog model
+        /// </summary>
+        public int CurrentDialogModel
+        {
+            get { return msCurrentDialogModel; }
+
+            set { msCurrentDialogModel = value; }
+        }
+
+
+        /// <summary>
+        /// Delegate which is used to externally set log method to debug console
+        /// </summary>
+        public PrintMethod AddItem
+        {
+            get { return mAddItem; }
+            set { mAddItem = value;}
+        }
+
+        #endregion
 
     }
 }

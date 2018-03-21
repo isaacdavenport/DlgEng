@@ -1,11 +1,7 @@
 ﻿using DialogEngine.Controls.ViewModels;
-using NAudio.Wave;
-using System;
-using System.Collections.Generic;
+using DialogEngine.Controls.VoiceRecorder;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Shapes;
 
 namespace DialogEngine.Controls.Views
 {
@@ -19,11 +15,9 @@ namespace DialogEngine.Controls.Views
         {
             InitializeComponent();
 
-            this.DataContext = new VoiceRecorderViewModel(this);
+            this.DataContext = new VoiceRecorderViewModel(this,NAudioEngine.Instance);
 
         }
-
-
     }
 }
 

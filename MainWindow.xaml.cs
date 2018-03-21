@@ -7,13 +7,15 @@ using System.IO;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Media;
-using DialogEngine.Controls;
 using log4net;
 using log4net.Config;
 using Microsoft.Win32;
 using DialogEngine.Helpers;
-using DialogEngine.ViewModels.Dialog;
-using DialogEngine.Views.Character;
+using DialogEngine.ViewModels;
+using DialogEngine.Views;
+using DialogEngine.Dialogs;
+using MaterialDesignThemes.Wpf;
+using MaterialDesignColors;
 
 namespace DialogEngine
 {
@@ -37,11 +39,11 @@ namespace DialogEngine
 
             mcLogger.Info("Application started.");
 
+            _initializeMaterialDesign();
+
             InitializeComponent();
 
-            mainFrame.Source = new Uri("Views/Dialog/DialogView.xaml", UriKind.Relative);
-
-            
+            mainFrame.NavigationService.Navigate(new DialogView(DateTime.Now));
         }
 
         #endregion
@@ -51,15 +53,15 @@ namespace DialogEngine
         // Click on main menu item dialog
         private void _dialog_Click(object sender, RoutedEventArgs e)
         {
-            mainFrame.Source = new Uri("Views/Dialog/DialogView.xaml", UriKind.Relative);
+            if(!mainFrame.Content.ToString().Contains("DialogView"))
+            mainFrame.NavigationService.GoBack();
 
             e.Handled = true;
-
         }
 
         private void _aboutDialogEngine_Click(object sender, RoutedEventArgs e)
         {
-            Process.Start("https://sites.google.com/isaacdavenport.com/toys2life/home");
+            Process.Start("www.toys2life.net");
         }
 
         private void _importCharacter_Click(object sender, RoutedEventArgs e)
@@ -121,10 +123,28 @@ namespace DialogEngine
 
         private void _settings_Click(object sender, RoutedEventArgs e)
         {
-            var _settingsDialog = new SettingsDialog();
-            _settingsDialog.Owner = this;
+            DialogHost.OpenDialogCommand.Execute(new SettingsDialogControl(),this.SettingsBtn);
+        }
 
-            _settingsDialog.ShowDialog();
+        #endregion
+
+        #region - private methods -
+
+        private void _createCharacter_Click(object sender, RoutedEventArgs e)
+        {
+            mainFrame.Source = new Uri("Views/WizardView.xaml", UriKind.Relative);
+
+            e.Handled = true;
+        }
+
+        private void _initializeMaterialDesign()
+        {
+            // Create dummy objects to force the MaterialDesign assemblies to be loaded
+            // from this assembly, which causes the MaterialDesign assemblies to be searched
+            // relative to this assembly's path. Otherwise, the MaterialDesign assemblies
+            // are searched relative to Eclipse's path, so they're not found.
+            var card = new Card();
+            var hue = new Hue("Dummy", Colors.Black, Colors.White);
         }
 
         #endregion
@@ -137,15 +157,6 @@ namespace DialogEngine
             StatusBarTextBox.Text = _infoMessage;
         }
 
-
-
         #endregion
-
-        private void _createCharacter_Click(object sender, RoutedEventArgs e)
-        {
-            mainFrame.Source = new Uri("Views/Character/CreateCharacter.xaml", UriKind.Relative);
-
-            e.Handled = true;
-        }
     }
 }
