@@ -5,6 +5,10 @@ using DialogEngine.Core;
 using System.Windows.Controls;
 using DialogEngine.ViewModels;
 using System;
+using DialogEngine.Services;
+using DialogEngine.Helpers;
+using MaterialDesignThemes.Wpf;
+using System.Windows.Input;
 
 namespace DialogEngine.Views
 {
@@ -18,7 +22,7 @@ namespace DialogEngine.Views
         /// <summary>
         /// Creates instance of DialogView
         /// </summary>
-        public  DialogView(DateTime dateTime)
+        public  DialogView(DateTime _dateTime)
         {
             InitializeComponent();
            
@@ -28,14 +32,16 @@ namespace DialogEngine.Views
 
         protected async override void onPageLoaded()
         {
-                DialogTracker.GetInstance(DialogViewModel.Instance).AddItem = new DialogTracker.PrintMethod((this.DataContext as DialogViewModel).AddItem);
+            (this.DataContext as DialogViewModel).View = this;
 
-                InitModelDialogs.AddItem = new InitModelDialogs.PrintMethod(((this.DataContext as DialogViewModel).AddItem));
-
-                (this.DataContext as DialogViewModel).View = this;
-
-                await (this.DataContext as DialogViewModel).InitDialogDataAsync();
+            await DialogDataService.LoadDialogDataAsync(SessionVariables.WizardDirectory);
         }
 
+        private void PopupBox_Opened(object sender, System.Windows.RoutedEventArgs e)
+        {
+           ComboBox child = (sender as PopupBox).PopupContent as ComboBox;            
+           child.IsDropDownOpen = true;
+           FocusManager.SetFocusedElement(child.Parent,child);
+        }
     }
 }

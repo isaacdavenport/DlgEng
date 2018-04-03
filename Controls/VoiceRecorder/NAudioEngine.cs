@@ -3,7 +3,9 @@
 
 using System;
 using System.ComponentModel;
+using System.Reflection;
 using System.Windows.Threading;
+using log4net;
 using NAudio.Wave;
 
 
@@ -15,6 +17,7 @@ namespace DialogEngine.Controls.VoiceRecorder
     public class NAudioEngine : INotifyPropertyChanged, ISpectrumPlayer, IDisposable
     {
         #region - Fields -
+        private static readonly ILog mcLogger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private readonly int mcRepeatThreshold = 200;
         private readonly DispatcherTimer mcPositionTimer = new DispatcherTimer(DispatcherPriority.ApplicationIdle);
         private readonly int mcfftDataSize = (int)FFTDataSize.FFT2048;
@@ -43,7 +46,6 @@ namespace DialogEngine.Controls.VoiceRecorder
         private WaveStream mActiveStream;
         private WaveChannel32 mInputStream;
         private SampleAggregator mSampleAggregator;
-        private TagLib.File mFileTag;
         private TimeSpan mRepeatStart;
         private TimeSpan mRepeatStop;
         private bool mInRepeatSet;
@@ -218,10 +220,7 @@ namespace DialogEngine.Controls.VoiceRecorder
 
         private void NotifyPropertyChanged(String info)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(info));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(info));
         }
 
         #endregion
@@ -308,14 +307,14 @@ namespace DialogEngine.Controls.VoiceRecorder
         /// <summary>
         /// Starts recording sound
         /// </summary>
-        public void StartRecording()
+        public void StartRecording(string path)
         {
             mWaveInDevice = new WaveIn();
             mWaveInDevice.WaveFormat = WaveFormat.CreateIeeeFloatWaveFormat(44100,2);
             mWaveInDevice.DataAvailable += _waveIn_DataAvailable;
 
             mSampleAggregator = new SampleAggregator(mcfftDataSize);
-            mWaveFileWriter = new WaveFileWriter(@"C:\Users\sbstb\Desktop\Output\tempSasa.mp3", mWaveInDevice.WaveFormat);
+            mWaveFileWriter = new WaveFileWriter(path, mWaveInDevice.WaveFormat);
 
             mWaveInDevice.StartRecording();
             IsRecording = true;    
@@ -371,11 +370,21 @@ namespace DialogEngine.Controls.VoiceRecorder
         {
             if (CanPlay)
             {
-                mWaveOutDevice.Play();
-                IsPlaying = true;
-                CanPause = true;
-                CanPlay = false;
-                CanStop = true;
+                try
+                {
+                    mWaveOutDevice.Play();
+                    IsPlaying = true;
+                    CanPause = true;
+                    CanPlay = false;
+                    CanStop = true;
+                }
+                catch
+                {
+                    IsPlaying = false;
+                    CanPlay = true;
+                    CanPause = false;
+                    CanStop = false;
+                }
             }
         }
 
@@ -404,17 +413,17 @@ namespace DialogEngine.Controls.VoiceRecorder
                     {
                         DesiredLatency = 100
                     };
-                    ActiveStream = new Mp3FileReader(path);
+                    ActiveStream = new WaveFileReader(path); 
                     mInputStream = new WaveChannel32(ActiveStream);
                     mSampleAggregator = new SampleAggregator(mcfftDataSize);
                     mInputStream.Sample += _inputStream_Sample;
                     mWaveOutDevice.Init(mInputStream);
                     ChannelLength = mInputStream.TotalTime.TotalSeconds;
-                    FileTag = TagLib.File.Create(path);
                     CanPlay = true;
                 }
-                catch
+                catch(Exception ex)
                 {
+                    mcLogger.Error("OpenFile " + ex.Message);
                     ActiveStream = null;
                     CanPlay = false;
                 }
@@ -423,21 +432,6 @@ namespace DialogEngine.Controls.VoiceRecorder
         #endregion
 
         #region - Properties -
-
-        /// <summary>
-        /// Information about .mp3 file
-        /// </summary>
-        public TagLib.File FileTag
-        {
-            get { return mFileTag; }
-            set
-            {
-                TagLib.File _oldValue = mFileTag;
-                mFileTag = value;
-                if (_oldValue != mFileTag)
-                    NotifyPropertyChanged("FileTag");
-            }
-        }
 
         /// <summary>
         /// Stream of loaded .mp3 file

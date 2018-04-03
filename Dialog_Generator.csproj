@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="packages\Microsoft.Net.Compilers.2.0.1\build\Microsoft.Net.Compilers.props" Condition="Exists('packages\Microsoft.Net.Compilers.2.0.1\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="packages\Microsoft.Net.Compilers.2.7.0\build\Microsoft.Net.Compilers.props" Condition="Exists('packages\Microsoft.Net.Compilers.2.7.0\build\Microsoft.Net.Compilers.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -75,44 +75,47 @@
     <Reference Include="Accord.Math.Core, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
       <HintPath>packages\Accord.Math.3.8.0\lib\net45\Accord.Math.Core.dll</HintPath>
     </Reference>
+    <Reference Include="CommonServiceLocator, Version=2.0.3.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>packages\CommonServiceLocator.2.0.3\lib\net45\CommonServiceLocator.dll</HintPath>
+    </Reference>
     <Reference Include="FontAwesome.WPF, Version=4.7.0.37774, Culture=neutral, PublicKeyToken=0758b07a11a4f466, processorArchitecture=MSIL">
       <HintPath>packages\FontAwesome.WPF.4.7.0.9\lib\net40\FontAwesome.WPF.dll</HintPath>
     </Reference>
-    <Reference Include="GalaSoft.MvvmLight, Version=5.3.0.19026, Culture=neutral, PublicKeyToken=e7570ab207bcb616, processorArchitecture=MSIL">
-      <HintPath>packages\MvvmLightLibs.5.3.0.0\lib\net45\GalaSoft.MvvmLight.dll</HintPath>
+    <Reference Include="GalaSoft.MvvmLight, Version=5.4.1.0, Culture=neutral, PublicKeyToken=e7570ab207bcb616, processorArchitecture=MSIL">
+      <HintPath>packages\MvvmLightLibs.5.4.1\lib\net45\GalaSoft.MvvmLight.dll</HintPath>
     </Reference>
-    <Reference Include="GalaSoft.MvvmLight.Extras, Version=5.3.0.19032, Culture=neutral, PublicKeyToken=669f0b5e8f868abf, processorArchitecture=MSIL">
-      <HintPath>packages\MvvmLightLibs.5.3.0.0\lib\net45\GalaSoft.MvvmLight.Extras.dll</HintPath>
+    <Reference Include="GalaSoft.MvvmLight.Extras, Version=5.4.1.0, Culture=neutral, PublicKeyToken=669f0b5e8f868abf, processorArchitecture=MSIL">
+      <HintPath>packages\MvvmLightLibs.5.4.1\lib\net45\GalaSoft.MvvmLight.Extras.dll</HintPath>
     </Reference>
-    <Reference Include="GalaSoft.MvvmLight.Platform, Version=5.3.0.19032, Culture=neutral, PublicKeyToken=5f873c45e98af8a1, processorArchitecture=MSIL">
-      <HintPath>packages\MvvmLightLibs.5.3.0.0\lib\net45\GalaSoft.MvvmLight.Platform.dll</HintPath>
+    <Reference Include="GalaSoft.MvvmLight.Platform, Version=5.4.1.0, Culture=neutral, PublicKeyToken=5f873c45e98af8a1, processorArchitecture=MSIL">
+      <HintPath>packages\MvvmLightLibs.5.4.1\lib\net45\GalaSoft.MvvmLight.Platform.dll</HintPath>
     </Reference>
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>packages\log4net.2.0.8\lib\net40-full\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="MaterialDesignColors, Version=1.1.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\MaterialDesignColors.1.1.2\lib\net45\MaterialDesignColors.dll</HintPath>
+    <Reference Include="MaterialDesignColors, Version=1.1.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\MaterialDesignColors.1.1.3\lib\net45\MaterialDesignColors.dll</HintPath>
     </Reference>
-    <Reference Include="MaterialDesignThemes.Wpf, Version=2.3.1.953, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\MaterialDesignThemes.2.3.1.953\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
+    <Reference Include="MaterialDesignThemes.Wpf, Version=2.4.0.1044, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\MaterialDesignThemes.2.4.0.1044\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
-    </Reference>
     <Reference Include="NAudio, Version=1.8.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\NAudio.1.8.4\lib\net35\NAudio.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>packages\Newtonsoft.Json.10.0.2\lib\net40\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="policy.2.0.taglib-sharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=db62eba44689b5b0, processorArchitecture=MSIL">
       <HintPath>packages\taglib.2.1.0.0\lib\policy.2.0.taglib-sharp.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="Stateless, Version=4.0.0.0, Culture=neutral, PublicKeyToken=93038f0927583c9a, processorArchitecture=MSIL">
+      <HintPath>packages\Stateless.4.0.0\lib\net45\Stateless.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="Microsoft.CSharp" />
@@ -122,9 +125,10 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Input.Manipulations" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>packages\MvvmLightLibs.5.3.0.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
+      <HintPath>packages\MvvmLightLibs.5.4.1\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows.Presentation" />
+    <Reference Include="System.Workflow.Activities" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
     <Reference Include="taglib-sharp, Version=2.1.0.0, Culture=neutral, PublicKeyToken=db62eba44689b5b0, processorArchitecture=MSIL">
@@ -132,10 +136,34 @@
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="WindowsFormsIntegration" />
+    <Reference Include="Xceed.Wpf.AvalonDock, Version=3.3.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>packages\Extended.Wpf.Toolkit.3.3.0\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero, Version=3.3.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>packages\Extended.Wpf.Toolkit.3.3.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro, Version=3.3.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>packages\Extended.Wpf.Toolkit.3.3.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010, Version=3.3.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>packages\Extended.Wpf.Toolkit.3.3.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.DataGrid, Version=3.3.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>packages\Extended.Wpf.Toolkit.3.3.0\lib\net40\Xceed.Wpf.DataGrid.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit, Version=3.3.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>packages\Extended.Wpf.Toolkit.3.3.0\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Dialog\DialogState.cs" />
+    <Compile Include="Controls\Dialog\DialogTrigger.cs" />
+    <Compile Include="Controls\ViewModels\DialogControlViewModel.cs" />
+    <Compile Include="Controls\Views\DialogControl.xaml.cs">
+      <DependentUpon>DialogControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\VoiceRecorder\BarHeightScalingStyles.cs" />
     <Compile Include="Controls\VoiceRecorder\FFTDataSize.cs" />
@@ -144,23 +172,34 @@
     <Compile Include="Controls\VoiceRecorder\NAudioEngine.cs" />
     <Compile Include="Controls\VoiceRecorder\SampleAggregator.cs" />
     <Compile Include="Controls\VoiceRecorder\SpectrumAnalyzer.cs" />
-    <Compile Include="Controls\ViewModels\MediaPlayerViewModel.cs" />
-    <Compile Include="Controls\ViewModels\VoiceRecorderViewModel.cs" />
-    <Compile Include="Controls\Views\MediaPlayer.xaml.cs">
-      <DependentUpon>MediaPlayer.xaml</DependentUpon>
+    <Compile Include="Controls\ViewModels\MediaPlayerControlViewModel.cs" />
+    <Compile Include="Controls\ViewModels\VoiceRecorderControlViewModel.cs" />
+    <Compile Include="Controls\Views\MediaPlayerControl.xaml.cs">
+      <DependentUpon>MediaPlayerControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Views\VoiceRecoreder.xaml.cs">
-      <DependentUpon>VoiceRecoreder.xaml</DependentUpon>
+    <Compile Include="Controls\Views\VoiceRecorederControl.xaml.cs">
+      <DependentUpon>VoiceRecorederControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\Add1Converter.cs" />
     <Compile Include="Converters\CharacterStateToBooleanConverter.cs" />
+    <Compile Include="Converters\CloneValuesConverter.cs" />
+    <Compile Include="Converters\InputValuesToBooleanConverter.cs" />
     <Compile Include="Converters\InvertBooleanConverter.cs" />
+    <Compile Include="Converters\IsPlayInContextEnabledConveter.cs" />
+    <Compile Include="Converters\IsRecordingEnabledConverter.cs" />
+    <Compile Include="Converters\IsVoiceRecorderPlayingEnabledConverter.cs" />
     <Compile Include="Converters\ListBoxItemConverter.cs" />
+    <Compile Include="Converters\ListBoxItemTextAndIndexConverter.cs" />
     <Compile Include="Converters\MatrixToDataViewConverter.cs" />
     <Compile Include="Converters\ModelDialogStateToBooleanConverter.cs" />
     <Compile Include="Converters\RadioNumToStringConverter.cs" />
     <Compile Include="Converters\RowIndexConverter.cs" />
     <Compile Include="Converters\StarWidthConverter.cs" />
+    <Compile Include="Converters\TutorialStepNameConverter.cs" />
     <Compile Include="Converters\ValueToColorConverter.cs" />
+    <Compile Include="Dialogs\NewCharacterDialogControl.xaml.cs">
+      <DependentUpon>NewCharacterDialogControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\SerialComPortErrorDialogControl.xaml.cs">
       <DependentUpon>SerialComPortErrorDialogControl.xaml</DependentUpon>
     </Compile>
@@ -172,6 +211,7 @@
     <Compile Include="Events\CompositeEvent.cs" />
     <Compile Include="Events\DialogEvents\ChangedCharactersStateEvent.cs" />
     <Compile Include="Events\DialogEvents\ChangedModelDialogStateEvent.cs" />
+    <Compile Include="Events\DialogEvents\DialogDataLoadedEvent.cs" />
     <Compile Include="Events\DialogEvents\StopImmediatelyPlayingCurrentDialogLIne.cs" />
     <Compile Include="Events\DialogEvents\StopPlayingCurrentDialogLineEvent.cs" />
     <Compile Include="Events\DialogEvents\UseSerialPortChanged.cs" />
@@ -182,16 +222,13 @@
     <Compile Include="Events\SimpleEvent.cs" />
     <Compile Include="Events\SimpleEventSubscription.cs" />
     <Compile Include="Helpers\LoggerHelper.cs" />
-    <Compile Include="Hendlers\Dialog\DialogTracker.cs" />
     <Compile Include="HeatMapUpdate.cs" />
     <Compile Include="Helpers\AppSet.cs" />
-    <Compile Include="Models\Dialog\Character.cs" />
     <Compile Include="Models\Dialog\DialogItem.cs" />
     <Compile Include="Models\Dialog\HistoricalDialog.cs" />
     <Compile Include="Models\Dialog\HistoricalPhrase.cs" />
     <Compile Include="Models\Dialog\ModelDialog.cs" />
     <Compile Include="Models\Dialog\ModelDialogInfo.cs" />
-    <Compile Include="Models\Dialog\ModelDialogInput.cs" />
     <Compile Include="Models\Dialog\ParentalRatings.cs" />
     <Compile Include="Models\Dialog\PhraseEntry.cs" />
     <Compile Include="Core\PageBase.cs" />
@@ -205,14 +242,21 @@
     <Compile Include="Models\Logger\InfoMessage.cs" />
     <Compile Include="Models\Logger\LogMessage.cs" />
     <Compile Include="Models\Logger\WarningMessage.cs" />
+    <Compile Include="Models\Shared\DialogData.cs" />
+    <Compile Include="Models\Dialog\Character.cs" />
+    <Compile Include="Models\Wizard\TutorialStep.cs" />
+    <Compile Include="Models\Wizard\WizardParameter.cs" />
+    <Compile Include="Models\Wizard\WizardType.cs" />
+    <Compile Include="Models\Wizard\WizardsList.cs" />
     <Compile Include="MP3Player.cs" />
-    <Compile Include="Hendlers\Dialog\InitModelDialogs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\SessionVariables.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helpers\VisualHelper.cs" />
+    <Compile Include="Services\DialogDataService.cs" />
+    <Compile Include="Dialogs\ValidationRules\CharacterPrefixValidationRule.cs" />
     <Compile Include="ViewModels\DialogViewModel.cs" />
     <Compile Include="ViewModels\WizardViewModel.cs" />
     <Compile Include="Views\WizardView.xaml.cs">
@@ -283,11 +327,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Controls\Views\MediaPlayer.xaml">
+    <Page Include="Controls\Views\DialogControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\Views\VoiceRecoreder.xaml">
+    <Page Include="Controls\Views\MediaPlayerControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Views\VoiceRecorederControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\NewCharacterDialogControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -359,8 +411,8 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('packages\Microsoft.Net.Compilers.2.0.1\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.Net.Compilers.2.0.1\build\Microsoft.Net.Compilers.props'))" />
     <Error Condition="!Exists('packages\Accord.3.8.0\build\Accord.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Accord.3.8.0\build\Accord.targets'))" />
+    <Error Condition="!Exists('packages\Microsoft.Net.Compilers.2.7.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.Net.Compilers.2.7.0\build\Microsoft.Net.Compilers.props'))" />
   </Target>
   <PropertyGroup>
     <PostBuildEvent>if not exist "$(OutputDir)Log" mkdir "$(OutputDir)Log"</PostBuildEvent>

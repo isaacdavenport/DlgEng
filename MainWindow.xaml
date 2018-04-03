@@ -9,7 +9,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              WindowStartupLocation="CenterScreen"
-             xmlns:fa="http://schemas.fontawesome.io/icons/"
              WindowState="Maximized"                
              mc:Ignorable="d"
              TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -20,120 +19,102 @@
              TextOptions.TextRenderingMode="Auto"
              d:DesignHeight="451.32" Title="DialogEngine" Width="639.305">
 
-
-    <materialDesign:DialogHost HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Themes/Generic.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+        
+    <materialDesign:DialogHost x:Name="MainWindowDialogHost" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 
         <Grid x:Name="mainGrid" >
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
 
 
             <!-- Menu -->
             <Menu  FontSize="16" Grid.Row="0"  Background="White" Margin="0,0,0,0"  >
 
-             <MenuItem Header="_File" >
-                <MenuItem Header="_Reload files"  Click="_reloadFiles_Click">
-                    <MenuItem.Icon>
-                        <materialDesign:PackIcon Kind="Reload" />
-                    </MenuItem.Icon>
+                <MenuItem Header="_File" >
                 </MenuItem>
-            </MenuItem>
 
                 <MenuItem Header="_View" >
 
                     <MenuItem Header="_Dialog"  >
-                    <MenuItem.Icon>
-                        <materialDesign:PackIcon Kind="CommentMultipleOutline" />
-                    </MenuItem.Icon>
-                        
+                        <MenuItem.Icon>
+                            <materialDesign:PackIcon Kind="CommentMultipleOutline" />
+                        </MenuItem.Icon>
+
                         <MenuItem Header="_Create character"  Click="_createCharacter_Click">
-                        <MenuItem.Icon>
-                            <materialDesign:PackIcon Kind="AccountPlus" />
-                        </MenuItem.Icon>
+                            <MenuItem.Icon>
+                                <materialDesign:PackIcon Kind="AccountPlus" />
+                            </MenuItem.Icon>
                         </MenuItem>
-
-                        <MenuItem Header="_Import character"  Click="_importCharacter_Click">
-                        <MenuItem.Icon>
-                            <materialDesign:PackIcon Kind="File" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-                        <MenuItem Header="_Import dialog model"  Click="_importDialogModel_Click">
-                        <MenuItem.Icon>
-                            <materialDesign:PackIcon Kind="File" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-
                     </MenuItem>
 
                 </MenuItem>
 
-                
+
                 <MenuItem Header="_Tools">
-                     <MenuItem Header="_Settings" Click="_settings_Click">
+                    <MenuItem Header="_Settings" Click="_settings_Click">
                         <MenuItem.Icon>
-                          <materialDesign:PackIcon Kind="Settings" />
+                            <materialDesign:PackIcon Kind="Settings" />
                         </MenuItem.Icon>
-                     </MenuItem>
+                    </MenuItem>
                 </MenuItem>
 
                 <MenuItem Header="_Help">
                     <MenuItem Header="_About Toys2Life" Click="_aboutDialogEngine_Click">
                         <MenuItem.Icon>
-                        <materialDesign:PackIcon Kind="Information" />
-                    </MenuItem.Icon>
+                            <materialDesign:PackIcon Kind="InformationOutline" />
+                        </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
 
             </Menu>
 
-        <!--Toolbar-->
+            <!--Toolbar-->
 
-        <ToolBarTray Grid.Row="1"  >
-            <ToolBar Style="{DynamicResource MaterialDesignToolBar}"  ClipToBounds="False">
+            <ToolBarTray Grid.Row="1"  >
+                <ToolBar Style="{DynamicResource MaterialDesignToolBar}"   ClipToBounds="False">
 
-                <Button Click="_reloadFiles_Click" ToolTip="Relaod files" >
-                    <materialDesign:PackIcon Kind="Reload" />
-                </Button>
+                    <!-- Dialog btn -->
+                    <Button Click="_dialog_Click"  ToolTip="Dialog">
+                        <materialDesign:PackIcon Kind="CommentMultipleOutline" />
+                    </Button>
 
-                <Separator />
+                    <!-- MP3 player btn -->
+                    <Button  Click="_createCharacter_Click" ToolTip="Run a Wizard" >
+                        <materialDesign:PackIcon Kind="AccountPlus" />
+                    </Button>
 
-                <!-- Dialog btn -->
-                <Button Click="_dialog_Click"  ToolTip="Dialog">
-                    <materialDesign:PackIcon Kind="CommentMultipleOutline" />
-                </Button>
+                    <Separator />
 
-                <!-- MP3 player btn -->
-                <Button  Click="_createCharacter_Click" ToolTip="Run a Wizard" >
-                    <materialDesign:PackIcon Kind="AccountPlus" />
-                </Button>
-
-                <Separator />
-
-                <!-- Settings btn -->
+                    <!-- Settings btn -->
                     <Button x:Name="SettingsBtn"  ToolTip="Settings" Click="_settings_Click">
 
                         <materialDesign:PackIcon Kind="Settings" />
-                </Button>
-                
-                </ToolBar>
-        </ToolBarTray>
+                    </Button>
 
-        <!-- Main frame -->
-        <Frame x:Name="mainFrame"
+                </ToolBar>
+            </ToolBarTray>
+
+            <!-- Main frame -->
+            <Frame x:Name="mainFrame"
                NavigationUIVisibility="Hidden"
                Grid.Row="2"
                HorizontalAlignment="Stretch"
-               VerticalAlignment="Stretch"
+               VerticalAlignment="Stretch"/>
 
-               />
-                    
-        <!-- Statusbar -->
-        <StatusBar Grid.Row="3" 
+            <!-- Statusbar -->
+            <StatusBar Grid.Row="3" 
                    HorizontalAlignment="Stretch" 
                    Height="30" 
                    Background="White"
@@ -141,68 +122,55 @@
                    HorizontalContentAlignment="Center" 
                    VerticalContentAlignment="Center" 
                    BorderThickness="0,1,0,0">
-            
-            <StatusBar.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="150" />
-                            <ColumnDefinition Width="auto" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="150" />
-                        </Grid.ColumnDefinitions>
-                    </Grid>
-                </ItemsPanelTemplate>
-            </StatusBar.ItemsPanel>
+
+                <StatusBar.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150" />
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="150" />
+                            </Grid.ColumnDefinitions>
+                        </Grid>
+                    </ItemsPanelTemplate>
+                </StatusBar.ItemsPanel>
 
 
-            <StatusBarItem VerticalContentAlignment="Center" 
+                <StatusBarItem VerticalContentAlignment="Center" 
                            Grid.Column="0" 
                            HorizontalContentAlignment="Center">
 
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="50"/>
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
 
-                    <Label Content="Mode:"  Grid.Column="0"/>
+                        <Label Content="Mode:"  Grid.Column="0"/>
 
-                    <Label x:Name="SelectionModeLabel"
+                        <Label x:Name="SelectionModeLabel"
                            Grid.Column="1" />
-                </Grid>
-
-            </StatusBarItem>
-
-            <Separator Grid.Column="1" Background="LightGray" />
-
-            <StatusBarItem VerticalContentAlignment="Center" 
-                           Grid.Column="2" 
-                           HorizontalContentAlignment="Center">
-
-                <TextBlock  HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Run Text="Toys2Life" 
-                         x:Name="StatusBarTextBox" 
-                         FontSize="12" />
-                </TextBlock>
+                    </Grid>
 
                 </StatusBarItem>
 
-        </StatusBar>
+                <Separator Grid.Column="1" Background="LightGray" />
 
-        
-        
-        <!-- Dialogs -->
+                <StatusBarItem VerticalContentAlignment="Center" 
+                           Grid.Column="2" 
+                           HorizontalContentAlignment="Center">
 
+                    <TextBlock  HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Run Text="Toys2Life" 
+                         x:Name="StatusBarTextBox" 
+                         FontSize="12" />
+                    </TextBlock>
 
+                </StatusBarItem>
 
+            </StatusBar>
 
-
-            <!-- End dialogs -->
-        
-    </Grid>
-
+        </Grid>
     </materialDesign:DialogHost>
-
-
 </Window>

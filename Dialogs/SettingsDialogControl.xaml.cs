@@ -32,6 +32,7 @@ namespace DialogEngine.Dialogs
 
         #endregion
 
+        #region - constructor -
         /// <summary>
         /// Creates instance of SettingsDialog
         /// </summary>
@@ -43,6 +44,7 @@ namespace DialogEngine.Dialogs
             _populateEvents();
         }
 
+        #endregion
 
         #region -private functions-
 

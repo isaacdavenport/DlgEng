@@ -34,7 +34,7 @@ namespace DialogEngine.Converters
 
             if(column == 0)
             {
-                return Brushes.LightGray;
+                return Brushes.WhiteSmoke;
             }
 
             // first column is row header so we need to sub for 1

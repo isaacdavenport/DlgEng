@@ -4,6 +4,7 @@
 using DialogEngine.Events.DialogEvents;
 using DialogEngine.Helpers;
 using DialogEngine.Models.Logger;
+using DialogEngine.Services;
 using DialogEngine.ViewModels;
 using log4net;
 using System;
@@ -111,7 +112,7 @@ namespace DialogEngine
 
         private void _player_MediaFailed(object sender, ExceptionEventArgs e)
         {
-            DialogViewModel.Instance.AddItem(new ErrorMessage("Media filed."));
+            DialogDataService.AddMessage(new ErrorMessage("Media filed."));
         }
 
         #endregion

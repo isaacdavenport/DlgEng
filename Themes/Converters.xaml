@@ -12,5 +12,13 @@
     <converters:ValueToColorConverter x:Key="ValueToColorConverter" />
     <converters:ListBoxItemConverter x:Key="ListBoxItemConverter" />
     <converters:RadioNumToStringConverter x:Key="RadioNumToStringConverter" />
+    <converters:Add1Converter x:Key="Add1Converter" />
+    <converters:TutorialStepNameConverter x:Key="TutorialStepNameConverter" />
+    <converters:InputValuesToBooleanConverter x:Key="InputValuesToBooleanConverter" />
+    <converters:ListBoxItemTextAndIndexConverter x:Key="ListBoxItemTextAndIndexConverter" />
+    <converters:CloneValuesConverter x:Key="CloneValuesConverter" />
+    <converters:IsRecordingEnabledConverter x:Key="IsRecordingEnabledConverter" />
+    <converters:IsVoiceRecorderPlayingEnabledConverter x:Key="IsVoiceRecorderPlayingEnabledConverter" />
+    <converters:IsPlayInContextEnabledConveter x:Key="IsPlayInContextEnabledConveter" />
 
 </ResourceDictionary>

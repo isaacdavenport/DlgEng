@@ -8,7 +8,6 @@ using System.Reflection;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using DialogEngine.Core;
 using DialogEngine.Helpers;
 using DialogEngine.Models.Dialog;
@@ -21,7 +20,7 @@ using System.Windows.Data;
 using DialogEngine.Views;
 using GalaSoft.MvvmLight.CommandWpf;
 using System.Windows.Input;
-using System.Linq;
+using DialogEngine.Models.Shared;
 
 namespace DialogEngine.ViewModels
 {
@@ -36,13 +35,13 @@ namespace DialogEngine.ViewModels
         //default application logger
         private static readonly ILog mcLogger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         // counter for characters in On state
-        private static int mSelectedCharactersOn;
+        private static int msSelectedCharactersOn;
         private static DialogViewModel msInstance = null;
         private static readonly object mcPadlock = new object();
         // reference on view
-        private Views.DialogView mView; 
+        private DialogView mView; 
         private readonly Random mRandom = new Random();
-        // start position of drag and drop operation
+        // start position of drag operation from characters listbox to radio textbox
         private Point mStartPosition;
         // detect is dialog model changed, true value force application to reload dialog model
         private bool mIsModelsDialogChanged;
@@ -60,15 +59,6 @@ namespace DialogEngine.ViewModels
         private bool mIsDialogStopped = true;
         // selected dialog model .json file
         private ModelDialogInfo mSelectedDialogModel;
-        // create token which we pass to background method, so we can force method to finish executing
-
-        private CancellationTokenSource mCancellationTokenDialogWorkerSource = new CancellationTokenSource();
-        private CancellationTokenSource mCancellationTokenGenerateDialogSource = new CancellationTokenSource();
-
-        // collection of dialog lines
-        private ObservableCollection<object> mDialogLinesCollection;
-        // Combobox item sources
-
         private ObservableCollection<Character> mCharacterCollection;
         private ObservableCollection<ModelDialogInfo> mDialogModelCollection;
 
@@ -111,8 +101,10 @@ namespace DialogEngine.ViewModels
         /// </summary>
         public DialogViewModel()
         {
+            DialogData.Instance.PropertyChanged += _dialogData_PropertyChanged;
             EventAggregator.Instance.GetEvent<ChangedCharactersStateEvent>().Subscribe(_onChangedCharacterState);
             EventAggregator.Instance.GetEvent<ChangedModelDialogStateEvent>().Subscribe(_onChangedModelDialogState);
+            EventAggregator.Instance.GetEvent<DialogDataLoadedEvent>().Subscribe(_onDialogDataLoaded);
 
             _bindCommands();
         }
@@ -135,6 +127,11 @@ namespace DialogEngine.ViewModels
         /// Stops dialog
         /// </summary>
         public Core.RelayCommand StopDialog { get; set; }
+
+
+        public Core.RelayCommand EditCharacterCommand { get; set; }
+
+        public Core.RelayCommand ChooseDialogModelCbx_DropDownOpened { get; set; }
 
         /// <summary>
         /// Unbinds radio from character
@@ -171,6 +168,16 @@ namespace DialogEngine.ViewModels
         /// Recalculate width for TabItem columns in debug view
         /// </summary>
         public RelayCommand<SelectionChangedEventArgs> RefreshTabItem { get; set; }
+
+
+        #endregion
+
+        #region - event handlers -
+
+        private void _dialogData_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            OnPropertyChanged(e.PropertyName);
+        }
 
         #endregion
 
@@ -210,8 +217,6 @@ namespace DialogEngine.ViewModels
                 OnPropertyChanged("SelectedCharactersOn");
 
                 // when state of character changed, we want to cancel current dialog and reset MP3 player
-                mCancellationTokenGenerateDialogSource.Cancel();
-                mCancellationTokenGenerateDialogSource = new CancellationTokenSource();
                 EventAggregator.Instance.GetEvent<StopPlayingCurrentDialogLineEvent>().Publish();
             }
             catch (Exception ex)
@@ -231,7 +236,7 @@ namespace DialogEngine.ViewModels
         private async void _setCharacterToRadioBidnings()
         {
             // reset radio textboxes
-            if (Application.Current.Dispatcher.CheckAccess())
+            if (Dispatcher.CheckAccess())
             {
                 foreach (TextBox tb in VisualHelper.FindVisualChildren<TextBox>(this.View.RadioTextBoxesContainer))
                 {
@@ -251,7 +256,7 @@ namespace DialogEngine.ViewModels
             }
             else
             {
-                await Application.Current.Dispatcher.BeginInvoke((Action)(() =>
+                await Dispatcher.BeginInvoke((Action)(() =>
                 {
                     foreach (TextBox tb in VisualHelper.FindVisualChildren<TextBox>(this.View.RadioTextBoxesContainer))
                     {
@@ -273,25 +278,13 @@ namespace DialogEngine.ViewModels
         }
 
         // choose collection where to add object depend on type of argument
-        private void _processAddItem(object _entry)
+        private void _processAddMessage(LogMessage entry)
         {
             try
             {
-                if (_entry is DialogItem || _entry is String)
+                if (entry is InfoMessage)
                 {
-                    DialogLinesCollection.Add(_entry);
-
-                    OnPropertyChanged("DialogLinesCollection");
-
-                    var scrollViewer = VisualTreeHelper.GetChild(mView.textOutput, 0) as ScrollViewer;
-
-                    scrollViewer.ScrollToBottom();
-
-                }
-                else if (_entry is InfoMessage)
-                {
-                    InfoMessagesCollection.Insert(0, (InfoMessage)_entry);
-
+                    InfoMessagesCollection.Insert(0, (InfoMessage)entry);
                     int _length = InfoMessagesCollection.Count;
 
                     if (_length > 300 && _length > 0)
@@ -300,12 +293,10 @@ namespace DialogEngine.ViewModels
                     }
 
                     OnPropertyChanged("InfoMessagesCollection");
-
                 }
-                else if (_entry is WarningMessage)
+                else if (entry is WarningMessage)
                 {
-                    WarningMessagesCollection.Insert(0, (WarningMessage)_entry);
-
+                    WarningMessagesCollection.Insert(0, (WarningMessage)entry);
                     int _length = WarningMessagesCollection.Count;
 
                     if (_length > 300 && _length > 0)
@@ -314,12 +305,10 @@ namespace DialogEngine.ViewModels
                     }
 
                     OnPropertyChanged("WarningMessagesCollection");
-
                 }
                 else
                 {
-                    ErrorMessagesCollection.Insert(0, (ErrorMessage)_entry);
-
+                    ErrorMessagesCollection.Insert(0, (ErrorMessage)entry);
                     int _length = ErrorMessagesCollection.Count;
 
 
@@ -333,7 +322,7 @@ namespace DialogEngine.ViewModels
             }
             catch (Exception e)
             {
-                mcLogger.Error("processAddItem " + e.Message);
+                mcLogger.Error("process_addMessage " + e.Message);
             }
         }
 
@@ -347,6 +336,8 @@ namespace DialogEngine.ViewModels
             StopDialog = new Core.RelayCommand(x => _stopDialog());
 
             ClearRadioBindingCommand = new Core.RelayCommand(x => _clearRadioBindingCommand((string)x));
+
+            EditCharacterCommand = new Core.RelayCommand(x => _editCharacter((Character)x));
 
             // MVVM light commands where we can pass event object
 
@@ -366,6 +357,21 @@ namespace DialogEngine.ViewModels
 
         }
 
+        private void _editCharacter(Character character)
+        {
+            (Application.Current.MainWindow.FindName("mainFrame") as Frame).NavigationService.Navigate(new WizardView(character));            
+        }
+
+        private async void _onDialogDataLoaded()
+        {
+            Task _checkTagsUsedTask = _checkTagsUsedAsync();
+            Task _checkForMissingPhrasesTask = _checkForMissingPhrasesAsync();
+
+            _setCharacterToRadioBidnings();
+
+            await _checkTagsUsedTask;
+            await _checkForMissingPhrasesTask;
+        }
 
 
         private void _dialogModelSelectionChanged(SelectionChangedEventArgs e)
@@ -416,7 +422,6 @@ namespace DialogEngine.ViewModels
                 if (e.Data.GetDataPresent("characterFormat"))
                 {
                     Character character = e.Data.GetData("characterFormat") as Character;
-
                     TextBox tb = e.Source as TextBox;
 
                     // prevent dropping of the same character
@@ -449,15 +454,12 @@ namespace DialogEngine.ViewModels
                     else
                     {
                         // if character already assigned we get textbox where is character dropped
-                        TextBox tbClear = mView.FindName("Radio_" + character.RadioNum) as TextBox;
-
+                        TextBox _tbClear = mView.FindName("Radio_" + character.RadioNum) as TextBox;
                         // assign new radio number for dropping character
                         character.RadioNum = _numRadio;
-
                         // clear former textbox
-                        tbClear.Text = "";
-                        tbClear.Tag = null;
-
+                        _tbClear.Text = "";
+                        _tbClear.Tag = null;
                         // assign new character
                         tb.Text = character.CharacterName;
 
@@ -480,7 +482,6 @@ namespace DialogEngine.ViewModels
             {
                 mcLogger.Error("Error during executing drop command. "+ ex.Message);
             }
-
             e.Handled = true;
         }
 
@@ -490,14 +491,10 @@ namespace DialogEngine.ViewModels
         {
             try
             {
-                if (!e.Data.GetDataPresent("characterFormat") || !(e.Source is TextBox))
-                {
-                    e.Effects = DragDropEffects.None;
-                }
-                else
-                {
+                if (!e.Data.GetDataPresent("characterFormat") || !(e.Source is TextBox))               
+                    e.Effects = DragDropEffects.None;                
+                else                
                     e.Effects = DragDropEffects.Copy;
-                }
             }
             catch (Exception ex)
             {
@@ -515,7 +512,6 @@ namespace DialogEngine.ViewModels
             {
                 Point _mousePos = e.GetPosition(null);
                 Vector diff = mStartPosition - _mousePos;
-
 
                 if ((e.LeftButton == MouseButtonState.Pressed) &&
                     (Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance ||
@@ -550,7 +546,6 @@ namespace DialogEngine.ViewModels
         // forces TabItem to refresh binding for GridView columns width
         private void _refreshTabItem(SelectionChangedEventArgs e)
         {
-
             try
             {
                 if (e.AddedItems.Count > 0 && e.AddedItems[0] is TabItem)
@@ -577,13 +572,6 @@ namespace DialogEngine.ViewModels
         {
             switch (type)
             {
-                case "DialogLinesCollection":
-                    {
-                        DialogLinesCollection.Clear();
-                        OnPropertyChanged(type);
-                        break;
-                    }
-
                 case "InfoMessagesCollection":
                     {
                         InfoMessagesCollection.Clear();
@@ -628,385 +616,166 @@ namespace DialogEngine.ViewModels
                         {
                             var _debugMessage = "Missing " + _character.CharacterPrefix + "_" + _phrase.FileName + ".mp3 " + _phrase.DialogStr;
 
-                            AddItem(new WarningMessage(_debugMessage));
+                            _addMessage(new WarningMessage(_debugMessage));
 
                             LoggerHelper.Info(SessionVariables.DialogLogFileName, "missing " + _character.CharacterPrefix + "_" + _phrase.FileName + ".mp3 " + _phrase.DialogStr);
-
                         }
                     }
-
                 }
             });
             //TODO check that all dialog models have unique names
         }
 
 
-        private async Task _checkTagsUsedAsync(DialogTracker _dialogTracker)
+        private async Task _checkTagsUsedAsync()
         {
             await Task.Run(() =>
             {
                 Thread.CurrentThread.Name = "_checkTagsUsedAsyncThread";
 
-                foreach (var _dialog in _dialogTracker.ModelDialogs)
-                {
-                    AddItem(new InfoMessage(" " + _dialogTracker.ModelDialogs.IndexOf(_dialog) + " : " + _dialog.Name));
-                    LoggerHelper.Info(SessionVariables.DialogLogFileName, " " + _dialogTracker.ModelDialogs.IndexOf(_dialog) + " : " + _dialog.Name);
-                }
-
                 //test that all character tags are used by a dialog model.
-                AddItem(new InfoMessage("Check characters tags are used "));
+                _addMessage(new InfoMessage("Check characters tags are used "));
 
                 var _usedFlag = false;
 
                 foreach (var _character in CharacterCollection)
                     foreach (var _phrase in _character.Phrases)
-                        foreach (var _phrasetag in _phrase.PhraseWeights.Keys)
+                        foreach (var _phraseTag in _phrase.PhraseWeights.Keys)
                         {
                             _usedFlag = false;
 
-
-                            foreach (var _dialog in _dialogTracker.ModelDialogs)
+                            foreach (var _dialogInfo in DialogModelCollection)
                             {
-                                foreach (var _dialogtag in _dialog.PhraseTypeSequence)
-                                    if (_phrasetag == _dialogtag)
-                                    {
-                                        _usedFlag = true;
+                                foreach(var dialog in _dialogInfo.ArrayOfDialogModels)
+                                    foreach (var _dialogTag in dialog.PhraseTypeSequence)
+                                        if (_phraseTag == _dialogTag)
+                                        {
+                                            _usedFlag = true;
+                                            break;
+                                        }
+
+                                    if (_usedFlag)
                                         break;
-                                    }
-
-
-                                if (_usedFlag)
-                                    break;
                             }
-
 
                             if (!_usedFlag)
                             {
-                                AddItem(new InfoMessage(" " + _phrasetag + " is not used."));
-                                LoggerHelper.Info(SessionVariables.DialogLogFileName, " " + _phrasetag + " is not used.");
+                                _addMessage(new InfoMessage(" " + _phraseTag + " is not used."));
+                                LoggerHelper.Info(SessionVariables.DialogLogFileName, " " + _phraseTag + " is not used.");
                             }
                         }
 
-
-                AddItem(new InfoMessage("Check dialogs tags are used"));
-
-
-                foreach (var _dialog in _dialogTracker.ModelDialogs)
-                    foreach (var _dialogtag in _dialog.PhraseTypeSequence) //each dialog model tag
-                    {
-                        _usedFlag = false;
-
-                        foreach (var _character in CharacterCollection)
+                foreach (var _dialogInfo in DialogModelCollection)
+                    foreach (var dialog in _dialogInfo.ArrayOfDialogModels)
+                        foreach (var _dialogTag in dialog.PhraseTypeSequence) //each dialog model tag
                         {
-                            foreach (var _characterPhrase in _character.Phrases)
-                            {
-                                foreach (var _phraseTag in _characterPhrase.PhraseWeights.Keys) //each character phrase tag{
-                                    if (_dialogtag == _phraseTag)
-                                    {
-                                        _usedFlag = true;
-                                        break;
-                                    }
+                            _usedFlag = false;
 
+                            foreach (var _character in CharacterCollection)
+                            {
+                                foreach (var _characterPhrase in _character.Phrases)
+                                {
+                                    foreach (var _phraseTag in _characterPhrase.PhraseWeights.Keys) //each character phrase tag{
+                                        if (_dialogTag == _phraseTag)
+                                        {
+                                            _usedFlag = true;
+                                            break;
+                                        }
+
+                                    if (_usedFlag)
+                                        break;
+                                }
 
                                 if (_usedFlag)
                                     break;
                             }
 
-
-                            if (_usedFlag)
-                                break;
+                            if (!_usedFlag)
+                            {
+                                _addMessage(new InfoMessage(" " + _dialogTag + " not used in " + dialog.Name));
+                                LoggerHelper.Info(SessionVariables.DialogLogFileName, " " + _dialogTag + " not used in " + dialog.Name);
+                            }
                         }
-
-
-                        if (!_usedFlag)
-                        {
-                            AddItem(new InfoMessage(" " + _dialogtag + " not used in " + _dialog.Name));
-                            LoggerHelper.Info(SessionVariables.DialogLogFileName, " " + _dialogtag + " not used in " + _dialog.Name);
-                        }
-                    }
-
             });
         }
 
+        private void _addMessage(LogMessage _entry)
+        {
+            try
+            {
+                if (Dispatcher.CheckAccess())
+                {
+                    _processAddMessage(_entry);
+                }
+                else
+                {
+                    Dispatcher.BeginInvoke((Action)(() =>
+                    {
+                        _processAddMessage(_entry);
+                    }));
+                }
+            }
+            catch (Exception ex)
+            {
+                mcLogger.Error("Error during adding an item. " + ex.Message);
+            }
+        }
 
         // stops dialog
         private void _stopDialog()
         {
-            try
-            {
-                IsDialogStopped = true;
+            //try
+            //{
+            //    IsDialogStopped = true;
 
-                EventAggregator.Instance.GetEvent<StopImmediatelyPlayingCurrentDialogLIne>().Publish();
+            //    EventAggregator.Instance.GetEvent<StopImmediatelyPlayingCurrentDialogLIne>().Publish();
 
-                DialogLinesCollection.Clear();
+            //    DialogLinesCollection.Clear();
 
-                OnPropertyChanged("DialogLinesCollection");
+            //    OnPropertyChanged("DialogLinesCollection");
 
-                mCancellationTokenDialogWorkerSource.Cancel();
-                mCancellationTokenGenerateDialogSource.Cancel();
+            //    mCancellationTokenDialogWorkerSource.Cancel();
+            //    mCancellationTokenGenerateDialogSource.Cancel();
 
-                mCancellationTokenDialogWorkerSource = new CancellationTokenSource();
-                mCancellationTokenGenerateDialogSource = new CancellationTokenSource();
-            }
-            catch (Exception ex)
-            {
-                mcLogger.Error("Stop dialog. " + ex.Message);
-            }
+            //    mCancellationTokenDialogWorkerSource = new CancellationTokenSource();
+            //    mCancellationTokenGenerateDialogSource = new CancellationTokenSource();
+            //}
+            //catch (Exception ex)
+            //{
+            //    mcLogger.Error("Stop dialog. " + ex.Message);
+            //}
         }
 
 
         // starts new dialog
         private async  void _startDialog()
         {
-            try
-            {
-                try
-                {
-                    // .First() will throw exception if data not found
-                    var _dialogModelInfo = DialogModelCollection.Where(x => x.State == Models.Enums.ModelDialogState.On)
-                                                                .First();
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("No allowed dialog model files. Please change settings for dialog models.");
-                    return;
-                }
+            //try
+            //{
+            //    try
+            //    {
+            //        // .First() will throw exception if data not found
+            //        var _dialogModelInfo = DialogModelCollection.Where(x => x.State == Models.Enums.ModelDialogState.On)
+            //                                                    .First();
+            //    }
+            //    catch (Exception)
+            //    {
+            //        MessageBox.Show("No allowed dialog model files. Please change settings for dialog models.");
+            //        return;
+            //    }
 
-                IsDialogStopped = false;
-
-                // pass cancellationToken to method which can be used to force async method to finish executing
-                await _dialogWorkerMethodAsync(mCancellationTokenDialogWorkerSource.Token);
-            }
-            catch (Exception ex)
-            {
-                mcLogger.Error("Start dialog exception. "+ ex.Message);
-            }         
+            //    IsDialogStopped = false;
+            //}
+            //catch (Exception ex)
+            //{
+            //    mcLogger.Error("Start dialog exception. "+ ex.Message);
+            //}         
         }
 
-
-        private async Task _dialogWorkerMethodAsync(CancellationToken _cancellationToken)
-        {
-            try
-            {
-                if (mIsModelsDialogChanged == true)
-                {
-                    await InitModelDialogs.RefreshDialogModelsAsync();
-
-                    mIsModelsDialogChanged = false;
-                }
-
-                await Task.Run(() =>
-                {
-                     Thread.CurrentThread.Name = "DialogWorkerThread";
-
-                      while (!_cancellationToken.IsCancellationRequested)
-                      {
-
-                        mcLogger.Debug("Start DialogWorkerThread");
-
-                          switch (SelectedCharactersOn)
-                          {
-                              case 2: // if selected 2 characters have ON state we can force characters
-                                  {
-                                      int[] _selectedCharactersAndModel;
-
-                                      // if we selected specific dialog model
-                                      if (SelectedDialogModelIndex != -1)
-                                      {
-                                          _selectedCharactersAndModel = new int[3];
-
-                                          _selectedCharactersAndModel[2] = SelectedDialogModelIndex;
-                                      }
-                                      else
-                                      {
-                                          _selectedCharactersAndModel = new int[2];
-                                      }
-
-                                      _selectedCharactersAndModel[0] = SelectedIndex1;
-
-                                      _selectedCharactersAndModel[1] = SelectedIndex2;
-
-                                      DialogTracker.Instance.GenerateADialog(mCancellationTokenGenerateDialogSource.Token, _selectedCharactersAndModel);
-
-                                      break;
-                                  }
-
-                              case 1:  // if only one character is in ON state then we have to random select another
-                                  {
-                                      int[] _selectedCharactersAndModel;
-
-
-                                      if (SelectedDialogModelIndex != -1)
-                                      {
-                                          _selectedCharactersAndModel = new int[3];
-
-                                          _selectedCharactersAndModel[2] = SelectedDialogModelIndex; // we need to sub 1 because first item is placeholder
-                                      }
-                                      else
-                                      {
-                                          _selectedCharactersAndModel = new int[2];
-                                      }
-
-
-                                      _selectedCharactersAndModel[0] = SelectedIndex1 == -1 ? SelectedIndex2 : SelectedIndex1;
-
-                                      int _nextCharacter2 = SelectNextCharacters.GetNextCharacter(_selectedCharactersAndModel[0]);
-
-                                      //we have to select second character random
-                                      _selectedCharactersAndModel[1] = _nextCharacter2 == -1 ? DialogTracker.Instance.Character2Num : _nextCharacter2;
-
-                                      DialogTracker.Instance.GenerateADialog(mCancellationTokenGenerateDialogSource.Token, _selectedCharactersAndModel);
-
-                                      break;
-                                  }
-                              default: // if no characters in ON state
-                                  {
-                                      if (SelectedDialogModelIndex != -1)
-                                      {
-                                          DialogTracker.Instance.GenerateADialog(mCancellationTokenGenerateDialogSource.Token, new int[] { SelectedDialogModelIndex });
-
-                                      }
-                                      else
-                                      {
-                                          DialogTracker.Instance.GenerateADialog(mCancellationTokenGenerateDialogSource.Token); //normal operation
-                                      }
-
-                                      Thread.Sleep(300);
-                                      Thread.Sleep(mRandom.Next(0, 600));
-                                      DialogEngine.HeatMapUpdate.PrintHeatMap();
-                                      Thread.Sleep(200);
-                                      break;
-                                  }
-                          }
-
-                        mcLogger.Debug("End DialogWorkerThread");
-
-                    }
-                }, _cancellationToken);
-            }
-            catch (TaskCanceledException ex) 
-            {
-                mcLogger.Error("TaskCanceledException.  " + ex.Message);
-            }
-            catch (Exception ex)
-            {
-                mcLogger.Error("Dialog worker method. "+ ex.Message);
-            }
-        }
-
-        #endregion
-
-        #region - Public methods -
-
-        /// <summary>
-        /// Add dialog item 
-        /// </summary>
-        /// <param name="_entry">Line to be added to debug console </param>
-        public void AddItem(object _entry)
-        {
-            try
-            {
-                if (Application.Current.Dispatcher.CheckAccess())
-                {
-                    _processAddItem(_entry);
-                }
-                else
-                {
-                    Application.Current.Dispatcher.BeginInvoke((Action)(() =>
-                    {
-                        _processAddItem(_entry);
-                    }));
-                }
-            }
-            catch(Exception ex)
-            {
-                mcLogger.Error("Error during adding an item. " + ex.Message);
-            }
-        }
-
-        /// <summary>
-        /// Reloada dialog and character .json files
-        /// </summary>
-        public async Task ReloadDialogDataAsync()
-        {
-            try
-            {
-                Task loadDialogModelsTask = InitModelDialogs.SetDefaultsAsync(DialogTracker.Instance);
-                Task loadCharactersTask = DialogTracker.Instance.IntakeCharactersAsync();
-
-                await loadDialogModelsTask;
-                await loadCharactersTask;
-
-                _setCharacterToRadioBidnings();
-            }
-            catch(Exception ex)
-            {
-                mcLogger.Error("Error during reloading dialog data." + ex.Message);
-                MessageBox.Show("Error during reloading dialog data.");
-            }
-        }
-
-
-        /// <summary>
-        /// Initialize  dialog data (characters and dialog models) and character selection method (serial or random)
-        /// </summary>
-        public async Task InitDialogDataAsync()
-        {
-            try
-            {
-                Task _loadDialogModelsTask = InitModelDialogs.SetDefaultsAsync(DialogTracker.Instance);
-                Task _loadCharactersTask = DialogTracker.Instance.IntakeCharactersAsync();
-
-                await _loadDialogModelsTask;
-
-                if (SessionVariables.TagUsageCheck)
-                    await _checkTagsUsedAsync(DialogTracker.Instance);
-
-
-                await _loadCharactersTask;
-
-                // wait untill loading of character complete and then set character to radio bindings
-                _setCharacterToRadioBidnings();
-
-                if (SessionVariables.DebugFlag)
-                    await _checkForMissingPhrasesAsync();
-
-
-                await SerialComs.InitCharacterSelection();
-
-                mcLogger.Debug("SerialComs.InitCharacterSelection done");
-            }
-            catch(Exception ex)
-            {
-                mcLogger.Error("Error during initializing dialog data. " + ex.Message);
-                MessageBox.Show("Error during initializing dialog data.");
-            }
-        }
 
         #endregion
 
         #region - Properties -
-
-        /// <summary>
-        /// Dynamic collection of objects, objects can be added,removed or updated, and UI is automatically updated
-        /// Source for ItemsControl where we display dialog lines
-        /// </summary>
-        public ObservableCollection<object> DialogLinesCollection
-        {
-            get
-            {
-                if (mDialogLinesCollection == null)
-                    mDialogLinesCollection = new ObservableCollection<object>();
-
-                return mDialogLinesCollection;
-            }
-            set
-            {
-                mDialogLinesCollection = value;
-                // send notification to view (model is changed)
-                OnPropertyChanged("DialogLinesCollection");
-            }
-        }
 
         /// <summary>
         /// Contains index of selected character 1 in ON state
@@ -1132,29 +901,29 @@ namespace DialogEngine.ViewModels
         {
             get
             {
-                if (SelectedDialogModel == null)
-                {
-                    return -1;
-                }
+                //if (SelectedDialogModel == null)
+                //{
+                //    return -1;
+                //}
 
-                int result = 0;
+                //int result = 0;
 
-                // iterate over dialog model files
-                for (int i = 0; i < DialogModelCollection.Count; i++)
-                {
-                    // if we found selected file, then get its selected dialog model 
-                    if (DialogModelCollection[i].FileName.Equals(SelectedDialogModel.FileName))
-                    {
-                        return result + SelectedDialogModel.SelectedModelDialogIndex;
-                    }
-                    else  // add number of its dialog models
-                    {
-                        if (DialogModelCollection[i].State == Models.Enums.ModelDialogState.On)
-                        {
-                            result += DialogModelCollection[i].InList.Count;
-                        }
-                    }
-                }
+                //// iterate over dialog model files
+                //for (int i = 0; i < DialogModelCollection.Count; i++)
+                //{
+                //    // if we found selected file, then get its selected dialog model 
+                //    if (DialogModelCollection[i].FileName.Equals(SelectedDialogModel.FileName))
+                //    {
+                //        return result + SelectedDialogModel.SelectedModelDialogIndex;
+                //    }
+                //    else  // add number of its dialog models
+                //    {
+                //        if (DialogModelCollection[i].State == Models.Enums.ModelDialogState.On)
+                //        {
+                //            result += DialogModelCollection[i].InList.Count;
+                //        }
+                //    }
+                //}
 
                 return -1;
             }
@@ -1165,8 +934,8 @@ namespace DialogEngine.ViewModels
         /// </summary>
         public static int SelectedCharactersOn
         {
-            get { return mSelectedCharactersOn;  }
-            set { mSelectedCharactersOn = value; }
+            get { return msSelectedCharactersOn;  }
+            set { msSelectedCharactersOn = value; }
         }
 
         /// <summary>
@@ -1177,16 +946,8 @@ namespace DialogEngine.ViewModels
         {
             get
             {
-                if (mCharacterCollection == null)
-                {
-                    mCharacterCollection = new ObservableCollection<Character>();
-                }
+                mCharacterCollection = DialogData.Instance.CharacterCollection;
                 return mCharacterCollection;
-            }
-            set
-            {
-                mCharacterCollection = value;
-                OnPropertyChanged("CharacterCollection");
             }
         }
 
@@ -1198,16 +959,8 @@ namespace DialogEngine.ViewModels
         {
             get
             {
-                if (mDialogModelCollection == null)
-                    mDialogModelCollection = new ObservableCollection<ModelDialogInfo>();
-
+                mDialogModelCollection = DialogData.Instance.DialogModelCollection;
                 return mDialogModelCollection;
-            }
-            set
-            {
-                mDialogModelCollection = value;
-                // send notification to view (model is changed)
-                OnPropertyChanged("DialogModelCollection");
             }
         }
 
@@ -1274,14 +1027,6 @@ namespace DialogEngine.ViewModels
             }
         }
 
-        /// <summary>
-        /// CancellationTokenSource which we need to cancel 
-        /// </summary>
-        public CancellationTokenSource CancellationTokenGenerateDialogSource
-        {
-            get { return mCancellationTokenGenerateDialogSource; }
-            set { mCancellationTokenGenerateDialogSource = value; }
-        }
 
         /// <summary>
         /// Radios states

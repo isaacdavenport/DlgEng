@@ -4,6 +4,7 @@
 using DialogEngine.Events;
 using DialogEngine.Events.DialogEvents;
 using DialogEngine.Models.Enums;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 
 
@@ -17,33 +18,25 @@ namespace DialogEngine.Models.Dialog
     {
         #region - fields -
 
-        private List<ModelDialog> mInList = new List<ModelDialog>();
         private int mSelectedModelDialogIndex = -1;
         private ModelDialogState mState;
-        public string FileName { set; get; }
 
         #endregion
 
         #region - properties -
 
-        /// <summary>
-        /// List of dialog models in dialog .json file
-        /// </summary>
-        public List<ModelDialog> InList
-        {
-            get { return mInList;  }
-            set { mInList = value; }
-        }
+        public List<ModelDialog> ArrayOfDialogModels { get; set; }
+        public string ModelsCollectionName { set; get; }
 
         /// <summary>
         /// Index of selected dialog model from dialog .json file
         /// </summary>
+        [JsonIgnore]
         public int SelectedModelDialogIndex
         {
             get { return mSelectedModelDialogIndex; }
             set { mSelectedModelDialogIndex = value; }
         }
-
 
         /// <summary>
         /// Represents state of dialog .json file
@@ -52,6 +45,7 @@ namespace DialogEngine.Models.Dialog
         /// On - we want to load dialog models from dialog .json file
         /// Off - ignore dilogs from dialog .json file
         /// </summary>
+        [JsonIgnore]
         public ModelDialogState State
         {
             get { return mState; }

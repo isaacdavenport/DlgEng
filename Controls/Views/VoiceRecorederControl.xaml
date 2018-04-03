@@ -1,0 +1,118 @@
+﻿<!--
+   Confidential Source Code Property Toys2Life LLC Colorado 2017
+   www.toys2life.org
+-->
+    
+<UserControl x:Class="DialogEngine.Controls.Views.VoiceRecorederControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:vr="clr-namespace:DialogEngine.Controls.VoiceRecorder"
+             xmlns:local ="clr-namespace:DialogEngine.Controls.Views"
+             xmlns:pages ="clr-namespace:DialogEngine.Views"
+             HorizontalAlignment="Stretch"
+             VerticalAlignment="Stretch"
+             HorizontalContentAlignment="Stretch"
+             VerticalContentAlignment="Stretch"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Themes/Generic.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <materialDesign:PackIcon x:Key="Microphone" Kind="Microphone" />
+            <materialDesign:PackIcon x:Key="StopBtn" Kind="Stop" />
+            <materialDesign:PackIcon x:Key="PauseBtn" Kind="Pause" />
+            <materialDesign:PackIcon x:Key="PlayBtn" Kind="Play" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid Background="#FF595959"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+
+        <Border x:Name="VoiceRcrdBorder"
+            BorderThickness="2"                
+            Grid.Row="0" 
+            HorizontalAlignment="Stretch" 
+            VerticalAlignment="Stretch" 
+            Background="#FF333333" 
+            CornerRadius="3,3,3,3">
+            <vr:SpectrumAnalyzer x:Name="spectrumAnalyzer"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                BarCount="64" />
+        </Border>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Center"  Orientation="Horizontal">
+                <Button x:Name="RecordingBtn"
+                    Margin="10,10,10,10"  
+                    Command="{Binding StartRecording}"
+                    Width="25"
+                    Content="{StaticResource Microphone}"
+                    Height="25">
+                    <Button.IsEnabled>
+                        <MultiBinding Converter="{StaticResource IsRecordingEnabledConverter}">
+                            <Binding  Path="IsPlaying" />
+                            <Binding  Path="RecordingAllowed" 
+                                      RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=local:VoiceRecorederControl}" />
+                        </MultiBinding>
+                    </Button.IsEnabled>
+                </Button>
+                <Button x:Name="PlayingBtn"
+                    Margin="10,10,10,10"  
+                    Command="{Binding PlayContent}" 
+                    Width="25"
+                    Content="{StaticResource PlayBtn}"
+                    Height="25" >
+                    <Button.IsEnabled >
+                        <MultiBinding Converter="{StaticResource IsVoiceRecorderPlayingEnabledConverter}">
+                            <Binding Path="IsRecording" />
+                            <Binding Path="CurrentFilePath" />
+                            <Binding Path="IsPlayingLineInContext" />
+                        </MultiBinding>
+                    </Button.IsEnabled>
+                </Button>
+
+                <Button x:Name="PlayInContextBtn"
+                    Margin="10,10,10,10"  
+                    Command="{Binding DataContext.PlayInContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=pages:WizardView}}" 
+                    Width="auto"
+                    Padding="4,0,4,0"
+                    Content="Play in context"
+                    Height="25" >
+                    <Button.IsEnabled >
+                        <MultiBinding Converter="{StaticResource IsPlayInContextEnabledConveter}">
+                            <Binding Path="IsRecording" />
+                            <Binding Path="CurrentFilePath" />
+                            <Binding Path="IsPlaying" />
+                            <Binding Path="IsPlayingLineInContext" />
+                        </MultiBinding>
+                    </Button.IsEnabled>
+                </Button>
+
+            </StackPanel>
+            
+            <Slider x:Name="ProgressSlider"
+                VerticalAlignment="Center"
+                Grid.Column="1"               
+                HorizontalAlignment="Stretch"
+                Margin="10,0,10,0"
+                Maximum="100"
+                Value="{Binding ChannelPosition}"
+                IsMoveToPointEnabled="True" />
+        </Grid>
+    </Grid>
+</UserControl>

@@ -1,52 +1,40 @@
-﻿//  Confidential Source Code Property Toys2Life LLC Colorado 2017
-//  www.toys2life.org
+﻿
 
-using System.Collections.Generic;
-using Newtonsoft.Json;
-using DialogEngine.Models.Enums;
-using DialogEngine.ViewModels;
 using DialogEngine.Events;
 using DialogEngine.Events.DialogEvents;
+using DialogEngine.Models.Enums;
+using DialogEngine.ViewModels;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace DialogEngine.Models.Dialog
 {
-    /// <summary>
-    /// Used for deserialization of json files with created characters.
-    /// </summary>
     public class Character
     {
+        #region - fields -
 
-
-        public const int RecentPhrasesQueueSize = 8;
-
-        /// <summary>
-        /// A character's Phrases list holds all the phrases they might say along with 
-        /// heuristic phraseWeights on what parts of a model dialog they might use them in.
-        /// </summary>
-        /// 
-                
-        // max allowed characters in On state is 2
-        private const int mcMaxAllowedCharactersOn = 2;
-
+        private const int mcMaxAllowedCharactersOn = 2;             // max allowed characters in On state is 2
         private CharacterState mState;
+        private int mRadioNum = -1;                                 // assigned radio number - unassigned value is -1
 
-        // assigned radio number - unassigned value is -1
-        private int mRadioNum = -1;
+        #endregion
 
-        [JsonProperty("Phrases")]
-        public List<PhraseEntry> Phrases = new List<PhraseEntry>(); //entry now has string phraseweight tags.
+        #region - properties -
 
-        [JsonProperty("PhraseTotals")]
+        public int CharacterAge { get; set; }
+        public string CharacterGender { get; set; }
+        public string CharacterName { get; set; }
+        public string CharacterPrefix { get; set; }
+        public List<PhraseEntry> Phrases = new List<PhraseEntry>();
         public PhraseEntry PhraseTotals = new PhraseEntry();
 
-        public Queue<PhraseEntry> RecentPhrases = new Queue<PhraseEntry>()
-            ; //TODO make this a method that runs over the history
+        // json ignore properties
 
-        [JsonProperty("CharacterName")]
-        public string CharacterName { get; protected set; }
+        [JsonIgnore]
+        public Queue<PhraseEntry> RecentPhrases = new Queue<PhraseEntry>();
 
-        [JsonProperty("CharacterPrefix")]
-        public string CharacterPrefix { get; protected set; }
+        [JsonIgnore]
+        public const int RecentPhrasesQueueSize = 8;
 
         /// <summary>
         /// Radio number assigned to character
@@ -56,7 +44,7 @@ namespace DialogEngine.Models.Dialog
         public int RadioNum
         {
             get { return mRadioNum; }
-            set { mRadioNum = value;}
+            set { mRadioNum = value; }
         }
 
         /// <summary>
@@ -88,5 +76,7 @@ namespace DialogEngine.Models.Dialog
                 }
             }
         }
+
+        #endregion
     }
 }

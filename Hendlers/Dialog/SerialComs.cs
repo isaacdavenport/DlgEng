@@ -18,6 +18,7 @@ using DialogEngine.Dialogs;
 using MaterialDesignThemes.Wpf;
 using System.Windows.Threading;
 using System.Configuration;
+using DialogEngine.Services;
 
 namespace DialogEngine
 {
@@ -105,7 +106,7 @@ namespace DialogEngine
             }
             catch(Exception ex)   // this is happened when usb is plug
             {
-                DialogViewModel.Instance.AddItem(new ErrorMessage("Device is disconnected."));
+                DialogDataService.AddMessage(new ErrorMessage("Device is disconnected."));
 
                 // COM port is closed, so we will run random selection
                 string _configPath = System.IO.Path.Combine(Environment.CurrentDirectory, "DialogEngine.exe");
@@ -203,7 +204,7 @@ namespace DialogEngine
             catch (Exception e)
             {
                 mcLogger.Error("InitCharacterSelection " + e.Message);
-                DialogViewModel.Instance.AddItem(new ErrorMessage("Error in character selection method."));
+                DialogDataService.AddMessage(new ErrorMessage("Error in character selection method."));
             }
             //worry about stopping cleanly later TODO
         }
@@ -252,7 +253,7 @@ namespace DialogEngine
                     catch(Exception ex)
                     {
                         mcLogger.Error("_regularylyReadSerialAsync " + ex.Message);
-                        DialogViewModel.Instance.AddItem(new ErrorMessage("Error in serial communication."));
+                        DialogDataService.AddMessage(new ErrorMessage("Error in serial communication."));
                     }
                 }
             });
@@ -275,29 +276,17 @@ namespace DialogEngine
                 mIsSerialMode = value;
                 try
                 {
+                    string _selectionModeName = mIsSerialMode ? "Serial" : "Random";
+
                     if (Application.Current.Dispatcher.CheckAccess())
                     {
-                        if (mIsSerialMode)
-                        {
-                            Application.Current.Windows.OfType<MainWindow>().FirstOrDefault().SelectionModeLabel.Content = "Serial";
-                        }
-                        else
-                        {
-                            Application.Current.Windows.OfType<MainWindow>().FirstOrDefault().SelectionModeLabel.Content = "Random";
-                        }
+                        Application.Current.Windows.OfType<MainWindow>().FirstOrDefault().SelectionModeLabel.Content = _selectionModeName;
                     }
                     else
                     {
                         Application.Current.Dispatcher.BeginInvoke((Action)(() =>
                         {
-                            if (mIsSerialMode)
-                            {
-                                Application.Current.Windows.OfType<MainWindow>().FirstOrDefault().SelectionModeLabel.Content = "Serial";
-                            }
-                            else
-                            {
-                                Application.Current.Windows.OfType<MainWindow>().FirstOrDefault().SelectionModeLabel.Content = "Random";
-                            }
+                            Application.Current.Windows.OfType<MainWindow>().FirstOrDefault().SelectionModeLabel.Content = _selectionModeName;
                         }));
                     }
                 }

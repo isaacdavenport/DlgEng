@@ -64,62 +64,6 @@ namespace DialogEngine
             Process.Start("www.toys2life.net");
         }
 
-        private void _importCharacter_Click(object sender, RoutedEventArgs e)
-        {
-            OpenFileDialog _openFileDialog = new OpenFileDialog();
-
-            _openFileDialog.DefaultExt = "json";
-            _openFileDialog.Filter = "Json file (*.json) | *.json";
-
-            Nullable<bool> result = _openFileDialog.ShowDialog();
-
-            if (result == true)
-            {
-                try
-                {
-                    string fileName = _openFileDialog.FileName;
-
-                    File.Copy(fileName, Path.Combine(SessionVariables.BaseDirectory, SessionVariables.CharactersDirectory, Path.GetFileName(fileName)));
-                }
-                catch (Exception ex)
-                {
-                    mcLogger.Error("Error during saving new character " + ex.Message);
-                    MessageBox.Show("Error during saving new character.");
-                }
-            }
-
-        }
-
-        private void _importDialogModel_Click(object sender, RoutedEventArgs e)
-        {
-            OpenFileDialog _openFileDialog = new OpenFileDialog();
-
-            _openFileDialog.DefaultExt = "json";
-            _openFileDialog.Filter = "Json file (*.json) | *.json";
-
-            Nullable<bool> result = _openFileDialog.ShowDialog();
-
-            if (result == true)
-            {
-                try
-                {
-                    string fileName = _openFileDialog.FileName;
-
-                    File.Copy(fileName, Path.Combine(SessionVariables.BaseDirectory, SessionVariables.DialogsDirectory, Path.GetFileName(fileName)));
-                }
-                catch (Exception ex)
-                {
-                    mcLogger.Error("Error during saving new dialog model " + ex.Message);
-                    MessageBox.Show("Error during saving new dialog model.");
-                }
-            }
-        }
-
-        private async void _reloadFiles_Click(object sender, RoutedEventArgs e)
-        {
-            await DialogViewModel.Instance.ReloadDialogDataAsync();
-        }
-
 
         private void _settings_Click(object sender, RoutedEventArgs e)
         {
@@ -132,7 +76,14 @@ namespace DialogEngine
 
         private void _createCharacter_Click(object sender, RoutedEventArgs e)
         {
-            mainFrame.Source = new Uri("Views/WizardView.xaml", UriKind.Relative);
+            if (mainFrame.NavigationService.CanGoForward)
+            {
+                mainFrame.NavigationService.GoForward();
+            }
+            else
+            {
+                mainFrame.NavigationService.Navigate(new WizardView());
+            }
 
             e.Handled = true;
         }

@@ -1,0 +1,73 @@
+﻿<UserControl x:Class="DialogEngine.Controls.Views.DialogControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:dialogModel="clr-namespace:DialogEngine.Models.Dialog"
+             xmlns:local="clr-namespace:DialogEngine.Controls.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <ItemsControl   x:Name="TextOutput"
+                        ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                        HorizontalContentAlignment="Stretch"  
+                        SnapsToDevicePixels="True"
+                        Grid.Row="0"
+                        Margin="0,5,10,20"
+                        Background="White"
+                        VerticalAlignment="Stretch" 
+                        HorizontalAlignment="Stretch"  
+                        ItemsSource="{Binding DialogLinesCollection}">
+            <ItemsControl.Resources>
+                <DataTemplate DataType="{x:Type dialogModel:DialogItem }">
+                    <DockPanel HorizontalAlignment="Stretch" Margin="30,0,60,0">
+                        <Border Margin="3" CornerRadius="10 10 10 10" Background="WhiteSmoke" HorizontalAlignment="Left" >
+                            <StackPanel>
+                                <TextBlock Padding="8" 
+                                           TextWrapping="Wrap" 
+                                           FontSize="16" 
+                                           Foreground="{DynamicResource PrimaryHueMidBrush}" 
+                                           Text="{Binding Path=Character.CharacterName }" 
+                                           Width="auto" 
+                                           HorizontalAlignment="Left"  />
+
+                                <TextBlock Padding="8" 
+                                           TextWrapping="Wrap" 
+                                           FontSize="16" 
+                                           Text="{Binding Path=PhraseEntry.DialogStr }" 
+                                           Width="auto" 
+                                           HorizontalAlignment="Left"  />
+                            </StackPanel>
+                        </Border>
+                    </DockPanel>
+                </DataTemplate>
+            </ItemsControl.Resources>
+
+            <ItemsControl.Template>
+                <ControlTemplate>
+                    <ScrollViewer x:Name="ScrollViewerMessages">
+                        <ItemsPresenter SnapsToDevicePixels="True" />
+                    </ScrollViewer>
+                </ControlTemplate>
+            </ItemsControl.Template>
+
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel VerticalAlignment="Stretch"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
+            <ItemsControl.ContextMenu>
+                <ContextMenu Background="White">
+                    <MenuItem Header="Clear All" Command="{Binding ClearAllMessages}" CommandParameter="DialogLinesCollection"  Background="White" >
+                        <MenuItem.Icon>
+                            <Image Source="pack://application:,,,/Resources/Images/clearAll.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ContextMenu>
+            </ItemsControl.ContextMenu>
+
+        </ItemsControl>
+
+    </Grid>
+</UserControl>

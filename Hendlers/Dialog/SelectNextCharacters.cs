@@ -16,6 +16,7 @@ using DialogEngine.Events.DialogEvents;
 using DialogEngine.Models.Logger;
 using log4net;
 using System.Windows.Threading;
+using DialogEngine.Services;
 
 namespace DialogEngine
 {
@@ -30,6 +31,8 @@ namespace DialogEngine
         public static readonly TimeSpan MaxLastSeenInterval = new TimeSpan(0, 0, 0, 3, 100);
         public static int BigRssi = 0;
         public static bool RssiStable = false;
+        public static int CurrentCharacter1;
+        public static int CurrentCharacter2 = 1;
         public static int NextCharacter1 = 1;
         public static int NextCharacter2 = 2;
         public static int[,] HeatMap = new int[SerialComs.NumRadios, SerialComs.NumRadios];
@@ -91,8 +94,8 @@ namespace DialogEngine
                 NextCharacter1 = _nextCharacter1MappedIndex1;
                 NextCharacter2 = _nextCharacter1MappedIndex2;
                  
-               if ((NextCharacter1 != DialogTracker.Instance.Character1Num || NextCharacter2 != DialogTracker.Instance.Character2Num) &&
-                    (NextCharacter2 != DialogTracker.Instance.Character1Num || NextCharacter1 != DialogTracker.Instance.Character2Num))
+               if ((NextCharacter1 != CurrentCharacter1 || NextCharacter2 != CurrentCharacter2) &&
+                    (NextCharacter2 != CurrentCharacter1 || NextCharacter1 != CurrentCharacter2))
                 {
                     //break current dialog and restart player
                     Application.Current.Dispatcher.BeginInvoke(() =>
@@ -100,8 +103,8 @@ namespace DialogEngine
                         EventAggregator.Instance.GetEvent<StopPlayingCurrentDialogLineEvent>().Publish();
                     },DispatcherPriority.Send);
 
-                    DialogViewModel.Instance.CancellationTokenGenerateDialogSource.Cancel();
-                    DialogViewModel.Instance.CancellationTokenGenerateDialogSource = new CancellationTokenSource();
+                    //DialogViewModel.Instance.CancellationTokenGenerateDialogSource.Cancel();
+                    //DialogViewModel.Instance.CancellationTokenGenerateDialogSource = new CancellationTokenSource();
                 }
             }
         }
@@ -328,7 +331,7 @@ namespace DialogEngine
                 catch (Exception ex)
                 {
                     mcLogger.Error("OccasionallyChangeToRandNewCharacterAsync " + ex.Message);
-                    DialogViewModel.Instance.AddItem(new ErrorMessage("Error in random selection of characters."));
+                    DialogDataService.AddMessage(new ErrorMessage("Error in random selection of characters."));
                 }
             });
         }

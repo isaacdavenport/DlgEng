@@ -15,7 +15,6 @@
         <ResourceDictionary Source="/Themes/ToggleButtonStyle.xaml" />
         <ResourceDictionary Source="/Themes/ComboBoxStyle.xaml" />
         <ResourceDictionary Source="/Themes/VoiceRecorderStyle.xaml" />
-
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

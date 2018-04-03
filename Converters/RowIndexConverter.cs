@@ -25,7 +25,7 @@ namespace DialogEngine.Converters
         /// <returns>Returns row index in DataGrid</returns>
         public object Convert(object _value, Type _targetType, object _parameter, CultureInfo _culture)
         {
-            return (_value as DataGridRow).GetIndex();
+            return (_value as DataGridRow).GetIndex() + 1;  // add 1 because intexes starts with 0
         }
 
         /// <summary>

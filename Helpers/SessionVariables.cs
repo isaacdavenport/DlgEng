@@ -24,7 +24,9 @@ namespace DialogEngine.Helpers
         public static string CharactersDirectory;
         public static string DialogsDirectory;
         public static string AudioDirectory;
-
+        public static string WizardDirectory;
+        public static string WizardVideoDirectory;
+        public static string WizardAudioDirectory;
         // !!! IMPORTANT !!!  If you change name, you must also change name in log4net.config 
         public static string DecimalLogFileName = "DecimalSerialLog";
 
@@ -200,7 +202,10 @@ namespace DialogEngine.Helpers
             DialogsDirectory = BaseDirectory + @"\DialogJSON\";
             AudioDirectory = BaseDirectory + @"\DialogAudio\";
             CharactersDirectory = BaseDirectory + @"\CharacterJSON\";
-        
+            WizardDirectory = BaseDirectory + @"\WizardJSON\";
+            WizardVideoDirectory = BaseDirectory + @"\WizardVideo\";
+            WizardAudioDirectory = BaseDirectory + @"\WizardAudio\";
+
             if (ConfigurationManager.AppSettings["CharactersDirectory"] != null)
                 CharactersDirectory = AppSet.ReadSetting("CharactersDirectory");
 

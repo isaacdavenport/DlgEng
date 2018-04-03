@@ -1,0 +1,4325 @@
+{
+   "Wizards" : [
+      {
+         "WizardName" : "BasicWizard",
+         "Commands" : "This string would normally be blank, but in future use we may want to pass commands like, -start a new file- or have the GUI do other executable type items  on starting a wizard or on a certain wizard step.",
+         "TutorialSteps" : [
+            {
+               "VideoFileName" : "DPWizIntroduction",
+               "InstructionalText" : "Welcome to Toys2Life! \r\n\r\nThis wizard will help you bring your toy to life as a talking character. Then, your toy and any other Toys2Life character will be able to talk with each other! \r\n\r\nFirst, take a moment to think about who your character is, and how they talk. Ask yourself: How does my character spend their time? What makes them happy, and what makes them sad? Is there anything unusual about them that you might not expect based on how they look? How do they talk? Do they like to use lots of fancy words, or do they keep it simple? \r\n\r\nOnce you have an idea about who your character is, you're ready to move on! Click the \"next\" button.",
+               "CollectUserInput" : false,
+               "Commands" : "This string would normally be blank, but in future use we may want to pass commands like, -start a new file- or have the GUI do other executable type items  on starting a wizard or on a certain wizard step.",
+               "PhraseWeights" : {},
+               "PhraseRating" : "PG",
+               "Popularity" : 3.0,
+               "PlayUserRecordedAudioInContext" : [
+                  [ "NoUserDataCollectedHere, this array element should not exist if we don't want to use this feature, although the CollectUserInput flag should cause it to be ignored anyway." ]
+               ]
+            },
+            {
+               "VideoFileName" : "DPWizGreeting",
+               "InstructionalText" : "First, think of a \"greeting\" for your character. This is how they say \"Hello!\" \r\n\r\nIf your character is a cowgirl or cowboy, maybe they say \"Howdy!\" An alien might say \"Greetings from the planet Zorfulon.\" What does your character say? Maybe they say hello by introducing themselves. \"Hi there, my name is [your character's name]\"\r\n\r\nType your character's greeting in the box below this window. \r\n\r\nThen, press the red record button, and read the greeting into your microphone. Press it again when you're done. \r\n\r\nClick the blue play button to hear how it sounds. You can record it again if it doesn't sound right. \r\n\r\nThen, hit the \"Conversation\" button to hear how the greeting would sound when your character talks to someone else. You can click it again to hear it in a second conversation. \r\n\r\nIf you're not happy with your greeting, press record to start over. Otherwise, good job--click next!",
+               "CollectUserInput" : true,
+               "Commands" : "",
+               "PhraseWeights" : {
+                  "Greeting" : 10.0
+               },
+               "PhraseRating" : "PG",
+               "Popularity" : 3.0,
+               "PlayUserRecordedAudioInContext" : [
+                  [ "WZ_SkylarGreeting1", "USR_CurrentLine" ],
+                  [ "USR_CurrentLine", "WZ_BjornGreeting1" ]
+               ]
+            },
+            {
+               "VideoFileName" : "DPWizYesNoQuestion",
+               "InstructionalText" : "Next is a Yes/No Question. Think of a question your character might ask that could be answered with a \"yes\" or a \"no.\"\r\n\r\nIf your character is an elephant, they might ask \"Do you like my trunk?\" A robot might ask \"Is there somewhere for me to plug in? Try starting your question with \"Do...\" or \"Is...\"\r\n\r\nJust like last time, type your character's yes/no question in the box below this window.\r\n\r\nPress the red record button, and read the question into your microphone. Press it again when you're done.\r\n\r\nClick the blue play button to hear how it sounds. You can record it again if it doesn't sound right.\r\n\r\nThen, hit the \"Conversation\" button to hear how the yes/no question would sound when your character talks to someone else. You can click it again to hear it in a second conversation.\r\n\r\nIf you're not happy with your question, press record to start over. Otherwise, good job--click next!",
+               "CollectUserInput" : true,
+               "Commands" : "",
+               "PhraseWeights" : {
+                  "YesNoQuestion" : 10.0
+               },
+               "PhraseRating" : "PG",
+               "Popularity" : 3.0,
+               "PlayUserRecordedAudioInContext" : [
+                  [ "USR_CurrentLine", "WZ_DannyYes1" ],
+                  [ "USR_CurrentLine", "WZ_BjornNo1" ]
+               ]
+            },
+            {
+               "VideoFileName" : "DPWizYes",
+               "InstructionalText" : "Next is a \"Yes.\" Think of how your character says \"yes\" when someone asks them a question.\r\n\r\nIf your character is a pirate, they might say \"Aye, matey!\" If they get really excited, they might say \"Yep yep yep, oh yeah!\"\r\n\r\nJust like before, type the line into the box below, record with the red button, and hit \"conversation\" (there are two conversations to hear) before moving on. ",
+               "CollectUserInput" : true,
+               "Commands" : "",
+               "PhraseWeights" : {
+                  "Yes" : 10.0
+               },
+               "PhraseRating" : "PG",
+               "Popularity" : 3.0,
+               "PlayUserRecordedAudioInContext" : [
+                  [ "WZ_SkylarYesNoQuestion1", "USR_CurrentLine" ],
+                  [ "WZ_DannyYesNoQuestion1", "USR_CurrentLine" ]
+               ]
+            },
+            {
+               "VideoFileName" : "DPWizNo",
+               "InstructionalText" : "Now, try a \"No.\" Think of how your character says \"no\" when someone asks them a question.\r\n\r\nIf your character likes to talk in a fancy way, they could say \"Goodness gracious no!\" If they're a robot, they might say \"Does not compute.\"\r\n\r\nJust like before, type the line into the box below, record with the red button, and hit \"conversation\" (there are two conversations to hear) before moving on. ",
+               "CollectUserInput" : true,
+               "Commands" : "",
+               "PhraseWeights" : {
+                  "No" : 10.0
+               },
+               "PhraseRating" : "PG",
+               "Popularity" : 3.0,
+               "PlayUserRecordedAudioInContext" : [
+                  [ "WZ_DannyYesNoQuestion2", "USR_CurrentLine" ],
+                  [ "WZ_SkylarYesNoQuestion2", "USR_CurrentLine" ]
+               ]
+            },
+            {
+               "VideoFileName" : "DPWizHowAreYou",
+               "InstructionalText" : "Time for a \"How are you?\" This is how your character asks someone else how they are doing.\r\n\r\nYour character might ask \"You okay?\" or just \"'Sup?\" A ghost might ask \"Are you having a spoooky day?\"\r\n\r\nJust like before, type the line into the box below, record with the red button, and hit \"conversation\" (there are two conversations to hear) before moving on. ",
+               "CollectUserInput" : true,
+               "Commands" : "",
+               "PhraseWeights" : {
+                  "HowAreYou" : 10.0
+               },
+               "PhraseRating" : "PG",
+               "Popularity" : 3.0,
+               "PlayUserRecordedAudioInContext" : [
+                  [ "USR_CurrentLine", "WZ_BjornImHappy" ],
+                  [ "USR_CurrentLine", "WZ_SkylarImSad" ]
+               ]
+            },
+            {
+               "VideoFileName" : "DPWizImHappy",
+               "InstructionalText" : "Now, imagine someone just asked your character how they feel, or shared some good news. You need a way for your character to say “I’m feeling happy!”\r\n\r\nYour character can describe how they’re feeling, but they shouldn’t say exactly what made them happy. This way, the \"I'm happy!\" will make sense in most conversations.\r\n\r\nIf your character is a puppy, she might say \"I'm in a tail-wagging mood!\" A detective could say \"I've got that case-closed feeling.\"\r\n\r\nJust like before, type the line into the box below, record with the red button, and hit \"conversation\" (there are two conversations to hear) before moving on. ",
+               "CollectUserInput" : true,
+               "Commands" : "",
+               "PhraseWeights" : {
+                  "ImHappy" : 10.0,
+                  "Exclamation" : "1"
+               },
+               "PhraseRating" : "PG",
+               "Popularity" : 3.0,
+               "PlayUserRecordedAudioInContext" : [
+                  [ "WZ_BjornHowAreYou", "USR_CurrentLine", "WZ_BjornGoOnJoyful" ],
+                  [ "USR_CurrentLine", "WZ_DannyYippy" ]
+               ]
+            },
+            {
+               "VideoFileName" : "DPWizImSad",
+               "InstructionalText" : "We just did an \"I'm happy.\" This time, someone asked your character how they're feeling, but they're not feeling great. Now you need an \"I'm sad.\"\r\n\r\nYour character can describe how they’re feeling, but they shouldn’t say exactly what made them sad. This way, the \"I'm sad...\" will make sense in most conversations.\r\n\r\nIf your character is dramatic and likes to complain a lot, they could say \"Right now, I'm, like, the saddest person who ever lived.\" An astronaut might say \"I haven't felt this blue since I was stuck on the dark side of the moon.\"\r\n\r\nJust like before, type the line into the box below, record with the red button, and hit \"conversation\" (there are two conversations to hear) before moving on. ",
+               "CollectUserInput" : true,
+               "Commands" : "",
+               "PhraseWeights" : {
+                  "ImSad" : 10.0,
+                  "Exclamation" : "1"
+               },
+               "PhraseRating" : "PG",
+               "Popularity" : 3.0,
+               "PlayUserRecordedAudioInContext" : [
+                  [ "USR_CurrentLine", "WZ_SkylarGoOnSadGaveMeString" ],
+                  [ "WZ_BjornAreYouFeelingMetal", "USR_CurrentLine", "WZ_BjornGoOnSad" ]
+               ]
+            },
+            {
+               "VideoFileName" : "DPWizCheerUp",
+               "InstructionalText" : "Imagine that someone else is feeling sad, and your character wants to make them feel better. Now, it's time for your character to give a \"Cheer up!\"\r\n\r\nThis could be your character giving the other character a compliment, some advice about how to feel better, or anything else encouraging.\r\n\r\nIf your character is a cowgirl, she could say \"Things will look better come sun-up, partner.\" A spider could say \"Don't worry, I'll give you four hugs!\"\r\n\r\nJust like before, type the line into the box below, record with the red button, and hit \"conversation\" (there are two conversations to hear) before moving on. ",
+               "CollectUserInput" : true,
+               "Commands" : "",
+               "PhraseWeights" : {
+                  "GiveAffirmation" : 10.0
+               },
+               "PhraseRating" : "PG",
+               "Popularity" : 3.0,
+               "PlayUserRecordedAudioInContext" : [
+                  [ "WZ_DannyFeelingSad", "USR_CurrentLine", "WZ_DannyYoureAFriend" ],
+                  [ "WZ_SkylarFrosting", "USR_CurrentLine" ]
+               ]
+            },
+            {
+               "VideoFileName" : "DPWizGiveCredit",
+               "InstructionalText" : "Next, imagine that your character is talking to someone who did something nice for them. Have your character say what that nice person did.\r\n\r\nIt helps to start with \"You.\" For example, if your character is a basketball fan, they could say \"You got me playoff tickets! Cool!\" A lion could say \"You got that thorn out of my paw!\"\r\n\r\nJust like before, type the line into the box below, record with the red button, and hit \"conversation\" (there are two conversations to hear) before moving on. ",
+               "CollectUserInput" : true,
+               "Commands" : "",
+               "PhraseWeights" : {
+                  "GiveCredit" : 10.0
+               },
+               "PhraseRating" : "PG",
+               "Popularity" : 3.0,
+               "PlayUserRecordedAudioInContext" : [
+                  [ "USR_CurrentLine", "WZ_BjornYoureWelcome" ],
+                  [ "USR_CurrentLine", "WZ_DannyYoureWelcome1" ]
+               ]
+            },
+            {
+               "VideoFileName" : "DPWizThankYou",
+               "InstructionalText" : "Time for your character to show their manners. Come up a way for your character to say \"Thank you!\"\r\n\r\nIf your character knows Spanish, they could say \"Gracias!\" If your character is very polite, they could say \"Thank you most kindly.\"\r\n\r\nJust like before, type the line into the box below, record with the red button, and hit \"conversation\" (there are two conversations to hear) before moving on. ",
+               "CollectUserInput" : true,
+               "Commands" : "",
+               "PhraseWeights" : {
+                  "ThankYou" : 10.0
+               },
+               "PhraseRating" : "PG",
+               "Popularity" : 3.0,
+               "PlayUserRecordedAudioInContext" : [
+                  [
+                     "WZ_SkylarYouAreInteresting",
+                     "USR_CurrentLine",
+                     "WZ_SkylarYoureWelcome"
+                  ],
+                  [ "WZ_DannyBeThereToHelp", "USR_CurrentLine", "WZ_DannyYoureWelcome2" ]
+               ]
+            },
+            {
+               "VideoFileName" : "DPWizYoureWelcome",
+               "InstructionalText" : "You just came up with a \"thank you.\" Last up, come up with a way for your character to say \"You're welcome!\"\r\n\r\nIf your character is relaxed and talks in a casual way, they could say \"hey, no problem.\" Or, maybe they just say \"you're welcome!\"\r\n\r\nJust like before, type the line into the box below, record with the red button, and hit \"conversation\" (there are two conversations to hear) before moving on. ",
+               "CollectUserInput" : true,
+               "Commands" : "",
+               "PhraseWeights" : {
+                  "YoureWelcome" : 10.0
+               },
+               "PhraseRating" : "PG",
+               "Popularity" : 3.0,
+               "PlayUserRecordedAudioInContext" : [
+                  [ "WZ_BjornThankYou", "USR_CurrentLine" ],
+                  [ "WZ_DannyEmpty", "USR_CurrentLine" ]
+               ]
+            },
+            {
+               "VideoFileName" : "DPWizOuttro",
+               "InstructionalText" : "Congratulations! You've now recorded enough lines to bring your toy to life!",
+               "CollectUserInput" : false,
+               "Commands" : "This string would normally be blank, but in future use we may want to pass commands like, -start a new file- or have the GUI do other executable type items  on starting a wizard or on a certain wizard step.",
+               "PhraseWeights" : {},
+               "PhraseRating" : "PG",
+               "Popularity" : 3.0,
+               "PlayUserRecordedAudioInContext" : [
+                  [ "NoUserDataCollectedHere, this array element should not exist if we don't want to use this feature, although the CollectUserInput flag should cause it to be ignored anyway." ]
+               ]
+            }
+         ]
+      }
+   ],
+   "Characters" : [
+      {
+         "CharacterAge" : 38,
+         "CharacterGender" : "F",
+         "CharacterName" : "Eunice",
+         "CharacterPrefix" : "SM",
+         "Phrases" : [
+            {
+               "DialogStr" : "UnInitSchoolmarm",
+               "FileName" : "UnInitSchoolMarm",
+               "PhraseWeights" : {
+                  "Exclamation" : 0.01
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "Good day",
+               "FileName" : "GoodDayJunk",
+               "PhraseWeights" : {
+                  "Greeting" : 5.3,
+                  "Exclamation" : 0.2
+               },
+               "PhraseRating" : "PG13"
+            },
+            {
+               "DialogStr" : "It brings a flush to the cheeks, and one's face may get red too.",
+               "FileName" : "ItBringsAFlush",
+               "PhraseWeights" : {
+                  "GiveSurprisingStatement" : 0.4,
+                  "Exclamation" : 0.4
+               },
+               "PhraseRating" : "PG13"
+            },
+            {
+               "DialogStr" : "Mark my words, I will send a toddler with a perment marker to your home!",
+               "FileName" : "MarkMyWordsI",
+               "PhraseWeights" : {
+                  "Threat" : 0.4
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "This too shall pass.",
+               "FileName" : "ThisTooShallPass",
+               "PhraseWeights" : {
+                  "GiveAffirmation" : 0.2,
+                  "GiveAdvice" : 0.2
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "Your behavior is intolerable!",
+               "FileName" : "YourBehaviorIsIntolerable",
+               "PhraseWeights" : {
+                  "Exclamation" : 0.1,
+                  "Retreat" : 0.2,
+                  "No" : 0.2,
+                  "ShutUp" : 0.1
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "I saw Tracy in the garden yesterday.  She exhibited her normal state of pique but her tomatos were distressingly picturesque.  At any rate an unhappy woman with access to weed killer must be watched closely.  So I follwed her to shoe store.  She came out with a pair of saddle shoes and red stilleto heels.  I fear her disquite has blossomed into full multiple personality disorder.",
+               "FileName" : "ISawTracyInThe",
+               "PhraseWeights" : {
+                  "Ramble" : 0.2
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Have you completed your assignments?",
+               "FileName" : "HaveYouCompletedYour",
+               "PhraseWeights" : {
+                  "YesNoQuestion" : 0.2
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "Boys will be boys.",
+               "FileName" : "BoysWillBeBoys",
+               "PhraseWeights" : {
+                  "GiveMotivation" : 0.2
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "And what, pray tell, have you been up to?",
+               "FileName" : "AndWhatPrayTell",
+               "PhraseWeights" : {
+                  "RequestCatchup" : 0.4
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "I fear my Cassenova will never arrive.",
+               "FileName" : "IFearMyCassenova",
+               "PhraseWeights" : {
+                  "RequestAffirmation" : 0.4,
+                  "GiveRecentHistory" : 0.1
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "You are in need of some discipline young man.",
+               "FileName" : "YouAreInNeed",
+               "PhraseWeights" : {
+                  "Exclamation" : 0.2,
+                  "Threat" : 0.3
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "Well sir, we shall be on our way.",
+               "FileName" : "WellSirWeShall",
+               "PhraseWeights" : {
+                  "Exclamation" : 0.2,
+                  "Retreat" : 0.5
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "I am at a loss for words.",
+               "FileName" : "IAmAtA",
+               "PhraseWeights" : {
+                  "Exclamation" : 0.01,
+                  "Retreat" : 0.01,
+                  "Yes" : 0.01,
+                  "No" : 0.01,
+                  "GiveAffirmation" : 0.01,
+                  "RequestAffirmation" : 0.01,
+                  "GiveDisbelief" : 0.01
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "Today I read from the unabridged works of deSade.",
+               "FileName" : "TodayIReadFrom",
+               "PhraseWeights" : {
+                  "GiveRecentHistory" : 0.1,
+                  "GiveSurprisingStatement" : 0.2,
+                  "GiveJoke" : 0.3
+               },
+               "PhraseRating" : "PG13"
+            },
+            {
+               "DialogStr" : "You are looking handsome today.",
+               "FileName" : "YouAreLookingHandsome",
+               "PhraseWeights" : {
+                  "GiveAffirmation" : 0.2,
+                  "GiveSurprisingStatement" : 0.1
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "You get an A+ today.",
+               "FileName" : "YouGetAnAPlus",
+               "PhraseWeights" : {
+                  "GiveAffirmation" : 0.2,
+                  "GiveSurprisingStatement" : 0.1,
+                  "Retreat" : 0.2
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "Literacy has taken a real plunge in this country.",
+               "FileName" : "LiteracyHasTakenA",
+               "PhraseWeights" : {
+                  "Insult" : 0.6,
+                  "GiveSurprisingStatement" : 0.1,
+                  "ShutUp" : 0.1
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "Your participle is dangling",
+               "FileName" : "YourParticipleIsDangling",
+               "PhraseWeights" : {
+                  "GiveSurprisingStatement" : 0.4,
+                  "SmCb_01A" : 1.0
+               },
+               "PhraseRating" : "PG13"
+            },
+            {
+               "DialogStr" : "In a battle of wits you would be unarmed",
+               "FileName" : "InABattleOfWits",
+               "PhraseWeights" : {
+                  "Insult" : 0.4
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "You have my permission to fellatiate that goat over there.",
+               "FileName" : "YouHaveMyPermission",
+               "PhraseWeights" : {
+                  "Insult" : 0.4
+               },
+               "PhraseRating" : "PG13"
+            },
+            {
+               "DialogStr" : "You are a bigger whore than Hester Prynne",
+               "FileName" : "YoureABiggerWhore",
+               "PhraseWeights" : {
+                  "Insult" : 0.4
+               },
+               "PhraseRating" : "PG13"
+            },
+            {
+               "DialogStr" : "Even lady Chatterly wouldn't take you as a lover",
+               "FileName" : "EvenLadyChatterlyWouldnt",
+               "PhraseWeights" : {
+                  "Insult" : 0.4
+               },
+               "PhraseRating" : "PG13"
+            },
+            {
+               "DialogStr" : "Guess what I caught Lisa and Jimmy doing in the bathroom.",
+               "FileName" : "GuessWhatICaught",
+               "PhraseWeights" : {
+                  "RequestActivity" : 0.4
+               },
+               "PhraseRating" : "PG13"
+            },
+            {
+               "DialogStr" : "Do you know what I spent the summer doing?",
+               "FileName" : "DoYouKnowWhatI",
+               "PhraseWeights" : {
+                  "RequestActivity" : 0.4
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "What was Dicken's favorite activity?  It wasn't writing.",
+               "FileName" : "WhatWasDickensFavorite",
+               "PhraseWeights" : {
+                  "RequestActivity" : 0.4
+               },
+               "PhraseRating" : "PG13"
+            },
+            {
+               "DialogStr" : "What should I spend my evening on?",
+               "FileName" : "WhatShouldISpend",
+               "PhraseWeights" : {
+                  "RequestActivity" : 0.4,
+                  "RequestAffirmation" : 0.3,
+                  "SmCb_01C" : 1.0
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "Homework",
+               "FileName" : "Homework",
+               "PhraseWeights" : {
+                  "GiveRecentHistory" : 0.4,
+                  "GiveActivity" : 0.4
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "Playing tiddly winks with foreign coins",
+               "FileName" : "PlayingTiddlyWinksWith",
+               "PhraseWeights" : {
+                  "GiveActivity" : 0.4,
+                  "GiveRecentHistory" : 0.4
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "Hoping a prince will come",
+               "FileName" : "HopingAPrinceWill",
+               "PhraseWeights" : {
+                  "GiveActivity" : 0.4,
+                  "GiveRecentHistory" : 0.4
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "I could use some comic relief",
+               "FileName" : "ICouldUseSome",
+               "PhraseWeights" : {
+                  "RequestJoke" : 0.6,
+                  "RequestAffirmation" : 0.3
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "The reason the bicycle fell over was it was two tired",
+               "FileName" : "TheReasonTheBicycle",
+               "PhraseWeights" : {
+                  "GiveJoke" : 0.4
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "I really must take leave of you now.",
+               "FileName" : "IReallyMustTake",
+               "PhraseWeights" : {
+                  "Retreat" : 0.4
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "May I be so bold as to join you.",
+               "FileName" : "MayIBeAs",
+               "PhraseWeights" : {
+                  "Greeting" : 0.2,
+                  "YesNoQuestion" : 0.2
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "It wasn't the panda that eats, shoots, and leaves, it was the bank robber",
+               "FileName" : "ItWasntThePanda",
+               "PhraseWeights" : {
+                  "GiveJoke" : 0.4
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "It isn't really so bad deary.",
+               "FileName" : "ItIsntReallySo",
+               "PhraseWeights" : {
+                  "GiveAffirmation" : 0.4,
+                  "SmCb_01E" : 1.0
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "When I'm sad, I stick pins in an effigy of Carlos and shout at the top of my lungs.  It always makes me feel better.",
+               "FileName" : "WhenImSadI",
+               "PhraseWeights" : {
+                  "GiveAffirmation" : 0.1,
+                  "Ramble" : 0.3,
+                  "GiveSurprisingStatement" : 0.4
+               },
+               "PhraseRating" : "PG13"
+            },
+            {
+               "DialogStr" : "Let's take a walk, shall we.",
+               "FileName" : "LetsTakeAWalk",
+               "PhraseWeights" : {
+                  "YesNoQuestion" : 0.4
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "Let's not make a bigger deal of this than we have to OK?",
+               "FileName" : "LetsNotMakeA",
+               "PhraseWeights" : {
+                  "YesNoQuestion" : 0.4
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "Would you care to try some of my famous nipples of venus?",
+               "FileName" : "WouldYouCareTo",
+               "PhraseWeights" : {
+                  "YesNoQuestion" : 0.4,
+                  "GiveSurprisingStatement" : 0.4
+               },
+               "PhraseRating" : "PG13"
+            },
+            {
+               "DialogStr" : "Of course",
+               "FileName" : "OfCourse",
+               "PhraseWeights" : {
+                  "Yes" : 0.4
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "Does a childs lip quiver when he sees me reach for my ruler?",
+               "FileName" : "DoesAChildsLip",
+               "PhraseWeights" : {
+                  "Yes" : 0.4
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "Do the Lilliputians win the limbo game at every luau?",
+               "FileName" : "DoTheLilliputiansWin",
+               "PhraseWeights" : {
+                  "Yes" : 0.4
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "Do I look agreeable?",
+               "FileName" : "DoILookAgreeable",
+               "PhraseWeights" : {
+                  "No" : 0.4
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "I assure you I am not that kind of girl.",
+               "FileName" : "IAssureYouI",
+               "PhraseWeights" : {
+                  "No" : 0.4
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "If you look deeply into my eyes perhaps you can see a glimpse of the purgatory that surely awaits you.",
+               "FileName" : "IfYouLookDeeply",
+               "PhraseWeights" : {
+                  "No" : 0.1,
+                  "GiveSurprisingStatement" : 0.1,
+                  "YesNoQuestion" : 0.1
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Indeed.",
+               "FileName" : "Indeed",
+               "PhraseWeights" : {
+                  "GiveDisbelief" : 0.4,
+                  "No" : 0.4
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "Do you know what happens to those who tell fibs?",
+               "FileName" : "DoYouKnowWhatHappens",
+               "PhraseWeights" : {
+                  "GiveDisbelief" : 0.4,
+                  "Threat" : 0.2,
+                  "YesNoQuestion" : 0.2
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "Who is talking here?",
+               "FileName" : "WhoIsTalkingHere",
+               "PhraseWeights" : {
+                  "ShutUp" : 0.4
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "Where have you been?",
+               "FileName" : "WhereHaveYouBeen",
+               "PhraseWeights" : {
+                  "RequestCatchup" : 0.4
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "Unconscionable.",
+               "FileName" : "Unconscionable",
+               "PhraseWeights" : {
+                  "GiveDisbelief" : 0.4
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "The principal is all in a tizzy these days.  Seems the Texas school board has pushed the textbook publishers to remove all references to the state of Alaska ever having existed over some phallic size argument by the respective governors.  ",
+               "FileName" : "ThePrincipalIsAll",
+               "PhraseWeights" : {
+                  "GiveDisbelief" : 0.4,
+                  "Ramble" : 0.2
+               },
+               "PhraseRating" : "PG13"
+            },
+            {
+               "DialogStr" : "I beg your pardon.",
+               "FileName" : "IBegYourPardon",
+               "PhraseWeights" : {
+                  "GiveDisbelief" : 0.2,
+                  "ShutUp" : 0.3
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "What, pray tell, are they giggling about?",
+               "FileName" : "WhatPrayTellAre",
+               "PhraseWeights" : {
+                  "RequestJoke" : 0.3,
+                  "RequestAffirmation" : 0.3
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "You would think that people talking to one another with zero sense of context would be impossible.  But in reality, people do it all the time.",
+               "FileName" : "YouWouldThinkThat",
+               "PhraseWeights" : {
+                  "GiveSurprisingStatement" : 0.4
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "How do you do?",
+               "FileName" : "HowDoYouDo",
+               "PhraseWeights" : {
+                  "Greeting" : 0.4,
+                  "RequestCatchup" : 0.4
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "Any mentionable recent exploits?",
+               "FileName" : "AnyMentionableRecentExploits",
+               "PhraseWeights" : {
+                  "RequestCatchup" : 0.4
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Why not tell your friend Eunice what's going on?",
+               "FileName" : "WhyNotTellYour",
+               "PhraseWeights" : {
+                  "RequestCatchup" : 0.4
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "Haberdash!",
+               "FileName" : "Haberdash",
+               "PhraseWeights" : {
+                  "Exclamation" : 0.2
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Well hello there.",
+               "FileName" : "GoodDayJunk2",
+               "PhraseWeights" : {
+                  "Greeting" : 2.9
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "I hope you step on a Lego.",
+               "FileName" : "IHopeYouStep",
+               "PhraseWeights" : {
+                  "Threat" : 0.2
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "I'll not listen to reason.  Reason is always something someone else has to say.",
+               "FileName" : "IllNotListenTo",
+               "PhraseWeights" : {
+                  "Retreat" : 0.2
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Do you suppose they will allow me to add \"doing well in the shallow end of the gene pool\" as a report card mark?",
+               "FileName" : "DoYouSupposeThey",
+               "PhraseWeights" : {
+                  "YesNoQuestion" : 0.2
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Do angels have wings?",
+               "FileName" : "DoAngelsHaveWings",
+               "PhraseWeights" : {
+                  "Yes" : 0.2
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "About as likely as a sucessful 4th grade class free of ritalin, prozac, and valium.",
+               "FileName" : "AboutAsLikelyAs",
+               "PhraseWeights" : {
+                  "No" : 0.2
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "And where have you been off to?",
+               "FileName" : "AndWhereHaveYou",
+               "PhraseWeights" : {
+                  "RequestCatchup" : 0.2
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "I know it is tough today, but it really will be better tomorrow.",
+               "FileName" : "IKnowItIsTough",
+               "PhraseWeights" : {
+                  "GiveAffirmation" : 0.2
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "I do well most times, but there are these moments where I just really miss having a shoulder to lean on.",
+               "FileName" : "IDoWellMost",
+               "PhraseWeights" : {
+                  "RequestAffirmation" : 0.2
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "That is absurd.",
+               "FileName" : "ThatIsAbsurd",
+               "PhraseWeights" : {
+                  "GiveDisbelief" : 0.2
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "I sometimes wonder how a child in my class could have ever become the way they are.  Then we have parent teach conference weeks, and after about 20 hours, I wish I could go back to wondering as opposed to knowing how a kid could get to be a certain way.  And every time I hear a parent say \"I have a great idea\", I have this sinking sensation that am about to lose 2-20 hours of my life to something asenine.",
+               "FileName" : "ISometimesWonderHow",
+               "PhraseWeights" : {
+                  "GiveRecentHistory" : 0.2
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Seeing back to school ads in July, for a teacher, is like a vammpire seeing a cross.  It burns, dear god, it burns.",
+               "FileName" : "SeeingBackToSchool",
+               "PhraseWeights" : {
+                  "GiveSurprisingStatement" : 0.2
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Perhaps I should start dating the janitor, he must be able to sweep women off their feet.",
+               "FileName" : "PerhapsIShouldStart",
+               "PhraseWeights" : {
+                  "Ramble" : 0.2
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Silence!",
+               "FileName" : "Silence",
+               "PhraseWeights" : {
+                  "ShutUp" : 0.2
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "What does one say to the parents of the anti-christ when they believe his behavior is generated from the excess gluten in the cafeteria lunches?",
+               "FileName" : "WhatDoesOneSay",
+               "PhraseWeights" : {
+                  "RequestJoke" : 0.2
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "An open, casket funeral for Mr. Smyth?  Why?  I mean could they not close the casket and close the book on that old letch?  Perhaps he died of a viagra overdose and they couldn't close the casket.",
+               "FileName" : "AnOpenCasketFuneral",
+               "PhraseWeights" : {
+                  "GiveJoke" : 0.2
+               },
+               "PhraseRating" : "PG13"
+            },
+            {
+               "DialogStr" : "You are an artist.  Why I sense you could entertain a room with nothing to play but a rusty trombone.",
+               "FileName" : "YouAreAnArtist",
+               "PhraseWeights" : {
+                  "Insult" : 0.2
+               },
+               "PhraseRating" : "PG13"
+            },
+            {
+               "DialogStr" : "I would appreciate a full report on your recent activities young man.",
+               "FileName" : "IWouldAppreciateA",
+               "PhraseWeights" : {
+                  "RequestActivity" : 0.2
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "conjugating the words lie and lay for a class of 8th graders.",
+               "FileName" : "ConjugatingTheWordsLie",
+               "PhraseWeights" : {
+                  "GiveActivity" : 0.2
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "I'm just not certain.  If I ask outright I am risking everything.",
+               "FileName" : "ImJustNotCertain",
+               "PhraseWeights" : {
+                  "RequestAdvice" : 0.2
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "Can a teacher, in good concience, allow the class bully an extra minute or two of harassment after he is entrapped by the entire special needs track team?",
+               "FileName" : "CanATeacherIn",
+               "PhraseWeights" : {
+                  "RequestAdvice" : 0.2
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "I don't know about that, but I do know you never forget to check your pockets for crayons before doing the laundry.",
+               "FileName" : "IDontKnowAbout",
+               "PhraseWeights" : {
+                  "GiveAdvice" : 0.1
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "We all have bits of crazy in us, some more than others.  Much, more with some...",
+               "FileName" : "WeAllHaveBits",
+               "PhraseWeights" : {
+                  "GiveAdvice" : 0.2
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Do you know why the third grade boys have started inserting tampons into their bums?",
+               "FileName" : "DoYouKnowWhy",
+               "PhraseWeights" : {
+                  "RequestMotivation" : 0.2
+               },
+               "PhraseRating" : "PG13"
+            },
+            {
+               "DialogStr" : "The nerve of her.  What inspires a seventy two year old middle school principal to run the kissing booth while the kids are on break?",
+               "FileName" : "TheNerveOfHer",
+               "PhraseWeights" : {
+                  "RequestMotivation" : 0.2
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Could be the old green eyed Jealousy.  Or it could be the glassy eyed reefer madness.  Hard to say.",
+               "FileName" : "CouldBeTheOld",
+               "PhraseWeights" : {
+                  "GiveMotivation" : 0.2
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "I expect it was similar to the reason one doesn't go lingerie shopping with one's mother.",
+               "FileName" : "IExpectItWas",
+               "PhraseWeights" : {
+                  "GiveMotivation" : 0.2
+               },
+               "PhraseRating" : "PG13"
+            },
+            {
+               "DialogStr" : "It was spite.  Apparently some people live purely on spite and Marblor Reds.",
+               "FileName" : "ItWasSpiteApparently",
+               "PhraseWeights" : {
+                  "GiveMotivation" : 0.2
+               },
+               "PhraseRating" : "PG13"
+            },
+            {
+               "DialogStr" : "The same place you left your dignity.",
+               "FileName" : "TheSamePlaceYou",
+               "PhraseWeights" : {
+                  "GiveLocation" : 0.2
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Try across town.",
+               "FileName" : "TryAcrossTown",
+               "PhraseWeights" : {
+                  "GiveLocation" : 0.2
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "I am certain I would not be familiar with such a location.",
+               "FileName" : "IAmCertainI",
+               "PhraseWeights" : {
+                  "GiveLocation" : 0.2
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "Things edge farther towards intolerability.  Perhaps I will have to relocate.",
+               "FileName" : "ThingsEdgeFartherTowards",
+               "PhraseWeights" : {
+                  "RequestLocation" : 0.2,
+                  "RequestAffirmation" : 0.2
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Is there a nail salon around here?  I feel I will just crumble if I have to keep wandering around looking like I just clawed my way out of my own grave.",
+               "FileName" : "IsThereANail",
+               "PhraseWeights" : {
+                  "RequestLocation" : 0.2,
+                  "RequestAffirmation" : 0.2
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "If you were my favorite whalebone girdle, where would you be hiding?",
+               "FileName" : "IfYouWereMy",
+               "PhraseWeights" : {
+                  "RequestLocation" : 0.2
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Don't be pigeon livered, get on with it.",
+               "FileName" : "DontBePigeonLivered",
+               "PhraseWeights" : {
+                  "Exclamation" : 0.1,
+                  "Threat" : 0.1,
+                  "ShutUp" : 0.1
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "I've been hornswoggled!",
+               "FileName" : "IveBeenHornswoggled",
+               "PhraseWeights" : {
+                  "Exclamation" : 0.3,
+                  "RequestAffirmation" : 0.1,
+                  "RequestAdvice" : 0.2,
+                  "GiveDisbelief" : 0.1
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "What is the matter Johny?",
+               "FileName" : "WhatIsTheMatter",
+               "PhraseWeights" : {
+                  "LM02A" : 0.2
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "And why would he do that?",
+               "FileName" : "AndWhyWouldHe",
+               "PhraseWeights" : {
+                  "LM02C" : 0.2
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "Do you owe him two dollars?",
+               "FileName" : "DoYouOweHim",
+               "PhraseWeights" : {
+                  "LM02E" : 0.2
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "Did anyone witness this alleged crime?",
+               "FileName" : "DidAnyoneWitnessThis",
+               "PhraseWeights" : {
+                  "LM02G" : 0.2
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "Well go ask Billy's father if he can corroborate your story.  Better yet, work it out directly with Eric.",
+               "FileName" : "WellGoAskBillys",
+               "PhraseWeights" : {
+                  "LM02I" : 0.2
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "This furry little monster is yours I take it.  I was initially put off by the smell of this little beast.",
+               "FileName" : "ThisFurryLittleMonster",
+               "PhraseWeights" : {
+                  "LM15B" : 0.2
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "Perhaps so, despite the odor, the warmth and purring when stroked attributes are somewhat endearing, but you must take better care that she doesn't wander off.",
+               "FileName" : "PerhapsSoDespiteThe",
+               "PhraseWeights" : {
+                  "LM15D" : 0.2
+               },
+               "PhraseRating" : "G"
+            },
+            {
+               "DialogStr" : "Have you seen my gown?",
+               "FileName" : "HaveYouSeenMy",
+               "PhraseWeights" : {
+                  "YesNoQuestion" : 2
+               },
+               "PhraseRating" : "G"
+            }
+         ]
+      },
+      {
+         "CharacterAge" : 24,
+         "CharacterGender" : "F",
+         "CharacterName" : "SampleCharacterRarity",
+         "CharacterPrefix" : "SCRY",
+         "Phrases" : [
+            {
+               "DialogStr" : "That sounds sublime!",
+               "FileName" : "SoundSublime",
+               "PhraseWeights" : {
+                  "AcceptPlan" : 5
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Don't I look beautiful?",
+               "FileName" : "DontILookBeautiful",
+               "PhraseWeights" : {
+                  "Brag" : 4
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "I think I feel a pimple coming on",
+               "FileName" : "PimpleComingOn",
+               "PhraseWeights" : {
+                  "Complain" : 5
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "I beg your pardon!",
+               "FileName" : "IBegYourPardon",
+               "PhraseWeights" : {
+                  "Deny" : 1
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Leave me be!",
+               "FileName" : "LeaveMeBe",
+               "PhraseWeights" : {
+                  "Exasperation" : 2
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "You're in style!",
+               "FileName" : "YoureInStyle",
+               "PhraseWeights" : {
+                  "Exclamation" : 5
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Hard work's all worthwhile!",
+               "FileName" : "HardWorksAllWorthwhile",
+               "PhraseWeights" : {
+                  "GiveAdvice" : 4
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "We're friends!",
+               "FileName" : "WereFriends",
+               "PhraseWeights" : {
+                  "GiveAffirmation" : 3
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Too true, too true",
+               "FileName" : "TooTrue",
+               "PhraseWeights" : {
+                  "GiveAgreement" : 4
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Right by the cake!",
+               "FileName" : "ByTheCake",
+               "PhraseWeights" : {
+                  "GiveLocation" : 5
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "These dresses are my responsibility!",
+               "FileName" : "TheseDressesAreMy",
+               "PhraseWeights" : {
+                  "GiveSurprisingStatement" : 2
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Justin Bieber is a favorite of many ponies.",
+               "FileName" : "JustinBieberIsA",
+               "PhraseWeights" : {
+                  "GiveWho" : 2
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Hi, I'm Rarity",
+               "FileName" : "HiImRarity",
+               "PhraseWeights" : {
+                  "Greeting" : 5
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "You've never liked me!",
+               "FileName" : "NeverLikedMe",
+               "PhraseWeights" : {
+                  "HurtFeelings" : 7
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "I'm as happy as when Photo Finish liked my designs",
+               "FileName" : "HappyAsWhen",
+               "PhraseWeights" : {
+                  "ImHappy" : 5
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Well, I'm in an awful state. May as well consign me to the dustbin of Equestrian history",
+               "FileName" : "InAnAwfulState",
+               "PhraseWeights" : {
+                  "ImSad" : 5
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Now I'm as anxious as when that tri-horned bunyip was attempting to sink our sailing vessel",
+               "FileName" : "TriHornedBunyip",
+               "PhraseWeights" : {
+                  "ImScared" : 5
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Dumb rock!",
+               "FileName" : "DumbRock",
+               "PhraseWeights" : {
+                  "Insult" : 5
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Oh my. [giggles]",
+               "FileName" : "Giggles",
+               "PhraseWeights" : {
+                  "Laugh" : 5
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Take my dresses, take my jewels. Possessions can be replaced, but you cannot!",
+               "FileName" : "TakeMyDresses",
+               "PhraseWeights" : {
+                  "MakeUp" : 2
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "No.",
+               "FileName" : "No",
+               "PhraseWeights" : {
+                  "No" : 6
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Every pony is laughing at me!",
+               "FileName" : "LaughingAtMe",
+               "PhraseWeights" : {
+                  "RequestAffirmation" : 2
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Have you seen the glitter?",
+               "FileName" : "HaveYouSeenTheGlitter",
+               "PhraseWeights" : {
+                  "RequestLocation" : 5
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "I am trying to picture who would look most splendid in this new dress I made.",
+               "FileName" : "IAmTryingTo",
+               "PhraseWeights" : {
+                  "RequestWho" : 2
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "I just finished five cartons of vanilla oat swirl. I'm not certain I'm up to this conversation.",
+               "FileName" : "NotCertainImUp2",
+               "PhraseWeights" : {
+                  "Retreat" : 6
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Good heavens! Your breath smells simply dreadful!",
+               "FileName" : "YourBreathSmells",
+               "PhraseWeights" : {
+                  "ShutUp" : 4
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "This I can assure you!",
+               "FileName" : "ThisICanAssureYou",
+               "PhraseWeights" : {
+                  "Yes" : 2
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Have you seen my gown?",
+               "FileName" : "HaveYouSeenMy",
+               "PhraseWeights" : {
+                  "YesNoQuestion" : 2
+               },
+               "PhraseRating" : "G"
+            }
+         ]
+      },
+      {
+         "CharacterAge" : 43,
+         "CharacterName" : "Bjorn Oresson",
+         "CharacterPrefix" : "BO",
+         "Phrases" : [
+            {
+               "DialogStr" : "Bjorn Oresson has not been initialized.",
+               "FileName" : "BjornOressonHasNotBeen",
+               "PhraseWeights" : {
+                  "Exclamation" : 0.01
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Are you ready to Ragnaroooooooooooook",
+               "FileName" : "ReadyToRag",
+               "PhraseWeights" : {
+                  "Exclamation" : 8,
+                  "YesNoQuestion" : 2,
+                  "GiveJoke" : 1
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Jah",
+               "FileName" : "Jah",
+               "PhraseWeights" : {
+                  "Yes" : 8,
+                  "GoOnNeutral" : 4
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Jah, jah, jah",
+               "FileName" : "JahJahJah",
+               "PhraseWeights" : {
+                  "Yes" : 8,
+                  "GiveAgreement" : 1
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Someone polish my battle axe. I'm about to need it",
+               "FileName" : "SomeonePolishMy",
+               "PhraseWeights" : {
+                  "Threat" : 8,
+                  "ShutUp" : 1
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Go on a quest to Valhalla, where we all go once we've rocked too hard",
+               "FileName" : "ValhallaWhereWeAllGo",
+               "PhraseWeights" : {
+                  "GiveLocation" : 8,
+                  "GiveAdvice" : 2
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "I've been working on power chords. Jug jug jug jug jug jug jug jug jah jaaaaaaaaaah",
+               "FileName" : "WorkingOnPowerChords",
+               "PhraseWeights" : {
+                  "GiveRecentHistory" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "It may be time to search the infinite belly of Jormungandr, the World Serpent",
+               "FileName" : "TimeToSearchTheInfiniteBelly",
+               "PhraseWeights" : {
+                  "GiveLocation" : 8,
+                  "SuggestPlan" : 2
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Where could the Frost Giants be? I need a drummer and they have good rhythm.",
+               "FileName" : "WhereCouldTheFrostGiants",
+               "PhraseWeights" : {
+                  "RequestLocation" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Take my hand in friendship, and call me Bjorn Oresson",
+               "FileName" : "TakeMyHand",
+               "PhraseWeights" : {
+                  "Greeting" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "The wind blows west, and I must go",
+               "FileName" : "TheWindBlowsWest",
+               "PhraseWeights" : {
+                  "Retreat" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "No",
+               "FileName" : "No",
+               "PhraseWeights" : {
+                  "No" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Sit with me a time, and tell me your tales of valor",
+               "FileName" : "SitWithMeATime",
+               "PhraseWeights" : {
+                  "RequestCatchup" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Some things are in the hands of we mortals. Some things are better left to the gods",
+               "FileName" : "SomeThingsAreInTheHands",
+               "PhraseWeights" : {
+                  "GiveAdvice" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "You have the look of a proud warrior. With a full beard, you'd be prouder still",
+               "FileName" : "LookOfAProudWarrior",
+               "PhraseWeights" : {
+                  "GiveAffirmation" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Hah! Now that is metal.",
+               "FileName" : "NowThatIsMetal",
+               "PhraseWeights" : {
+                  "GoOnJoyful" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "You scaly misshapen child of a tone-deaf troll",
+               "FileName" : "YouScalyChild",
+               "PhraseWeights" : {
+                  "Insult" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "No! I'd expect to hear such things from the lips of Loki the trickster",
+               "FileName" : "IdExpectToHear",
+               "PhraseWeights" : {
+                  "GiveDisbelief" : 8,
+                  "GoOnDisapproval" : 1,
+                  "Deny" : 1
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "If you cannot rock, then what will you be doing in the band?",
+               "FileName" : "IfYouCannotRock",
+               "PhraseWeights" : {
+                  "RequestActivity" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "...",
+               "FileName" : "HalfSecSilence",
+               "PhraseWeights" : {
+                  "GiveSilence" : 1
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "I don't understand. Who could have turned this amp...to eleven?",
+               "FileName" : "ToEleven",
+               "PhraseWeights" : {
+                  "RequestWho" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "My sister Inga has been braiding my beard",
+               "FileName" : "BraidingMyBeard",
+               "PhraseWeights" : {
+                  "GiveRecentHistory" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "I need new oars and sails for my longship. IKEA had none",
+               "FileName" : "IkeaHadNone",
+               "PhraseWeights" : {
+                  "RequestLocation" : 8,
+                  "GiveRecentHistory" : 1
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "You have innards of steel and the heart of a fire giant",
+               "FileName" : "InnardsOfSteel",
+               "PhraseWeights" : {
+                  "GiveAffirmation" : 8,
+                  "ThankYou" : 1
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "You touched my amps. I warned you not to do that",
+               "FileName" : "TouchedMyAmps",
+               "PhraseWeights" : {
+                  "Accuse" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "With all-seeing Odin as my witness...I did not",
+               "FileName" : "IDidNot",
+               "PhraseWeights" : {
+                  "Deny" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "With all-seeing Odin as my witness...jah, I did",
+               "FileName" : "JahIDid",
+               "PhraseWeights" : {
+                  "Admit" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "It wasn't me, it was dwarves. You should blame dwarves",
+               "FileName" : "BlameDwarves",
+               "PhraseWeights" : {
+                  "Deny" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "The Thunder God Thor came to me in a vision. But I feared to ride the lighting",
+               "FileName" : "FearedToRideTheLightning",
+               "PhraseWeights" : {
+                  "GiveRecentHistory" : 2,
+                  "RequestAffirmation" : 2,
+                  "RequestAdvice" : 1,
+                  "GiveSurprisingStatement" : 1,
+                  "GiveSecret" : 3
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "My hearing may be damaged, but I heard that well",
+               "FileName" : "HearingMayBeDamaged",
+               "PhraseWeights" : {
+                  "GoOnUnderstanding" : 8,
+                  "GoOnNeutral" : 1
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Let's talk of graves, of worms, and epitaphs, and with rainy eyes write sorrow on the bosom of the earth,",
+               "FileName" : "LetsTalkOfGraves",
+               "PhraseWeights" : {
+                  "RequestAffirmation" : 2,
+                  "RequestCatchup" : 1,
+                  "RequestJoke" : 1,
+                  "Greeting" : 1
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "That shakes me worse than thunder in an open field",
+               "FileName" : "ShakesMeWorse",
+               "PhraseWeights" : {
+                  "GoOnFear" : 8,
+                  "GoOnSad" : 4
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Foul.",
+               "FileName" : "Foul",
+               "PhraseWeights" : {
+                  "GoOnDisgust" : 8,
+                  "GoOnAngry" : 1,
+                  "NotFunny" : 2,
+                  "GoOnDisapproval" : 2
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "By the Horn of Heimdall",
+               "FileName" : "ByTheHorn",
+               "PhraseWeights" : {
+                  "Exclamation" : 2,
+                  "GoOnSurprise" : 3
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "It seems doom approaches",
+               "FileName" : "DoomApproaches",
+               "PhraseWeights" : {
+                  "GoOnSad" : 4,
+                  "GoOnFear" : 4,
+                  "ImSad" : 2,
+                  "ImScared" : 2
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "When I'm in need of a strong arm, you will do like for me",
+               "FileName" : "NeedOfAStrongArm",
+               "PhraseWeights" : {
+                  "YoureWelcome" : 3
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Headbanging with a flight of Valkyries",
+               "FileName" : "HeadbangingWithAFlight",
+               "PhraseWeights" : {
+                  "GiveActivity" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Shredding a solo",
+               "FileName" : "ShreddingASolo",
+               "PhraseWeights" : {
+                  "GiveActivity" : 4
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "When all the worlds were new, there was no food, and the Giant Ymir slept hungry. The giant began to sweat, and from the drops of his sweat came a cow, and from the cow's udders flowed rivers of milk that Ymir drank from.",
+               "FileName" : "TheGiantYmirSlept",
+               "PhraseWeights" : {
+                  "Ramble" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "The gods tried to shackle the great and dangerous Fenris wolf, but he snapped every rope and chain they put around him. The dwarves made a magic unbreakable ribbon to bind the animal. But the wolf was wary, cautious, and would not let none approach him with the ribbon, unless one of the gods would agree to place their hand inside his terrible mouth.",
+               "FileName" : "TheGodsTriedToShackle",
+               "PhraseWeights" : {
+                  "Ramble" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Fool! You set this bubblegum inside my beard",
+               "FileName" : "SetThisBubblegum",
+               "PhraseWeights" : {
+                  "Accuse" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "When the day ends, and the grit of combat has collected beneath my fingernails, I yearn for a bubble bath.",
+               "FileName" : "YearnForABubble",
+               "PhraseWeights" : {
+                  "GiveSurprisingStatement" : 4,
+                  "GiveJoke" : 4
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Why would anyone fill our roadie cases with laughing ravens",
+               "FileName" : "FillOurRoadie",
+               "PhraseWeights" : {
+                  "RequestMotivation" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "When the spirit of Rock fills the body, all manner of madness flows out",
+               "FileName" : "TheSpiritOfRock",
+               "PhraseWeights" : {
+                  "GiveMotivation" : 4,
+                  "GiveAdvice" : 1
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "I was alone on my boat under stormy skies, when a guitar solo pierced the heavens and gave me courage. Was it you who played it?",
+               "FileName" : "AloneOnMyBoat",
+               "PhraseWeights" : {
+                  "GiveCredit" : 9,
+                  "YesNoQuestion" : 2
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Loki the trickster god is behind many things",
+               "FileName" : "LokiTheTrickster",
+               "PhraseWeights" : {
+                  "GiveWho" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "I shall grasp your arm and agree to that",
+               "FileName" : "GraspYourArm",
+               "PhraseWeights" : {
+                  "AcceptPlan" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "What dark days",
+               "FileName" : "WhatDarkDays",
+               "PhraseWeights" : {
+                  "GoOnSad" : 4,
+                  "GoOnFear" : 4,
+                  "RequestAffirmation" : 1,
+                  "ImSad" : 2
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Peh!",
+               "FileName" : "Peh",
+               "PhraseWeights" : {
+                  "GoOnDisapproval" : 2,
+                  "GoOnDisgust" : 2,
+                  "Exasperation" : 2
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Hah hah!",
+               "FileName" : "HahHah",
+               "PhraseWeights" : {
+                  "GoOnJoyful" : 8,
+                  "Exclamation" : 8,
+                  "Laugh" : 4
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "I lack the wisdom of Odin, but this I understand",
+               "FileName" : "WisdomOfOdin",
+               "PhraseWeights" : {
+                  "GoOnUnderstanding" : 4,
+                  "GiveAffirmation" : 1,
+                  "GiveAdvice" : 1
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "By the fangs of Fenrir, no",
+               "FileName" : "ByTheFangs",
+               "PhraseWeights" : {
+                  "No" : 8,
+                  "Deny" : 1,
+                  "GoOnAngry" : 1,
+                  "RejectPlan" : 2
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "I tire of this. Unless you wish to taste my axe, we will part ways",
+               "FileName" : "ITireOfThis",
+               "PhraseWeights" : {
+                  "Retreat" : 8,
+                  "ShutUp" : 1
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "I thank you",
+               "FileName" : "IThankYou",
+               "PhraseWeights" : {
+                  "ThankYou" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "A warrior admits what he has done",
+               "FileName" : "AWarriorAdmits",
+               "PhraseWeights" : {
+                  "Admit" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "By the gods, I can scarcely believe it",
+               "FileName" : "ByTheGods",
+               "PhraseWeights" : {
+                  "GoOnSurprise" : 8,
+                  "GiveDisbelief" : 4
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "At times I fear I've fought too many battles. Say something to stoke my spirits",
+               "FileName" : "StokeMySpirits",
+               "PhraseWeights" : {
+                  "RequestJoke" : 8,
+                  "RequestAdvice" : 1,
+                  "RequestAffirmation" : 4
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "You are a coward, and the holy halls of Valhalla will never harbor you.",
+               "FileName" : "YouAreACoward",
+               "PhraseWeights" : {
+                  "Insult" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "The time has come to put down my axe, and pick up my axe. I mean, guitar",
+               "FileName" : "PutDownMyAxe",
+               "PhraseWeights" : {
+                  "GiveSurprisingStatement" : 2,
+                  "GiveJoke" : 1
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "You watched after my sisters and brother in my absence",
+               "FileName" : "YouWatchedAfter",
+               "PhraseWeights" : {
+                  "GiveCredit" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "I need someone who can play bass. I will not do it",
+               "FileName" : "PlayBass",
+               "PhraseWeights" : {
+                  "RequestWho" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "You are welcome, friend",
+               "FileName" : "YouAreWelcome",
+               "PhraseWeights" : {
+                  "YoureWelcome" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Erik the Red does more than settle islands",
+               "FileName" : "ErikTheRed",
+               "PhraseWeights" : {
+                  "GiveWho" : 4
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "It may be that they've seen too much bloodshed",
+               "FileName" : "SeenTooMuch",
+               "PhraseWeights" : {
+                  "GiveMotivation" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "If the time comes to make peace, how will I break bread with the enemy?",
+               "FileName" : "BreakBread",
+               "PhraseWeights" : {
+                  "RequestActivity" : 2,
+                  "RequestAdvice" : 4
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "In my years, I have made too many enemies. Do not force me to count you among them",
+               "FileName" : "TooManyEnemies",
+               "PhraseWeights" : {
+                  "Threat" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "When I was young, my father sent me to sea, but kept my brother with him. I do not know why",
+               "FileName" : "MyFatherSentMe",
+               "PhraseWeights" : {
+                  "RequestMotivation" : 8,
+                  "GiveSecret" : 4
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Twinkle, twinkle, little star",
+               "FileName" : "TwinkleTwinkleLittleStar_A",
+               "PhraseWeights" : {
+                  "Twinkle1" : 1
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "How I wonder what you are",
+               "FileName" : "HowIWonderWhat_A",
+               "PhraseWeights" : {
+                  "Twinkle2" : 1
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Up above the world so high",
+               "FileName" : "UpAboveTheWorld",
+               "PhraseWeights" : {
+                  "Twinkle3" : 1
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Like a diamond in the sky",
+               "FileName" : "LikeADiamondIn",
+               "PhraseWeights" : {
+                  "Twinkle4" : 1
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Twinkle, twinkle, little star",
+               "FileName" : "TwinkleTwinkleLittleStar_B",
+               "PhraseWeights" : {
+                  "Twinkle5" : 1
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "How I wonder what you are",
+               "FileName" : "HowIWonderWhat_B",
+               "PhraseWeights" : {
+                  "Twinkle6" : 1
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "You fill my belly with mirth",
+               "FileName" : "BellyWithMirth",
+               "PhraseWeights" : {
+                  "Laugh" : 6
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "My sister Inga braided my beard too tight",
+               "FileName" : "BeardTooTight",
+               "PhraseWeights" : {
+                  "Complain" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "I do not enjoy a sunny day",
+               "FileName" : "EnjoyASunnyDay",
+               "PhraseWeights" : {
+                  "Complain" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "I've rocked for many moons, and my right ear hears no longer",
+               "FileName" : "RightEarHears",
+               "PhraseWeights" : {
+                  "Complain" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "You've wounded me worse than any sword or arrow",
+               "FileName" : "WoundedMeWorse",
+               "PhraseWeights" : {
+                  "HurtFeelings" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Friend, you've a troubled look upon your brow",
+               "FileName" : "ATroubledLook",
+               "PhraseWeights" : {
+                  "WhatsWrong" : 8,
+                  "RequestQuestion" : 2
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Enough combat. Take my arm in truce",
+               "FileName" : "ArmInTruce",
+               "PhraseWeights" : {
+                  "MakeUp" : 8,
+                  "Sorry" : 4
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Hails and horns",
+               "FileName" : "HailsAndHorns",
+               "PhraseWeights" : {
+                  "Greeting" : 8,
+                  "Exclamation" : 2
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "I lost a toe to frostbite",
+               "FileName" : "LostAToe",
+               "PhraseWeights" : {
+                  "Complain" : 8,
+                  "GiveRecentHistory" : 1
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "I can't get my axe in tune",
+               "FileName" : "AxeInTune",
+               "PhraseWeights" : {
+                  "Complain" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "I've not seen my brother Bard in many long years",
+               "FileName" : "SeenMyBrother",
+               "PhraseWeights" : {
+                  "Complain" : 8,
+                  "RequestAffirmation" : 2
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Let's drink until our yesterdays are forgotten",
+               "FileName" : "DrinkUntilOurYesterdays",
+               "PhraseWeights" : {
+                  "SuggestPlan" : 8,
+                  "GiveAdvice" : 1
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Perhaps you've had drink enough for today",
+               "FileName" : "DrinkEnough",
+               "PhraseWeights" : {
+                  "NotFunny" : 1,
+                  "ShutUp" : 1,
+                  "Insult" : 1,
+                  "GiveDisbelief" : 3
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "I've lost friends enough it battle. I'll not lose you over this",
+               "FileName" : "LostFriendsEnough",
+               "PhraseWeights" : {
+                  "MakeUp" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Tell Bjorn what troubles you",
+               "FileName" : "TellBjorn",
+               "PhraseWeights" : {
+                  "WhatsWrong" : 8,
+                  "RequestQuestion" : 4
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "You speak to me like an enemy, and I've had too many of those",
+               "FileName" : "LikeAnEnemy",
+               "PhraseWeights" : {
+                  "HurtFeelings" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "I did not mean to wound you so",
+               "FileName" : "WoundYouSo",
+               "PhraseWeights" : {
+                  "Sorry" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "There's little humor in that",
+               "FileName" : "LittleHumor",
+               "PhraseWeights" : {
+                  "NotFunny" : 4,
+                  "GoOnDisapproval" : 2
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Uhhhh. Sometimes I'd rather be deaf in both ears",
+               "FileName" : "DeafInBothEars",
+               "PhraseWeights" : {
+                  "NotFunny" : 4,
+                  "ShutUp" : 4,
+                  "Exasperation" : 4,
+                  "DontCare" : 4,
+                  "GoOnDisgust" : 1
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "The god Freyr had to give away his magic sword in order to woo a giantess. From that day, whenever he had to fight, he beat his opponents with a reindeer's antler! Ha ha ha! Hahahahahahaha!",
+               "FileName" : "ReindeerAntler",
+               "PhraseWeights" : {
+                  "GiveJoke" : 8,
+                  "Ramble" : 2
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "I may once have known that, but I've suffered too many head wounds since",
+               "FileName" : "TooManyHeadWounds",
+               "PhraseWeights" : {
+                  "DontKnow" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "When Ragnarok comes and the world is torn apart, what will remain?",
+               "FileName" : "WhenRagnarokComes",
+               "PhraseWeights" : {
+                  "RequestObject" : 9
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Patel, what will become of your enemies when you've defeated them?",
+               "FileName" : "BjornDannyEnemies1",
+               "PhraseWeights" : {
+                  "BjornDannyEnemies1" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Will you burn their homes, steal their horses, and pillage their villages?",
+               "FileName" : "BjornDannyEnemies3",
+               "PhraseWeights" : {
+                  "BjornDannyEnemies3" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "You may not have a warrior's heart, Danny Patel. But you're a wiser man than me.",
+               "FileName" : "BjornDannyEnemies5",
+               "PhraseWeights" : {
+                  "BjornDannyEnemies5" : 8,
+                  "BjornToDanny" : 4
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "When I was a child, she killed a she-wolf with her bear hands to protect our family.",
+               "FileName" : "BjornDannyMother2",
+               "PhraseWeights" : {
+                  "BjornDannyMother2" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Ahh, there are no dwarves for miles",
+               "FileName" : "NoDwarves",
+               "PhraseWeights" : {
+                  "GoodNews" : 8,
+                  "GiveSurprisingStatement" : 2
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Perhaps...after the world has been destroyed, and made again",
+               "FileName" : "AfterTheWorld",
+               "PhraseWeights" : {
+                  "RejectPlan" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Only the Gods know that. You had best ask all-seeing Odin",
+               "FileName" : "OnlyTheGods",
+               "PhraseWeights" : {
+                  "DontKnow" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "That has the thunderous clap of truth",
+               "FileName" : "ThunderousClapOfTruth",
+               "PhraseWeights" : {
+                  "GiveAgreement" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "That cannot be so",
+               "FileName" : "CannotBeSo",
+               "PhraseWeights" : {
+                  "GiveDisbelief" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "We shall drink to that",
+               "FileName" : "DrinkToThat",
+               "PhraseWeights" : {
+                  "AcceptPlan" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "What stops your tears on lonesome days?",
+               "FileName" : "StopsYourTears",
+               "PhraseWeights" : {
+                  "RequestLike" : 8,
+                  "RequestJoke" : 1
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "My axe! I broke a string. What can I play instead?",
+               "FileName" : "BrokeAString",
+               "PhraseWeights" : {
+                  "RequestObject" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "My axe is in tune",
+               "FileName" : "AxeIsInTune",
+               "PhraseWeights" : {
+                  "GoodNews" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Perhaps.",
+               "FileName" : "Perhaps",
+               "PhraseWeights" : {
+                  "Maybe" : 8,
+                  "RejectPlan" : 1
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "That may be so",
+               "FileName" : "MayBeSo",
+               "PhraseWeights" : {
+                  "Maybe" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Grey skies warm my heart",
+               "FileName" : "GreySkies",
+               "PhraseWeights" : {
+                  "GoodNews" : 8,
+                  "GiveLike" : 6
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "It must be the clipped toenail of a god",
+               "FileName" : "ClippedToenail",
+               "PhraseWeights" : {
+                  "GiveObject" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Odin sent me a vision, but I cannot remember. What was it he showed me through smoke",
+               "FileName" : "ThroughSmoke",
+               "PhraseWeights" : {
+                  "RequestObject" : 7
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "It must be a fine proud belch",
+               "FileName" : "FineProudBelch",
+               "PhraseWeights" : {
+                  "GiveObject" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "What is it you wish to know?",
+               "FileName" : "WishToKnow",
+               "PhraseWeights" : {
+                  "RequestQuestion" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "To watch over my sisters gives me comfort",
+               "FileName" : "WatchOverMySisters",
+               "PhraseWeights" : {
+                  "GiveLike" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "What keeps you out of the grip of madness?",
+               "FileName" : "GripOfMadness",
+               "PhraseWeights" : {
+                  "RequestLike" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Ha! The sky is full of ravens",
+               "FileName" : "SkyFullOfRavens",
+               "PhraseWeights" : {
+                  "GoodNews" : 8,
+                  "GiveSurprisingStatement" : 2
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "My sister Inga gave birth to a healthy child",
+               "FileName" : "HealthyChild",
+               "PhraseWeights" : {
+                  "GoodNews" : 8,
+                  "GiveSurprisingStatement" : 2
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "When my father held me in his arms, he called me Bjorn",
+               "FileName" : "WhenMyFatherHeld",
+               "PhraseWeights" : {
+                  "Greeting" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Do not test me. Or I'll make you play bass",
+               "FileName" : "MakeYouPlayBass",
+               "PhraseWeights" : {
+                  "Threat" : 6
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "There are many ways to harm a man. Only a few dozen of them involve an axe",
+               "FileName" : "ManyWaysToHarm",
+               "PhraseWeights" : {
+                  "Threat" : 6
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Goodbye, until after the end of the world",
+               "FileName" : "GoodbyeUntilAfterTheEnd",
+               "PhraseWeights" : {
+                  "Retreat" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "It is so",
+               "FileName" : "ItIsSo",
+               "PhraseWeights" : {
+                  "Yes" : 4
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "It is not so",
+               "FileName" : "ItIsNotSo",
+               "PhraseWeights" : {
+                  "No" : 2,
+                  "Deny" : 2
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "What has destiny brought you?",
+               "FileName" : "WhatHasDestinyBroughtYou",
+               "PhraseWeights" : {
+                  "RequestCatchup" : 8,
+                  "RequestObject" : 2
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Fear not, friend. When you perish, the Valkyries will save a place in Valhalla for you",
+               "FileName" : "SaveAPlace",
+               "PhraseWeights" : {
+                  "GiveAffirmation" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "We must stop this talk before I grow hoarse",
+               "FileName" : "BeforeIGrowHoarse",
+               "PhraseWeights" : {
+                  "ShutUp" : 4
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "What is that cunning look in your eye? Are you hiding dwarves?",
+               "FileName" : "AreYouHidingDwarves",
+               "PhraseWeights" : {
+                  "YesNoQuestion" : 6,
+                  "Accuse" : 4
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Am I truly a warrior any longer?",
+               "FileName" : "TrulyAWarrior",
+               "PhraseWeights" : {
+                  "YesNoQuestion" : 8,
+                  "RequestAffirmation" : 2
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Enough of blood and rain. Say something merry",
+               "FileName" : "EnoughOfRain",
+               "PhraseWeights" : {
+                  "RequestJoke" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "You knock-kneed kisser of dwarves",
+               "FileName" : "KisserOfDwarves",
+               "PhraseWeights" : {
+                  "Insult" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "What will the trickster Loki be doing to bring on the end of the world?",
+               "FileName" : "WhatWillTheTrickster",
+               "PhraseWeights" : {
+                  "RequestActivity" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Cracking the knees of giants",
+               "FileName" : "KneesOfGiants",
+               "PhraseWeights" : {
+                  "GiveActivity" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "I need a way to keep my sanity",
+               "FileName" : "KeepMySanity",
+               "PhraseWeights" : {
+                  "RequestAdvice" : 4
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Why did blind Hodor slay the god of beauty?",
+               "FileName" : "WhyDidBlindHodor",
+               "PhraseWeights" : {
+                  "RequestMotivation" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "They were fooled by the trickster god Loki",
+               "FileName" : "FooledByTheTrickster",
+               "PhraseWeights" : {
+                  "GiveMotivation" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "I have sailed past many horizons. But I do not know where to find the edge of the world",
+               "FileName" : "TheEdgeOfTheWorld",
+               "PhraseWeights" : {
+                  "RequestLocation" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "One may find what they seek on the other side of Bifrost, the rainbow bridge",
+               "FileName" : "OtherSideOfBifrost",
+               "PhraseWeights" : {
+                  "GiveLocation" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "We have a warrior's bond. You can trust me with your secret",
+               "FileName" : "WeHaveAWarriorsBond",
+               "PhraseWeights" : {
+                  "RequestSecret" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "My blood runs lightning hot",
+               "FileName" : "BloodRunsHot",
+               "PhraseWeights" : {
+                  "ImAngry" : 8,
+                  "GoOnAngry" : 2
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "How do you fare?",
+               "FileName" : "HowDoYouFare",
+               "PhraseWeights" : {
+                  "HowAreYou" : 8,
+                  "WhatsWrong" : 2
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Ha! I feel so metal",
+               "FileName" : "FeelSoMetal",
+               "PhraseWeights" : {
+                  "ImHappy" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "[growling]",
+               "FileName" : "Growling",
+               "PhraseWeights" : {
+                  "ImAngry" : 4,
+                  "GoOnAngry" : 2,
+                  "Exasperation" : 2,
+                  "BodilyNoise" : 2
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Enough of your chatter",
+               "FileName" : "YourChatter",
+               "PhraseWeights" : {
+                  "Exasperation" : 4,
+                  "ShutUp" : 4
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Didn't hear you. It's this ringing in my brain",
+               "FileName" : "RingingInMyBrain",
+               "PhraseWeights" : {
+                  "DontKnow" : 4,
+                  "DontCare" : 4
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "I wonder whose appetite for destruction is most ravenous",
+               "FileName" : "AppetiteForDestruction",
+               "PhraseWeights" : {
+                  "RequestWho" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Perhaps my last drummer. He left the band because he feared to meet a grisly end, like so many of his kind",
+               "FileName" : "SoManyOfHisKind",
+               "PhraseWeights" : {
+                  "GiveWho" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Odin's ravens are forever watching, spying, finding secrets. And of all those secrets, what must the most terrible be?",
+               "FileName" : "OdinsRavensWatching",
+               "PhraseWeights" : {
+                  "RequestSecret" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Perhaps a lock of blonde hair from someone best forgotten",
+               "FileName" : "BlondeHairFromSomeone",
+               "PhraseWeights" : {
+                  "GiveObject" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Ah.",
+               "FileName" : "Ah",
+               "PhraseWeights" : {
+                  "GoOnNeutral" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "I've done much I regret. I wish you'd not remind me of it",
+               "FileName" : "RemindMeOfIt",
+               "PhraseWeights" : {
+                  "Admit" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "You make me a merry man",
+               "FileName" : "YouMakeMeAMerryMan",
+               "PhraseWeights" : {
+                  "Laugh" : 4
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Even you have a destiny, Danny Patel. Whether fair or foul, I cannot say",
+               "FileName" : "EvenYouHaveADestiny",
+               "PhraseWeights" : {
+                  "BjornToDanny" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "We indeed have a warrior's bond",
+               "FileName" : "WeIndeedHaveA",
+               "PhraseWeights" : {
+                  "ThankYou" : 2,
+                  "YoureWelcome" : 2
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Are you hale? Are you healthy? Does the spirit of metal possess you now?",
+               "FileName" : "SpiritOfMetal",
+               "PhraseWeights" : {
+                  "HowAreYou" : 8,
+                  "YesNoQuestion" : 2
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "My hands and heart are trembling. As though I have no battles left in me",
+               "FileName" : "HandsHeartTrembling",
+               "PhraseWeights" : {
+                  "ImScared" : 8,
+                  "ImSad" : 2
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "[big sneeze]",
+               "FileName" : "BigSneeze",
+               "PhraseWeights" : {
+                  "BodilyNoise" : 9
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "I am a granite god of rock",
+               "FileName" : "GraniteGodOfRock",
+               "PhraseWeights" : {
+                  "Brag" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "I feel, in this moment, at peace",
+               "FileName" : "FeelAtPeace",
+               "PhraseWeights" : {
+                  "ImHappy" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "You may tell me your secret. With all-seeing Odin as my witness, I will not share it",
+               "FileName" : "OdinAsMyWitness",
+               "PhraseWeights" : {
+                  "RequestSecret" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "I built a longboat with my bare hands, and nailed it tight with my fists",
+               "FileName" : "BuiltALongboat",
+               "PhraseWeights" : {
+                  "Brag" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "[long yawn]",
+               "FileName" : "LongYawn",
+               "PhraseWeights" : {
+                  "DontCare" : 2,
+                  "BodilyNoise" : 2,
+                  "NotFunny" : 1
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "The Norns guide the fate of we mortals. Now, let's play as though they guide our fingers",
+               "FileName" : "NornsGuideTheFates",
+               "PhraseWeights" : {
+                  "SuggestPlan" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "You've just given me one more sorrow",
+               "FileName" : "OneMoreSorrow",
+               "PhraseWeights" : {
+                  "HurtFeelings" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "We shall",
+               "FileName" : "WeShall",
+               "PhraseWeights" : {
+                  "AcceptPlan" : 6
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "My heart is full of cheer. And blood",
+               "FileName" : "HeartIsFullOfCheer",
+               "PhraseWeights" : {
+                  "ImHappy" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "I now have the mad and twitchy feeling that precedes a battle",
+               "FileName" : "MadAndTwitchyFeeling",
+               "PhraseWeights" : {
+                  "ImAngry" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "In truth, my beard...I have allowed my sister Inga to dye it",
+               "FileName" : "AllowedToDye",
+               "PhraseWeights" : {
+                  "GiveSecret" : 8
+               },
+               "PhraseRating" : "PG"
+            },
+            {
+               "DialogStr" : "Have you seen my gown?",
+               "FileName" : "HaveYouSeenMy",
+               "PhraseWeights" : {
+                  "YesNoQuestion" : 2
+               },
+               "PhraseRating" : "G"
+            }
+         ],
+         "CharacterGender" : "M"
+      }
+   ],
+   "DialogModels" : [
+      {
+         "ModelsCollectionName" : "BasicDialogModels",
+         "ArrayOfDialogModels" : [
+            {
+               "DialogName" : "Greeting, Greeting",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 12.0,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "Greeting", "Greeting" ]
+            },
+            {
+               "DialogName" : "YesNoQuestion, No",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 4,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "YesNoQuestion", "No" ]
+            },
+            {
+               "DialogName" : "YesNoQuestion, Yes",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 4,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "YesNoQuestion", "Yes" ]
+            },
+            {
+               "DialogName" : "Request Affirmation, Give Affirmation, Thank You, Youre Welcome",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 1,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestAffirmation", "GiveAffirmation", "ThankYou", "YoureWelcome" ]
+            },
+            {
+               "DialogName" : "Give Credit, Youre Welcome, Thank You",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "GiveCredit", "YoureWelcome", "ThankYou" ]
+            },
+            {
+               "DialogName" : "Give Affirmation, Thank You, Youre Welcome",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 1,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "GiveAffirmation", "ThankYou", "YoureWelcome" ]
+            },
+            {
+               "DialogName" : "RequestAffirmation, GiveAffirmation",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 6.2,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestAffirmation", "GiveAffirmation" ]
+            },
+            {
+               "DialogName" : "Give Affirmation, Thank You, Youre Welcome",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 1,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "GiveAffirmation", "ThankYou", "YoureWelcome" ]
+            }
+         ]
+      },
+      {
+         "ModelsCollectionName" : "IntermediateDialogModels",
+         "ArrayOfDialogModels" : [
+            {
+               "DialogName" : "Exclamation, Exclamation",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.4,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "Exclamation", "Exclamation" ]
+            },
+            {
+               "DialogName" : "RequestJoke, GiveJoke",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 3,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestJoke", "GiveJoke" ]
+            },
+            {
+               "DialogName" : "RequestAffirmation, GiveJoke",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.6,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestAffirmation", "GiveJoke" ]
+            },
+            {
+               "DialogName" : "GiveSurprisingSt, GiveDisbelief",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 2.8,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "GiveSurprisingStatement", "GiveDisbelief" ]
+            },
+            {
+               "DialogName" : "GiveSurprisingStatement Exclamation",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 2,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "GiveSurprisingStatement", "Exclamation" ]
+            },
+            {
+               "DialogName" : "GiveSurprisingStatement ShutUp",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 2,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "GiveSurprisingStatement", "ShutUp" ]
+            },
+            {
+               "DialogName" : "Guess what They/I did, Guess Activity, Correct Activity ",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [
+                  "RequestActivity",
+                  "GiveActivity",
+                  "No",
+                  "GiveSilence",
+                  "GiveActivity"
+               ]
+            },
+            {
+               "DialogName" : "RequestCatchup GiveRecentHistory",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 3,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestCatchup", "GiveRecentHistory" ]
+            },
+            {
+               "DialogName" : "Greeting RequestCatchup GiveRecentHistory",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 3,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "Greeting", "RequestCatchup", "GiveRecentHistory" ]
+            },
+            {
+               "DialogName" : "RequestCatchup, Ramble, Shutup",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 2.7,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestCatchup", "Ramble", "ShutUp" ]
+            },
+            {
+               "DialogName" : "ReqMotiv, Givemotiv",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 4.2,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestMotivation", "GiveMotivation" ]
+            },
+            {
+               "DialogName" : "ReqAdv,  GiveAdv",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 2.3,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestAdvice", "GiveAdvice" ]
+            },
+            {
+               "DialogName" : "ReqAff,  GiveAdv",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 2.3,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestAffirmation", "GiveAdvice" ]
+            },
+            {
+               "DialogName" : "ReqAdv,  GiveAff",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 2.3,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestAdvice", "GiveAffirmation" ]
+            },
+            {
+               "DialogName" : "Request location Give location",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 4.1,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestLocation", "GiveLocation" ]
+            },
+            {
+               "DialogName" : "Request location Give location Correct Location",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [
+                  "RequestLocation",
+                  "GiveLocation",
+                  "No",
+                  "GiveSilence",
+                  "GiveLocation"
+               ]
+            },
+            {
+               "DialogName" : "Request Who Give Who",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 4.1,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestWho", "GiveWho" ]
+            },
+            {
+               "DialogName" : "Request Who Give Who Correct",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestWho", "GiveWho", "No", "GiveSilence", "GiveWho" ]
+            },
+            {
+               "DialogName" : "SuggestPlan, GiveAgreement",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 4,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "SuggestPlan", "GiveAgreement" ]
+            },
+            {
+               "DialogName" : "Complain Complain Complain Complain",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 2,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "Complain", "Complain", "Complain", "Complain" ]
+            },
+            {
+               "DialogName" : "Whatswrong,complain,goonunderstanding,complain,giveadvice,thankyou,yourewelcome",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 3,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [
+                  "WhatsWrong",
+                  "Complain",
+                  "GoOnUnderstanding",
+                  "Complain",
+                  "GiveAdvice",
+                  "ThankYou",
+                  "YoureWelcome"
+               ]
+            },
+            {
+               "DialogName" : "Complain,GoOnNeutral,Complain,shutup",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 3,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "Complain", "GoOnNeutral", "Complain", "ShutUp" ]
+            },
+            {
+               "DialogName" : "WhatsWrong,Complain,GiveAdvice,ThankYou",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 3,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "WhatsWrong", "Complain", "GiveAdvice", "ThankYou" ]
+            },
+            {
+               "DialogName" : "Complain,goonangry,complain",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 3,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "Complain", "GoOnAngry", "Complain" ]
+            },
+            {
+               "DialogName" : "Insult,HurtFeelings,Laugh",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 2,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "Insult", "HurtFeelings", "Laugh" ]
+            },
+            {
+               "DialogName" : "Insult,HurtFeelings,Sorry,Makeup",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 3,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "Insult", "HurtFeelings", "Sorry", "MakeUp" ]
+            },
+            {
+               "DialogName" : "RequestJoke,GiveJoke,Laugh",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 4,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestJoke", "GiveJoke", "Laugh" ]
+            },
+            {
+               "DialogName" : "RequestAffirmation,Laugh,HurtFeelings",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 4,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestAffirmation", "Laugh", "HurtFeelings" ]
+            },
+            {
+               "DialogName" : "GiveJoke,Laugh",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 4,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "GiveJoke", "Laugh" ]
+            },
+            {
+               "DialogName" : "RequestJoke,GiveJoke,NotFunny",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 4,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestJoke", "GiveJoke", "NotFunny" ]
+            },
+            {
+               "DialogName" : "GiveJoke,NotFunny,HurtFeelings,Sorry",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 4,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "GiveJoke", "NotFunny", "HurtFeelings", "Sorry" ]
+            },
+            {
+               "DialogName" : "WhatsWrong,RequestAffirmation,GiveAffirmation",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 4,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "WhatsWrong", "RequestAffirmation", "GiveAffirmation" ]
+            },
+            {
+               "DialogName" : "WhatsWrong,RequestAdvice,GiveAdvice",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 4,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "WhatsWrong", "RequestAdvice", "GiveAdvice" ]
+            },
+            {
+               "DialogName" : "Threat,Threat,HurtFeelings,MakeUp,MakeUp",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 4,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "Threat", "Threat", "HurtFeelings", "MakeUp", "MakeUp" ]
+            },
+            {
+               "DialogName" : "Accuse,Sorry,Makeup",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 4,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "Accuse", "Sorry", "MakeUp" ]
+            },
+            {
+               "DialogName" : "RequestCatchup,GoodNews,Joyful",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestCatchup", "GoodNews", "GoOnJoyful" ]
+            },
+            {
+               "DialogName" : "RequestCatchup,GiveRecentHistory,Surprise",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestCatchup", "GiveRecentHistory", "GoOnSurprise" ]
+            },
+            {
+               "DialogName" : "RequestCatchup,GiveRecentHistory,Neutral",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestCatchup", "GiveRecentHistory", "GoOnNeutral" ]
+            },
+            {
+               "DialogName" : "RequestCatchup,GiveRecentHistory,Disapproval",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestCatchup", "GiveRecentHistory", "GoOnDisapproval" ]
+            },
+            {
+               "DialogName" : "InsultImAngry",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "Insult", "ImAngry" ]
+            },
+            {
+               "DialogName" : "Insult,Insult,ImAngry,ImAngry",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "Insult", "Insult", "ImAngry", "ImAngry" ]
+            },
+            {
+               "DialogName" : "Insult,Threat,ImScared",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 2,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "Insult", "Threat", "ImScared" ]
+            },
+            {
+               "DialogName" : "Threat,ImScared",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 1.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "Threat", "ImScared" ]
+            },
+            {
+               "DialogName" : "Insult,Threat,ImAngry",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "Insult", "Threat", "ImAngry" ]
+            },
+            {
+               "DialogName" : "GiveAffirmation,ImHappy",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "GiveAffirmation", "ImHappy" ]
+            },
+            {
+               "DialogName" : "RequestAffirmation,GiveAffirmation,ImHappy",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestAffirmation", "GiveAffirmation", "ImHappy" ]
+            },
+            {
+               "DialogName" : "Ramble,Retreat,ImSad",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "Ramble", "Retreat", "ImSad" ]
+            },
+            {
+               "DialogName" : "RequestAffirmation,Retreat,ImSad",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestAffirmation", "Retreat", "ImSad" ]
+            },
+            {
+               "DialogName" : "Ramble,GoOnNeutral",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "Ramble", "GoOnNeutral" ]
+            },
+            {
+               "DialogName" : "RequestCatchup,Ramble,GoOnNeutral",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestCatchup", "Ramble", "GoOnNeutral" ]
+            },
+            {
+               "DialogName" : "RequestCatchup,GiveRecentHistory,GoOnNeutral",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestCatchup", "GiveRecentHistory", "GoOnNeutral" ]
+            },
+            {
+               "DialogName" : "RequestCatchup,GiveRecentHistory,GoOnNeutral,RequestCatchup,GiveRecentHistory",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 2,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [
+                  "RequestCatchup",
+                  "GiveRecentHistory",
+                  "GoOnNeutral",
+                  "RequestCatchup",
+                  "GiveRecentHistory"
+               ]
+            },
+            {
+               "DialogName" : "RequestJoke,GiveJoke,Laugh,RequestJoke,GiveJoke,Laugh",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 3,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [
+                  "RequestJoke",
+                  "GiveJoke",
+                  "Laugh",
+                  "RequestJoke",
+                  "GiveJoke",
+                  "Laugh"
+               ]
+            },
+            {
+               "DialogName" : "SuggestPlan,AcceptPlan,ImHappy",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 2,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "SuggestPlan", "AcceptPlan", "ImHappy" ]
+            },
+            {
+               "DialogName" : "SuggestPlan,AcceptPlan",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 1,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "SuggestPlan", "AcceptPlan" ]
+            },
+            {
+               "DialogName" : "SuggestPlan,RejectPlan",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "SuggestPlan", "RejectPlan" ]
+            },
+            {
+               "DialogName" : "SuggestPlan,RejectPlan,ImSad",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 1,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "SuggestPlan", "RejectPlan", "ImSad" ]
+            },
+            {
+               "DialogName" : "SuggestPlan,RejectPlan,HurtFeelings,Sorry,Makeup",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 2,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "SuggestPlan", "RejectPlan", "HurtFeelings", "Sorry", "MakeUp" ]
+            },
+            {
+               "DialogName" : "SuggestPlan,RejectPlan,HurtFeelings,Retreat,ImSad",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 2,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "SuggestPlan", "RejectPlan", "HurtFeelings", "Retreat", "ImSad" ]
+            },
+            {
+               "DialogName" : "YesNoQuestion,DontKnow",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 1.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "YesNoQuestion", "DontKnow" ]
+            },
+            {
+               "DialogName" : "RequestQuestion,YesNoQuestion,DontKnow",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestQuestion", "YesNoQuestion", "DontKnow" ]
+            },
+            {
+               "DialogName" : "RequestQuestion,YesNoQuestion,Yes",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestQuestion", "YesNoQuestion", "Yes" ]
+            },
+            {
+               "DialogName" : "RequestQuestion,YesNoQuestion,No",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestQuestion", "YesNoQuestion", "No" ]
+            },
+            {
+               "DialogName" : "RequestMotivation,DontKnow",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestMotivation", "DontKnow" ]
+            },
+            {
+               "DialogName" : "RequestMotivation,GiveMotivation,GiveAgreement",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestMotivation", "GiveMotivation", "GiveAgreement" ]
+            },
+            {
+               "DialogName" : "RequestMotivation,GiveMotivation,GiveDisbelief",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestMotivation", "GiveMotivation", "GiveDisbelief" ]
+            },
+            {
+               "DialogName" : "RequestQuestion,RequestMotivation,GiveMotivation,GiveAgreement",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.3,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [
+                  "RequestQuestion",
+                  "RequestMotivation",
+                  "GiveMotivation",
+                  "GiveAgreement"
+               ]
+            },
+            {
+               "DialogName" : "RequestQuestion,RequestMotivation,GiveMotivation,GiveDisbelief",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.3,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [
+                  "RequestQuestion",
+                  "RequestMotivation",
+                  "GiveMotivation",
+                  "GiveDisbelief"
+               ]
+            },
+            {
+               "DialogName" : "RequestLocation,DontKnow",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestLocation", "DontKnow" ]
+            },
+            {
+               "DialogName" : "RequestLocation,GiveLocation,GiveAgreement",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestLocation", "GiveLocation", "GiveAgreement" ]
+            },
+            {
+               "DialogName" : "RequestLocation,GiveLocation,GiveDisbelief",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestLocation", "GiveLocation", "GiveDisbelief" ]
+            },
+            {
+               "DialogName" : "RequestQuestion,RequestLocation,GiveLocation,GiveAgreement",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.3,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestQuestion", "RequestLocation", "GiveLocation", "GiveAgreement" ]
+            },
+            {
+               "DialogName" : "RequestQuestion,RequestLocation,GiveLocation,GiveDisbelief",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.3,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestQuestion", "RequestLocation", "GiveLocation", "GiveDisbelief" ]
+            },
+            {
+               "DialogName" : "RequestQuestion,RequestLocation,DontKnow",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.3,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestQuestion", "RequestLocation", "DontKnow" ]
+            },
+            {
+               "DialogName" : "RequestWho,DontKnow",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestWho", "DontKnow" ]
+            },
+            {
+               "DialogName" : "RequestWho,GiveWho,GiveAgreement",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestWho", "GiveWho", "GiveAgreement" ]
+            },
+            {
+               "DialogName" : "RequestWho,GiveWho,GiveDisbelief",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestWho", "GiveWho", "GiveDisbelief" ]
+            },
+            {
+               "DialogName" : "RequestQuestion,RequestWho,GiveWho,GiveAgreement",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.3,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestQuestion", "RequestWho", "GiveWho", "GiveAgreement" ]
+            },
+            {
+               "DialogName" : "RequestQuestion,RequestWho,GiveWho,GiveDisbelief",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.3,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestQuestion", "RequestWho", "GiveWho", "GiveDisbelief" ]
+            },
+            {
+               "DialogName" : "RequestQuestion,RequestWho,DontKnow",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.3,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestQuestion", "RequestWho", "DontKnow" ]
+            },
+            {
+               "DialogName" : "RequestActivity,DontKnow",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestActivity", "DontKnow" ]
+            },
+            {
+               "DialogName" : "RequestActivity,GiveActivity,GiveAgreement",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestActivity", "GiveActivity", "GiveAgreement" ]
+            },
+            {
+               "DialogName" : "RequestActivity,GiveActivity,GiveDisbelief",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestActivity", "GiveActivity", "GiveDisbelief" ]
+            },
+            {
+               "DialogName" : "RequestQuestion,RequestActivity,GiveActivity,GiveAgreement",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.3,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestQuestion", "RequestActivity", "GiveActivity", "GiveAgreement" ]
+            },
+            {
+               "DialogName" : "RequestQuestion,RequestActivity,GiveActivity,GiveDisbelief",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.3,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestQuestion", "RequestActivity", "GiveActivity", "GiveDisbelief" ]
+            },
+            {
+               "DialogName" : "RequestQuestion,RequestObject,DontKnow",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.3,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestQuestion", "RequestObject", "DontKnow" ]
+            },
+            {
+               "DialogName" : "RequestObject,DontKnow",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestObject", "DontKnow" ]
+            },
+            {
+               "DialogName" : "RequestObject,GiveObject,GiveAgreement",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestObject", "GiveObject", "GiveAgreement" ]
+            },
+            {
+               "DialogName" : "RequestObject,GiveObject,GiveDisbelief",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestObject", "GiveObject", "GiveDisbelief" ]
+            },
+            {
+               "DialogName" : "RequestQuestion,RequestObject,GiveObject,GiveAgreement",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.3,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestQuestion", "RequestObject", "GiveObject", "GiveAgreement" ]
+            },
+            {
+               "DialogName" : "RequestQuestion,RequestObject,GiveObject,GiveDisbelief",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.3,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestQuestion", "RequestObject", "GiveObject", "GiveDisbelief" ]
+            },
+            {
+               "DialogName" : "RequestQuestion,RequestObject,DontKnow",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.3,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestQuestion", "RequestObject", "DontKnow" ]
+            },
+            {
+               "DialogName" : "RequestObject,GiveObject",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 2,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestObject", "GiveObject" ]
+            },
+            {
+               "DialogName" : "YesNoQuestion,Maybe",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "YesNoQuestion", "Maybe" ]
+            },
+            {
+               "DialogName" : "RequestQuestion,YesNoQuestion,Maybe",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestQuestion", "YesNoQuestion", "Maybe" ]
+            },
+            {
+               "DialogName" : "RequestLike,GiveLike",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 2,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestLike", "GiveLike" ]
+            },
+            {
+               "DialogName" : "RequestLike,GiveLike,GoOnDisapproval",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 1,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestLike", "GiveLike", "GoOnDisapproval" ]
+            },
+            {
+               "DialogName" : "RequestLike,GiveLike,GoOnNeutral,RequestLike,GiveLike",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 1,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestLike", "GiveLike", "GoOnNeutral", "RequestLike", "GiveLike" ]
+            },
+            {
+               "DialogName" : "RequestLike,GiveLike,GiveAgreement",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestLike", "GiveLike", "GiveAgreement" ]
+            },
+            {
+               "DialogName" : "GoodNews,GoodNews,GoodNews,Goodnews",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 3,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "GoodNews", "GoodNews", "GoodNews", "GoodNews" ]
+            },
+            {
+               "DialogName" : "GoodNews,GoOnJoyful,ImHappy",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 1.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "GoodNews", "GoOnJoyful", "ImHappy" ]
+            },
+            {
+               "DialogName" : "GoodNews,GoOnNeutral,GoodNews,Retreat",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "GoodNews", "GoOnNeutral", "GoodNews", "Retreat" ]
+            },
+            {
+               "DialogName" : "RequestSecret,GiveSecret",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestSecret", "GiveSecret" ]
+            },
+            {
+               "DialogName" : "RequestSecret,ShutUp",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestSecret", "ShutUp" ]
+            },
+            {
+               "DialogName" : "RequestSecret,GiveSecret,GiveDisbelief",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 1,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestSecret", "GiveSecret", "GiveDisbelief" ]
+            },
+            {
+               "DialogName" : "RequestQuestion,RequestSecret,GiveSecret,GiveDisbelief",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestQuestion", "RequestSecret", "GiveSecret", "GiveDisbelief" ]
+            },
+            {
+               "DialogName" : "RequestQuestion,RequestSecret,GiveSecret",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestQuestion", "RequestSecret", "GiveSecret" ]
+            },
+            {
+               "DialogName" : "RequestSecret,GiveSecret,GoOnSurprise",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 1,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestSecret", "GiveSecret", "GoOnSurprise" ]
+            },
+            {
+               "DialogName" : "RequestSecret,GiveSecret,DontCare",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestSecret", "GiveSecret", "DontCare" ]
+            },
+            {
+               "DialogName" : "RequestCatchup,GiveSecret,GoOnSurprise",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestCatchup", "GiveSecret", "GoOnSurprise" ]
+            },
+            {
+               "DialogName" : "RequestSecret,Retreat",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestSecret", "Retreat" ]
+            },
+            {
+               "DialogName" : "BodilyNoise,BodilyNoise,Laugh",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 2,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "BodilyNoise", "BodilyNoise", "Laugh" ]
+            },
+            {
+               "DialogName" : "BodilyNoise,Exclamation",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "BodilyNoise", "Exclamation" ]
+            },
+            {
+               "DialogName" : "BodilyNoise,ShutUp",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "BodilyNoise", "ShutUp" ]
+            },
+            {
+               "DialogName" : "BodilyNoise,GoOnDisgust",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 1,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "BodilyNoise", "GoOnDisgust" ]
+            },
+            {
+               "DialogName" : "RequestJoke,BodilyNoise,Laugh",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 1,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestJoke", "BodilyNoise", "Laugh" ]
+            },
+            {
+               "DialogName" : "RequestJoke,BodilyNoise,NotFunny",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 1,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestJoke", "BodilyNoise", "NotFunny" ]
+            },
+            {
+               "DialogName" : "BodilyNoise,Exasperation",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "BodilyNoise", "Exasperation" ]
+            },
+            {
+               "DialogName" : "Brag,Brag,Brag",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 1,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "Brag", "Brag", "Brag" ]
+            },
+            {
+               "DialogName" : "Brag,DontCare,HurtFeelings,Sorry",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 1,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "Brag", "DontCare", "HurtFeelings", "Sorry" ]
+            },
+            {
+               "DialogName" : "Brag,GiveDisbelief",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 2,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "Brag", "GiveDisbelief" ]
+            },
+            {
+               "DialogName" : "Brag,DontCare,HurtFeelings,Insult",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 1,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "Brag", "DontCare", "HurtFeelings", "Insult" ]
+            },
+            {
+               "DialogName" : "Brag,GoOnNeutral,Brag,ShutUp",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 1,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "Brag", "GoOnNeutral", "Brag", "ShutUp" ]
+            },
+            {
+               "DialogName" : "Ramble,DontCare",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "Ramble", "DontCare" ]
+            },
+            {
+               "DialogName" : "RequestAffirmation,DontCare,HurtFeelings,Laugh",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestAffirmation", "DontCare", "HurtFeelings", "Laugh" ]
+            },
+            {
+               "DialogName" : "RequestAffirmation,DontCare,HurtFeelings,Sorry,Makeup",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestAffirmation", "DontCare", "HurtFeelings", "Sorry", "MakeUp" ]
+            },
+            {
+               "DialogName" : "Complain,DontCare",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "Complain", "DontCare" ]
+            },
+            {
+               "DialogName" : "Complain,DontCare,ImAngry",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "Complain", "DontCare", "ImAngry" ]
+            },
+            {
+               "DialogName" : "WhatsWrong,Complain,DontCare,HurtFeelings,Sorry",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "WhatsWrong", "Complain", "DontCare", "HurtFeelings", "Sorry" ]
+            },
+            {
+               "DialogName" : "Ramble,Exasperation",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "Ramble", "Exasperation" ]
+            },
+            {
+               "DialogName" : "Complain,GoOnNeutral,Complain,Exasperation",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "Complain", "GoOnNeutral", "Complain", "Exasperation" ]
+            },
+            {
+               "DialogName" : "Insult,Exasperation",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "Insult", "Exasperation" ]
+            },
+            {
+               "DialogName" : "Ramble,Exasperation,Ramble,ShutUp",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "Ramble", "Exasperation", "Ramble", "ShutUp" ]
+            },
+            {
+               "DialogName" : "Greeting,Greeting,HowAreYou,ImHappy,GoOnJoyful,GoodNews",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 3,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [
+                  "Greeting",
+                  "Greeting",
+                  "HowAreYou",
+                  "ImHappy",
+                  "GoOnJoyful",
+                  "GoodNews"
+               ]
+            },
+            {
+               "DialogName" : "HowAreYou,ImHappy,GoOnJoyful,GoodNews",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 4,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "HowAreYou", "ImHappy", "GoOnJoyful", "GoodNews" ]
+            },
+            {
+               "DialogName" : "GoodNews,GoOnJoyful,ImHappy",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "GoodNews", "GoOnJoyful", "ImHappy" ]
+            },
+            {
+               "DialogName" : "RequestJoke,GiveJoke,Laugh,ImHappy",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "RequestJoke", "GiveJoke", "Laugh", "ImHappy" ]
+            },
+            {
+               "DialogName" : "HowAreYou,ImHappy,RequestCatchup,GiveRecentHistory",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "HowAreYou", "ImHappy", "RequestCatchup", "GiveRecentHistory" ]
+            },
+            {
+               "DialogName" : "HowAreYou,ImHappy,ImSad,GiveAffirmation",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "HowAreYou", "ImHappy", "ImSad", "GiveAffirmation" ]
+            },
+            {
+               "DialogName" : "HowAreYou,ImSad,GiveAffirmation,ThankYou",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "HowAreYou", "ImSad", "GiveAffirmation", "ThankYou" ]
+            },
+            {
+               "DialogName" : "HowAreYou,ImSad,WhatsWrong,Complain",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 3,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "HowAreYou", "ImSad", "WhatsWrong", "Complain" ]
+            },
+            {
+               "DialogName" : "Insult,HurtFeelings,Laugh,ImSad",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "Insult", "HurtFeelings", "Laugh", "ImSad" ]
+            },
+            {
+               "DialogName" : "HowAreYou,ImScared,GiveAffirmation",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "HowAreYou", "ImScared", "GiveAffirmation" ]
+            },
+            {
+               "DialogName" : "HowAreYou,ImScared,Laugh,HurtFeelings",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "HowAreYou", "ImScared", "Laugh", "HurtFeelings" ]
+            },
+            {
+               "DialogName" : "HowAreYou,ImScared,Laugh,HurtFeelings,Sorry",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "HowAreYou", "ImScared", "Laugh", "HurtFeelings", "Sorry" ]
+            },
+            {
+               "DialogName" : "Insult,ImAngry,Threat,ImScared",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "Insult", "ImAngry", "Threat", "ImScared" ]
+            },
+            {
+               "DialogName" : "Insult,Insult,ImAngry,ImAngry,Threat,Threat",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "Insult", "Insult", "ImAngry", "ImAngry", "Threat", "Threat" ]
+            },
+            {
+               "DialogName" : "HowAreYou,ImAngry,WhatsWrong,Complain",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 2,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "HowAreYou", "ImAngry", "WhatsWrong", "Complain" ]
+            },
+            {
+               "DialogName" : "HowAreYou,ImAngry,Retreat",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "HowAreYou", "ImAngry", "Retreat" ]
+            },
+            {
+               "DialogName" : "Insult,ImAngry,Insult,Threat,Retreat",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "Insult", "ImAngry", "Insult", "Threat", "Retreat" ]
+            },
+            {
+               "DialogName" : "Greeting,HowAreYou,ImHappy",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [ "Greeting", "HowAreYou", "ImHappy" ]
+            },
+            {
+               "DialogName" : "Greeting,RequestCatchup,GiveRecentHistory,GoOnNeutral,HowAreYou,ImHappy",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [
+                  "Greeting",
+                  "RequestCatchup",
+                  "GiveRecentHistory",
+                  "GoOnNeutral",
+                  "HowAreYou",
+                  "ImHappy"
+               ]
+            },
+            {
+               "DialogName" : "Greeting,RequestCatchup,GiveRecentHistory,GoOnNeutral,HowAreYou,ImSad,GoOnUnderstanding,Complain",
+               "AddedOnDateTime" : "2016-05-18T00:00:00",
+               "Popularity" : 0.5,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [
+                  "Greeting",
+                  "RequestCatchup",
+                  "GiveRecentHistory",
+                  "GoOnNeutral",
+                  "HowAreYou",
+                  "ImSad",
+                  "GoOnUnderstanding",
+                  "Complain"
+               ]
+            }
+         ]
+      },
+      {
+         "ModelsCollectionName" : "TwinkleTwinkle",
+         "ArrayOfDialogModels" : [
+            {
+               "DialogName" : "TwinkleTwinkleSong",
+               "AddedOnDateTime" : "2017-05-08T00:00:00",
+               "Popularity" : 2.7,
+               "Adventure" : "",
+               "Requires" : [],
+               "Provides" : [],
+               "PhraseTypeSequence" : [
+                  "Twinkle1",
+                  "Twinkle2",
+                  "Twinkle3",
+                  "Twinkle4",
+                  "Twinkle5",
+                  "Twinkle6"
+               ]
+            }
+         ]
+      }
+   ]
+}

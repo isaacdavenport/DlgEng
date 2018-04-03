@@ -11,6 +11,7 @@
       xmlns:local="clr-namespace:DialogEngine.Views"
       xmlns:core="clr-namespace:DialogEngine.Core"
       xmlns:dialogModel="clr-namespace:DialogEngine.Models.Dialog"
+      xmlns:controls="clr-namespace:DialogEngine.Controls.Views"
       xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
       xmlns:enums ="clr-namespace:DialogEngine.Models.Enums"
       xmlns:cmd="http://www.galasoft.ch/mvvmlight"
@@ -24,6 +25,13 @@
       d:DesignHeight="300" d:DesignWidth="300"
       Title="Dialog">
 
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Themes/Generic.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+         </ResourceDictionary >
+    </Page.Resources> 
     <Grid>
 
         <Grid.RowDefinitions>
@@ -36,7 +44,12 @@
             <ColumnDefinition Width="2.5*" />
         </Grid.ColumnDefinitions>
 
-        <Border CornerRadius="5" BorderBrush="LightGray" BorderThickness="1" Grid.Column="0" Grid.Row="0" Margin="17,17,17,17">
+        <Border CornerRadius="5" 
+                BorderBrush="LightGray" 
+                BorderThickness="1" 
+                Grid.Column="0" 
+                Grid.Row="0" 
+                Margin="8,8,5,8">
             <Grid  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" >
 
                 <Grid.RowDefinitions>
@@ -106,33 +119,47 @@
                             </TabItem.Header>
 
                             <DataGrid     x:Name="dataGrid"  
-                                                  ItemsSource="{Binding CharacterCollection}"                                                  
-                                                  HeadersVisibility="Column"  
-                                                  CanUserAddRows="False"
-                                                  Padding="0,0,0,4"
-                                                  EnableRowVirtualization="False"
-                                                  Background="White"
-                                                  VerticalContentAlignment="Stretch"
-                                                  VerticalAlignment="Stretch"
-                                                  HorizontalAlignment="Stretch"
-                                                  AutoGenerateColumns="False">
+                                          ItemsSource="{Binding CharacterCollection}"                                                  
+                                          HeadersVisibility="Column"  
+                                          CanUserAddRows="False"
+                                          Padding="0,0,0,4"
+                                          materialDesign:DataGridAssist.CellPadding="4 2 2 2"                                                   
+                                          materialDesign:DataGridAssist.ColumnHeaderPadding="4 4 4 4"
+                                          EnableRowVirtualization="False"
+                                          Background="White"
+                                          CanUserResizeColumns="False"
+                                          CanUserResizeRows="False"
+                                          VerticalContentAlignment="Stretch"
+                                          VerticalAlignment="Stretch"
+                                          HorizontalAlignment="Stretch"
+                                          AutoGenerateColumns="False">
                                 <DataGrid.Columns>
 
-                                    <DataGridTextColumn IsReadOnly="True" 
-                                                                    Header="" 
-                                                                    Width="auto" 
-                                                                    Binding ="{Binding RelativeSource={RelativeSource FindAncestor,  
-                                                                                       AncestorType={x:Type DataGridRow}},
-                                                                                       Converter={StaticResource RowIndexConverter}}">
-
-                                    </DataGridTextColumn>
-
-                                    <DataGridTemplateColumn IsReadOnly="True" 
-                                                                    Width="*" 
-                                                                    Header="Characters" >
+                                    <DataGridTemplateColumn IsReadOnly="True"
+                                                                    Header=""
+                                                                    Width="auto"
+                                                                    >
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <TextBlock Grid.Column="0" Text="{Binding CharacterName}" >
+                                                <TextBlock VerticalAlignment="Center" Text="{Binding RelativeSource={RelativeSource FindAncestor,  
+                                                                                                     AncestorType={x:Type DataGridRow}},
+                                                                                                     Converter={StaticResource RowIndexConverter}}" />
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    
+                                    <DataGridTemplateColumn IsReadOnly="True" Width="*" Header="Characters" >
+                                        
+                                        <DataGridTemplateColumn.HeaderStyle>
+                                            <Style TargetType="DataGridColumnHeader">
+                                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                <Setter Property="SeparatorBrush" Value="Transparent" />
+                                            </Style>
+                                        </DataGridTemplateColumn.HeaderStyle>
+                                        
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{Binding CharacterName}" >
                                                     <TextBlock.ToolTip>
                                                         <Grid >
                                                             <Grid.ColumnDefinitions>
@@ -199,9 +226,23 @@
                                                 </TextBlock>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
+                                        
                                     </DataGridTemplateColumn>
 
-                                    <DataGridTemplateColumn Header="Available" Width="auto">
+                                    <DataGridTemplateColumn  Width="auto">
+                                        
+                                        <DataGridTemplateColumn.Header>
+                                            <TextBlock Text="Avail" ToolTip="Available" />
+                                        </DataGridTemplateColumn.Header>
+                                        
+                                        <DataGridTemplateColumn.HeaderStyle>
+                                            <Style TargetType="DataGridColumnHeader">
+                                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                <Setter Property="SeparatorBrush" Value="Transparent" />
+                                                <Setter Property="BorderThickness" Value="0 0 0 0" />
+                                            </Style>
+                                        </DataGridTemplateColumn.HeaderStyle>
+                                        
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
                                                 <RadioButton GroupName="{Binding Path=CharacterName}" VerticalAlignment="Center" HorizontalAlignment="Center" 
@@ -209,15 +250,22 @@
                                                                                          Mode=TwoWay, 
                                                                                          UpdateSourceTrigger=PropertyChanged, 
                                                                                          Converter = {StaticResource CharacterStateToBooleanConverter}, 
-                                                                                         ConverterParameter={x:Static enums:CharacterState.Available}}">
-
-                                                </RadioButton>
+                                                                                         ConverterParameter={x:Static enums:CharacterState.Available}}" />
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
 
                                     </DataGridTemplateColumn>
-                                    <DataGridTemplateColumn Header="On"
-                                                                        Width="auto">
+                                    
+                                    <DataGridTemplateColumn  Header="On" >
+                                        
+                                        <DataGridTemplateColumn.HeaderStyle>
+                                            <Style TargetType="DataGridColumnHeader">
+                                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                <Setter Property="SeparatorBrush" Value="Transparent" />
+                                                <Setter Property="BorderThickness" Value="0 0 0 0" />
+                                            </Style>
+                                        </DataGridTemplateColumn.HeaderStyle>
+                                        
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
                                                 <RadioButton GroupName="{Binding Path=CharacterName}" VerticalAlignment="Center" HorizontalAlignment="Center" 
@@ -225,16 +273,22 @@
                                                                                          Mode=TwoWay,
                                                                                          UpdateSourceTrigger=PropertyChanged, 
                                                                                          Converter = {StaticResource CharacterStateToBooleanConverter}, 
-                                                                                         ConverterParameter={x:Static enums:CharacterState.On}}" >
-
-                                                </RadioButton>
+                                                                                         ConverterParameter={x:Static enums:CharacterState.On}}" />
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
 
                                     </DataGridTemplateColumn>
 
-                                    <DataGridTemplateColumn Header="Off"
-                                                                        Width="auto">
+                                    <DataGridTemplateColumn Header="Off" Width="auto">
+                                        
+                                        <DataGridTemplateColumn.HeaderStyle>
+                                            <Style TargetType="DataGridColumnHeader">
+                                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                <Setter Property="BorderThickness" Value="0 0 0 0" />
+                                                <Setter Property="SeparatorBrush" Value="Transparent" />
+                                            </Style>
+                                        </DataGridTemplateColumn.HeaderStyle>
+                                        
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
                                                 <RadioButton GroupName="{Binding Path=CharacterName}" HorizontalAlignment="Center" VerticalAlignment="Center"
@@ -242,26 +296,62 @@
                                                                                          Mode=TwoWay,
                                                                                          UpdateSourceTrigger=PropertyChanged, 
                                                                                          Converter = {StaticResource CharacterStateToBooleanConverter}, 
-                                                                                         ConverterParameter={x:Static enums:CharacterState.Off}}" >
-
-                                                </RadioButton>
+                                                                                         ConverterParameter={x:Static enums:CharacterState.Off}}" />
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
-
+                                        
                                     </DataGridTemplateColumn>
 
+                                    <DataGridTemplateColumn Width="25">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <StackPanel   Orientation="Horizontal"  HorizontalAlignment="Right">
+                                                    <materialDesign:PopupBox Width="25"
+                                                                             Margin="-5,0,0,0"
+                                                                             Style="{DynamicResource MaterialDesignToolForegroundPopupBox}"  
+                                                                             Padding="2 0 2 0">
+                                                        <StackPanel Margin="0,10,0,10">
+                                                            <Button Command="{Binding DataContext.EditCharacterCommand, 
+                                                                                      RelativeSource={RelativeSource Mode=FindAncestor, 
+                                                                                      AncestorType=local:DialogView}}" CommandParameter="{Binding}" >
+                                                                    <Button.Content>
+                                                                    <StackPanel Orientation="Horizontal" >
+                                                                        <materialDesign:PackIcon Kind="Pencil" VerticalAlignment="Center" />
+                                                                        <TextBlock Margin="5,0,0,0" Text="Edit" VerticalAlignment="Center" />
+                                                                    </StackPanel>
+                                                                </Button.Content>
+                                                            </Button>
+                                                            <Button IsEnabled="False" Command="{Binding DataContext.EditCharacterCommand, 
+                                                                                      RelativeSource={RelativeSource Mode=FindAncestor, 
+                                                                                      AncestorType=local:DialogView}}" CommandParameter="{Binding}" >
+                                                                <Button.Content>
+                                                                    <StackPanel Orientation="Horizontal" >
+                                                                        <materialDesign:PackIcon Kind="Delete" VerticalAlignment="Center" />
+                                                                        <TextBlock Margin="5,0,0,0" Text="Delete" VerticalAlignment="Center" />
+                                                                    </StackPanel>
+                                                                </Button.Content>
+                                                            </Button>
+                                                        </StackPanel>
+                                                    </materialDesign:PopupBox>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>    
+                                    
                                 </DataGrid.Columns>
                             </DataGrid>
 
                         </TabItem>
 
-                        <TabItem  HorizontalAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                        <TabItem  HorizontalAlignment="Stretch" 
+                                  VerticalContentAlignment="Stretch" 
+                                  VerticalAlignment="Stretch" 
+                                  HorizontalContentAlignment="Stretch">
 
                             <TabItem.Header>
                                 <StackPanel>
                                     <TextBlock Text="Serial mode" Margin="10,0,10,3"/>
                                 </StackPanel>
-
                             </TabItem.Header>
 
                             <Grid  Margin="5,10,5,10" Height="300" HorizontalAlignment="Stretch"   VerticalAlignment="Stretch">
@@ -300,12 +390,11 @@
                                         <i:EventTrigger EventName="PreviewMouseMove">
                                             <cmd:EventToCommand Command="{Binding PreviewMouseMoveCommand}" PassEventArgsToCommand="true"/>
                                         </i:EventTrigger>
-
                                     </i:Interaction.Triggers>
 
                                 </ListBox>
 
-                                <!-- Textboxes -->
+                                <!-- Textboxes for radio binding -->
 
                                 <Grid HorizontalAlignment="Stretch" x:Name="RadioTextBoxesContainer" Height="auto"  Margin="20,0,0,0" Grid.Column="1">
                                     <Grid.ColumnDefinitions>
@@ -323,8 +412,17 @@
                                         <RowDefinition />
                                     </Grid.RowDefinitions>
 
-                                    <TextBlock Text="R0: " Foreground="Black" Grid.Column="0" VerticalAlignment="Center"   HorizontalAlignment="Left"  />
-                                    <TextBox x:Name="Radio_0" Grid.Column="1" Height="20"  Style="{x:Null}" IsReadOnly="True" AllowDrop="True"   >
+                                    <TextBlock Text="R0: " 
+                                               Foreground="Black" 
+                                               Grid.Column="0" 
+                                               VerticalAlignment="Center"   
+                                               HorizontalAlignment="Left"  />
+                                    <TextBox x:Name="Radio_0" 
+                                             Grid.Column="1" 
+                                             Height="20"  
+                                             Style="{x:Null}" 
+                                             IsReadOnly="True" 
+                                             AllowDrop="True"   >
 
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="PreviewDragEnter">
@@ -351,8 +449,19 @@
                                         <materialDesign:PackIcon Kind="ArrowLeft" />
                                     </Button>
 
-                                    <TextBlock Text="R1: " Grid.Column="0" Grid.Row="1"   Foreground="Black" VerticalAlignment="Center"   HorizontalAlignment="Right"  />
-                                    <TextBox x:Name="Radio_1"  Grid.Column="1" Grid.Row="1" Height="20"  Style="{x:Null}" IsReadOnly="True" AllowDrop="True"  >
+                                    <TextBlock Text="R1: " 
+                                               Grid.Column="0" 
+                                               Grid.Row="1"   
+                                               Foreground="Black" 
+                                               VerticalAlignment="Center"   
+                                               HorizontalAlignment="Right"  />
+                                    <TextBox x:Name="Radio_1"  
+                                             Grid.Column="1" 
+                                             Grid.Row="1" 
+                                             Height="20"  
+                                             Style="{x:Null}" 
+                                             IsReadOnly="True" 
+                                             AllowDrop="True"  >
 
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="PreviewDragEnter">
@@ -379,8 +488,19 @@
                                         <materialDesign:PackIcon Kind="ArrowLeft" />
                                     </Button>
 
-                                    <TextBlock Text="R2: " Grid.Column="0" Grid.Row="2"   Foreground="Black"  VerticalAlignment="Center"   HorizontalAlignment="Right"  />
-                                    <TextBox x:Name="Radio_2" Grid.Column="1" Grid.Row="2" Height="20"  Style="{x:Null}"  IsReadOnly="True" AllowDrop="True"  >
+                                    <TextBlock Text="R2: " 
+                                               Grid.Column="0" 
+                                               Grid.Row="2"   
+                                               Foreground="Black"  
+                                               VerticalAlignment="Center"   
+                                               HorizontalAlignment="Right"  />
+                                    <TextBox x:Name="Radio_2" 
+                                             Grid.Column="1" 
+                                             Grid.Row="2" 
+                                             Height="20"  
+                                             Style="{x:Null}"  
+                                             IsReadOnly="True" 
+                                             AllowDrop="True"  >
 
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="PreviewDragEnter">
@@ -394,7 +514,6 @@
                                             <i:EventTrigger EventName="PreviewDragOver">
                                                 <cmd:EventToCommand Command="{Binding DragOverCommand}" PassEventArgsToCommand="true"/>
                                             </i:EventTrigger>
-
                                         </i:Interaction.Triggers>
 
                                     </TextBox>
@@ -408,8 +527,19 @@
                                         <materialDesign:PackIcon Kind="ArrowLeft" />
                                     </Button>
 
-                                    <TextBlock Text="R3: " Grid.Column="0" Grid.Row="3" Foreground="Black"  VerticalAlignment="Center"   HorizontalAlignment="Right"  />
-                                    <TextBox x:Name="Radio_3" Grid.Column="1" Grid.Row="3"   Style="{x:Null}" IsReadOnly="True" AllowDrop="True" Height="20" >
+                                    <TextBlock Text="R3: " 
+                                               Grid.Column="0" 
+                                               Grid.Row="3" 
+                                               Foreground="Black"  
+                                               VerticalAlignment="Center"   
+                                               HorizontalAlignment="Right"  />
+                                    <TextBox x:Name="Radio_3" 
+                                             Grid.Column="1" 
+                                             Grid.Row="3"   
+                                             Style="{x:Null}" 
+                                             IsReadOnly="True" 
+                                             AllowDrop="True" 
+                                             Height="20" >
 
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="PreviewDragEnter">
@@ -436,8 +566,19 @@
                                         <materialDesign:PackIcon Kind="ArrowLeft" />
                                     </Button>
 
-                                    <TextBlock Text="R4: " Grid.Column="0" Grid.Row="4" Foreground="Black" VerticalAlignment="Center"   HorizontalAlignment="Right"  />
-                                    <TextBox x:Name="Radio_4"  Grid.Column="1" Grid.Row="4"  Style="{x:Null}"  IsReadOnly="True" AllowDrop="True" Height="20"  >
+                                    <TextBlock Text="R4: " 
+                                               Grid.Column="0" 
+                                               Grid.Row="4" 
+                                               Foreground="Black" 
+                                               VerticalAlignment="Center"   
+                                               HorizontalAlignment="Right"  />
+                                    <TextBox x:Name="Radio_4"  
+                                             Grid.Column="1" 
+                                             Grid.Row="4"  
+                                             Style="{x:Null}"  
+                                             IsReadOnly="True" 
+                                             AllowDrop="True" 
+                                             Height="20"  >
 
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="PreviewDragEnter">
@@ -466,8 +607,19 @@
                                         <materialDesign:PackIcon Kind="ArrowLeft" />
                                     </Button>
 
-                                    <TextBlock Text="R5: " Grid.Column="0" Grid.Row="5" Foreground="Black" VerticalAlignment="Center"   HorizontalAlignment="Right"  />
-                                    <TextBox x:Name="Radio_5"  Grid.Column="1" Grid.Row="5"  Style="{x:Null}"  IsReadOnly="True" AllowDrop="True" Height="20"  >
+                                    <TextBlock Text="R5: " 
+                                               Grid.Column="0" 
+                                               Grid.Row="5" 
+                                               Foreground="Black" 
+                                               VerticalAlignment="Center"   
+                                               HorizontalAlignment="Right"  />
+                                    <TextBox x:Name="Radio_5"  
+                                             Grid.Column="1" 
+                                             Grid.Row="5"  
+                                             Style="{x:Null}"  
+                                             IsReadOnly="True" 
+                                             AllowDrop="True" 
+                                             Height="20"  >
 
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="PreviewDragEnter">
@@ -513,53 +665,81 @@
                                           HeadersVisibility="Column" 
                                           CanUserAddRows="False"
                                           Padding="0,0,0,4"
-                                          EnableRowVirtualization="True"  
+                                          materialDesign:DataGridAssist.CellPadding="4 6 2 6"                                                   
+                                          materialDesign:DataGridAssist.ColumnHeaderPadding="4 8 4 8"
+                                          EnableRowVirtualization="True"
+                                          CanUserResizeColumns="False"
+                                          CanUserResizeRows="False"
                                           AutoGenerateColumns="False"
                                           Background="White"
                                           HorizontalAlignment="Stretch"
                                           VerticalAlignment="Stretch">
 
                                     <DataGrid.Columns>
-                                        <DataGridTextColumn IsReadOnly="True" 
-                                                                    Header="" 
-                                                                    Width="auto" 
-                                                                    Binding ="{Binding  RelativeSource={RelativeSource FindAncestor,  
-                                                                                        AncestorType={x:Type DataGridRow}},
-                                                                                        Converter={StaticResource RowIndexConverter}}" />
-
-                                        <DataGridTextColumn IsReadOnly="True" 
-                                                                    Width="*" 
-                                                                    Header="Dialog models" 
-                                                                    Binding ="{Binding FileName}" />
-
-                                        <DataGridTemplateColumn Header="On"
-                                                                        Width="auto">
+                                        <DataGridTemplateColumn IsReadOnly="True" Width="auto"  >
+                                            
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <RadioButton GroupName="{Binding Path=FileName}" VerticalAlignment="Center" HorizontalAlignment="Center" 
-                                                                         IsChecked="{Binding State, 
-                                                                                            Mode=TwoWay,
-                                                                                            UpdateSourceTrigger=PropertyChanged, 
-                                                                                            Converter = {StaticResource ModelDialogStateToBooleanConverter}, 
-                                                                                            ConverterParameter={x:Static enums:ModelDialogState.On}}" >
+                                                    <TextBlock VerticalAlignment="Center" Text="{Binding RelativeSource={RelativeSource FindAncestor,  
+                                                                                                         AncestorType={x:Type DataGridRow}},
+                                                                                                         Converter={StaticResource RowIndexConverter}}" />
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                            
+                                        </DataGridTemplateColumn>
 
-                                                    </RadioButton>
+                                        <DataGridTemplateColumn IsReadOnly="True" Width="*" Header="Dialog models" >
+ 
+                                            <DataGridTemplateColumn.HeaderStyle>
+                                                <Style TargetType="DataGridColumnHeader">
+                                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                    <Setter Property="SeparatorBrush" Value="Transparent" />
+                                                    <Setter Property="BorderThickness" Value="0"/>
+                                                </Style>
+                                            </DataGridTemplateColumn.HeaderStyle>
+
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock VerticalAlignment="Center" Text="{Binding ModelsCollectionName}" />
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                            
+                                        </DataGridTemplateColumn>
+
+                                        <DataGridTemplateColumn Header="On" Width="auto">
+                                            <DataGridTemplateColumn.HeaderStyle>
+                                                <Style TargetType="DataGridColumnHeader">
+                                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                    <Setter Property="SeparatorBrush" Value="Transparent" />
+                                                </Style>
+                                            </DataGridTemplateColumn.HeaderStyle>
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <RadioButton GroupName="{Binding Path=ModelsCollectionName}" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                                                 IsChecked="{Binding State, 
+                                                                                     Mode=TwoWay,
+                                                                                     UpdateSourceTrigger=PropertyChanged, 
+                                                                                     Converter = {StaticResource ModelDialogStateToBooleanConverter}, 
+                                                                                     ConverterParameter={x:Static enums:ModelDialogState.On}}" />
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.CellTemplate>
                                         </DataGridTemplateColumn>
 
-                                        <DataGridTemplateColumn Header="Off"
-                                                                        Width="auto">
+                                        <DataGridTemplateColumn Header="Off" Width="auto">
+                                            <DataGridTemplateColumn.HeaderStyle>
+                                                <Style TargetType="DataGridColumnHeader">
+                                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                    <Setter Property="SeparatorBrush" Value="Transparent" />
+                                                </Style>
+                                            </DataGridTemplateColumn.HeaderStyle>
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <RadioButton GroupName="{Binding Path=FileName}" VerticalAlignment="Center" HorizontalAlignment="Center" 
-                                                                         IsChecked="{Binding State, 
-                                                                                             Mode=TwoWay,
-                                                                                             UpdateSourceTrigger=PropertyChanged, 
-                                                                                             Converter = {StaticResource ModelDialogStateToBooleanConverter} , 
-                                                                                             ConverterParameter={x:Static enums:ModelDialogState.Off}}" >
-
-                                                    </RadioButton>
+                                                    <RadioButton GroupName="{Binding Path=ModelsCollectionName}" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                                                 IsChecked="{Binding State, 
+                                                                                     Mode=TwoWay,
+                                                                                     UpdateSourceTrigger=PropertyChanged, 
+                                                                                     Converter = {StaticResource ModelDialogStateToBooleanConverter} , 
+                                                                                     ConverterParameter={x:Static enums:ModelDialogState.Off}}" />
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.CellTemplate>
                                         </DataGridTemplateColumn>
@@ -567,70 +747,40 @@
                                         <DataGridTemplateColumn>
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <Grid>
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="auto" />
-                                                            <ColumnDefinition Width="*" />
-                                                        </Grid.ColumnDefinitions>
-
-                                                        <ToggleButton x:Name="MoreInfoButton" IsEnabled="{Binding State, 
-                                                                                                                  Converter = {StaticResource ModelDialogStateToBooleanConverter} , 
-                                                                                                                  ConverterParameter={x:Static enums:ModelDialogState.On}}"  >
-                                                            <ToggleButton.Template>
-                                                                <ControlTemplate>
-
-                                                                    <Label x:Name="MoreInfoLabel" Margin="2,0,0,0" HorizontalAlignment="Center">
-                                                                        <Label.Background>
-                                                                            <ImageBrush  ImageSource="pack://application:,,,/Resources/Images/more-button-of-three-dots.png" />
-                                                                        </Label.Background>
-                                                                        <Label.ToolTip>
-                                                                            <TextBlock Text="Choose dialog model..." />
-                                                                        </Label.ToolTip>
-                                                                    </Label>
-
-                                                                </ControlTemplate>
-                                                            </ToggleButton.Template>
-
-                                                        </ToggleButton>
-
-                                                        <Popup  Grid.Column="1" 
-                                                                Width="auto" 
-                                                                Visibility="Visible" 
-                                                                StaysOpen="False" 
-                                                                IsOpen="{Binding IsChecked, ElementName=MoreInfoButton}" 
-                                                                Placement="Right">
-
-                                                            <Border BorderBrush="LightGray" BorderThickness="1">
-                                                                <Grid>
-                                                                    <ComboBox materialDesign:HintAssist.Hint="Choose dialog model ..."
+                                                    <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" Opened="PopupBox_Opened"  HorizontalContentAlignment="Stretch" StaysOpen="True">
+                                                        <materialDesign:PopupBox.ToggleContent>
+                                                            <materialDesign:PackIcon Kind="DotsHorizontal" />
+                                                        </materialDesign:PopupBox.ToggleContent>
+                                                        
+                                                        <ComboBox materialDesign:HintAssist.Hint="Choose dialog model..."
                                                                           Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                                                                           Tag="{Binding}"
-                                                                          Background="White"
-                                                                          IsEditable="True"                                                                    
-                                                                          MinWidth="100"
-                                                                          ItemsSource="{Binding InList}" 
-                                                                          DisplayMemberPath="Name" >
+                                                                          IsDropDownOpen="True"                                                                         
+                                                                          x:Name="ChooseDialogModelCbx"
+                                                                          Background="White"                                                                          
+                                                                          HorizontalAlignment="Left"
+                                                                          HorizontalContentAlignment="Stretch"
+                                                                          VerticalContentAlignment="Stretch"
+                                                                          IsEditable="True"    
+                                                                          Margin="0,0,5,5"
+                                                                          ItemsSource="{Binding ArrayOfDialogModels}" 
+                                                                          DisplayMemberPath="Name">
 
-                                                                        <ComboBox.ItemsPanel>
-                                                                            <ItemsPanelTemplate>
-                                                                                <VirtualizingStackPanel/>
-                                                                            </ItemsPanelTemplate>
-                                                                        </ComboBox.ItemsPanel>
+                                                            <ComboBox.ItemsPanel>
+                                                                <ItemsPanelTemplate>
+                                                                    <VirtualizingStackPanel/>
+                                                                </ItemsPanelTemplate>
+                                                            </ComboBox.ItemsPanel>
 
-                                                                        <i:Interaction.Triggers>
-                                                                            <i:EventTrigger EventName="SelectionChanged">
-                                                                                <cmd:EventToCommand Command="{Binding DataContext.DialogModelSelectionChangedCommand , 
-                                                                                                              RelativeSource={RelativeSource AncestorType=local:DialogView}}" 
-                                                                                            PassEventArgsToCommand="true"/>
-                                                                            </i:EventTrigger>
-                                                                        </i:Interaction.Triggers>
-                                                                    </ComboBox>
-                                                                </Grid>
-                                                            </Border>
-                                                        </Popup>
-
-                                                    </Grid>
-
+                                                            <i:Interaction.Triggers>
+                                                                <i:EventTrigger EventName="SelectionChanged">
+                                                                    <cmd:EventToCommand Command="{Binding DataContext.DialogModelSelectionChangedCommand , 
+                                                                                                          RelativeSource={RelativeSource AncestorType=local:DialogView}}" 
+                                                                                        PassEventArgsToCommand="true"/>
+                                                                </i:EventTrigger>
+                                                            </i:Interaction.Triggers>
+                                                        </ComboBox>
+                                                    </materialDesign:PopupBox>
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.CellTemplate>
                                         </DataGridTemplateColumn>
@@ -660,7 +810,7 @@
                                 Style="{DynamicResource MaterialDesignRaisedButton}"
                                 Command="{Binding GenerateDialog}" 
                                 HorizontalAlignment="Center"
-                                IsEnabled="{Binding IsDialogStopped}"
+                                IsEnabled="False"
                                 Grid.Column="1" />
 
                     </Grid>
@@ -669,7 +819,7 @@
             </Grid>
         </Border>
 
-        <Separator Grid.Column="1" BorderBrush="LightGray"  BorderThickness="1"  VerticalAlignment="Stretch" >
+        <Separator Grid.Column="1" BorderBrush="LightGray" SnapsToDevicePixels="True" BorderThickness="1"   VerticalAlignment="Stretch" >
             <Separator.LayoutTransform>
                 <RotateTransform Angle="90" />
             </Separator.LayoutTransform>
@@ -684,73 +834,14 @@
 
             <!-- Dialog view -->
 
-            <ItemsControl             
-                        x:Name="textOutput"
-                        ScrollViewer.VerticalScrollBarVisibility="Auto" 
-                        HorizontalContentAlignment="Stretch"  
-                        SnapsToDevicePixels="True"
-                        Grid.Row="0"
-                        Margin="0,5,10,20"
-                        Background="White"
-                        VerticalAlignment="Stretch" 
-                        HorizontalAlignment="Stretch"  
-                        ItemsSource="{Binding DialogLinesCollection}">
-                <ItemsControl.Resources>
-                    <DataTemplate DataType="{x:Type dialogModel:DialogItem }">
-                        <DockPanel HorizontalAlignment="Stretch" Margin="30,0,60,0">
-                            <Border Margin="3" CornerRadius="10 10 10 10" Background="WhiteSmoke" HorizontalAlignment="Left" >
-                                <StackPanel>
-                                    <TextBlock Padding="8" 
-                                           TextWrapping="Wrap" 
-                                           FontSize="16" 
-                                           Foreground="{DynamicResource PrimaryHueMidBrush}" 
-                                           Text="{Binding Path=Character.CharacterName }" 
-                                           Width="auto" 
-                                           HorizontalAlignment="Left"  />
-
-                                    <TextBlock Padding="8" 
-                                           TextWrapping="Wrap" 
-                                           FontSize="16" 
-                                           Text="{Binding Path=PhraseEntry.DialogStr }" 
-                                           Width="auto" 
-                                           HorizontalAlignment="Left"  />
-                                </StackPanel>
-                            </Border>
-                        </DockPanel>
-                    </DataTemplate>
-                </ItemsControl.Resources>
-
-                <ItemsControl.Template>
-                    <ControlTemplate>
-                        <ScrollViewer x:Name="ScrollViewerMessages">
-                            <ItemsPresenter SnapsToDevicePixels="True" />
-                        </ScrollViewer>
-                    </ControlTemplate>
-                </ItemsControl.Template>
-
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <VirtualizingStackPanel VerticalAlignment="Stretch"/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-
-                <ItemsControl.ContextMenu>
-                    <ContextMenu Background="White">
-                        <MenuItem Header="Clear All" Command="{Binding ClearAllMessages}" CommandParameter="DialogLinesCollection"  Background="White" >
-                            <MenuItem.Icon>
-                                <Image Source="pack://application:,,,/Resources/Images/clearAll.png" />
-                            </MenuItem.Icon>
-                        </MenuItem>
-                    </ContextMenu>
-                </ItemsControl.ContextMenu>
-
-            </ItemsControl>
+            <controls:DialogControl Grid.Row="0" />
 
             <GridSplitter  
                       Grid.Row="1" 
                       Height="10"
+                      Margin="0"
                       Background="White" 
-                      BorderThickness="0,0,0,1" 
+                      BorderThickness="0,0,0,0" 
                       BorderBrush="LightGray" 
                       VerticalAlignment="Stretch" 
                       HorizontalAlignment="Stretch" />
@@ -758,13 +849,16 @@
             <!-- Debug view -->
 
             <TabControl  Grid.Row="2" 
-                         BorderThickness="0"  
+                         BorderThickness="0,1,1,1"
+                         BorderBrush="LightGray"
                          HorizontalAlignment="Stretch" 
-                         TabStripPlacement="Bottom" 
+                         TabStripPlacement="Bottom"
+                         Padding="0"
+                         Margin="-4,0,1,0"
                          VerticalAlignment="Stretch"
                          Background="White"
                          Style="{x:Null}"
-                         x:Name="LoggerMessages">
+                         x:Name="LoggerMessagesTabControl">
 
                 <TabControl.Resources>
                     <Style TargetType="TabItem">
@@ -779,6 +873,7 @@
                                                             x:Name="ContentSite"
                                                             VerticalAlignment="Center"
                                                             HorizontalAlignment="Center"
+                                                           
                                                             ContentSource="Header"
                                                             Height="auto"
                                                             Margin="10,3,10,3"/>
@@ -828,28 +923,31 @@
                         </StackPanel>
                     </TabItem.Header>
 
-                    <ListView Margin="0,0,5,0" 
+                    <ListView Margin="0,0,1,0" 
                               BorderBrush="LightGray" 
                               x:Name="ErrorsList" 
                               HorizontalContentAlignment="Stretch" 
-                              HorizontalAlignment="Stretch" 
+                              HorizontalAlignment="Stretch"
+                              
+                              materialDesign:DataGridAssist.CellPadding="4 2 2 2"                                                   
+                              materialDesign:DataGridAssist.ColumnHeaderPadding="4 4 4 4"
                               VerticalAlignment="Stretch"
                               ScrollViewer.CanContentScroll="True"
-                              ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                              ScrollViewer.VerticalScrollBarVisibility="Auto"
+                              ScrollViewer.HorizontalScrollBarVisibility="Visible"
+                              ScrollViewer.VerticalScrollBarVisibility="Visible"
                               ItemsSource="{Binding ErrorMessagesCollection}">
+                        
                         <ListView.ItemContainerStyle>
                             <Style TargetType="{x:Type ListViewItem}">
                                 <Setter Property="ToolTip">
                                     <Setter.Value>
-                                        <TextBlock TextWrapping="Wrap" 
-                                                   MaxWidth="500" 
-                                                   Text="{Binding Message}" />
+                                        <TextBlock TextWrapping="Wrap" MaxWidth="500" Text="{Binding Message}" />
                                     </Setter.Value>
                                 </Setter>
                             </Style>
 
                         </ListView.ItemContainerStyle>
+                        
                         <ListView.View>
                             <GridView >
                                 <GridViewColumn x:Name="ErrorGridViewColumn" Header="Description"
@@ -862,6 +960,7 @@
                                 <GridViewColumn Header="Line" Width="100" DisplayMemberBinding="{Binding Line}" />
                             </GridView>
                         </ListView.View>
+                        
                     </ListView>
 
                 </TabItem>
@@ -890,23 +989,23 @@
 
                     </TabItem.Header>
 
-                    <ListView Margin="0,0,5,0" 
+                    <ListView Margin="0,0,1,0" 
                               BorderBrush="LightGray"  
                               x:Name="WarningsList"
                               ScrollViewer.CanContentScroll="True" 
-                              ScrollViewer.VerticalScrollBarVisibility="Auto"
-                              ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                              ScrollViewer.VerticalScrollBarVisibility="Visible"
+                              ScrollViewer.HorizontalScrollBarVisibility="Visible"
                               HorizontalContentAlignment="Stretch" 
-                              HorizontalAlignment="Stretch" 
+                              HorizontalAlignment="Stretch"
+                              materialDesign:DataGridAssist.CellPadding="4 2 2 2"                                                   
+                              materialDesign:DataGridAssist.ColumnHeaderPadding="4 4 4 4"
                               VerticalAlignment="Stretch" 
                               ItemsSource="{Binding WarningMessagesCollection}">
                         <ListView.ItemContainerStyle>
                             <Style TargetType="{x:Type ListViewItem}">
                                 <Setter Property="ToolTip">
                                     <Setter.Value>
-                                        <TextBlock TextWrapping="Wrap" 
-                                                   MaxWidth="500" 
-                                                   Text="{Binding Message}" />
+                                        <TextBlock TextWrapping="Wrap" MaxWidth="500" Text="{Binding Message}" />
                                     </Setter.Value>
                                 </Setter>
                             </Style>
@@ -951,23 +1050,23 @@
                     </TabItem.Header>
 
 
-                    <ListView Margin="0,0,5,0" 
+                    <ListView Margin="0,0,1,0" 
                               BorderBrush="LightGray"  
                               x:Name="InfoList" 
                               ScrollViewer.CanContentScroll="True" 
-                              ScrollViewer.VerticalScrollBarVisibility="Auto"
-                              ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                              ScrollViewer.VerticalScrollBarVisibility="Visible"
+                              ScrollViewer.HorizontalScrollBarVisibility="Visible"
                               HorizontalContentAlignment="Stretch" 
-                              HorizontalAlignment="Stretch" 
+                              HorizontalAlignment="Stretch"
+                              materialDesign:DataGridAssist.CellPadding="4 2 2 2"                                                   
+                              materialDesign:DataGridAssist.ColumnHeaderPadding="4 4 4 4"
                               VerticalAlignment="Stretch"
                               ItemsSource="{Binding InfoMessagesCollection}">
                         <ListView.ItemContainerStyle>
                             <Style TargetType="{x:Type ListViewItem}">
                                 <Setter Property="ToolTip">
                                     <Setter.Value>
-                                        <TextBlock TextWrapping="Wrap" 
-                                                   MaxWidth="500" 
-                                                   Text="{Binding Message}" />
+                                        <TextBlock TextWrapping="Wrap" MaxWidth="500" Text="{Binding Message}" />
                                     </Setter.Value>
                                 </Setter>
                             </Style>
@@ -1020,7 +1119,7 @@
 
                         <StackPanel Orientation="Horizontal" Grid.Row="0">
 
-                            <DataGrid   Margin="0,5,5,0" 
+                            <DataGrid   Margin="5,5,5,0" 
                                         x:Name="DebugGrid"
                                         Width="auto"
                                         GridLinesVisibility="All"
@@ -1029,7 +1128,7 @@
                                         VerticalGridLinesBrush="LightGray" 
                                         HorizontalGridLinesBrush="LightGray" 
                                         BorderBrush="LightGray" 
-                                        BorderThickness="1"
+                                        BorderThickness="1,1,0,0"
                                         HeadersVisibility="Column"
                                         CanUserAddRows="False"
                                         IsReadOnly="True"
@@ -1038,13 +1137,16 @@
 
                                 <DataGrid.ColumnHeaderStyle>
                                     <Style TargetType="DataGridColumnHeader">
-                                        <Setter Property="Background" Value="LightGray" />
+                                        <Setter Property="Background" Value="WhiteSmoke" />
                                         <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                        <Setter Property="BorderThickness" Value="0,0,1,0" />
+                                        <Setter Property="BorderBrush" Value="LightGray"/>
                                     </Style>
                                 </DataGrid.ColumnHeaderStyle>
                                 <DataGrid.CellStyle>
                                     <Style TargetType="DataGridCell">
-                                        <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self} , Converter={StaticResource ValueToColorConverter}}"/>
+                                        <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self} ,
+                                                                              Converter={StaticResource ValueToColorConverter}}"/>
                                         <Setter Property="BorderThickness" Value="0" />
                                         <Setter Property="TextBlock.TextAlignment" Value="Center" />
                                     </Style>
@@ -1130,7 +1232,11 @@
                                            Grid.Column="0" 
                                            Content="RSSIstable:" />
 
-                                    <TextBlock Grid.Column="1" VerticalAlignment="Center"  HorizontalAlignment="Left" Grid.Row="0" IsEnabled="False" >                                  
+                                    <TextBlock Grid.Column="1" 
+                                               VerticalAlignment="Center"  
+                                               HorizontalAlignment="Left" 
+                                               Grid.Row="0" 
+                                               IsEnabled="False" >                                  
                                         <Run FontWeight="Bold" Foreground="Black" Text="{Binding RSSIstable}" />
                                     </TextBlock>
 
