@@ -20,10 +20,14 @@
                 <ResourceDictionary Source="/Themes/Generic.xaml"></ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
-
     </UserControl.Resources>
 
     <GroupBox Header="Settings"  BorderThickness="0" Style="{DynamicResource MaterialDesignGroupBox}"  UseLayoutRounding="True" SnapsToDevicePixels="True">
+        <GroupBox.HeaderTemplate>
+            <DataTemplate>
+                <TextBlock Text="Settings" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </DataTemplate>
+        </GroupBox.HeaderTemplate>
         <Grid x:Name="MainGrid">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />

@@ -27,6 +27,7 @@ namespace DialogEngine.Dialogs
         {
             InitializeComponent();
 
+            this.groupBox.HeaderTemplate = (DataTemplate)FindResource("newCharacterHeader");
             NumbersList = new List<int>(Enumerable.Range(1, 100));
             NumbersCbx.ItemsSource = NumbersList;
             WizardTypeCb.ItemsSource = DialogData.Instance.WizardTypesCollection;
@@ -37,6 +38,7 @@ namespace DialogEngine.Dialogs
         {
             InitializeComponent();
 
+            this.groupBox.HeaderTemplate =(DataTemplate)FindResource("editCharacterHeader");
             mCharacter = character;
             NumbersList = new List<int>(Enumerable.Range(1, 100));
             NumbersCbx.ItemsSource = NumbersList;
@@ -94,6 +96,7 @@ namespace DialogEngine.Dialogs
         #region - properties -
 
         public IList<int> NumbersList { get; }
+
 
 
         #endregion

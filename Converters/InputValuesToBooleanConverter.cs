@@ -13,7 +13,7 @@ namespace DialogEngine.Converters
             string _characterPrefix = values[0] as string;
             string _characterName = values[1] as string;
 
-            return !((string.IsNullOrEmpty(_characterPrefix) ||  _characterPrefix.Length != 3)
+            return !(string.IsNullOrEmpty(_characterPrefix)
                    || string.IsNullOrEmpty(_characterName));
         }
 

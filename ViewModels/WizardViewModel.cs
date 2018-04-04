@@ -9,12 +9,18 @@ using DialogEngine.Models.Dialog;
 using DialogEngine.Models.Shared;
 using DialogEngine.Models.Wizard;
 using DialogEngine.Views;
+using log4net;
 using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace DialogEngine.ViewModels
 {
@@ -22,7 +28,7 @@ namespace DialogEngine.ViewModels
     {
         #region - fields -
 
-        
+        private static readonly ILog mcLogger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private readonly string mCurrentLineName = "USR_CurrentLine";
         private WizardView mView;
         private Character mCharacter;
@@ -31,7 +37,8 @@ namespace DialogEngine.ViewModels
         private string mCurrentVideoFilePath;
         private int mCurrentStepIndex;
         private bool mIsPlayingLineInContext;
-
+        private CancellationTokenSource mCancellationTokenSource;
+        private string mDialogStr;
         #endregion
 
         #region - constructor -
@@ -60,6 +67,7 @@ namespace DialogEngine.ViewModels
         public RelayCommand SkipStep { get; set; }
         public RelayCommand CreateNewCharacter { get; set; }
         public RelayCommand PlayInContext { get; set; }
+        public RelayCommand Cancel { get; set; }
 
         #endregion
 
@@ -70,7 +78,40 @@ namespace DialogEngine.ViewModels
         {
             DialogHostLoaded = new RelayCommand(x => _view_Loaded());
             SaveAndNext = new RelayCommand(x => _nextStep());
+            SkipStep = new RelayCommand(x => _skipStep());
             PlayInContext = new RelayCommand(x => _playDialogLineInContext());
+            Cancel = new RelayCommand(x => _cancel());
+        }
+
+        private void _skipStep()
+        {
+            ++CurrentStepIndex;
+            CurrentTutorialStep = mCurrentWizard.TutorialSteps[mCurrentStepIndex];
+            CurrentVideoFilePath = Path.Combine(SessionVariables.WizardVideoDirectory, CurrentTutorialStep.VideoFileName + ".avi");
+        }
+
+        private async void _cancel()
+        {
+            var result =await  DialogHost.Show(new YesNoDialog("Cancel wizard","Do you want to save changes?"), "WizardPageDialogHost");
+
+            if(result != null)
+            {
+                DialogData.Instance.CharacterCollection.Add(Character);
+                _goBackToDialog();
+            }
+            else
+            {
+                _goBackToDialog();
+            }
+        }
+
+
+        private void _goBackToDialog()
+        {
+            Frame _mainFrame = (Application.Current.MainWindow as MainWindow).mainFrame;
+
+            if (_mainFrame.CanGoBack)
+                _mainFrame.GoBack();
         }
 
         private async void _playDialogLineInContext()
@@ -85,6 +126,7 @@ namespace DialogEngine.ViewModels
 
                 if (mIsPlayingLineInContext)
                 {
+                    mCancellationTokenSource.Cancel();
                     mIsPlayingLineInContext = false;
 
                     Dispatcher.BeginInvoke((Action)(() =>
@@ -94,75 +136,88 @@ namespace DialogEngine.ViewModels
                 }
                 else
                 {
-
-                    mIsPlayingLineInContext = true;
-
-                    Dispatcher.BeginInvoke((Action)(() =>
+                    try
                     {
-                        mView.voiceRecorder.PlayInContextBtn.Content = "Stop";
-                    }));
+                        mCancellationTokenSource = new CancellationTokenSource();
+                        IsPlayingLineInContext = true;
+                        List<List<string>> _dialogsList = CurrentTutorialStep.PlayUserRecordedAudioInContext;
 
-                    List<List<string>> _dialogsList = CurrentTutorialStep.PlayUserRecordedAudioInContext;
-
-                    foreach (List<string> dialog in _dialogsList)
-                    {
-                        foreach (string _dialogLine in dialog)
+                        Dispatcher.BeginInvoke((Action)(() =>
                         {
-                            if (_dialogLine.Equals(mCurrentLineName))
+                            mView.voiceRecorder.PlayInContextBtn.Content = "Stop";
+                        }));
+
+                        int index = 0;
+                        int _dialogLength = _dialogsList.Count;
+
+                        foreach (List<string> dialog in _dialogsList)
+                        {
+                            mCancellationTokenSource.Token.ThrowIfCancellationRequested();
+
+                            foreach (string _dialogLine in dialog)
                             {
-                                Dispatcher.Invoke((Action)(() =>
+                                mCancellationTokenSource.Token.ThrowIfCancellationRequested();
+
+                                if (_dialogLine.Equals(mCurrentLineName))
                                 {
-                                    _voiceRecorderVM.Play(_voiceRecorderVM.CurrentFilePath);
-                                }));
-                            }
-                            else
-                            {
-                                string path = Path.Combine(SessionVariables.WizardVideoDirectory, _dialogLine + ".avi");
-                                CurrentVideoFilePath = path;
-
-
-                                Dispatcher.Invoke((Action)(() =>
+                                    Dispatcher.Invoke((Action)(() =>
+                                    {
+                                        _voiceRecorderVM.Play(_voiceRecorderVM.CurrentFilePath);
+                                    }));
+                                }
+                                else
                                 {
-                                    _mediaPlayerVM.StartMediaPlayer();
-                                }));
+                                    string path = Path.Combine(SessionVariables.WizardVideoDirectory, _dialogLine + ".avi");
+                                    CurrentVideoFilePath = path;
+
+                                    Dispatcher.Invoke((Action)(() =>
+                                    {
+                                        _mediaPlayerVM.StartMediaPlayer();
+                                    }));
+                                }
+
+                                mCancellationTokenSource.Token.ThrowIfCancellationRequested();
+
+                                do
+                                {
+                                    if(_voiceRecorderVM.IsPlaying || _mediaPlayerVM.IsPlaying)
+                                        Task.Delay(500);   //task.delay will only logical blocks thread instead of thread.sleep which blocks thread
+                                }
+                                while (_voiceRecorderVM.IsPlaying || _mediaPlayerVM.IsPlaying);
+
+                                Thread.Sleep(500);
                             }
 
 
-                            do
-                            {
-                                Task.Delay(500);
-                            }
-                            while (_voiceRecorderVM.IsPlaying || _mediaPlayerVM.IsPlaying);
+                            if(index < _dialogLength-1)
+                                Thread.Sleep(500);
 
-                            Thread.Sleep(1000);
+                            index++;
                         }
 
-                        Task.Delay(1000);
+                        IsPlayingLineInContext = false;
+                        Dispatcher.BeginInvoke((Action)(() =>
+                        {
+                            mView.voiceRecorder.PlayInContextBtn.Content = "Play in context";
+                        }));
                     }
-
-                    mIsPlayingLineInContext = true;
-
-                    Dispatcher.BeginInvoke((Action)(() =>
+                    catch (OperationCanceledException)
                     {
-                        mView.voiceRecorder.PlayInContextBtn.Content = "Play in context";
-                    }));
+                        IsPlayingLineInContext = false;
+                        Dispatcher.BeginInvoke((Action)(() =>
+                        {
+                            mView.voiceRecorder.PlayInContextBtn.Content = "Play in context";
+                        }));
+                    }
+                    catch(Exception ex)
+                    {
+                        mcLogger.Error("_playDialogLineInContext" + ex.Message);
+                    }
                 }
             });
 
             CurrentVideoFilePath = _tutorialStepVideoFilePathCache;
-
-
         }
-
-        public async  Task checkIsFinished(VoiceRecorderControlViewModel vm1, MediaPlayerControlViewModel vm2)
-        {
-            await Task.Run(() => {
-
-
-
-            });
-        }
-
 
 
         private async void _view_Loaded()
@@ -187,16 +242,59 @@ namespace DialogEngine.ViewModels
         }
 
 
-        private void _nextStep()
+        private async void _nextStep()
         {
             if(mCurrentStepIndex < mCurrentWizard.TutorialSteps.Count-1)
             {
+                if (mCurrentTutorialStep.CollectUserInput)
+                {
+                    string _tagName = CurrentTutorialStep.PhraseWeights.Keys.ElementAt(0);
+                    string _characterName = mCharacter.CharacterName.Replace(" ", string.Empty);
+
+                    PhraseEntry entry = new PhraseEntry
+                    {
+                        PhraseRating = CurrentTutorialStep.PhraseRating,
+                        DialogStr = DialogStr,
+                        PhraseWeights = CurrentTutorialStep.PhraseWeights,
+                        FileName = _characterName + "" + _tagName
+                    };
+
+                    mCharacter.Phrases.Add(entry);
+                }
+
                 ++CurrentStepIndex;
                 CurrentTutorialStep = mCurrentWizard.TutorialSteps[mCurrentStepIndex];
                 CurrentVideoFilePath = Path.Combine(SessionVariables.WizardVideoDirectory, CurrentTutorialStep.VideoFileName + ".avi");
             }
+            else
+            {
+                DialogData.Instance.CharacterCollection.Add(mCharacter);
+
+                var result = await DialogHost.
+                    Show(new YesNoDialog("Success", "Character successfully created!","Add new character", "Close wizard"), "WizardPageDialogHost");
+
+                if(result != null)
+                {
+                    Reset();
+                    _view_Loaded();
+                }
+                else
+                {
+                    _goBackToDialog();
+                }
+            }
         }
 
+
+        #endregion
+
+        #region
+
+        public void Reset()
+        {
+            mCharacter = null;
+            CurrentStepIndex = 0;
+        }
 
         #endregion
 
@@ -246,16 +344,38 @@ namespace DialogEngine.ViewModels
 
         public string CurrentVideoFilePath
         {
-            get
-            {
-                return mCurrentVideoFilePath;
-            }
+            get { return mCurrentVideoFilePath; }
             set
             {
                 mCurrentVideoFilePath = value;
                 OnPropertyChanged("CurrentVideoFilePath");
             }
         }
+
+        public bool IsPlayingLineInContext
+        {
+            get { return mIsPlayingLineInContext; }
+            set
+            {
+                mIsPlayingLineInContext = value;
+                OnPropertyChanged("IsPlayingLineInContext");
+            }
+        }
+
+
+        public string DialogStr
+        {
+            get
+            {
+                return mDialogStr;
+            }
+            set
+            {
+                mDialogStr = value;
+                OnPropertyChanged("DialogStr");
+            }
+        }
+
         #endregion
 
     }

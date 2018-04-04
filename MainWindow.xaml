@@ -42,9 +42,6 @@
             <!-- Menu -->
             <Menu  FontSize="16" Grid.Row="0"  Background="White" Margin="0,0,0,0"  >
 
-                <MenuItem Header="_File" >
-                </MenuItem>
-
                 <MenuItem Header="_View" >
 
                     <MenuItem Header="_Dialog"  >
@@ -60,7 +57,6 @@
                     </MenuItem>
 
                 </MenuItem>
-
 
                 <MenuItem Header="_Tools">
                     <MenuItem Header="_Settings" Click="_settings_Click">

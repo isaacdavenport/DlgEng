@@ -20,5 +20,7 @@
     <converters:IsRecordingEnabledConverter x:Key="IsRecordingEnabledConverter" />
     <converters:IsVoiceRecorderPlayingEnabledConverter x:Key="IsVoiceRecorderPlayingEnabledConverter" />
     <converters:IsPlayInContextEnabledConveter x:Key="IsPlayInContextEnabledConveter" />
+    <converters:IsSkipStepBtnEnabledConverter x:Key="IsSkipStepBtnEnabledConverter" />
+    <converters:SaveAndNextBtnContentConverter x:Key="SaveAndNextBtnContentConverter" />
 
 </ResourceDictionary>

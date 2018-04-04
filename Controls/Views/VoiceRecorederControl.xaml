@@ -68,6 +68,8 @@
                             <Binding  Path="IsPlaying" />
                             <Binding  Path="RecordingAllowed" 
                                       RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=local:VoiceRecorederControl}" />
+                            <Binding Path="IsPlayingLineInContext" 
+                                     RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=local:VoiceRecorederControl}" />
                         </MultiBinding>
                     </Button.IsEnabled>
                 </Button>
@@ -81,7 +83,7 @@
                         <MultiBinding Converter="{StaticResource IsVoiceRecorderPlayingEnabledConverter}">
                             <Binding Path="IsRecording" />
                             <Binding Path="CurrentFilePath" />
-                            <Binding Path="IsPlayingLineInContext" />
+                            <Binding Path="IsPlayingLineInContext" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=local:VoiceRecorederControl}" />
                         </MultiBinding>
                     </Button.IsEnabled>
                 </Button>
@@ -95,10 +97,8 @@
                     Height="25" >
                     <Button.IsEnabled >
                         <MultiBinding Converter="{StaticResource IsPlayInContextEnabledConveter}">
-                            <Binding Path="IsRecording" />
-                            <Binding Path="CurrentFilePath" />
-                            <Binding Path="IsPlaying" />
-                            <Binding Path="IsPlayingLineInContext" />
+                            <Binding Path="IsEnabled" ElementName="PlayingBtn" />
+                            <Binding Path="IsPlayingLineInContext" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=local:VoiceRecorederControl}" />
                         </MultiBinding>
                     </Button.IsEnabled>
                 </Button>

@@ -15,11 +15,16 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Themes/Generic.xaml"></ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
+            <DataTemplate x:Key="editCharacterHeader">
+                <TextBlock Text="Edit character" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </DataTemplate>
+            <DataTemplate x:Key="newCharacterHeader">
+                <TextBlock Text="Create new character" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </DataTemplate>
         </ResourceDictionary>
-
     </UserControl.Resources>
-    
-    <GroupBox   BorderThickness="0" Style="{DynamicResource MaterialDesignGroupBox}" Header="Create new character"  UseLayoutRounding="True" SnapsToDevicePixels="True">
+
+    <GroupBox x:Name="groupBox"   BorderThickness="0" Style="{DynamicResource MaterialDesignGroupBox}"   UseLayoutRounding="True" SnapsToDevicePixels="True">
         <Grid x:Name="MainGrid" Margin="20,20,20,20">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />

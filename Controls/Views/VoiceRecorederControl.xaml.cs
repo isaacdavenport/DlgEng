@@ -36,6 +36,9 @@ namespace DialogEngine.Controls.Views
         public static readonly DependencyProperty RecordingAllowedProperty =
             DependencyProperty.Register("RecordingAllowed", typeof(bool), typeof(VoiceRecorederControl),new PropertyMetadata(false));
 
+        public static readonly DependencyProperty IsPlayingLineInContextProperty =
+            DependencyProperty.Register("IsPlayingLineInContext", typeof(bool), typeof(VoiceRecorederControl), new PropertyMetadata(false));
+
         public Character CurrentCharacter
         {
             get { return (Character)GetValue(CurrentCharacterProperty); }
@@ -58,6 +61,11 @@ namespace DialogEngine.Controls.Views
             set { SetValue(RecordingAllowedProperty, value);}
         }
 
+        public bool IsPlayingLineInContext
+        {
+            get { return (bool)GetValue(IsPlayingLineInContextProperty); }
+            set { SetValue(IsPlayingLineInContextProperty, value); }
+        }
 
         #endregion
     }

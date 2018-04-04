@@ -74,7 +74,7 @@ namespace DialogEngine.Controls.VoiceRecorder
         /// </summary>
         private NAudioEngine()
         {
-            mcPositionTimer.Interval = TimeSpan.FromMilliseconds(50);
+            mcPositionTimer.Interval = TimeSpan.FromMilliseconds(25);
             mcPositionTimer.Tick += _positionTimer_Tick;
         }
         
@@ -309,6 +309,7 @@ namespace DialogEngine.Controls.VoiceRecorder
         /// </summary>
         public void StartRecording(string path)
         {
+            Stop();
             mWaveInDevice = new WaveIn();
             mWaveInDevice.WaveFormat = WaveFormat.CreateIeeeFloatWaveFormat(44100,2);
             mWaveInDevice.DataAvailable += _waveIn_DataAvailable;
@@ -341,7 +342,14 @@ namespace DialogEngine.Controls.VoiceRecorder
         {
             if (mWaveOutDevice != null)
             {
+                ChannelPosition = 0;
                 mWaveOutDevice.Stop();
+                mWaveOutDevice.Dispose();
+                mWaveOutDevice = null;
+                ActiveStream.Dispose();
+                ActiveStream = null;
+                mInputStream.Dispose();
+                mInputStream = null;
             }
             IsPlaying = false;
             CanStop = false;

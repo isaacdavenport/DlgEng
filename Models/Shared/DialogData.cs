@@ -37,7 +37,6 @@ namespace DialogEngine.Models.Shared
                     msInstance = new DialogData();
                 }
                 return msInstance;
-
             }
         }
 
@@ -57,10 +56,7 @@ namespace DialogEngine.Models.Shared
 
         private void NotifyPropertyChanged(string info)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(info));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(info));
         }
 
         #endregion
@@ -130,9 +126,6 @@ namespace DialogEngine.Models.Shared
                 NotifyPropertyChanged("WizardTypesCollection");
             }
         }
-
-
-        
 
         #endregion
     }

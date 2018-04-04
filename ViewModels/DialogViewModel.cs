@@ -131,8 +131,6 @@ namespace DialogEngine.ViewModels
 
         public Core.RelayCommand EditCharacterCommand { get; set; }
 
-        public Core.RelayCommand ChooseDialogModelCbx_DropDownOpened { get; set; }
-
         /// <summary>
         /// Unbinds radio from character
         /// </summary>
@@ -238,42 +236,34 @@ namespace DialogEngine.ViewModels
             // reset radio textboxes
             if (Dispatcher.CheckAccess())
             {
-                foreach (TextBox tb in VisualHelper.FindVisualChildren<TextBox>(this.View.RadioTextBoxesContainer))
-                {
-                    tb.Tag = null;
-                    tb.Text = "";
-                }
-
-                for (int i = 0; i < SerialComs.NumRadios && i < mCharacterCollection.Count; i++)
-                {
-                    mCharacterCollection[i].RadioNum = i;
-
-                    string textBoxName = "Radio_" + i.ToString();
-                    (mView.FindName(textBoxName) as TextBox).Text = mCharacterCollection[i].CharacterName;
-                    (mView.FindName(textBoxName) as TextBox).Tag = mCharacterCollection[i];
-                    mRadiosState[i] = true;
-                }
+                _setBindings();
             }
             else
             {
                 await Dispatcher.BeginInvoke((Action)(() =>
                 {
-                    foreach (TextBox tb in VisualHelper.FindVisualChildren<TextBox>(this.View.RadioTextBoxesContainer))
-                    {
-                        tb.Tag = null;
-                        tb.Text = "";
-                    }
-
-                    for (int i = 0; i < SerialComs.NumRadios && i < mCharacterCollection.Count; i++)
-                    {
-                        mCharacterCollection[i].RadioNum = i;
-
-                        string textBoxName = "Radio_" + i.ToString();
-                        (mView.FindName(textBoxName) as TextBox).Text = mCharacterCollection[i].CharacterName;
-                        (mView.FindName(textBoxName) as TextBox).Tag = mCharacterCollection[i];
-                        mRadiosState[i] = true;
-                    }
+                    _setBindings();
                 }));
+            }
+        }
+
+
+        private void _setBindings()
+        {
+            foreach (TextBox tb in VisualHelper.FindVisualChildren<TextBox>(this.View.RadioTextBoxesContainer))
+            {
+                tb.Tag = null;
+                tb.Text = "";
+            }
+
+            for (int i = 0; i < SerialComs.NumRadios && i < mCharacterCollection.Count; i++)
+            {
+                mCharacterCollection[i].RadioNum = i;
+
+                string textBoxName = "Radio_" + i.ToString();
+                (mView.FindName(textBoxName) as TextBox).Text = mCharacterCollection[i].CharacterName;
+                (mView.FindName(textBoxName) as TextBox).Tag = mCharacterCollection[i];
+                mRadiosState[i] = true;
             }
         }
 
@@ -287,7 +277,7 @@ namespace DialogEngine.ViewModels
                     InfoMessagesCollection.Insert(0, (InfoMessage)entry);
                     int _length = InfoMessagesCollection.Count;
 
-                    if (_length > 300 && _length > 0)
+                    if (_length > 300)
                     {
                         InfoMessagesCollection.RemoveAt(_length - 1);
                     }
@@ -299,7 +289,7 @@ namespace DialogEngine.ViewModels
                     WarningMessagesCollection.Insert(0, (WarningMessage)entry);
                     int _length = WarningMessagesCollection.Count;
 
-                    if (_length > 300 && _length > 0)
+                    if (_length > 300)
                     {
                         WarningMessagesCollection.RemoveAt(_length - 1);
                     }
@@ -311,8 +301,7 @@ namespace DialogEngine.ViewModels
                     ErrorMessagesCollection.Insert(0, (ErrorMessage)entry);
                     int _length = ErrorMessagesCollection.Count;
 
-
-                    if (_length > 300 && _length > 0)
+                    if (_length > 300)
                     {
                         ErrorMessagesCollection.RemoveAt(_length - 1);
                     }
@@ -354,13 +343,16 @@ namespace DialogEngine.ViewModels
             DialogModelSelectionChangedCommand = new RelayCommand<SelectionChangedEventArgs>(_dialogModelSelectionChanged);
 
             RefreshTabItem = new RelayCommand<SelectionChangedEventArgs>(_refreshTabItem);
-
         }
 
-        private void _editCharacter(Character character)
+
+        private async void _editCharacter(Character character)
         {
-            (Application.Current.MainWindow.FindName("mainFrame") as Frame).NavigationService.Navigate(new WizardView(character));            
+            await Dispatcher.BeginInvoke((Action) (() => {
+                (Application.Current.MainWindow.FindName("mainFrame") as Frame).NavigationService.Navigate(new WizardView(character));
+            }));
         }
+
 
         private async void _onDialogDataLoaded()
         {
@@ -404,7 +396,6 @@ namespace DialogEngine.ViewModels
             mRadiosState[_numRadio] = false;
             mView.CharactersListBox.Items.Refresh();
         }
-
 
 
         private void _dragOverCommand(DragEventArgs e)
@@ -610,7 +601,7 @@ namespace DialogEngine.ViewModels
                 {
                     foreach (var _phrase in _character.Phrases)
                     {
-                        if (!File.Exists(SessionVariables.AudioDirectory
+                        if (!File.Exists(SessionVariables.WizardAudioDirectory
                             + _character.CharacterPrefix + "_"
                             + _phrase.FileName + ".mp3")) //Char name and prefix are being left blank...
                         {

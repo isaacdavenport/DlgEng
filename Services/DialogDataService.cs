@@ -8,6 +8,7 @@ using DialogEngine.Models.Wizard;
 using log4net;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Reflection;
@@ -83,6 +84,26 @@ namespace DialogEngine.Services
             });
         }
 
+
+        public static async Task SerializeDataToFile(string path)
+        {
+            await Task.Run(() =>
+            {
+
+                WizardsList _wizardsList = new WizardsList
+                {
+                    Characters = new List<Character>(DialogData.Instance.CharacterCollection),
+                    DialogModels = new List<ModelDialogInfo>(DialogData.Instance.DialogModelCollection),
+                    Wizards = new List<WizardType>(DialogData.Instance.WizardTypesCollection)
+                };
+
+                using (StreamWriter file = File.CreateText(path))
+                {
+                    JsonSerializer serializer = new JsonSerializer();
+                    serializer.Serialize(file, _wizardsList);
+                }
+            });
+        }
 
         public static void AddMessage(LogMessage message)
         {

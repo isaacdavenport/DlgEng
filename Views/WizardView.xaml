@@ -28,7 +28,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Themes/Generic.xaml" />
-                <ResourceDictionary Source="/Themes/TextBoxStyle.xaml" />
+                <ResourceDictionary Source="/Themes/TextBoxStyle.xaml" />  
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Page.Resources>
@@ -47,10 +47,12 @@
                                     DockPanel.Dock="Top"
                                     HorizontalAlignment="Right" Margin="16,16,16,5"
                                     IsChecked="{Binding ElementName=MenuToggleButton, Path=IsChecked, Mode=TwoWay}" />
+                    
                     <GroupBox   Margin="5,5,5,5"  BorderThickness="0">
                         <GroupBox.Header>
                             <TextBlock Text="Wizard tags with descriptions" Foreground="White" HorizontalAlignment="Center" />
                         </GroupBox.Header>
+                        
                         <ListBox HorizontalAlignment="Stretch" 
                                  VerticalAlignment="Stretch"
                                  ItemsSource="{Binding CurrentWizard.TutorialSteps}" 
@@ -86,6 +88,7 @@
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
+                        
                     </GroupBox>
                 </DockPanel>
             </materialDesign:DrawerHost.LeftDrawerContent>
@@ -202,17 +205,18 @@
                                 </GroupBox>
                             </Border>
 
-                            <TextBox Style="{DynamicResource MaterialDesignTextAreaTextBox}" 
-                                     Grid.Row="1"
-                                     x:Name="TagTb"
-                                     IsEnabled="{Binding CurrentTutorialStep.CollectUserInput}"
-                                     VerticalAlignment="Stretch"
-                                     HorizontalAlignment="Stretch"
-                                     AcceptsReturn="True"
-                                     BorderBrush="#FF333333"
-                                     TextWrapping="Wrap"
-                                     VerticalScrollBarVisibility="Auto" 
-                                     materialDesign:HintAssist.Hint="Write text for this tag...">
+                            <TextBox x:Name="dialogStrTb"
+                                Style="{DynamicResource MaterialDesignTextAreaTextBox}" 
+                                Grid.Row="1"
+                                Text="{Binding DialogStr}"
+                                IsEnabled="{Binding CurrentTutorialStep.CollectUserInput}"
+                                VerticalAlignment="Stretch"
+                                HorizontalAlignment="Stretch"
+                                AcceptsReturn="True"
+                                BorderBrush="#FF333333"
+                                TextWrapping="Wrap"
+                                VerticalScrollBarVisibility="Auto" 
+                                materialDesign:HintAssist.Hint="Write text for this tag...">
                                 <TextBox.Resources>
                                         <Style x:Key="MaterialDesignTextAreaTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource MaterialDesignTextBox}">
                                             <Setter Property="materialDesign:TextFieldAssist.HasTextAreaBox" Value="True" />
@@ -255,7 +259,11 @@
                                     VerticalAlignment="Stretch"
                                     CornerRadius="2,2,2,2" 
                                     BorderBrush="#FF595959">
-                                <controls:VoiceRecorederControl x:Name="voiceRecorder"   
+                                <controls:VoiceRecorederControl x:Name="voiceRecorder"
+                                                                IsPlayingLineInContext="{Binding DataContext.IsPlayingLineInContext,
+                                                                                                 RelativeSource={RelativeSource 
+                                                                                                 Mode=FindAncestor,
+                                                                                                 AncestorType=local:WizardView}}"
                                                                 CurrentCharacter="{Binding DataContext.Character, 
                                                                                            RelativeSource={RelativeSource 
                                                                                            Mode=FindAncestor, 
@@ -297,16 +305,35 @@
                                     Margin="0,40,0,0" 
                                     VerticalAlignment="Center" 
                                     HorizontalAlignment="Center">
-                            <Button Content="Cancel"                                    
+                            
+                            <Button Content="Cancel"
+                                    Command="{Binding Cancel}"
                                     Style="{DynamicResource MaterialDesignRaisedButton}"
                                     Margin="20,0,0,0" />
+
                             <Button Content="Skip"
+                                    Command="{Binding SkipStep}"
                                     Style="{DynamicResource MaterialDesignRaisedButton}"
-                                    Margin="20,0,0,0" />
-                            <Button Content="Save and next"
+                                    Margin="20,0,0,0">
+                                <Button.IsEnabled>
+                                    <MultiBinding Converter="{StaticResource IsSkipStepBtnEnabledConverter}">
+                                        <Binding Path="CurrentStepIndex" />
+                                        <Binding Path="CurrentWizard.TutorialSteps.Count" />
+                                    </MultiBinding>
+                                </Button.IsEnabled>
+                            </Button>
+
+                            <Button 
                                     Command="{Binding SaveAndNext}"
                                     Style="{DynamicResource MaterialDesignRaisedButton}"
-                                    Margin="20,0,0,0"  />
+                                    Margin="20,0,0,0">
+                                <Button.Content>
+                                    <MultiBinding Converter="{StaticResource SaveAndNextBtnContentConverter}">
+                                        <Binding Path="CurrentStepIndex" />
+                                        <Binding Path="CurrentWizard.TutorialSteps.Count" />                                    
+                                    </MultiBinding>
+                                </Button.Content>
+                            </Button>
                         </StackPanel>
                     </Grid>
                 </Border>

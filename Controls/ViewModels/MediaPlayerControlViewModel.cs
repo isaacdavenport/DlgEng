@@ -45,7 +45,7 @@ namespace DialogEngine.Controls.ViewModels
             this.mMediaElement.MediaFailed += _mediaElement_MediaFailed;
             this.mMediaElement.Loaded += _mediaElement_Loaded;
 
-            mcMediaTimer.Interval = TimeSpan.FromMilliseconds(50);
+            mcMediaTimer.Interval = TimeSpan.FromMilliseconds(25);
             mcMediaTimer.Tick += _mediaTimer_Tick;
 
             _bindCommands();
@@ -91,7 +91,7 @@ namespace DialogEngine.Controls.ViewModels
 
         private void _mediaElement_MediaOpened(object sender, RoutedEventArgs e)
         {
-            mMediaDuration = mMediaElement.NaturalDuration.TimeSpan;
+            mMediaDuration = mMediaElement.NaturalDuration.HasTimeSpan ? mMediaElement.NaturalDuration.TimeSpan : new TimeSpan(0,0,0);
             mView.VideoPlayerSlider.Maximum = mMediaDuration.TotalMilliseconds;
             mcMediaTimer.Start();
         }
