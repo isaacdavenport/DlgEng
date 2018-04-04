@@ -105,6 +105,7 @@ namespace DialogEngine.Services
             });
         }
 
+
         public static void AddMessage(LogMessage message)
         {
             try

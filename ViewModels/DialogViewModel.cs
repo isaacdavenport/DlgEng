@@ -359,10 +359,10 @@ namespace DialogEngine.ViewModels
             Task _checkTagsUsedTask = _checkTagsUsedAsync();
             Task _checkForMissingPhrasesTask = _checkForMissingPhrasesAsync();
 
-            _setCharacterToRadioBidnings();
-
             await _checkTagsUsedTask;
             await _checkForMissingPhrasesTask;
+
+            _setCharacterToRadioBidnings();
         }
 
 

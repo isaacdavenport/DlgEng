@@ -111,7 +111,10 @@ namespace DialogEngine.ViewModels
             Frame _mainFrame = (Application.Current.MainWindow as MainWindow).mainFrame;
 
             if (_mainFrame.CanGoBack)
+            {
                 _mainFrame.GoBack();
+                Reset();
+            }
         }
 
         private async void _playDialogLineInContext()
