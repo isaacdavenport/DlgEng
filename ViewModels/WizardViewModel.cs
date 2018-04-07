@@ -12,6 +12,7 @@ using DialogEngine.Models.Wizard;
 using DialogEngine.ViewModels.Workflows;
 using log4net;
 using MaterialDesignThemes.Wpf;
+using Stateless.Graph;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -63,6 +64,9 @@ namespace DialogEngine.ViewModels
 
             _configureStateMachine();
             _bindCommands();
+
+            Console.Write(UmlDotGraph.Format(StateMachine.GetInfo()));
+
         }
 
 
@@ -141,8 +145,9 @@ namespace DialogEngine.ViewModels
 
             StateMachine.Configure(States.ShowFormDialog)
                 .OnEntry(t => _view_Loaded())
-                .Permit(Triggers.Back, States.Back)
-                .Permit(Triggers.ReadyForUserAction, States.ReadyForUserAction);
+                .Permit(Triggers.ReadyForUserAction, States.ReadyForUserAction)
+                .Permit(Triggers.LeaveWizard, States.LeaveWizard);
+
 
             StateMachine.Configure(States.ReadyForUserAction)
                 .OnEntry(t => _registerListeners())
@@ -152,25 +157,42 @@ namespace DialogEngine.ViewModels
                 .Permit(Triggers.Cancel, States.Cancel)
                 .Permit(Triggers.VoiceRecorderAction, States.VoiceRecorderAction)
                 .Permit(Triggers.VideoPlayerAction, States.VideoPlayerAction);
+                
 
+            // State VoiceRecorderAction is added to be able to disable others controls if any of its substates is active
             StateMachine.Configure(States.VoiceRecorderAction)
                 .Permit(Triggers.ReadyForUserAction,States.ReadyForUserAction);
+
+            StateMachine.Configure(States.VoiceRecorderRecording)
+                .SubstateOf(States.VoiceRecorderAction)
+                .Permit(Triggers.ReadyForUserAction,States.ReadyForUserAction);
+
+            StateMachine.Configure(States.VoiceRecorderPlaying)
+                .SubstateOf(States.VoiceRecorderAction)
+                .Permit(Triggers.ReadyForUserAction, States.ReadyForUserAction);
 
             StateMachine.Configure(States.VideoPlayerAction)
                 .Permit(Triggers.ReadyForUserAction, States.ReadyForUserAction);
 
             StateMachine.Configure(States.SaveAndNext)
                 .OnEntry(t => _nextStep())
-                .Permit(Triggers.ReadyForUserAction, States.ReadyForUserAction);
+                .Permit(Triggers.ReadyForUserAction, States.ReadyForUserAction)
+                .Permit(Triggers.Finish, States.Finish);
+
+            StateMachine.Configure(States.Finish)
+                .Permit(Triggers.LeaveWizard, States.LeaveWizard)
+                .Permit(Triggers.ShowFormDialog, States.ShowFormDialog);
 
             StateMachine.Configure(States.SkipStep)
                 .OnEntry(t => _skipStep())
                 .Permit(Triggers.ReadyForUserAction,States.ReadyForUserAction);
 
-            StateMachine.Configure(States.Back)
-                .OnEntry(t => _goBackToDialog())
-                .OnExit(t => { StateMachine.Fire(Triggers.Start); })
-                .Permit(Triggers.Start, States.Start);
+            StateMachine.Configure(States.Cancel)
+                .Permit(Triggers.LeaveWizard, States.LeaveWizard);
+
+            StateMachine.Configure(States.VideoPlayerPlaying)
+                .SubstateOf(States.VideoPlayerAction)
+                .Permit(Triggers.ReadyForUserAction, States.ReadyForUserAction);
         }
 
 
@@ -342,7 +364,7 @@ namespace DialogEngine.ViewModels
             }
             else
             {
-                StateMachine.Fire(Triggers.Back);
+                _goBackToDialog();
             }
         }
 

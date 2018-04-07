@@ -290,6 +290,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
+    <None Include="ViewModels\Workflows\wizardWorkflow.pdf" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\error.png" />

@@ -13,11 +13,16 @@ namespace DialogEngine.ViewModels.Workflows
         ShowFormDialog,
         ReadyForUserAction,
         VoiceRecorderAction,
+        VoiceRecorderRecording,
+        VoiceRecorderPlaying,
         VideoPlayerAction,
+        VideoPlayerPlaying,
+        PlayingLineInContext,
         SaveAndNext,
         SkipStep,
         Cancel,
-        Back
+        Finish,
+        LeaveWizard,
     }
 
     public enum Triggers
@@ -26,11 +31,16 @@ namespace DialogEngine.ViewModels.Workflows
         ShowFormDialog,
         ReadyForUserAction,
         VoiceRecorderAction,
+        VoiceRecorderRecording,
+        VoiceRecorderPlaying,
         VideoPlayerAction,
+        VideoPlayerPlaying,
+        PlayingLineInContext,
         SaveAndNext,
         SkipStep,
         Cancel,
-        Back
+        Finish,
+        LeaveWizard
     }
 
     public class StateMachine : Stateless.StateMachine<States, Triggers>, INotifyPropertyChanged

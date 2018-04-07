@@ -22,10 +22,10 @@ bld/
 [Ll]og/
 [Ll]ogs/
 
-**/bin/Debug/*.xml
-**/bin/Debug/*.dll
-**/bin/Debug/*.config
-**/bin/Debug/*.exe
+##**/bin/Debug/*.xml
+##**/bin/Debug/*.dll
+##**/bin/Debug/*.config
+##**/bin/Debug/*.exe
 
 
 # Visual Studio 2015 cache/options directory
