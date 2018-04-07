@@ -11,16 +11,9 @@
              xmlns:local="clr-namespace:DialogEngine.Controls.Views"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d"
+             Loaded="_mediaPlayerControl_Loaded"
              d:DesignHeight="300" d:DesignWidth="300">
     
-    <UserControl.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Themes/Generic.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </UserControl.Resources>
-
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FF595959">
 
         <Grid.RowDefinitions>

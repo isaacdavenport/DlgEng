@@ -10,7 +10,7 @@ namespace DialogEngine.Converters
     /// Increments received value
     /// Used when we want to show values from 1 but, array indexes starts with 0
     /// </summary>
-    public class Add1Converter : IValueConverter
+    public class IncrementValueConverter : IValueConverter
     {
         /// <summary>
         /// Increments received value

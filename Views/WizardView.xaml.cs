@@ -18,9 +18,9 @@ namespace DialogEngine.Views
         /// </summary>
         public WizardView()
         {
-            InitializeComponent();
+            DataContext = new WizardViewModel();
 
-            DataContext = new WizardViewModel(this);
+            InitializeComponent();
         }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace DialogEngine.Views
         {
             InitializeComponent();
 
-            DataContext = new WizardViewModel(this, character);
+            DataContext = new WizardViewModel(character);
         }
 
         #endregion

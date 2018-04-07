@@ -173,7 +173,7 @@ namespace DialogEngine
                         mcLogger.Error("Serial port error " + ex.Message);
 
                         // if COM port name is not valid, we show dialog to user with valid COM ports 
-                        var result = await DialogHost.Show(new SerialComPortErrorDialogControl());
+                        var result = await DialogHost.Show(new SerialComPortErrorDialog());
 
                         // if user clicked on "Save changes" we try to again initialize serial
                         if (result == null)

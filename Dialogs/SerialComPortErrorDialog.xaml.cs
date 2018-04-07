@@ -15,7 +15,7 @@ namespace DialogEngine.Dialogs
     /// <summary>
     /// Interaction logic for SerialComPortErrorDialogUserControl.xaml
     /// </summary>
-    public partial class SerialComPortErrorDialogControl : UserControl
+    public partial class SerialComPortErrorDialog : UserControl
     {
         #region - fields -
 
@@ -28,7 +28,7 @@ namespace DialogEngine.Dialogs
         /// <summary>
         /// Default constructor
         /// </summary>
-        public SerialComPortErrorDialogControl()
+        public SerialComPortErrorDialog()
         {
             InitializeComponent();
 

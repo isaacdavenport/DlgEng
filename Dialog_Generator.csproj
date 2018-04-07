@@ -129,10 +129,10 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\DialogWorkflow\DialogState.cs" />
-    <Compile Include="Controls\DialogWorkflow\DialogTrigger.cs" />
-    <Compile Include="Controls\ViewModels\DialogControlViewModel.cs" />
-    <Compile Include="Controls\Views\DialogControl.xaml.cs">
+    <Compile Include="Converters\PlayInContextBtnContentConverter.cs" />
+    <Compile Include="Converters\PlayStopIconValueConverter.cs" />
+    <Compile Include="ViewModels\DialogControlViewModel.cs" />
+    <Compile Include="Controls\DialogControl.xaml.cs">
       <DependentUpon>DialogControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\VoiceRecorder\BarHeightScalingStyles.cs" />
@@ -141,16 +141,16 @@
     <Compile Include="Controls\VoiceRecorder\ISpectrumPlayer.cs" />
     <Compile Include="Controls\VoiceRecorder\NAudioEngine.cs" />
     <Compile Include="Controls\VoiceRecorder\SampleAggregator.cs" />
-    <Compile Include="Controls\VoiceRecorder\SpectrumAnalyzer.cs" />
-    <Compile Include="Controls\ViewModels\MediaPlayerControlViewModel.cs" />
-    <Compile Include="Controls\ViewModels\VoiceRecorderControlViewModel.cs" />
-    <Compile Include="Controls\Views\MediaPlayerControl.xaml.cs">
+    <Compile Include="Controls\SpectrumAnalyzer.cs" />
+    <Compile Include="ViewModels\MediaPlayerControlViewModel.cs" />
+    <Compile Include="ViewModels\VoiceRecorderControlViewModel.cs" />
+    <Compile Include="Controls\MediaPlayerControl.xaml.cs">
       <DependentUpon>MediaPlayerControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Views\VoiceRecorederControl.xaml.cs">
+    <Compile Include="Controls\VoiceRecorederControl.xaml.cs">
       <DependentUpon>VoiceRecorederControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Converters\Add1Converter.cs" />
+    <Compile Include="Converters\IncrementValueConverter.cs" />
     <Compile Include="Converters\CharacterStateToBooleanConverter.cs" />
     <Compile Include="Converters\CloneValuesConverter.cs" />
     <Compile Include="Converters\InputValuesToBooleanConverter.cs" />
@@ -169,16 +169,16 @@
     <Compile Include="Converters\StarWidthConverter.cs" />
     <Compile Include="Converters\TutorialStepNameConverter.cs" />
     <Compile Include="Converters\ValueToColorConverter.cs" />
-    <Compile Include="Dialogs\NewCharacterDialogControl.xaml.cs">
-      <DependentUpon>NewCharacterDialogControl.xaml</DependentUpon>
+    <Compile Include="Dialogs\CharacterFormDialog.xaml.cs">
+      <DependentUpon>CharacterFormDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\SerialComPortErrorDialogControl.xaml.cs">
-      <DependentUpon>SerialComPortErrorDialogControl.xaml</DependentUpon>
+    <Compile Include="Dialogs\SerialComPortErrorDialog.xaml.cs">
+      <DependentUpon>SerialComPortErrorDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Core\RelayCommand.cs" />
     <Compile Include="Core\ViewModelBase.cs" />
-    <Compile Include="Dialogs\SettingsDialogControl.xaml.cs">
-      <DependentUpon>SettingsDialogControl.xaml</DependentUpon>
+    <Compile Include="Dialogs\SettingsDialog.xaml.cs">
+      <DependentUpon>SettingsDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\YesNoDialog.xaml.cs">
       <DependentUpon>YesNoDialog.xaml</DependentUpon>
@@ -199,6 +199,7 @@
     <Compile Include="Helpers\LoggerHelper.cs" />
     <Compile Include="HeatMapUpdate.cs" />
     <Compile Include="Helpers\AppSet.cs" />
+    <Compile Include="Extensions\StateMachineExtensions.cs" />
     <Compile Include="Models\Dialog\DialogItem.cs" />
     <Compile Include="Models\Dialog\HistoricalDialog.cs" />
     <Compile Include="Models\Dialog\HistoricalPhrase.cs" />
@@ -226,7 +227,9 @@
     <Compile Include="MP3Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\SessionVariables.cs" />
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="ViewModels\Workflows\DialogWorkflow.cs" />
+    <Compile Include="ViewModels\Workflows\WizardWorkflow.cs" />
+    <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helpers\VisualHelper.cs" />
@@ -234,8 +237,6 @@
     <Compile Include="Dialogs\ValidationRules\CharacterPrefixValidationRule.cs" />
     <Compile Include="ViewModels\DialogViewModel.cs" />
     <Compile Include="ViewModels\WizardViewModel.cs" />
-    <Compile Include="ViewModels\WizardWorkflow\WizardState.cs" />
-    <Compile Include="ViewModels\WizardWorkflow\WizardTrigger.cs" />
     <Compile Include="Views\WizardView.xaml.cs">
       <DependentUpon>WizardView.xaml</DependentUpon>
     </Compile>
@@ -304,27 +305,27 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Controls\Views\DialogControl.xaml">
+    <Page Include="Controls\DialogControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\Views\MediaPlayerControl.xaml">
+    <Page Include="Controls\MediaPlayerControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\Views\VoiceRecorederControl.xaml">
+    <Page Include="Controls\VoiceRecorederControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dialogs\NewCharacterDialogControl.xaml">
+    <Page Include="Dialogs\CharacterFormDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dialogs\SerialComPortErrorDialogControl.xaml">
+    <Page Include="Dialogs\SerialComPortErrorDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dialogs\SettingsDialogControl.xaml">
+    <Page Include="Dialogs\SettingsDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -332,7 +333,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="Views\MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -382,11 +383,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <None Include="Resources\Videos\WZ_BjornAreYouFeelingMetal.avi">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -400,7 +396,9 @@
 
 if not exist "$(OutputDir)WizardAudio"   xcopy   "$(SolutionDir)\WizardAudio"  "$(OutputDir)WizardAudio" /Y /I  /E
 
-if not exist "$(OutputDir)WizardVideo"   xcopy   "$(SolutionDir)\WizardVideo"  "$(OutputDir)WizardVideo" /Y /I  /E</PostBuildEvent>
+if not exist "$(OutputDir)WizardVideo"   xcopy   "$(SolutionDir)\WizardVideo"  "$(OutputDir)WizardVideo" /Y /I  /E
+
+if not exist "$(OutputDir)TutorialCharacterCreation"   xcopy   "$(SolutionDir)\TutorialCharacterCreation"  "$(OutputDir)TutorialCharacterCreation" /Y /I  /E</PostBuildEvent>
   </PropertyGroup>
   <Import Project="packages\Accord.3.8.0\build\Accord.targets" Condition="Exists('packages\Accord.3.8.0\build\Accord.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

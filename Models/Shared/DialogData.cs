@@ -2,7 +2,6 @@
 using DialogEngine.Models.Dialog;
 using DialogEngine.Models.Logger;
 using DialogEngine.Models.Wizard;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 

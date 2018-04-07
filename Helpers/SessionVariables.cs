@@ -24,14 +24,15 @@ namespace DialogEngine.Helpers
         public static string CharactersDirectory;
         public static string DialogsDirectory;
         public static string AudioDirectory;
-        public static string WizardDirectory;
-        public static string WizardVideoDirectory;
-        public static string WizardAudioDirectory;
+        public static readonly string WizardDirectory;
+        public static readonly string WizardVideoDirectory;
+        public static readonly string WizardAudioDirectory;
+        public static readonly string TutorialDirectory;
         // !!! IMPORTANT !!!  If you change name, you must also change name in log4net.config 
-        public static string DecimalLogFileName = "DecimalSerialLog";
+        public static readonly string DecimalLogFileName = "DecimalSerialLog";
 
         // !!! IMPORTANT !!! If you change name, you must also change name in log4net.config 
-        public static string DialogLogFileName = "LogDialog";
+        public static readonly string  DialogLogFileName = "LogDialog";
 
         /// <summary>
         /// Maximum time to play current dialog after speaker characters changed in seconds
@@ -205,6 +206,7 @@ namespace DialogEngine.Helpers
             WizardDirectory = BaseDirectory + @"\WizardJSON\";
             WizardVideoDirectory = BaseDirectory + @"\WizardVideo\";
             WizardAudioDirectory = BaseDirectory + @"\WizardAudio\";
+            TutorialDirectory = BaseDirectory + @"\TutorialCharacterCreation\";
 
             if (ConfigurationManager.AppSettings["CharactersDirectory"] != null)
                 CharactersDirectory = AppSet.ReadSetting("CharactersDirectory");

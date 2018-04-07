@@ -2,7 +2,6 @@
 using DialogEngine.Controls.VoiceRecorder;
 using DialogEngine.Models.Dialog;
 using DialogEngine.Models.Wizard;
-using System;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -18,8 +17,6 @@ namespace DialogEngine.Controls.Views
         public VoiceRecorederControl()
         {
             InitializeComponent();
-
-            this.DataContext = new VoiceRecorderControlViewModel(this,NAudioEngine.Instance);
         }
 
         #endregion

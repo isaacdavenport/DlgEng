@@ -1,5 +1,4 @@
 ﻿
-using DialogEngine.Controls.Dialog;
 using DialogEngine.Controls.Views;
 using DialogEngine.Core;
 using DialogEngine.Helpers;
@@ -24,7 +23,7 @@ namespace DialogEngine.Controls.ViewModels
         #region - fields -
 
         private static readonly ILog mcLogger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-        private readonly StateMachine<DialogState, DialogTrigger> mcStateMachine;
+        //private readonly StateMachine<DialogState, DialogTrigger> mcStateMachine;
         private static int msMovementWaitCount;
         private static int msCurrentDialogModel;
 
@@ -58,7 +57,7 @@ namespace DialogEngine.Controls.ViewModels
         public DialogControlViewModel(DialogControl view)
         {
             this.mView = view;
-            mcStateMachine = new StateMachine<DialogState, DialogTrigger>(DialogState.Init);
+            //mcStateMachine = new StateMachine<DialogState, DialogTrigger>(DialogState.Init);
         }
 
         #endregion
@@ -67,18 +66,18 @@ namespace DialogEngine.Controls.ViewModels
 
         private void _configureStateMachine()
         {
-            mcStateMachine.Configure(DialogState.Init)
-                .Permit(DialogTrigger.WaitForDialog, DialogState.Idle);
+            //mcStateMachine.Configure(DialogState.Init)
+            //    .Permit(DialogTrigger.WaitForDialog, DialogState.Idle);
 
-            mcStateMachine.Configure(DialogState.Idle)
-                .Permit(DialogTrigger.PrepareDialogParameters, DialogState.PrepareDialogParameters);
+            //mcStateMachine.Configure(DialogState.Idle)
+            //    .Permit(DialogTrigger.PrepareDialogParameters, DialogState.PrepareDialogParameters);
 
-            mcStateMachine.Configure(DialogState.PrepareDialogParameters)
-                .Permit(DialogTrigger.RunDialog, DialogState.RunDialog)
-                .Permit(DialogTrigger.WaitForDialog, DialogState.Idle);
+            //mcStateMachine.Configure(DialogState.PrepareDialogParameters)
+            //    .Permit(DialogTrigger.RunDialog, DialogState.RunDialog)
+            //    .Permit(DialogTrigger.WaitForDialog, DialogState.Idle);
 
-            mcStateMachine.Configure(DialogState.RunDialog)
-                .Permit(DialogTrigger.WaitForDialog, DialogState.Idle);
+            //mcStateMachine.Configure(DialogState.RunDialog)
+            //    .Permit(DialogTrigger.WaitForDialog, DialogState.Idle);
 
         }
 
@@ -127,16 +126,16 @@ namespace DialogEngine.Controls.ViewModels
         private void _prepareDialogParameters()
         {
             if (!_importClosestSerialComsCharacters())
-                mcStateMachine.Fire(DialogTrigger.WaitForDialog);
+                //mcStateMachine.Fire(DialogTrigger.WaitForDialog);
 
             msCurrentDialogModel = _pickAWeightedDialog(Character1Num, Character2Num);
 
             if (_waitingForMovement() || SameCharactersAsLast && SessionVariables.WaitIndefinatelyForMove)
-                mcStateMachine.Fire(DialogTrigger.WaitForDialog);
+                //mcStateMachine.Fire(DialogTrigger.WaitForDialog);
 
             _processDebugFlags();
 
-            mcStateMachine.Fire(DialogTrigger.RunDialog);
+            //mcStateMachine.Fire(DialogTrigger.RunDialog);
         }
 
 
@@ -209,7 +208,7 @@ namespace DialogEngine.Controls.ViewModels
                 LastPhraseImpliedMovement = _determineIfMovementImplied(_selectedPhrase);
             }
 
-            mcStateMachine.Fire(DialogTrigger.WaitForDialog);
+            //mcStateMachine.Fire(DialogTrigger.WaitForDialog);
         }
 
 

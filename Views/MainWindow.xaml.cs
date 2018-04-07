@@ -9,13 +9,13 @@ using System.Windows;
 using System.Windows.Media;
 using log4net;
 using log4net.Config;
-using Microsoft.Win32;
-using DialogEngine.Helpers;
-using DialogEngine.ViewModels;
 using DialogEngine.Views;
 using DialogEngine.Dialogs;
 using MaterialDesignThemes.Wpf;
 using MaterialDesignColors;
+using DialogEngine.Helpers;
+using System.Collections.Generic;
+using DialogEngine.Core;
 
 namespace DialogEngine
 {
@@ -28,6 +28,8 @@ namespace DialogEngine
         
         // Default application logger
         private static readonly ILog mcLogger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private readonly string mcJsonEditorExeName = "JSONedit.exe";
+        private Dictionary<string, PageBase> mPages = new Dictionary<string, PageBase>();
 
         #endregion
 
@@ -37,14 +39,14 @@ namespace DialogEngine
         {
             XmlConfigurator.Configure(new FileInfo("log4net.config"));
 
-            mcLogger.Info("Application started.");
-
             _initializeMaterialDesign();
-
             InitializeComponent();
 
             mainFrame.NavigationService.Navigate(new DialogView(DateTime.Now));
+            mcLogger.Info("Application started.");
         }
+
+
 
         #endregion
 
@@ -53,15 +55,31 @@ namespace DialogEngine
         // Click on main menu item dialog
         private void _dialog_Click(object sender, RoutedEventArgs e)
         {
-            if(!mainFrame.Content.ToString().Contains("DialogView"))
-            mainFrame.NavigationService.GoBack();
-
-            e.Handled = true;
+            if (mainFrame.NavigationService.CanGoBack)
+            {
+                mainFrame.NavigationService.GoBack();
+            }
+            else
+            {
+                mainFrame.NavigationService.Navigate(new DialogView(DateTime.Now));
+            }
         }
+
+        private void _editWithJsonEditor_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start(Path.Combine(SessionVariables.TutorialDirectory,mcJsonEditorExeName),Path.Combine(SessionVariables.WizardDirectory, "StarterCharacterWizard.json"));
+        }
+
 
         private void _aboutDialogEngine_Click(object sender, RoutedEventArgs e)
         {
             Process.Start("www.toys2life.net");
+        }
+
+
+        private void _tutorial_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start(Path.Combine(SessionVariables.TutorialDirectory,"tutorial.pdf"));
         }
 
 
@@ -70,9 +88,6 @@ namespace DialogEngine
             DialogHost.OpenDialogCommand.Execute(new SettingsDialogControl(),this.SettingsBtn);
         }
 
-        #endregion
-
-        #region - private methods -
 
         private void _createCharacter_Click(object sender, RoutedEventArgs e)
         {
@@ -87,6 +102,10 @@ namespace DialogEngine
 
             e.Handled = true;
         }
+
+        #endregion
+
+        #region - private methods -
 
         private void _initializeMaterialDesign()
         {
@@ -109,5 +128,6 @@ namespace DialogEngine
         }
 
         #endregion
+
     }
 }

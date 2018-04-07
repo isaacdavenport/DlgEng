@@ -21,7 +21,7 @@ namespace DialogEngine
         }
 
 
-        private async void _application_Exit(object sender, ExitEventArgs e)
+        private  void _application_Exit(object sender, ExitEventArgs e)
         {
             //await DialogDataService.SerializeDataToFile(@"C:\Users\sbstb\Desktop\Output\new.json");
         }

@@ -13,7 +13,7 @@ namespace DialogEngine.Dialogs
     /// <summary>
     /// Interaction logic for NewCharacterDialogControl.xaml
     /// </summary>
-    public partial class NewCharacterDialogControl : UserControl
+    public partial class CharacterFormDialog : UserControl
     {
         #region - fields -
 
@@ -23,7 +23,7 @@ namespace DialogEngine.Dialogs
 
         #region - constructor -
 
-        public NewCharacterDialogControl()
+        public CharacterFormDialog()
         {
             InitializeComponent();
 
@@ -34,7 +34,7 @@ namespace DialogEngine.Dialogs
         }
 
 
-        public NewCharacterDialogControl(Character character)
+        public CharacterFormDialog(Character character)
         {
             InitializeComponent();
 

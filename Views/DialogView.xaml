@@ -25,13 +25,6 @@
       d:DesignHeight="300" d:DesignWidth="300"
       Title="Dialog">
 
-    <Page.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Themes/Generic.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-         </ResourceDictionary >
-    </Page.Resources> 
     <Grid>
 
         <Grid.RowDefinitions>
@@ -367,14 +360,14 @@
                                 <!-- Listbox populated with characters -->
 
                                 <ListBox Grid.Column="0"
-                                                 Grid.Row="0"
-                                                 BorderBrush="LightGray"
-                                                 BorderThickness="1"
-                                                 VerticalAlignment="Stretch"
-                                                 VerticalContentAlignment="Stretch"
-                                                 HorizontalAlignment="Stretch"
-                                                 ItemsSource="{Binding CharacterCollection}"
-                                                 x:Name="CharactersListBox">
+                                         Grid.Row="0"
+                                         BorderBrush="LightGray"
+                                         BorderThickness="1"
+                                         VerticalAlignment="Stretch"
+                                         VerticalContentAlignment="Stretch"
+                                         HorizontalAlignment="Stretch"
+                                         ItemsSource="{Binding CharacterCollection}"
+                                         x:Name="CharactersListBox">
 
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>

@@ -50,25 +50,61 @@ namespace DialogEngine.Controls.VoiceRecorder
         #endregion
 
         #region - dependency properties -
+
+        #region SoundPlayer
+
+        /// <summary>
+        /// Identifies the <see cref="SoundPlayer" /> dependency property. 
+        /// </summary>
+        public static readonly DependencyProperty SoundPlayerProperty =
+            DependencyProperty.Register("SoundPlayer", typeof(ISoundPlayer), typeof(SpectrumAnalyzer),new PropertyMetadata(null,_onSoundPlayerChanged));
+
+        private static void _onSoundPlayerChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            SpectrumAnalyzer _spectrumAnalyzer = d as SpectrumAnalyzer;
+            if (_spectrumAnalyzer != null)
+            {
+                _spectrumAnalyzer.mSoundPlayer = e.NewValue as ISpectrumPlayer;
+                _spectrumAnalyzer.mSoundPlayer.PropertyChanged += _spectrumAnalyzer.soundPlayer_PropertyChanged;
+                _spectrumAnalyzer.UpdateBarLayout();
+                _spectrumAnalyzer.mcAnimationTimer.Start();
+            }
+        }
+
+        public ISpectrumPlayer SoundPlayer
+        {
+            // IMPORTANT: To maintain parity between setting a property in XAML and procedural code, do not touch the getter and setter inside this dependency property!
+            get
+            {
+                return (ISpectrumPlayer)GetValue(SoundPlayerProperty);
+            }
+            set
+            {
+                SetValue(SoundPlayerProperty, value);
+            }
+        }
+        #endregion
+
         #region MaximumFrequency
         /// <summary>
         /// Identifies the <see cref="MaximumFrequency" /> dependency property. 
         /// </summary>
-        public static readonly DependencyProperty MaximumFrequencyProperty = DependencyProperty.Register("MaximumFrequency", typeof(int), typeof(SpectrumAnalyzer), new UIPropertyMetadata(20000, OnMaximumFrequencyChanged, OnCoerceMaximumFrequency));
+        public static readonly DependencyProperty MaximumFrequencyProperty = 
+            DependencyProperty.Register("MaximumFrequency", typeof(int), typeof(SpectrumAnalyzer), new UIPropertyMetadata(20000, _onMaximumFrequencyChanged, _onCoerceMaximumFrequency));
 
-        private static object OnCoerceMaximumFrequency(DependencyObject o, object value)
+        private static object _onCoerceMaximumFrequency(DependencyObject o, object value)
         {
             if (o is SpectrumAnalyzer spectrumAnalyzer)
-                return spectrumAnalyzer.OnCoerceMaximumFrequency((int)value);
+                return spectrumAnalyzer._onCoerceMaximumFrequency((int)value);
             else
                 return value;
         }
 
-        private static void OnMaximumFrequencyChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
+        private static void _onMaximumFrequencyChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
             SpectrumAnalyzer _spectrumAnalyzer = o as SpectrumAnalyzer;
             if (_spectrumAnalyzer != null)
-                _spectrumAnalyzer.OnMaximumFrequencyChanged((int)e.OldValue, (int)e.NewValue);
+                _spectrumAnalyzer._onMaximumFrequencyChanged((int)e.OldValue, (int)e.NewValue);
         }
 
         /// <summary>
@@ -76,7 +112,7 @@ namespace DialogEngine.Controls.VoiceRecorder
         /// </summary>
         /// <param name="value">The value that was set on <see cref="MaximumFrequency"/></param>
         /// <returns>The adjusted value of <see cref="MaximumFrequency"/></returns>
-        protected virtual int OnCoerceMaximumFrequency(int value)
+        protected virtual int _onCoerceMaximumFrequency(int value)
         {
             if ((int)value < MinimumFrequency)
                 return MinimumFrequency + 1;
@@ -88,7 +124,7 @@ namespace DialogEngine.Controls.VoiceRecorder
         /// </summary>
         /// <param name="oldValue">The previous value of <see cref="MaximumFrequency"/></param>
         /// <param name="newValue">The new value of <see cref="MaximumFrequency"/></param>
-        protected virtual void OnMaximumFrequencyChanged(int oldValue, int newValue)
+        protected virtual void _onMaximumFrequencyChanged(int oldValue, int newValue)
         {
             UpdateBarLayout();
         }
@@ -117,22 +153,23 @@ namespace DialogEngine.Controls.VoiceRecorder
         /// <summary>
         /// Identifies the <see cref="MinimumFrequency" /> dependency property. 
         /// </summary>
-        public static readonly DependencyProperty MinimumFrequencyProperty = DependencyProperty.Register("MinimumFrequency", typeof(int), typeof(SpectrumAnalyzer), new UIPropertyMetadata(20, OnMinimumFrequencyChanged, OnCoerceMinimumFrequency));
+        public static readonly DependencyProperty MinimumFrequencyProperty = 
+            DependencyProperty.Register("MinimumFrequency", typeof(int), typeof(SpectrumAnalyzer), new UIPropertyMetadata(20, _onMinimumFrequencyChanged, _onCoerceMinimumFrequency));
 
-        private static object OnCoerceMinimumFrequency(DependencyObject o, object value)
+        private static object _onCoerceMinimumFrequency(DependencyObject o, object value)
         {
             SpectrumAnalyzer spectrumAnalyzer = o as SpectrumAnalyzer;
             if (spectrumAnalyzer != null)
-                return spectrumAnalyzer.OnCoerceMinimumFrequency((int)value);
+                return spectrumAnalyzer._onCoerceMinimumFrequency((int)value);
             else
                 return value;
         }
 
-        private static void OnMinimumFrequencyChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
+        private static void _onMinimumFrequencyChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
             SpectrumAnalyzer spectrumAnalyzer = o as SpectrumAnalyzer;
             if (spectrumAnalyzer != null)
-                spectrumAnalyzer.OnMinimumFrequencyChanged((int)e.OldValue, (int)e.NewValue);
+                spectrumAnalyzer._onMinimumFrequencyChanged((int)e.OldValue, (int)e.NewValue);
         }
 
         /// <summary>
@@ -140,7 +177,7 @@ namespace DialogEngine.Controls.VoiceRecorder
         /// </summary>
         /// <param name="value">The value that was set on <see cref="MinimumFrequency"/></param>
         /// <returns>The adjusted value of <see cref="MinimumFrequency"/></returns>
-        protected virtual int OnCoerceMinimumFrequency(int value)
+        protected virtual int _onCoerceMinimumFrequency(int value)
         {
             if (value < 0)
                 return value = 0;
@@ -153,7 +190,7 @@ namespace DialogEngine.Controls.VoiceRecorder
         /// </summary>
         /// <param name="oldValue">The previous value of <see cref="MinimumFrequency"/></param>
         /// <param name="newValue">The new value of <see cref="MinimumFrequency"/></param>
-        protected virtual void OnMinimumFrequencyChanged(int oldValue, int newValue)
+        protected virtual void _onMinimumFrequencyChanged(int oldValue, int newValue)
         {
             UpdateBarLayout();
         }
@@ -187,7 +224,7 @@ namespace DialogEngine.Controls.VoiceRecorder
         {
             SpectrumAnalyzer _spectrumAnalyzer = o as SpectrumAnalyzer;
             if (_spectrumAnalyzer != null)
-                return _spectrumAnalyzer.OnCoerceBarCount((int)value);
+                return _spectrumAnalyzer._onCoerceBarCount((int)value);
             else
                 return value;
         }
@@ -196,7 +233,7 @@ namespace DialogEngine.Controls.VoiceRecorder
         {
             SpectrumAnalyzer _spectrumAnalyzer = o as SpectrumAnalyzer;
             if (_spectrumAnalyzer != null)
-                _spectrumAnalyzer.OnBarCountChanged((int)e.OldValue, (int)e.NewValue);
+                _spectrumAnalyzer._onBarCountChanged((int)e.OldValue, (int)e.NewValue);
         }
 
         /// <summary>
@@ -204,7 +241,7 @@ namespace DialogEngine.Controls.VoiceRecorder
         /// </summary>
         /// <param name="value">The value that was set on <see cref="BarCount"/></param>
         /// <returns>The adjusted value of <see cref="BarCount"/></returns>
-        protected virtual int OnCoerceBarCount(int value)
+        protected virtual int _onCoerceBarCount(int value)
         {
             value = Math.Max(value, 1);
             return value;
@@ -215,7 +252,7 @@ namespace DialogEngine.Controls.VoiceRecorder
         /// </summary>
         /// <param name="oldValue">The previous value of <see cref="BarCount"/></param>
         /// <param name="newValue">The new value of <see cref="BarCount"/></param>
-        protected virtual void OnBarCountChanged(int oldValue, int newValue)
+        protected virtual void _onBarCountChanged(int oldValue, int newValue)
         {
             UpdateBarLayout();
         }
@@ -244,22 +281,23 @@ namespace DialogEngine.Controls.VoiceRecorder
         /// <summary>
         /// Identifies the <see cref="BarSpacing" /> dependency property. 
         /// </summary>
-        public static readonly DependencyProperty BarSpacingProperty = DependencyProperty.Register("BarSpacing", typeof(double), typeof(SpectrumAnalyzer), new UIPropertyMetadata(5.0d, OnBarSpacingChanged, OnCoerceBarSpacing));
+        public static readonly DependencyProperty BarSpacingProperty = 
+            DependencyProperty.Register("BarSpacing", typeof(double), typeof(SpectrumAnalyzer), new UIPropertyMetadata(5.0d, _onBarSpacingChanged, _onCoerceBarSpacing));
 
-        private static object OnCoerceBarSpacing(DependencyObject o, object value)
+        private static object _onCoerceBarSpacing(DependencyObject o, object value)
         {
             SpectrumAnalyzer spectrumAnalyzer = o as SpectrumAnalyzer;
             if (spectrumAnalyzer != null)
-                return spectrumAnalyzer.OnCoerceBarSpacing((double)value);
+                return spectrumAnalyzer._onCoerceBarSpacing((double)value);
             else
                 return value;
         }
 
-        private static void OnBarSpacingChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
+        private static void _onBarSpacingChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
             SpectrumAnalyzer spectrumAnalyzer = o as SpectrumAnalyzer;
             if (spectrumAnalyzer != null)
-                spectrumAnalyzer.OnBarSpacingChanged((double)e.OldValue, (double)e.NewValue);
+                spectrumAnalyzer._onBarSpacingChanged((double)e.OldValue, (double)e.NewValue);
         }
 
         /// <summary>
@@ -267,7 +305,7 @@ namespace DialogEngine.Controls.VoiceRecorder
         /// </summary>
         /// <param name="value">The value that was set on <see cref="BarSpacing"/></param>
         /// <returns>The adjusted value of <see cref="BarSpacing"/></returns>
-        protected virtual double OnCoerceBarSpacing(double value)
+        protected virtual double _onCoerceBarSpacing(double value)
         {
             value = Math.Max(value, 0);
             return value;
@@ -278,7 +316,7 @@ namespace DialogEngine.Controls.VoiceRecorder
         /// </summary>
         /// <param name="oldValue">The previous value of <see cref="BarSpacing"/></param>
         /// <param name="newValue">The new value of <see cref="BarSpacing"/></param>
-        protected virtual void OnBarSpacingChanged(double oldValue, double newValue)
+        protected virtual void _onBarSpacingChanged(double oldValue, double newValue)
         {
             UpdateBarLayout();
         }
@@ -305,22 +343,23 @@ namespace DialogEngine.Controls.VoiceRecorder
         /// <summary>
         /// Identifies the <see cref="PeakFallDelay" /> dependency property. 
         /// </summary>
-        public static readonly DependencyProperty PeakFallDelayProperty = DependencyProperty.Register("PeakFallDelay", typeof(int), typeof(SpectrumAnalyzer), new UIPropertyMetadata(10, OnPeakFallDelayChanged, OnCoercePeakFallDelay));
+        public static readonly DependencyProperty PeakFallDelayProperty = 
+            DependencyProperty.Register("PeakFallDelay", typeof(int), typeof(SpectrumAnalyzer), new UIPropertyMetadata(10, _onPeakFallDelayChanged, _onCoercePeakFallDelay));
 
-        private static object OnCoercePeakFallDelay(DependencyObject o, object value)
+        private static object _onCoercePeakFallDelay(DependencyObject o, object value)
         {
-            SpectrumAnalyzer spectrumAnalyzer = o as SpectrumAnalyzer;
-            if (spectrumAnalyzer != null)
-                return spectrumAnalyzer.OnCoercePeakFallDelay((int)value);
+            SpectrumAnalyzer _spectrumAnalyzer = o as SpectrumAnalyzer;
+            if (_spectrumAnalyzer != null)
+                return _spectrumAnalyzer._onCoercePeakFallDelay((int)value);
             else
                 return value;
         }
 
-        private static void OnPeakFallDelayChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
+        private static void _onPeakFallDelayChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
-            SpectrumAnalyzer spectrumAnalyzer = o as SpectrumAnalyzer;
-            if (spectrumAnalyzer != null)
-                spectrumAnalyzer.OnPeakFallDelayChanged((int)e.OldValue, (int)e.NewValue);
+            SpectrumAnalyzer _spectrumAnalyzer = o as SpectrumAnalyzer;
+            if (_spectrumAnalyzer != null)
+                _spectrumAnalyzer._onPeakFallDelayChanged((int)e.OldValue, (int)e.NewValue);
         }
 
         /// <summary>
@@ -328,7 +367,7 @@ namespace DialogEngine.Controls.VoiceRecorder
         /// </summary>
         /// <param name="value">The value that was set on <see cref="PeakFallDelay"/></param>
         /// <returns>The adjusted value of <see cref="PeakFallDelay"/></returns>
-        protected virtual int OnCoercePeakFallDelay(int value)
+        protected virtual int _onCoercePeakFallDelay(int value)
         {
             value = Math.Max(value, 0);
             return value;
@@ -339,7 +378,7 @@ namespace DialogEngine.Controls.VoiceRecorder
         /// </summary>
         /// <param name="oldValue">The previous value of <see cref="PeakFallDelay"/></param>
         /// <param name="newValue">The new value of <see cref="PeakFallDelay"/></param>
-        protected virtual void OnPeakFallDelayChanged(int oldValue, int newValue)
+        protected virtual void _onPeakFallDelayChanged(int oldValue, int newValue)
         {
 
         }
@@ -369,22 +408,23 @@ namespace DialogEngine.Controls.VoiceRecorder
         /// <summary>
         /// Identifies the <see cref="IsFrequencyScaleLinear" /> dependency property. 
         /// </summary>
-        public static readonly DependencyProperty IsFrequencyScaleLinearProperty = DependencyProperty.Register("IsFrequencyScaleLinear", typeof(bool), typeof(SpectrumAnalyzer), new UIPropertyMetadata(false, OnIsFrequencyScaleLinearChanged, OnCoerceIsFrequencyScaleLinear));
+        public static readonly DependencyProperty IsFrequencyScaleLinearProperty = 
+            DependencyProperty.Register("IsFrequencyScaleLinear", typeof(bool), typeof(SpectrumAnalyzer), new UIPropertyMetadata(false, _onIsFrequencyScaleLinearChanged, _onCoerceIsFrequencyScaleLinear));
 
-        private static object OnCoerceIsFrequencyScaleLinear(DependencyObject o, object value)
+        private static object _onCoerceIsFrequencyScaleLinear(DependencyObject o, object value)
         {
-            SpectrumAnalyzer spectrumAnalyzer = o as SpectrumAnalyzer;
-            if (spectrumAnalyzer != null)
-                return spectrumAnalyzer.OnCoerceIsFrequencyScaleLinear((bool)value);
+            SpectrumAnalyzer _spectrumAnalyzer = o as SpectrumAnalyzer;
+            if (_spectrumAnalyzer != null)
+                return _spectrumAnalyzer._onCoerceIsFrequencyScaleLinear((bool)value);
             else
                 return value;
         }
 
-        private static void OnIsFrequencyScaleLinearChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
+        private static void _onIsFrequencyScaleLinearChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
-            SpectrumAnalyzer spectrumAnalyzer = o as SpectrumAnalyzer;
-            if (spectrumAnalyzer != null)
-                spectrumAnalyzer.OnIsFrequencyScaleLinearChanged((bool)e.OldValue, (bool)e.NewValue);
+            SpectrumAnalyzer _spectrumAnalyzer = o as SpectrumAnalyzer;
+            if (_spectrumAnalyzer != null)
+                _spectrumAnalyzer._onIsFrequencyScaleLinearChanged((bool)e.OldValue, (bool)e.NewValue);
         }
 
         /// <summary>
@@ -392,7 +432,7 @@ namespace DialogEngine.Controls.VoiceRecorder
         /// </summary>
         /// <param name="value">The value that was set on <see cref="IsFrequencyScaleLinear"/></param>
         /// <returns>The adjusted value of <see cref="IsFrequencyScaleLinear"/></returns>
-        protected virtual bool OnCoerceIsFrequencyScaleLinear(bool value)
+        protected virtual bool _onCoerceIsFrequencyScaleLinear(bool value)
         {
             return value;
         }
@@ -402,7 +442,7 @@ namespace DialogEngine.Controls.VoiceRecorder
         /// </summary>
         /// <param name="oldValue">The previous value of <see cref="IsFrequencyScaleLinear"/></param>
         /// <param name="newValue">The new value of <see cref="IsFrequencyScaleLinear"/></param>
-        protected virtual void OnIsFrequencyScaleLinearChanged(bool oldValue, bool newValue)
+        protected virtual void _onIsFrequencyScaleLinearChanged(bool oldValue, bool newValue)
         {
             UpdateBarLayout();
         }
@@ -434,22 +474,23 @@ namespace DialogEngine.Controls.VoiceRecorder
         /// <summary>
         /// Identifies the <see cref="BarHeightScaling" /> dependency property. 
         /// </summary>
-        public static readonly DependencyProperty BarHeightScalingProperty = DependencyProperty.Register("BarHeightScaling", typeof(BarHeightScalingStyles), typeof(SpectrumAnalyzer), new UIPropertyMetadata(BarHeightScalingStyles.Decibel, OnBarHeightScalingChanged, OnCoerceBarHeightScaling));
+        public static readonly DependencyProperty BarHeightScalingProperty = 
+            DependencyProperty.Register("BarHeightScaling", typeof(BarHeightScalingStyles), typeof(SpectrumAnalyzer), new UIPropertyMetadata(BarHeightScalingStyles.Decibel, _onBarHeightScalingChanged, _onCoerceBarHeightScaling));
 
-        private static object OnCoerceBarHeightScaling(DependencyObject o, object value)
+        private static object _onCoerceBarHeightScaling(DependencyObject o, object value)
         {
-            SpectrumAnalyzer spectrumAnalyzer = o as SpectrumAnalyzer;
-            if (spectrumAnalyzer != null)
-                return spectrumAnalyzer.OnCoerceBarHeightScaling((BarHeightScalingStyles)value);
+            SpectrumAnalyzer _spectrumAnalyzer = o as SpectrumAnalyzer;
+            if (_spectrumAnalyzer != null)
+                return _spectrumAnalyzer._onCoerceBarHeightScaling((BarHeightScalingStyles)value);
             else
                 return value;
         }
 
-        private static void OnBarHeightScalingChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
+        private static void _onBarHeightScalingChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
-            SpectrumAnalyzer spectrumAnalyzer = o as SpectrumAnalyzer;
-            if (spectrumAnalyzer != null)
-                spectrumAnalyzer.OnBarHeightScalingChanged((BarHeightScalingStyles)e.OldValue, (BarHeightScalingStyles)e.NewValue);
+            SpectrumAnalyzer _spectrumAnalyzer = o as SpectrumAnalyzer;
+            if (_spectrumAnalyzer != null)
+                _spectrumAnalyzer._onBarHeightScalingChanged((BarHeightScalingStyles)e.OldValue, (BarHeightScalingStyles)e.NewValue);
         }
 
         /// <summary>
@@ -457,7 +498,7 @@ namespace DialogEngine.Controls.VoiceRecorder
         /// </summary>
         /// <param name="value">The value that was set on <see cref="BarHeightScaling"/></param>
         /// <returns>The adjusted value of <see cref="BarHeightScaling"/></returns>
-        protected virtual BarHeightScalingStyles OnCoerceBarHeightScaling(BarHeightScalingStyles value)
+        protected virtual BarHeightScalingStyles _onCoerceBarHeightScaling(BarHeightScalingStyles value)
         {
             return value;
         }
@@ -467,7 +508,7 @@ namespace DialogEngine.Controls.VoiceRecorder
         /// </summary>
         /// <param name="oldValue">The previous value of <see cref="BarHeightScaling"/></param>
         /// <param name="newValue">The new value of <see cref="BarHeightScaling"/></param>
-        protected virtual void OnBarHeightScalingChanged(BarHeightScalingStyles oldValue, BarHeightScalingStyles newValue)
+        protected virtual void _onBarHeightScalingChanged(BarHeightScalingStyles oldValue, BarHeightScalingStyles newValue)
         {
 
         }
@@ -494,22 +535,23 @@ namespace DialogEngine.Controls.VoiceRecorder
         /// <summary>
         /// Identifies the <see cref="AveragePeaks" /> dependency property. 
         /// </summary>
-        public static readonly DependencyProperty AveragePeaksProperty = DependencyProperty.Register("AveragePeaks", typeof(bool), typeof(SpectrumAnalyzer), new UIPropertyMetadata(false, OnAveragePeaksChanged, OnCoerceAveragePeaks));
+        public static readonly DependencyProperty AveragePeaksProperty = 
+            DependencyProperty.Register("AveragePeaks", typeof(bool), typeof(SpectrumAnalyzer), new UIPropertyMetadata(false, _onAveragePeaksChanged, _onCoerceAveragePeaks));
 
-        private static object OnCoerceAveragePeaks(DependencyObject o, object value)
+        private static object _onCoerceAveragePeaks(DependencyObject o, object value)
         {
-            SpectrumAnalyzer spectrumAnalyzer = o as SpectrumAnalyzer;
-            if (spectrumAnalyzer != null)
-                return spectrumAnalyzer.OnCoerceAveragePeaks((bool)value);
+            SpectrumAnalyzer _spectrumAnalyzer = o as SpectrumAnalyzer;
+            if (_spectrumAnalyzer != null)
+                return _spectrumAnalyzer._onCoerceAveragePeaks((bool)value);
             else
                 return value;
         }
 
-        private static void OnAveragePeaksChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
+        private static void _onAveragePeaksChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
-            SpectrumAnalyzer spectrumAnalyzer = o as SpectrumAnalyzer;
-            if (spectrumAnalyzer != null)
-                spectrumAnalyzer.OnAveragePeaksChanged((bool)e.OldValue, (bool)e.NewValue);
+            SpectrumAnalyzer _spectrumAnalyzer = o as SpectrumAnalyzer;
+            if (_spectrumAnalyzer != null)
+                _spectrumAnalyzer._onAveragePeaksChanged((bool)e.OldValue, (bool)e.NewValue);
         }
 
         /// <summary>
@@ -517,7 +559,7 @@ namespace DialogEngine.Controls.VoiceRecorder
         /// </summary>
         /// <param name="value">The value that was set on <see cref="AveragePeaks"/></param>
         /// <returns>The adjusted value of <see cref="AveragePeaks"/></returns>
-        protected virtual bool OnCoerceAveragePeaks(bool value)
+        protected virtual bool _onCoerceAveragePeaks(bool value)
         {
             return value;
         }
@@ -527,7 +569,7 @@ namespace DialogEngine.Controls.VoiceRecorder
         /// </summary>
         /// <param name="oldValue">The previous value of <see cref="AveragePeaks"/></param>
         /// <param name="newValue">The new value of <see cref="AveragePeaks"/></param>
-        protected virtual void OnAveragePeaksChanged(bool oldValue, bool newValue)
+        protected virtual void _onAveragePeaksChanged(bool oldValue, bool newValue)
         {
 
         }
@@ -556,22 +598,23 @@ namespace DialogEngine.Controls.VoiceRecorder
         /// <summary>
         /// Identifies the <see cref="BarStyle" /> dependency property. 
         /// </summary>
-        public static readonly DependencyProperty BarStyleProperty = DependencyProperty.Register("BarStyle", typeof(Style), typeof(SpectrumAnalyzer), new UIPropertyMetadata(null, OnBarStyleChanged, OnCoerceBarStyle));
+        public static readonly DependencyProperty BarStyleProperty = 
+            DependencyProperty.Register("BarStyle", typeof(Style), typeof(SpectrumAnalyzer), new UIPropertyMetadata(null, _onBarStyleChanged, _onCoerceBarStyle));
 
-        private static object OnCoerceBarStyle(DependencyObject o, object value)
+        private static object _onCoerceBarStyle(DependencyObject o, object value)
         {
             SpectrumAnalyzer _spectrumAnalyzer = o as SpectrumAnalyzer;
             if (_spectrumAnalyzer != null)
-                return _spectrumAnalyzer.OnCoerceBarStyle((Style)value);
+                return _spectrumAnalyzer._onCoerceBarStyle((Style)value);
             else
                 return value;
         }
 
-        private static void OnBarStyleChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
+        private static void _onBarStyleChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
             SpectrumAnalyzer _spectrumAnalyzer = o as SpectrumAnalyzer;
             if (_spectrumAnalyzer != null)
-                _spectrumAnalyzer.OnBarStyleChanged((Style)e.OldValue, (Style)e.NewValue);
+                _spectrumAnalyzer._onBarStyleChanged((Style)e.OldValue, (Style)e.NewValue);
         }
 
         /// <summary>
@@ -579,7 +622,7 @@ namespace DialogEngine.Controls.VoiceRecorder
         /// </summary>
         /// <param name="value">The value that was set on <see cref="BarStyle"/></param>
         /// <returns>The adjusted value of <see cref="BarStyle"/></returns>
-        protected virtual Style OnCoerceBarStyle(Style value)
+        protected virtual Style _onCoerceBarStyle(Style value)
         {
             return value;
         }
@@ -589,7 +632,7 @@ namespace DialogEngine.Controls.VoiceRecorder
         /// </summary>
         /// <param name="oldValue">The previous value of <see cref="BarStyle"/></param>
         /// <param name="newValue">The new value of <see cref="BarStyle"/></param>
-        protected virtual void OnBarStyleChanged(Style oldValue, Style newValue)
+        protected virtual void _onBarStyleChanged(Style oldValue, Style newValue)
         {
             UpdateBarLayout();
         }
@@ -676,22 +719,23 @@ namespace DialogEngine.Controls.VoiceRecorder
         /// <summary>
         /// Identifies the <see cref="ActualBarWidth" /> dependency property. 
         /// </summary>
-        public static readonly DependencyProperty ActualBarWidthProperty = DependencyProperty.Register("ActualBarWidth", typeof(double), typeof(SpectrumAnalyzer), new UIPropertyMetadata(0.0d, OnActualBarWidthChanged, OnCoerceActualBarWidth));
+        public static readonly DependencyProperty ActualBarWidthProperty = 
+            DependencyProperty.Register("ActualBarWidth", typeof(double), typeof(SpectrumAnalyzer), new UIPropertyMetadata(0.0d, _onActualBarWidthChanged, _onCoerceActualBarWidth));
 
-        private static object OnCoerceActualBarWidth(DependencyObject o, object value)
+        private static object _onCoerceActualBarWidth(DependencyObject o, object value)
         {
-            SpectrumAnalyzer spectrumAnalyzer = o as SpectrumAnalyzer;
-            if (spectrumAnalyzer != null)
-                return spectrumAnalyzer.OnCoerceActualBarWidth((double)value);
+            SpectrumAnalyzer _spectrumAnalyzer = o as SpectrumAnalyzer;
+            if (_spectrumAnalyzer != null)
+                return _spectrumAnalyzer._onCoerceActualBarWidth((double)value);
             else
                 return value;
         }
 
-        private static void OnActualBarWidthChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
+        private static void _onActualBarWidthChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
-            SpectrumAnalyzer spectrumAnalyzer = o as SpectrumAnalyzer;
-            if (spectrumAnalyzer != null)
-                spectrumAnalyzer.OnActualBarWidthChanged((double)e.OldValue, (double)e.NewValue);
+            SpectrumAnalyzer _spectrumAnalyzer = o as SpectrumAnalyzer;
+            if (_spectrumAnalyzer != null)
+                _spectrumAnalyzer._onActualBarWidthChanged((double)e.OldValue, (double)e.NewValue);
         }
 
         /// <summary>
@@ -699,7 +743,7 @@ namespace DialogEngine.Controls.VoiceRecorder
         /// </summary>
         /// <param name="value">The value that was set on <see cref="ActualBarWidth"/></param>
         /// <returns>The adjusted value of <see cref="ActualBarWidth"/></returns>
-        protected virtual double OnCoerceActualBarWidth(double value)
+        protected virtual double _onCoerceActualBarWidth(double value)
         {
             return value;
         }
@@ -709,7 +753,7 @@ namespace DialogEngine.Controls.VoiceRecorder
         /// </summary>
         /// <param name="oldValue">The previous value of <see cref="ActualBarWidth"/></param>
         /// <param name="newValue">The new value of <see cref="ActualBarWidth"/></param>
-        protected virtual void OnActualBarWidthChanged(double oldValue, double newValue)
+        protected virtual void _onActualBarWidthChanged(double oldValue, double newValue)
         {
 
         }
@@ -735,22 +779,23 @@ namespace DialogEngine.Controls.VoiceRecorder
         /// <summary>
         /// Identifies the <see cref="RefreshInterval" /> dependency property. 
         /// </summary>
-        public static readonly DependencyProperty RefreshIntervalProperty = DependencyProperty.Register("RefreshInterval", typeof(int), typeof(SpectrumAnalyzer), new UIPropertyMetadata(mcDefaultUpdateInterval, OnRefreshIntervalChanged, OnCoerceRefreshInterval));
+        public static readonly DependencyProperty RefreshIntervalProperty = 
+            DependencyProperty.Register("RefreshInterval", typeof(int), typeof(SpectrumAnalyzer), new UIPropertyMetadata(mcDefaultUpdateInterval, _onRefreshIntervalChanged, _onCoerceRefreshInterval));
 
-        private static object OnCoerceRefreshInterval(DependencyObject o, object value)
+        private static object _onCoerceRefreshInterval(DependencyObject o, object value)
         {
             SpectrumAnalyzer _spectrumAnalyzer = o as SpectrumAnalyzer;
             if (_spectrumAnalyzer != null)
-                return _spectrumAnalyzer.OnCoerceRefreshInterval((int)value);
+                return _spectrumAnalyzer._onCoerceRefreshInterval((int)value);
             else
                 return value;
         }
 
-        private static void OnRefreshIntervalChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
+        private static void _onRefreshIntervalChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
             SpectrumAnalyzer _spectrumAnalyzer = o as SpectrumAnalyzer;
             if (_spectrumAnalyzer != null)
-                _spectrumAnalyzer.OnRefreshIntervalChanged((int)e.OldValue, (int)e.NewValue);
+                _spectrumAnalyzer._onRefreshIntervalChanged((int)e.OldValue, (int)e.NewValue);
         }
 
         /// <summary>
@@ -758,7 +803,7 @@ namespace DialogEngine.Controls.VoiceRecorder
         /// </summary>
         /// <param name="value">The value that was set on <see cref="RefreshInterval"/></param>
         /// <returns>The adjusted value of <see cref="RefreshInterval"/></returns>
-        protected virtual int OnCoerceRefreshInterval(int value)
+        protected virtual int _onCoerceRefreshInterval(int value)
         {
             value = Math.Min(1000, Math.Max(10, value));
             return value;
@@ -769,7 +814,7 @@ namespace DialogEngine.Controls.VoiceRecorder
         /// </summary>
         /// <param name="oldValue">The previous value of <see cref="RefreshInterval"/></param>
         /// <param name="newValue">The new value of <see cref="RefreshInterval"/></param>
-        protected virtual void OnRefreshIntervalChanged(int oldValue, int newValue)
+        protected virtual void _onRefreshIntervalChanged(int oldValue, int newValue)
         {
             mcAnimationTimer.Interval = TimeSpan.FromMilliseconds(newValue);
         }
@@ -799,22 +844,23 @@ namespace DialogEngine.Controls.VoiceRecorder
         /// <summary>
         /// Identifies the <see cref="FFTComplexity" /> dependency property. 
         /// </summary>
-        public static readonly DependencyProperty FFTComplexityProperty = DependencyProperty.Register("FFTComplexity", typeof(FFTDataSize), typeof(SpectrumAnalyzer), new UIPropertyMetadata(FFTDataSize.FFT2048, OnFFTComplexityChanged, OnCoerceFFTComplexity));
+        public static readonly DependencyProperty FFTComplexityProperty = 
+            DependencyProperty.Register("FFTComplexity", typeof(FFTDataSize), typeof(SpectrumAnalyzer), new UIPropertyMetadata(FFTDataSize.FFT2048, _onFFTComplexityChanged, _onCoerceFFTComplexity));
 
-        private static object OnCoerceFFTComplexity(DependencyObject o, object value)
+        private static object _onCoerceFFTComplexity(DependencyObject o, object value)
         {
             SpectrumAnalyzer _spectrumAnalyzer = o as SpectrumAnalyzer;
             if (_spectrumAnalyzer != null)
-                return _spectrumAnalyzer.OnCoerceFFTComplexity((FFTDataSize)value);
+                return _spectrumAnalyzer._onCoerceFFTComplexity((FFTDataSize)value);
             else
                 return value;
         }
 
-        private static void OnFFTComplexityChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
+        private static void _onFFTComplexityChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
             SpectrumAnalyzer _spectrumAnalyzer = o as SpectrumAnalyzer;
             if (_spectrumAnalyzer != null)
-                _spectrumAnalyzer.OnFFTComplexityChanged((FFTDataSize)e.OldValue, (FFTDataSize)e.NewValue);
+                _spectrumAnalyzer._onFFTComplexityChanged((FFTDataSize)e.OldValue, (FFTDataSize)e.NewValue);
         }
 
         /// <summary>
@@ -822,7 +868,7 @@ namespace DialogEngine.Controls.VoiceRecorder
         /// </summary>
         /// <param name="value">The value that was set on <see cref="FFTComplexity"/></param>
         /// <returns>The adjusted value of <see cref="FFTComplexity"/></returns>
-        protected virtual FFTDataSize OnCoerceFFTComplexity(FFTDataSize value)
+        protected virtual FFTDataSize _onCoerceFFTComplexity(FFTDataSize value)
         {
             return value;
         }
@@ -832,7 +878,7 @@ namespace DialogEngine.Controls.VoiceRecorder
         /// </summary>
         /// <param name="oldValue">The previous value of <see cref="FFTComplexity"/></param>
         /// <param name="newValue">The new value of <see cref="FFTComplexity"/></param>
-        protected virtual void OnFFTComplexityChanged(FFTDataSize _oldValue, FFTDataSize _newValue)
+        protected virtual void _onFFTComplexityChanged(FFTDataSize _oldValue, FFTDataSize _newValue)
         {
             mChannelData = new float[((int)_newValue / 2)];
         }

@@ -21,9 +21,6 @@
 
     <UserControl.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Themes/Generic.xaml" />
-            </ResourceDictionary.MergedDictionaries>
             <materialDesign:PackIcon x:Key="Microphone" Kind="Microphone" />
             <materialDesign:PackIcon x:Key="StopBtn" Kind="Stop" />
             <materialDesign:PackIcon x:Key="PauseBtn" Kind="Pause" />
@@ -44,10 +41,13 @@
             VerticalAlignment="Stretch" 
             Background="#FF333333" 
             CornerRadius="3,3,3,3">
-            <vr:SpectrumAnalyzer x:Name="spectrumAnalyzer"
+            
+            <vr:SpectrumAnalyzer SoundPlayer="{Binding SoundPlayer}" 
+                x:Name="spectrumAnalyzer"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
                 BarCount="64" />
+            
         </Border>
 
         <Grid Grid.Row="1">
@@ -61,7 +61,6 @@
                     Margin="10,10,10,10"  
                     Command="{Binding StartRecording}"
                     Width="25"
-                    Content="{StaticResource Microphone}"
                     Height="25">
                     <Button.IsEnabled>
                         <MultiBinding Converter="{StaticResource IsRecordingEnabledConverter}">
@@ -72,12 +71,21 @@
                                      RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=local:VoiceRecorederControl}" />
                         </MultiBinding>
                     </Button.IsEnabled>
+                    <Button.Content>
+                        <MultiBinding Converter="{StaticResource PlayStopIconValueConverter}" ConverterParameter="Microphone|StopBtn">
+                            <Binding Path="IsRecording" />
+                            <Binding RelativeSource="{RelativeSource Self}" />
+                        </MultiBinding>
+                    </Button.Content>
+                    <Button.Resources>
+                        <materialDesign:PackIcon x:Key="Microphone" Kind="Microphone" />
+                        <materialDesign:PackIcon x:Key="StopBtn" Kind="Stop" />
+                    </Button.Resources>
                 </Button>
                 <Button x:Name="PlayingBtn"
                     Margin="10,10,10,10"  
                     Command="{Binding PlayContent}" 
                     Width="25"
-                    Content="{StaticResource PlayBtn}"
                     Height="25" >
                     <Button.IsEnabled >
                         <MultiBinding Converter="{StaticResource IsVoiceRecorderPlayingEnabledConverter}">
@@ -86,6 +94,16 @@
                             <Binding Path="IsPlayingLineInContext" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=local:VoiceRecorederControl}" />
                         </MultiBinding>
                     </Button.IsEnabled>
+                    <Button.Content>
+                        <MultiBinding Converter="{StaticResource PlayStopIconValueConverter}" ConverterParameter="PlayBtn|StopBtn">
+                            <Binding Path="IsPlaying" />
+                            <Binding RelativeSource="{RelativeSource Self}" />
+                        </MultiBinding>
+                    </Button.Content>
+                    <Button.Resources>
+                        <materialDesign:PackIcon x:Key="PlayBtn" Kind="Play" />
+                        <materialDesign:PackIcon x:Key="StopBtn" Kind="Stop" />
+                    </Button.Resources>
                 </Button>
 
                 <Button x:Name="PlayInContextBtn"
@@ -93,7 +111,7 @@
                     Command="{Binding DataContext.PlayInContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=pages:WizardView}}" 
                     Width="auto"
                     Padding="4,0,4,0"
-                    Content="Play in context"
+                    Content="{Binding IsPlayingLineInContext, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:VoiceRecorederControl}, Converter={StaticResource PlayInContextBtnContentConverter}}"
                     Height="25" >
                     <Button.IsEnabled >
                         <MultiBinding Converter="{StaticResource IsPlayInContextEnabledConveter}">

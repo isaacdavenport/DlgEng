@@ -3,7 +3,7 @@
    www.toys2life.org
 -->
     
-    <UserControl x:Class="DialogEngine.Dialogs.SerialComPortErrorDialogControl"
+    <UserControl x:Class="DialogEngine.Dialogs.SerialComPortErrorDialog"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 

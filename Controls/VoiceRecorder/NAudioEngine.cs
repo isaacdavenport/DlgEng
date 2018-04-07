@@ -54,7 +54,7 @@ namespace DialogEngine.Controls.VoiceRecorder
 
         #region  - Singleton -
         /// <summary>
-        /// Singleton
+        /// Singleton instance of <see cref="NAudioEngine"/>
         /// </summary>
         public static NAudioEngine Instance
         {
@@ -259,10 +259,10 @@ namespace DialogEngine.Controls.VoiceRecorder
             mWaveFileWriter.Write(e.Buffer, 0, e.BytesRecorded);
 
             byte[] buffer = e.Buffer;
-            int bytesRecorded = e.BytesRecorded;
-            int bufferIncrement = mWaveInDevice.WaveFormat.BlockAlign;
+            int _bytesRecorded = e.BytesRecorded;
+            int _bufferIncrement = mWaveInDevice.WaveFormat.BlockAlign;
 
-            for (int index = 0; index < bytesRecorded; index += bufferIncrement)
+            for (int index = 0; index < _bytesRecorded; index += _bufferIncrement)
             {
                 float sample32 = BitConverter.ToSingle(buffer, index);
                 mSampleAggregator.Add(sample32, 0.0f);
@@ -399,7 +399,7 @@ namespace DialogEngine.Controls.VoiceRecorder
         /// <summary>
         /// Opens .mp3 file and prepares for playing 
         /// </summary>
-        /// <param name="path"></param>
+        /// <param name="path">Path of .mp3 file which we want to play</param>
         public void OpenFile(string path)
         {
             Stop();
@@ -457,7 +457,7 @@ namespace DialogEngine.Controls.VoiceRecorder
         }
 
         /// <summary>
-        /// 
+        /// Can player play .mp3 file
         /// </summary>
         public bool CanPlay
         {
@@ -472,7 +472,7 @@ namespace DialogEngine.Controls.VoiceRecorder
         }
 
         /// <summary>
-        /// 
+        /// Can player pause playing
         /// </summary>
         public bool CanPause
         {
@@ -487,7 +487,7 @@ namespace DialogEngine.Controls.VoiceRecorder
         }
 
         /// <summary>
-        /// 
+        /// Can player stop playing
         /// </summary>
         public bool CanStop
         {
@@ -502,7 +502,7 @@ namespace DialogEngine.Controls.VoiceRecorder
         }
 
         /// <summary>
-        /// 
+        /// Is player playing .mp3 file
         /// </summary>
         public bool IsPlaying
         {
@@ -518,7 +518,7 @@ namespace DialogEngine.Controls.VoiceRecorder
         }
         
         /// <summary>
-        /// 
+        /// Is player recording sound
         /// </summary>
         public bool IsRecording
         {

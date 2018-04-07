@@ -5,12 +5,8 @@ using DialogEngine.Controls.Views;
 using DialogEngine.Controls.VoiceRecorder;
 using DialogEngine.Core;
 using DialogEngine.Helpers;
-using DialogEngine.Views;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.Threading;
 
 namespace DialogEngine.Controls.ViewModels
 {
@@ -22,13 +18,13 @@ namespace DialogEngine.Controls.ViewModels
     {
         #region - fields -
 
-        private VoiceRecorederControl mView;
         private NAudioEngine mSoundPlayer;
         private double mChannelPosition;
         private bool mIsRecording;
         private bool mIsPlaying;
         private bool mIsPlayingLineInContext;
         private string mCurrentFilePath;
+
 
         #endregion
 
@@ -37,16 +33,16 @@ namespace DialogEngine.Controls.ViewModels
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="view">Instance of <see cref="VoiceRecoreder"/></param>
         /// <param name="player">Instance of <see cref="ISoundPlayer"/></param>
-        public VoiceRecorderControlViewModel(VoiceRecorederControl view,NAudioEngine player)
+        public VoiceRecorderControlViewModel(NAudioEngine player)
         {
-            this.mView = view;
-            this.mSoundPlayer = player;
+            this.SoundPlayer = player;
             this.mSoundPlayer.PropertyChanged += _soundPlayer_PropertyChanged;
+            IsPlaying = false;
+            IsRecording = false;
+            IsPlayingLineInContext = false;
 
             _bindCommands();
-            mView.spectrumAnalyzer.RegisterSoundPlayer(player);
         }
 
         #endregion
@@ -82,7 +78,7 @@ namespace DialogEngine.Controls.ViewModels
                             ChannelPosition = 0;
 
                         IsPlaying = false;
-                        mView.PlayingBtn.Content = mView.FindResource("PlayBtn");
+                        //mView.PlayingBtn.Content = mView.FindResource("PlayBtn");
                     }
                     break;
                 case "IsRecording":
@@ -97,36 +93,29 @@ namespace DialogEngine.Controls.ViewModels
 
         private void _bindCommands()
         {
-            StartRecording = new RelayCommand(x => _startRecording());
-            PlayContent = new RelayCommand(x => Play(mCurrentFilePath));
+            StartRecording = new RelayCommand(x => _startOrStopRecording());
+            PlayContent = new RelayCommand(x => PlayOrStop(mCurrentFilePath));
         }
 
-        private void _playInContext()
-        {
-
-            
-        }
-
-
-
-        private void _startRecording()
+ 
+        private void _startOrStopRecording()
         {
             if (IsRecording)
             {
                 IsRecording = false;
-                mView.RecordingBtn.Content = mView.FindResource("Microphone");
+                //mView.RecordingBtn.Content = mView.FindResource("Microphone");
                 mSoundPlayer.StopRecording();
             }
             else
             {
-                string _characterName = mView.CurrentCharacter.CharacterName;
-                string _tagName = mView.CurrentTutorialStep.VideoFileName;
+                //string _characterName = mView.CurrentCharacter.CharacterName;
+                //string _tagName = mView.CurrentTutorialStep.VideoFileName;
 
                 IsRecording = true;
-                mView.RecordingBtn.Content = mView.FindResource("StopBtn");
+                //mView.RecordingBtn.Content = mView.FindResource("StopBtn");
 
-                string _fileName = _characterName.Replace(" ",string.Empty) + "_" + _tagName.Substring(5, _tagName.Length - 5) + ".mp3";
-                CurrentFilePath = Path.Combine(SessionVariables.WizardAudioDirectory,_fileName);
+                //string _fileName = _characterName.Replace(" ",string.Empty) + "_" + _tagName.Substring(5, _tagName.Length - 5) + ".mp3";
+                CurrentFilePath = Path.Combine(SessionVariables.WizardAudioDirectory,"");
 
                 mSoundPlayer.StartRecording(mCurrentFilePath);
             }
@@ -141,19 +130,19 @@ namespace DialogEngine.Controls.ViewModels
             CurrentFilePath = string.Empty;
         }
 
-        public void Play(string path)
+        public void PlayOrStop(string path)
         {
             if (IsPlaying)
             {
                 IsPlaying = false;
-                mView.PlayingBtn.Content = mView.FindResource("PlayBtn");
+                //mView.PlayingBtn.Content = mView.FindResource("PlayBtn");
                 if (mSoundPlayer.CanPause)
                     mSoundPlayer.Pause();
             }
             else
             {
                 IsPlaying = true;
-                mView.PlayingBtn.Content = mView.FindResource("PauseBtn");
+                //mView.PlayingBtn.Content = mView.FindResource("PauseBtn");
 
                 if (ChannelPosition == 0)
                     mSoundPlayer.OpenFile(path);
@@ -165,6 +154,16 @@ namespace DialogEngine.Controls.ViewModels
         #endregion
 
         #region - properties -
+
+        public NAudioEngine SoundPlayer
+        {
+            get { return mSoundPlayer; }
+            set
+            {
+                mSoundPlayer = value;
+                OnPropertyChanged("SoundPlayer");
+            }
+        }
 
         /// <summary>
         /// Is player recording

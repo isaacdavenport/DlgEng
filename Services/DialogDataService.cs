@@ -49,9 +49,9 @@ namespace DialogEngine.Services
                             _jsonString = reader.ReadToEnd();
                             WizardsList _wizardsList = JsonConvert.DeserializeObject<WizardsList>(_jsonString); //json string to Object.
 
-                            DialogData.Instance.CharacterCollection = new ObservableCollection<Character>(_wizardsList.Characters);
-                            DialogData.Instance.DialogModelCollection = new ObservableCollection<ModelDialogInfo>(_wizardsList.DialogModels);
-                            DialogData.Instance.WizardTypesCollection = new ObservableCollection<WizardType>(_wizardsList.Wizards);
+                            DialogData.Instance.CharacterCollection = _wizardsList.Characters;
+                            DialogData.Instance.DialogModelCollection = _wizardsList.DialogModels;
+                            DialogData.Instance.WizardTypesCollection = _wizardsList.Wizards;
 
                             EventAggregator.Instance.GetEvent<DialogDataLoadedEvent>().Publish();
                         }
@@ -92,9 +92,9 @@ namespace DialogEngine.Services
 
                 WizardsList _wizardsList = new WizardsList
                 {
-                    Characters = new List<Character>(DialogData.Instance.CharacterCollection),
-                    DialogModels = new List<ModelDialogInfo>(DialogData.Instance.DialogModelCollection),
-                    Wizards = new List<WizardType>(DialogData.Instance.WizardTypesCollection)
+                    Characters = DialogData.Instance.CharacterCollection,
+                    DialogModels = DialogData.Instance.DialogModelCollection,
+                    Wizards = DialogData.Instance.WizardTypesCollection
                 };
 
                 using (StreamWriter file = File.CreateText(path))

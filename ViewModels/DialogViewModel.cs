@@ -187,10 +187,10 @@ namespace DialogEngine.ViewModels
             try
             {
                 int result = 0;
+                int index = 0;
                 SelectedCharactersOn = 0;
                 SelectedIndex1 = -1;
                 SelectedIndex2 = -1;
-                int index = 0;
 
                 // iterate over characters and try to find characters in ON state
                 // then assign indexes to mSelectedIndex 
@@ -394,7 +394,8 @@ namespace DialogEngine.ViewModels
             tb.Tag = null;
 
             mRadiosState[_numRadio] = false;
-            mView.CharactersListBox.Items.Refresh();
+
+            OnPropertyChanged("CharacterCollection");
         }
 
 
@@ -405,7 +406,6 @@ namespace DialogEngine.ViewModels
         }
 
 
-
         private void _dropCommand(DragEventArgs e)
         {
             try
@@ -414,15 +414,13 @@ namespace DialogEngine.ViewModels
                 {
                     Character character = e.Data.GetData("characterFormat") as Character;
                     TextBox tb = e.Source as TextBox;
+                    Character _tbCharacter = tb.Tag == null ? null : (Character)tb.Tag;
 
                     // prevent dropping of the same character
-                    if (tb.Tag != null)
+                    if (_tbCharacter != null && _tbCharacter.CharacterName.Equals(character))
                     {
-                        if ((tb.Tag as Character).CharacterName.Equals(character.CharacterName))
-                        {
-                            e.Handled = true;
-                            return;
-                        }
+                        e.Handled = true;
+                        return;
                     }
 
                     // TextBox has name in form of "Radio_x"  x - radio number
@@ -448,15 +446,17 @@ namespace DialogEngine.ViewModels
                         TextBox _tbClear = mView.FindName("Radio_" + character.RadioNum) as TextBox;
                         // assign new radio number for dropping character
                         character.RadioNum = _numRadio;
+
                         // clear former textbox
                         _tbClear.Text = "";
                         _tbClear.Tag = null;
+
                         // assign new character
                         tb.Text = character.CharacterName;
 
-                        if (tb.Tag != null)
+                        if (_tbCharacter !=null)
                         {
-                            (tb.Tag as Character).RadioNum = -1;
+                            _tbCharacter.RadioNum = -1;
                         }
 
                         tb.Tag = character;
@@ -466,7 +466,8 @@ namespace DialogEngine.ViewModels
                     {
                         mRadiosState[_numRadio] = true;
                     }
-                    mView.CharactersListBox.Items.Refresh();
+
+                    OnPropertyChanged("CharacterCollection");
                 }
             }
             catch (Exception ex)
@@ -475,7 +476,6 @@ namespace DialogEngine.ViewModels
             }
             e.Handled = true;
         }
-
 
 
         private void _dragEnterCommand(DragEventArgs e)
@@ -504,9 +504,9 @@ namespace DialogEngine.ViewModels
                 Point _mousePos = e.GetPosition(null);
                 Vector diff = mStartPosition - _mousePos;
 
-                if ((e.LeftButton == MouseButtonState.Pressed) &&
-                    (Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance ||
-                    Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance))
+                if ((  e.LeftButton == MouseButtonState.Pressed)
+                    &&(Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance
+                    || Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance))
                 {
                     ListBox _listBox = e.Source as ListBox;
                     ListBoxItem _listBoxItem = VisualHelper.GetNearestContainer<ListBoxItem>((DependencyObject)e.OriginalSource);
@@ -609,7 +609,8 @@ namespace DialogEngine.ViewModels
 
                             _addMessage(new WarningMessage(_debugMessage));
 
-                            LoggerHelper.Info(SessionVariables.DialogLogFileName, "missing " + _character.CharacterPrefix + "_" + _phrase.FileName + ".mp3 " + _phrase.DialogStr);
+                            LoggerHelper.Info(SessionVariables.DialogLogFileName, "missing " 
+                                              + _character.CharacterPrefix + "_" + _phrase.FileName + ".mp3 " + _phrase.DialogStr);
                         }
                     }
                 }
