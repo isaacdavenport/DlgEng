@@ -32,9 +32,7 @@ namespace DialogEngine.ViewModels
 
         private static readonly ILog mcLogger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-
         private readonly string mCurrentLineName = "USR_CurrentLine";
-
         public StateMachine mStateMachine;
         private States mCurrentState;
         private MediaPlayerControlViewModel mMediaPlayerControlViewModel;
@@ -47,6 +45,7 @@ namespace DialogEngine.ViewModels
         private bool mIsPlayingLineInContext;
         private CancellationTokenSource mCancellationTokenSource;
         private string mDialogStr;
+
         #endregion
 
         #region - constructor -
@@ -58,15 +57,16 @@ namespace DialogEngine.ViewModels
             (
                 action: () => _view_Loaded()
             );
+
+            StateMachine.PropertyChanged += _stateMachine_PropertyChanged;
+
             MediaPlayerControlViewModel = new MediaPlayerControlViewModel();
             VoiceRecorderControlViewModel = new VoiceRecorderControlViewModel(NAudioEngine.Instance);
-            IsPlayingLineInContext = false;
 
             _configureStateMachine();
             _bindCommands();
 
             Console.Write(UmlDotGraph.Format(StateMachine.GetInfo()));
-
         }
 
 
@@ -80,12 +80,13 @@ namespace DialogEngine.ViewModels
             );
             MediaPlayerControlViewModel = new MediaPlayerControlViewModel();
             VoiceRecorderControlViewModel = new VoiceRecorderControlViewModel(NAudioEngine.Instance);
-            IsPlayingLineInContext = false;
 
             _configureStateMachine();
             _bindCommands();
 
+            Console.Write(UmlDotGraph.Format(StateMachine.GetInfo()));
         }
+
 
         #endregion
 
@@ -102,36 +103,62 @@ namespace DialogEngine.ViewModels
 
         #region - event handlers -
 
+        private void _stateMachine_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName.Equals("State"))
+                CurrentState = StateMachine.State;
+        }
+
         private void _voiceRecorderControlViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName.Equals("IsPlaying"))
+            switch (e.PropertyName)
             {
-                if (mVoiceRecorderControlViewModel.IsPlaying)
-                {
-                    StateMachine.Fire(Triggers.VoiceRecorderAction);
-                }
-                else
-                {
-                    StateMachine.Fire(Triggers.ReadyForUserAction);
-                }
+                case "IsPlaying":
+                    if (mVoiceRecorderControlViewModel.IsPlaying)
+                    {
+                        StateMachine.Fire(Triggers.VoiceRecorderPlaying);
+                    }
+                    else
+                    {
+                        StateMachine.Fire(Triggers.ReadyForUserAction);
+                    }
+                    break;
+                case "IsRecording":
+                    if (mVoiceRecorderControlViewModel.IsRecording)
+                    {
+                        StateMachine.Fire(Triggers.VoiceRecorderRecording);
+                    }
+                    else
+                    {
+                        StateMachine.Fire(Triggers.ReadyForUserAction);
+                    }
+                    break;
+                case "IsPlayingLineInContext":
+                    if(mVoiceRecorderControlViewModel.IsPlayingLineInContext)
+                    {
+                        StateMachine.Fire(Triggers.VoiceRecorderPlayingInContext);
+                    }
+                    else
+                    {
+                        StateMachine.Fire(Triggers.ReadyForUserAction);
+                    }
+                    break;
             }
         }
 
         private void _mediaPlayerControlViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-
             if (e.PropertyName.Equals("IsPlaying"))
             {
                 if (mMediaPlayerControlViewModel.IsPlaying)
                 {
-                    StateMachine.Fire(Triggers.VideoPlayerAction);
+                    StateMachine.Fire(Triggers.VideoPlayerPlaying);
                 }
                 else
                 {
                     StateMachine.Fire(Triggers.ReadyForUserAction);
                 }
             }
-
         }
 
         #endregion
@@ -141,6 +168,7 @@ namespace DialogEngine.ViewModels
         private void _configureStateMachine()
         {
             StateMachine.Configure(States.Start)
+                .OnEntry(_registerListeners)
                 .Permit(Triggers.ShowFormDialog, States.ShowFormDialog);
 
             StateMachine.Configure(States.ShowFormDialog)
@@ -148,15 +176,14 @@ namespace DialogEngine.ViewModels
                 .Permit(Triggers.ReadyForUserAction, States.ReadyForUserAction)
                 .Permit(Triggers.LeaveWizard, States.LeaveWizard);
 
-
             StateMachine.Configure(States.ReadyForUserAction)
-                .OnEntry(t => _registerListeners())
-                .OnExit(t => _clearListeners())
                 .Permit(Triggers.SaveAndNext, States.SaveAndNext)
                 .Permit(Triggers.SkipStep, States.SkipStep)
                 .Permit(Triggers.Cancel, States.Cancel)
-                .Permit(Triggers.VoiceRecorderAction, States.VoiceRecorderAction)
-                .Permit(Triggers.VideoPlayerAction, States.VideoPlayerAction);
+                .Permit(Triggers.VoiceRecorderPlaying, States.VoiceRecorderPlaying)
+                .Permit(Triggers.VoiceRecorderRecording, States.VoiceRecorderRecording)
+                .Permit(Triggers.VoiceRecorderPlayingInContext, States.VoiceRecorderPlayingInContext)
+                .Permit(Triggers.VideoPlayerPlaying, States.VideoPlayerPlaying);
                 
 
             // State VoiceRecorderAction is added to be able to disable others controls if any of its substates is active
@@ -171,15 +198,22 @@ namespace DialogEngine.ViewModels
                 .SubstateOf(States.VoiceRecorderAction)
                 .Permit(Triggers.ReadyForUserAction, States.ReadyForUserAction);
 
+            StateMachine.Configure(States.VoiceRecorderPlayingInContext)
+                .OnEntry(t => _playDialogLineInContext())
+                .SubstateOf(States.VoiceRecorderAction)
+                .Permit(Triggers.ReadyForUserAction, States.ReadyForUserAction);
+
             StateMachine.Configure(States.VideoPlayerAction)
                 .Permit(Triggers.ReadyForUserAction, States.ReadyForUserAction);
 
             StateMachine.Configure(States.SaveAndNext)
-                .OnEntry(t => _nextStep())
+                .OnEntry(t => _saveAndNextStep())
                 .Permit(Triggers.ReadyForUserAction, States.ReadyForUserAction)
+                .Permit(Triggers.SkipStep,States.SkipStep)
                 .Permit(Triggers.Finish, States.Finish);
 
             StateMachine.Configure(States.Finish)
+                .OnEntry(t => _finish())
                 .Permit(Triggers.LeaveWizard, States.LeaveWizard)
                 .Permit(Triggers.ShowFormDialog, States.ShowFormDialog);
 
@@ -188,7 +222,12 @@ namespace DialogEngine.ViewModels
                 .Permit(Triggers.ReadyForUserAction,States.ReadyForUserAction);
 
             StateMachine.Configure(States.Cancel)
+                .OnEntry(t => _cancel())
                 .Permit(Triggers.LeaveWizard, States.LeaveWizard);
+
+            StateMachine.Configure(States.LeaveWizard)
+                .OnEntry(t => _leaveVizard())
+                .Permit(Triggers.Start, States.Start);
 
             StateMachine.Configure(States.VideoPlayerPlaying)
                 .SubstateOf(States.VideoPlayerAction)
@@ -215,34 +254,78 @@ namespace DialogEngine.ViewModels
             DialogHostLoaded = new RelayCommand(x => { StateMachine.Fire(Triggers.ShowFormDialog); });
             SaveAndNext = new RelayCommand(x => { StateMachine.Fire(Triggers.SaveAndNext); });
             SkipStep = new RelayCommand(x => { StateMachine.Fire(Triggers.SkipStep); });
-            PlayInContext = new RelayCommand(x => _playDialogLineInContext());
-            Cancel = new RelayCommand(x => _cancel());
+            PlayInContext = new RelayCommand(x => { StateMachine.Fire(Triggers.VoiceRecorderPlayingInContext); });
+            Cancel = new RelayCommand(x => { StateMachine.Fire(Triggers.Cancel); });
         }
 
 
         private void _skipStep()
         {
-            ++CurrentStepIndex;
-            CurrentTutorialStep = mCurrentWizard.TutorialSteps[mCurrentStepIndex];
-            CurrentVideoFilePath = Path.Combine(SessionVariables.WizardVideoDirectory, CurrentTutorialStep.VideoFileName + ".avi");
+            try
+            {
+                DialogStr = "";
+                mVoiceRecorderControlViewModel.ResetData();
+
+                ++CurrentStepIndex;
+                CurrentTutorialStep = mCurrentWizard.TutorialSteps[mCurrentStepIndex];
+                CurrentVideoFilePath = Path.Combine(SessionVariables.WizardVideoDirectory, CurrentTutorialStep.VideoFileName + ".avi");
+                VoiceRecorderControlViewModel.CurrentFilePath = _tutorialStepFilePath();
+
+                StateMachine.Fire(Triggers.ReadyForUserAction);
+            }
+            catch (Exception ex)
+            {
+                mcLogger.Error("_skipStep" + ex.Message);
+            }
+        }
+
+
+        private string _tutorialStepFilePath()
+        {
+            string _tagName = CurrentTutorialStep.PhraseWeights.Count > 0 ? CurrentTutorialStep.PhraseWeights.Keys.ElementAt(0) : "";
+
+            if (string.IsNullOrEmpty(_tagName))
+            {
+                return "";
+            }
+            else
+            {
+                string _mp3FilePath = Character.CharacterPrefix + "_" + _tagName;
+
+                return Path.Combine(SessionVariables.WizardAudioDirectory, _mp3FilePath + ".mp3");
+            }
         }
 
 
         private async void _cancel()
         {
-            var result =await  DialogHost.Show(new YesNoDialog("Cancel wizard","Do you want to save changes?"), "WizardPageDialogHost");
+            try
+            {
+                var result = await DialogHost.Show(new YesNoDialog("Cancel wizard", "Do you want to save changes?"), "WizardPageDialogHost");
 
-            if(result != null)
-            {
-                DialogData.Instance.CharacterCollection.Add(Character);
-                _goBackToDialog();
+                if (result != null)
+                    DialogData.Instance.CharacterCollection.Add(Character);
+
+                StateMachine.Fire(Triggers.LeaveWizard);
             }
-            else
+            catch (Exception ex)
             {
-                _goBackToDialog();
+                mcLogger.Error("_cancel " + ex.Message);
             }
         }
 
+        private void _leaveVizard()
+        {
+            try
+            {           
+                StateMachine.Fire(Triggers.Start);
+                _goBackToDialog();
+            }
+            catch (Exception ex)
+            {
+                mcLogger.Error("_leaveVizard" + ex.Message);
+            }
+        }
 
         private void _goBackToDialog()
         {
@@ -266,16 +349,32 @@ namespace DialogEngine.ViewModels
                 if (IsPlayingLineInContext)
                 {
                     mCancellationTokenSource.Cancel();
-                    IsPlayingLineInContext = false;
 
+                    if (mVoiceRecorderControlViewModel.IsPlaying)
+                    {
+                        Dispatcher.Invoke((Action)(() =>
+                        {
+                            mVoiceRecorderControlViewModel.PlayOrStop(mVoiceRecorderControlViewModel.CurrentFilePath);
+                        }));
+                    }
+                    else if (mMediaPlayerControlViewModel.IsPlaying)
+                    {
+                        Dispatcher.Invoke((Action)(() =>
+                        {
+                            mMediaPlayerControlViewModel.StopMediaPlayer();
+                        }));
+                    }
+                
+                    IsPlayingLineInContext = false;
                 }
                 else
                 {
                     try
                     {
+                        IsPlayingLineInContext = true;
+
                         List<List<string>> _dialogsList = CurrentTutorialStep.PlayUserRecordedAudioInContext;
                         mCancellationTokenSource = new CancellationTokenSource();
-                        IsPlayingLineInContext = true;
                         int index = 0;
                         int _dialogLength = _dialogsList.Count;
 
@@ -355,63 +454,81 @@ namespace DialogEngine.ViewModels
 
             if (result != null)
             {
+                DialogStr = "";
+                mVoiceRecorderControlViewModel.ResetData();
+
                 mCharacter = (result as WizardParameter).Character;
                 CurrentWizard = DialogData.Instance.WizardTypesCollection[(result as WizardParameter).WizardTypeIndex];
                 CurrentTutorialStep = CurrentWizard.TutorialSteps[0];
                 CurrentVideoFilePath = Path.Combine(SessionVariables.WizardVideoDirectory, CurrentTutorialStep.VideoFileName + ".avi");
 
+                _registerListeners();
                 StateMachine.Fire(Triggers.ReadyForUserAction);
             }
             else
             {
-                _goBackToDialog();
+                _clearListeners();
+                StateMachine.Fire(Triggers.LeaveWizard);
             }
         }
 
 
-        private async void _nextStep()
+        private async void _saveAndNextStep()
         {
             if(mCurrentStepIndex < mCurrentWizard.TutorialSteps.Count-1)
             {
                 if (mCurrentTutorialStep.CollectUserInput)
                 {
-                    string _tagName = CurrentTutorialStep.PhraseWeights.Keys.ElementAt(0);
-                    string _characterName = mCharacter.CharacterName.Replace(" ", string.Empty);
+                    if (string.IsNullOrEmpty(DialogStr))
+                    {
+                        var result = await DialogHost
+                            .Show(new YesNoDialog("Warning", "You didn't write text for this dialog line. Do you want to save step without it?", "Yes", "No"), "WizardPageDialogHost");
+
+                        if(result == null)
+                        {
+                            StateMachine.Fire(Triggers.ReadyForUserAction);
+                            return;
+                        }
+                    }
 
                     PhraseEntry entry = new PhraseEntry
                     {
                         PhraseRating = CurrentTutorialStep.PhraseRating,
                         DialogStr = DialogStr,
                         PhraseWeights = CurrentTutorialStep.PhraseWeights,
-                        FileName = _characterName + "" + _tagName
+                        FileName = mVoiceRecorderControlViewModel.CurrentFilePath
                     };
 
                     mCharacter.Phrases.Add(entry);
                 }
 
-                ++CurrentStepIndex;
-                CurrentTutorialStep = mCurrentWizard.TutorialSteps[mCurrentStepIndex];
-                CurrentVideoFilePath = Path.Combine(SessionVariables.WizardVideoDirectory, CurrentTutorialStep.VideoFileName + ".avi");
+                StateMachine.Fire(Triggers.SkipStep);
+                return;
             }
             else
             {
-                DialogData.Instance.CharacterCollection.Add(mCharacter);
-
-                var result = await DialogHost.
-                    Show(new YesNoDialog("Success", "Character successfully created!","Add new character", "Close wizard"), "WizardPageDialogHost");
-
-                if(result != null)
-                {
-                    Reset();
-                    _view_Loaded();
-                }
-                else
-                {
-                    _goBackToDialog();
-                }
+                StateMachine.Fire(Triggers.Finish);
             }
         }
 
+
+        private async void _finish()
+        {
+            DialogData.Instance.CharacterCollection.Add(mCharacter);
+
+            var result = await DialogHost.
+                Show(new YesNoDialog("Success", "Character successfully created!", "Add new character", "Close wizard"), "WizardPageDialogHost");
+
+            if (result != null)
+            {
+                Reset();
+                StateMachine.Fire(Triggers.ShowFormDialog);
+            }
+            else
+            {
+                StateMachine.Fire(Triggers.LeaveWizard);
+            }
+        }
 
         #endregion
 
@@ -422,6 +539,7 @@ namespace DialogEngine.ViewModels
         {
             mCharacter = null;
             CurrentStepIndex = 0;
+            DialogStr = "";
         }
 
 
@@ -438,8 +556,8 @@ namespace DialogEngine.ViewModels
 
         public States CurrentState
         {
-            get { return mCurrentState; }
-            set
+            get { return StateMachine.State; }
+            private set
             {
                 mCurrentState = value;
                 OnPropertyChanged("CurrentState");
@@ -506,8 +624,23 @@ namespace DialogEngine.ViewModels
             get { return mIsPlayingLineInContext; }
             set
             {
+                bool _oldValue = mIsPlayingLineInContext;
+                if (_oldValue == value)
+                    return;
+
                 mIsPlayingLineInContext = value;
                 OnPropertyChanged("IsPlayingLineInContext");
+
+                if (mIsPlayingLineInContext)
+                {
+                    StateMachine.Fire(Triggers.VoiceRecorderPlayingInContext);
+                    _clearListeners();
+                }
+                else
+                {
+                    StateMachine.Fire(Triggers.ReadyForUserAction);
+                    _registerListeners();
+                }
             }
         }
 
@@ -542,6 +675,5 @@ namespace DialogEngine.ViewModels
         }
 
         #endregion
-
     }
 }

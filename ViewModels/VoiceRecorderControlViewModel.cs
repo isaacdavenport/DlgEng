@@ -22,6 +22,7 @@ namespace DialogEngine.Controls.ViewModels
         private double mChannelPosition;
         private bool mIsRecording;
         private bool mIsPlaying;
+        private bool mIsLineRecorded;
         private bool mIsPlayingLineInContext;
         private string mCurrentFilePath;
 
@@ -38,9 +39,7 @@ namespace DialogEngine.Controls.ViewModels
         {
             this.SoundPlayer = player;
             this.mSoundPlayer.PropertyChanged += _soundPlayer_PropertyChanged;
-            IsPlaying = false;
-            IsRecording = false;
-            IsPlayingLineInContext = false;
+
 
             _bindCommands();
         }
@@ -78,12 +77,11 @@ namespace DialogEngine.Controls.ViewModels
                             ChannelPosition = 0;
 
                         IsPlaying = false;
-                        //mView.PlayingBtn.Content = mView.FindResource("PlayBtn");
                     }
                     break;
-                case "IsRecording":
-                    IsRecording = mSoundPlayer.IsRecording;
-                    break;
+                //case "IsRecording":
+                //    IsRecording = mSoundPlayer.IsRecording;
+                //    break;
             }
         }
 
@@ -102,22 +100,13 @@ namespace DialogEngine.Controls.ViewModels
         {
             if (IsRecording)
             {
-                IsRecording = false;
-                //mView.RecordingBtn.Content = mView.FindResource("Microphone");
                 mSoundPlayer.StopRecording();
+                IsRecording = false;
             }
             else
             {
-                //string _characterName = mView.CurrentCharacter.CharacterName;
-                //string _tagName = mView.CurrentTutorialStep.VideoFileName;
-
+                mSoundPlayer.StartRecording(CurrentFilePath);
                 IsRecording = true;
-                //mView.RecordingBtn.Content = mView.FindResource("StopBtn");
-
-                //string _fileName = _characterName.Replace(" ",string.Empty) + "_" + _tagName.Substring(5, _tagName.Length - 5) + ".mp3";
-                CurrentFilePath = Path.Combine(SessionVariables.WizardAudioDirectory,"");
-
-                mSoundPlayer.StartRecording(mCurrentFilePath);
             }
         }
 
@@ -125,25 +114,24 @@ namespace DialogEngine.Controls.ViewModels
 
         #region - public functions -
 
+
         public void ResetData()
         {
-            CurrentFilePath = string.Empty;
+            IsLineRecorded = false;
         }
+
 
         public void PlayOrStop(string path)
         {
             if (IsPlaying)
             {
                 IsPlaying = false;
-                //mView.PlayingBtn.Content = mView.FindResource("PlayBtn");
-                if (mSoundPlayer.CanPause)
-                    mSoundPlayer.Pause();
+                if (mSoundPlayer.CanStop)
+                    mSoundPlayer.Stop();
             }
             else
             {
                 IsPlaying = true;
-                //mView.PlayingBtn.Content = mView.FindResource("PauseBtn");
-
                 if (ChannelPosition == 0)
                     mSoundPlayer.OpenFile(path);
 
@@ -173,7 +161,16 @@ namespace DialogEngine.Controls.ViewModels
             get { return mIsRecording; }
             set
             {
+                bool _oldValue = mIsRecording;
+                if (_oldValue == value)
+                    return;
+
                 mIsRecording = value;
+                if(mIsRecording == false)
+                {
+                    IsLineRecorded = true;
+                }
+
                 OnPropertyChanged("IsRecording");
             }
         }
@@ -186,6 +183,10 @@ namespace DialogEngine.Controls.ViewModels
             get { return mIsPlaying; }
             set
             {
+                bool _oldValue = mIsPlaying;
+                if (_oldValue == value)
+                    return;
+
                 mIsPlaying = value;
                 OnPropertyChanged("IsPlaying");
             }
@@ -204,6 +205,18 @@ namespace DialogEngine.Controls.ViewModels
                 OnPropertyChanged("IsPlayingLineInContext");
             }
         }
+
+
+        public bool IsLineRecorded
+        {
+            get { return mIsLineRecorded; }
+            set
+            {
+                mIsLineRecorded = value;
+                OnPropertyChanged("IsLineRecorded");
+            }
+        }
+
 
         /// <summary>
         /// Position of current stream
@@ -224,7 +237,7 @@ namespace DialogEngine.Controls.ViewModels
         public string CurrentFilePath
         {
             get { return mCurrentFilePath; }
-            private set
+            set
             {
                 mCurrentFilePath = value;
                 OnPropertyChanged("CurrentFilePath");

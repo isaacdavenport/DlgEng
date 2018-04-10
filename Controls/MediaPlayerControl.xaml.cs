@@ -1,4 +1,5 @@
 ﻿using DialogEngine.Controls.ViewModels;
+using DialogEngine.ViewModels.Workflows;
 using log4net;
 using System;
 using System.Reflection;
@@ -40,8 +41,17 @@ namespace DialogEngine.Controls.Views
 
         #region - dependency properties -
 
+        public static readonly DependencyProperty StateProperty =
+            DependencyProperty.Register("State", typeof(States), typeof(MediaPlayerControl), new PropertyMetadata(States.Start));
+
         public static readonly DependencyProperty FilePathProperty =
             DependencyProperty.Register("FilePath", typeof(string), typeof(MediaPlayerControl));
+
+        public States State
+        {
+            get { return (States)GetValue(StateProperty); }
+            set { SetValue(StateProperty, value); }
+        }
 
         public string FilePath
         {
@@ -56,7 +66,17 @@ namespace DialogEngine.Controls.Views
         private void _mediaPlayerControl_Loaded(object sender, RoutedEventArgs e)
         {
             (this.DataContext as MediaPlayerControlViewModel).PlayRequested += _mediaPlayerControl_PlayRequested;
-            (this.DataContext as MediaPlayerControlViewModel).StopRequested += _mediaPlayerControl_StopRequested; ;
+            (this.DataContext as MediaPlayerControlViewModel).PauseRequested += _mediaPlayerControl_PauseRequested;
+            (this.DataContext as MediaPlayerControlViewModel).StopRequested += _mediaPlayerControl_StopRequested;
+        }
+
+        private void _mediaPlayerControl_PauseRequested(object sender, EventArgs e)
+        {
+            if (VideoPlayer.CanPause)
+            {
+                VideoPlayer.Pause();
+                (this.DataContext as MediaPlayerControlViewModel).IsPlaying = false;
+            }
         }
 
         private void _mediaTimer_Tick(object sender, EventArgs e)
@@ -66,13 +86,14 @@ namespace DialogEngine.Controls.Views
 
         private void _mediaPlayerControl_StopRequested(object sender, EventArgs e)
         {
-            if (VideoPlayer.CanPause)
-                VideoPlayer.Stop();
+            VideoPlayer.Stop();
+            (this.DataContext as MediaPlayerControlViewModel).IsPlaying = false;
         }
 
         private void _mediaPlayerControl_PlayRequested(object sender, EventArgs e)
         {
             VideoPlayer.Play();
+            (this.DataContext as MediaPlayerControlViewModel).IsPlaying = true;
         }
 
         private void _mediaElement_Loaded(object sender, RoutedEventArgs e)
@@ -102,7 +123,5 @@ namespace DialogEngine.Controls.Views
         }
 
         #endregion
-
-
     }
 }

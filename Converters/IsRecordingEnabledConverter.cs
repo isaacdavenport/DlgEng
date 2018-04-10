@@ -1,7 +1,9 @@
 ﻿
 
+using DialogEngine.ViewModels.Workflows;
 using System;
 using System.Globalization;
+using System.Linq;
 using System.Windows.Data;
 
 namespace DialogEngine.Converters
@@ -10,8 +12,8 @@ namespace DialogEngine.Converters
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            bool _isPlaying = (bool)values[0];
-            bool _isPlayingLineInContext = (bool)values[2];
+            States state = (States)values[0];
+            string[] states = parameter.ToString().Split('|');            
             bool _isRecordingAllowed = false;
             try
             {
@@ -19,7 +21,7 @@ namespace DialogEngine.Converters
             }
             catch{}
 
-            return !_isPlaying && _isRecordingAllowed && !_isPlayingLineInContext;
+            return _isRecordingAllowed && states.Contains(state.ToString());
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

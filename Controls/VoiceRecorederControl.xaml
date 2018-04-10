@@ -63,12 +63,11 @@
                     Width="25"
                     Height="25">
                     <Button.IsEnabled>
-                        <MultiBinding Converter="{StaticResource IsRecordingEnabledConverter}">
-                            <Binding  Path="IsPlaying" />
+                        <MultiBinding Converter="{StaticResource IsRecordingEnabledConverter}" ConverterParameter="ReadyForUserAction|VoiceRecorderRecording">
+                            <Binding  Path="State" 
+                                      RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=local:VoiceRecorederControl}" />
                             <Binding  Path="RecordingAllowed" 
                                       RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=local:VoiceRecorederControl}" />
-                            <Binding Path="IsPlayingLineInContext" 
-                                     RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=local:VoiceRecorederControl}" />
                         </MultiBinding>
                     </Button.IsEnabled>
                     <Button.Content>
@@ -88,10 +87,10 @@
                     Width="25"
                     Height="25" >
                     <Button.IsEnabled >
-                        <MultiBinding Converter="{StaticResource IsVoiceRecorderPlayingEnabledConverter}">
-                            <Binding Path="IsRecording" />
-                            <Binding Path="CurrentFilePath" />
-                            <Binding Path="IsPlayingLineInContext" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=local:VoiceRecorederControl}" />
+                        <MultiBinding Converter="{StaticResource IsVoiceRecorderPlayingEnabledConverter}" ConverterParameter="ReadyForUserAction|VoiceRecorderPlaying">
+                            <Binding  Path="State" 
+                                      RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=local:VoiceRecorederControl}" />
+                            <Binding Path="IsLineRecorded" />
                         </MultiBinding>
                     </Button.IsEnabled>
                     <Button.Content>
@@ -108,15 +107,22 @@
 
                 <Button x:Name="PlayInContextBtn"
                     Margin="10,10,10,10"  
-                    Command="{Binding DataContext.PlayInContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=pages:WizardView}}" 
+                    Command="{Binding DataContext.PlayInContext, 
+                                      RelativeSource={RelativeSource 
+                                      Mode=FindAncestor, 
+                                      AncestorType=pages:WizardView}}" 
                     Width="auto"
                     Padding="4,0,4,0"
-                    Content="{Binding IsPlayingLineInContext, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:VoiceRecorederControl}, Converter={StaticResource PlayInContextBtnContentConverter}}"
+                    Content="{Binding IsPlayingLineInContext, RelativeSource={RelativeSource 
+                                                              Mode=FindAncestor,
+                                                              AncestorType=local:VoiceRecorederControl}, 
+                                                              Converter={StaticResource PlayInContextBtnContentConverter}}"
                     Height="25" >
                     <Button.IsEnabled >
-                        <MultiBinding Converter="{StaticResource IsPlayInContextEnabledConveter}">
-                            <Binding Path="IsEnabled" ElementName="PlayingBtn" />
-                            <Binding Path="IsPlayingLineInContext" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=local:VoiceRecorederControl}" />
+                        <MultiBinding Converter="{StaticResource IsPlayInContextEnabledConveter}" ConverterParameter="ReadyForUserAction|VoiceRecorderPlayingInContext">
+                            <Binding  Path="State" 
+                                      RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=local:VoiceRecorederControl}" />
+                            <Binding Path="IsLineRecorded" />
                         </MultiBinding>
                     </Button.IsEnabled>
                 </Button>

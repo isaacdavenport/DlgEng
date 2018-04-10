@@ -244,12 +244,18 @@
                                     Grid.Row="0"
                                     BorderThickness="1" 
                                     CornerRadius="2,2,2,2">
+                                
                                 <controls:MediaPlayerControl  x:Name="mediaPlayer"
                                                               DataContext="{Binding MediaPlayerControlViewModel}"
+                                                              State="{Binding DataContext.CurrentState,
+                                                                              RelativeSource={RelativeSource 
+                                                                              Mode=FindAncestor,
+                                                                              AncestorType=local:WizardView}}"                                                              
                                                               FilePath="{Binding DataContext.CurrentVideoFilePath ,
                                                                                  RelativeSource={RelativeSource 
                                                                                  Mode=FindAncestor, 
                                                                                  AncestorType=local:WizardView}}" />
+                                
                             </Border>
 
                             <!-- Recorder -->
@@ -260,26 +266,27 @@
                                     VerticalAlignment="Stretch"
                                     CornerRadius="2,2,2,2" 
                                     BorderBrush="#FF595959">
+                                
                                 <controls:VoiceRecorederControl x:Name="voiceRecorder"
-                                                                DataContext="{Binding VoiceRecorderControlViewModel}"
-                                                                IsPlayingLineInContext="{Binding DataContext.IsPlayingLineInContext,
-                                                                                                 RelativeSource={RelativeSource 
-                                                                                                 Mode=FindAncestor,
-                                                                                                 AncestorType=local:WizardView}}"
-                                                                CurrentCharacter="{Binding DataContext.Character, 
-                                                                                           RelativeSource={RelativeSource 
-                                                                                           Mode=FindAncestor, 
-                                                                                           AncestorType=local:WizardView}}"
-                                                                CurrentTutorialStep="{Binding DataContext.CurrentTutorialStep, 
-                                                                                              RelativeSource={RelativeSource 
-                                                                                              Mode=FindAncestor, 
-                                                                                              AncestorType=local:WizardView}}"
+                                                                DataContext="{Binding DataContext.VoiceRecorderControlViewModel, 
+                                                                                      RelativeSource={RelativeSource 
+                                                                                      Mode=FindAncestor, 
+                                                                                      AncestorType=local:WizardView}}"
+                                                                State="{Binding DataContext.CurrentState,
+                                                                                RelativeSource={RelativeSource 
+                                                                                Mode=FindAncestor,
+                                                                                AncestorType=local:WizardView}}"
                                                                 RecordingAllowed="{Binding DataContext.CurrentTutorialStep.CollectUserInput, 
                                                                                            RelativeSource={RelativeSource 
                                                                                            Mode=FindAncestor, 
                                                                                            AncestorType=local:WizardView}}"
+                                                                IsPlayingLineInContext="{Binding DataContext.IsPlayingLineInContext,
+                                                                                                 RelativeSource={RelativeSource 
+                                                                                                 Mode=FindAncestor, 
+                                                                                                 AncestorType=local:WizardView}}"
                                                                 HorizontalAlignment="Stretch" 
                                                                 VerticalAlignment="Stretch"/>
+                                
                             </Border>
 
                         </Grid>
@@ -294,11 +301,14 @@
                                        FontSize="16"
                                        FontWeight="Bold"
                                        Foreground="{DynamicResource PrimaryHueMidBrush}" />
+                            
                             <TextBlock Text="of" FontSize="16" Margin="7,0,7,0" Foreground="#FF595959" />
+
                             <TextBlock Text="{Binding CurrentWizard.TutorialSteps.Count}"
                                        FontSize="16"
                                        FontWeight="Bold"
                                        Foreground="{DynamicResource PrimaryHueMidBrush}" />
+                            
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" 
@@ -325,8 +335,7 @@
                                 </Button.IsEnabled>
                             </Button>
 
-                            <Button 
-                                    Command="{Binding SaveAndNext}"
+                            <Button Command="{Binding SaveAndNext}"
                                     Style="{DynamicResource MaterialDesignRaisedButton}"
                                     Margin="20,0,0,0">
                                 <Button.Content>

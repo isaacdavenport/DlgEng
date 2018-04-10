@@ -29,7 +29,7 @@ namespace DialogEngine
         // Default application logger
         private static readonly ILog mcLogger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private readonly string mcJsonEditorExeName = "JSONedit.exe";
-        private Dictionary<string, PageBase> mPages = new Dictionary<string, PageBase>();
+        private readonly string mcJsonBkpFileName = "StarterCharacterWizard_Bkp.json";
 
         #endregion
 
@@ -67,7 +67,7 @@ namespace DialogEngine
 
         private void _editWithJsonEditor_Click(object sender, RoutedEventArgs e)
         {
-            Process.Start(Path.Combine(SessionVariables.TutorialDirectory,mcJsonEditorExeName),Path.Combine(SessionVariables.WizardDirectory, "StarterCharacterWizard.json"));
+            Process.Start(Path.Combine(SessionVariables.TutorialDirectory,mcJsonEditorExeName),Path.Combine(SessionVariables.WizardDirectory, mcJsonBkpFileName));
         }
 
 
@@ -128,6 +128,5 @@ namespace DialogEngine
         }
 
         #endregion
-
     }
 }

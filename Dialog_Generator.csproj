@@ -129,6 +129,8 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\IsMediaPlayerPlayBtnEnabledConverter.cs" />
+    <Compile Include="Converters\IsMediaPlayerStopBtnEnabledConverter.cs" />
     <Compile Include="Converters\PlayInContextBtnContentConverter.cs" />
     <Compile Include="Converters\PlayStopIconValueConverter.cs" />
     <Compile Include="ViewModels\DialogControlViewModel.cs" />
@@ -290,7 +292,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
-    <None Include="ViewModels\Workflows\wizardWorkflow.pdf" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\error.png" />

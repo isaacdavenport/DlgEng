@@ -24,5 +24,7 @@
     <converters:SaveAndNextBtnContentConverter x:Key="SaveAndNextBtnContentConverter" />
     <converters:PlayStopIconValueConverter x:Key="PlayStopIconValueConverter" />
     <converters:PlayInContextBtnContentConverter x:Key="PlayInContextBtnContentConverter" />
+    <converters:IsMediaPlayerPlayBtnEnabledConverter x:Key="IsMediaPlayerPlayBtnEnabledConverter" />
+    <converters:IsMediaPlayerStopBtnEnabledConverter x:Key="IsMediaPlayerStopBtnEnabledConverter" />
 
 </ResourceDictionary>

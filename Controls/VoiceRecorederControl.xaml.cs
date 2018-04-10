@@ -1,7 +1,7 @@
 ﻿using DialogEngine.Controls.ViewModels;
-using DialogEngine.Controls.VoiceRecorder;
 using DialogEngine.Models.Dialog;
 using DialogEngine.Models.Wizard;
+using DialogEngine.ViewModels.Workflows;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -24,11 +24,8 @@ namespace DialogEngine.Controls.Views
         #region - dependency properties -
 
 
-        public static readonly DependencyProperty CurrentCharacterProperty =
-            DependencyProperty.Register("CurrentCharacter", typeof(Character), typeof(VoiceRecorederControl),new PropertyMetadata(null));
-
-        public static readonly DependencyProperty CurrentTutorialStepProperty =
-            DependencyProperty.Register("CurrentTutorialStep", typeof(TutorialStep), typeof(VoiceRecorederControl),new PropertyMetadata(null));
+        public static readonly DependencyProperty StateProperty =
+            DependencyProperty.Register("State", typeof(States), typeof(VoiceRecorederControl),new PropertyMetadata(States.Start));
 
         public static readonly DependencyProperty RecordingAllowedProperty =
             DependencyProperty.Register("RecordingAllowed", typeof(bool), typeof(VoiceRecorederControl),new PropertyMetadata(false));
@@ -36,20 +33,10 @@ namespace DialogEngine.Controls.Views
         public static readonly DependencyProperty IsPlayingLineInContextProperty =
             DependencyProperty.Register("IsPlayingLineInContext", typeof(bool), typeof(VoiceRecorederControl), new PropertyMetadata(false));
 
-        public Character CurrentCharacter
+        public States State
         {
-            get { return (Character)GetValue(CurrentCharacterProperty); }
-            set { SetValue(CurrentCharacterProperty, value); }
-        }
-
-        public TutorialStep CurrentTutorialStep
-        {
-            get { return (TutorialStep)GetValue(CurrentTutorialStepProperty); }
-            set
-            {
-                SetValue(CurrentTutorialStepProperty, value);
-                (this.DataContext as VoiceRecorderControlViewModel).ResetData();
-            }
+            get { return (States)GetValue(StateProperty); }
+            set { SetValue(StateProperty, value); }
         }
 
         public bool RecordingAllowed

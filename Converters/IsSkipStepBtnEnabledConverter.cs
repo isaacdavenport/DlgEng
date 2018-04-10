@@ -1,7 +1,9 @@
 ﻿
 
+using DialogEngine.ViewModels.Workflows;
 using System;
 using System.Globalization;
+using System.Linq;
 using System.Windows.Data;
 
 namespace DialogEngine.Converters
@@ -15,15 +17,15 @@ namespace DialogEngine.Converters
 
             try
             {
-                 _currentStep = Int32.Parse(values[0].ToString());
-                _stepsCount = Int32.Parse(values[1].ToString());
+                 _currentStep = int.Parse(values[0].ToString());
+                 _stepsCount = int.Parse(values[1].ToString());
             }
-            catch (Exception)
+            catch
             {
-                return true;
+                return false;
             }
 
-            return _currentStep < _stepsCount - 1;
+            return _currentStep < _stepsCount-1;
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
