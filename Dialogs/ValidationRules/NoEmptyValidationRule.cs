@@ -5,15 +5,15 @@ using System.Windows.Controls;
 
 namespace DialogEngine.Dialogs.ValidationRules
 {
-    public class CharacterPrefixValidationRule : ValidationRule
+    public class NoEmptyValidationRule : ValidationRule
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            string _enteredValue =(string) value ?? "";
+            string _enteredValue = (string)value ?? "";
 
-            return _enteredValue.Length != 3
-                ? new ValidationResult(false, "Field requires 3 characters.")
+            return _enteredValue.Length == 0
+                ? new ValidationResult(false, "Character name can't be empty.")
                 : ValidationResult.ValidResult;
-        }
+        }    
     }
 }

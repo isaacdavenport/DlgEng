@@ -51,7 +51,7 @@ namespace DialogEngine.Dialogs
 
                 ConfigurationManager.RefreshSection("appSettings");
 
-                DialogHost.CloseDialogCommand.Execute(null, sender as Button);
+                DialogHost.CloseDialogCommand.Execute(true, sender as Button);
             }
             catch (Exception ex)
             {
@@ -63,7 +63,7 @@ namespace DialogEngine.Dialogs
 
         private void _close_Click(object sender, RoutedEventArgs e)
         {
-            DialogHost.CloseDialogCommand.Execute(null, sender as Button);
+            DialogHost.CloseDialogCommand.Execute(false, sender as Button);
         }
 
 

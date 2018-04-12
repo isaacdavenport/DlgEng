@@ -26,5 +26,6 @@
     <converters:PlayInContextBtnContentConverter x:Key="PlayInContextBtnContentConverter" />
     <converters:IsMediaPlayerPlayBtnEnabledConverter x:Key="IsMediaPlayerPlayBtnEnabledConverter" />
     <converters:IsMediaPlayerStopBtnEnabledConverter x:Key="IsMediaPlayerStopBtnEnabledConverter" />
+    <converters:CharacterGenderConverter x:Key="CharacterGenderConverter" />
 
 </ResourceDictionary>

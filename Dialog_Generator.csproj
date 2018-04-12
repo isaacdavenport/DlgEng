@@ -129,10 +129,16 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\CharacterGenderConverter.cs" />
     <Compile Include="Converters\IsMediaPlayerPlayBtnEnabledConverter.cs" />
     <Compile Include="Converters\IsMediaPlayerStopBtnEnabledConverter.cs" />
     <Compile Include="Converters\PlayInContextBtnContentConverter.cs" />
     <Compile Include="Converters\PlayStopIconValueConverter.cs" />
+    <Compile Include="Dialogs\ValidationRules\NoEmptyValidationRule.cs" />
+    <Compile Include="Dialogs\ValidationRules\NumberValidationRule.cs" />
+    <Compile Include="Hendlers\RandomSelection.cs" />
+    <Compile Include="Hendlers\SerialSelection.cs" />
+    <Compile Include="Workflows\SerialSelectionWorkflow.cs" />
     <Compile Include="ViewModels\DialogControlViewModel.cs" />
     <Compile Include="Controls\DialogControl.xaml.cs">
       <DependentUpon>DialogControl.xaml</DependentUpon>
@@ -144,6 +150,7 @@
     <Compile Include="Controls\VoiceRecorder\NAudioEngine.cs" />
     <Compile Include="Controls\VoiceRecorder\SampleAggregator.cs" />
     <Compile Include="Controls\SpectrumAnalyzer.cs" />
+    <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\MediaPlayerControlViewModel.cs" />
     <Compile Include="ViewModels\VoiceRecorderControlViewModel.cs" />
     <Compile Include="Controls\MediaPlayerControl.xaml.cs">
@@ -210,9 +217,7 @@
     <Compile Include="Models\Dialog\ParentalRatings.cs" />
     <Compile Include="Models\Dialog\PhraseEntry.cs" />
     <Compile Include="Core\PageBase.cs" />
-    <Compile Include="Hendlers\Dialog\ParseMessage.cs" />
-    <Compile Include="Hendlers\Dialog\SelectNextCharacters.cs" />
-    <Compile Include="Hendlers\Dialog\SerialComs.cs" />
+    <Compile Include="Services\ParseMessage.cs" />
     <Compile Include="Models\Dialog\ReceivedMessage.cs" />
     <Compile Include="Models\Enums\CharacterState.cs" />
     <Compile Include="Models\Enums\ModelDialogState.cs" />
@@ -229,8 +234,9 @@
     <Compile Include="MP3Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\SessionVariables.cs" />
-    <Compile Include="ViewModels\Workflows\DialogWorkflow.cs" />
-    <Compile Include="ViewModels\Workflows\WizardWorkflow.cs" />
+    <Compile Include="Workflows\DialogWorkflow.cs" />
+    <Compile Include="Workflows\MainWindowWorkflow.cs" />
+    <Compile Include="Workflows\WizardWorkflow.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>

@@ -5,7 +5,7 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DialogEngine.Dialogs"
-             xmlns:vr="clr-namespace:DialogEngine.ValidationRules"
+             xmlns:vr="clr-namespace:DialogEngine.Dialogs.ValidationRules"
              mc:Ignorable="d" 
              Width="400"
              d:DesignHeight="450" d:DesignWidth="800">
@@ -24,7 +24,12 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <GroupBox x:Name="groupBox"   BorderThickness="0" Style="{DynamicResource MaterialDesignGroupBox}"   UseLayoutRounding="True" SnapsToDevicePixels="True">
+    <GroupBox x:Name="groupBox"   
+              BorderThickness="0" 
+              Style="{DynamicResource MaterialDesignGroupBox}"   
+              UseLayoutRounding="True" 
+              SnapsToDevicePixels="True">
+        
         <Grid x:Name="MainGrid" Margin="20,20,20,20">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
@@ -46,15 +51,23 @@
                    HorizontalAlignment="Right"/>
 
             <ComboBox x:Name="NumbersCbx"
-                      Style="{StaticResource MaterialDesignComboBox}"                      
+                      ItemsSource="{Binding NumbersList}"
+                      Style="{StaticResource MaterialDesignComboBox}"
+                      materialDesign:ValidationAssist.UsePopup="True"
                       MinWidth="72"
                       Grid.Row="0"
                       Grid.Column="1"
-                      SelectedIndex="0"
                       HorizontalAlignment="Left"
                       Margin="16 0 0 0"
-                      IsEditable="True"
-                      ItemsSource="{Binding NumbersListComboVirtualization}">
+                      SelectedValue="{Binding Character.CharacterAge}"
+                      IsEditable="True">
+                <ComboBox.SelectedItem>
+                    <Binding Path="Character.CharacterAge" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <vr:NumberValidationRule />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </ComboBox.SelectedItem>
                 <ComboBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <VirtualizingStackPanel />
@@ -62,40 +75,44 @@
                 </ComboBox.ItemsPanel>
             </ComboBox>
 
-            <Label Content="Character gender: " Margin="0,10,0,0" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" />
+            <Label Content="Character gender: " 
+                   Margin="0,15,0,0" 
+                   Grid.Row="1" 
+                   Grid.Column="0" 
+                   HorizontalAlignment="Right" />
 
             <ComboBox x:Name="GenderCb"
+                  ItemsSource="{Binding GenderList}"
                   Style="{StaticResource MaterialDesignComboBox}"
                   materialDesign:HintAssist.Hint="Search"
                   IsEditable="False"
-                  SelectedIndex="0"
                   Grid.Row="1"
                   MinWidth="72"
-                  Margin="16 10 0 0"
+                  Margin="16 15 0 0"
+                  SelectedValue="{Binding Character.CharacterGender, Converter={StaticResource CharacterGenderConverter}}"
                   Grid.Column="1"
                   HorizontalAlignment="Left"
-                  materialDesign:HintAssist.HintOpacity=".26">
-                <ComboBoxItem  Tag="M">
-                    Male
-                </ComboBoxItem>
-                <ComboBoxItem Tag="F">
-                    Female
-                </ComboBoxItem>
-            </ComboBox>
+                  materialDesign:HintAssist.HintOpacity=".26" />
 
             <!-- Character prefix section -->
-            <Label Content="Character prefix: " Margin="0,10,0,0" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" />
-            <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1">
+            <Label Content="Character prefix: " 
+                   Margin="0,15,0,0" 
+                   Grid.Row="2" 
+                   Grid.Column="0" 
+                   HorizontalAlignment="Right" />
+            
+            <StackPanel Orientation="Horizontal"  Grid.Row="2" Grid.Column="1">
                 <TextBox x:Name="CharacterPrefixTb"
                      Grid.Row="2"
                      materialDesign:HintAssist.Hint="Enter prefix"
+                     materialDesign:ValidationAssist.UsePopup="True"
                      Grid.Column="1" 
                      MinWidth="72" 
-                     Margin="16,10,0,0" 
+                     Margin="16,15,0,0" 
                      Style="{StaticResource MaterialDesignTextBox}" 
                      HorizontalAlignment="Left">
                     <TextBox.Text>
-                        <Binding RelativeSource="{RelativeSource Self}" Mode="TwoWay" Path="Text" UpdateSourceTrigger="LostFocus">
+                        <Binding  Path="Character.CharacterPrefix" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
                                 <vr:CharacterPrefixValidationRule />
                             </Binding.ValidationRules>
@@ -105,18 +122,36 @@
             </StackPanel>
 
             <!-- Character name section -->
-            <Label Content="Character name: " Margin="0,10,0,0" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" />
-                <TextBox x:Name="CharacterNameTb"
+            <Label Content="Character name: " 
+                   Margin="0,15,0,0" 
+                   Grid.Row="3" 
+                   Grid.Column="0" 
+                   HorizontalAlignment="Right" />
+            
+            <TextBox x:Name="CharacterNameTb"
                      Grid.Row="3"
                      Grid.Column="1"
                      materialDesign:HintAssist.Hint="Enter name"
-                     Margin="16,10,0,0"  
+                     Margin="16,15,0,0"  
                      Style="{StaticResource MaterialDesignTextBox}" 
-                     HorizontalAlignment="Stretch"  />
+                     HorizontalAlignment="Stretch">
+                <TextBox.Text>
+                    <Binding  Path="Character.CharacterName" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <vr:NoEmptyValidationRule  />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
 
-            <Label Content="Choose wizard: " Margin="0,10,0,0" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right" />
+            <Label Content="Choose wizard: " 
+                   Margin="0,15,0,0" 
+                   Grid.Row="4" 
+                   Grid.Column="0" 
+                   HorizontalAlignment="Right" />
 
             <ComboBox x:Name="WizardTypeCb"
+                  ItemsSource="{Binding WizardsList}"
                   Style="{StaticResource MaterialDesignComboBox}"
                   materialDesign:HintAssist.Hint="Search"
                   IsEditable="False"
@@ -124,10 +159,9 @@
                   Grid.Row="4"
                   DisplayMemberPath="WizardName"
                   HorizontalAlignment="Stretch"
-                  Margin="16 10 0 0"
+                  Margin="16 15 0 0"
                   Grid.Column="1"
                   materialDesign:HintAssist.HintOpacity=".26" />
-
 
             <Button Content="Close"
                     Grid.Row="5"
@@ -146,12 +180,6 @@
                      HorizontalAlignment="Left"
                      Style="{DynamicResource MaterialDesignRaisedButton}"
                      Margin="20,20,0,0">
-                <Button.IsEnabled>
-                    <MultiBinding Converter="{StaticResource InputValuesToBooleanConverter}">
-                        <Binding ElementName="CharacterPrefixTb" Path="Text"/>
-                        <Binding ElementName="CharacterNameTb" Path="Text"/>
-                    </MultiBinding>
-                </Button.IsEnabled>
             </Button>
 
         </Grid>

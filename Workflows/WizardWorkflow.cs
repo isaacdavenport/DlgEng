@@ -69,7 +69,7 @@ namespace DialogEngine.ViewModels.Workflows
               (
                 (t) => Debug.WriteLine
                   (
-                    "State Machine transitioned from {0} -> {1} [{2}]",
+                    "WizardWorkflow transitioned from {0} -> {1} [{2}]",
                     t.Source, t.Destination, t.Trigger
                   )
               );

@@ -11,10 +11,16 @@ namespace DialogEngine.Helpers
     /// <summary>
     /// Logger factory class
     /// </summary>
-    public class LoggerHelper
+    public static class LoggerHelper
     {
+        #region - fields -
+
         private static readonly ILog mcDecimalSerialLog = LogManager.GetLogger(SessionVariables.DecimalLogFileName);
         private static readonly ILog mcLogDialog = LogManager.GetLogger(SessionVariables.DialogLogFileName);
+
+        #endregion
+
+        #region - private functions -
 
         // returns logger depends on type
         private static ILog _getLogger(string type)
@@ -35,6 +41,9 @@ namespace DialogEngine.Helpers
             return null;
         }
 
+        #endregion
+
+        #region - public functions -
 
         /// <summary>
         /// Logs error message
@@ -72,5 +81,7 @@ namespace DialogEngine.Helpers
         {
             _getLogger(_loggerType)?.Info( _message);
         }
+
+        #endregion
     }
 }

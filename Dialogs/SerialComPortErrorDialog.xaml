@@ -26,7 +26,16 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <GroupBox Header="COM port error"  BorderThickness="0" Style="{DynamicResource MaterialDesignGroupBox}"  UseLayoutRounding="True" SnapsToDevicePixels="True">
+    <GroupBox  
+              BorderThickness="0" 
+              Style="{DynamicResource MaterialDesignGroupBox}"  
+              UseLayoutRounding="True" 
+              SnapsToDevicePixels="True">
+        <GroupBox.HeaderTemplate>
+            <DataTemplate>
+                <TextBlock Text="Error" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </DataTemplate>
+        </GroupBox.HeaderTemplate>
 
         <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 
@@ -41,7 +50,12 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <StackPanel HorizontalAlignment="Center"  VerticalAlignment="Bottom" Grid.Row="0" Grid.ColumnSpan="2" Orientation="Horizontal">
+            <StackPanel HorizontalAlignment="Center"  
+                        VerticalAlignment="Bottom" 
+                        Grid.Row="0" 
+                        Grid.ColumnSpan="2" 
+                        Orientation="Horizontal">
+                
                 <Label Width="30" Height="25">
                     <Image Source="pack://application:,,,/Resources/Images/error.png" />
                 </Label>

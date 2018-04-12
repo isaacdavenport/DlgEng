@@ -6,27 +6,87 @@ using DialogEngine.Models.Enums;
 using DialogEngine.ViewModels;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace DialogEngine.Models.Dialog
 {
-    public class Character
+    public class Character : INotifyPropertyChanged
     {
         #region - fields -
 
         private const int mcMaxAllowedCharactersOn = 2;             // max allowed characters in On state is 2
         private CharacterState mState;
+        private int mCharacterAge;
+        private string mCharacterGender = "M";
+        private string mCharacterName="";
+        private string mCharacterPrefix="";
         private int mRadioNum = -1;                                 // assigned radio number - unassigned value is -1
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        #endregion
+
+        #region - public functions -
+
+        /// <summary>
+        /// Notifies of property changed.
+        /// </summary>
+        /// <param name="_propertyName">Name of changed property.</param>
+        public virtual void OnPropertyChanged(string _propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(_propertyName));
+        }
 
         #endregion
 
         #region - properties -
-
-        public int CharacterAge { get; set; }
-        public string CharacterGender { get; set; }
-        public string CharacterName { get; set; }
-        public string CharacterPrefix { get; set; }
         public List<PhraseEntry> Phrases = new List<PhraseEntry>();
         public PhraseEntry PhraseTotals = new PhraseEntry();
+
+        [JsonProperty("CharacterAge")]
+        public int CharacterAge
+        {
+            get { return mCharacterAge; }
+            set
+            {
+                mCharacterAge = value;
+                OnPropertyChanged("CharacterAge");
+            }
+        }
+
+        [JsonProperty("CharacterGender")]
+        public string CharacterGender
+        {
+            get { return mCharacterGender; }
+            set
+            {
+                mCharacterGender = value;
+                OnPropertyChanged("CharacterGender");
+            }
+        }
+
+
+        [JsonProperty("CharacterName")]
+        public string CharacterName
+        {
+            get { return mCharacterName; }
+            set
+            {
+                mCharacterName = value;
+                OnPropertyChanged("CharacterName");
+            }
+        }
+
+
+        [JsonProperty("CharacterPrefix")]
+        public string CharacterPrefix
+        {
+            get { return mCharacterPrefix; }
+            set
+            {
+                mCharacterPrefix = value;
+                OnPropertyChanged("CharacterPrefix");
+            }
+        }
 
         // json ignore properties
 
@@ -46,6 +106,7 @@ namespace DialogEngine.Models.Dialog
             get { return mRadioNum; }
             set { mRadioNum = value; }
         }
+
 
         /// <summary>
         /// Represents state of character
@@ -78,5 +139,6 @@ namespace DialogEngine.Models.Dialog
         }
 
         #endregion
+
     }
 }

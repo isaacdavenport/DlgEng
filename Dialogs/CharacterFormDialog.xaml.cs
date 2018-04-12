@@ -3,6 +3,8 @@ using DialogEngine.Models.Shared;
 using DialogEngine.Models.Wizard;
 using MaterialDesignThemes.Wpf;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,11 +15,15 @@ namespace DialogEngine.Dialogs
     /// <summary>
     /// Interaction logic for NewCharacterDialogControl.xaml
     /// </summary>
-    public partial class CharacterFormDialog : UserControl
+    public partial class CharacterFormDialog : UserControl, INotifyPropertyChanged
     {
         #region - fields -
 
         private Character mCharacter;
+        private List<int> mNumbersList;
+        private ObservableCollection<WizardType> mWizardsList;
+        private List<string> mGenderList;
+        public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
 
@@ -25,25 +31,23 @@ namespace DialogEngine.Dialogs
 
         public CharacterFormDialog()
         {
+            DataContext = this;
             InitializeComponent();
 
             this.groupBox.HeaderTemplate = (DataTemplate)FindResource("newCharacterHeader");
-            NumbersList = new List<int>(Enumerable.Range(1, 100));
-            NumbersCbx.ItemsSource = NumbersList;
-            WizardTypeCb.ItemsSource = DialogData.Instance.WizardTypesCollection;
+            Character = new Character();
+            _initData();
         }
 
 
         public CharacterFormDialog(Character character)
         {
+            DataContext = this;
             InitializeComponent();
 
             this.groupBox.HeaderTemplate =(DataTemplate)FindResource("editCharacterHeader");
-            mCharacter = character;
-            NumbersList = new List<int>(Enumerable.Range(1, 100));
-            NumbersCbx.ItemsSource = NumbersList;
-            WizardTypeCb.ItemsSource = DialogData.Instance.WizardTypesCollection;
-            _populateForm(character);
+            Character = character;
+            _initData();
         }
 
         #endregion
@@ -52,25 +56,22 @@ namespace DialogEngine.Dialogs
 
         private void _save_Click(object sender, RoutedEventArgs e)
         {
-            if(mCharacter == null)
-            {
-                mCharacter = new Character
-                {
-                    CharacterAge = NumbersList[NumbersCbx.SelectedIndex],
-                    CharacterGender = (GenderCb.SelectedValue).ToString().Substring(0, 1),
-                    CharacterName = CharacterNameTb.Text,
-                    CharacterPrefix = CharacterPrefixTb.Text
-                };
-            }
-            else
-            {
-                mCharacter.CharacterAge = NumbersList[NumbersCbx.SelectedIndex];
-                mCharacter.CharacterGender = (GenderCb.SelectedValue).ToString().Substring(0, 1);
-                mCharacter.CharacterName = CharacterNameTb.Text;
-                mCharacter.CharacterPrefix = CharacterPrefixTb.Text;
-            }
+            NumbersCbx.GetBindingExpression(ComboBox.SelectedValueProperty).UpdateSource();
+            CharacterNameTb.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            CharacterPrefixTb.GetBindingExpression(TextBox.TextProperty).UpdateSource();
 
-            DialogHost.CloseDialogCommand.Execute(new WizardParameter() { Character = mCharacter, WizardTypeIndex = WizardTypeCb.SelectedIndex }, sender as Button);
+            if ( Validation.GetHasError(NumbersCbx)
+              || Validation.GetHasError(CharacterNameTb)
+              || Validation.GetHasError(CharacterPrefixTb))
+                return;
+
+            WizardParameter parameter = new WizardParameter
+            {
+                Character = mCharacter,
+                WizardTypeIndex = WizardTypeCb.SelectedIndex
+            };
+
+            DialogHost.CloseDialogCommand.Execute(parameter, sender as Button);
         }
 
         private void _close_Click(object sender, RoutedEventArgs e)
@@ -83,21 +84,77 @@ namespace DialogEngine.Dialogs
 
         #region - private functions -
 
-        private void _populateForm(Character character)
+        private void _initData()
         {
-            this.CharacterNameTb.Text = character.CharacterName;
-            this.CharacterPrefixTb.Text = character.CharacterPrefix;
-            this.NumbersCbx.SelectedValue = character.CharacterAge;
-            this.GenderCb.SelectedIndex = character.CharacterGender.Equals("M") ? 0 : 1 ;         
+            List<string> _genderList = new List<string>();
+            _genderList.Add("Male");
+            _genderList.Add("Female");
+
+            NumbersList = new List<int>(Enumerable.Range(1, 100));
+            WizardsList = DialogData.Instance.WizardTypesCollection;
+            GenderList = _genderList;
+        }
+
+        #endregion
+
+        #region - public functions -
+
+        /// <summary>
+        /// Notifies of property changed.
+        /// </summary>
+        /// <param name="_propertyName">Name of changed property.</param>
+        public virtual void OnPropertyChanged(string _propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(_propertyName));
         }
 
         #endregion
 
         #region - properties -
 
-        public IList<int> NumbersList { get; }
+
+        public ObservableCollection<WizardType> WizardsList
+        {
+            get { return mWizardsList; }
+            set
+            {
+                mWizardsList = value;
+                OnPropertyChanged("WizardsList");
+            }
+        }
 
 
+        public List<string> GenderList
+        {
+            get { return mGenderList; }
+            set
+            {
+                mGenderList = value;
+                OnPropertyChanged("GenderList");
+            }
+        }
+
+
+        public List<int> NumbersList
+        {
+            get { return mNumbersList; }
+            set
+            {
+                mNumbersList = value;
+                OnPropertyChanged("NumbersList");
+            }
+        }
+
+
+        public Character Character
+        {
+            get { return mCharacter; }
+            set
+            {
+                mCharacter = value;
+                OnPropertyChanged("Character");
+            }
+        }
 
         #endregion
 

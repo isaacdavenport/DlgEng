@@ -11,7 +11,6 @@ namespace DialogEngine.Dialogs
     {
         #region - constructor -
 
-
         public YesNoDialog(string _dialogName,string _questionMessage)
         {
             InitializeComponent();
@@ -19,7 +18,6 @@ namespace DialogEngine.Dialogs
             this.groupBox.Header = _dialogName;
             this.genericTextTb.Text = _questionMessage;
         }
-
 
         public YesNoDialog(string _dialogName, string _questionMessage, string _yesBtnContent, string _noBtnContent)
         {
