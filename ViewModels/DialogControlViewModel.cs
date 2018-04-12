@@ -2,6 +2,7 @@
 using DialogEngine.Controls.Views;
 using DialogEngine.Core;
 using DialogEngine.Helpers;
+using DialogEngine.Hendlers;
 using DialogEngine.Models.Dialog;
 using DialogEngine.Models.Logger;
 using DialogEngine.Services;
@@ -214,30 +215,30 @@ namespace DialogEngine.Controls.ViewModels
 
         private void _processDebugFlags(params int[] _dialogDirectives)
         {
-            switch (_dialogDirectives.Count())
-            {
-                case 0:  // we didn't pass characters and dialog model
-                    Character1Num = SelectNextCharacters.NextCharacter1;
-                    Character2Num = SelectNextCharacters.NextCharacter2;
-                    break;
+            //    switch (_dialogDirectives.Count())
+            //    {
+            //        case 0:  // we didn't pass characters and dialog model
+            //            Character1Num = SelectNextCharacters.NextCharacter1;
+            //            Character2Num = SelectNextCharacters.NextCharacter2;
+            //            break;
 
-                case 1:  // only dialog model selected
-                    msCurrentDialogModel = _dialogDirectives[0];
-                    Character1Num = SelectNextCharacters.NextCharacter1;
-                    Character2Num = SelectNextCharacters.NextCharacter2;
-                    break;
+            //        case 1:  // only dialog model selected
+            //            msCurrentDialogModel = _dialogDirectives[0];
+            //            Character1Num = SelectNextCharacters.NextCharacter1;
+            //            Character2Num = SelectNextCharacters.NextCharacter2;
+            //            break;
 
-                case 2: // only characters selected
-                    Character1Num = _dialogDirectives[0];
-                    Character2Num = _dialogDirectives[1];
-                    break;
+            //        case 2: // only characters selected
+            //            Character1Num = _dialogDirectives[0];
+            //            Character2Num = _dialogDirectives[1];
+            //            break;
 
-                case 3: // both characters and dialog model selected
-                    Character1Num = _dialogDirectives[0];
-                    Character2Num = _dialogDirectives[1];
-                    msCurrentDialogModel = _dialogDirectives[2];
-                    break;
-            }
+            //        case 3: // both characters and dialog model selected
+            //            Character1Num = _dialogDirectives[0];
+            //            Character2Num = _dialogDirectives[1];
+            //            msCurrentDialogModel = _dialogDirectives[2];
+            //            break;
+            //    }
 
 
             if (SessionVariables.DebugFlag)
@@ -394,8 +395,8 @@ namespace DialogEngine.Controls.ViewModels
 
         private bool _importClosestSerialComsCharacters()
         {
-            var _tempChar1 = SelectNextCharacters.NextCharacter1;
-            var _tempChar2 = SelectNextCharacters.NextCharacter2;
+            var _tempChar1 = SerialSelection.NextCharacter1;
+            var _tempChar2 = SerialSelection.NextCharacter2;
 
             if (_tempChar1 == _tempChar2 || _tempChar1 >= mCharactersList.Count || _tempChar2 >= mCharactersList.Count)
                 return false;
@@ -720,10 +721,10 @@ namespace DialogEngine.Controls.ViewModels
 
         public bool DialogTrackerAndSerialComsCharactersSame()
         {
-            if ((Character1Num == SelectNextCharacters.NextCharacter1
-                 || Character1Num == SelectNextCharacters.NextCharacter2)
-                 && (Character2Num == SelectNextCharacters.NextCharacter2
-                 || Character2Num == SelectNextCharacters.NextCharacter1))
+            if ((Character1Num == SerialSelection.NextCharacter1
+                 || Character1Num == SerialSelection.NextCharacter2)
+                 && (Character2Num == SerialSelection.NextCharacter2
+                 || Character2Num == SerialSelection.NextCharacter1))
             {
                 return true;
             }

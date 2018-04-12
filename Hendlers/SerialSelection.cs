@@ -37,10 +37,10 @@ namespace DialogEngine.Hendlers
         
         public int CurrentCharacter1;
         public int CurrentCharacter2 = 1;
-        public int NextCharacter1 = 1;
-        public int NextCharacter2 = 2;
-        public int[,] HeatMap = new int[NumRadios,NumRadios];
-        public DateTime[] CharactersLastHeatMapUpdateTime = new DateTime[NumRadios];
+        public static int NextCharacter1 = 1;
+        public static int NextCharacter2 = 2;
+        public static int[,] HeatMap = new int[NumRadios,NumRadios];
+        public static DateTime[] CharactersLastHeatMapUpdateTime = new DateTime[NumRadios];
 
         #endregion
 

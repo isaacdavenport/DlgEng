@@ -21,6 +21,7 @@ using DialogEngine.Views;
 using GalaSoft.MvvmLight.CommandWpf;
 using System.Windows.Input;
 using DialogEngine.Models.Shared;
+using DialogEngine.Hendlers;
 
 namespace DialogEngine.ViewModels
 {
@@ -53,7 +54,7 @@ namespace DialogEngine.ViewModels
         private string mCharacter2Prefix = "--";
         private bool mRSSIstable;
         private int mRSSIsum;
-        private int[,] mHeatMap = new int[SerialComs.NumRadios, SerialComs.NumRadios];
+        private int[,] mHeatMap = new int[SerialSelection.NumRadios, SerialSelection.NumRadios];
 
         // indicate when dialog is active or no
         private bool mIsDialogStopped = true;
@@ -256,7 +257,7 @@ namespace DialogEngine.ViewModels
                 tb.Text = "";
             }
 
-            for (int i = 0; i < SerialComs.NumRadios && i < mCharacterCollection.Count; i++)
+            for (int i = 0; i < SerialSelection.NumRadios && i < mCharacterCollection.Count; i++)
             {
                 mCharacterCollection[i].RadioNum = i;
 

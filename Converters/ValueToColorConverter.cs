@@ -3,6 +3,7 @@
 
 //  Converters convert input parameter to a value expected by a gui item  
 
+using DialogEngine.Hendlers;
 using DialogEngine.ViewModels;
 using System;
 using System.Globalization;
@@ -40,10 +41,10 @@ namespace DialogEngine.Converters
             // first column is row header so we need to sub for 1
             int _heatMapColumn = column - 1;
 
-            if( row == _heatMapColumn && SelectNextCharacters.HeatMap[row, _heatMapColumn] > 0)
+            if( row == _heatMapColumn && SerialSelection.HeatMap[row, _heatMapColumn] > 0)
             {
-                if(  row == DialogViewModel.Instance.CharacterCollection[SelectNextCharacters.NextCharacter1].RadioNum 
-                  || row == DialogViewModel.Instance.CharacterCollection[SelectNextCharacters.NextCharacter2].RadioNum)
+                if(  row == DialogViewModel.Instance.CharacterCollection[SerialSelection.NextCharacter1].RadioNum 
+                  || row == DialogViewModel.Instance.CharacterCollection[SerialSelection.NextCharacter2].RadioNum)
                 {
                     return Brushes.Red;
                 }

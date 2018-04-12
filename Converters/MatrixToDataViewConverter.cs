@@ -7,6 +7,7 @@ using System;
 using System.Globalization;
 using System.Windows.Data;
 using System.Data;
+using DialogEngine.Hendlers;
 
 namespace DialogEngine.Converters
 {
@@ -54,7 +55,7 @@ namespace DialogEngine.Converters
                     newRow[c] = array[r, c-1];                    
                 }
 
-                newRow[columns+1] = SelectNextCharacters.CharactersLastHeatMapUpdateTime[r].ToString("mm.ss.fff");
+                newRow[columns+1] = SerialSelection.CharactersLastHeatMapUpdateTime[r].ToString("mm.ss.fff");
                 t.Rows.Add(newRow);
             }
 
