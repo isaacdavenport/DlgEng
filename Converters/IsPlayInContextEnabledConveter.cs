@@ -1,6 +1,6 @@
 ﻿
 
-using DialogEngine.ViewModels.Workflows;
+using DialogEngine.ViewModels.WizardWorkflow;
 using System;
 using System.Globalization;
 using System.Linq;

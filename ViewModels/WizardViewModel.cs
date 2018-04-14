@@ -5,11 +5,13 @@ using DialogEngine.Controls.ViewModels;
 using DialogEngine.Controls.VoiceRecorder;
 using DialogEngine.Core;
 using DialogEngine.Dialogs;
+using DialogEngine.Events;
+using DialogEngine.Events.DialogEvents;
 using DialogEngine.Helpers;
 using DialogEngine.Models.Dialog;
 using DialogEngine.Models.Shared;
 using DialogEngine.Models.Wizard;
-using DialogEngine.ViewModels.Workflows;
+using DialogEngine.ViewModels.WizardWorkflow;
 using log4net;
 using MaterialDesignThemes.Wpf;
 using Stateless.Graph;
@@ -21,8 +23,6 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
 
 namespace DialogEngine.ViewModels
 {
@@ -33,7 +33,7 @@ namespace DialogEngine.ViewModels
         private static readonly ILog mcLogger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         private readonly string mCurrentLineName = "USR_CurrentLine";
-        public StateMachine mStateMachine;
+        public  StateMachine mStateMachine;
         private States mCurrentState;
         private MediaPlayerControlViewModel mMediaPlayerControlViewModel;
         private VoiceRecorderControlViewModel mVoiceRecorderControlViewModel;
@@ -268,7 +268,7 @@ namespace DialogEngine.ViewModels
 
                 ++CurrentStepIndex;
                 CurrentTutorialStep = mCurrentWizard.TutorialSteps[mCurrentStepIndex];
-                CurrentVideoFilePath = Path.Combine(SessionVariables.WizardVideoDirectory, CurrentTutorialStep.VideoFileName + ".avi");
+                CurrentVideoFilePath = Path.Combine(SessionHelper.WizardVideoDirectory, CurrentTutorialStep.VideoFileName + ".avi");
                 VoiceRecorderControlViewModel.CurrentFilePath = _tutorialStepFilePath();
 
                 StateMachine.Fire(Triggers.ReadyForUserAction);
@@ -292,7 +292,7 @@ namespace DialogEngine.ViewModels
             {
                 string _mp3FilePath = Character.CharacterPrefix + "_" + _tagName;
 
-                return Path.Combine(SessionVariables.WizardAudioDirectory, _mp3FilePath + ".mp3");
+                return Path.Combine(SessionHelper.WizardAudioDirectory, _mp3FilePath + ".mp3");
             }
         }
 
@@ -329,13 +329,8 @@ namespace DialogEngine.ViewModels
 
         private void _goBackToDialog()
         {
-            Frame _mainFrame = (Application.Current.MainWindow as MainWindow).mainFrame;
-
-            if (_mainFrame.CanGoBack)
-            {
-                _mainFrame.GoBack();
-                Reset();
-            }
+            EventAggregator.Instance.GetEvent<GoBackEvent>().Publish();
+            Reset();
         }
 
 
@@ -395,7 +390,7 @@ namespace DialogEngine.ViewModels
                                 }
                                 else
                                 {
-                                    string path = Path.Combine(SessionVariables.WizardVideoDirectory, _dialogLine + ".avi");
+                                    string path = Path.Combine(SessionHelper.WizardVideoDirectory, _dialogLine + ".avi");
                                     CurrentVideoFilePath = path;
 
                                     Dispatcher.Invoke((Action)(() =>
@@ -460,7 +455,7 @@ namespace DialogEngine.ViewModels
                 mCharacter = (result as WizardParameter).Character;
                 CurrentWizard = DialogData.Instance.WizardTypesCollection[(result as WizardParameter).WizardTypeIndex];
                 CurrentTutorialStep = CurrentWizard.TutorialSteps[0];
-                CurrentVideoFilePath = Path.Combine(SessionVariables.WizardVideoDirectory, CurrentTutorialStep.VideoFileName + ".avi");
+                CurrentVideoFilePath = Path.Combine(SessionHelper.WizardVideoDirectory, CurrentTutorialStep.VideoFileName + ".avi");
 
                 _registerListeners();
                 StateMachine.Fire(Triggers.ReadyForUserAction);

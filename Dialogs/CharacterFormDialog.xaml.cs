@@ -157,7 +157,5 @@ namespace DialogEngine.Dialogs
         }
 
         #endregion
-
-
     }
 }

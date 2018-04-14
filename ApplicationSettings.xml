@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Settings>
+  <Setting Key="DebugFlag" Name="Debug enabled:" Value="true" >
+  Write dialog information during dialog.
+  </Setting>
+  <Setting Key="TagUsageCheck" Name="Check tag usage:" Value="false" >
+  Check which tags will not be used in dialog.
+  </Setting>
+  <Setting Key="AudioDialogsOn" Name="Audio enabled:" Value="true" >
+  Is audio enabled during dialog. 
+  </Setting>
+  <Setting Key="WaitIndefinatelyForMove" Name="Wait indefinately for move:" Value="false" >
+  </Setting>
+  <Setting Key="TextDialogsOn" Name="Text dialog enabled:" Value="true" >
+  Is dialog text visible during dialog.
+  </Setting>
+  <Setting Key="UseSerialPort" Name="Use serial port:" Value="false" >
+  Use serial or random selection of characters.
+  </Setting>
+  <Setting Key="CurrentParentalRating" Name="Current parental rating:" Value="PG" RegexText="^(?:PG|G|PG13|R)$" ErrorMessage ="Allowed values: PG,G,PG13,R.">
+  G - General Audiences
+  PG - Parental Guidance Suggested
+  PG13 - Parents Strongly Cautioned
+  R - Restricted - under 17 requires accompanying parent
+  </Setting>
+  <Setting Key="ComPortName" Name="COM port name:" Value="COM4" RegexText="^COM{1}\d+$" ErrorMessage ="Text must starts wit 'COM' and finish with digit.">
+  COM port name.
+  </Setting>
+  <Setting Key="MaxTimeToPlayFile" Name="Max time to play .mp3 file:" Value="1.5"  RegexText="^\d+\.\d+$" ErrorMessage ="Field requires decimal number.">
+  Determine how long current dialog can play, if new characters selected. Value is in seconds.
+  </Setting>
+</Settings>

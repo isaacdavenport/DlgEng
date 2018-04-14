@@ -65,7 +65,6 @@ namespace DialogEngine.Hendlers.Workflows.SerialSelectionWorkflow
 
         #endregion
 
-
         #region - private functions -
 
         private void OnPropertyChanged(string propertyName)

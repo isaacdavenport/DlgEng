@@ -1,7 +1,5 @@
-﻿using DialogEngine.Controls.ViewModels;
-using DialogEngine.Models.Dialog;
-using DialogEngine.Models.Wizard;
-using DialogEngine.ViewModels.Workflows;
+﻿
+using DialogEngine.ViewModels.WizardWorkflow;
 using System.Windows;
 using System.Windows.Controls;
 

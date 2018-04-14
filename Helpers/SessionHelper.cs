@@ -13,7 +13,7 @@ namespace DialogEngine.Helpers
     /// <summary>
     /// Aggregator of all application settings 
     /// </summary>
-    public static class SessionVariables
+    public static class SessionHelper
     {
         private static readonly ILog mcLogger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         public static bool ShowDupePhrases;
@@ -21,18 +21,20 @@ namespace DialogEngine.Helpers
         public static bool MonitorReceiveBufferSize;
         public static bool MonitorMessageParseFails;
         public static string BaseDirectory;
-        public static string CharactersDirectory;
-        public static string DialogsDirectory;
-        public static string AudioDirectory;
         public static readonly string WizardDirectory;
         public static readonly string WizardVideoDirectory;
         public static readonly string WizardAudioDirectory;
         public static readonly string TutorialDirectory;
+        public static readonly string TutorialFileName;
+        public static readonly string Toys2LifeWebsiteUrl;
+        
+
         // !!! IMPORTANT !!!  If you change name, you must also change name in log4net.config 
         public static readonly string DecimalLogFileName = "DecimalSerialLog";
 
         // !!! IMPORTANT !!! If you change name, you must also change name in log4net.config 
         public static readonly string  DialogLogFileName = "LogDialog";
+
 
         /// <summary>
         /// Maximum time to play current dialog after speaker characters changed in seconds
@@ -41,12 +43,12 @@ namespace DialogEngine.Helpers
         {
             get
             {
-                double result = -1;
-                //Verify the flags and strings in the app settings config file
-                if (ConfigurationManager.AppSettings["MaxTimeToPlayFile"] != null)
-                    result = Convert.ToDouble(AppSet.ReadSetting("MaxTimeToPlayFile"));
+                string result = ConfigHelper.Instance.GetValue("MaxTimeToPlayFile");
 
-                return result;
+                if (result != null)
+                    return Convert.ToDouble(result);
+                else
+                    return 0;
             }
 
         }
@@ -55,12 +57,12 @@ namespace DialogEngine.Helpers
         {
             get
             {
-                bool result=false;
-                //Verify the flags and strings in the app settings config file
-                if (ConfigurationManager.AppSettings["DebugFlag"] != null)
-                    result = Convert.ToBoolean(AppSet.ReadSetting("DebugFlag"));
+                string result = ConfigHelper.Instance.GetValue("DebugFlag");
 
-                return result;
+                if (result != null)
+                    return bool.Parse(result);
+                else
+                    return false;
             }
 
         }
@@ -69,12 +71,12 @@ namespace DialogEngine.Helpers
         {
             get
             {
-                bool result = false;
+                string result = ConfigHelper.Instance.GetValue("TagUsageCheck");
 
-                if (ConfigurationManager.AppSettings["TagUsageCheck"] != null)
-                    result = Convert.ToBoolean(AppSet.ReadSetting("TagUsageCheck"));
-
-                return result;
+                if (result != null)
+                    return bool.Parse(result);
+                else
+                    return false;
             }
         }
 
@@ -82,12 +84,12 @@ namespace DialogEngine.Helpers
         {
             get
             {
-                bool result = false;
+                string result = ConfigHelper.Instance.GetValue("AudioDialogsOn");
 
-                if (ConfigurationManager.AppSettings["AudioDialogsOn"] != null)
-                    result = Convert.ToBoolean(AppSet.ReadSetting("AudioDialogsOn"));
-
-                return result;
+                if (result != null)
+                    return bool.Parse(result);
+                else
+                    return true;
             }
         }
 
@@ -95,12 +97,12 @@ namespace DialogEngine.Helpers
         {
             get
             {
-                bool result=false;
+                string result = ConfigHelper.Instance.GetValue("TextDialogsOn");
 
-                if (ConfigurationManager.AppSettings["TextDialogsOn"] != null)
-                    result = Convert.ToBoolean(AppSet.ReadSetting("TextDialogsOn"));
-
-                return result;
+                if (result != null)
+                    return bool.Parse(result);
+                else
+                    return true;
             }
         }
 
@@ -108,12 +110,12 @@ namespace DialogEngine.Helpers
         {
             get
             {
-                bool result=false;
+                string result = ConfigHelper.Instance.GetValue("WaitIndefinatelyForMove");
 
-                if (ConfigurationManager.AppSettings["WaitIndefinatelyForMove"] != null)
-                    result = Convert.ToBoolean(AppSet.ReadSetting("WaitIndefinatelyForMove"));
-
-                return result;
+                if (result != null)
+                    return bool.Parse(result);
+                else
+                    return false;
             }
         }
 
@@ -124,12 +126,12 @@ namespace DialogEngine.Helpers
         {
             get
             {
-                bool result = false;
+                string result = ConfigHelper.Instance.GetValue("UseSerialPort");
 
-                if (ConfigurationManager.AppSettings["UseSerialPort"] != null)
-                    result = Convert.ToBoolean(AppSet.ReadSetting("UseSerialPort"));
-
-                return result;
+                if (result != null)
+                    return bool.Parse(result);
+                else
+                    return false;
             }
         }
 
@@ -140,12 +142,12 @@ namespace DialogEngine.Helpers
         {
             get
             {
-                string result = "PG";
+                string result = ConfigHelper.Instance.GetValue("CurrentParentalRating");
 
-                if (ConfigurationManager.AppSettings["CurrentParentalRating"] != null)
-                    result = AppSet.ReadSetting("CurrentParentalRating");
-
-                return result;
+                if (result != null)
+                    return result;
+                else
+                    return "PG";
             }
         }
 
@@ -156,14 +158,9 @@ namespace DialogEngine.Helpers
         {
             get
             {
-                string result=string.Empty;
+               string value = ConfigHelper.Instance.GetValue("ComPortName");
 
-                if (ConfigurationManager.AppSettings["ComPortName"] != null)
-                {
-                  result   = AppSet.ReadSetting("ComPortName");
-                }
-
-                return result;
+               return value;
             }
         }
 
@@ -171,13 +168,12 @@ namespace DialogEngine.Helpers
         /// <summary>
         /// Static constructor
         /// </summary>
-        static SessionVariables()
+        static SessionHelper()
         {
             if (ConfigurationManager.AppSettings["ShowDupePhrases"] != null)
                 ShowDupePhrases = Convert.ToBoolean(AppSet.ReadSetting("ShowDupePhrases"));
             else
                 ShowDupePhrases = false;
-
 
             if (ConfigurationManager.AppSettings["CheckStuckTransmissions"] != null)
                 CheckStuckTransmissions = Convert.ToBoolean(AppSet.ReadSetting("CheckStuckTransmissions"));
@@ -194,54 +190,19 @@ namespace DialogEngine.Helpers
             else
                 MonitorMessageParseFails = false;
 
+            TutorialFileName = ConfigurationManager.AppSettings["TutorialFileName"];
+            Toys2LifeWebsiteUrl = ConfigurationManager.AppSettings["Toys2LifeWebsiteUrl"];
+
             //get executable path of DialogGenerator.exe
             string _path = Environment.CurrentDirectory;
 
             //path is  "solutionDir/bin/outputDir", so we need to go back 2 times to solutionDir
             BaseDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
-            DialogsDirectory = BaseDirectory + @"\DialogJSON\";
-            AudioDirectory = BaseDirectory + @"\DialogAudio\";
-            CharactersDirectory = BaseDirectory + @"\CharacterJSON\";
             WizardDirectory = BaseDirectory + @"\WizardJSON\";
             WizardVideoDirectory = BaseDirectory + @"\WizardVideo\";
             WizardAudioDirectory = BaseDirectory + @"\WizardAudio\";
             TutorialDirectory = BaseDirectory + @"\TutorialCharacterCreation\";
-
-            if (ConfigurationManager.AppSettings["CharactersDirectory"] != null)
-                CharactersDirectory = AppSet.ReadSetting("CharactersDirectory");
-
-            if (CharactersDirectory == null)
-            {
-                mcLogger.Debug("Valid CharactersDirectory path not found in config file exiting.");
-                Environment.Exit(0);
-            }
-
-            if (ConfigurationManager.AppSettings["DialogsDirectory"] != null)
-                DialogsDirectory = AppSet.ReadSetting("DialogsDirectory");
-            
-            if(DialogsDirectory == null)
-            {
-                mcLogger.Debug("Valid DialogsDirectory path not found in config file exiting.");
-                Environment.Exit(0);
-            }
-
-            if (ConfigurationManager.AppSettings["AudioDirectory"] != null)
-            {
-                AudioDirectory = AppSet.ReadSetting("AudioDirectory");
-            }
-
-            if (AudioDirectory == null && AudioDialogsOn)
-            { 
-                mcLogger.Debug("Valid AudioDirectory path not found in config file exiting.");
-                Environment.Exit(0);
-            }
-
-            if (ComPortName == null && UseSerialPort)
-            {
-                mcLogger.Debug("Valid ComPortName  not found in config file exiting.");
-                Environment.Exit(0);
-            }
         }
     }
 }

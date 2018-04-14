@@ -27,5 +27,7 @@
     <converters:IsMediaPlayerPlayBtnEnabledConverter x:Key="IsMediaPlayerPlayBtnEnabledConverter" />
     <converters:IsMediaPlayerStopBtnEnabledConverter x:Key="IsMediaPlayerStopBtnEnabledConverter" />
     <converters:CharacterGenderConverter x:Key="CharacterGenderConverter" />
+    <converters:ParseBooleanConverter x:Key="ParseBooleanConverter" />
+    <converters:IsEnabledMainWindowControlConverter x:Key="IsEnabledMainWindowControlConverter" />
 
 </ResourceDictionary>

@@ -21,7 +21,7 @@ using DialogEngine.Views;
 using GalaSoft.MvvmLight.CommandWpf;
 using System.Windows.Input;
 using DialogEngine.Models.Shared;
-using DialogEngine.Hendlers;
+using DialogEngine.Services;
 
 namespace DialogEngine.ViewModels
 {
@@ -54,7 +54,7 @@ namespace DialogEngine.ViewModels
         private string mCharacter2Prefix = "--";
         private bool mRSSIstable;
         private int mRSSIsum;
-        private int[,] mHeatMap = new int[SerialSelection.NumRadios, SerialSelection.NumRadios];
+        private int[,] mHeatMap = new int[SerialSelectionService.NumRadios, SerialSelectionService.NumRadios];
 
         // indicate when dialog is active or no
         private bool mIsDialogStopped = true;
@@ -257,7 +257,7 @@ namespace DialogEngine.ViewModels
                 tb.Text = "";
             }
 
-            for (int i = 0; i < SerialSelection.NumRadios && i < mCharacterCollection.Count; i++)
+            for (int i = 0; i < SerialSelectionService.NumRadios && i < mCharacterCollection.Count; i++)
             {
                 mCharacterCollection[i].RadioNum = i;
 
@@ -320,36 +320,26 @@ namespace DialogEngine.ViewModels
         private void _bindCommands()
         {
             GenerateDialog = new Core.RelayCommand(_x => _startDialog());
-
             ClearAllMessages = new Core.RelayCommand(x => _clearAllMessages((string)x));
-
             StopDialog = new Core.RelayCommand(x => _stopDialog());
-
             ClearRadioBindingCommand = new Core.RelayCommand(x => _clearRadioBindingCommand((string)x));
-
             EditCharacterCommand = new Core.RelayCommand(x => _editCharacter((Character)x));
 
             // MVVM light commands where we can pass event object
 
             PreviewMouseLeftButtonDownCommand = new RelayCommand<MouseButtonEventArgs>(_previewMouseLeftButtonCommand);
-
             PreviewMouseMoveCommand = new RelayCommand<MouseEventArgs>(_previewMouseMoveCommand);
-
             DragEnterCommand = new RelayCommand<DragEventArgs>(_dragEnterCommand);
-
             DropCommand = new RelayCommand<DragEventArgs>(_dropCommand);
-
             DragOverCommand = new RelayCommand<DragEventArgs>(_dragOverCommand);
-
             DialogModelSelectionChangedCommand = new RelayCommand<SelectionChangedEventArgs>(_dialogModelSelectionChanged);
-
             RefreshTabItem = new RelayCommand<SelectionChangedEventArgs>(_refreshTabItem);
         }
 
 
         private async void _editCharacter(Character character)
         {
-            await Dispatcher.BeginInvoke((Action) (() => {
+           await Dispatcher.BeginInvoke((Action) (() => {
                 (Application.Current.MainWindow.FindName("mainFrame") as Frame).NavigationService.Navigate(new WizardView(character));
             }));
         }
@@ -357,10 +347,19 @@ namespace DialogEngine.ViewModels
 
         private async void _onDialogDataLoaded()
         {
-            Task _checkTagsUsedTask = _checkTagsUsedAsync();
-            Task _checkForMissingPhrasesTask = _checkForMissingPhrasesAsync();
+            Task _checkTagsUsedTask = null;
+            Task _checkForMissingPhrasesTask;
 
-            await _checkTagsUsedTask;
+            if (SessionHelper.TagUsageCheck)
+                _checkTagsUsedTask = _checkTagsUsedAsync();
+
+            _checkForMissingPhrasesTask= _checkForMissingPhrasesAsync();
+
+            if(_checkTagsUsedTask != null)
+            {
+                await _checkTagsUsedTask;
+            }
+
             await _checkForMissingPhrasesTask;
 
             _setCharacterToRadioBidnings();
@@ -595,14 +594,14 @@ namespace DialogEngine.ViewModels
             {
                 Thread.CurrentThread.Name = "_checkForMissingPhrasesAsyncThread";
 
-                if (!SessionVariables.AudioDialogsOn)
+                if (!SessionHelper.AudioDialogsOn)
                     return;
 
                 foreach (var _character in CharacterCollection)
                 {
                     foreach (var _phrase in _character.Phrases)
                     {
-                        if (!File.Exists(SessionVariables.WizardAudioDirectory
+                        if (!File.Exists(SessionHelper.WizardAudioDirectory
                             + _character.CharacterPrefix + "_"
                             + _phrase.FileName + ".mp3")) //Char name and prefix are being left blank...
                         {
@@ -610,7 +609,7 @@ namespace DialogEngine.ViewModels
 
                             _addMessage(new WarningMessage(_debugMessage));
 
-                            LoggerHelper.Info(SessionVariables.DialogLogFileName, "missing " 
+                            LoggerHelper.Info(SessionHelper.DialogLogFileName, "missing " 
                                               + _character.CharacterPrefix + "_" + _phrase.FileName + ".mp3 " + _phrase.DialogStr);
                         }
                     }
@@ -654,7 +653,7 @@ namespace DialogEngine.ViewModels
                             if (!_usedFlag)
                             {
                                 _addMessage(new InfoMessage(" " + _phraseTag + " is not used."));
-                                LoggerHelper.Info(SessionVariables.DialogLogFileName, " " + _phraseTag + " is not used.");
+                                LoggerHelper.Info(SessionHelper.DialogLogFileName, " " + _phraseTag + " is not used.");
                             }
                         }
 
@@ -686,7 +685,7 @@ namespace DialogEngine.ViewModels
                             if (!_usedFlag)
                             {
                                 _addMessage(new InfoMessage(" " + _dialogTag + " not used in " + dialog.Name));
-                                LoggerHelper.Info(SessionVariables.DialogLogFileName, " " + _dialogTag + " not used in " + dialog.Name);
+                                LoggerHelper.Info(SessionHelper.DialogLogFileName, " " + _dialogTag + " not used in " + dialog.Name);
                             }
                         }
             });

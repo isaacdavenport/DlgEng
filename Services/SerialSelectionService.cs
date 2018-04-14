@@ -13,9 +13,9 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Threading;
 
-namespace DialogEngine.Hendlers
+namespace DialogEngine.Services
 {
-    public class SerialSelection
+    public class SerialSelectionService
     {
         #region - fields -
 
@@ -46,7 +46,7 @@ namespace DialogEngine.Hendlers
 
         #region - constructor -
 
-        public SerialSelection()
+        public SerialSelectionService()
         {
             StateMachine = new StateMachine
             (
@@ -113,7 +113,7 @@ namespace DialogEngine.Hendlers
                 NextCharacter2 = 0;
 
                 mSerialPort = new SerialPort();
-                mSerialPort.PortName = SessionVariables.ComPortName;
+                mSerialPort.PortName = SessionHelper.ComPortName;
                 mSerialPort.BaudRate = 460800;
                 mSerialPort.ReadTimeout = 500;
                 mSerialPort.Open();

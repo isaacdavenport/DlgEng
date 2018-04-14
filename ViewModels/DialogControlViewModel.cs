@@ -2,13 +2,11 @@
 using DialogEngine.Controls.Views;
 using DialogEngine.Core;
 using DialogEngine.Helpers;
-using DialogEngine.Hendlers;
 using DialogEngine.Models.Dialog;
 using DialogEngine.Models.Logger;
 using DialogEngine.Services;
 using DialogEngine.ViewModels;
 using log4net;
-using Stateless;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -48,7 +46,7 @@ namespace DialogEngine.Controls.ViewModels
         public List<HistoricalPhrase> HistoricalPhrases = new List<HistoricalPhrase>();
         public Queue<int> RecentDialogs = new Queue<int>();
         public delegate void PrintMethod(LogMessage message);
-        public PrintMethod AddItem = DialogDataService.AddMessage;
+        public PrintMethod AddItem = DialogDataHelper.AddMessage;
 
 
         #endregion
@@ -131,7 +129,7 @@ namespace DialogEngine.Controls.ViewModels
 
             msCurrentDialogModel = _pickAWeightedDialog(Character1Num, Character2Num);
 
-            if (_waitingForMovement() || SameCharactersAsLast && SessionVariables.WaitIndefinatelyForMove)
+            if (_waitingForMovement() || SameCharactersAsLast && SessionHelper.WaitIndefinatelyForMove)
                 //mcStateMachine.Fire(DialogTrigger.WaitForDialog);
 
             _processDebugFlags();
@@ -172,12 +170,12 @@ namespace DialogEngine.Controls.ViewModels
 
                     AddItem(new InfoMessage(_selectedPhrase.DialogStr));
 
-                    if (SessionVariables.TextDialogsOn)
+                    if (SessionHelper.TextDialogsOn)
                         DialogLinesCollection.Add(new DialogItem() { Character = mCharactersList[_speakingCharacter], PhraseEntry = _selectedPhrase });
 
                     _addPhraseToHistory(_selectedPhrase, _speakingCharacter);
 
-                    var _pathAndFileName = SessionVariables.AudioDirectory
+                    var _pathAndFileName = SessionHelper.WizardAudioDirectory
                                           + mCharactersList[_speakingCharacter].CharacterPrefix
                                           + "_" + _selectedPhrase.FileName + ".mp3";
 
@@ -241,7 +239,7 @@ namespace DialogEngine.Controls.ViewModels
             //    }
 
 
-            if (SessionVariables.DebugFlag)
+            if (SessionHelper.DebugFlag)
                 WriteDialogInfo(Character1Num, Character2Num);
 
             HeatMapUpdate.PrintHeatMap();
@@ -259,7 +257,7 @@ namespace DialogEngine.Controls.ViewModels
                 StartedTime = DateTime.Now
             });
 
-            LoggerHelper.Info(SessionVariables.DialogLogFileName, mCharactersList[_speakingCharacter].CharacterName + ": " + _selectedPhrase.DialogStr);
+            LoggerHelper.Info(SessionHelper.DialogLogFileName, mCharactersList[_speakingCharacter].CharacterName + ": " + _selectedPhrase.DialogStr);
         }
 
 
@@ -288,7 +286,7 @@ namespace DialogEngine.Controls.ViewModels
         {
             // unless waiting to start a dialog model, that may be an issue eventually
 
-            if (LastPhraseImpliedMovement && SameCharactersAsLast && SessionVariables.UseSerialPort)
+            if (LastPhraseImpliedMovement && SameCharactersAsLast && SessionHelper.UseSerialPort)
             {
                 Thread.Sleep(mRandom.Next(0, 2000));
                 msMovementWaitCount++;
@@ -306,7 +304,7 @@ namespace DialogEngine.Controls.ViewModels
                     AddItem(new InfoMessage("Wait3"));
                     DialogLinesCollection.Add(new DialogItem() { Character = mCharactersList[Character1Num], PhraseEntry = _ch1RetreatPhrase });
 
-                    _playAudio(SessionVariables.AudioDirectory + mCharactersList[Character1Num].CharacterPrefix +
+                    _playAudio(SessionHelper.WizardAudioDirectory + mCharactersList[Character1Num].CharacterPrefix +
                               "_" + _ch1RetreatPhrase.FileName + ".mp3");
 
                     return true;
@@ -327,7 +325,7 @@ namespace DialogEngine.Controls.ViewModels
                     AddItem(new InfoMessage("Wait5"));
                     DialogLinesCollection.Add(new DialogItem() { Character = mCharactersList[Character2Num], PhraseEntry = _ch2RetreatPhrase });
 
-                    _playAudio(SessionVariables.AudioDirectory
+                    _playAudio(SessionHelper.WizardAudioDirectory
                                + mCharactersList[Character2Num].CharacterPrefix
                                + "_" + _ch2RetreatPhrase.FileName + ".mp3");
 
@@ -352,7 +350,7 @@ namespace DialogEngine.Controls.ViewModels
 
         private void _playAudio(string _pathAndFileName)
         {
-            if (!SessionVariables.AudioDialogsOn)
+            if (!SessionHelper.AudioDialogsOn)
             {
                 Thread.Sleep(3200);
                 return;
@@ -395,8 +393,8 @@ namespace DialogEngine.Controls.ViewModels
 
         private bool _importClosestSerialComsCharacters()
         {
-            var _tempChar1 = SerialSelection.NextCharacter1;
-            var _tempChar2 = SerialSelection.NextCharacter2;
+            var _tempChar1 = SerialSelectionService.NextCharacter1;
+            var _tempChar2 = SerialSelectionService.NextCharacter2;
 
             if (_tempChar1 == _tempChar2 || _tempChar1 >= mCharactersList.Count || _tempChar2 >= mCharactersList.Count)
                 return false;
@@ -623,7 +621,7 @@ namespace DialogEngine.Controls.ViewModels
 
         private  void _removePhrasesOverParentalRating(Character _inCharacter)
         {
-            var _maxParentalRating = ParentalRatings.GetNumeric(SessionVariables.CurrentParentalRating);
+            var _maxParentalRating = ParentalRatings.GetNumeric(SessionHelper.CurrentParentalRating);
             var _minParentalRating = ParentalRatings.GetNumeric("G");
 
             _inCharacter.Phrases.RemoveAll(_item =>
@@ -714,17 +712,17 @@ namespace DialogEngine.Controls.ViewModels
 
 
                 AddItem(new InfoMessage(_dialogModelString));
-                LoggerHelper.Info(SessionVariables.DialogLogFileName, _dialogModelString);
+                LoggerHelper.Info(SessionHelper.DialogLogFileName, _dialogModelString);
             }
         }
 
 
         public bool DialogTrackerAndSerialComsCharactersSame()
         {
-            if ((Character1Num == SerialSelection.NextCharacter1
-                 || Character1Num == SerialSelection.NextCharacter2)
-                 && (Character2Num == SerialSelection.NextCharacter2
-                 || Character2Num == SerialSelection.NextCharacter1))
+            if ((Character1Num == SerialSelectionService.NextCharacter1
+                 || Character1Num == SerialSelectionService.NextCharacter2)
+                 && (Character2Num == SerialSelectionService.NextCharacter2
+                 || Character2Num == SerialSelectionService.NextCharacter1))
             {
                 return true;
             }

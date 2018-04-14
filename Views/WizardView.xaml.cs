@@ -2,7 +2,6 @@
 using DialogEngine.Models.Dialog;
 using DialogEngine.ViewModels;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace DialogEngine.Views
 {
@@ -18,9 +17,9 @@ namespace DialogEngine.Views
         /// </summary>
         public WizardView()
         {
-            DataContext = new WizardViewModel();
-
             InitializeComponent();
+
+            DataContext = new WizardViewModel();
         }
 
         /// <summary>

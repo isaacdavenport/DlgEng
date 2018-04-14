@@ -1,26 +1,21 @@
 ﻿
 
-using DialogEngine.ViewModels.WizardWorkflow;
 using System;
 using System.Globalization;
-using System.Linq;
 using System.Windows.Data;
 
 namespace DialogEngine.Converters
 {
-    public class IsMediaPlayerPlayBtnEnabledConverter : IValueConverter
+    public class ParseBooleanConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            States state = (States)value;
-            string[] states = parameter.ToString().Split('|');
-
-            return states.Contains(state.ToString());
+            return bool.Parse((string)value);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return new  NotImplementedException();
+            return ((bool)value).ToString();
         }
     }
 }

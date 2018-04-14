@@ -4,8 +4,6 @@
 using DialogEngine.Events.DialogEvents;
 using DialogEngine.Helpers;
 using DialogEngine.Models.Logger;
-using DialogEngine.Services;
-using DialogEngine.ViewModels;
 using log4net;
 using System;
 using System.Reflection;
@@ -64,7 +62,7 @@ namespace DialogEngine
             double _durationOfPlaying = DateTime.Now.TimeOfDay.TotalSeconds - mStartedTime.TotalSeconds;
 
             // 0.5 seconds we need to mute player
-            if (_durationOfPlaying > (SessionVariables.MaxTimeToPlayFile - 0.5))
+            if (_durationOfPlaying > (SessionHelper.MaxTimeToPlayFile - 0.5))
             {
                 mTimer.Change(Timeout.Infinite, Timeout.Infinite);
                 mVolumeTimer.Change(0, 100);
@@ -112,7 +110,7 @@ namespace DialogEngine
 
         private void _player_MediaFailed(object sender, ExceptionEventArgs e)
         {
-            DialogDataService.AddMessage(new ErrorMessage("Media filed."));
+            DialogDataHelper.AddMessage(new ErrorMessage("Media filed."));
         }
 
         #endregion
@@ -126,7 +124,7 @@ namespace DialogEngine
 
             if (IsPlaying())
             {
-                if (mDuration > SessionVariables.MaxTimeToPlayFile)
+                if (mDuration > SessionHelper.MaxTimeToPlayFile)
                 {
                     mTimer.Change(0,1000);
                 }

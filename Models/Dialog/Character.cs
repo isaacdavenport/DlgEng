@@ -16,7 +16,7 @@ namespace DialogEngine.Models.Dialog
 
         private const int mcMaxAllowedCharactersOn = 2;             // max allowed characters in On state is 2
         private CharacterState mState;
-        private int mCharacterAge;
+        private int mCharacterAge = 10;
         private string mCharacterGender = "M";
         private string mCharacterName="";
         private string mCharacterPrefix="";

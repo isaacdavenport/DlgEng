@@ -1,9 +1,12 @@
 ﻿//  Confidential Source Code Property Toys2Life LLC Colorado 2017
 //  www.toys2life.org
 
-using DialogEngine.Services;
+using DialogEngine.Helpers;
+using log4net;
+using log4net.Config;
+using System.IO;
+using System.Reflection;
 using System.Windows;
-using System.Windows.Navigation;
 
 namespace DialogEngine
 {
@@ -12,7 +15,14 @@ namespace DialogEngine
     /// </summary>
     public partial class App : Application
     {
-       
+        #region - fields -
+
+        private static readonly ILog mcLogger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
+        #endregion
+
+        #region - event handlers -
+
         // Handling all unhandled exceptions in application
         private void _application_DisptatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
@@ -23,7 +33,18 @@ namespace DialogEngine
 
         private  void _application_Exit(object sender, ExitEventArgs e)
         {
-            //await DialogDataService.SerializeDataToFile(@"C:\Users\sbstb\Desktop\Output\new.json");
+            ConfigHelper.Instance.SerializeSettingsToFile();
         }
+
+
+        private async void _application_Startup(object sender, StartupEventArgs e)
+        {
+            XmlConfigurator.Configure(new FileInfo("log4net.config"));
+            await ConfigHelper.Instance.DeserializeSettingsFromFile();
+
+            mcLogger.Info("Application started.");
+        }
+
+        #endregion 
     }
 }

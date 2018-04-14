@@ -5,7 +5,6 @@ using DialogEngine.Core;
 using System.Windows.Controls;
 using DialogEngine.ViewModels;
 using System;
-using DialogEngine.Services;
 using DialogEngine.Helpers;
 using MaterialDesignThemes.Wpf;
 using System.Windows.Input;
@@ -34,7 +33,7 @@ namespace DialogEngine.Views
         {
             (this.DataContext as DialogViewModel).View = this;
 
-            await DialogDataService.LoadDialogDataAsync(SessionVariables.WizardDirectory);
+            await DialogDataHelper.LoadDialogDataAsync(SessionHelper.WizardDirectory);
         }
 
         private void PopupBox_Opened(object sender, System.Windows.RoutedEventArgs e)

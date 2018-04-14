@@ -18,8 +18,8 @@
              TextOptions.TextFormattingMode="Ideal" 
              TextOptions.TextRenderingMode="Auto"
              d:DesignHeight="451.32" Title="DialogEngine" Width="639.305">
-        
-    <materialDesign:DialogHost x:Name="MainWindowDialogHost" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+
+    <materialDesign:DialogHost x:Name="RootDialogHost" Identifier="RootDialogHost"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 
         <Grid x:Name="mainGrid" >
 
@@ -30,12 +30,10 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-
             <!-- Menu -->
             <Menu  FontSize="16" Grid.Row="0"  Background="White" Margin="0,0,0,0"  >
 
                 <MenuItem Header="_File" >
-
                     <MenuItem IsEnabled="False" Header="_Relaod data"  >
                         <MenuItem.Icon>
                             <materialDesign:PackIcon Kind="Reload" />
@@ -44,14 +42,21 @@
                 </MenuItem>
 
                 <MenuItem Header="_View" >
-
-                    <MenuItem Header="_Dialog"  >
+                    <MenuItem Header="_Dialog"
+                              IsEnabled="{Binding CurrentState, 
+                                                  Converter={StaticResource IsEnabledMainWindowControlConverter}, 
+                                                  ConverterParameter=WizardView|DialogView}"
+                              Command="{Binding GoToDialogView}" >
                         <MenuItem.Icon>
                             <materialDesign:PackIcon Kind="CommentMultipleOutline" />
                         </MenuItem.Icon>
                     </MenuItem>
 
-                    <MenuItem Header="_Run wizard"  Click="_createCharacter_Click">
+                    <MenuItem Header="_Run wizard"
+                              IsEnabled="{Binding CurrentState, 
+                                                  Converter={StaticResource IsEnabledMainWindowControlConverter}, 
+                                                  ConverterParameter=WizardView}"                              
+                              Command="{Binding GoToWizardView}">
                         <MenuItem.Icon>
                             <materialDesign:PackIcon Kind="AccountPlus" />
                         </MenuItem.Icon>
@@ -59,67 +64,65 @@
                 </MenuItem>
 
                 <MenuItem Header="_Tools">
-
-                    <MenuItem Header="_Edit with JSON editor" Click="_editWithJsonEditor_Click">
+                    <MenuItem Header="_Edit with JSON editor" Command="{Binding EditWithJSONEditor}">
                         <MenuItem.Icon>
                             <materialDesign:PackIcon Kind="Json" />
                         </MenuItem.Icon>
                     </MenuItem>
 
-                    <MenuItem Header="_Settings" Click="_settings_Click">
+                    <MenuItem Header="_Settings" Command="{Binding OpenSettingsDialog}">
                         <MenuItem.Icon>
                             <materialDesign:PackIcon Kind="Settings" />
                         </MenuItem.Icon>
                     </MenuItem>
-
                 </MenuItem>
 
                 <MenuItem Header="_Tutorial">
-
-                    <MenuItem Header="_Read tutorial" Click="_tutorial_Click">
+                    <MenuItem Header="_Read tutorial" Command="{Binding ReadTutorial}">
                         <MenuItem.Icon>
                             <materialDesign:PackIcon Kind="MessageTextOutline" />
                         </MenuItem.Icon>
                     </MenuItem>
 
-                    <MenuItem IsEnabled="False" Header="_Video tutorial" Click="_tutorial_Click">
+                    <MenuItem IsEnabled="False" Header="_Video tutorial" >
                         <MenuItem.Icon>
                             <materialDesign:PackIcon Kind="Video" />
                         </MenuItem.Icon>
                     </MenuItem>
 
-                    <MenuItem Header="_About Toys2Life" Click="_aboutDialogEngine_Click">
+                    <MenuItem Header="_About Toys2Life" Command="{Binding AboutToys2Life}">
                         <MenuItem.Icon>
                             <materialDesign:PackIcon Kind="InformationOutline" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
-
             </Menu>
 
             <!--Toolbar-->
 
             <ToolBarTray Grid.Row="1"  >
                 <ToolBar Style="{DynamicResource MaterialDesignToolBar}"   ClipToBounds="False">
-
-                    <!-- Dialog btn -->
-                    <Button Click="_dialog_Click"  ToolTip="Dialog">
+                    <Button Command="{Binding GoToDialogView}"
+                            IsEnabled="{Binding CurrentState, 
+                                                Converter={StaticResource IsEnabledMainWindowControlConverter}, 
+                                                ConverterParameter=WizardView|DialogView}"
+                            ToolTip="Dialog">
                         <materialDesign:PackIcon Kind="CommentMultipleOutline" />
                     </Button>
 
-                    <!-- MP3 player btn -->
-                    <Button  Click="_createCharacter_Click" ToolTip="Run a Wizard" >
+                    <Button  Command="{Binding GoToWizardView}"
+                             IsEnabled="{Binding CurrentState, 
+                                                 Converter={StaticResource IsEnabledMainWindowControlConverter}, 
+                                                 ConverterParameter=WizardView}"  
+                             ToolTip="Run a Wizard" >
                         <materialDesign:PackIcon Kind="AccountPlus" />
                     </Button>
 
                     <Separator />
 
-                    <!-- Settings btn -->
-                    <Button x:Name="SettingsBtn"  ToolTip="Settings" Click="_settings_Click">
-
+                    <Button x:Name="SettingsBtn"  ToolTip="Settings" Command="{Binding OpenSettingsDialog}">
                         <materialDesign:PackIcon Kind="Settings" />
                     </Button>
-
                 </ToolBar>
             </ToolBarTray>
 
@@ -183,7 +186,6 @@
                          x:Name="StatusBarTextBox" 
                          FontSize="12" />
                     </TextBlock>
-
                 </StatusBarItem>
 
             </StatusBar>

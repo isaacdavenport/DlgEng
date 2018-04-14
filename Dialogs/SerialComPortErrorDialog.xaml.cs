@@ -1,6 +1,7 @@
 ﻿//  Confidential Source Code Property Toys2Life LLC Colorado 2017
 //  www.toys2life.org
 
+using DialogEngine.Helpers;
 using log4net;
 using MaterialDesignThemes.Wpf;
 using System;
@@ -43,20 +44,13 @@ namespace DialogEngine.Dialogs
         {
             try
             {
-                string _configPath = System.IO.Path.Combine(Environment.CurrentDirectory, "DialogEngine.exe");
-
-                Configuration _config = ConfigurationManager.OpenExeConfiguration(_configPath);
-                _config.AppSettings.Settings["ComPortName"].Value = SerialPortsComboBox.SelectedValue.ToString();
-                _config.Save();
-
-                ConfigurationManager.RefreshSection("appSettings");
+                ConfigHelper.Instance.SetValue("ComPortName", SerialPortsComboBox.SelectedValue.ToString());
 
                 DialogHost.CloseDialogCommand.Execute(true, sender as Button);
             }
             catch (Exception ex)
             {
                 mcLogger.Error("Error during saving COM port name. " + ex.Message);
-                MessageBox.Show("Error during saving COM port name.");
             }
         }
 

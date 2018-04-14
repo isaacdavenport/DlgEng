@@ -15,8 +15,8 @@ namespace DialogEngine.Helpers
     {
         #region - fields -
 
-        private static readonly ILog mcDecimalSerialLog = LogManager.GetLogger(SessionVariables.DecimalLogFileName);
-        private static readonly ILog mcLogDialog = LogManager.GetLogger(SessionVariables.DialogLogFileName);
+        private static readonly ILog mcDecimalSerialLog = LogManager.GetLogger(SessionHelper.DecimalLogFileName);
+        private static readonly ILog mcLogDialog = LogManager.GetLogger(SessionHelper.DialogLogFileName);
 
         #endregion
 
@@ -29,11 +29,11 @@ namespace DialogEngine.Helpers
             {
                 return null;
             }
-            else if( string.Equals(type, SessionVariables.DecimalLogFileName, StringComparison.OrdinalIgnoreCase))
+            else if( string.Equals(type, SessionHelper.DecimalLogFileName, StringComparison.OrdinalIgnoreCase))
             {
                 return mcDecimalSerialLog;
             }
-            else if(string.Equals(type, SessionVariables.DialogLogFileName, StringComparison.OrdinalIgnoreCase))
+            else if(string.Equals(type, SessionHelper.DialogLogFileName, StringComparison.OrdinalIgnoreCase))
             {
                 return mcLogDialog;
             }

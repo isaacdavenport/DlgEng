@@ -14,9 +14,9 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace DialogEngine.Services
+namespace DialogEngine.Helpers
 {
-    public static class DialogDataService
+    public static class DialogDataHelper
     {
         #region - fields-
 
@@ -57,10 +57,10 @@ namespace DialogEngine.Services
                         catch (JsonReaderException e)
                         {
                             string _errorReadingMessage = "Error reading " + _fileInfo.Name;
-                            DialogDataService.AddMessage(new ErrorMessage(_errorReadingMessage));
+                            DialogDataHelper.AddMessage(new ErrorMessage(_errorReadingMessage));
 
                             string _jsonParseErrorMessage = "JSON Parse error at " + e.LineNumber + ", " + e.LinePosition;
-                            DialogDataService.AddMessage(new ErrorMessage(_jsonParseErrorMessage));
+                            DialogDataHelper.AddMessage(new ErrorMessage(_jsonParseErrorMessage));
                         }
                         catch (Exception ex)
                         {
