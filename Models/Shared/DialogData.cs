@@ -2,6 +2,7 @@
 using DialogEngine.Models.Dialog;
 using DialogEngine.Models.Logger;
 using DialogEngine.Models.Wizard;
+using DialogEngine.Services;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 
@@ -13,6 +14,7 @@ namespace DialogEngine.Models.Shared
 
         private static DialogData msInstance;
         private bool mIsDialogDataLoaded;
+        private int[,] mHeatMapUpdate = new int[SerialSelectionService.NumRadios, SerialSelectionService.NumRadios];
 
         private ObservableCollection<Character> mCharacterCollection;
         private ObservableCollection<ModelDialogInfo> mDialogModelCollection;
@@ -123,6 +125,17 @@ namespace DialogEngine.Models.Shared
             {
                 mWizardTypesCollection = value;
                 NotifyPropertyChanged("WizardTypesCollection");
+            }
+        }
+
+
+        public int[,] HeatMapUpdate
+        {
+            get { return mHeatMapUpdate; }
+            set
+            {
+                mHeatMapUpdate = value;
+                NotifyPropertyChanged("HeatMapUpdate");
             }
         }
 

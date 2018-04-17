@@ -44,7 +44,7 @@ namespace DialogEngine.Converters
         /// <param name="_culture"></param>
         /// <returns>New character state as enum value</returns>
         public object ConvertBack(object _value, Type _targetType, object _parameter, CultureInfo _culture)
-        {         
+        {
             return (CharacterState)_parameter;
         }
     }

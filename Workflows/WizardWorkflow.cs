@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows.Input;
 
-namespace DialogEngine.ViewModels.WizardWorkflow
+namespace DialogEngine.Workflows.WizardWorkflow
 {
     public enum States
     {

@@ -5,6 +5,7 @@ using DialogEngine.Events.DialogEvents;
 using DialogEngine.Models.Enums;
 using DialogEngine.ViewModels;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 
@@ -14,7 +15,8 @@ namespace DialogEngine.Models.Dialog
     {
         #region - fields -
 
-        private const int mcMaxAllowedCharactersOn = 2;             // max allowed characters in On state is 2
+        // max allowed characters in On state is 2
+        private const int mcMaxAllowedCharactersOn = 2;             
         private CharacterState mState;
         private int mCharacterAge = 10;
         private string mCharacterGender = "M";
@@ -135,6 +137,8 @@ namespace DialogEngine.Models.Dialog
                     mState = value;
                     EventAggregator.Instance.GetEvent<ChangedCharactersStateEvent>().Publish();
                 }
+
+                OnPropertyChanged("State");
             }
         }
 

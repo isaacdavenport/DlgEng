@@ -1,8 +1,8 @@
 ﻿
 using DialogEngine.Dialogs;
 using DialogEngine.Helpers;
-using DialogEngine.Hendlers.Workflows.SerialSelectionWorkflow;
 using DialogEngine.Models.Shared;
+using DialogEngine.Workflows.SerialSelectionWorkflow;
 using log4net;
 using MaterialDesignThemes.Wpf;
 using System;
@@ -10,12 +10,13 @@ using System.IO;
 using System.IO.Ports;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
 
 namespace DialogEngine.Services
 {
-    public class SerialSelectionService
+    public class SerialSelectionService : ICharacterSelection
     {
         #region - fields -
 
@@ -28,13 +29,14 @@ namespace DialogEngine.Services
         private int mTempch2;
         private SerialPort mSerialPort;
         private StateMachine mStateMachine;
+        private States mCurrentState;
         private int mRowNum;
         private int [] mNewRow= new int[NumRadios +1];
         private bool mIsSerialMode;
         private Random mRandom = new Random();
         private int[,] mStrongRssiCharacterPairBuf = new int[2, StrongRssiBufDepth];
-        public int BigRssi = 0;
-        
+
+        public int BigRssi = 0;        
         public int CurrentCharacter1;
         public int CurrentCharacter2 = 1;
         public static int NextCharacter1 = 1;
@@ -52,6 +54,27 @@ namespace DialogEngine.Services
             (
                 action: () => { } // no action for start state
             );
+
+            _configureStateMachine();
+            StateMachine.PropertyChanged += _stateMachine_PropertyChanged;
+            mcHeatMapUpdateTimer.Interval = TimeSpan.FromSeconds(3);
+            mcHeatMapUpdateTimer.Tick += _heatMapUpdateTimer_Tick;
+        }
+
+        #endregion
+
+        #region - event handlers -
+
+        private void _stateMachine_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName.Equals("State"))
+                mCurrentState = StateMachine.State;
+        }
+
+
+        private void _heatMapUpdateTimer_Tick(object sender, EventArgs e)
+        {
+            DialogData.Instance.HeatMapUpdate = HeatMap;
         }
 
         #endregion
@@ -61,51 +84,49 @@ namespace DialogEngine.Services
         private void _configureStateMachine()
         {
             StateMachine.Configure(States.Start)
-                .Permit(Triggers.Init, States.Init);
+                .Permit(Triggers.Initialize, States.Init);
 
             StateMachine.Configure(States.Init)
-                .OnEntry(t => _initSerial())
                 .Permit(Triggers.ReadMessage, States.ReadMessage)
                 .Permit(Triggers.SerialPortNameError, States.SerialPortNameError)
                 .Permit(Triggers.USB_disconnectedError,States.USB_disconnectedError)
                 .Permit(Triggers.Finish, States.Finish);
 
+            StateMachine.Configure(States.Idle)
+                .Permit(Triggers.ReadMessage, States.ReadMessage)
+                .Permit(Triggers.Finish, States.Finish);
+
             StateMachine.Configure(States.SerialPortNameError)
-                .OnEntry(t => _serialPortError())
-                .Permit(Triggers.Init, States.Init)
+                .Permit(Triggers.Initialize, States.Init)
                 .Permit(Triggers.Start, States.Start);
 
             StateMachine.Configure(States.USB_disconnectedError)
                 .OnEntry(t => _usbDisconectedError())
-                .Permit(Triggers.Init, States.Init)
+                .Permit(Triggers.Initialize, States.Init)
                 .Permit(Triggers.Finish, States.Finish);
 
             StateMachine.Configure(States.ReadMessage)
-                .OnEntry(t => _readSerialInLine())
                 .Permit(Triggers.FindClosestPair, States.FindClosestPair)
-                .Permit(Triggers.Init,States.Init)
-                .Permit(Triggers.ReadMessage, States.ReadMessage)
+                .Permit(Triggers.Initialize, States.Init)
+                .Permit(Triggers.Idle, States.Idle)
                 .Permit(Triggers.Finish, States.Finish);
                 
             StateMachine.Configure(States.FindClosestPair)
-                .OnEntry(t => _findBiggestRssiPair())
                 .Permit(Triggers.ReadMessage, States.ReadMessage)
                 .Permit(Triggers.SelectNextCharacters, States.SelectNextCharacters)
                 .Permit(Triggers.Finish, States.Finish);
 
             StateMachine.Configure(States.SelectNextCharacters)
-                .OnEntry(t => _selectNextCharacters())
                 .Permit(Triggers.ReadMessage, States.ReadMessage)
                 .Permit(Triggers.Finish, States.Finish);
 
             StateMachine.Configure(States.Finish)
-                .OnEntry(t => _finishSelection())
                 .Permit(Triggers.Start,States.Start);
                 
         }
 
 
-        private void _initSerial()
+        private Triggers _initSerial()
         {
             try
             {
@@ -121,37 +142,45 @@ namespace DialogEngine.Services
 
                 mcHeatMapUpdateTimer.Start();
 
-                StateMachine.Fire(Triggers.ReadMessage);
+                return Triggers.ReadMessage;
             }
             catch(InvalidOperationException ex)  // Instance of SerialPort is already open
             {
                 mcLogger.Error("_initSerial InvalidOperationException " + ex.Message);
-                StateMachine.Fire(Triggers.ReadMessage);
+                return Triggers.ReadMessage;
             }
             catch(ArgumentException ex) // invalid port name
             {
                 mcLogger.Error("_initSerial ArgumentException " + ex.Message);
-                StateMachine.Fire(Triggers.SerialPortNameError);
+                return Triggers.SerialPortNameError;
             }
-            catch (Exception ex) 
+            catch(IOException ex)
             {
-                mcLogger.Error("_initSerial  " + ex.Message);
+                mcLogger.Error("_initSerial IOException " + ex.Message);
+                return Triggers.SerialPortNameError;
             }
         }
 
+        private Triggers _idle()
+        {
+            return Triggers.ReadMessage;
+        }
 
-        private void _finishSelection()
+
+
+        private Triggers _finishSelection()
         {
             try
             {
                 mSerialPort.Close();  // Close() method calls Dispose() se we don't need to call Dispose()
+                mcHeatMapUpdateTimer.Stop();
             }
             catch (IOException ex)
             {
                 mcLogger.Error("_finishSelection " + ex.Message);
             }
 
-            StateMachine.Fire(Triggers.Start);
+            return Triggers.Start;
         }
 
         private void _usbDisconectedError()
@@ -159,22 +188,27 @@ namespace DialogEngine.Services
 
         }
 
-        private async void _serialPortError()
+        private async Task<Triggers> _serialPortError()
         {
-            bool result =(bool) await DialogHost.Show(new SerialComPortErrorDialog());
+            bool result = false ;
+            await Application.Current.Dispatcher.Invoke(async () =>
+            {
+                result = (bool)await DialogHost.Show(new SerialComPortErrorDialog());
+
+            });
 
             if (result)
             {
-                StateMachine.Fire(Triggers.Init);
+                return Triggers.Initialize;
             }
             else
             {
-                StateMachine.Fire(Triggers.Start);
+                return Triggers.Start;
             }
         }
 
 
-        private void _readMessage()
+        private Triggers _readMessage()
         {
             try
             {
@@ -185,37 +219,35 @@ namespace DialogEngine.Services
 
                 if (message == null)
                 {
-                    StateMachine.Fire(Triggers.ReadMessage);
-                    return;
+                    return Triggers.Idle;
                 }
 
                 mRowNum = ParseMessage.Parse(message, ref mNewRow);
 
-                if (-1 < mRowNum && mRowNum < NumRadios)
+                if (mRowNum < 0 || mRowNum >= NumRadios)
                 {
-                    StateMachine.Fire(Triggers.ReadMessage);
-                    return;
+                    return Triggers.Idle;
                 }
                 else
                 {
                     ParseMessage.ProcessMessage(mRowNum, mNewRow);
-                    StateMachine.Fire(Triggers.FindClosestPair);
+                    return Triggers.FindClosestPair;
                 }
             }
             catch (TimeoutException ex)
             {
                 mcLogger.Error("_readMessage TimeoutException " + ex.Message);
-                StateMachine.Fire(Triggers.ReadMessage);
+                return Triggers.Idle;
             }
             catch (InvalidOperationException ex) // port is closed
             {
                 mcLogger.Error("_readMessage InvalidOperationException " + ex.Message);
-                StateMachine.Fire(Triggers.Init);
+                return Triggers.Initialize;
             }
             catch (Exception ex)
             {
                 mcLogger.Error("_readMessage " + ex.Message);
-                StateMachine.Fire(Triggers.ReadMessage);
+                return Triggers.Idle;
             }
         }
 
@@ -281,7 +313,7 @@ namespace DialogEngine.Services
             }
             catch (Exception)
             {
-                MessageBox.Show("No character assigned to radio with number " + _radioNum + " .");
+                //MessageBox.Show("No character assigned to radio with number " + _radioNum + " .");
                 return -1;
             }
         }
@@ -326,7 +358,7 @@ namespace DialogEngine.Services
         }
 
 
-        private  void _findBiggestRssiPair()
+        private Triggers _findBiggestRssiPair()
         {
             //  This method takes the RSSI values and combines them so that the RSSI for Ch2 looking at 
             //  Ch1 is added to the RSSI for Ch1 looking at Ch2
@@ -377,22 +409,22 @@ namespace DialogEngine.Services
 
                 if (_rssiStable)
                 {
-                    StateMachine.Fire(Triggers.SelectNextCharacters);
+                    return Triggers.SelectNextCharacters;
                 }
                 else
                 {
-                    StateMachine.Fire(Triggers.ReadMessage);
+                    return Triggers.ReadMessage;
                 }
             }
             catch (Exception ex)
             {
                 mcLogger.Error("_findBiggestRssiPair " + ex.Message);
-                StateMachine.Fire(Triggers.ReadMessage);
+                return Triggers.ReadMessage;
             }
         }
 
 
-        private void _selectNextCharacters()
+        private Triggers _selectNextCharacters()
         {
             try
             {
@@ -408,7 +440,7 @@ namespace DialogEngine.Services
                 mcLogger.Error("_selectNextCharacters " + ex.Message);
             }
 
-            StateMachine.Fire(Triggers.ReadMessage);
+            return Triggers.ReadMessage;
         }
 
 
@@ -442,6 +474,82 @@ namespace DialogEngine.Services
 
             return _message;
         }
+
+
+        #endregion
+
+        #region - public functions -
+
+        public  Task Start()
+        {
+            return Task.Run(async () =>
+            {
+                StateMachine.Fire(Triggers.Initialize);
+
+                do
+                {
+                    switch (StateMachine.State)
+                    {
+                        case States.Init:
+                            {
+                                Triggers _nextTrigger = _initSerial();
+
+                                StateMachine.Fire(_nextTrigger);
+                                break;
+                            }
+                        case States.SerialPortNameError:
+                            {
+                                Triggers _nextTrigger = await _serialPortError();
+
+                                StateMachine.Fire(_nextTrigger);
+                                break;
+                            }
+                        case States.Idle:
+                            {
+                                Triggers _nextTrigger = _idle();
+
+                                StateMachine.Fire(_nextTrigger);
+                                break;
+                            }
+                        case States.ReadMessage:
+                            {
+                                Triggers _nextTrigger = _readMessage();
+
+                                StateMachine.Fire(_nextTrigger);
+                                break;
+                            }
+                        case States.FindClosestPair:
+                            {
+                                Triggers _nextTrigger = _findBiggestRssiPair();
+
+                                StateMachine.Fire(_nextTrigger);
+                                break;
+                            }
+                        case States.SelectNextCharacters:
+                            {
+                                Triggers _nextTrigger = _selectNextCharacters();
+
+                                StateMachine.Fire(_nextTrigger);
+                                break;
+                            }
+                        case States.Finish:
+                            {
+                                Triggers _nextTrigger = _finishSelection();
+
+                                StateMachine.Fire(_nextTrigger);
+                                break;
+                            }
+                    }
+                } while (StateMachine.State != States.Start);
+
+            });
+        }
+
+        public void Stop()
+        {
+            StateMachine.Fire(Triggers.Finish);
+        }
+
 
         #endregion
 

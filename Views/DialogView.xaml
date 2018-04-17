@@ -238,12 +238,14 @@
                                         
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <RadioButton GroupName="{Binding Path=CharacterName}" VerticalAlignment="Center" HorizontalAlignment="Center" 
-                                                                     IsChecked="{Binding State,
-                                                                                         Mode=TwoWay, 
-                                                                                         UpdateSourceTrigger=PropertyChanged, 
-                                                                                         Converter = {StaticResource CharacterStateToBooleanConverter}, 
-                                                                                         ConverterParameter={x:Static enums:CharacterState.Available}}" />
+                                                <RadioButton GroupName="{Binding Path=CharacterName}" 
+                                                             VerticalAlignment="Center" 
+                                                             HorizontalAlignment="Center" 
+                                                             IsChecked="{Binding State,
+                                                                                 Mode=TwoWay, 
+                                                                                 UpdateSourceTrigger=PropertyChanged, 
+                                                                                 Converter = {StaticResource CharacterStateToBooleanConverter}, 
+                                                                                 ConverterParameter={x:Static enums:CharacterState.Available}}" />
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
 
@@ -261,12 +263,14 @@
                                         
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <RadioButton GroupName="{Binding Path=CharacterName}" VerticalAlignment="Center" HorizontalAlignment="Center" 
-                                                                     IsChecked="{Binding State, 
-                                                                                         Mode=TwoWay,
-                                                                                         UpdateSourceTrigger=PropertyChanged, 
-                                                                                         Converter = {StaticResource CharacterStateToBooleanConverter}, 
-                                                                                         ConverterParameter={x:Static enums:CharacterState.On}}" />
+                                                <RadioButton GroupName="{Binding Path=CharacterName}" 
+                                                             VerticalAlignment="Center" 
+                                                             HorizontalAlignment="Center" 
+                                                             IsChecked="{Binding State, 
+                                                                                 Mode=TwoWay,
+                                                                                 UpdateSourceTrigger=PropertyChanged, 
+                                                                                 Converter = {StaticResource CharacterStateToBooleanConverter}, 
+                                                                                 ConverterParameter={x:Static enums:CharacterState.On}}" />
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
 
@@ -284,12 +288,14 @@
                                         
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <RadioButton GroupName="{Binding Path=CharacterName}" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                                                     IsChecked="{Binding State, 
-                                                                                         Mode=TwoWay,
-                                                                                         UpdateSourceTrigger=PropertyChanged, 
-                                                                                         Converter = {StaticResource CharacterStateToBooleanConverter}, 
-                                                                                         ConverterParameter={x:Static enums:CharacterState.Off}}" />
+                                                <RadioButton GroupName="{Binding Path=CharacterName}" 
+                                                             HorizontalAlignment="Center" 
+                                                             VerticalAlignment="Center"
+                                                             IsChecked="{Binding State, 
+                                                                                 Mode=TwoWay,
+                                                                                 UpdateSourceTrigger=PropertyChanged, 
+                                                                                 Converter = {StaticResource CharacterStateToBooleanConverter}, 
+                                                                                 ConverterParameter={x:Static enums:CharacterState.Off}}" />
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                         
@@ -795,15 +801,18 @@
                                 Content="Stop dialog"
                                 Style="{DynamicResource MaterialDesignRaisedButton}"
                                 Command="{Binding StopDialog}" 
-                                HorizontalAlignment="Center" 
-                                IsEnabled="{Binding IsDialogStopped , Converter={StaticResource InvertBooleanConverter}}"
+                                HorizontalAlignment="Center"
+                                IsEnabled="{Binding ElementName=StartDialogBtn, Path=IsEnabled, Converter={StaticResource InvertBooleanConverter}}"
                                 Grid.Column="0" />
 
                         <Button Content="Start dialog"
+                                x:Name="StartDialogBtn"
                                 Style="{DynamicResource MaterialDesignRaisedButton}"
                                 Command="{Binding GenerateDialog}" 
                                 HorizontalAlignment="Center"
-                                IsEnabled="False"
+                                IsEnabled="{Binding CurrentState, 
+                                                    Converter={StaticResource IsEnabledDialogViewControlConverter}, 
+                                                    ConverterParameter=RandomSelectionStarted|SerialSelectionStarted}"
                                 Grid.Column="1" />
 
                     </Grid>

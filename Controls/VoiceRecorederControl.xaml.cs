@@ -1,5 +1,5 @@
 ﻿
-using DialogEngine.ViewModels.WizardWorkflow;
+using DialogEngine.Workflows.WizardWorkflow;
 using System.Windows;
 using System.Windows.Controls;
 

@@ -26,11 +26,11 @@ namespace DialogEngine.Helpers
 
         #region - public functions -
 
-        public static async  Task LoadDialogDataAsync(string path)
+        public static  Task LoadDialogDataAsync(string path)
         {
             ObservableCollection<Character> _characterList = new ObservableCollection<Character>();
 
-            await Task.Run(() =>
+            return Task.Run(() =>
             {
                 Thread.CurrentThread.Name = "LoadDialogDataAsync";
 

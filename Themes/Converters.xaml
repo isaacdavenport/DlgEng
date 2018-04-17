@@ -29,5 +29,6 @@
     <converters:CharacterGenderConverter x:Key="CharacterGenderConverter" />
     <converters:ParseBooleanConverter x:Key="ParseBooleanConverter" />
     <converters:IsEnabledMainWindowControlConverter x:Key="IsEnabledMainWindowControlConverter" />
+    <converters:IsEnabledDialogViewControlConverter x:Key="IsEnabledDialogViewControlConverter" />
 
 </ResourceDictionary>

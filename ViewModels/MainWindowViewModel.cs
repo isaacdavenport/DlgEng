@@ -5,7 +5,7 @@ using DialogEngine.Dialogs;
 using DialogEngine.Events;
 using DialogEngine.Events.DialogEvents;
 using DialogEngine.Helpers;
-using DialogEngine.ViewModels.MainWindowWorkflows;
+using DialogEngine.Workflows.MainWindowWorkflows;
 using DialogEngine.Views;
 using log4net;
 using MaterialDesignThemes.Wpf;

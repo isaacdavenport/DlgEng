@@ -22,6 +22,7 @@ using GalaSoft.MvvmLight.CommandWpf;
 using System.Windows.Input;
 using DialogEngine.Models.Shared;
 using DialogEngine.Services;
+using DialogEngine.Workflows.DialogPageWorkflow;
 
 namespace DialogEngine.ViewModels
 {
@@ -35,10 +36,10 @@ namespace DialogEngine.ViewModels
 
         //default application logger
         private static readonly ILog mcLogger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private StateMachine mStateMachine;
+        private States mCurrentState;
         // counter for characters in On state
         private static int msSelectedCharactersOn;
-        private static DialogViewModel msInstance = null;
-        private static readonly object mcPadlock = new object();
         // reference on view
         private DialogView mView; 
         private readonly Random mRandom = new Random();
@@ -46,20 +47,23 @@ namespace DialogEngine.ViewModels
         private Point mStartPosition;
         // detect is dialog model changed, true value force application to reload dialog model
         private bool mIsModelsDialogChanged;
-        private int mSelectedIndex1;
-        private int mSelectedIndex2;
+        public static int SelectedIndex1;
+        public static int SelectedIndex2;
         // variables for debuging selection of characters in serial mode
 
         private string mCharacter1Prefix = "--";
         private string mCharacter2Prefix = "--";
         private bool mRSSIstable;
         private int mRSSIsum;
-        private int[,] mHeatMap = new int[SerialSelectionService.NumRadios, SerialSelectionService.NumRadios];
+
+        private RandomSelectionService mRandomSelectionService;
+        private SerialSelectionService mSerialSelectionService;
+
+        private ICharacterSelection mCurrentSelectionService;
 
         // indicate when dialog is active or no
         private bool mIsDialogStopped = true;
         // selected dialog model .json file
-        private ModelDialogInfo mSelectedDialogModel;
         private ObservableCollection<Character> mCharacterCollection;
         private ObservableCollection<ModelDialogInfo> mDialogModelCollection;
 
@@ -69,29 +73,7 @@ namespace DialogEngine.ViewModels
         private ObservableCollection<WarningMessage> mWarningMessagesCollection;
         private ObservableCollection<ErrorMessage> mErrorMessagesCollection;
 
-        private bool[] mRadiosState = new bool[6];
-
-        #endregion
-
-        #region - Singleton - 
-
-        /// <summary>
-        /// Implementation of singleton pattern for DialogTracker class
-        /// </summary>
-        public static DialogViewModel Instance
-        {
-            get
-            {
-                lock (mcPadlock)
-                {
-                    if (msInstance == null)
-                    {
-                        msInstance = new DialogViewModel();
-                    }
-                    return msInstance;
-                }
-            }
-        }
+        private static bool[] mRadiosState = new bool[6];
 
         #endregion
 
@@ -102,12 +84,21 @@ namespace DialogEngine.ViewModels
         /// </summary>
         public DialogViewModel()
         {
+            StateMachine = new StateMachine
+                (
+                 action: () => { }
+                );
             DialogData.Instance.PropertyChanged += _dialogData_PropertyChanged;
-            EventAggregator.Instance.GetEvent<ChangedCharactersStateEvent>().Subscribe(_onChangedCharacterState);
-            EventAggregator.Instance.GetEvent<ChangedModelDialogStateEvent>().Subscribe(_onChangedModelDialogState);
-            EventAggregator.Instance.GetEvent<DialogDataLoadedEvent>().Subscribe(_onDialogDataLoaded);
+            StateMachine.PropertyChanged += _stateMachine_PropertyChanged;
 
+            mRandomSelectionService = new RandomSelectionService();
+            mSerialSelectionService = new SerialSelectionService();
+
+            _configureStateMachine();
+            _subscribeForEvents();
             _bindCommands();
+
+            StateMachine.Fire(Triggers.Initialize);
         }
 
         #endregion
@@ -141,6 +132,7 @@ namespace DialogEngine.ViewModels
 
         public RelayCommand<MouseButtonEventArgs> PreviewMouseLeftButtonDownCommand { get; set; }
 
+
         public RelayCommand<MouseEventArgs> PreviewMouseMoveCommand { get; set; }
 
         /// <summary>
@@ -161,12 +153,12 @@ namespace DialogEngine.ViewModels
         /// <summary>
         /// Selected  dialog model from specified dialog .json file
         /// </summary>
-        public RelayCommand<SelectionChangedEventArgs> DialogModelSelectionChangedCommand { get; set; }
+        public RelayCommand<System.Windows.Controls.SelectionChangedEventArgs> DialogModelSelectionChangedCommand { get; set; }
 
         /// <summary>
         /// Recalculate width for TabItem columns in debug view
         /// </summary>
-        public RelayCommand<SelectionChangedEventArgs> RefreshTabItem { get; set; }
+        public RelayCommand<System.Windows.Controls.SelectionChangedEventArgs> RefreshTabItem { get; set; }
 
 
         #endregion
@@ -178,50 +170,116 @@ namespace DialogEngine.ViewModels
             OnPropertyChanged(e.PropertyName);
         }
 
+        private void _stateMachine_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName.Equals("State"))
+            {
+                CurrentState = StateMachine.State;
+            }
+        }
+
         #endregion
 
         #region - Private methods -
 
+
+        private void _configureStateMachine()
+        {
+            StateMachine.Configure(States.Start)
+                .Permit(Triggers.Initialize,States.Init);
+
+            StateMachine.Configure(States.Init)
+                .OnEntry(t => _initDialogData())
+                .Permit(Triggers.Idle, States.Idle);
+
+            StateMachine.Configure(States.Idle)
+                .Permit(Triggers.StartRadnomSelection, States.RandomSelectionStarted)
+                .Permit(Triggers.StartSerialSelection, States.SerialSelectionStarted);
+
+            StateMachine.Configure(States.CharacterSelectionStarted)
+                .Permit(Triggers.Idle, States.Idle);
+
+            StateMachine.Configure(States.RandomSelectionStarted)
+                .SubstateOf(States.CharacterSelectionStarted);
+
+            StateMachine.Configure(States.SerialSelectionStarted)
+                .SubstateOf(States.CharacterSelectionStarted);
+        }
+
+
+        private void _subscribeForEvents()
+        {
+            EventAggregator.Instance.GetEvent<ChangedCharactersStateEvent>().Subscribe(_onChangedCharacterState);
+            EventAggregator.Instance.GetEvent<ChangedModelDialogStateEvent>().Subscribe(_onChangedModelDialogState);
+        }
+
+
+        private async void _initDialogData()
+        {
+            Task _checkTagsUsedTask = null;
+            Task _checkForMissingPhrasesTask;
+
+            await DialogDataHelper.LoadDialogDataAsync(SessionHelper.WizardDirectory);
+
+            
+            if (SessionHelper.TagUsageCheck)
+                _checkTagsUsedTask = _checkTagsUsedAsync();
+
+            _checkForMissingPhrasesTask = _checkForMissingPhrasesAsync();
+
+            if (_checkTagsUsedTask != null)
+            {
+                await _checkTagsUsedTask;
+            }
+
+            await _checkForMissingPhrasesTask;
+
+            _setCharacterToRadioBidnings();
+
+            StateMachine.Fire(Triggers.Idle);
+        }
+
+
         // refresh SelectedCharactersOn when character state is changed
         private void _onChangedCharacterState()
         {
-            try
-            {
-                int result = 0;
-                int index = 0;
-                SelectedCharactersOn = 0;
-                SelectedIndex1 = -1;
-                SelectedIndex2 = -1;
+            //try
+            //{
+            //    int result = 0;
+            //    int index = 0;
+            //    SelectedCharactersOn = 0;
+            //    SelectedIndex1 = -1;
+            //    SelectedIndex2 = -1;
 
-                // iterate over characters and try to find characters in ON state
-                // then assign indexes to mSelectedIndex 
-                foreach (Character characterInfo in CharacterCollection)
-                {
-                    if (characterInfo.State == Models.Enums.CharacterState.On)
-                    {
-                        string fieldName = "mSelectedIndex" + (result + 1);
-                        // get field using reflection
-                        var field = this.GetType().GetField(fieldName, BindingFlags.Instance | BindingFlags.NonPublic);
-                        field.SetValue(this, index);
-                        result += 1;
+            //    // iterate over characters and try to find characters in ON state
+            //    // then assign indexes to mSelectedIndex 
+            //    foreach (Character characterInfo in CharacterCollection)
+            //    {
+            //        if (characterInfo.State == Models.Enums.CharacterState.On)
+            //        {
+            //            string fieldName = "mSelectedIndex" + (result + 1);
+            //            // get field using reflection
+            //            var field = this.GetType().GetField(fieldName, BindingFlags.Instance | BindingFlags.NonPublic);
+            //            field.SetValue(this, index);
+            //            result += 1;
     
-                        if (result == 2)
-                            break;
-                    }
-                    index++;
-                }
+            //            if (result == 2)
+            //                break;
+            //        }
+            //        index++;
+            //    }
 
-                SelectedCharactersOn = result;
+            //    SelectedCharactersOn = result;
 
-                OnPropertyChanged("SelectedCharactersOn");
+            //    OnPropertyChanged("SelectedCharactersOn");
 
-                // when state of character changed, we want to cancel current dialog and reset MP3 player
-                EventAggregator.Instance.GetEvent<StopPlayingCurrentDialogLineEvent>().Publish();
-            }
-            catch (Exception ex)
-            {
-                mcLogger.Error("Character state changed. "+ ex.Message);
-            }
+            //    // when state of character changed, we want to cancel current dialog and reset MP3 player
+            //    EventAggregator.Instance.GetEvent<StopPlayingCurrentDialogLineEvent>().Publish();
+            //}
+            //catch (Exception ex)
+            //{
+            //    mcLogger.Error("Character state changed. "+ ex.Message);
+            //}
         }
 
 
@@ -267,6 +325,7 @@ namespace DialogEngine.ViewModels
                 mRadiosState[i] = true;
             }
         }
+
 
         // choose collection where to add object depend on type of argument
         private void _processAddMessage(LogMessage entry)
@@ -332,8 +391,8 @@ namespace DialogEngine.ViewModels
             DragEnterCommand = new RelayCommand<DragEventArgs>(_dragEnterCommand);
             DropCommand = new RelayCommand<DragEventArgs>(_dropCommand);
             DragOverCommand = new RelayCommand<DragEventArgs>(_dragOverCommand);
-            DialogModelSelectionChangedCommand = new RelayCommand<SelectionChangedEventArgs>(_dialogModelSelectionChanged);
-            RefreshTabItem = new RelayCommand<SelectionChangedEventArgs>(_refreshTabItem);
+            DialogModelSelectionChangedCommand = new RelayCommand<System.Windows.Controls.SelectionChangedEventArgs>(this._dialogModelSelectionChanged);
+            RefreshTabItem = new RelayCommand<System.Windows.Controls.SelectionChangedEventArgs>(this._refreshTabItem);
         }
 
 
@@ -345,40 +404,36 @@ namespace DialogEngine.ViewModels
         }
 
 
-        private async void _onDialogDataLoaded()
-        {
-            Task _checkTagsUsedTask = null;
-            Task _checkForMissingPhrasesTask;
-
-            if (SessionHelper.TagUsageCheck)
-                _checkTagsUsedTask = _checkTagsUsedAsync();
-
-            _checkForMissingPhrasesTask= _checkForMissingPhrasesAsync();
-
-            if(_checkTagsUsedTask != null)
-            {
-                await _checkTagsUsedTask;
-            }
-
-            await _checkForMissingPhrasesTask;
-
-            _setCharacterToRadioBidnings();
-        }
-
-
-        private void _dialogModelSelectionChanged(SelectionChangedEventArgs e)
+        private void _dialogModelSelectionChanged(System.Windows.Controls.SelectionChangedEventArgs e)
         {
             if(e.AddedItems.Count > 0)
             {
+                int index;
+                int result = 0;
                 ComboBox source = e.Source as ComboBox;
+                int _indexOfSelectedDialogModel = source.SelectedIndex;
+                ModelDialogInfo _selectedDialogModel = source.Tag as ModelDialogInfo;
 
-                SelectedDialogModel = source.Tag as ModelDialogInfo;
+                index = DialogModelCollection.IndexOf(_selectedDialogModel);
 
-                SelectedDialogModel.SelectedModelDialogIndex = source.SelectedIndex;
+                // iterate over dialog model files
+                for (int i = 0; i < index; i++)
+                {
+                    if (DialogModelCollection[i].State == Models.Enums.ModelDialogState.On)
+                    {
+                        result += DialogModelCollection[i].ArrayOfDialogModels.Count;
+                    }
+                }
+
+                _indexOfSelectedDialogModel += result;
+
+                EventAggregator.Instance.GetEvent<SelectedCharacterChangedEvent>().
+                    Publish(new Models.Shared.SelectionChangedEventArgs { IsSelected = true, Index = _indexOfSelectedDialogModel });
             }
             else
             {
-                SelectedDialogModel = null;
+                EventAggregator.Instance.GetEvent<SelectedCharacterChangedEvent>().
+                    Publish(new Models.Shared.SelectionChangedEventArgs { IsSelected = false });
             }
         }
 
@@ -496,7 +551,6 @@ namespace DialogEngine.ViewModels
         }
 
 
-
         private void _previewMouseMoveCommand(MouseEventArgs e)
         {
             try
@@ -535,7 +589,7 @@ namespace DialogEngine.ViewModels
 
 
         // forces TabItem to refresh binding for GridView columns width
-        private void _refreshTabItem(SelectionChangedEventArgs e)
+        private void _refreshTabItem(System.Windows.Controls.SelectionChangedEventArgs e)
         {
             try
             {
@@ -716,52 +770,34 @@ namespace DialogEngine.ViewModels
         // stops dialog
         private void _stopDialog()
         {
-            //try
-            //{
-            //    IsDialogStopped = true;
+            mCurrentSelectionService.Stop();
 
-            //    EventAggregator.Instance.GetEvent<StopImmediatelyPlayingCurrentDialogLIne>().Publish();
-
-            //    DialogLinesCollection.Clear();
-
-            //    OnPropertyChanged("DialogLinesCollection");
-
-            //    mCancellationTokenDialogWorkerSource.Cancel();
-            //    mCancellationTokenGenerateDialogSource.Cancel();
-
-            //    mCancellationTokenDialogWorkerSource = new CancellationTokenSource();
-            //    mCancellationTokenGenerateDialogSource = new CancellationTokenSource();
-            //}
-            //catch (Exception ex)
-            //{
-            //    mcLogger.Error("Stop dialog. " + ex.Message);
-            //}
+            StateMachine.Fire(Triggers.Idle);
         }
 
 
         // starts new dialog
         private async  void _startDialog()
         {
-            //try
-            //{
-            //    try
-            //    {
-            //        // .First() will throw exception if data not found
-            //        var _dialogModelInfo = DialogModelCollection.Where(x => x.State == Models.Enums.ModelDialogState.On)
-            //                                                    .First();
-            //    }
-            //    catch (Exception)
-            //    {
-            //        MessageBox.Show("No allowed dialog model files. Please change settings for dialog models.");
-            //        return;
-            //    }
+            try
+            {
+                if (SessionHelper.UseSerialPort)
+                {
+                    mCurrentSelectionService = mSerialSelectionService;
+                    StateMachine.Fire(Triggers.StartSerialSelection);
+                }
+                else
+                {
+                    mCurrentSelectionService = mRandomSelectionService;
+                    StateMachine.Fire(Triggers.StartRadnomSelection);
+                }
 
-            //    IsDialogStopped = false;
-            //}
-            //catch (Exception ex)
-            //{
-            //    mcLogger.Error("Start dialog exception. "+ ex.Message);
-            //}         
+                await mCurrentSelectionService.Start();
+            }
+            catch (Exception ex)
+            {
+                mcLogger.Error("_startDialog " + ex.Message);
+            }
         }
 
 
@@ -769,28 +805,46 @@ namespace DialogEngine.ViewModels
 
         #region - Properties -
 
-        /// <summary>
-        /// Contains index of selected character 1 in ON state
-        /// </summary>
-        public int SelectedIndex1 { get => mSelectedIndex1; set => mSelectedIndex1 = value; }
 
-        /// <summary>
-        /// Contains index of selected character 2 in ON state
-        /// </summary>
-        public int SelectedIndex2 { get => mSelectedIndex2; set => mSelectedIndex2 = value; }
+        public StateMachine StateMachine
+        {
+            get { return mStateMachine; }
+            set
+            {
+                mStateMachine = value;
+                OnPropertyChanged("StateMachine");
+            }
+        }
+
+
+        public States CurrentState
+        {
+            get { return mCurrentState; }
+            set
+            {
+                mCurrentState = value;
+                OnPropertyChanged("CurrentState");
+            }
+        }
+
+
+        ///// <summary>
+        ///// Contains index of selected character 1 in ON state
+        ///// </summary>
+        //public int SelectedIndex1 { get => mSelectedIndex1; set => mSelectedIndex1 = value; }
+
+        ///// <summary>
+        ///// Contains index of selected character 2 in ON state
+        ///// </summary>
+        //public int SelectedIndex2 { get => mSelectedIndex2; set => mSelectedIndex2 = value; }
 
 
         /// <summary>
         /// Signal strengh received from toys 
         /// </summary>
-        public int[,] HeatMapUpdate
+        public  int[,] HeatMapUpdate
         {
-            get { return mHeatMap; }
-            set
-            {
-                mHeatMap = value;
-                OnPropertyChanged("HeatMapUpdate");
-            }
+            get { return DialogData.Instance.HeatMapUpdate; }
         }
 
 
@@ -871,54 +925,6 @@ namespace DialogEngine.ViewModels
         {
             get { return mView; }
             set { this.mView = value; }
-        }
-
-        /// <summary>
-        /// Selected dialog model .json file
-        /// </summary>
-        public ModelDialogInfo SelectedDialogModel
-        {
-            get { return mSelectedDialogModel; }
-            set
-            {
-                this.mSelectedDialogModel = value;
-                OnPropertyChanged("SelectedDialogModel");
-            }
-        }
-
-        /// <summary>
-        /// Index of selected dialog model from selected dialog .json file
-        /// </summary>
-        public int SelectedDialogModelIndex
-        {
-            get
-            {
-                //if (SelectedDialogModel == null)
-                //{
-                //    return -1;
-                //}
-
-                //int result = 0;
-
-                //// iterate over dialog model files
-                //for (int i = 0; i < DialogModelCollection.Count; i++)
-                //{
-                //    // if we found selected file, then get its selected dialog model 
-                //    if (DialogModelCollection[i].FileName.Equals(SelectedDialogModel.FileName))
-                //    {
-                //        return result + SelectedDialogModel.SelectedModelDialogIndex;
-                //    }
-                //    else  // add number of its dialog models
-                //    {
-                //        if (DialogModelCollection[i].State == Models.Enums.ModelDialogState.On)
-                //        {
-                //            result += DialogModelCollection[i].InList.Count;
-                //        }
-                //    }
-                //}
-
-                return -1;
-            }
         }
 
         /// <summary>
@@ -1023,7 +1029,7 @@ namespace DialogEngine.ViewModels
         /// <summary>
         /// Radios states
         /// </summary>
-        public bool[] RadiosState
+        public static bool[] RadiosState
         {
             get { return mRadiosState; }
         }

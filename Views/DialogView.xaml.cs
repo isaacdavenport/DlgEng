@@ -25,15 +25,15 @@ namespace DialogEngine.Views
         {
             InitializeComponent();
            
-            DataContext = DialogViewModel.Instance;
+            DataContext = new DialogViewModel();
         }
 
 
-        protected async override void onPageLoaded()
+        protected  override void onPageLoaded()
         {
             (this.DataContext as DialogViewModel).View = this;
 
-            await DialogDataHelper.LoadDialogDataAsync(SessionHelper.WizardDirectory);
+            //await DialogDataHelper.LoadDialogDataAsync(SessionHelper.WizardDirectory);
         }
 
         private void PopupBox_Opened(object sender, System.Windows.RoutedEventArgs e)

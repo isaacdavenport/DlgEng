@@ -9,6 +9,7 @@ using DialogEngine.ViewModels;
 using log4net;
 using System.Reflection;
 using DialogEngine.Services;
+using DialogEngine.Models.Shared;
 
 namespace DialogEngine.Helpers
 {
@@ -27,7 +28,7 @@ namespace DialogEngine.Helpers
         {
             try
             {
-                if (_characterRowNum > DialogViewModel.Instance.CharacterCollection.Count - 1)  //was omiting character 5 from log when it was Count - 2
+                if (_characterRowNum > DialogData.Instance.CharacterCollection.Count - 1)  //was omiting character 5 from log when it was Count - 2
                 {
                     return;
                 }
@@ -36,7 +37,7 @@ namespace DialogEngine.Helpers
                 {
                     ReceivedTime = _timeStamp,
                     SequenceNum = _rw[SerialSelectionService.NumRadios],
-                    CharacterPrefix = DialogViewModel.Instance.CharacterCollection[_characterRowNum].CharacterPrefix
+                    CharacterPrefix = DialogData.Instance.CharacterCollection[_characterRowNum].CharacterPrefix
                 });
 
                 //TODO add a lock around this
@@ -79,7 +80,7 @@ namespace DialogEngine.Helpers
             {
                 for (int _k = 0; _k < SerialSelectionService.NumRadios; _k++)
                 {
-                    if (DialogViewModel.Instance.RadiosState[_rowNum])
+                    if (DialogViewModel.RadiosState[_rowNum])
                     {
                         SerialSelectionService.HeatMap[_rowNum, _k] = _newRow[_k];
                     }

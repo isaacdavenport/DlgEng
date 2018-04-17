@@ -7,7 +7,6 @@ using System;
 using System.Globalization;
 using System.Windows.Data;
 using System.Data;
-using DialogEngine.Hendlers;
 using DialogEngine.Services;
 
 namespace DialogEngine.Converters
@@ -29,8 +28,10 @@ namespace DialogEngine.Converters
         {
             var array = value as int[,];
             if (array == null) return null;
+
             var rows = array.GetLength(0);
             if (rows == 0) return null;
+
             var columns = array.GetLength(1);
             if (columns == 0) return null;
 

@@ -11,7 +11,7 @@ using DialogEngine.Helpers;
 using DialogEngine.Models.Dialog;
 using DialogEngine.Models.Shared;
 using DialogEngine.Models.Wizard;
-using DialogEngine.ViewModels.WizardWorkflow;
+using DialogEngine.Workflows.WizardWorkflow;
 using log4net;
 using MaterialDesignThemes.Wpf;
 using Stateless.Graph;
@@ -191,17 +191,14 @@ namespace DialogEngine.ViewModels
                 .Permit(Triggers.ReadyForUserAction,States.ReadyForUserAction);
 
             StateMachine.Configure(States.VoiceRecorderRecording)
-                .SubstateOf(States.VoiceRecorderAction)
-                .Permit(Triggers.ReadyForUserAction,States.ReadyForUserAction);
+                .SubstateOf(States.VoiceRecorderAction);
 
             StateMachine.Configure(States.VoiceRecorderPlaying)
-                .SubstateOf(States.VoiceRecorderAction)
-                .Permit(Triggers.ReadyForUserAction, States.ReadyForUserAction);
+                .SubstateOf(States.VoiceRecorderAction);
 
             StateMachine.Configure(States.VoiceRecorderPlayingInContext)
                 .OnEntry(t => _playDialogLineInContext())
-                .SubstateOf(States.VoiceRecorderAction)
-                .Permit(Triggers.ReadyForUserAction, States.ReadyForUserAction);
+                .SubstateOf(States.VoiceRecorderAction);
 
             StateMachine.Configure(States.VideoPlayerAction)
                 .Permit(Triggers.ReadyForUserAction, States.ReadyForUserAction);
@@ -230,8 +227,8 @@ namespace DialogEngine.ViewModels
                 .Permit(Triggers.Start, States.Start);
 
             StateMachine.Configure(States.VideoPlayerPlaying)
-                .SubstateOf(States.VideoPlayerAction)
-                .Permit(Triggers.ReadyForUserAction, States.ReadyForUserAction);
+                .SubstateOf(States.VideoPlayerAction);
+
         }
 
 
@@ -477,7 +474,9 @@ namespace DialogEngine.ViewModels
                     if (string.IsNullOrEmpty(DialogStr))
                     {
                         var result = await DialogHost
-                            .Show(new YesNoDialog("Warning", "You didn't write text for this dialog line. Do you want to save step without it?", "Yes", "No"), "WizardPageDialogHost");
+                            .Show(new YesNoDialog("Warning", 
+                            "You didn't write text for this dialog line. Do you want to save step without it?", "Yes", "No"), 
+                            "WizardPageDialogHost");
 
                         if(result == null)
                         {

@@ -15,7 +15,7 @@ using System.Windows;
 
 namespace DialogEngine.Services
 {
-    public class RandomSelectionService
+    public class RandomSelectionService : ICharacterSelection
     {
         #region - fields -
 
@@ -23,6 +23,7 @@ namespace DialogEngine.Services
         private static Random msRandom = new Random();
         public static int NextCharacter1 = 1;
         public static int NextCharacter2 = 2;
+        private CancellationTokenSource mCancellationTokenSource;
 
         #endregion
 
@@ -94,9 +95,11 @@ namespace DialogEngine.Services
         }
 
 
-        public async static Task OccasionallyChangeToRandNewCharacterAsync(CancellationToken _cancellationToken)
+        public  Task Start()
         {
-            await Task.Run(() =>
+            mCancellationTokenSource = new CancellationTokenSource();
+
+            return Task.Run(() =>
             {
                 Thread.CurrentThread.Name = "OccasionallyChangeToRandNewCharacterAsyncThread";
 
@@ -113,7 +116,7 @@ namespace DialogEngine.Services
 
                     while (true)
                     {
-                        _cancellationToken.ThrowIfCancellationRequested();
+                        mCancellationTokenSource.Token.ThrowIfCancellationRequested();
 
                         _userHasForcedCharacters = false;
 
@@ -122,8 +125,8 @@ namespace DialogEngine.Services
                             if (DialogViewModel.SelectedCharactersOn == 2)
                             {  //two three letter inital sets should be less than7 w space
                                 _userHasForcedCharacters = true;
-                                NextCharacter1 = DialogViewModel.Instance.SelectedIndex1;
-                                NextCharacter2 = DialogViewModel.Instance.SelectedIndex2;
+                                NextCharacter1 = DialogViewModel.SelectedIndex1;
+                                NextCharacter2 = DialogViewModel.SelectedIndex2;
                             }
                         }
 
@@ -152,6 +155,11 @@ namespace DialogEngine.Services
                     DialogDataHelper.AddMessage(new ErrorMessage("Error in random selection of characters."));
                 }
             });
+        }
+
+        public void Stop()
+        {
+            mCancellationTokenSource.Cancel();
         }
 
         #endregion

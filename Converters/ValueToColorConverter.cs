@@ -3,6 +3,7 @@
 
 //  Converters convert input parameter to a value expected by a gui item  
 
+using DialogEngine.Models.Shared;
 using DialogEngine.Services;
 using DialogEngine.ViewModels;
 using System;
@@ -43,8 +44,8 @@ namespace DialogEngine.Converters
 
             if( row == _heatMapColumn && SerialSelectionService.HeatMap[row, _heatMapColumn] > 0)
             {
-                if(  row == DialogViewModel.Instance.CharacterCollection[SerialSelectionService.NextCharacter1].RadioNum 
-                  || row == DialogViewModel.Instance.CharacterCollection[SerialSelectionService.NextCharacter2].RadioNum)
+                if(  row == DialogData.Instance.CharacterCollection[SerialSelectionService.NextCharacter1].RadioNum 
+                  || row == DialogData.Instance.CharacterCollection[SerialSelectionService.NextCharacter2].RadioNum)
                 {
                     return Brushes.Red;
                 }

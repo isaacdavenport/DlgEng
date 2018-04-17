@@ -5,19 +5,16 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows.Input;
 
-namespace DialogEngine.Workflows.SerialSelectionWorkflow
+namespace DialogEngine.Workflows.DialogPageWorkflow
 {
     public enum States
     {
-       Start,
-       Init,
-       Idle,
-       SerialPortNameError,
-       USB_disconnectedError,
-       ReadMessage,
-       FindClosestPair,
-       SelectNextCharacters,
-       Finish
+        Start,
+        Init,
+        Idle,
+        CharacterSelectionStarted,
+        SerialSelectionStarted,
+        RandomSelectionStarted
     }
 
     public enum Triggers
@@ -25,12 +22,9 @@ namespace DialogEngine.Workflows.SerialSelectionWorkflow
         Start,
         Initialize,
         Idle,
-        SerialPortNameError,
-        USB_disconnectedError,
-        ReadMessage,
-        FindClosestPair,
-        SelectNextCharacters,
-        Finish
+        StartCharacterSelection,
+        StartSerialSelection,
+        StartRadnomSelection
     }
 
     public class StateMachine : Stateless.StateMachine<States, Triggers>, INotifyPropertyChanged
@@ -59,7 +53,7 @@ namespace DialogEngine.Workflows.SerialSelectionWorkflow
               (
                 (t) => Debug.WriteLine
                   (
-                    "SerialSelectionWorkflow transitioned from {0} -> {1} [{2}]",
+                    "DialogPageWorkflow transitioned from {0} -> {1} [{2}]",
                     t.Source, t.Destination, t.Trigger
                   )
               );

@@ -130,6 +130,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\CharacterGenderConverter.cs" />
+    <Compile Include="Converters\IsEnabledDialogViewControlConverter.cs" />
     <Compile Include="Converters\IsEnabledMainWindowControlConverter.cs" />
     <Compile Include="Converters\IsMediaPlayerPlayBtnEnabledConverter.cs" />
     <Compile Include="Converters\IsMediaPlayerStopBtnEnabledConverter.cs" />
@@ -142,11 +143,18 @@
     <Compile Include="Dialogs\ValidationRules\NumberValidationRule.cs" />
     <Compile Include="Dialogs\ValidationRules\RegexValidtionRuleWrapper.cs" />
     <Compile Include="Dialogs\ValidationRules\RegexValidationRule.cs" />
+    <Compile Include="Events\DialogEvents\DialogModelChangedEvent.cs" />
     <Compile Include="Events\DialogEvents\GoBackEvent.cs" />
+    <Compile Include="Events\DialogEvents\SelectedCharacterChangedEvent.cs" />
+    <Compile Include="Events\DialogEvents\SelectedCharactersPairChangedEvent.cs" />
     <Compile Include="Helpers\ConfigHelper.cs" />
+    <Compile Include="Models\Shared\SelectedCharactersPairEventArgs.cs" />
+    <Compile Include="Models\Shared\SelectionChangedEventArgs.cs" />
+    <Compile Include="Services\ICharacterSelection.cs" />
     <Compile Include="Services\RandomSelectionService.cs" />
     <Compile Include="Services\SerialSelectionService.cs" />
     <Compile Include="Models\Shared\Setting.cs" />
+    <Compile Include="Workflows\DialogPageWorkflow.cs" />
     <Compile Include="Workflows\SerialSelectionWorkflow.cs" />
     <Compile Include="ViewModels\DialogControlViewModel.cs" />
     <Compile Include="Controls\DialogControl.xaml.cs">
@@ -243,7 +251,7 @@
     <Compile Include="MP3Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\SessionHelper.cs" />
-    <Compile Include="Workflows\DialogWorkflow.cs" />
+    <Compile Include="Workflows\DialogGeneratorWorkflow.cs" />
     <Compile Include="Workflows\MainWindowWorkflow.cs" />
     <Compile Include="Workflows\WizardWorkflow.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">

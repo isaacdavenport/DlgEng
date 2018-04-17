@@ -14,7 +14,7 @@ namespace DialogEngine.Models.Dialog
     /// This is subset of <see cref="ModelDialog" />
     /// It is used to store basic information about dialog models, which should be faster then parsing all json files 
     /// </summary>
-    public class ModelDialogInfo
+    public class ModelDialogInfo 
     {
         #region - fields -
 
@@ -54,6 +54,17 @@ namespace DialogEngine.Models.Dialog
                 mState = value;
                 EventAggregator.Instance.GetEvent<ChangedModelDialogStateEvent>().Publish();
             }
+        }
+
+        #endregion
+
+        #region - public functions -
+
+        public override bool Equals(object obj)
+        {
+            var _modelDialogInfo = obj as ModelDialogInfo;
+
+            return _modelDialogInfo.ModelsCollectionName.Equals(this.ModelsCollectionName);
         }
 
         #endregion

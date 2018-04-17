@@ -1,5 +1,5 @@
 ﻿using DialogEngine.Controls.ViewModels;
-using DialogEngine.ViewModels.WizardWorkflow;
+using DialogEngine.Workflows.WizardWorkflow;
 using log4net;
 using System;
 using System.Reflection;

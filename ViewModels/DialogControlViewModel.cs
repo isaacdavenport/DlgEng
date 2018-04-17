@@ -1,11 +1,15 @@
 ﻿
 using DialogEngine.Controls.Views;
 using DialogEngine.Core;
+using DialogEngine.Events;
+using DialogEngine.Events.DialogEvents;
 using DialogEngine.Helpers;
 using DialogEngine.Models.Dialog;
 using DialogEngine.Models.Logger;
+using DialogEngine.Models.Shared;
 using DialogEngine.Services;
 using DialogEngine.ViewModels;
+using DialogEngine.Workflows.DialogGeneratorWorkflow;
 using log4net;
 using System;
 using System.Collections.Generic;
@@ -26,6 +30,7 @@ namespace DialogEngine.Controls.ViewModels
         private static int msMovementWaitCount;
         private static int msCurrentDialogModel;
 
+        private StateMachine mStateMachine;
         private DialogControl mView;
         private int mPriorCharacter1Num = 100;
         private int mPriorCharacter2Num = 100;
@@ -56,7 +61,12 @@ namespace DialogEngine.Controls.ViewModels
         public DialogControlViewModel(DialogControl view)
         {
             this.mView = view;
-            //mcStateMachine = new StateMachine<DialogState, DialogTrigger>(DialogState.Init);
+            StateMachine = new StateMachine
+                (
+                  action : () => { }
+                );
+
+            _configureStateMachine();
         }
 
         #endregion
@@ -65,19 +75,25 @@ namespace DialogEngine.Controls.ViewModels
 
         private void _configureStateMachine()
         {
-            //mcStateMachine.Configure(DialogState.Init)
-            //    .Permit(DialogTrigger.WaitForDialog, DialogState.Idle);
+            StateMachine.Configure(States.Init)
+                .OnEntry(t => _initialize())
+                .Permit(Triggers.WaitForNewCharacters, States.Idle);
 
-            //mcStateMachine.Configure(DialogState.Idle)
-            //    .Permit(DialogTrigger.PrepareDialogParameters, DialogState.PrepareDialogParameters);
+            StateMachine.Configure(States.Idle)
+                .OnEntry(t => _waitForNewCharacters())
+                .Permit(Triggers.GenerateADialog, States.DialogStarted);
 
-            //mcStateMachine.Configure(DialogState.PrepareDialogParameters)
-            //    .Permit(DialogTrigger.RunDialog, DialogState.RunDialog)
-            //    .Permit(DialogTrigger.WaitForDialog, DialogState.Idle);
+            StateMachine.Configure(States.GenerateADialog)
+                .Permit(Triggers.WaitForNewCharacters, States.Idle);
 
-            //mcStateMachine.Configure(DialogState.RunDialog)
-            //    .Permit(DialogTrigger.WaitForDialog, DialogState.Idle);
+            StateMachine.Configure(States.PreparingDialogParameters)
+                .SubstateOf(States.GenerateADialog)
+                .OnEntry(t => _prepareDialogParameters())
+                .Permit(Triggers.StartDialog, States.DialogStarted);
 
+            StateMachine.Configure(States.DialogStarted)
+                .SubstateOf(States.GenerateADialog)
+                .OnEntry(t => _startDialog());
         }
 
 
@@ -122,6 +138,59 @@ namespace DialogEngine.Controls.ViewModels
         }
 
 
+        private void _subscribeForEvents()
+        {
+            EventAggregator.Instance.GetEvent<SelectedCharacterChangedEvent>().Subscribe(_selectedCharacterChanged);
+            EventAggregator.Instance.GetEvent<DialogModelChangedEvent>().Subscribe(_dialogModelChanged);
+            EventAggregator.Instance.GetEvent<SelectedCharactersPairChangedEvent>().Subscribe(_selectedCharactersPairChanged);
+        }
+
+        private void _unsubscribeForEvents()
+        {
+            EventAggregator.Instance.GetEvent<SelectedCharacterChangedEvent>().Unsubscribe(_selectedCharacterChanged);
+            EventAggregator.Instance.GetEvent<DialogModelChangedEvent>().Unsubscribe(_dialogModelChanged);
+            EventAggregator.Instance.GetEvent<SelectedCharactersPairChangedEvent>().Unsubscribe(_selectedCharactersPairChanged);
+        }
+
+        private void _dialogModelChanged(SelectionChangedEventArgs args)
+        {
+            if(args.IsSelected)
+            {
+                mIndexOfCurrentDialogModel = args.Index;
+            }
+            else
+            {
+                mIndexOfCurrentDialogModel = -1;
+            }
+        }
+
+        private void _selectedCharactersPairChanged(SelectedCharactersPairEventArgs args)
+        {
+            Character1Num = args.Character1Index;
+            Character2Num = args.Character2Index;
+        }
+
+        private void _selectedCharacterChanged(SelectionChangedEventArgs args)
+        {
+            if (args.IsSelected)
+            {
+                Character1Num = args.Index;
+            }
+            else
+            {
+                if (Character1Num == args.Index)
+                    Character1Num = -1;
+                else
+                    Character2Num = -1;
+            }
+        }
+
+
+        private void _waitForNewCharacters()
+        {
+
+        }
+
         private void _prepareDialogParameters()
         {
             if (!_importClosestSerialComsCharacters())
@@ -138,7 +207,7 @@ namespace DialogEngine.Controls.ViewModels
         }
 
 
-        private void _runDialog()
+        private void _startDialog()
         {
             var _speakingCharacter = Character1Num;
             var _selectedPhrase = mCharactersList[_speakingCharacter].Phrases[0]; //initialize to unused placeholder phrase
@@ -732,6 +801,16 @@ namespace DialogEngine.Controls.ViewModels
         #endregion
 
         #region - properties -
+
+        public StateMachine StateMachine
+        {
+            get { return mStateMachine; }
+            set
+            {
+                mStateMachine = value;
+                OnPropertyChanged("StateMachine");
+            }
+        }
 
         public ObservableCollection<object> DialogLinesCollection
         {
