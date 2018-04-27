@@ -1,6 +1,6 @@
 ﻿
 
-namespace DialogEngine.Models.Shared
+namespace DialogEngine.Events.EventArgs
 {
     public class SelectionChangedEventArgs
     {

@@ -10,7 +10,6 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:DialogEngine.Views"
       xmlns:core="clr-namespace:DialogEngine.Core"
-      xmlns:dialogModel="clr-namespace:DialogEngine.Models.Dialog"
       xmlns:controls="clr-namespace:DialogEngine.Controls.Views"
       xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
       xmlns:enums ="clr-namespace:DialogEngine.Models.Enums"
@@ -836,8 +835,12 @@
 
             <!-- Dialog view -->
 
-            <controls:DialogControl Grid.Row="0" />
+            <controls:DialogGeneratorControl Grid.Row="0" 
+                                    DataContext="{Binding DialogGeneratorViewModel}"  
+                                    CollectionChanged="{Binding IsItemAdded}" />
 
+            <!-- end -->
+            
             <GridSplitter  
                       Grid.Row="1" 
                       Height="10"

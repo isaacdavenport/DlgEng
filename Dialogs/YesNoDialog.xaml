@@ -34,7 +34,9 @@
 
             <TextBlock x:Name="genericTextTb" 
                        Grid.ColumnSpan="2" 
-                       Grid.Row="0" 
+                       Grid.Row="0"
+                       MaxWidth="300"
+                       TextWrapping="Wrap"
                        HorizontalAlignment="Center" 
                        VerticalAlignment="Center" />
 

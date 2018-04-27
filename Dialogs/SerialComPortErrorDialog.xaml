@@ -26,7 +26,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <GroupBox  
+    <GroupBox 
               BorderThickness="0" 
               Style="{DynamicResource MaterialDesignGroupBox}"  
               UseLayoutRounding="True" 
@@ -37,7 +37,7 @@
             </DataTemplate>
         </GroupBox.HeaderTemplate>
 
-        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid HorizontalAlignment="Stretch" Margin="15,15,15,15" VerticalAlignment="Stretch">
 
             <Grid.RowDefinitions>
                 <RowDefinition />
@@ -50,40 +50,35 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <StackPanel HorizontalAlignment="Center"  
-                        VerticalAlignment="Bottom" 
-                        Grid.Row="0" 
-                        Grid.ColumnSpan="2" 
-                        Orientation="Horizontal">
-                
-                <Label Width="30" Height="25">
-                    <Image Source="pack://application:,,,/Resources/Images/error.png" />
-                </Label>
-                <TextBlock VerticalAlignment="Center" Text="COM port doesn't exist. Please choose valid COM port." />
-            </StackPanel>
-
-            <Label Content="Serial COM ports:"
-               Height="35" 
-               Grid.Row="1"
-               Margin="0,5,0,0"
-               Grid.Column="0" 
-               VerticalAlignment="Center"
-               VerticalContentAlignment="Center"
-               HorizontalAlignment="Right" />
+            <TextBlock VerticalAlignment="Center"
+                       Grid.Row="0"
+                       MaxWidth="300"
+                       HorizontalAlignment="Center"
+                       Grid.ColumnSpan="2"
+                       TextWrapping="Wrap"
+                       Text="COM port doesn't exist, or USB is disconnected. Please choose valid COM port and check is USB plugged in." />
 
             <StackPanel Grid.Row="1" 
-                Grid.Column="1"
+                Grid.ColumnSpan="2"
+                Margin="0,15,0,0"
                 Orientation="Horizontal"
                 VerticalAlignment="Center"
-                HorizontalAlignment="Left">
+                HorizontalAlignment="Stretch">
+
+                <Label Content="Valid COM ports:"
+                       FontWeight="DemiBold"
+                       Margin="0,5,0,0"
+                       Grid.Column="0" 
+                       VerticalAlignment="Center"
+                       HorizontalContentAlignment="Left"
+                       VerticalContentAlignment="Center"
+                       HorizontalAlignment="Left" />
 
                 <ComboBox x:Name="SerialPortsComboBox"
-                    Grid.Row="1" 
-                    Grid.Column="1" 
                     materialDesign:HintAssist.Hint="Search"
-                    IsEditable="True"
-                    Margin="20,0,20,0"
-                    Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                    IsEditable="False"
+                    Margin="10,0,0,0"
+                    Style="{StaticResource MaterialDesignComboBox}"
                     Width="auto"
                     VerticalAlignment="Center"
                     VerticalContentAlignment="Center"
@@ -104,7 +99,7 @@
                 Grid.Row="2" 
                 Height="auto" 
                 Width="auto"
-                Margin="0,20,20,0"
+                Margin="0,20,10,0"
                 Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
                 CommandParameter="{Binding ElementName=CloseBtn,Path=Content}"
                 Style="{StaticResource MaterialDesignRaisedButton}"
@@ -119,7 +114,7 @@
                 Height="auto"
                 Click="_saveChanges_Click"
                 Style="{StaticResource MaterialDesignRaisedButton}"
-                Margin="20,20,0,0"
+                Margin="10,20,0,0"
                 VerticalAlignment="Top"
                 HorizontalAlignment="Left"
                 Grid.Column="1" />

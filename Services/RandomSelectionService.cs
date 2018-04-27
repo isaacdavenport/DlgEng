@@ -1,5 +1,8 @@
 ﻿
 
+using DialogEngine.Events;
+using DialogEngine.Events.DialogEvents;
+using DialogEngine.Events.EventArgs;
 using DialogEngine.Helpers;
 using DialogEngine.Models.Logger;
 using DialogEngine.Models.Shared;
@@ -108,46 +111,78 @@ namespace DialogEngine.Services
 
                 try
                 {
-                    bool _userHasForcedCharacters;
+                    bool _isNewCharacterSelected;
                     DateTime _nextCharacterSwapTime = new DateTime();
                     _nextCharacterSwapTime = DateTime.Now;
                     _nextCharacterSwapTime.AddSeconds(12);
-
+                    
 
                     while (true)
                     {
                         mCancellationTokenSource.Token.ThrowIfCancellationRequested();
 
-                        _userHasForcedCharacters = false;
-
-                        if (SessionHelper.DebugFlag)
-                        {
-                            if (DialogViewModel.SelectedCharactersOn == 2)
-                            {  //two three letter inital sets should be less than7 w space
-                                _userHasForcedCharacters = true;
-                                NextCharacter1 = DialogViewModel.SelectedIndex1;
-                                NextCharacter2 = DialogViewModel.SelectedIndex2;
-                            }
-                        }
+                        _isNewCharacterSelected = false;
 
                         Thread.Sleep(1000);
 
-                        if (!_userHasForcedCharacters && _nextCharacterSwapTime.CompareTo(DateTime.Now) < 0)
+                        switch (DialogViewModel.SelectedCharactersOn)
                         {
-                            int _nextCharacter1Index = GetNextCharacter();
-                            int _nextCharacter2Index = GetNextCharacter(_nextCharacter1Index >= 0 ? _nextCharacter1Index : NextCharacter1);
+                            case 0:
+                                {
+                                    if (_nextCharacterSwapTime.CompareTo(DateTime.Now) < 0)
+                                    {
+                                        int _nextCharacter1Index = GetNextCharacter();
+                                        int _nextCharacter2Index = GetNextCharacter(_nextCharacter1Index >= 0 ? _nextCharacter1Index : NextCharacter1);
 
-                            NextCharacter1 = _nextCharacter1Index >= 0 ? _nextCharacter1Index : NextCharacter1; //lower bound inclusive, upper exclusive
-                            NextCharacter2 = _nextCharacter2Index >= 0 ? _nextCharacter2Index : NextCharacter2; //lower bound inclusive, upper exclusive
+                                        NextCharacter1 = _nextCharacter1Index >= 0 ? _nextCharacter1Index : NextCharacter1; //lower bound inclusive, upper exclusive
+                                        NextCharacter2 = _nextCharacter2Index >= 0 ? _nextCharacter2Index : NextCharacter2; //lower bound inclusive, upper exclusive
 
-                            _nextCharacterSwapTime = DateTime.Now;
-                            _nextCharacterSwapTime = _nextCharacterSwapTime.AddSeconds(8 + msRandom.Next(0, 34));
+                                        _nextCharacterSwapTime = DateTime.Now;
+                                        _nextCharacterSwapTime = _nextCharacterSwapTime.AddSeconds(8 + msRandom.Next(0, 34));
+
+                                        _isNewCharacterSelected = true;
+                                    }
+
+                                    break;
+                                }
+                            case 1:
+                                {
+                                    if (_nextCharacterSwapTime.CompareTo(DateTime.Now) < 0)
+                                    {
+                                        NextCharacter1 = DialogViewModel.SelectedIndex1;
+                                        int _nextCharacter2Index = GetNextCharacter(NextCharacter1);
+
+                                        NextCharacter2 = _nextCharacter2Index >= 0 ? _nextCharacter2Index : NextCharacter2;
+
+                                        _nextCharacterSwapTime = DateTime.Now;
+                                        _nextCharacterSwapTime = _nextCharacterSwapTime.AddSeconds(8 + msRandom.Next(0, 34));
+
+                                        _isNewCharacterSelected = true;
+                                    }
+
+                                    break;
+                                }
+                            case 2:
+                                {
+                                    NextCharacter1 = DialogViewModel.SelectedIndex1;
+                                    NextCharacter2 = DialogViewModel.SelectedIndex2;
+
+                                    _isNewCharacterSelected = true;
+
+                                    break;
+                                }
+                        }
+
+                        if (_isNewCharacterSelected)
+                        {
+                            EventAggregator.Instance.GetEvent<SelectedCharactersPairChangedEvent>()
+                                .Publish(new SelectedCharactersPairEventArgs() { Character1Index = NextCharacter1, Character2Index = NextCharacter2 });
                         }
                     }
                 }
                 catch (OperationCanceledException ex)
                 {
-                    mcLogger.Error("OccasionallyChangeToRandNewCharacterAsync " + ex.Message);
+                    mcLogger.Debug("OccasionallyChangeToRandNewCharacterAsync " + ex.Message);
                 }
                 catch (Exception ex)
                 {

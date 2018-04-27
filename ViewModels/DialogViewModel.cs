@@ -23,6 +23,7 @@ using System.Windows.Input;
 using DialogEngine.Models.Shared;
 using DialogEngine.Services;
 using DialogEngine.Workflows.DialogPageWorkflow;
+using DialogEngine.Controls.ViewModels;
 
 namespace DialogEngine.ViewModels
 {
@@ -36,44 +37,25 @@ namespace DialogEngine.ViewModels
 
         //default application logger
         private static readonly ILog mcLogger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private static bool[] mRadiosState = new bool[6];
+        private int mRSSIsum;
+        private string mCharacter1Prefix = "--";
+        private string mCharacter2Prefix = "--";
+        private bool mRSSIstable;
         private StateMachine mStateMachine;
         private States mCurrentState;
-        // counter for characters in On state
-        private static int msSelectedCharactersOn;
-        // reference on view
+        private DialogGeneratorViewModel mDialogControlViewModel;
         private DialogView mView; 
         private readonly Random mRandom = new Random();
         // start position of drag operation from characters listbox to radio textbox
         private Point mStartPosition;
-        // detect is dialog model changed, true value force application to reload dialog model
-        private bool mIsModelsDialogChanged;
-        public static int SelectedIndex1;
-        public static int SelectedIndex2;
-        // variables for debuging selection of characters in serial mode
-
-        private string mCharacter1Prefix = "--";
-        private string mCharacter2Prefix = "--";
-        private bool mRSSIstable;
-        private int mRSSIsum;
-
         private RandomSelectionService mRandomSelectionService;
         private SerialSelectionService mSerialSelectionService;
-
         private ICharacterSelection mCurrentSelectionService;
 
-        // indicate when dialog is active or no
-        private bool mIsDialogStopped = true;
-        // selected dialog model .json file
-        private ObservableCollection<Character> mCharacterCollection;
-        private ObservableCollection<ModelDialogInfo> mDialogModelCollection;
-
-        // Collections of debug messages
-
-        private ObservableCollection<InfoMessage> mInfoMessagesCollection;
-        private ObservableCollection<WarningMessage> mWarningMessagesCollection;
-        private ObservableCollection<ErrorMessage> mErrorMessagesCollection;
-
-        private static bool[] mRadiosState = new bool[6];
+        public static int SelectedCharactersOn;
+        public static int SelectedIndex1;
+        public static int SelectedIndex2;
 
         #endregion
 
@@ -82,17 +64,17 @@ namespace DialogEngine.ViewModels
         /// <summary>
         /// Creates instance of DialogViewModel.cs
         /// </summary>
-        public DialogViewModel()
+        public DialogViewModel(DialogView view)
         {
+            mView = view;
             StateMachine = new StateMachine
                 (
                  action: () => { }
                 );
-            DialogData.Instance.PropertyChanged += _dialogData_PropertyChanged;
-            StateMachine.PropertyChanged += _stateMachine_PropertyChanged;
 
             mRandomSelectionService = new RandomSelectionService();
             mSerialSelectionService = new SerialSelectionService();
+            mDialogControlViewModel = new DialogGeneratorViewModel();
 
             _configureStateMachine();
             _subscribeForEvents();
@@ -170,6 +152,7 @@ namespace DialogEngine.ViewModels
             OnPropertyChanged(e.PropertyName);
         }
 
+
         private void _stateMachine_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName.Equals("State"))
@@ -211,6 +194,8 @@ namespace DialogEngine.ViewModels
         {
             EventAggregator.Instance.GetEvent<ChangedCharactersStateEvent>().Subscribe(_onChangedCharacterState);
             EventAggregator.Instance.GetEvent<ChangedModelDialogStateEvent>().Subscribe(_onChangedModelDialogState);
+            DialogData.Instance.PropertyChanged += _dialogData_PropertyChanged;
+            StateMachine.PropertyChanged += _stateMachine_PropertyChanged;
         }
 
 
@@ -220,8 +205,7 @@ namespace DialogEngine.ViewModels
             Task _checkForMissingPhrasesTask;
 
             await DialogDataHelper.LoadDialogDataAsync(SessionHelper.WizardDirectory);
-
-            
+          
             if (SessionHelper.TagUsageCheck)
                 _checkTagsUsedTask = _checkTagsUsedAsync();
 
@@ -243,50 +227,50 @@ namespace DialogEngine.ViewModels
         // refresh SelectedCharactersOn when character state is changed
         private void _onChangedCharacterState()
         {
-            //try
-            //{
-            //    int result = 0;
-            //    int index = 0;
-            //    SelectedCharactersOn = 0;
-            //    SelectedIndex1 = -1;
-            //    SelectedIndex2 = -1;
+            try
+            {
+                int result = 0;
+                int index = 0;
+                SelectedCharactersOn = 0;
+                SelectedIndex1 = -1;
+                SelectedIndex2 = -1;
 
-            //    // iterate over characters and try to find characters in ON state
-            //    // then assign indexes to mSelectedIndex 
-            //    foreach (Character characterInfo in CharacterCollection)
-            //    {
-            //        if (characterInfo.State == Models.Enums.CharacterState.On)
-            //        {
-            //            string fieldName = "mSelectedIndex" + (result + 1);
-            //            // get field using reflection
-            //            var field = this.GetType().GetField(fieldName, BindingFlags.Instance | BindingFlags.NonPublic);
-            //            field.SetValue(this, index);
-            //            result += 1;
-    
-            //            if (result == 2)
-            //                break;
-            //        }
-            //        index++;
-            //    }
+                // iterate over characters and try to find characters in ON state
+                // then assign indexes to mSelectedIndex 
+                foreach (Character characterInfo in CharacterCollection)
+                {
+                    if (characterInfo.State == Models.Enums.CharacterState.On)
+                    {
+                        string fieldName = "SelectedIndex" + (result + 1);
+                        // get field using reflection
+                        var field = typeof(DialogViewModel).GetField(fieldName);
+                        field.SetValue(null, index);
+                        result += 1;
 
-            //    SelectedCharactersOn = result;
+                        if (result == 2)
+                            break;
+                    }
+                    index++;
+                }
 
-            //    OnPropertyChanged("SelectedCharactersOn");
+                SelectedCharactersOn = result;
 
-            //    // when state of character changed, we want to cancel current dialog and reset MP3 player
-            //    EventAggregator.Instance.GetEvent<StopPlayingCurrentDialogLineEvent>().Publish();
-            //}
-            //catch (Exception ex)
-            //{
-            //    mcLogger.Error("Character state changed. "+ ex.Message);
-            //}
+                OnPropertyChanged("SelectedCharactersOn");
+
+                // when state of character changed, we want to cancel current dialog and reset MP3 player
+                EventAggregator.Instance.GetEvent<StopPlayingCurrentDialogLineEvent>().Publish();
+            }
+            catch (Exception ex)
+            {
+                mcLogger.Error("Character state changed. " + ex.Message);
+            }
         }
 
 
         // change indicator if state of dialog models changed
         private void _onChangedModelDialogState()
         {
-            mIsModelsDialogChanged = true;
+            //mIsModelsDialogChanged = true;
         }
 
 
@@ -315,13 +299,13 @@ namespace DialogEngine.ViewModels
                 tb.Text = "";
             }
 
-            for (int i = 0; i < SerialSelectionService.NumRadios && i < mCharacterCollection.Count; i++)
+            for (int i = 0; i < SerialSelectionService.NumRadios && i < CharacterCollection.Count; i++)
             {
-                mCharacterCollection[i].RadioNum = i;
+                CharacterCollection[i].RadioNum = i;
 
                 string textBoxName = "Radio_" + i.ToString();
-                (mView.FindName(textBoxName) as TextBox).Text = mCharacterCollection[i].CharacterName;
-                (mView.FindName(textBoxName) as TextBox).Tag = mCharacterCollection[i];
+                (mView.FindName(textBoxName) as TextBox).Text = CharacterCollection[i].CharacterName;
+                (mView.FindName(textBoxName) as TextBox).Tag = CharacterCollection[i];
                 mRadiosState[i] = true;
             }
         }
@@ -391,8 +375,8 @@ namespace DialogEngine.ViewModels
             DragEnterCommand = new RelayCommand<DragEventArgs>(_dragEnterCommand);
             DropCommand = new RelayCommand<DragEventArgs>(_dropCommand);
             DragOverCommand = new RelayCommand<DragEventArgs>(_dragOverCommand);
-            DialogModelSelectionChangedCommand = new RelayCommand<System.Windows.Controls.SelectionChangedEventArgs>(this._dialogModelSelectionChanged);
-            RefreshTabItem = new RelayCommand<System.Windows.Controls.SelectionChangedEventArgs>(this._refreshTabItem);
+            DialogModelSelectionChangedCommand = new RelayCommand<System.Windows.Controls.SelectionChangedEventArgs>(_dialogModelSelectionChanged);
+            RefreshTabItem = new RelayCommand<System.Windows.Controls.SelectionChangedEventArgs>(_refreshTabItem);
         }
 
 
@@ -427,13 +411,13 @@ namespace DialogEngine.ViewModels
 
                 _indexOfSelectedDialogModel += result;
 
-                EventAggregator.Instance.GetEvent<SelectedCharacterChangedEvent>().
-                    Publish(new Models.Shared.SelectionChangedEventArgs { IsSelected = true, Index = _indexOfSelectedDialogModel });
+                EventAggregator.Instance.GetEvent<DialogModelChangedEvent>().
+                    Publish(new Events.EventArgs.SelectionChangedEventArgs { IsSelected = true, Index = _indexOfSelectedDialogModel });
             }
             else
             {
-                EventAggregator.Instance.GetEvent<SelectedCharacterChangedEvent>().
-                    Publish(new Models.Shared.SelectionChangedEventArgs { IsSelected = false });
+                EventAggregator.Instance.GetEvent<DialogModelChangedEvent>().
+                    Publish(new Events.EventArgs.SelectionChangedEventArgs { IsSelected = false });
             }
         }
 
@@ -450,7 +434,7 @@ namespace DialogEngine.ViewModels
 
             mRadiosState[_numRadio] = false;
 
-            OnPropertyChanged("CharacterCollection");
+            mView.CharactersListBox.Items.Refresh();
         }
 
 
@@ -467,9 +451,9 @@ namespace DialogEngine.ViewModels
             {
                 if (e.Data.GetDataPresent("characterFormat"))
                 {
-                    Character character = e.Data.GetData("characterFormat") as Character;
-                    TextBox tb = e.Source as TextBox;
-                    Character _tbCharacter = tb.Tag == null ? null : (Character)tb.Tag;
+                    Character character = e.Data.GetData("characterFormat") as Character;  // character from listbox
+                    TextBox tb = e.Source as TextBox;  // textbox where we want to drop character
+                    Character _tbCharacter = tb.Tag == null ? null : (Character)tb.Tag; //check is any character already assigned to this textbox
 
                     // prevent dropping of the same character
                     if (_tbCharacter != null && _tbCharacter.CharacterName.Equals(character))
@@ -477,52 +461,54 @@ namespace DialogEngine.ViewModels
                         e.Handled = true;
                         return;
                     }
-
-                    // TextBox has name in form of "Radio_x"  x - radio number
-                    string[] _nameRadioNum = tb.Name.Split('_');
-                    int _numRadio = int.Parse(_nameRadioNum[1]);
-
-                    // if radioNum == -1 then character is already assigned
-                    if (character.RadioNum < 0)
+                    else 
                     {
-                        character.RadioNum = _numRadio;
+                        // TextBox has name in form of "Radio_x"  x - radio number
+                        string[] _nameRadioNum = tb.Name.Split('_');
+                        int _numRadio = int.Parse(_nameRadioNum[1]);
 
-                        if (tb.Tag != null)
+                        // if radioNum == -1 then character is already assigned
+                        if (character.RadioNum < 0)
                         {
-                            (tb.Tag as Character).RadioNum = -1;
+                            character.RadioNum = _numRadio;
+
+                            if (tb.Tag != null) // reset values for character which was assigned before 
+                            {
+                                (tb.Tag as Character).RadioNum = -1;
+                            }
+
+                            tb.Text = character.CharacterName;
+                            tb.Tag = character;
+                        }
+                        else
+                        {
+                            // if character already assigned we get textbox where it was dropped
+                            TextBox _tbClear = mView.FindName("Radio_" + character.RadioNum) as TextBox;
+                            // assign new radio number for dropping character
+                            character.RadioNum = _numRadio;
+
+                            // clear former textbox
+                            _tbClear.Text = "";
+                            _tbClear.Tag = null;
+
+                            // assign new character
+                            tb.Text = character.CharacterName;
+
+                            if (_tbCharacter != null)
+                            {
+                                _tbCharacter.RadioNum = -1;
+                            }
+
+                            tb.Tag = character;
                         }
 
-                        tb.Text = character.CharacterName;
-                        tb.Tag = character;
-                    }
-                    else
-                    {
-                        // if character already assigned we get textbox where is character dropped
-                        TextBox _tbClear = mView.FindName("Radio_" + character.RadioNum) as TextBox;
-                        // assign new radio number for dropping character
-                        character.RadioNum = _numRadio;
-
-                        // clear former textbox
-                        _tbClear.Text = "";
-                        _tbClear.Tag = null;
-
-                        // assign new character
-                        tb.Text = character.CharacterName;
-
-                        if (_tbCharacter !=null)
+                        if (!mRadiosState[_numRadio])
                         {
-                            _tbCharacter.RadioNum = -1;
+                            mRadiosState[_numRadio] = true;
                         }
 
-                        tb.Tag = character;
+                        mView.CharactersListBox.Items.Refresh();
                     }
-
-                    if (!mRadiosState[_numRadio])
-                    {
-                        mRadiosState[_numRadio] = true;
-                    }
-
-                    OnPropertyChanged("CharacterCollection");
                 }
             }
             catch (Exception ex)
@@ -771,6 +757,7 @@ namespace DialogEngine.ViewModels
         private void _stopDialog()
         {
             mCurrentSelectionService.Stop();
+            mDialogControlViewModel.StopDialogGenerator();
 
             StateMachine.Fire(Triggers.Idle);
         }
@@ -792,12 +779,19 @@ namespace DialogEngine.ViewModels
                     StateMachine.Fire(Triggers.StartRadnomSelection);
                 }
 
-                await mCurrentSelectionService.Start();
+                Task selectionServiceTask = mCurrentSelectionService.Start();
+                Task dialogGeneratorTask = mDialogControlViewModel.StartDialogGenerator();
+
+                await selectionServiceTask;
+                await dialogGeneratorTask;
             }
             catch (Exception ex)
             {
                 mcLogger.Error("_startDialog " + ex.Message);
             }
+
+            if(StateMachine.CanFire(Triggers.Idle))
+                StateMachine.Fire(Triggers.Idle);
         }
 
 
@@ -827,18 +821,6 @@ namespace DialogEngine.ViewModels
             }
         }
 
-
-        ///// <summary>
-        ///// Contains index of selected character 1 in ON state
-        ///// </summary>
-        //public int SelectedIndex1 { get => mSelectedIndex1; set => mSelectedIndex1 = value; }
-
-        ///// <summary>
-        ///// Contains index of selected character 2 in ON state
-        ///// </summary>
-        //public int SelectedIndex2 { get => mSelectedIndex2; set => mSelectedIndex2 = value; }
-
-
         /// <summary>
         /// Signal strengh received from toys 
         /// </summary>
@@ -846,21 +828,6 @@ namespace DialogEngine.ViewModels
         {
             get { return DialogData.Instance.HeatMapUpdate; }
         }
-
-
-        /// <summary>
-        /// Represents dialog started state
-        /// </summary>
-        public bool IsDialogStopped
-        {
-            get { return mIsDialogStopped; }
-            set
-            {
-                mIsDialogStopped = value;
-                OnPropertyChanged("IsDialogStopped");
-            }
-        }
-
 
         /// <summary>
         /// Selected character 1 - CharacterPrefix
@@ -918,6 +885,16 @@ namespace DialogEngine.ViewModels
         }
 
 
+        public DialogGeneratorViewModel DialogControlViewModel
+        {
+            get { return mDialogControlViewModel; }
+            set
+            {
+                mDialogControlViewModel = value;
+                OnPropertyChanged("DialogControlViewModel");
+            }
+        }
+
         /// <summary>
         /// Reference on View (DialogView.xaml)
         /// </summary>
@@ -928,25 +905,12 @@ namespace DialogEngine.ViewModels
         }
 
         /// <summary>
-        /// Counter for characters in "On" state
-        /// </summary>
-        public static int SelectedCharactersOn
-        {
-            get { return msSelectedCharactersOn;  }
-            set { msSelectedCharactersOn = value; }
-        }
-
-        /// <summary>
         /// Collection of <see cref="Character"/>
         /// Source for characters combobox
         /// </summary>
         public ObservableCollection<Character> CharacterCollection
         {
-            get
-            {
-                mCharacterCollection = DialogData.Instance.CharacterCollection;
-                return mCharacterCollection;
-            }
+            get { return DialogData.Instance.CharacterCollection; }
         }
 
         /// <summary>
@@ -955,11 +919,7 @@ namespace DialogEngine.ViewModels
         /// </summary>
         public ObservableCollection<ModelDialogInfo> DialogModelCollection
         {
-            get
-            {
-                mDialogModelCollection = DialogData.Instance.DialogModelCollection;
-                return mDialogModelCollection;
-            }
+            get { return DialogData.Instance.DialogModelCollection; }
         }
 
         /// <summary>
@@ -968,19 +928,7 @@ namespace DialogEngine.ViewModels
         /// </summary>
         public ObservableCollection<ErrorMessage> ErrorMessagesCollection
         {
-            get
-            {
-                if (mErrorMessagesCollection == null)
-                {
-                    mErrorMessagesCollection = new ObservableCollection<ErrorMessage>();
-                }
-                return mErrorMessagesCollection;
-            }
-            set
-            {
-                mErrorMessagesCollection = value;
-                OnPropertyChanged("ErrorMessagesCollection");
-            }
+            get { return DialogData.Instance.ErrorMessagesCollection; }
         }
 
         /// <summary>
@@ -989,19 +937,7 @@ namespace DialogEngine.ViewModels
         /// </summary>
         public ObservableCollection<WarningMessage> WarningMessagesCollection
         {
-            get
-            {
-                if (mWarningMessagesCollection == null)
-                {
-                    mWarningMessagesCollection = new ObservableCollection<WarningMessage>();
-                }
-                return mWarningMessagesCollection;
-            }
-            set
-            {
-                mWarningMessagesCollection = value;
-                OnPropertyChanged("WarningMessagesCollection");
-            }
+            get { return DialogData.Instance.WarningMessagesCollection; }
         }
 
         /// <summary>
@@ -1010,19 +946,7 @@ namespace DialogEngine.ViewModels
         /// </summary>
         public ObservableCollection<InfoMessage> InfoMessagesCollection
         {
-            get
-            {
-                if (mInfoMessagesCollection == null)
-                {
-                    mInfoMessagesCollection = new ObservableCollection<InfoMessage>();
-                }
-                return mInfoMessagesCollection;
-            }
-            set
-            {
-                mInfoMessagesCollection = value;
-                OnPropertyChanged("InfoMessagesCollection");
-            }
+            get { return DialogData.Instance.InfoMessagesCollection; }
         }
 
 

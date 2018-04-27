@@ -9,20 +9,24 @@ namespace DialogEngine.Workflows.DialogGeneratorWorkflow
 {
     public enum States
     {
+        Start,
         Init,
         Idle,
         GenerateADialog,
         PreparingDialogParameters,
-        DialogStarted        
+        DialogStarted,
+        DialogFinished
     }
 
     public enum Triggers
     {
+        Start,
         Initialize,
         WaitForNewCharacters,
         GenerateADialog,
         PrepareDialogParameters,
-        StartDialog        
+        StartDialog,
+        FinishDialog
     }
 
     public class StateMachine : Stateless.StateMachine<States, Triggers>, INotifyPropertyChanged
@@ -35,7 +39,7 @@ namespace DialogEngine.Workflows.DialogGeneratorWorkflow
 
         #region - constructor -
 
-        public StateMachine(Action action) : base(States.Init)
+        public StateMachine(Action action) : base(States.Start)
         {
             OnTransitioned
             (
@@ -46,15 +50,15 @@ namespace DialogEngine.Workflows.DialogGeneratorWorkflow
                 }
             );
 
-            //used to debug commands and UI components
-            OnTransitioned
-              (
-                (t) => Debug.WriteLine
-                  (
-                    "DialogWorkflow transitioned from {0} -> {1} [{2}]",
-                    t.Source, t.Destination, t.Trigger
-                  )
-              );
+            ////used to debug commands and UI components
+            //OnTransitioned
+            //  (
+            //    (t) => Debug.WriteLine
+            //      (
+            //        "DialogWorkflow transitioned from {0} -> {1} [{2}]",
+            //        t.Source, t.Destination, t.Trigger
+            //      )
+            //  );
         }
 
         #endregion

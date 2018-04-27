@@ -21,11 +21,11 @@ namespace DialogEngine.Views
         /// <summary>
         /// Creates instance of DialogView
         /// </summary>
-        public  DialogView(DateTime _dateTime)
+        public  DialogView()
         {
+            DataContext = new DialogViewModel(this);
+
             InitializeComponent();
-           
-            DataContext = new DialogViewModel();
         }
 
 

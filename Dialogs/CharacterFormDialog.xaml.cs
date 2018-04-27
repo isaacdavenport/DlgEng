@@ -9,7 +9,6 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
-
 namespace DialogEngine.Dialogs
 {
     /// <summary>
@@ -48,6 +47,8 @@ namespace DialogEngine.Dialogs
             this.groupBox.HeaderTemplate =(DataTemplate)FindResource("editCharacterHeader");
             Character = character;
             _initData();
+
+            CharacterPrefixTb.IsEnabled = false;
         }
 
         #endregion
@@ -76,7 +77,7 @@ namespace DialogEngine.Dialogs
 
         private void _close_Click(object sender, RoutedEventArgs e)
         {
-            (Application.Current.MainWindow.FindName("mainFrame") as Frame).NavigationService.GoBack();
+            DialogHost.CloseDialogCommand.Execute(null, sender as Button);
         }
 
 

@@ -5,8 +5,6 @@ using DialogEngine.Controls.ViewModels;
 using DialogEngine.Controls.VoiceRecorder;
 using DialogEngine.Core;
 using DialogEngine.Dialogs;
-using DialogEngine.Events;
-using DialogEngine.Events.DialogEvents;
 using DialogEngine.Helpers;
 using DialogEngine.Models.Dialog;
 using DialogEngine.Models.Shared;
@@ -14,7 +12,6 @@ using DialogEngine.Models.Wizard;
 using DialogEngine.Workflows.WizardWorkflow;
 using log4net;
 using MaterialDesignThemes.Wpf;
-using Stateless.Graph;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,6 +20,8 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
 
 namespace DialogEngine.ViewModels
 {
@@ -31,25 +30,25 @@ namespace DialogEngine.ViewModels
         #region - fields -
 
         private static readonly ILog mcLogger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-
+        // name in .json file for recorded line
         private readonly string mCurrentLineName = "USR_CurrentLine";
-        public  StateMachine mStateMachine;
+        private int mCurrentStepIndex;
+        private string mCurrentVideoFilePath;
+        private string mDialogStr;
+        private bool mIsPlayingLineInContext;
+        private bool mIsEditMode;
         private States mCurrentState;
+        public StateMachine mStateMachine;
         private MediaPlayerControlViewModel mMediaPlayerControlViewModel;
         private VoiceRecorderControlViewModel mVoiceRecorderControlViewModel;
         private Character mCharacter;
         private WizardType mCurrentWizard;
         private TutorialStep mCurrentTutorialStep;
-        private string mCurrentVideoFilePath;
-        private int mCurrentStepIndex;
-        private bool mIsPlayingLineInContext;
         private CancellationTokenSource mCancellationTokenSource;
-        private string mDialogStr;
 
         #endregion
 
         #region - constructor -
-
 
         public WizardViewModel()
         {
@@ -65,8 +64,6 @@ namespace DialogEngine.ViewModels
 
             _configureStateMachine();
             _bindCommands();
-
-            Console.Write(UmlDotGraph.Format(StateMachine.GetInfo()));
         }
 
 
@@ -83,10 +80,7 @@ namespace DialogEngine.ViewModels
 
             _configureStateMachine();
             _bindCommands();
-
-            Console.Write(UmlDotGraph.Format(StateMachine.GetInfo()));
         }
-
 
         #endregion
 
@@ -114,35 +108,32 @@ namespace DialogEngine.ViewModels
             switch (e.PropertyName)
             {
                 case "IsPlaying":
-                    if (mVoiceRecorderControlViewModel.IsPlaying)
                     {
-                        StateMachine.Fire(Triggers.VoiceRecorderPlaying);
+                        if (mVoiceRecorderControlViewModel.IsPlaying)
+                        {
+                            StateMachine.Fire(Triggers.VoiceRecorderPlaying);
+                        }
+                        else
+                        {
+                            StateMachine.Fire(Triggers.ReadyForUserAction);
+                        }
+
+                        break;
                     }
-                    else
-                    {
-                        StateMachine.Fire(Triggers.ReadyForUserAction);
-                    }
-                    break;
+
                 case "IsRecording":
-                    if (mVoiceRecorderControlViewModel.IsRecording)
                     {
-                        StateMachine.Fire(Triggers.VoiceRecorderRecording);
+                        if (mVoiceRecorderControlViewModel.IsRecording)
+                        {
+                            StateMachine.Fire(Triggers.VoiceRecorderRecording);
+                        }
+                        else
+                        {
+                            StateMachine.Fire(Triggers.ReadyForUserAction);
+                        }
+
+                        break;
                     }
-                    else
-                    {
-                        StateMachine.Fire(Triggers.ReadyForUserAction);
-                    }
-                    break;
-                case "IsPlayingLineInContext":
-                    if(mVoiceRecorderControlViewModel.IsPlayingLineInContext)
-                    {
-                        StateMachine.Fire(Triggers.VoiceRecorderPlayingInContext);
-                    }
-                    else
-                    {
-                        StateMachine.Fire(Triggers.ReadyForUserAction);
-                    }
-                    break;
             }
         }
 
@@ -165,10 +156,12 @@ namespace DialogEngine.ViewModels
 
         #region - private functions -
 
+        #region - helper functions -
+
         private void _configureStateMachine()
         {
             StateMachine.Configure(States.Start)
-                .OnEntry(_registerListeners)
+                .OnEntry(t => _registerListeners())
                 .Permit(Triggers.ShowFormDialog, States.ShowFormDialog);
 
             StateMachine.Configure(States.ShowFormDialog)
@@ -185,7 +178,6 @@ namespace DialogEngine.ViewModels
                 .Permit(Triggers.VoiceRecorderPlayingInContext, States.VoiceRecorderPlayingInContext)
                 .Permit(Triggers.VideoPlayerPlaying, States.VideoPlayerPlaying);
                 
-
             // State VoiceRecorderAction is added to be able to disable others controls if any of its substates is active
             StateMachine.Configure(States.VoiceRecorderAction)
                 .Permit(Triggers.ReadyForUserAction,States.ReadyForUserAction);
@@ -197,7 +189,7 @@ namespace DialogEngine.ViewModels
                 .SubstateOf(States.VoiceRecorderAction);
 
             StateMachine.Configure(States.VoiceRecorderPlayingInContext)
-                .OnEntry(t => _playDialogLineInContext())
+                .OnExit(t => _registerListeners())
                 .SubstateOf(States.VoiceRecorderAction);
 
             StateMachine.Configure(States.VideoPlayerAction)
@@ -251,29 +243,8 @@ namespace DialogEngine.ViewModels
             DialogHostLoaded = new RelayCommand(x => { StateMachine.Fire(Triggers.ShowFormDialog); });
             SaveAndNext = new RelayCommand(x => { StateMachine.Fire(Triggers.SaveAndNext); });
             SkipStep = new RelayCommand(x => { StateMachine.Fire(Triggers.SkipStep); });
-            PlayInContext = new RelayCommand(x => { StateMachine.Fire(Triggers.VoiceRecorderPlayingInContext); });
+            PlayInContext = new RelayCommand(x => _playDialogLineInContext());
             Cancel = new RelayCommand(x => { StateMachine.Fire(Triggers.Cancel); });
-        }
-
-
-        private void _skipStep()
-        {
-            try
-            {
-                DialogStr = "";
-                mVoiceRecorderControlViewModel.ResetData();
-
-                ++CurrentStepIndex;
-                CurrentTutorialStep = mCurrentWizard.TutorialSteps[mCurrentStepIndex];
-                CurrentVideoFilePath = Path.Combine(SessionHelper.WizardVideoDirectory, CurrentTutorialStep.VideoFileName + ".avi");
-                VoiceRecorderControlViewModel.CurrentFilePath = _tutorialStepFilePath();
-
-                StateMachine.Fire(Triggers.ReadyForUserAction);
-            }
-            catch (Exception ex)
-            {
-                mcLogger.Error("_skipStep" + ex.Message);
-            }
         }
 
 
@@ -294,75 +265,30 @@ namespace DialogEngine.ViewModels
         }
 
 
-        private async void _cancel()
-        {
-            try
-            {
-                var result = await DialogHost.Show(new YesNoDialog("Cancel wizard", "Do you want to save changes?"), "WizardPageDialogHost");
-
-                if (result != null)
-                    DialogData.Instance.CharacterCollection.Add(Character);
-
-                StateMachine.Fire(Triggers.LeaveWizard);
-            }
-            catch (Exception ex)
-            {
-                mcLogger.Error("_cancel " + ex.Message);
-            }
-        }
-
-        private void _leaveVizard()
-        {
-            try
-            {           
-                StateMachine.Fire(Triggers.Start);
-                _goBackToDialog();
-            }
-            catch (Exception ex)
-            {
-                mcLogger.Error("_leaveVizard" + ex.Message);
-            }
-        }
-
-        private void _goBackToDialog()
-        {
-            EventAggregator.Instance.GetEvent<GoBackEvent>().Publish();
-            Reset();
-        }
-
-
         private async void _playDialogLineInContext()
         {
             string _tutorialStepVideoFilePathCache = mCurrentVideoFilePath;
 
-            await Task.Run(async() =>
+            if (IsPlayingLineInContext)
             {
+                mCancellationTokenSource.Cancel();
 
-                if (IsPlayingLineInContext)
+                if (mVoiceRecorderControlViewModel.IsPlaying)
                 {
-                    mCancellationTokenSource.Cancel();
-
-                    if (mVoiceRecorderControlViewModel.IsPlaying)
-                    {
-                        Dispatcher.Invoke((Action)(() =>
-                        {
-                            mVoiceRecorderControlViewModel.PlayOrStop(mVoiceRecorderControlViewModel.CurrentFilePath);
-                        }));
-                    }
-                    else if (mMediaPlayerControlViewModel.IsPlaying)
-                    {
-                        Dispatcher.Invoke((Action)(() =>
-                        {
-                            mMediaPlayerControlViewModel.StopMediaPlayer();
-                        }));
-                    }
-                
-                    IsPlayingLineInContext = false;
+                    mVoiceRecorderControlViewModel.PlayOrStop(mVoiceRecorderControlViewModel.CurrentFilePath);
                 }
-                else
+                else if (mMediaPlayerControlViewModel.IsPlaying)
+                {
+                    mMediaPlayerControlViewModel.StopMediaPlayer();
+                }
+            }
+            else
+            {
+                await Task.Run(async () =>
                 {
                     try
                     {
+                        _clearListeners();
                         IsPlayingLineInContext = true;
 
                         List<List<string>> _dialogsList = CurrentTutorialStep.PlayUserRecordedAudioInContext;
@@ -400,35 +326,97 @@ namespace DialogEngine.ViewModels
 
                                 do
                                 {
-                                    if(mVoiceRecorderControlViewModel.IsPlaying || mMediaPlayerControlViewModel.IsPlaying)
-                                      await  Task.Delay(500);   //task.delay will only logical blocks thread instead of thread.sleep which blocks thread
+                                    if (mVoiceRecorderControlViewModel.IsPlaying || mMediaPlayerControlViewModel.IsPlaying)
+                                        await Task.Delay(500);   //task.delay will only logical blocks thread instead of 
+                                                                 //thread.sleep which blocks thread
                                 }
                                 while (mVoiceRecorderControlViewModel.IsPlaying || mMediaPlayerControlViewModel.IsPlaying);
 
                                 Thread.Sleep(500);
                             }
 
-
-                            if(index < _dialogLength-1)
+                            if (index < _dialogLength - 1)
                                 Thread.Sleep(500);
 
                             index++;
                         }
-
-                        IsPlayingLineInContext = false;
                     }
                     catch (OperationCanceledException)
                     {
-                        IsPlayingLineInContext = false;
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         mcLogger.Error("_playDialogLineInContext" + ex.Message);
                     }
-                }
-            });
 
+                });
+            }
+
+            IsPlayingLineInContext = false;
             CurrentVideoFilePath = _tutorialStepVideoFilePathCache;
+        }
+
+        #endregion
+
+        #region - state machine functions -
+
+        private void _skipStep()
+        {
+            try
+            {
+                DialogStr = "";
+                mVoiceRecorderControlViewModel.ResetData();
+
+                ++CurrentStepIndex;
+                CurrentTutorialStep = mCurrentWizard.TutorialSteps[mCurrentStepIndex];
+                CurrentVideoFilePath = Path.Combine(SessionHelper.WizardVideoDirectory, CurrentTutorialStep.VideoFileName + ".avi");
+                VoiceRecorderControlViewModel.CurrentFilePath = _tutorialStepFilePath();
+
+                StateMachine.Fire(Triggers.ReadyForUserAction);
+            }
+            catch (Exception ex)
+            {
+                mcLogger.Error("_skipStep" + ex.Message);
+            }
+        }
+
+
+        private async void _cancel()
+        {
+            try
+            {
+                var result = await DialogHost.Show(new YesNoDialog("Cancel wizard", "Do you want to save changes?"), "WizardPageDialogHost");
+
+                if (result != null)
+                    DialogData.Instance.CharacterCollection.Add(Character);
+
+                StateMachine.Fire(Triggers.LeaveWizard);
+            }
+            catch (Exception ex)
+            {
+                mcLogger.Error("_cancel " + ex.Message);
+            }
+        }
+
+
+        private void _leaveVizard()
+        {
+            try
+            {           
+                StateMachine.Fire(Triggers.Start);
+                _goBackToDialog();
+            }
+            catch (Exception ex)
+            {
+                mcLogger.Error("_leaveVizard" + ex.Message);
+            }
+        }
+
+
+        private void _goBackToDialog()
+        {
+            NavigationCommands.BrowseHome.Execute(null, Application.Current.MainWindow);
+            Reset();
         }
 
 
@@ -442,7 +430,7 @@ namespace DialogEngine.ViewModels
             else
                 dialog = new CharacterFormDialog(mCharacter);
 
-            var result = await DialogHost.Show(dialog, "WizardPageDialogHost");
+            var result = await DialogHost.Show(dialog, "RootDialogHost");
 
             if (result != null)
             {
@@ -471,12 +459,25 @@ namespace DialogEngine.ViewModels
             {
                 if (mCurrentTutorialStep.CollectUserInput)
                 {
-                    if (string.IsNullOrEmpty(DialogStr))
+                    if (string.IsNullOrEmpty(DialogStr) || !VoiceRecorderControlViewModel.IsLineRecorded)
                     {
+                        string message ="";
+
+                        if (string.IsNullOrEmpty(DialogStr))
+                            message += "write text";
+
+                        if (!VoiceRecorderControlViewModel.IsLineRecorded)
+                        {
+                            if (string.IsNullOrEmpty(message))
+                                message += "record .mp3 file";
+                            else
+                                message += " and record .mp3 file";
+                        }
+
                         var result = await DialogHost
                             .Show(new YesNoDialog("Warning", 
-                            "You didn't write text for this dialog line. Do you want to save step without it?", "Yes", "No"), 
-                            "WizardPageDialogHost");
+                                                  "You didn't "+ message +" for this dialog line. Do you want to save step without it?", "Yes", "No"), 
+                                                  "WizardPageDialogHost");
 
                         if(result == null)
                         {
@@ -511,7 +512,10 @@ namespace DialogEngine.ViewModels
             DialogData.Instance.CharacterCollection.Add(mCharacter);
 
             var result = await DialogHost.
-                Show(new YesNoDialog("Success", "Character successfully created!", "Add new character", "Close wizard"), "WizardPageDialogHost");
+                Show(new YesNoDialog("Success", 
+                                     "Character successfully created!", 
+                                     "Add new character", 
+                                     "Close wizard"), "WizardPageDialogHost");
 
             if (result != null)
             {
@@ -526,8 +530,9 @@ namespace DialogEngine.ViewModels
 
         #endregion
 
-        #region - public functions -
+        #endregion
 
+        #region - public functions -
 
         public void Reset()
         {
@@ -535,7 +540,6 @@ namespace DialogEngine.ViewModels
             CurrentStepIndex = 0;
             DialogStr = "";
         }
-
 
         #endregion
 
@@ -628,12 +632,10 @@ namespace DialogEngine.ViewModels
                 if (mIsPlayingLineInContext)
                 {
                     StateMachine.Fire(Triggers.VoiceRecorderPlayingInContext);
-                    _clearListeners();
                 }
                 else
                 {
                     StateMachine.Fire(Triggers.ReadyForUserAction);
-                    _registerListeners();
                 }
             }
         }
@@ -649,6 +651,7 @@ namespace DialogEngine.ViewModels
             }
         }
 
+
         public MediaPlayerControlViewModel MediaPlayerControlViewModel
         {
             get { return mMediaPlayerControlViewModel; }
@@ -658,6 +661,8 @@ namespace DialogEngine.ViewModels
                 OnPropertyChanged("MediaPlayerControlViewModel");
             }
         }
+
+
         public VoiceRecorderControlViewModel VoiceRecorderControlViewModel
         {
             get { return mVoiceRecorderControlViewModel; }

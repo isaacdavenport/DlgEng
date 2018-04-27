@@ -13,6 +13,7 @@ using System.IO;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace DialogEngine.Helpers
 {
@@ -21,6 +22,51 @@ namespace DialogEngine.Helpers
         #region - fields-
 
         private static readonly ILog mcLogger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
+        #endregion
+
+        #region - private functions -
+
+        private static void _processMessage(LogMessage message)
+        {
+            try
+            {
+                if (message is InfoMessage)
+                {
+                    DialogData.Instance.InfoMessagesCollection.Insert(0, (InfoMessage)message);
+                    int _length = DialogData.Instance.InfoMessagesCollection.Count;
+
+                    if (_length > 300 && _length > 0)
+                    {
+                        DialogData.Instance.InfoMessagesCollection.RemoveAt(_length - 1);
+                    }
+                }
+                else if (message is WarningMessage)
+                {
+                    DialogData.Instance.WarningMessagesCollection.Insert(0, (WarningMessage)message);
+                    int _length = DialogData.Instance.WarningMessagesCollection.Count;
+
+                    if (_length > 300 && _length > 0)
+                    {
+                        DialogData.Instance.WarningMessagesCollection.RemoveAt(_length - 1);
+                    }
+                }
+                else
+                {
+                    DialogData.Instance.ErrorMessagesCollection.Insert(0, (ErrorMessage)message);
+                    int _length = DialogData.Instance.ErrorMessagesCollection.Count;
+
+                    if (_length > 300 && _length > 0)
+                    {
+                        DialogData.Instance.ErrorMessagesCollection.RemoveAt(_length - 1);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                mcLogger.Error("AddMessage " + e.Message);
+            }
+        }
 
         #endregion
 
@@ -104,47 +150,21 @@ namespace DialogEngine.Helpers
             });
         }
 
-
-        public static void AddMessage(LogMessage message)
+        public static  void AddMessage(LogMessage message)
         {
-            try
+            if (Application.Current.Dispatcher.CheckAccess())
             {
-                if (message is InfoMessage)
-                {
-                    DialogData.Instance.InfoMessagesCollection.Insert(0, (InfoMessage)message);
-                    int _length = DialogData.Instance.InfoMessagesCollection.Count;
-
-                    if (_length > 300 && _length > 0)
-                    {
-                        DialogData.Instance.InfoMessagesCollection.RemoveAt(_length - 1);
-                    }
-                }
-                else if (message is WarningMessage)
-                {
-                    DialogData.Instance.WarningMessagesCollection.Insert(0, (WarningMessage)message);
-                    int _length = DialogData.Instance.WarningMessagesCollection.Count;
-
-                    if (_length > 300 && _length > 0)
-                    {
-                        DialogData.Instance.WarningMessagesCollection.RemoveAt(_length - 1);
-                    }
-                }
-                else
-                {
-                    DialogData.Instance.ErrorMessagesCollection.Insert(0, (ErrorMessage)message);
-                    int _length = DialogData.Instance.ErrorMessagesCollection.Count;
-
-                    if (_length > 300 && _length > 0)
-                    {
-                        DialogData.Instance.ErrorMessagesCollection.RemoveAt(_length - 1);
-                    }
-                }
+                _processMessage(message);
             }
-            catch (Exception e)
+            else
             {
-                 mcLogger.Error("AddMessage " + e.Message);
+                Application.Current.Dispatcher.BeginInvoke((Action) (() =>
+                {
+                    _processMessage(message);
+                }));
             }
         }
+
 
         #endregion
     }

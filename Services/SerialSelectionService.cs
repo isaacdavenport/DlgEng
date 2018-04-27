@@ -1,6 +1,10 @@
 ﻿
 using DialogEngine.Dialogs;
+using DialogEngine.Events;
+using DialogEngine.Events.DialogEvents;
+using DialogEngine.Events.EventArgs;
 using DialogEngine.Helpers;
+using DialogEngine.Models.Exceptions;
 using DialogEngine.Models.Shared;
 using DialogEngine.Workflows.SerialSelectionWorkflow;
 using log4net;
@@ -10,6 +14,7 @@ using System.IO;
 using System.IO.Ports;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
@@ -21,28 +26,29 @@ namespace DialogEngine.Services
         #region - fields -
 
         private readonly ILog mcLogger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-        public static readonly int NumRadios = 6;  //includes dongle
-        public const int StrongRssiBufDepth = 12;
-        public readonly TimeSpan MaxLastSeenInterval = new TimeSpan(0, 0, 0, 3, 100);
-        private readonly DispatcherTimer mcHeatMapUpdateTimer = new DispatcherTimer();
         private int mTempCh1;
-        private int mTempch2;
-        private SerialPort mSerialPort;
-        private StateMachine mStateMachine;
-        private States mCurrentState;
         private int mRowNum;
-        private int [] mNewRow= new int[NumRadios +1];
-        private bool mIsSerialMode;
-        private Random mRandom = new Random();
+        private int mTempch2;
         private int[,] mStrongRssiCharacterPairBuf = new int[2, StrongRssiBufDepth];
+        private int[] mNewRow = new int[NumRadios + 1];
+        private bool mIsSerialMode;
+        private SerialPort mSerialPort;
+        private States mCurrentState;
+        private StateMachine mStateMachine;
+        private readonly DispatcherTimer mcHeatMapUpdateTimer = new DispatcherTimer();
+        private CancellationTokenSource mCancellationTokenSource;
+        private Random mRandom = new Random();
 
+        public const int StrongRssiBufDepth = 12;
         public int BigRssi = 0;        
         public int CurrentCharacter1;
         public int CurrentCharacter2 = 1;
         public static int NextCharacter1 = 1;
         public static int NextCharacter2 = 2;
+        public static int NumRadios = 6;  //includes dongle
         public static int[,] HeatMap = new int[NumRadios,NumRadios];
         public static DateTime[] CharactersLastHeatMapUpdateTime = new DateTime[NumRadios];
+        public readonly TimeSpan MaxLastSeenInterval = new TimeSpan(0, 0, 0, 3, 100);
 
         #endregion
 
@@ -74,7 +80,12 @@ namespace DialogEngine.Services
 
         private void _heatMapUpdateTimer_Tick(object sender, EventArgs e)
         {
-            DialogData.Instance.HeatMapUpdate = HeatMap;
+            HeatMapUpdate.PrintHeatMap();
+        }
+
+        private void _serialPort_ErrorReceived(object sender, SerialErrorReceivedEventArgs e)
+        {
+            mcLogger.Error("_serialPort_ErrorReceived " +  e.EventType !=null?e.EventType.ToString():"");
         }
 
         #endregion
@@ -89,7 +100,6 @@ namespace DialogEngine.Services
             StateMachine.Configure(States.Init)
                 .Permit(Triggers.ReadMessage, States.ReadMessage)
                 .Permit(Triggers.SerialPortNameError, States.SerialPortNameError)
-                .Permit(Triggers.USB_disconnectedError,States.USB_disconnectedError)
                 .Permit(Triggers.Finish, States.Finish);
 
             StateMachine.Configure(States.Idle)
@@ -101,13 +111,12 @@ namespace DialogEngine.Services
                 .Permit(Triggers.Start, States.Start);
 
             StateMachine.Configure(States.USB_disconnectedError)
-                .OnEntry(t => _usbDisconectedError())
                 .Permit(Triggers.Initialize, States.Init)
                 .Permit(Triggers.Finish, States.Finish);
 
             StateMachine.Configure(States.ReadMessage)
                 .Permit(Triggers.FindClosestPair, States.FindClosestPair)
-                .Permit(Triggers.Initialize, States.Init)
+                .Permit(Triggers.USB_disconnectedError, States.USB_disconnectedError)
                 .Permit(Triggers.Idle, States.Idle)
                 .Permit(Triggers.Finish, States.Finish);
                 
@@ -121,6 +130,7 @@ namespace DialogEngine.Services
                 .Permit(Triggers.Finish, States.Finish);
 
             StateMachine.Configure(States.Finish)
+                .OnEntry(t => _finishSelection())
                 .Permit(Triggers.Start,States.Start);
                 
         }
@@ -134,6 +144,7 @@ namespace DialogEngine.Services
                 NextCharacter2 = 0;
 
                 mSerialPort = new SerialPort();
+                mSerialPort.ErrorReceived += _serialPort_ErrorReceived;
                 mSerialPort.PortName = SessionHelper.ComPortName;
                 mSerialPort.BaudRate = 460800;
                 mSerialPort.ReadTimeout = 500;
@@ -144,22 +155,23 @@ namespace DialogEngine.Services
 
                 return Triggers.ReadMessage;
             }
-            catch(InvalidOperationException ex)  // Instance of SerialPort is already open
+            catch(InvalidOperationException ex)  // Instance of SerialPort is already open and wi will redirect for reading messages
             {
-                mcLogger.Error("_initSerial InvalidOperationException " + ex.Message);
+                mcLogger.Error("InvalidOperationException _initSerial  " + ex.Message);
                 return Triggers.ReadMessage;
             }
-            catch(ArgumentException ex) // invalid port name
+            catch(ArgumentException ex) // invalid port name (name is not formed as COM + digit)
             {
-                mcLogger.Error("_initSerial ArgumentException " + ex.Message);
+                mcLogger.Error("ArgumentException _initSerial  " + ex.Message);
                 return Triggers.SerialPortNameError;
             }
-            catch(IOException ex)
+            catch(IOException ex) // com port doesn't exists (usb is disconnected or not valid COM port name)
             {
-                mcLogger.Error("_initSerial IOException " + ex.Message);
+                mcLogger.Error("IOException _initSerial " + ex.Message);
                 return Triggers.SerialPortNameError;
             }
         }
+
 
         private Triggers _idle()
         {
@@ -167,8 +179,7 @@ namespace DialogEngine.Services
         }
 
 
-
-        private Triggers _finishSelection()
+        private void _finishSelection()
         {
             try
             {
@@ -180,13 +191,32 @@ namespace DialogEngine.Services
                 mcLogger.Error("_finishSelection " + ex.Message);
             }
 
-            return Triggers.Start;
+            StateMachine.Fire(Triggers.Start);
         }
 
-        private void _usbDisconectedError()
+
+        private async Task<Triggers> _usbDisconectedError()
         {
+            object result = null;
 
+            await Application.Current.Dispatcher.Invoke(async () =>
+            {
+                result = await DialogHost.Show(new YesNoDialog("Error",
+                                              "USB disconected. Please check connection and try again.",
+                                              "Try again",
+                                              "Finish dialog"));
+            });
+
+            if (result != null)
+                return Triggers.Initialize;
+            else
+            {
+                Stop();
+
+                return Triggers.Finish;
+            }
         }
+
 
         private async Task<Triggers> _serialPortError()
         {
@@ -234,6 +264,11 @@ namespace DialogEngine.Services
                     return Triggers.FindClosestPair;
                 }
             }
+            catch(COMPortSlosedException ex)
+            {
+                mcLogger.Error("_readMessage COMPortSlosedException");
+                return Triggers.USB_disconnectedError;
+            }
             catch (TimeoutException ex)
             {
                 mcLogger.Error("_readMessage TimeoutException " + ex.Message);
@@ -257,6 +292,7 @@ namespace DialogEngine.Services
             mTempCh1 = 0;
             mTempch2 = 0;
         }
+
 
         private  bool _calculateRssiStable(int _ch1, int _ch2)
         {
@@ -311,7 +347,7 @@ namespace DialogEngine.Services
 
                 return index;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 //MessageBox.Show("No character assigned to radio with number " + _radioNum + " .");
                 return -1;
@@ -432,7 +468,11 @@ namespace DialogEngine.Services
 
                 if (_charactersAssigned)
                 {
-                    //todo notify others componets
+                    EventAggregator.Instance.GetEvent<SelectedCharactersPairChangedEvent>().
+                        Publish(new SelectedCharactersPairEventArgs { Character1Index = NextCharacter1, Character2Index = NextCharacter2 });
+
+                    CurrentCharacter1 = NextCharacter1;
+                    CurrentCharacter2 = NextCharacter2;
                 }
             }
             catch(Exception ex)
@@ -450,18 +490,34 @@ namespace DialogEngine.Services
 
             try
             {
-                if (mSerialPort.IsOpen && mSerialPort.BytesToRead > 18)
+                switch (mSerialPort.IsOpen)
                 {
-                    _message = mSerialPort.ReadLine();
+                    case true:
+                        {
+                            if(mSerialPort.BytesToRead > 18)
+                            {
+                                _message = mSerialPort.ReadLine();
 
-                    if (mSerialPort.BytesToRead > 1000)
-                    {
-                        // got behind for some reason
-                        mSerialPort.DiscardInBuffer();
+                                if (mSerialPort.BytesToRead > 1000)
+                                {
+                                    // got behind for some reason
+                                    mSerialPort.DiscardInBuffer();
 
-                        mcLogger.Debug("serial buffer over run.");
-                    }
+                                    mcLogger.Debug("serial buffer over run.");
+                                }
+                            }
+                            break;
+                        }
+                    case false:
+                        {
+                            throw new COMPortSlosedException();
+                            break;
+                        }
                 }
+            }
+            catch(COMPortSlosedException ex)
+            {
+                throw ex;
             }
             catch (TimeoutException ex)
             {
@@ -485,6 +541,9 @@ namespace DialogEngine.Services
             return Task.Run(async () =>
             {
                 StateMachine.Fire(Triggers.Initialize);
+                mCancellationTokenSource = new CancellationTokenSource();
+
+                Thread.CurrentThread.Name = "SerialSelectionService";
 
                 do
                 {
@@ -532,22 +591,23 @@ namespace DialogEngine.Services
                                 StateMachine.Fire(_nextTrigger);
                                 break;
                             }
-                        case States.Finish:
+                        case States.USB_disconnectedError:
                             {
-                                Triggers _nextTrigger = _finishSelection();
+                                Triggers _nextTrigger = await _usbDisconectedError();
 
                                 StateMachine.Fire(_nextTrigger);
                                 break;
                             }
                     }
-                } while (StateMachine.State != States.Start);
+                } while (!mCancellationTokenSource.Token.IsCancellationRequested);
 
+                StateMachine.Fire(Triggers.Finish);
             });
         }
 
         public void Stop()
         {
-            StateMachine.Fire(Triggers.Finish);
+            mCancellationTokenSource.Cancel();
         }
 
 

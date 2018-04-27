@@ -13,14 +13,13 @@ namespace DialogEngine.Models.Shared
         #region - fields -
 
         private static DialogData msInstance;
-        private bool mIsDialogDataLoaded;
         private int[,] mHeatMapUpdate = new int[SerialSelectionService.NumRadios, SerialSelectionService.NumRadios];
 
         private ObservableCollection<Character> mCharacterCollection;
         private ObservableCollection<ModelDialogInfo> mDialogModelCollection;
-        private ObservableCollection<InfoMessage> mInfoMessagesCollection;
-        private ObservableCollection<WarningMessage> mWarningMessagesCollection;
-        private ObservableCollection<ErrorMessage> mErrorMessagesCollection;
+        private ObservableCollection<InfoMessage> mInfoMessagesCollection = new ObservableCollection<InfoMessage>();
+        private ObservableCollection<WarningMessage> mWarningMessagesCollection = new ObservableCollection<WarningMessage>();
+        private ObservableCollection<ErrorMessage> mErrorMessagesCollection = new ObservableCollection<ErrorMessage>();
         private ObservableCollection<WizardType> mWizardTypesCollection;
 
         public event PropertyChangedEventHandler PropertyChanged;

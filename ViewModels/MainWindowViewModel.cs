@@ -2,19 +2,16 @@
 
 using DialogEngine.Core;
 using DialogEngine.Dialogs;
-using DialogEngine.Events;
-using DialogEngine.Events.DialogEvents;
 using DialogEngine.Helpers;
 using DialogEngine.Workflows.MainWindowWorkflows;
-using DialogEngine.Views;
 using log4net;
 using MaterialDesignThemes.Wpf;
-using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using GalaSoft.MvvmLight.CommandWpf;
 using System.IO;
 using System.Reflection;
-using System.Windows;
+using System;
 using System.Windows.Navigation;
 
 namespace DialogEngine.ViewModels
@@ -45,7 +42,6 @@ namespace DialogEngine.ViewModels
 
             _configureStateMachine();
             _bindCommands();
-            _subscribeToEvents();
 
             StateMachine.Fire(Triggers.NavigateToDialogView);
         }
@@ -54,12 +50,11 @@ namespace DialogEngine.ViewModels
 
         #region - commands -
 
-        public RelayCommand GoToDialogView { get; set; }
-        public RelayCommand GoToWizardView { get; set; }
-        public RelayCommand EditWithJSONEditor { get; set; }
-        public RelayCommand OpenSettingsDialog { get; set; }
-        public RelayCommand AboutToys2Life { get; set; }
-        public RelayCommand ReadTutorial { get; set; }
+        public Core.RelayCommand EditWithJSONEditor { get; set; }
+        public Core.RelayCommand OpenSettingsDialog { get; set; }
+        public Core.RelayCommand AboutToys2Life { get; set; }
+        public Core.RelayCommand ReadTutorial { get; set; }
+        public RelayCommand<NavigationEventArgs> MainFrameNavigated { get; set; }
 
         #endregion
 
@@ -80,50 +75,43 @@ namespace DialogEngine.ViewModels
         private void _configureStateMachine()
         {
             StateMachine.Configure(States.Start)
-                .Permit(Triggers.NavigateToDialogView,States.DialogView)
-                .Permit(Triggers.NavigateToWizardView,States.WizardView);
+                .Permit(Triggers.NavigateToDialogView, States.DialogView)
+                .Permit(Triggers.NavigateToWizardView, States.WizardView);
 
             StateMachine.Configure(States.DialogView)
-                .OnEntry(t => _goToDialogView())
                 .Permit(Triggers.NavigateToWizardView, States.WizardView);
 
             StateMachine.Configure(States.WizardView)
-                .OnEntry(t => _goToWizardView())
                 .Permit(Triggers.NavigateToDialogView, States.DialogView);
         }
 
 
         private void _bindCommands()
         {
-            GoToDialogView = new RelayCommand(x => { StateMachine.Fire(Triggers.NavigateToDialogView); });
-            GoToWizardView = new RelayCommand(x => { StateMachine.Fire(Triggers.NavigateToWizardView); });
-            ReadTutorial = new RelayCommand(x => _readTutorial());
-            AboutToys2Life = new RelayCommand(x => _aboutToys2Life());
-            OpenSettingsDialog = new RelayCommand(x => _openSettingsDialog());
-            EditWithJSONEditor = new RelayCommand(x => _editWithJSONEditor());
+            ReadTutorial = new Core.RelayCommand(x => _readTutorial());
+            AboutToys2Life = new Core.RelayCommand(x => _aboutToys2Life());
+            OpenSettingsDialog = new Core.RelayCommand(x => _openSettingsDialog());
+            EditWithJSONEditor = new Core.RelayCommand(x => _editWithJSONEditor());
+            MainFrameNavigated = new RelayCommand<NavigationEventArgs>(_onMainFrameNavigated);
         }
 
-        private void _subscribeToEvents()
+        private void _onMainFrameNavigated(NavigationEventArgs obj)
         {
-            EventAggregator.Instance.GetEvent<GoBackEvent>().Subscribe(() => { StateMachine.Fire(Triggers.NavigateToDialogView); });
-        }
+            string _typeName = obj.Content.GetType().Name;
 
-        private void _goToWizardView()
-        {
-            NavigationService service = (Application.Current.MainWindow as MainWindow).mainFrame.NavigationService;
-
-            service.Navigate(new WizardView());
-        }
-
-
-        private void _goToDialogView()
-        {
-            NavigationService service = (Application.Current.MainWindow as MainWindow).mainFrame.NavigationService;
-
-            if (service.CanGoBack)
-                service.GoBack();
-            else
-                service.Navigate(new DialogView(DateTime.Now));
+            switch (_typeName)
+            {
+                case "WizardView":
+                    {
+                        StateMachine.Fire(Triggers.NavigateToWizardView);
+                        break;
+                    }
+                case "DialogView":
+                    {
+                        StateMachine.Fire(Triggers.NavigateToDialogView);
+                        break;
+                    }
+            }
         }
 
 

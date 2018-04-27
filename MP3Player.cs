@@ -25,10 +25,10 @@ namespace DialogEngine
         private static readonly ILog mcLogger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private static readonly object mcPadlock = new object();
         private static MP3Player msInstance = null;
-        // started time of playing .mp3 file
-        private TimeSpan mStartedTime;
         // length of .mp3 file in seconds
         private double mDuration;
+        // started time of playing .mp3 file
+        private TimeSpan mStartedTime;
         private Timer mTimer;
         private Timer mVolumeTimer;
         // wpf media player

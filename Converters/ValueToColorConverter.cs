@@ -5,7 +5,6 @@
 
 using DialogEngine.Models.Shared;
 using DialogEngine.Services;
-using DialogEngine.ViewModels;
 using System;
 using System.Globalization;
 using System.Windows.Controls;

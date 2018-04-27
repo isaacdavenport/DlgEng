@@ -18,14 +18,13 @@ namespace DialogEngine.Controls.ViewModels
     {
         #region - fields -
 
-        private NAudioEngine mSoundPlayer;
         private double mChannelPosition;
+        private string mCurrentFilePath;
         private bool mIsRecording;
         private bool mIsPlaying;
         private bool mIsLineRecorded;
         private bool mIsPlayingLineInContext;
-        private string mCurrentFilePath;
-
+        private NAudioEngine mSoundPlayer;
 
         #endregion
 
@@ -39,7 +38,6 @@ namespace DialogEngine.Controls.ViewModels
         {
             this.SoundPlayer = player;
             this.mSoundPlayer.PropertyChanged += _soundPlayer_PropertyChanged;
-
 
             _bindCommands();
         }
@@ -68,20 +66,21 @@ namespace DialogEngine.Controls.ViewModels
             switch (e.PropertyName)
             {
                 case "ChannelPosition":
-                    ChannelPosition = (double)mSoundPlayer.ActiveStream.Position / (double)mSoundPlayer.ActiveStream.Length;
-                    break;
-                case "IsPlaying":
-                    if (!mSoundPlayer.IsPlaying)
                     {
-                        if (mSoundPlayer.ChannelPosition == mSoundPlayer.ChannelLength)
-                            ChannelPosition = 0;
-
-                        IsPlaying = false;
+                        ChannelPosition = (double)mSoundPlayer.ActiveStream.Position / (double)mSoundPlayer.ActiveStream.Length;
+                        break;
                     }
-                    break;
-                //case "IsRecording":
-                //    IsRecording = mSoundPlayer.IsRecording;
-                //    break;
+                case "IsPlaying":
+                    {
+                        if (!mSoundPlayer.IsPlaying)
+                        {
+                            if (mSoundPlayer.ChannelPosition == mSoundPlayer.ChannelLength)
+                                ChannelPosition = 0;
+
+                            IsPlaying = false;
+                        }
+                        break;
+                    }
             }
         }
 

@@ -19,7 +19,6 @@ namespace DialogEngine.Controls.ViewModels
 
         private static readonly ILog mcLogger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private bool mIsPlaying;
-
         public event EventHandler PlayRequested;
         public event EventHandler PauseRequested;
         public event EventHandler StopRequested;

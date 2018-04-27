@@ -110,6 +110,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Input.Manipulations" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -144,21 +145,21 @@
     <Compile Include="Dialogs\ValidationRules\RegexValidtionRuleWrapper.cs" />
     <Compile Include="Dialogs\ValidationRules\RegexValidationRule.cs" />
     <Compile Include="Events\DialogEvents\DialogModelChangedEvent.cs" />
-    <Compile Include="Events\DialogEvents\GoBackEvent.cs" />
-    <Compile Include="Events\DialogEvents\SelectedCharacterChangedEvent.cs" />
     <Compile Include="Events\DialogEvents\SelectedCharactersPairChangedEvent.cs" />
     <Compile Include="Helpers\ConfigHelper.cs" />
-    <Compile Include="Models\Shared\SelectedCharactersPairEventArgs.cs" />
-    <Compile Include="Models\Shared\SelectionChangedEventArgs.cs" />
+    <Compile Include="Models\Exceptions\COMPortSlosedException.cs" />
+    <Compile Include="Models\Exceptions\DialogGeneratorMethodCanceledException.cs" />
+    <Compile Include="Events\EventArgs\SelectedCharactersPairEventArgs.cs" />
+    <Compile Include="Events\EventArgs\SelectionChangedEventArgs.cs" />
     <Compile Include="Services\ICharacterSelection.cs" />
     <Compile Include="Services\RandomSelectionService.cs" />
     <Compile Include="Services\SerialSelectionService.cs" />
     <Compile Include="Models\Shared\Setting.cs" />
-    <Compile Include="Workflows\DialogPageWorkflow.cs" />
+    <Compile Include="Workflows\DialogViewWorkflow.cs" />
     <Compile Include="Workflows\SerialSelectionWorkflow.cs" />
-    <Compile Include="ViewModels\DialogControlViewModel.cs" />
-    <Compile Include="Controls\DialogControl.xaml.cs">
-      <DependentUpon>DialogControl.xaml</DependentUpon>
+    <Compile Include="ViewModels\DialogGeneratorViewModel.cs" />
+    <Compile Include="Controls\DialogGeneratorControl.xaml.cs">
+      <DependentUpon>DialogGeneratorControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\VoiceRecorder\BarHeightScalingStyles.cs" />
     <Compile Include="Controls\VoiceRecorder\FFTDataSize.cs" />
@@ -223,7 +224,7 @@
     <Compile Include="Events\SimpleEvent.cs" />
     <Compile Include="Events\SimpleEventSubscription.cs" />
     <Compile Include="Helpers\LoggerHelper.cs" />
-    <Compile Include="HeatMapUpdate.cs" />
+    <Compile Include="Helpers\HeatMapUpdate.cs" />
     <Compile Include="Helpers\AppSet.cs" />
     <Compile Include="Extensions\StateMachineExtensions.cs" />
     <Compile Include="Models\Dialog\DialogItem.cs" />
@@ -330,7 +331,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Controls\DialogControl.xaml">
+    <Page Include="Controls\DialogGeneratorControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

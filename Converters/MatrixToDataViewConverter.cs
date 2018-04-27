@@ -57,7 +57,7 @@ namespace DialogEngine.Converters
                     newRow[c] = array[r, c-1];                    
                 }
 
-                newRow[columns+1] = SerialSelectionService.CharactersLastHeatMapUpdateTime[r].ToString("mm.ss.fff");
+                newRow[columns + 1] = SerialSelectionService.CharactersLastHeatMapUpdateTime[r].ToString("mm.ss.fff");
                 t.Rows.Add(newRow);
             }
 

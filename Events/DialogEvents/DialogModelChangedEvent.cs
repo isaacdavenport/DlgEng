@@ -1,5 +1,4 @@
-﻿using DialogEngine.Models.Shared;
-
+﻿using DialogEngine.Events.EventArgs;
 
 namespace DialogEngine.Events.DialogEvents
 {

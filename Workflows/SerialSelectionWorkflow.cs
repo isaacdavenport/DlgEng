@@ -55,14 +55,14 @@ namespace DialogEngine.Workflows.SerialSelectionWorkflow
             );
 
             //used to debug commands and UI components
-            OnTransitioned
-              (
-                (t) => Debug.WriteLine
-                  (
-                    "SerialSelectionWorkflow transitioned from {0} -> {1} [{2}]",
-                    t.Source, t.Destination, t.Trigger
-                  )
-              );
+            //OnTransitioned
+            //  (
+            //    (t) => Debug.WriteLine
+            //      (
+            //        "SerialSelectionWorkflow transitioned from {0} -> {1} [{2}]",
+            //        t.Source, t.Destination, t.Trigger
+            //      )
+            //  );
         }
 
         #endregion
