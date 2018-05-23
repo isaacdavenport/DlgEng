@@ -6,6 +6,7 @@ using log4net;
 using log4net.Config;
 using System.IO;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace DialogEngine
@@ -31,9 +32,13 @@ namespace DialogEngine
         }
 
 
-        private  void _application_Exit(object sender, ExitEventArgs e)
+        private async  void _application_Exit(object sender, ExitEventArgs e)
         {
-            ConfigHelper.Instance.SerializeSettingsToFile();
+           Task _serializeSettingsTask = ConfigHelper.Instance.SerializeSettingsToFile();
+           //Task _serializeDialogDataTask =   DialogDataHelper.SerializeDataToFile(Path.Combine(SessionHelper.WizardDirectory,SessionHelper.JSONFileName));
+
+            await _serializeSettingsTask;
+            //await _serializeDialogDataTask;
         }
 
 

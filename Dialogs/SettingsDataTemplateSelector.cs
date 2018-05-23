@@ -12,13 +12,13 @@ namespace DialogEngine.Dialogs
         {
             FrameworkElement element = container as FrameworkElement;
             Setting setting = item as Setting;
+            bool temp;
 
-            try
+            if(bool.TryParse(setting.Value,out temp))
             {
-                bool.Parse(setting.Value);
                 return element.FindResource("BoolDataTemplate") as DataTemplate;
             }
-            catch (System.Exception)
+            else
             {
                 return element.FindResource("StringDataTemplate") as DataTemplate;
             }

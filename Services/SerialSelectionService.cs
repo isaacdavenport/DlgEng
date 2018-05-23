@@ -468,8 +468,14 @@ namespace DialogEngine.Services
 
                 if (_charactersAssigned)
                 {
-                    EventAggregator.Instance.GetEvent<SelectedCharactersPairChangedEvent>().
-                        Publish(new SelectedCharactersPairEventArgs { Character1Index = NextCharacter1, Character2Index = NextCharacter2 });
+                    Application.Current.Dispatcher.BeginInvoke(() =>
+                    {
+                        EventAggregator.Instance.GetEvent<SelectedCharactersPairChangedEvent>().
+                            Publish(new SelectedCharactersPairEventArgs { Character1Index = NextCharacter1, Character2Index = NextCharacter2 });
+
+                        EventAggregator.Instance.GetEvent<StopPlayingCurrentDialogLineEvent>().Publish();
+
+                    },DispatcherPriority.Send);
 
                     CurrentCharacter1 = NextCharacter1;
                     CurrentCharacter2 = NextCharacter2;
@@ -511,7 +517,6 @@ namespace DialogEngine.Services
                     case false:
                         {
                             throw new COMPortSlosedException();
-                            break;
                         }
                 }
             }

@@ -24,6 +24,9 @@ using DialogEngine.Models.Shared;
 using DialogEngine.Services;
 using DialogEngine.Workflows.DialogPageWorkflow;
 using DialogEngine.Controls.ViewModels;
+using System.Linq;
+using MaterialDesignThemes.Wpf;
+using DialogEngine.Dialogs;
 
 namespace DialogEngine.ViewModels
 {
@@ -44,7 +47,7 @@ namespace DialogEngine.ViewModels
         private bool mRSSIstable;
         private StateMachine mStateMachine;
         private States mCurrentState;
-        private DialogGeneratorViewModel mDialogControlViewModel;
+        private DialogGeneratorViewModel mDialogGeneratorViewModel;
         private DialogView mView; 
         private readonly Random mRandom = new Random();
         // start position of drag operation from characters listbox to radio textbox
@@ -74,7 +77,7 @@ namespace DialogEngine.ViewModels
 
             mRandomSelectionService = new RandomSelectionService();
             mSerialSelectionService = new SerialSelectionService();
-            mDialogControlViewModel = new DialogGeneratorViewModel();
+            mDialogGeneratorViewModel = new DialogGeneratorViewModel();
 
             _configureStateMachine();
             _subscribeForEvents();
@@ -102,8 +105,9 @@ namespace DialogEngine.ViewModels
         /// </summary>
         public Core.RelayCommand StopDialog { get; set; }
 
-
         public Core.RelayCommand EditCharacterCommand { get; set; }
+
+        public Core.RelayCommand RemoveCharacterCommand { get; set; }
 
         /// <summary>
         /// Unbinds radio from character
@@ -135,12 +139,12 @@ namespace DialogEngine.ViewModels
         /// <summary>
         /// Selected  dialog model from specified dialog .json file
         /// </summary>
-        public RelayCommand<System.Windows.Controls.SelectionChangedEventArgs> DialogModelSelectionChangedCommand { get; set; }
+        public RelayCommand<SelectionChangedEventArgs> DialogModelSelectionChangedCommand { get; set; }
 
         /// <summary>
         /// Recalculate width for TabItem columns in debug view
         /// </summary>
-        public RelayCommand<System.Windows.Controls.SelectionChangedEventArgs> RefreshTabItem { get; set; }
+        public RelayCommand<SelectionChangedEventArgs> RefreshTabItem { get; set; }
 
 
         #endregion
@@ -366,7 +370,7 @@ namespace DialogEngine.ViewModels
             ClearAllMessages = new Core.RelayCommand(x => _clearAllMessages((string)x));
             StopDialog = new Core.RelayCommand(x => _stopDialog());
             ClearRadioBindingCommand = new Core.RelayCommand(x => _clearRadioBindingCommand((string)x));
-            EditCharacterCommand = new Core.RelayCommand(x => _editCharacter((Character)x));
+            RemoveCharacterCommand = new Core.RelayCommand(x => _removeCharacter((Character)x));
 
             // MVVM light commands where we can pass event object
 
@@ -375,20 +379,25 @@ namespace DialogEngine.ViewModels
             DragEnterCommand = new RelayCommand<DragEventArgs>(_dragEnterCommand);
             DropCommand = new RelayCommand<DragEventArgs>(_dropCommand);
             DragOverCommand = new RelayCommand<DragEventArgs>(_dragOverCommand);
-            DialogModelSelectionChangedCommand = new RelayCommand<System.Windows.Controls.SelectionChangedEventArgs>(_dialogModelSelectionChanged);
-            RefreshTabItem = new RelayCommand<System.Windows.Controls.SelectionChangedEventArgs>(_refreshTabItem);
+            DialogModelSelectionChangedCommand = new RelayCommand<SelectionChangedEventArgs>(_dialogModelSelectionChanged);
+            RefreshTabItem = new RelayCommand<SelectionChangedEventArgs>(_refreshTabItem);
         }
 
-
-        private async void _editCharacter(Character character)
+        private async void _removeCharacter(Character character)
         {
-           await Dispatcher.BeginInvoke((Action) (() => {
-                (Application.Current.MainWindow.FindName("mainFrame") as Frame).NavigationService.Navigate(new WizardView(character));
-            }));
+            var result = await DialogHost.Show(new YesNoDialog("", "Are you sure you want to delete this character? ", "Yes", "No"));
+
+            if(result != null)
+            {
+                int index = DialogData.Instance.CharacterCollection.Select((c, i) => new { ch = c, index = i })
+                                                  .First(x => x.ch.CharacterPrefix.Equals(character.CharacterPrefix)).index;
+
+                DialogData.Instance.CharacterCollection.RemoveAt(index);
+            }
         }
 
 
-        private void _dialogModelSelectionChanged(System.Windows.Controls.SelectionChangedEventArgs e)
+        private void _dialogModelSelectionChanged(SelectionChangedEventArgs e)
         {
             if(e.AddedItems.Count > 0)
             {
@@ -575,7 +584,7 @@ namespace DialogEngine.ViewModels
 
 
         // forces TabItem to refresh binding for GridView columns width
-        private void _refreshTabItem(System.Windows.Controls.SelectionChangedEventArgs e)
+        private void _refreshTabItem(SelectionChangedEventArgs e)
         {
             try
             {
@@ -757,7 +766,7 @@ namespace DialogEngine.ViewModels
         private void _stopDialog()
         {
             mCurrentSelectionService.Stop();
-            mDialogControlViewModel.StopDialogGenerator();
+            mDialogGeneratorViewModel.StopDialogGenerator();
 
             StateMachine.Fire(Triggers.Idle);
         }
@@ -780,7 +789,7 @@ namespace DialogEngine.ViewModels
                 }
 
                 Task selectionServiceTask = mCurrentSelectionService.Start();
-                Task dialogGeneratorTask = mDialogControlViewModel.StartDialogGenerator();
+                Task dialogGeneratorTask = mDialogGeneratorViewModel.StartDialogGenerator();
 
                 await selectionServiceTask;
                 await dialogGeneratorTask;
@@ -885,13 +894,13 @@ namespace DialogEngine.ViewModels
         }
 
 
-        public DialogGeneratorViewModel DialogControlViewModel
+        public DialogGeneratorViewModel DialogGeneratorViewModel
         {
-            get { return mDialogControlViewModel; }
+            get { return mDialogGeneratorViewModel; }
             set
             {
-                mDialogControlViewModel = value;
-                OnPropertyChanged("DialogControlViewModel");
+                mDialogGeneratorViewModel = value;
+                OnPropertyChanged("DialogGeneratorViewModel");
             }
         }
 

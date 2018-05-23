@@ -22,16 +22,6 @@ namespace DialogEngine.Views
             DataContext = new WizardViewModel();
         }
 
-        /// <summary>
-        /// Constructor which is invoked when we want to edit character
-        /// </summary>
-        /// <param name="character">Reference on character which we want to edit</param>
-        public WizardView(Character character)
-        {
-            InitializeComponent();
-
-            DataContext = new WizardViewModel(character);
-        }
 
         #endregion
 

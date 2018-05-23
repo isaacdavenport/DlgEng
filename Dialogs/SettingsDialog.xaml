@@ -37,11 +37,27 @@
               SnapsToDevicePixels="True">
         <GroupBox.HeaderTemplate>
             <DataTemplate>
-                <TextBlock Text="Settings" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="Settings"
+                               Grid.Column="1"
+                               HorizontalAlignment="Center" 
+                               VerticalAlignment="Center" />
+
+                    <StackPanel Orientation="Horizontal" Grid.Column="2" HorizontalAlignment="Right">
+                        <Label Foreground="White" Content="Off" />
+                        <ToggleButton IsChecked="False" Background="WhiteSmoke" />
+                    </StackPanel>
+                </Grid>
             </DataTemplate>
         </GroupBox.HeaderTemplate>
         
-        <Grid x:Name="MainGrid" Margin="30,30,30,15">
+        <Grid x:Name="MainGrid" Margin="30,0,30,15">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
@@ -51,7 +67,7 @@
                 <RowDefinition />
                 <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
-
+            
             <ItemsControl ItemsSource="{Binding Settings}" Grid.Row="0" Grid.ColumnSpan="2" ItemTemplateSelector="{StaticResource SettingsDataTemplateSelector}" >
                 <ItemsControl.Resources>
                     <DataTemplate x:Key="BoolDataTemplate">

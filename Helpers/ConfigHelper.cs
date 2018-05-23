@@ -54,17 +54,20 @@ namespace DialogEngine.Helpers
             });
         }
 
-        public void SerializeSettingsToFile()
+        public  Task SerializeSettingsToFile()
         {
-            try
+            return Task.Run(() =>
             {
-                FileStream fs = new FileStream(mSettingsFilePath, FileMode.Create);
-                mSerializer.Serialize(fs, Settings);
-            }
-            catch (Exception ex)
-            {
-                mcLogger.Error("SerializeSettingsToFile. " + ex.Message);
-            }
+                try
+                {
+                    FileStream fs = new FileStream(mSettingsFilePath, FileMode.Create);
+                    mSerializer.Serialize(fs, Settings);
+                }
+                catch (Exception ex)
+                {
+                    mcLogger.Error("SerializeSettingsToFile. " + ex.Message);
+                }
+            });
         }
 
         public string GetValue(string key)

@@ -130,24 +130,37 @@ namespace DialogEngine.Helpers
         }
 
 
-        public static async Task SerializeDataToFile(string path)
+        public static  Task SerializeDataToFile(string path)
         {
-            await Task.Run(() =>
+            return Task.Run(() =>
             {
-
+                //
+                //    DialogModels = DialogData.Instance.DialogModelCollection,
                 WizardsList _wizardsList = new WizardsList
                 {
-                    Characters = DialogData.Instance.CharacterCollection,
-                    DialogModels = DialogData.Instance.DialogModelCollection,
-                    Wizards = DialogData.Instance.WizardTypesCollection
+
+                    Wizards = DialogData.Instance.WizardTypesCollection,
+                    //Characters = DialogData.Instance.CharacterCollection
+                    DialogModels = DialogData.Instance.DialogModelCollection
                 };
 
                 using (StreamWriter file = File.CreateText(path))
                 {
                     JsonSerializer serializer = new JsonSerializer();
+                    serializer.Error += Serializer_Error;
                     serializer.Serialize(file, _wizardsList);
                 }
             });
+        }
+
+        private static void Serializer_Error(object sender, Newtonsoft.Json.Serialization.ErrorEventArgs e)
+        {
+            mcLogger.Error(e.ErrorContext.Error.Message);
+        }
+
+        private static void  error(object sender, ErrorEventArgs args)
+        {
+
         }
 
         public static  void AddMessage(LogMessage message)

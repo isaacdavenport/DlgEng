@@ -15,6 +15,7 @@ using log4net;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -39,6 +40,7 @@ namespace DialogEngine.Controls.ViewModels
         private bool mLastPhraseImpliedMovement;
         private bool mSameCharactersAsLast;
         private bool mIsItemAdded;
+        private bool mIsForcedDialogModel;
         private delegate void PrintMethod(LogMessage message);
         private PrintMethod AddItem = DialogDataHelper.AddMessage;
         private StateMachine mStateMachine;
@@ -89,6 +91,50 @@ namespace DialogEngine.Controls.ViewModels
             IsItemAdded = false;
         }
 
+
+        private void _charactersList_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            if (e.NewItems != null)
+            {
+                Character _newCharacter = e.NewItems[0] as Character;
+
+                _newCharacter.PhraseTotals = new PhraseEntry();  // init PhraseTotals
+                _newCharacter.PhraseTotals.DialogStr = "phrase weights";
+                _newCharacter.PhraseTotals.FileName = "silence";
+                _newCharacter.PhraseTotals.PhraseRating = "G";
+                _newCharacter.PhraseTotals.PhraseWeights = new Dictionary<string, double>();
+                _newCharacter.PhraseTotals.PhraseWeights.Add("Greeting", 0.0f);
+
+                _removePhrasesOverParentalRating(_newCharacter);
+
+                //Calculate Phrase Weight Totals here.
+                foreach (var _curPhrase in _newCharacter.Phrases)
+                {
+                    foreach (var tag in _curPhrase.PhraseWeights.Keys)
+                    {
+                        if (_newCharacter.PhraseTotals.PhraseWeights.Keys.Contains(tag))
+                        {
+                            _newCharacter.PhraseTotals.PhraseWeights[tag] += _curPhrase.PhraseWeights[tag];
+                        }
+                        else
+                        {
+                            _newCharacter.PhraseTotals.PhraseWeights.Add(tag, _curPhrase.PhraseWeights[tag]);
+                        }
+                    }
+                }
+
+                for (var i = 0; i < Character.RecentPhrasesQueueSize; i++)
+                {
+                    // we always deque after enque so this sets que size
+                    _newCharacter.RecentPhrases.Enqueue(_newCharacter.Phrases[0]);
+                }
+            }
+            else if (e.OldItems != null)
+            {
+
+            }
+        }
+
         #endregion
 
         #region - private functions -
@@ -132,9 +178,13 @@ namespace DialogEngine.Controls.ViewModels
         private void _initialize()
         {
             mCharactersList = DialogData.Instance.CharacterCollection;
+
+            mCharactersList.CollectionChanged += _charactersList_CollectionChanged;
             
             foreach(ModelDialogInfo _modelDialogInfo in DialogData.Instance.DialogModelCollection)
             {
+                mDialogModelPopularitySum += _modelDialogInfo.ArrayOfDialogModels.Sum(_modelDialogItem => _modelDialogItem.Popularity);
+
                 foreach(ModelDialog _dialogModel in _modelDialogInfo.ArrayOfDialogModels)
                 {
                     mDialogModelsList.Add(_dialogModel);
@@ -204,10 +254,12 @@ namespace DialogEngine.Controls.ViewModels
             if(args.IsSelected)
             {
                 mIndexOfCurrentDialogModel = args.Index;
+                mIsForcedDialogModel = true;
             }
             else
             {
                 mIndexOfCurrentDialogModel = 0;
+                mIsForcedDialogModel = false;
             }
         }
 
@@ -348,52 +400,62 @@ namespace DialogEngine.Controls.ViewModels
 
         private void _playAudio(string _pathAndFileName)
         {
-            if (!SessionHelper.AudioDialogsOn)
+            try
             {
-                Thread.Sleep(3200);
-                return;
-            }
-
-            if (File.Exists(_pathAndFileName))
-            {
-                var i = 0;
-                bool _isPlaying = false;
-                Thread.Sleep(300);
-
-                Dispatcher.Invoke(() => {
-                    var _playSuccess = MP3Player.Instance.PlayMp3(_pathAndFileName);
-                    if (_playSuccess != 0)
-                    {
-                        AddItem(new ErrorMessage("MP3 Play Error  ---  " + _playSuccess));
-                    }
-                });
-
-                do
+                if (!SessionHelper.AudioDialogsOn)
                 {
-                    Dispatcher.Invoke(() =>
-                    {
-                        _isPlaying = MP3Player.Instance.IsPlaying();
+                    Thread.Sleep(3200);
+                    return;
+                }
+
+                if (File.Exists(_pathAndFileName))
+                {
+                    var i = 0;
+                    bool _isPlaying = false;
+                    Thread.Sleep(300);
+
+                    Dispatcher.Invoke(() => {
+                        var _playSuccess = MP3Player.Instance.PlayMp3(_pathAndFileName);
+
+                        if (_playSuccess != 0)
+                        {
+                            AddItem(new ErrorMessage("MP3 Play Error  ---  " + _playSuccess));
+                        }
                     });
 
-                    Thread.Sleep(100);
-                    i++;
-                }
-                while (_isPlaying && i < 400);  // don't get stuck,, 40 seconds max phrase
+                    do
+                    {
+                        Dispatcher.Invoke(() =>
+                        {
+                            _isPlaying = MP3Player.Instance.IsPlaying();
+                        });
 
-                Thread.Sleep(800); // wait around a second after the audio is done for between phrase pause
+                        Thread.Sleep(100);
+                        i++;
+                    }
+                    while (_isPlaying && i < 400);  // don't get stuck,, 40 seconds max phrase
+
+                    Thread.Sleep(800); // wait around a second after the audio is done for between phrase pause
+                }
+                else
+                {
+                    AddItem(new ErrorMessage("Could not find: " + _pathAndFileName));
+                    Thread.Sleep(1500);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                AddItem(new ErrorMessage("Could not find: " + _pathAndFileName));
-                Thread.Sleep(3200);
+                mcLogger.Error(" _playAudio " + ex.Message);
             }
+
+            Debug.WriteLine("exit play mp3");
         }
 
 
         private bool _importClosestSerialComsCharacters()
         {
-            var _tempChar1 = SerialSelectionService.NextCharacter1;
-            var _tempChar2 = SerialSelectionService.NextCharacter2;
+            var _tempChar1 = mCharacter1Num;
+            var _tempChar2 = mCharacter2Num;
 
             if (_tempChar1 == _tempChar2 || _tempChar1 >= mCharactersList.Count || _tempChar2 >= mCharactersList.Count)
                 return false;
@@ -729,7 +791,7 @@ namespace DialogEngine.Controls.ViewModels
                 if (!_importClosestSerialComsCharacters())
                     return Triggers.WaitForNewCharacters;
 
-                mIndexOfCurrentDialogModel = mIndexOfCurrentDialogModel >= 0 ?
+                mIndexOfCurrentDialogModel = mIsForcedDialogModel ?
                                              mIndexOfCurrentDialogModel
                                             : _pickAWeightedDialog(mCharacter1Num, mCharacter2Num);
 
@@ -759,12 +821,12 @@ namespace DialogEngine.Controls.ViewModels
 
 
 
-        private async Task<Triggers> _startDialog(CancellationToken token)
+        private  async Task<Triggers>  _startDialog(CancellationToken token)
         {
             try
             {
                 // used to stop  immediately function if new character are selected
-                Func<Task> action = async () =>
+                Func<Task> action = async() =>
                 {
                     mEventWaitHandle.WaitOne();
                     throw new DialogGeneratorMethodCanceledException(); // throw exception which will cancel method
@@ -812,6 +874,8 @@ namespace DialogEngine.Controls.ViewModels
                                               + "_" + _selectedPhrase.FileName + ".mp3";
 
                         _playAudio(_pathAndFileName); // vb: code stops here so commented out for debugging purpose
+
+                        Debug.WriteLine("after playAudio");
 
                         if (!_dialogTrackerAndSerialComsCharactersSame()
                             && DialogViewModel.SelectedCharactersOn != 1)

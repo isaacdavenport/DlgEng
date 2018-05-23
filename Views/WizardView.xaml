@@ -341,6 +341,13 @@
                             <Button Command="{Binding SaveAndNext}"
                                     Style="{DynamicResource MaterialDesignRaisedButton}"
                                     Margin="20,0,0,0">
+                                <Button.IsEnabled>
+                                    <MultiBinding Converter="{StaticResource IsEnabledSaveAndNextBtnConverter}" >
+                                        <Binding Path="VoiceRecorderControlViewModel.IsLineRecorded" />
+                                        <Binding Path="CurrentStepIndex" />
+                                        <Binding Path="CurrentWizard.TutorialSteps.Count" />
+                                    </MultiBinding>
+                                </Button.IsEnabled>
                                 <Button.Content>
                                     <MultiBinding Converter="{StaticResource SaveAndNextBtnContentConverter}">
                                         <Binding Path="CurrentStepIndex" />

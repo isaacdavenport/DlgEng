@@ -30,5 +30,6 @@
     <converters:ParseBooleanConverter x:Key="ParseBooleanConverter" />
     <converters:IsEnabledMainWindowControlConverter x:Key="IsEnabledMainWindowControlConverter" />
     <converters:IsEnabledDialogViewControlConverter x:Key="IsEnabledDialogViewControlConverter" />
+    <converters:IsEnabledSaveAndNextBtnConverter x:Key="IsEnabledSaveAndNextBtnConverter" />
 
 </ResourceDictionary>

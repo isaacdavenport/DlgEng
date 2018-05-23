@@ -62,9 +62,17 @@ namespace DialogEngine.Models.Dialog
 
         public override bool Equals(object obj)
         {
-            var _modelDialogInfo = obj as ModelDialogInfo;
+            if(obj is ModelDialogInfo)
+            {
+                var _modelDialogInfo = obj as ModelDialogInfo;
 
-            return _modelDialogInfo.ModelsCollectionName.Equals(this.ModelsCollectionName);
+                return _modelDialogInfo.ModelsCollectionName.Equals(this.ModelsCollectionName);
+            }
+            else
+            {
+                return false;
+            }
+
         }
 
         #endregion

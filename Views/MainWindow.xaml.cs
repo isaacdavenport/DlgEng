@@ -12,6 +12,8 @@ using System.Runtime.Caching;
 using log4net;
 using System.Reflection;
 using DialogEngine.Core;
+using DialogEngine.Models.Dialog;
+using DialogEngine.Views;
 
 namespace DialogEngine
 {
@@ -62,31 +64,52 @@ namespace DialogEngine
 
         private void _onGoToPage(object sender, ExecutedRoutedEventArgs e)
         {
-            _onViewRequest((string)e.Parameter);
+            _onViewRequest(e.Parameter);
         }
 
-        private void _onViewRequest(string uri)
+        private void _onViewRequest(object param)
         {
-            var newUri = new Uri(uri, UriKind.RelativeOrAbsolute);
-
             try
             {
-                if (!mCurrentView.Equals(uri))
+                if(param is Character)
                 {
-                    PageBase page = mMemoryCache.Get(uri) as PageBase;
+                    PageBase page = mMemoryCache.Get("/Views/WizardView.xaml") as PageBase;
 
-                    if(page != null)
+                    if (page != null)
                     {
+                        ((page as WizardView).DataContext as WizardViewModel).Character = param as Character;
                         mainFrame.Navigate(page);
                     }
                     else
                     {
-                        PageBase _newPage =  Application.LoadComponent(new Uri(uri, UriKind.Relative)) as PageBase;
-                        mMemoryCache.Add(uri, _newPage,null);
+                        PageBase _newPage = Application.LoadComponent(new Uri("/Views/WizardView.xaml", UriKind.Relative)) as PageBase;
+                        mMemoryCache.Add("/Views/WizardView.xaml", _newPage, null);
+                        ((_newPage as WizardView).DataContext as WizardViewModel).Character = param as Character;
                         mainFrame.Navigate(_newPage);
                     }
 
-                    mCurrentView = uri;
+                    mCurrentView = "/Views/WizardView.xaml";
+                }
+                else
+                {
+                    string uri = (string)param;
+                    if (!mCurrentView.Equals(uri))
+                    {
+                        PageBase page = mMemoryCache.Get(uri) as PageBase;
+
+                        if (page != null)
+                        {
+                            mainFrame.Navigate(page);
+                        }
+                        else
+                        {
+                            PageBase _newPage = Application.LoadComponent(new Uri(uri, UriKind.Relative)) as PageBase;
+                            mMemoryCache.Add(uri, _newPage, null);
+                            mainFrame.Navigate(_newPage);
+                        }
+
+                        mCurrentView = uri;
+                    }
                 }
             }
             catch (Exception ex)

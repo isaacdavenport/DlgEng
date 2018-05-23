@@ -1,7 +1,6 @@
 ﻿//  Confidential Source Code Property Toys2Life LLC Colorado 2017
 //  www.toys2life.org
 
-using DialogEngine.Controls.Views;
 using DialogEngine.Controls.VoiceRecorder;
 using DialogEngine.Core;
 using DialogEngine.Helpers;
@@ -104,7 +103,7 @@ namespace DialogEngine.Controls.ViewModels
             }
             else
             {
-                mSoundPlayer.StartRecording(CurrentFilePath);
+                mSoundPlayer.StartRecording(Path.Combine(SessionHelper.WizardAudioDirectory,CurrentFilePath));
                 IsRecording = true;
             }
         }
@@ -132,7 +131,7 @@ namespace DialogEngine.Controls.ViewModels
             {
                 IsPlaying = true;
                 if (ChannelPosition == 0)
-                    mSoundPlayer.OpenFile(path);
+                    mSoundPlayer.OpenFile(Path.Combine(SessionHelper.WizardAudioDirectory,path));
 
                 mSoundPlayer.Play();
             }

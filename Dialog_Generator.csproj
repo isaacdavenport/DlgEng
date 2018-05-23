@@ -133,6 +133,7 @@
     <Compile Include="Converters\CharacterGenderConverter.cs" />
     <Compile Include="Converters\IsEnabledDialogViewControlConverter.cs" />
     <Compile Include="Converters\IsEnabledMainWindowControlConverter.cs" />
+    <Compile Include="Converters\IsEnabledSaveAndNextBtnConverter.cs" />
     <Compile Include="Converters\IsMediaPlayerPlayBtnEnabledConverter.cs" />
     <Compile Include="Converters\IsMediaPlayerStopBtnEnabledConverter.cs" />
     <Compile Include="Converters\ParseBooleanConverter.cs" />
