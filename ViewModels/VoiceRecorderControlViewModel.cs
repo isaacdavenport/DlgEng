@@ -103,7 +103,7 @@ namespace DialogEngine.Controls.ViewModels
             }
             else
             {
-                mSoundPlayer.StartRecording(Path.Combine(SessionHelper.WizardAudioDirectory,CurrentFilePath));
+                mSoundPlayer.StartRecording(Path.Combine(SessionHelper.WizardAudioDirectory,CurrentFilePath+ ".mp3"));
                 IsRecording = true;
             }
         }
@@ -131,7 +131,7 @@ namespace DialogEngine.Controls.ViewModels
             {
                 IsPlaying = true;
                 if (ChannelPosition == 0)
-                    mSoundPlayer.OpenFile(Path.Combine(SessionHelper.WizardAudioDirectory,path));
+                    mSoundPlayer.OpenFile(Path.Combine(SessionHelper.WizardAudioDirectory,path + ".mp3"));
 
                 mSoundPlayer.Play();
             }

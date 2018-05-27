@@ -55,7 +55,7 @@ namespace DialogEngine.ViewModels
         {
             StateMachine = new StateMachine
             (
-                action: () => _view_Loaded()
+                action: () => { }
             );
 
             StateMachine.PropertyChanged += _stateMachine_PropertyChanged;
@@ -256,7 +256,7 @@ namespace DialogEngine.ViewModels
             {
                 string _mp3FilePath = Character.CharacterPrefix + "_" + _videoFileName;
 
-                return  _mp3FilePath + ".mp3";
+                return  _mp3FilePath ;
             }
         }
 
@@ -383,8 +383,8 @@ namespace DialogEngine.ViewModels
         {
             try
             {
-                _clearListeners();
                 StateMachine.Fire(Triggers.Start);
+
                 _goBackToDialog();
             }
             catch (Exception ex)
@@ -428,7 +428,6 @@ namespace DialogEngine.ViewModels
                 CurrentWizard = DialogData.Instance.WizardTypesCollection[(result as WizardParameter).WizardTypeIndex];
                 CurrentTutorialStep = CurrentWizard.TutorialSteps[0];
                 CurrentVideoFilePath = Path.Combine(SessionHelper.WizardVideoDirectory, CurrentTutorialStep.VideoFileName + ".avi");
-
                 StateMachine.Fire(Triggers.ReadyForUserAction);
             }
             else
@@ -445,7 +444,7 @@ namespace DialogEngine.ViewModels
                 {
                     // file name is formed as BO_Greeting.mp3
                     string[] parts = phrase.FileName.Split('_');
-                    string _userRecordedFileName = parts[1].Substring(0, parts[1].Length - 4);
+                    string _userRecordedFileName = parts[1].Substring(0, parts[1].Length);
                     // DPWizGiveCredit tag name is right side of 'Wiz'
                     int _indexForSplitting = _tutorialStep.VideoFileName.IndexOf("Wiz");
                     string _tagName = _tutorialStep.VideoFileName.Substring(_indexForSplitting + 3);

@@ -11,6 +11,7 @@
              xmlns:cmd="http://www.galasoft.ch/mvvmlight"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              WindowStartupLocation="CenterScreen"
+             Closing="_mainWindow_closing"
              WindowState="Maximized"                
              mc:Ignorable="d"
              TextElement.Foreground="{DynamicResource MaterialDesignBody}"

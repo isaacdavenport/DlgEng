@@ -25,7 +25,10 @@ namespace DialogEngine.Models.Dialog
 
         #region - properties -
 
+        [JsonProperty("ArrayOfDialogModels")]
         public List<ModelDialog> ArrayOfDialogModels { get; set; }
+
+        [JsonProperty("ModelsCollectionName")]
         public string ModelsCollectionName { set; get; }
 
         /// <summary>
@@ -60,20 +63,20 @@ namespace DialogEngine.Models.Dialog
 
         #region - public functions -
 
-        public override bool Equals(object obj)
-        {
-            if(obj is ModelDialogInfo)
-            {
-                var _modelDialogInfo = obj as ModelDialogInfo;
+        //public override bool Equals(object obj)
+        //{
+        //    if(obj is ModelDialogInfo)
+        //    {
+        //        var _modelDialogInfo = obj as ModelDialogInfo;
 
-                return _modelDialogInfo.ModelsCollectionName.Equals(this.ModelsCollectionName);
-            }
-            else
-            {
-                return false;
-            }
+        //        return _modelDialogInfo.ModelsCollectionName.Equals(this.ModelsCollectionName);
+        //    }
+        //    else
+        //    {
+        //        return false;
+        //    }
 
-        }
+        //}
 
         #endregion
     }

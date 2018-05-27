@@ -4,6 +4,7 @@
 using DialogEngine.Helpers;
 using log4net;
 using log4net.Config;
+using System;
 using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -30,17 +31,6 @@ namespace DialogEngine
             MessageBox.Show("An unhandled exception just occurred: " + e.Exception.Message, "Exception", MessageBoxButton.OK, MessageBoxImage.Warning);
             e.Handled = true;
         }
-
-
-        private async  void _application_Exit(object sender, ExitEventArgs e)
-        {
-           Task _serializeSettingsTask = ConfigHelper.Instance.SerializeSettingsToFile();
-           //Task _serializeDialogDataTask =   DialogDataHelper.SerializeDataToFile(Path.Combine(SessionHelper.WizardDirectory,SessionHelper.JSONFileName));
-
-            await _serializeSettingsTask;
-            //await _serializeDialogDataTask;
-        }
-
 
         private async void _application_Startup(object sender, StartupEventArgs e)
         {

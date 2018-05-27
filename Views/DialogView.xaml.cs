@@ -8,6 +8,7 @@ using System;
 using DialogEngine.Helpers;
 using MaterialDesignThemes.Wpf;
 using System.Windows.Input;
+using System.Windows;
 
 namespace DialogEngine.Views
 {
@@ -32,11 +33,9 @@ namespace DialogEngine.Views
         protected  override void onPageLoaded()
         {
             (this.DataContext as DialogViewModel).View = this;
-
-            //await DialogDataHelper.LoadDialogDataAsync(SessionHelper.WizardDirectory);
         }
 
-        private void PopupBox_Opened(object sender, System.Windows.RoutedEventArgs e)
+        private void PopupBox_Opened(object sender, RoutedEventArgs e)
         {
            ComboBox child = (sender as PopupBox).PopupContent as ComboBox;            
            child.IsDropDownOpen = true;

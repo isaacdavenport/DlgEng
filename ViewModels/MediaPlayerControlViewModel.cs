@@ -89,6 +89,9 @@ namespace DialogEngine.Controls.ViewModels
             get { return mIsPlaying; }
             set
             {
+                if (mIsPlaying == value)
+                    return;
+
                 mIsPlaying = value;
                 OnPropertyChanged("IsPlaying");
             }

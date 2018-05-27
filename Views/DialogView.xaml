@@ -146,6 +146,7 @@
                                             <Style TargetType="DataGridColumnHeader">
                                                 <Setter Property="HorizontalContentAlignment" Value="Center" />
                                                 <Setter Property="SeparatorBrush" Value="Transparent" />
+                                                <Setter Property="Background" Value="White" />
                                             </Style>
                                         </DataGridTemplateColumn.HeaderStyle>
                                         
@@ -232,6 +233,7 @@
                                                 <Setter Property="HorizontalContentAlignment" Value="Center" />
                                                 <Setter Property="SeparatorBrush" Value="Transparent" />
                                                 <Setter Property="BorderThickness" Value="0 0 0 0" />
+                                                <Setter Property="Background" Value="White" />
                                             </Style>
                                         </DataGridTemplateColumn.HeaderStyle>
                                         
@@ -257,6 +259,7 @@
                                                 <Setter Property="HorizontalContentAlignment" Value="Center" />
                                                 <Setter Property="SeparatorBrush" Value="Transparent" />
                                                 <Setter Property="BorderThickness" Value="0 0 0 0" />
+                                                <Setter Property="Background" Value="White" />
                                             </Style>
                                         </DataGridTemplateColumn.HeaderStyle>
                                         
@@ -282,6 +285,7 @@
                                                 <Setter Property="HorizontalContentAlignment" Value="Center" />
                                                 <Setter Property="BorderThickness" Value="0 0 0 0" />
                                                 <Setter Property="SeparatorBrush" Value="Transparent" />
+                                                <Setter Property="Background" Value="White" />
                                             </Style>
                                         </DataGridTemplateColumn.HeaderStyle>
                                         
@@ -692,6 +696,7 @@
                                                     <Setter Property="HorizontalContentAlignment" Value="Center" />
                                                     <Setter Property="SeparatorBrush" Value="Transparent" />
                                                     <Setter Property="BorderThickness" Value="0"/>
+                                                    <Setter Property="Background" Value="White" />
                                                 </Style>
                                             </DataGridTemplateColumn.HeaderStyle>
 
@@ -708,6 +713,7 @@
                                                 <Style TargetType="DataGridColumnHeader">
                                                     <Setter Property="HorizontalContentAlignment" Value="Center" />
                                                     <Setter Property="SeparatorBrush" Value="Transparent" />
+                                                    <Setter Property="Background" Value="White" />
                                                 </Style>
                                             </DataGridTemplateColumn.HeaderStyle>
                                             <DataGridTemplateColumn.CellTemplate>
@@ -727,6 +733,7 @@
                                                 <Style TargetType="DataGridColumnHeader">
                                                     <Setter Property="HorizontalContentAlignment" Value="Center" />
                                                     <Setter Property="SeparatorBrush" Value="Transparent" />
+                                                    <Setter Property="Background" Value="White" />
                                                 </Style>
                                             </DataGridTemplateColumn.HeaderStyle>
                                             <DataGridTemplateColumn.CellTemplate>

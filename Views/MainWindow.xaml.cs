@@ -14,6 +14,9 @@ using System.Reflection;
 using DialogEngine.Core;
 using DialogEngine.Models.Dialog;
 using DialogEngine.Views;
+using DialogEngine.Helpers;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace DialogEngine
 {
@@ -51,6 +54,15 @@ namespace DialogEngine
         #endregion
 
         #region - private methods -
+
+        private async void _mainWindow_closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Task _serializeSettingsTask = ConfigHelper.Instance.SerializeSettingsToFile();
+            Task _serializeDialogDataTask = DialogDataHelper.SerializeDataToFile(Path.Combine(SessionHelper.WizardDirectory, SessionHelper.JSONFileName));
+
+            await _serializeSettingsTask;
+            await _serializeDialogDataTask;
+        }
 
         private void _onBrowseBack(object sender, ExecutedRoutedEventArgs e)
         {

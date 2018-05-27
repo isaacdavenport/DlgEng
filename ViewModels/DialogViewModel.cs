@@ -387,7 +387,7 @@ namespace DialogEngine.ViewModels
         {
             var result = await DialogHost.Show(new YesNoDialog("", "Are you sure you want to delete this character? ", "Yes", "No"));
 
-            if(result != null)
+            if (result != null)
             {
                 int index = DialogData.Instance.CharacterCollection.Select((c, i) => new { ch = c, index = i })
                                                   .First(x => x.ch.CharacterPrefix.Equals(character.CharacterPrefix)).index;

@@ -1,5 +1,4 @@
 ﻿
-
 using DialogEngine.Events;
 using DialogEngine.Events.DialogEvents;
 using DialogEngine.Models.Enums;
@@ -21,9 +20,10 @@ namespace DialogEngine.Models.Dialog
         private string mCharacterGender = "M";
         private string mCharacterName="";
         private string mCharacterPrefix="";
-        private int mRadioNum = -1;                                 // assigned radio number - unassigned value is -1
+        private int mRadioNum = -1;                                // assigned radio number - unassigned value is -1
         public event PropertyChangedEventHandler PropertyChanged;
-
+        private List<PhraseEntry> mPhrases;
+        private PhraseEntry mPhraseTotals;
         #endregion
 
         #region - public functions -
@@ -40,8 +40,26 @@ namespace DialogEngine.Models.Dialog
         #endregion
 
         #region - properties -
-        public List<PhraseEntry> Phrases = new List<PhraseEntry>();
-        public PhraseEntry PhraseTotals = new PhraseEntry();
+
+        [JsonIgnore]
+        public PhraseEntry PhraseTotals
+        {
+            get
+            {
+                if (mPhraseTotals == null)
+                    mPhraseTotals = new PhraseEntry();
+
+                return mPhraseTotals;
+            }
+
+            set
+            {
+                mPhraseTotals = value;
+            }
+        }
+
+        //[JsonProperty("PhraseTotals")]
+        //public PhraseEntry PhraseTotals = new PhraseEntry();
 
         [JsonProperty("CharacterAge")]
         public int CharacterAge
@@ -86,6 +104,23 @@ namespace DialogEngine.Models.Dialog
             {
                 mCharacterPrefix = value;
                 OnPropertyChanged("CharacterPrefix");
+            }
+        }
+
+        [JsonProperty("Phrases")]
+        public List<PhraseEntry> Phrases
+        {
+            get
+            {
+                if (mPhrases == null)
+                    mPhrases = new List<PhraseEntry>();
+
+                return mPhrases;
+            }
+
+            set
+            {
+                mPhrases = value;
             }
         }
 

@@ -13,6 +13,7 @@ using System.IO;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web.Script.Serialization;
 using System.Windows;
 
 namespace DialogEngine.Helpers
@@ -134,24 +135,38 @@ namespace DialogEngine.Helpers
         {
             return Task.Run(() =>
             {
-                //
-                //    DialogModels = DialogData.Instance.DialogModelCollection,
-                WizardsList _wizardsList = new WizardsList
+                try
                 {
+                    WizardsList _wizardsList = new WizardsList
+                    {
 
-                    Wizards = DialogData.Instance.WizardTypesCollection,
-                    //Characters = DialogData.Instance.CharacterCollection
-                    DialogModels = DialogData.Instance.DialogModelCollection
-                };
+                        Wizards = DialogData.Instance.WizardTypesCollection,
+                        Characters = DialogData.Instance.CharacterCollection,
+                        DialogModels = DialogData.Instance.DialogModelCollection
+                    };
 
-                using (StreamWriter file = File.CreateText(path))
-                {
-                    JsonSerializer serializer = new JsonSerializer();
-                    serializer.Error += Serializer_Error;
-                    serializer.Serialize(file, _wizardsList);
+                    var settings = new JsonSerializerSettings
+                    {
+                        Error = (sender, args) =>
+                        {
+                            mcLogger.Error(args.ErrorContext.Error.Message);
+                        },
+                        Formatting = Formatting.Indented
+                        
+                    };
+
+                    string json = JsonConvert.SerializeObject(_wizardsList, settings);
+
+                    File.WriteAllText(path, json);
                 }
+                catch (JsonSerializationException ex)
+                {
+                    mcLogger.Error(ex.Message);
+                }
+
             });
         }
+
 
         private static void Serializer_Error(object sender, Newtonsoft.Json.Serialization.ErrorEventArgs e)
         {

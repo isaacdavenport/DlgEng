@@ -21,7 +21,7 @@ namespace DialogEngine.Models.Dialog
         public string Adventure = "";
 
         [JsonProperty("DialogName")]
-        public string Name;
+        public string Name { get; set; }
 
         [JsonProperty("PhraseTypeSequence")]
         public List<string> PhraseTypeSequence = new List<string>();
