@@ -443,8 +443,7 @@ namespace DialogEngine.ViewModels
                 if (!string.IsNullOrEmpty(phrase.FileName))
                 {
                     // file name is formed as BO_Greeting.mp3
-                    string[] parts = phrase.FileName.Split('_');
-                    string _userRecordedFileName = parts[1].Substring(0, parts[1].Length);
+                    string _userRecordedFileName = phrase.FileName;
                     // DPWizGiveCredit tag name is right side of 'Wiz'
                     int _indexForSplitting = _tutorialStep.VideoFileName.IndexOf("Wiz");
                     string _tagName = _tutorialStep.VideoFileName.Substring(_indexForSplitting + 3);
@@ -474,7 +473,7 @@ namespace DialogEngine.ViewModels
                     if(_currentPhrase != null)
                     {
                         DialogStr = _currentPhrase.DialogStr;
-                        VoiceRecorderControlViewModel.CurrentFilePath = _currentPhrase.FileName;
+                        VoiceRecorderControlViewModel.CurrentFilePath = Character.CharacterPrefix + "_" +_currentPhrase.FileName;
                         VoiceRecorderControlViewModel.IsLineRecorded = true;
                         mIsPhraseEditable = true;
                         mCurrentPhrase = _currentPhrase;
@@ -540,12 +539,14 @@ namespace DialogEngine.ViewModels
                     }
                     else
                     {
+                        string[] mFileNameArray = mVoiceRecorderControlViewModel.CurrentFilePath.Split('_');
+
                         PhraseEntry entry = new PhraseEntry
                         {
                             PhraseRating = CurrentTutorialStep.PhraseRating,
                             DialogStr = DialogStr,
                             PhraseWeights = CurrentTutorialStep.PhraseWeights,
-                            FileName = mVoiceRecorderControlViewModel.CurrentFilePath
+                            FileName = mFileNameArray[1]
                         };
 
                         mCharacter.Phrases.Add(entry);
