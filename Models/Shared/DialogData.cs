@@ -15,7 +15,7 @@ namespace DialogEngine.Models.Shared
         private static DialogData msInstance;
         private int[,] mHeatMapUpdate = new int[SerialSelectionService.NumRadios, SerialSelectionService.NumRadios];
 
-        private ObservableCollection<Character> mCharacterCollection;
+        private ObservableCollection<Character> mCharacterCollection = new ObservableCollection<Character>();
         private ObservableCollection<ModelDialogInfo> mDialogModelCollection;
         private ObservableCollection<InfoMessage> mInfoMessagesCollection = new ObservableCollection<InfoMessage>();
         private ObservableCollection<WarningMessage> mWarningMessagesCollection = new ObservableCollection<WarningMessage>();

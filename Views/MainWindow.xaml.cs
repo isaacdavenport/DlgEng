@@ -62,6 +62,8 @@ namespace DialogEngine
 
             await _serializeSettingsTask;
             await _serializeDialogDataTask;
+
+            Application.Current.Shutdown();
         }
 
         private void _onBrowseBack(object sender, ExecutedRoutedEventArgs e)

@@ -27,6 +27,7 @@ using DialogEngine.Controls.ViewModels;
 using System.Linq;
 using MaterialDesignThemes.Wpf;
 using DialogEngine.Dialogs;
+using System.Diagnostics;
 
 namespace DialogEngine.ViewModels
 {
@@ -55,6 +56,8 @@ namespace DialogEngine.ViewModels
         private RandomSelectionService mRandomSelectionService;
         private SerialSelectionService mSerialSelectionService;
         private ICharacterSelection mCurrentSelectionService;
+        private ReceiverBluetoothService mReceiverService;
+
 
         public static int SelectedCharactersOn;
         public static int SelectedIndex1;
@@ -84,9 +87,18 @@ namespace DialogEngine.ViewModels
             _bindCommands();
 
             StateMachine.Fire(Triggers.Initialize);
+
+            mReceiverService = new ReceiverBluetoothService();
+
+            mReceiverService.Start(SetData);
         }
 
         #endregion
+
+        public void SetData(string data)
+        {
+            Debug.WriteLine("received data : " + data);
+        }
 
         #region - Commands -
 
@@ -765,6 +777,9 @@ namespace DialogEngine.ViewModels
         // stops dialog
         private void _stopDialog()
         {
+
+
+            EventAggregator.Instance.GetEvent<StopImmediatelyPlayingCurrentDialogLIne>().Publish();
             mCurrentSelectionService.Stop();
             mDialogGeneratorViewModel.StopDialogGenerator();
 
@@ -781,11 +796,15 @@ namespace DialogEngine.ViewModels
                 {
                     mCurrentSelectionService = mSerialSelectionService;
                     StateMachine.Fire(Triggers.StartSerialSelection);
+
+                    EventAggregator.Instance.GetEvent<CharacterSelectionStartedEvent>().Publish(Models.Enums.SelectionMode.Serial);
                 }
                 else
                 {
                     mCurrentSelectionService = mRandomSelectionService;
                     StateMachine.Fire(Triggers.StartRadnomSelection);
+
+                    EventAggregator.Instance.GetEvent<CharacterSelectionStartedEvent>().Publish(Models.Enums.SelectionMode.Random);
                 }
 
                 Task selectionServiceTask = mCurrentSelectionService.Start();
@@ -799,8 +818,11 @@ namespace DialogEngine.ViewModels
                 mcLogger.Error("_startDialog " + ex.Message);
             }
 
-            if(StateMachine.CanFire(Triggers.Idle))
-                StateMachine.Fire(Triggers.Idle);
+            EventAggregator.Instance.GetEvent<CharacterSelectionStartedEvent>().Publish(Models.Enums.SelectionMode.NoSelection);
+
+
+            if (StateMachine.CanFire(Triggers.Idle))
+                StateMachine.Fire(Triggers.Idle);    
         }
 
 

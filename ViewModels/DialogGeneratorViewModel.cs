@@ -104,6 +104,7 @@ namespace DialogEngine.Controls.ViewModels
                 _newCharacter.PhraseTotals.PhraseRating = "G";
                 _newCharacter.PhraseTotals.PhraseWeights = new Dictionary<string, double>();
                 _newCharacter.PhraseTotals.PhraseWeights.Add("Greeting", 0.0f);
+                Character character2 = new Character();
 
                 _removePhrasesOverParentalRating(_newCharacter);
 

@@ -13,6 +13,9 @@ using System.IO;
 using System.Reflection;
 using System;
 using System.Windows.Navigation;
+using DialogEngine.Events;
+using DialogEngine.Events.DialogEvents;
+using DialogEngine.Models.Enums;
 
 namespace DialogEngine.ViewModels
 {
@@ -24,6 +27,7 @@ namespace DialogEngine.ViewModels
         private static readonly ILog mcLogger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private readonly string mcJsonEditorExeName = "JSONedit.exe";
         private readonly string mcJsonBkpFileName = "StarterCharacterWizard_Bkp.json";
+        private string mSelectionModeName = "";
         private StateMachine mStateMachine;
         private States mCurrentState;
 
@@ -43,7 +47,31 @@ namespace DialogEngine.ViewModels
             _configureStateMachine();
             _bindCommands();
 
+            EventAggregator.Instance.GetEvent<CharacterSelectionStartedEvent>().Subscribe(_selectionModeChanged);
+
             StateMachine.Fire(Triggers.NavigateToDialogView);
+        }
+
+        private void _selectionModeChanged(SelectionMode mode)
+        {
+            switch (mode)
+            {
+                case SelectionMode.NoSelection:
+                    {
+                        SelectionModeName = "";
+                        break;
+                    }
+                case SelectionMode.Random:
+                    {
+                        SelectionModeName = "Random";
+                        break;
+                    }
+                case SelectionMode.Serial:
+                    {
+                        SelectionModeName = "Serial";
+                        break;
+                    }
+            }
         }
 
         #endregion
@@ -117,7 +145,7 @@ namespace DialogEngine.ViewModels
 
         private void _readTutorial()
         {
-            Process.Start(Path.Combine(SessionHelper.TutorialDirectory,SessionHelper.TutorialFileName));
+            Process.Start(Path.Combine(SessionHelper.TutorialDirectory, SessionHelper.TutorialFileName));
         }
 
         private void _aboutToys2Life()
@@ -128,13 +156,13 @@ namespace DialogEngine.ViewModels
 
         private async void _openSettingsDialog()
         {
-           await  DialogHost.Show(new SettingsDialog(), "RootDialogHost");
+            await DialogHost.Show(new SettingsDialog(), "RootDialogHost");
         }
 
 
         private void _editWithJSONEditor()
         {
-            Process.Start(Path.Combine(SessionHelper.TutorialDirectory, mcJsonEditorExeName), 
+            Process.Start(Path.Combine(SessionHelper.TutorialDirectory, mcJsonEditorExeName),
                           Path.Combine(SessionHelper.WizardDirectory, mcJsonBkpFileName));
 
         }
@@ -164,6 +192,16 @@ namespace DialogEngine.ViewModels
             }
         }
 
+        public string SelectionModeName
+        {
+            get { return mSelectionModeName; }
+            set
+            {
+                mSelectionModeName = value;
+                OnPropertyChanged("SelectionModeName");
+            }
+
+        }
         #endregion
-    }
+    }   
 }

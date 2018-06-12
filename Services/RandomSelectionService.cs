@@ -135,7 +135,7 @@ namespace DialogEngine.Services
                                         NextCharacter1 = _nextCharacter1Index >= 0 ? _nextCharacter1Index : NextCharacter1; //lower bound inclusive, upper exclusive
                                         NextCharacter2 = _nextCharacter2Index >= 0 ? _nextCharacter2Index : NextCharacter2; //lower bound inclusive, upper exclusive
 
-                                        _nextCharacterSwapTime = DateTime.Now.AddSeconds(8 + msRandom.Next(0, 14));
+                                        _nextCharacterSwapTime = DateTime.Now.AddSeconds(4 + msRandom.Next(0, 2));
 
                                         _isNewCharacterSelected = true;
 
@@ -148,7 +148,7 @@ namespace DialogEngine.Services
 
                                         NextCharacter2 = _nextCharacter2Index >= 0 ? _nextCharacter2Index : NextCharacter2;
 
-                                        _nextCharacterSwapTime = DateTime.Now.AddSeconds(8 + msRandom.Next(0, 14));
+                                        _nextCharacterSwapTime = DateTime.Now.AddSeconds(4 + msRandom.Next(0, 2));
 
                                         _isNewCharacterSelected = true;
 
@@ -159,7 +159,7 @@ namespace DialogEngine.Services
                                         NextCharacter1 = DialogViewModel.SelectedIndex1;
                                         NextCharacter2 = DialogViewModel.SelectedIndex2;
 
-                                        _nextCharacterSwapTime = DateTime.Now.AddSeconds(8 + msRandom.Next(0, 14));
+                                        _nextCharacterSwapTime = DateTime.Now.AddSeconds(4 + msRandom.Next(0, 2));
 
                                         _isNewCharacterSelected = true;
 
@@ -172,6 +172,8 @@ namespace DialogEngine.Services
                         {
                             Application.Current.Dispatcher.BeginInvoke(()=>
                             {
+                                EventAggregator.Instance.GetEvent<StopPlayingCurrentDialogLineEvent>().Publish();
+
                                 EventAggregator.Instance.GetEvent<SelectedCharactersPairChangedEvent>()
                                     .Publish(new SelectedCharactersPairEventArgs() { Character1Index = NextCharacter1, Character2Index = NextCharacter2 });
 

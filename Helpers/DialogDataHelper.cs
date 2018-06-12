@@ -81,39 +81,65 @@ namespace DialogEngine.Helpers
             {
                 Thread.CurrentThread.Name = "LoadDialogDataAsync";
 
-                var _directoryInfo = new DirectoryInfo(path);
-                FileInfo _fileInfo = _directoryInfo.GetFiles("*.json")[0];
-                string _jsonString;
-
                 try
                 {
-                    var _fileSteam = _fileInfo.OpenRead(); //open a read-only FileStream
-                    using (var reader = new StreamReader(_fileSteam)) //creates new streamerader for fs stream. Could also construct with filename...
+                    var _directoryInfo = new DirectoryInfo(path);
+                    FileInfo[] _fileInfo = _directoryInfo.GetFiles("*.json");
+                    string _jsonString;
+
+                    for (int i=0;i< _fileInfo.Length; i++)
                     {
-                        try
+                        var _fileSteam = _fileInfo[i].OpenRead(); //open a read-only FileStream
+                        using (var reader = new StreamReader(_fileSteam)) //creates new streamerader for fs stream. Could also construct with filename...
                         {
-                            _jsonString = reader.ReadToEnd();
-                            WizardsList _wizardsList = JsonConvert.DeserializeObject<WizardsList>(_jsonString); //json string to Object.
+                            try
+                            {
+                                _jsonString = reader.ReadToEnd();
 
-                            DialogData.Instance.CharacterCollection = _wizardsList.Characters;
-                            DialogData.Instance.DialogModelCollection = _wizardsList.DialogModels;
-                            DialogData.Instance.WizardTypesCollection = _wizardsList.Wizards;
+                                // read wizard .json file
+                                if (_fileInfo[i].Name.Contains("Wizard"))
+                                {
+                                    WizardsList _wizardsList = JsonConvert.DeserializeObject<WizardsList>(_jsonString); //json string to Object.
 
-                            EventAggregator.Instance.GetEvent<DialogDataLoadedEvent>().Publish();
-                        }
-                        catch (JsonReaderException e)
-                        {
-                            string _errorReadingMessage = "Error reading " + _fileInfo.Name;
-                            DialogDataHelper.AddMessage(new ErrorMessage(_errorReadingMessage));
+                                    DialogData.Instance.DialogModelCollection = _wizardsList.DialogModels;
+                                    DialogData.Instance.WizardTypesCollection = _wizardsList.Wizards;
 
-                            string _jsonParseErrorMessage = "JSON Parse error at " + e.LineNumber + ", " + e.LinePosition;
-                            DialogDataHelper.AddMessage(new ErrorMessage(_jsonParseErrorMessage));
-                        }
-                        catch (Exception ex)
-                        {
-                            mcLogger.Error("Error during parsing json file " + ex.Message);
+                                    Application.Current.Dispatcher.Invoke(() =>
+                                    {
+                                        foreach (var character in _wizardsList.Characters)
+                                            DialogData.Instance.CharacterCollection.Add(character);
+                                    });
+                                }
+                                else
+                                {
+                                    // read characters in separated files
+                                    Character character = JsonConvert.DeserializeObject<Character>(_jsonString);
+                                    character.FileName = _fileInfo[i].Name;
+
+                                    Application.Current.Dispatcher.Invoke(() =>
+                                    {
+                                        DialogData.Instance.CharacterCollection.Add(character);
+                                    });
+                                }
+
+                            }
+                            catch (JsonReaderException e)
+                            {
+                                string _errorReadingMessage = "Error reading " + _fileInfo[i].Name;
+                                DialogDataHelper.AddMessage(new ErrorMessage(_errorReadingMessage));
+
+                                string _jsonParseErrorMessage = "JSON Parse error at " + e.LineNumber + ", " + e.LinePosition;
+                                DialogDataHelper.AddMessage(new ErrorMessage(_jsonParseErrorMessage));
+                            }
+                            catch (Exception ex)
+                            {
+                                mcLogger.Error("Error during parsing json file " + ex.Message);
+                            }
+
                         }
                     }
+
+                    EventAggregator.Instance.GetEvent<DialogDataLoadedEvent>().Publish();
                 }
                 catch (UnauthorizedAccessException e)
                 {
@@ -137,13 +163,6 @@ namespace DialogEngine.Helpers
             {
                 try
                 {
-                    WizardsList _wizardsList = new WizardsList
-                    {
-
-                        Wizards = DialogData.Instance.WizardTypesCollection,
-                        Characters = DialogData.Instance.CharacterCollection,
-                        DialogModels = DialogData.Instance.DialogModelCollection
-                    };
 
                     var settings = new JsonSerializerSettings
                     {
@@ -152,12 +171,36 @@ namespace DialogEngine.Helpers
                             mcLogger.Error(args.ErrorContext.Error.Message);
                         },
                         Formatting = Formatting.Indented
-                        
+
+                    };
+
+                    for (int i = DialogData.Instance.CharacterCollection.Count - 1; i >= 0; i--)
+                    {
+                        if (!string.IsNullOrEmpty(DialogData.Instance.CharacterCollection[i].FileName))
+                        {
+                            string _jsonLocal = JsonConvert.SerializeObject(DialogData.Instance.CharacterCollection[i], settings);
+
+                            File.WriteAllText(Path.Combine(SessionHelper.WizardDirectory, DialogData.Instance.CharacterCollection[i].FileName), _jsonLocal);
+
+                            Application.Current.Dispatcher.Invoke(() =>
+                            {
+                                DialogData.Instance.CharacterCollection.RemoveAt(i);
+                            });
+                        }
+                    }
+
+                    WizardsList _wizardsList = new WizardsList
+                    {
+
+                        Wizards = DialogData.Instance.WizardTypesCollection,
+                        Characters = DialogData.Instance.CharacterCollection,
+                        DialogModels = DialogData.Instance.DialogModelCollection
                     };
 
                     string json = JsonConvert.SerializeObject(_wizardsList, settings);
 
                     File.WriteAllText(path, json);
+
                 }
                 catch (JsonSerializationException ex)
                 {

@@ -179,6 +179,9 @@ namespace DialogEngine.Models.Dialog
             }
         }
 
+        [JsonIgnore]
+        public string FileName { get; set; }
+
         #endregion
 
     }

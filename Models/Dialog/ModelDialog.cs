@@ -14,6 +14,8 @@ namespace DialogEngine.Models.Dialog
     public class ModelDialog
     {
 
+        private string mName;
+
         [JsonProperty("AddedOnDateTime")]
         public DateTime AddedOnDateTime = new DateTime(2016, 1, 2, 3, 4, 5);
 
@@ -21,7 +23,22 @@ namespace DialogEngine.Models.Dialog
         public string Adventure = "";
 
         [JsonProperty("DialogName")]
-        public string Name { get; set; }
+        public string Name
+        { get
+            {
+                if (!string.IsNullOrEmpty(mName))
+                    return mName;
+                else
+                {
+                    mName = string.Join(",", PhraseTypeSequence.ToArray());
+                    return mName;
+                }
+            }
+            set
+          {
+                mName = value;
+          }
+        }
 
         [JsonProperty("PhraseTypeSequence")]
         public List<string> PhraseTypeSequence = new List<string>();

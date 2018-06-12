@@ -9,9 +9,9 @@ namespace DialogEngine.Dialogs.ValidationRules
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            string _enteredValue =(string) value ?? "";
+            string _enteredValue = (string)value ?? "";
 
-            return _enteredValue.Length != 3
+            return (_enteredValue.Length != 3) && (_enteredValue.Length !=2) 
                 ? new ValidationResult(false, "Field requires 3 characters.")
                 : ValidationResult.ValidResult;
         }

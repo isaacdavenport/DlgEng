@@ -307,7 +307,11 @@
                                     <DataGridTemplateColumn Width="25">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <StackPanel   Orientation="Horizontal"  HorizontalAlignment="Right">
+                                                <StackPanel   Orientation="Horizontal" 
+                                                              IsEnabled="{Binding DataContext.CurrentState, 
+                                                                                  RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:DialogView},
+                                                                                  Converter={StaticResource IsEnabledDialogViewControlConverter}, 
+                                                                                  ConverterParameter=StartSerialSelection|StartRadnomSelection}"                                                               HorizontalAlignment="Right">
                                                     <materialDesign:PopupBox Width="25"
                                                                              Margin="-5,0,0,0"
                                                                              Style="{DynamicResource MaterialDesignToolForegroundPopupBox}"  
@@ -322,7 +326,11 @@
                                                                     </StackPanel>
                                                                 </Button.Content>
                                                             </Button>
-                                                            <Button IsEnabled="True" Command="{Binding DataContext.RemoveCharacterCommand, 
+                                                            <Button IsEnabled="{Binding DataContext.CurrentState, 
+                                                                                        RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:DialogView},
+                                                                                        Converter={StaticResource IsEnabledDialogViewControlConverter}, 
+                                                                                        ConverterParameter=StartSerialSelection|StartRadnomSelection}" 
+                                                                    Command="{Binding DataContext.RemoveCharacterCommand, 
                                                                                       RelativeSource={RelativeSource Mode=FindAncestor, 
                                                                                       AncestorType=local:DialogView}}" CommandParameter="{Binding}" >
                                                                 <Button.Content>

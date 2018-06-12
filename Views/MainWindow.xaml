@@ -184,7 +184,8 @@
                         <Label Content="Mode:"  Grid.Column="0"/>
 
                         <Label x:Name="SelectionModeLabel"
-                           Grid.Column="1" />
+                               Content="{Binding SelectionModeName}"
+                               Grid.Column="1" />
                     </Grid>
 
                 </StatusBarItem>
