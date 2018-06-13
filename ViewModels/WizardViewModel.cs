@@ -241,7 +241,6 @@ namespace DialogEngine.ViewModels
 
         private string _tutorialStepFilePath()
         {
-
             int _indexForSplitting = CurrentTutorialStep.VideoFileName.IndexOf("Wiz");
 
             string  _videoFileName = CurrentTutorialStep.VideoFileName.Substring(_indexForSplitting + 3);

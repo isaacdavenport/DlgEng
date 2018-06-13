@@ -56,6 +56,7 @@ namespace DialogEngine.Controls.ViewModels
         private List<HistoricalDialog> mHistoricalDialogs = new List<HistoricalDialog>();
         private List<HistoricalPhrase> mHistoricalPhrases = new List<HistoricalPhrase>();
         private Queue<int> mRecentDialogs = new Queue<int>();
+        private Queue<SelectedCharactersPairEventArgs> mRandomSelectionList = new Queue<SelectedCharactersPairEventArgs>();
 
         #endregion
 
@@ -267,16 +268,31 @@ namespace DialogEngine.Controls.ViewModels
 
         private void _selectedCharactersPairChanged(SelectedCharactersPairEventArgs args)
         {
-            mCharacter1Num = args.Character1Index;
-            mCharacter2Num = args.Character2Index;
-
-            if(CurrentState != States.Idle)
+            if (SessionHelper.UseSerialPort)
             {
-                mStateMachineTaskTokenSource.Cancel();
-                StateMachine.Fire(Triggers.WaitForNewCharacters);
-            }
+                mCharacter1Num = args.Character1Index;
+                mCharacter2Num = args.Character2Index;
 
-            mEventWaitHandle.Set();
+                if (CurrentState != States.Idle)
+                {
+                    mStateMachineTaskTokenSource.Cancel();
+                    StateMachine.Fire(Triggers.WaitForNewCharacters);
+                }
+
+                mEventWaitHandle.Set();
+            }
+            else
+            {
+                Debug.WriteLine("Selection run");
+                mRandomSelectionList.Enqueue(args);
+
+                if(CurrentState == States.Idle)
+                {
+                    //Debug.WriteLine("State :   " + CurrentState.ToString());
+                    //Debug.WriteLine("insideeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+                    mEventWaitHandle.Set();
+                }
+            }
         }
 
         #endregion
@@ -436,12 +452,14 @@ namespace DialogEngine.Controls.ViewModels
                     }
                     while (_isPlaying && i < 400);  // don't get stuck,, 40 seconds max phrase
 
+                    Debug.WriteLine("playing finished");
+
                     Thread.Sleep(800); // wait around a second after the audio is done for between phrase pause
                 }
                 else
                 {
                     AddItem(new ErrorMessage("Could not find: " + _pathAndFileName));
-                    Thread.Sleep(1500);
+                    Thread.Sleep(3000);
                 }
             }
             catch (Exception ex)
@@ -455,6 +473,14 @@ namespace DialogEngine.Controls.ViewModels
 
         private bool _importClosestSerialComsCharacters()
         {
+            if (!SessionHelper.UseSerialPort)
+            {
+                SelectedCharactersPairEventArgs args = mRandomSelectionList.Dequeue();
+
+                mCharacter1Num = args.Character1Index;
+                mCharacter2Num = args.Character2Index;
+            }
+
             var _tempChar1 = mCharacter1Num;
             var _tempChar2 = mCharacter2Num;
 
@@ -769,7 +795,21 @@ namespace DialogEngine.Controls.ViewModels
 
         private Triggers _waitForNewCharacters()
         {
-            mEventWaitHandle.WaitOne();
+            if (SessionHelper.UseSerialPort)
+            {
+                mEventWaitHandle.WaitOne();
+            }
+            else
+            {
+                if(mRandomSelectionList.Count > 0)
+                {
+                    return Triggers.PrepareDialogParameters;
+                }
+                else
+                {
+                    mEventWaitHandle.WaitOne();
+                }
+            }
 
             return Triggers.PrepareDialogParameters;
         }
@@ -874,6 +914,7 @@ namespace DialogEngine.Controls.ViewModels
                                               + mCharactersList[_speakingCharacter].CharacterPrefix
                                               + "_" + _selectedPhrase.FileName + ".mp3";
 
+                        Debug.WriteLine(_selectedPhrase.DialogStr);
                         _playAudio(_pathAndFileName); // vb: code stops here so commented out for debugging purpose
 
                         Debug.WriteLine("after playAudio");
@@ -882,6 +923,7 @@ namespace DialogEngine.Controls.ViewModels
                             && DialogViewModel.SelectedCharactersOn != 1)
                         {
                             mSameCharactersAsLast = false;
+                            Debug.WriteLine("izlaz");
                             return Triggers.WaitForNewCharacters; // the characters have moved  TODO break into charactersSame() and use also with prior
                         }
                         //Toggle character
@@ -913,6 +955,8 @@ namespace DialogEngine.Controls.ViewModels
                 mcLogger.Error("_startDialog " + ex.Message);
             }
 
+            Debug.WriteLine("izlaz");
+
             return Triggers.WaitForNewCharacters;
         }
 
@@ -942,7 +986,7 @@ namespace DialogEngine.Controls.ViewModels
                         case States.Idle:
                             {
                                 Triggers _nextTrigger = _waitForNewCharacters();
-
+                                //Debug.WriteLine(_nextTrigger.ToString());
                                 if(StateMachine.CanFire(_nextTrigger))
                                     StateMachine.Fire(_nextTrigger);
                                 break;
@@ -950,6 +994,7 @@ namespace DialogEngine.Controls.ViewModels
                         case States.PreparingDialogParameters:
                             {
                                 Triggers _nextTrigger = await _prepareDialogParameters(mStateMachineTaskTokenSource.Token);
+                                //Debug.WriteLine(_nextTrigger.ToString());
 
                                 if (StateMachine.CanFire(_nextTrigger))
                                     StateMachine.Fire(_nextTrigger);
@@ -958,6 +1003,7 @@ namespace DialogEngine.Controls.ViewModels
                         case States.DialogStarted:
                             {
                                 Triggers _nextTrigger = await _startDialog(mStateMachineTaskTokenSource.Token);
+                                //Debug.WriteLine(_nextTrigger.ToString());
 
                                 if (StateMachine.CanFire(_nextTrigger))
                                     StateMachine.Fire(_nextTrigger);
@@ -969,13 +1015,17 @@ namespace DialogEngine.Controls.ViewModels
             });
         }
 
+
         public void StopDialogGenerator()
         {
             mCancellationTokenSource.Cancel();
 
             if (CurrentState != States.DialogFinished)
                 StateMachine.Fire(Triggers.FinishDialog);
+
+            DialogLinesCollection.Clear();
         }
+
 
         public void SwapCharactersOneAndTwo()
         {

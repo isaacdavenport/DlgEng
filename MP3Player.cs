@@ -6,6 +6,7 @@ using DialogEngine.Helpers;
 using DialogEngine.Models.Logger;
 using log4net;
 using System;
+using System.Diagnostics;
 using System.Reflection;
 using System.Threading;
 using System.Windows;
@@ -27,6 +28,7 @@ namespace DialogEngine
         private static MP3Player msInstance = null;
         // length of .mp3 file in seconds
         private double mDuration;
+        private bool mIsFileLoaded;
         // started time of playing .mp3 file
         private TimeSpan mStartedTime;
         private Timer mTimer;
@@ -105,6 +107,8 @@ namespace DialogEngine
         {
             if(Player.NaturalDuration.HasTimeSpan)
             mDuration = Player.NaturalDuration.TimeSpan.TotalSeconds;
+
+            mIsFileLoaded = true;
         }
 
 
@@ -163,6 +167,7 @@ namespace DialogEngine
         {
             try
             {
+                mIsFileLoaded = false;
                 mTimer.Change(Timeout.Infinite, Timeout.Infinite);
                 mVolumeTimer.Change(Timeout.Infinite, Timeout.Infinite);
 
@@ -190,13 +195,10 @@ namespace DialogEngine
         {
             try
             {
-                double position = Player.Position.TotalSeconds;
-                if (position == 0)
-                {
-                    return false;
-                }
+                if (!mIsFileLoaded)
+                    return true;
 
-                return Player.NaturalDuration.TimeSpan.TotalSeconds != Player.Position.TotalSeconds;
+                return (Player.Position.TotalSeconds > 0 && Player.Position.TotalSeconds < Player.NaturalDuration.TimeSpan.TotalSeconds);
             }
             catch (Exception ex)
             {

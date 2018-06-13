@@ -11,7 +11,6 @@ using System.Diagnostics;
 using GalaSoft.MvvmLight.CommandWpf;
 using System.IO;
 using System.Reflection;
-using System;
 using System.Windows.Navigation;
 using DialogEngine.Events;
 using DialogEngine.Events.DialogEvents;

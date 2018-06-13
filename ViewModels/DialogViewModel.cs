@@ -58,7 +58,6 @@ namespace DialogEngine.ViewModels
         private ICharacterSelection mCurrentSelectionService;
         private ReceiverBluetoothService mReceiverService;
 
-
         public static int SelectedCharactersOn;
         public static int SelectedIndex1;
         public static int SelectedIndex2;
@@ -87,10 +86,6 @@ namespace DialogEngine.ViewModels
             _bindCommands();
 
             StateMachine.Fire(Triggers.Initialize);
-
-            mReceiverService = new ReceiverBluetoothService();
-
-            mReceiverService.Start(SetData);
         }
 
         #endregion
@@ -177,6 +172,11 @@ namespace DialogEngine.ViewModels
             }
         }
 
+        private async void CharacterCollection_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            _setCharacterToRadioBidnings();
+        }
+
         #endregion
 
         #region - Private methods -
@@ -212,8 +212,8 @@ namespace DialogEngine.ViewModels
             EventAggregator.Instance.GetEvent<ChangedModelDialogStateEvent>().Subscribe(_onChangedModelDialogState);
             DialogData.Instance.PropertyChanged += _dialogData_PropertyChanged;
             StateMachine.PropertyChanged += _stateMachine_PropertyChanged;
+            DialogData.Instance.CharacterCollection.CollectionChanged += CharacterCollection_CollectionChanged;
         }
-
 
         private async void _initDialogData()
         {
