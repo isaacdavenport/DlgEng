@@ -58,7 +58,8 @@ namespace DialogEngine
         private async void _mainWindow_closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             Task _serializeSettingsTask = ConfigHelper.Instance.SerializeSettingsToFile();
-            Task _serializeDialogDataTask = DialogDataHelper.SerializeDataToFile(Path.Combine(SessionHelper.WizardDirectory, SessionHelper.JSONFileName));
+            Task _serializeDialogDataTask = DialogDataHelper.SerializeDataToFile(Path.Combine(SessionHelper.WizardDirectory, 
+                SessionHelper.JSONFileName));
 
             await _serializeSettingsTask;
             await _serializeDialogDataTask;
