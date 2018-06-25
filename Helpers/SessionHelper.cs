@@ -27,7 +27,6 @@ namespace DialogEngine.Helpers
         public static readonly string TutorialDirectory;
         public static readonly string TutorialFileName;
         public static readonly string Toys2LifeWebsiteUrl;
-        public static readonly string JSONFileName;
         
         // !!! IMPORTANT !!!  If you change name, you must also change name in log4net.config 
         public static readonly string DecimalLogFileName = "DecimalSerialLog";
@@ -191,10 +190,6 @@ namespace DialogEngine.Helpers
 
             TutorialFileName = ConfigurationManager.AppSettings["TutorialFileName"];
             Toys2LifeWebsiteUrl = ConfigurationManager.AppSettings["Toys2LifeWebsiteUrl"];
-            JSONFileName = ConfigurationManager.AppSettings["JSONFileName"];
-
-            //get executable path of DialogGenerator.exe
-            string _path = Environment.CurrentDirectory;
 
             //path is  "solutionDir/bin/outputDir", so we need to go back 2 times to solutionDir
             BaseDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);

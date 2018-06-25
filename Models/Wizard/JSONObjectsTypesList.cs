@@ -6,7 +6,7 @@ using System.Collections.ObjectModel;
 
 namespace DialogEngine.Models.Wizard
 {
-    public class WizardsList
+    public class JSONObjectsTypesList
     {
         [JsonProperty("Wizards")]
         public ObservableCollection<WizardType> Wizards { get; set; }

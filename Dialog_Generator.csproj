@@ -263,7 +263,7 @@
     <Compile Include="Models\Wizard\TutorialStep.cs" />
     <Compile Include="Models\Wizard\WizardParameter.cs" />
     <Compile Include="Models\Wizard\WizardType.cs" />
-    <Compile Include="Models\Wizard\WizardsList.cs" />
+    <Compile Include="Models\Wizard\JSONObjectsTypesList.cs" />
     <Compile Include="MP3Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\SessionHelper.cs" />

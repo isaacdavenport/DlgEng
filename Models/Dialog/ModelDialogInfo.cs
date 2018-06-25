@@ -59,25 +59,13 @@ namespace DialogEngine.Models.Dialog
             }
         }
 
+        [JsonIgnore]
+        public string FileName { get; set; }
+
+        [JsonIgnore]
+        public int JsonArrayIndex { get; set; }
+        
         #endregion
 
-        #region - public functions -
-
-        //public override bool Equals(object obj)
-        //{
-        //    if(obj is ModelDialogInfo)
-        //    {
-        //        var _modelDialogInfo = obj as ModelDialogInfo;
-
-        //        return _modelDialogInfo.ModelsCollectionName.Equals(this.ModelsCollectionName);
-        //    }
-        //    else
-        //    {
-        //        return false;
-        //    }
-
-        //}
-
-        #endregion
     }
 }

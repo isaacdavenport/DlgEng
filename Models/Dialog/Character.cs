@@ -182,6 +182,9 @@ namespace DialogEngine.Models.Dialog
         [JsonIgnore]
         public string FileName { get; set; }
 
+        [JsonIgnore]
+        public int JsonArrayIndex { get; set; }
+
         #endregion
 
     }

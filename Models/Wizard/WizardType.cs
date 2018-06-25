@@ -14,5 +14,12 @@ namespace DialogEngine.Models.Wizard
 
         [JsonProperty("TutorialSteps")]
         public List<TutorialStep> TutorialSteps { get; set; }
+
+        [JsonIgnore]
+        public string FileName { get; set; }
+
+        [JsonIgnore]
+        public int JsonArrayIndex { get; set; }
+
     }
 }

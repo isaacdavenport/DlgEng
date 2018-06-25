@@ -120,7 +120,7 @@ namespace DialogEngine.Dialogs
             set
             {
                 mWizardsList = value;
-                OnPropertyChanged("WizardsList");
+                OnPropertyChanged("JSONObjectsTypesList");
             }
         }
 
