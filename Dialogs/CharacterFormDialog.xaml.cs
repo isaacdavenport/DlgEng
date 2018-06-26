@@ -1,6 +1,5 @@
 ﻿using DialogEngine.Models.Dialog;
 using DialogEngine.Models.Shared;
-using DialogEngine.Models.Wizard;
 using MaterialDesignThemes.Wpf;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,6 +7,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using DialogEngine.Models;
 
 namespace DialogEngine.Dialogs
 {
@@ -20,7 +20,7 @@ namespace DialogEngine.Dialogs
 
         private Character mCharacter;
         private List<int> mNumbersList;
-        private ObservableCollection<WizardType> mWizardsList;
+        private ObservableCollection<Wizard> mWizardsList;
         private List<string> mGenderList;
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -92,7 +92,7 @@ namespace DialogEngine.Dialogs
             _genderList.Add("Female");
 
             NumbersList = new List<int>(Enumerable.Range(1, 100));
-            WizardsList = DialogData.Instance.WizardTypesCollection;
+            WizardsList = DialogData.Instance.WizardsCollection;
             GenderList = _genderList;
         }
 
@@ -114,13 +114,13 @@ namespace DialogEngine.Dialogs
         #region - properties -
 
 
-        public ObservableCollection<WizardType> WizardsList
+        public ObservableCollection<Wizard> WizardsList
         {
             get { return mWizardsList; }
             set
             {
                 mWizardsList = value;
-                OnPropertyChanged("WizardsList");
+                OnPropertyChanged("JSONObjectsTypesList");
             }
         }
 

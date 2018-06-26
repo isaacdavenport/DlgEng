@@ -174,7 +174,7 @@ namespace DialogEngine.ViewModels
 
         private async void CharacterCollection_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            _setCharacterToRadioBidnings();
+            _setCharacterToRadioBindings();
         }
 
         #endregion
@@ -234,7 +234,7 @@ namespace DialogEngine.ViewModels
 
             await _checkForMissingPhrasesTask;
 
-            _setCharacterToRadioBidnings();
+            _setCharacterToRadioBindings();
 
             StateMachine.Fire(Triggers.Idle);
         }
@@ -290,7 +290,7 @@ namespace DialogEngine.ViewModels
         }
 
 
-        private async void _setCharacterToRadioBidnings()
+        private async void _setCharacterToRadioBindings()
         {
             // reset radio textboxes
             if (Dispatcher.CheckAccess())
