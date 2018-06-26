@@ -58,11 +58,12 @@ namespace DialogEngine
         private async void _mainWindow_closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             Task _serializeSettingsTask = ConfigHelper.Instance.SerializeSettingsToFile();
-            Task _serializeDialogDataTask = DialogDataHelper.SerializeDataToFile(Path.Combine(SessionHelper.WizardDirectory, 
-                SessionHelper.JSONFileName));
+            // TODO make this happen at end of wizard not when closing application
+            //Task _serializeDialogDataTask = DialogDataHelper.SerializeDataToFile(Path.Combine(SessionHelper.WizardDirectory, 
+            //    SessionHelper.JSONFileName));
 
             await _serializeSettingsTask;
-            await _serializeDialogDataTask;
+            // await _serializeDialogDataTask;
 
             Application.Current.Shutdown();
         }

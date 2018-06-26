@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace DialogEngine.Models.Wizard
+namespace DialogEngine.Models
 {
     public class TutorialStep
     {

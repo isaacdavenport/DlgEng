@@ -1,7 +1,6 @@
 ﻿
 using DialogEngine.Models.Dialog;
 using DialogEngine.Models.Logger;
-using DialogEngine.Models.Wizard;
 using DialogEngine.Services;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -20,7 +19,7 @@ namespace DialogEngine.Models.Shared
         private ObservableCollection<InfoMessage> mInfoMessagesCollection = new ObservableCollection<InfoMessage>();
         private ObservableCollection<WarningMessage> mWarningMessagesCollection = new ObservableCollection<WarningMessage>();
         private ObservableCollection<ErrorMessage> mErrorMessagesCollection = new ObservableCollection<ErrorMessage>();
-        private ObservableCollection<WizardType> mWizardTypesCollection;
+        private ObservableCollection<Dialog.Wizard> mWizardsCollection;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -117,13 +116,13 @@ namespace DialogEngine.Models.Shared
         }
 
 
-        public ObservableCollection<WizardType> WizardTypesCollection
+        public ObservableCollection<Dialog.Wizard> WizardsCollection
         {
-            get { return mWizardTypesCollection ; }
+            get { return mWizardsCollection ; }
             set
             {
-                mWizardTypesCollection = value;
-                NotifyPropertyChanged("WizardTypesCollection");
+                mWizardsCollection = value;
+                NotifyPropertyChanged("WizardsCollection");
             }
         }
 

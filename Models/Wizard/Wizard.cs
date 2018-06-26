@@ -1,10 +1,9 @@
-﻿
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace DialogEngine.Models.Wizard
+namespace DialogEngine.Models.Dialog
 {
-    public class WizardType
+    public class Wizard
     {
         [JsonProperty("WizardName")]
         public string WizardName { get; set; }

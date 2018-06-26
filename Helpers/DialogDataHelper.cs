@@ -4,7 +4,7 @@ using DialogEngine.Events.DialogEvents;
 using DialogEngine.Models.Dialog;
 using DialogEngine.Models.Logger;
 using DialogEngine.Models.Shared;
-using DialogEngine.Models.Wizard;
+using DialogEngine.Models;
 using log4net;
 using Newtonsoft.Json;
 using System;
@@ -85,6 +85,10 @@ namespace DialogEngine.Helpers
                     FileInfo[] _fileInfo = _directoryInfo.GetFiles("*.json");
                     string _jsonString;
 
+                    DialogData.Instance.CharacterCollection = new ObservableCollection<Character>();
+                    DialogData.Instance.DialogModelCollection = new ObservableCollection<ModelDialogInfo>();
+                    DialogData.Instance.WizardsCollection = new ObservableCollection<Wizard>();
+
                     for (int i=0;i< _fileInfo.Length; i++)
                     {
                         var _fileSteam = _fileInfo[i].OpenRead(); //open a read-only FileStream
@@ -97,19 +101,44 @@ namespace DialogEngine.Helpers
                                 JSONObjectsTypesList _jsonObjectsTypesList = JsonConvert.DeserializeObject
                                     <JSONObjectsTypesList>(_jsonString);
 
-                                DialogData.Instance.DialogModelCollection = _jsonObjectsTypesList.DialogModels;
-                                DialogData.Instance.WizardTypesCollection = _jsonObjectsTypesList.Wizards;
-
+                                //This assumes all characters/wizards in array read and are formatted correctly or the entire json read fails
+                                // otherwise array member numbers will be off by one if we decide not to read one due to a parse error
                                 Application.Current.Dispatcher.Invoke(() =>
                                 {
                                     int j = 0;
-                                    foreach (var character in _jsonObjectsTypesList.Characters)
+                                    if (_jsonObjectsTypesList.Characters != null)
                                     {
-                                        character.FileName = _fileInfo[i].Name;
-                                        character.JsonArrayIndex = j;
-                                        //TODO this assumes all characters in array read correctly and otherwise entire json read fails
-                                        j++;
-                                        DialogData.Instance.CharacterCollection.Add(character);
+                                        foreach (var _character in _jsonObjectsTypesList.Characters)
+                                        {
+                                            _character.FileName = _fileInfo[i].Name;
+                                            _character.JsonArrayIndex = j;
+                                            j++;
+                                            DialogData.Instance.CharacterCollection.Add(_character);
+                                        }
+                                    }
+                                    
+                                    j = 0;
+                                    if (_jsonObjectsTypesList.Wizards != null)
+                                    {
+                                        foreach (var _wizard in _jsonObjectsTypesList.Wizards)
+                                        {
+                                            _wizard.FileName = _fileInfo[i].Name;
+                                            _wizard.JsonArrayIndex = j;
+                                            j++;
+                                            DialogData.Instance.WizardsCollection.Add(_wizard);
+                                        }
+                                    }
+
+                                    j = 0;
+                                    if (_jsonObjectsTypesList.DialogModels != null)
+                                    {
+                                        foreach (var _dialogModel in _jsonObjectsTypesList.DialogModels)
+                                        {
+                                            _dialogModel.FileName = _fileInfo[i].Name;
+                                            _dialogModel.JsonArrayIndex = j;
+                                            j++;
+                                            DialogData.Instance.DialogModelCollection.Add(_dialogModel);
+                                        }
                                     }
                                 });
                             }
@@ -144,14 +173,12 @@ namespace DialogEngine.Helpers
             });
         }
 
-
-        public static  Task SerializeDataToFile(string _pathAndFileName)
-        {
+        public static  Task SerializeDataToFile()
+        {   //TODO run this after wizard completes not on application close, only run for changed character
             return Task.Run(() =>
             {
                 try
                 {
-
                     var settings = new JsonSerializerSettings
                     {
                         Error = (sender, args) =>
@@ -163,10 +190,15 @@ namespace DialogEngine.Helpers
 
                     for (int i = DialogData.Instance.CharacterCollection.Count - 1; i >= 0; i--)
                     {
+                        // The .FileName should never be empty now, all characters, wizards, modelDialogs must be read
+                          // from some file.
                         if (!string.IsNullOrEmpty(DialogData.Instance.CharacterCollection[i].FileName))
                         {
                             string _jsonLocal = JsonConvert.SerializeObject(DialogData.Instance.CharacterCollection[i], settings);
-
+                            //TODO we are rewriting everything, even if it didn't change, we should write on wizard completion only
+                              // not write everything at application close
+                              // this may not be the only character in the file's character array, don't want to wipe out those
+                              // other characters or any wizards or modelDialogs
                             File.WriteAllText(Path.Combine(SessionHelper.WizardDirectory, 
                                 DialogData.Instance.CharacterCollection[i].FileName), _jsonLocal);
 
@@ -175,28 +207,16 @@ namespace DialogEngine.Helpers
                                 DialogData.Instance.CharacterCollection.RemoveAt(i);
                             });
                         }
+                        mcLogger.Error("Character " + DialogData.Instance.CharacterCollection[i].CharacterName +
+                             " has no associated filename from which it was read for saving back any changes.");
                     }
-
-                    JSONObjectsTypesList _jsonObjectsTypesList = new JSONObjectsTypesList
-                    {
-                        Wizards = DialogData.Instance.WizardTypesCollection,
-                        Characters = DialogData.Instance.CharacterCollection,
-                        DialogModels = DialogData.Instance.DialogModelCollection
-                    };
-
-                    string json = JsonConvert.SerializeObject(_jsonObjectsTypesList, settings);
-
-                    File.WriteAllText(_pathAndFileName, json);
-
                 }
                 catch (JsonSerializationException ex)
                 {
                     mcLogger.Error(ex.Message);
                 }
-
             });
         }
-
 
         private static void Serializer_Error(object sender, Newtonsoft.Json.Serialization.ErrorEventArgs e)
         {

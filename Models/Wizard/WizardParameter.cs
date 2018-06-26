@@ -2,7 +2,7 @@
 
 using DialogEngine.Models.Dialog;
 
-namespace DialogEngine.Models.Wizard
+namespace DialogEngine.Models
 {
     public class WizardParameter
     {

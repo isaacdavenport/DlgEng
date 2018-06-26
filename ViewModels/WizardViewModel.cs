@@ -8,7 +8,6 @@ using DialogEngine.Dialogs;
 using DialogEngine.Helpers;
 using DialogEngine.Models.Dialog;
 using DialogEngine.Models.Shared;
-using DialogEngine.Models.Wizard;
 using DialogEngine.Workflows.WizardWorkflow;
 using log4net;
 using MaterialDesignThemes.Wpf;
@@ -21,6 +20,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using DialogEngine.Models;
 
 namespace DialogEngine.ViewModels
 {
@@ -43,7 +43,7 @@ namespace DialogEngine.ViewModels
         private MediaPlayerControlViewModel mMediaPlayerControlViewModel;
         private VoiceRecorderControlViewModel mVoiceRecorderControlViewModel;
         private Character mCharacter;
-        private WizardType mCurrentWizard;
+        private Wizard mCurrentWizard;
         private TutorialStep mCurrentTutorialStep;
         private CancellationTokenSource mCancellationTokenSource;
 
@@ -424,7 +424,7 @@ namespace DialogEngine.ViewModels
                 mVoiceRecorderControlViewModel.ResetData();
 
                 mCharacter = (result as WizardParameter).Character;
-                CurrentWizard = DialogData.Instance.WizardTypesCollection[(result as WizardParameter).WizardTypeIndex];
+                CurrentWizard = DialogData.Instance.WizardsCollection[(result as WizardParameter).WizardTypeIndex];
                 CurrentTutorialStep = CurrentWizard.TutorialSteps[0];
                 CurrentVideoFilePath = Path.Combine(SessionHelper.WizardVideoDirectory, CurrentTutorialStep.VideoFileName + ".avi");
                 StateMachine.Fire(Triggers.ReadyForUserAction);
@@ -551,7 +551,7 @@ namespace DialogEngine.ViewModels
                         mCharacter.Phrases.Add(entry);
                     }
                 }
-
+                //TODO  We have a new line, we should write the JSON file with the update to the character here
                 StateMachine.Fire(Triggers.SkipStep);
                 return;
             }
@@ -572,6 +572,7 @@ namespace DialogEngine.ViewModels
                 {
                     DialogData.Instance.CharacterCollection.Add(mCharacter);
                     _userMessage = "Character successfully created!";
+                    //TODO we don't want to create a character each time, we want to update existing
                 }
                 else // if user didn't record any phrase
                 {
@@ -645,7 +646,7 @@ namespace DialogEngine.ViewModels
         }
 
 
-        public WizardType CurrentWizard
+        public Wizard CurrentWizard
         {
             get { return mCurrentWizard; }
             set
