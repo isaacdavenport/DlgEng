@@ -43,7 +43,6 @@
                 <RowDefinition />
                 <RowDefinition />
                 <RowDefinition />
-                <RowDefinition />
             </Grid.RowDefinitions>
 
             <Label Content="Character age: "
@@ -63,7 +62,7 @@
                       SelectedValue="{Binding Character.CharacterAge}"
                       IsEditable="True">
                 <ComboBox.SelectedItem>
-                    <Binding Path="Character.CharacterAge" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                    <Binding Path="Character.CharacterAge" Mode="TwoWay" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <vr:NumberValidationRule />
                         </Binding.ValidationRules>
@@ -137,7 +136,7 @@
                      Style="{StaticResource MaterialDesignTextBox}" 
                      HorizontalAlignment="Stretch">
                 <TextBox.Text>
-                    <Binding  Path="Character.CharacterName" UpdateSourceTrigger="PropertyChanged">
+                    <Binding  Path="Character.CharacterName" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <vr:NoEmptyValidationRule  />
                         </Binding.ValidationRules>
@@ -145,27 +144,9 @@
                 </TextBox.Text>
             </TextBox>
 
-            <Label Content="Choose wizard: " 
-                   Margin="0,15,0,0" 
-                   Grid.Row="4" 
-                   Grid.Column="0" 
-                   HorizontalAlignment="Right" />
-
-            <ComboBox x:Name="WizardTypeCb"
-                  ItemsSource="{Binding WizardsList}"
-                  Style="{StaticResource MaterialDesignComboBox}"
-                  materialDesign:HintAssist.Hint="Search"
-                  IsEditable="False"
-                  SelectedIndex="0"
-                  Grid.Row="4"
-                  DisplayMemberPath="WizardName"
-                  HorizontalAlignment="Stretch"
-                  Margin="16 15 0 0"
-                  Grid.Column="1"
-                  materialDesign:HintAssist.HintOpacity=".26" />
 
             <Button Content="Close"
-                    Grid.Row="5"
+                    Grid.Row="4"
                     Click="_close_Click"
                     x:Name="CloseBtn"
                     Grid.Column="0"
@@ -175,7 +156,7 @@
 
             <Button  Content="Save"
                      x:Name="SaveBtn"
-                     Grid.Row="5"
+                     Grid.Row="4"
                      Grid.Column="1"
                      Click="_save_Click"
                      HorizontalAlignment="Left"

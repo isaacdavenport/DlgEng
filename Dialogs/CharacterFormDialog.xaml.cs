@@ -7,7 +7,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using DialogEngine.Models;
 
 namespace DialogEngine.Dialogs
 {
@@ -22,6 +21,7 @@ namespace DialogEngine.Dialogs
         private List<int> mNumbersList;
         private ObservableCollection<Wizard> mWizardsList;
         private List<string> mGenderList;
+        private bool mIsEditing;
         public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
@@ -46,6 +46,7 @@ namespace DialogEngine.Dialogs
 
             this.groupBox.HeaderTemplate =(DataTemplate)FindResource("editCharacterHeader");
             Character = character;
+            mIsEditing = true;
             _initData();
 
             CharacterPrefixTb.IsEnabled = false;
@@ -66,13 +67,14 @@ namespace DialogEngine.Dialogs
               || Validation.GetHasError(CharacterPrefixTb))
                 return;
 
-            WizardParameter parameter = new WizardParameter
+            if (mIsEditing)
             {
-                Character = mCharacter,
-                WizardTypeIndex = WizardTypeCb.SelectedIndex
-            };
-
-            DialogHost.CloseDialogCommand.Execute(parameter, sender as Button);
+                DialogHost.CloseDialogCommand.Execute(null, sender as Button);
+            }
+            else
+            {
+                DialogHost.CloseDialogCommand.Execute(Character, sender as Button);
+            }
         }
 
         private void _close_Click(object sender, RoutedEventArgs e)
@@ -120,7 +122,7 @@ namespace DialogEngine.Dialogs
             set
             {
                 mWizardsList = value;
-                OnPropertyChanged("JSONObjectsTypesList");
+                OnPropertyChanged("WizardsList");
             }
         }
 

@@ -105,7 +105,6 @@ namespace DialogEngine.Controls.ViewModels
                 _newCharacter.PhraseTotals.PhraseRating = "G";
                 _newCharacter.PhraseTotals.PhraseWeights = new Dictionary<string, double>();
                 _newCharacter.PhraseTotals.PhraseWeights.Add("Greeting", 0.0f);
-                Character character2 = new Character();
 
                 _removePhrasesOverParentalRating(_newCharacter);
 
@@ -125,7 +124,7 @@ namespace DialogEngine.Controls.ViewModels
                     }
                 }
 
-                for (var i = 0; i < Character.RecentPhrasesQueueSize; i++)
+                for (var i = 0; i < Character.RecentPhrasesQueueSize && i < _newCharacter.Phrases.Count; i++)
                 {
                     // we always deque after enque so this sets que size
                     _newCharacter.RecentPhrases.Enqueue(_newCharacter.Phrases[0]);

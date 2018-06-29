@@ -15,6 +15,9 @@ using System.Windows.Navigation;
 using DialogEngine.Events;
 using DialogEngine.Events.DialogEvents;
 using DialogEngine.Models.Enums;
+using System;
+using DialogEngine.Models.Shared;
+using DialogEngine.Models.Dialog;
 
 namespace DialogEngine.ViewModels
 {
@@ -81,6 +84,7 @@ namespace DialogEngine.ViewModels
         public Core.RelayCommand OpenSettingsDialog { get; set; }
         public Core.RelayCommand AboutToys2Life { get; set; }
         public Core.RelayCommand ReadTutorial { get; set; }
+        public Core.RelayCommand CreateCharacter { get; set; }
         public RelayCommand<NavigationEventArgs> MainFrameNavigated { get; set; }
 
         #endregion
@@ -119,8 +123,11 @@ namespace DialogEngine.ViewModels
             AboutToys2Life = new Core.RelayCommand(x => _aboutToys2Life());
             OpenSettingsDialog = new Core.RelayCommand(x => _openSettingsDialog());
             EditWithJSONEditor = new Core.RelayCommand(x => _editWithJSONEditor());
+            CreateCharacter = new Core.RelayCommand(x => _createCharacter());
             MainFrameNavigated = new RelayCommand<NavigationEventArgs>(_onMainFrameNavigated);
         }
+
+
 
         private void _onMainFrameNavigated(NavigationEventArgs obj)
         {
@@ -141,6 +148,15 @@ namespace DialogEngine.ViewModels
             }
         }
 
+        private async void _createCharacter()
+        {
+            var result = await DialogHost.Show(new CharacterFormDialog());
+
+            if(result != null)
+            {
+                DialogData.Instance.CharacterCollection.Add(result as Character);
+            }
+        }
 
         private void _readTutorial()
         {

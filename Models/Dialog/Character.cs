@@ -4,12 +4,14 @@ using DialogEngine.Events.DialogEvents;
 using DialogEngine.Models.Enums;
 using DialogEngine.ViewModels;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace DialogEngine.Models.Dialog
 {
-    public class Character : INotifyPropertyChanged
+    public class Character : INotifyPropertyChanged,IEquatable<Character>
     {
         #region - fields -
 
@@ -58,13 +60,14 @@ namespace DialogEngine.Models.Dialog
             }
         }
 
+
         //[JsonProperty("PhraseTotals")]
         //public PhraseEntry PhraseTotals = new PhraseEntry();
-
+        [Required]
         [JsonProperty("CharacterAge")]
         public int CharacterAge
         {
-            get { return mCharacterAge; }
+            get { return  mCharacterAge; }
             set
             {
                 mCharacterAge = value;
@@ -83,7 +86,7 @@ namespace DialogEngine.Models.Dialog
             }
         }
 
-
+        [Required]
         [JsonProperty("CharacterName")]
         public string CharacterName
         {
@@ -187,5 +190,10 @@ namespace DialogEngine.Models.Dialog
 
         #endregion
 
+
+        public bool Equals(Character other)
+        {
+            return other.CharacterPrefix.Equals(this.CharacterPrefix);
+        }
     }
 }

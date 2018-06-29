@@ -403,16 +403,16 @@ namespace DialogEngine.ViewModels
         private async void _view_Loaded()
         {
             // if we want to add new character
-            CharacterFormDialog dialog;
+            WizardFormDialog dialog;
 
             if (mCharacter == null)
             {
-                dialog = new CharacterFormDialog();
+                dialog = new WizardFormDialog();
                 mIsEditMode = false;
             }
             else
             {
-                dialog = new CharacterFormDialog(mCharacter);
+                dialog = new WizardFormDialog(mCharacter);
                 mIsEditMode = true;
             }
 
@@ -570,7 +570,6 @@ namespace DialogEngine.ViewModels
             {            
                 if(mCharacter.Phrases != null && mCharacter.Phrases.Count > 0)
                 {
-                    DialogData.Instance.CharacterCollection.Add(mCharacter);
                     _userMessage = "Character successfully created!";
                     //TODO we don't want to create a character each time, we want to update existing
                 }
@@ -587,7 +586,7 @@ namespace DialogEngine.ViewModels
             var result = await DialogHost.
                 Show(new YesNoDialog("", 
                                      _userMessage, 
-                                     "Add new character", 
+                                     "Run another wizard", 
                                      "Close wizard"), "WizardPageDialogHost");
 
             if (result != null)

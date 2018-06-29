@@ -109,6 +109,7 @@
       <HintPath>packages\Stateless.4.0.0\lib\net45\Stateless.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
@@ -156,6 +157,9 @@
     <Compile Include="Dialogs\ValidationRules\NumberValidationRule.cs" />
     <Compile Include="Dialogs\ValidationRules\RegexValidtionRuleWrapper.cs" />
     <Compile Include="Dialogs\ValidationRules\RegexValidationRule.cs" />
+    <Compile Include="Dialogs\WizardFormDialog.xaml.cs">
+      <DependentUpon>WizardFormDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Events\DialogEvents\CharacterSelectionStartedEvent.cs" />
     <Compile Include="Events\DialogEvents\DialogModelChangedEvent.cs" />
     <Compile Include="Events\DialogEvents\SelectedCharactersPairChangedEvent.cs" />
@@ -170,6 +174,7 @@
     <Compile Include="Services\ReceiverBluetoothService.cs" />
     <Compile Include="Services\SerialSelectionService.cs" />
     <Compile Include="Models\Shared\Setting.cs" />
+    <Compile Include="GlobalCommands.cs" />
     <Compile Include="Workflows\DialogViewWorkflow.cs" />
     <Compile Include="Workflows\SerialSelectionWorkflow.cs" />
     <Compile Include="ViewModels\DialogGeneratorViewModel.cs" />
@@ -367,6 +372,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Dialogs\SettingsDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\WizardFormDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -10,6 +10,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:cmd="http://www.galasoft.ch/mvvmlight"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:global="clr-namespace:DialogEngine"
              WindowStartupLocation="CenterScreen"
              Closing="_mainWindow_closing"
              WindowState="Maximized"                
@@ -48,13 +49,22 @@
                 </MenuItem>
 
                 <MenuItem Header="_View" >
-                    <MenuItem Header="_Dialog"
+                    <!--<MenuItem Header="_Dialog"
                               IsEnabled="{Binding CurrentState , 
                                                   Converter={StaticResource IsEnabledMainWindowControlConverter}, 
                                                   ConverterParameter=WizardView|DialogView}"
                               Command="NavigationCommands.BrowseHome">
                         <MenuItem.Icon>
                             <materialDesign:PackIcon Kind="CommentMultipleOutline" />
+                        </MenuItem.Icon>
+                    </MenuItem>-->
+                    <MenuItem Header="_Add new character"                        
+                              Command="global:GlobalCommands.OpenCharacterFormCommand"
+                              IsEnabled="{Binding CurrentState , 
+                                                  Converter={StaticResource IsEnabledMainWindowControlConverter}, 
+                                                  ConverterParameter=WizardView}">
+                        <MenuItem.Icon>
+                            <materialDesign:PackIcon Kind="AccountPlus" />
                         </MenuItem.Icon>
                     </MenuItem>
 
@@ -65,7 +75,7 @@
                                                   ConverterParameter=WizardView}"
                               CommandParameter="/Views/WizardView.xaml">
                         <MenuItem.Icon>
-                            <materialDesign:PackIcon Kind="AccountPlus" />
+                            <materialDesign:PackIcon Kind="AccountEdit" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
@@ -117,13 +127,21 @@
                         <materialDesign:PackIcon Kind="CommentMultipleOutline" />
                     </Button>
 
+                    <Button  Command="global:GlobalCommands.OpenCharacterFormCommand"
+                             IsEnabled="{Binding CurrentState , 
+                                                 Converter={StaticResource IsEnabledMainWindowControlConverter}, 
+                                                 ConverterParameter=WizardView}"
+                             ToolTip="Create new character.." >
+                        <materialDesign:PackIcon Kind="AccountPlus" />
+                    </Button>
+
                     <Button  Command="NavigationCommands.GoToPage"
                              CommandParameter="/Views/WizardView.xaml"
                              IsEnabled="{Binding CurrentState , 
                                                  Converter={StaticResource IsEnabledMainWindowControlConverter}, 
                                                  ConverterParameter=WizardView}"
                              ToolTip="Run a Wizard" >
-                        <materialDesign:PackIcon Kind="AccountPlus" />
+                        <materialDesign:PackIcon Kind="AccountEdit" />
                     </Button>
 
                     <Separator />
