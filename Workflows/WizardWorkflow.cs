@@ -22,7 +22,7 @@ namespace DialogEngine.Workflows.WizardWorkflow
         SkipStep,
         Cancel,
         Finish,
-        LeaveWizard,
+        LeaveWizard
     }
 
     public enum Triggers

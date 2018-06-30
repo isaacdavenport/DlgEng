@@ -279,7 +279,6 @@ namespace DialogEngine.ViewModels
             }
             else
             {
-
                 await Task.Run(async () =>
                 {
                     try

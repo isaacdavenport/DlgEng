@@ -31,5 +31,6 @@
     <converters:IsEnabledMainWindowControlConverter x:Key="IsEnabledMainWindowControlConverter" />
     <converters:IsEnabledDialogViewControlConverter x:Key="IsEnabledDialogViewControlConverter" />
     <converters:IsEnabledSaveAndNextBtnConverter x:Key="IsEnabledSaveAndNextBtnConverter" />
+    <converters:IsEnabledCancelBtnConverter x:Key="IsEnabledCancelBtnConverter" />
 
 </ResourceDictionary>

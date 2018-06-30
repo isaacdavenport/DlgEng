@@ -143,6 +143,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\CharacterGenderConverter.cs" />
+    <Compile Include="Converters\IsEnabledCancelBtnConverter.cs" />
     <Compile Include="Converters\IsEnabledDialogViewControlConverter.cs" />
     <Compile Include="Converters\IsEnabledMainWindowControlConverter.cs" />
     <Compile Include="Converters\IsEnabledSaveAndNextBtnConverter.cs" />

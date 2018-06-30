@@ -2,6 +2,7 @@
 using System;
 using System.Globalization;
 using System.Windows.Data;
+using DialogEngine.Workflows.WizardWorkflow;
 
 namespace DialogEngine.Converters
 {
@@ -9,20 +10,19 @@ namespace DialogEngine.Converters
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            int _currentStep;
-            int _stepsCount;
-
             try
             {
-                 _currentStep = int.Parse(values[0].ToString());
-                 _stepsCount = int.Parse(values[1].ToString());
-            }
-            catch
-            {
-                return false;
-            }
+                int _currentStep = int.Parse(values[0].ToString());
+                int _stepsCount = int.Parse(values[1].ToString());
+                States state = (States)values[2];
 
-            return _currentStep < _stepsCount-1;
+                return (_currentStep < _stepsCount - 1) && state == States.ReadyForUserAction;
+
+            }
+            catch { }
+            
+            return false;
+
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

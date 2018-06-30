@@ -119,13 +119,13 @@
 
             <ToolBarTray Grid.Row="1"  >
                 <ToolBar Style="{DynamicResource MaterialDesignToolBar}"   ClipToBounds="False">
-                    <Button Command="NavigationCommands.BrowseHome"
+                    <!--<Button Command="NavigationCommands.BrowseHome"
                             IsEnabled="{Binding CurrentState , 
                                                 Converter={StaticResource IsEnabledMainWindowControlConverter}, 
                                                 ConverterParameter=WizardView|DialogView}"
                             ToolTip="Dialog">
                         <materialDesign:PackIcon Kind="CommentMultipleOutline" />
-                    </Button>
+                    </Button>-->
 
                     <Button  Command="global:GlobalCommands.OpenCharacterFormCommand"
                              IsEnabled="{Binding CurrentState , 
