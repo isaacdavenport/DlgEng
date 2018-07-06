@@ -222,7 +222,7 @@ namespace DialogEngine.Controls.ViewModels
                     }
                 }
 
-                for (var i = 0; i < Character.RecentPhrasesQueueSize; i++)
+                for (var i = 0; i < Character.RecentPhrasesQueueSize && i < character.Phrases.Count; i++)
                 {
                     // we always deque after enque so this sets que size
                     character.RecentPhrases.Enqueue(character.Phrases[0]);

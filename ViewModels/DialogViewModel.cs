@@ -56,7 +56,6 @@ namespace DialogEngine.ViewModels
         private RandomSelectionService mRandomSelectionService;
         private SerialSelectionService mSerialSelectionService;
         private ICharacterSelection mCurrentSelectionService;
-        private ReceiverBluetoothService mReceiverService;
 
         public static int SelectedCharactersOn;
         public static int SelectedIndex1;

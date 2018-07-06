@@ -114,7 +114,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime" />
     <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Runtime.WindowsRuntime, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -142,6 +144,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\SpinnerControl.xaml.cs">
+      <DependentUpon>SpinnerControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\CharacterGenderConverter.cs" />
     <Compile Include="Converters\IsEnabledCancelBtnConverter.cs" />
     <Compile Include="Converters\IsEnabledDialogViewControlConverter.cs" />
@@ -152,6 +157,12 @@
     <Compile Include="Converters\ParseBooleanConverter.cs" />
     <Compile Include="Converters\PlayInContextBtnContentConverter.cs" />
     <Compile Include="Converters\PlayStopIconValueConverter.cs" />
+    <Compile Include="Dialogs\ExportCharacterDialog.xaml.cs">
+      <DependentUpon>ExportCharacterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\ImportCharacterDialog.xaml.cs">
+      <DependentUpon>ImportCharacterDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\SettingsDataTemplateSelector.cs" />
     <Compile Include="Dialogs\ValidationRules\BindingProxy.cs" />
     <Compile Include="Dialogs\ValidationRules\NoEmptyValidationRule.cs" />
@@ -172,7 +183,6 @@
     <Compile Include="Events\EventArgs\SelectionChangedEventArgs.cs" />
     <Compile Include="Services\ICharacterSelection.cs" />
     <Compile Include="Services\RandomSelectionService.cs" />
-    <Compile Include="Services\ReceiverBluetoothService.cs" />
     <Compile Include="Services\SerialSelectionService.cs" />
     <Compile Include="Models\Shared\Setting.cs" />
     <Compile Include="GlobalCommands.cs" />
@@ -360,11 +370,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\SpinnerControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\VoiceRecorederControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Dialogs\CharacterFormDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\ExportCharacterDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\ImportCharacterDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -453,7 +475,9 @@ if not exist "$(OutputDir)WizardAudio"   xcopy   "$(SolutionDir)\WizardAudio"  "
 
 if not exist "$(OutputDir)WizardVideo"   xcopy   "$(SolutionDir)\WizardVideo"  "$(OutputDir)WizardVideo" /Y /I  /E
 
-if not exist "$(OutputDir)TutorialCharacterCreation"   xcopy   "$(SolutionDir)\TutorialCharacterCreation"  "$(OutputDir)TutorialCharacterCreation" /Y /I  /E</PostBuildEvent>
+if not exist "$(OutputDir)TutorialCharacterCreation"   xcopy   "$(SolutionDir)\TutorialCharacterCreation"  "$(OutputDir)TutorialCharacterCreation" /Y /I  /E
+
+if not exist "$(OutputDir)Temp" mkdir "$(OutputDir)Temp"</PostBuildEvent>
   </PropertyGroup>
   <Import Project="packages\Accord.3.8.0\build\Accord.targets" Condition="Exists('packages\Accord.3.8.0\build\Accord.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

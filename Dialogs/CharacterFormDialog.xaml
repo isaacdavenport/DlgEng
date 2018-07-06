@@ -144,7 +144,6 @@
                 </TextBox.Text>
             </TextBox>
 
-
             <Button Content="Close"
                     Grid.Row="4"
                     Click="_close_Click"
@@ -161,8 +160,7 @@
                      Click="_save_Click"
                      HorizontalAlignment="Left"
                      Style="{DynamicResource MaterialDesignRaisedButton}"
-                     Margin="20,20,0,0">
-            </Button>
+                     Margin="20,20,0,0"/>
 
         </Grid>
     </GroupBox>

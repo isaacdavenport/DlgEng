@@ -27,6 +27,7 @@ namespace DialogEngine.Helpers
         public static readonly string TutorialDirectory;
         public static readonly string TutorialFileName;
         public static readonly string Toys2LifeWebsiteUrl;
+        public static readonly string TempDirectory;
         
         // !!! IMPORTANT !!!  If you change name, you must also change name in log4net.config 
         public static readonly string DecimalLogFileName = "DecimalSerialLog";
@@ -198,6 +199,7 @@ namespace DialogEngine.Helpers
             WizardVideoDirectory = BaseDirectory + @"\WizardVideo\";
             WizardAudioDirectory = BaseDirectory + @"\WizardAudio\";
             TutorialDirectory = BaseDirectory + @"\TutorialCharacterCreation\";
+            TempDirectory = BaseDirectory + @"\Temp\";
         }
     }
 }

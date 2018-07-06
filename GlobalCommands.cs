@@ -6,10 +6,23 @@ namespace DialogEngine
     public static class GlobalCommands
     {
         private static readonly RoutedUICommand mcOpenCharacterFormCommand = new RoutedUICommand("", "OpenCharacterFormCommand", typeof(GlobalCommands));
+        private static readonly RoutedUICommand mcImportCharacterCommand = new RoutedUICommand("","ImportCharacterCommand",typeof(GlobalCommands));
+        private static readonly RoutedUICommand mcExportCharacterCommand = new RoutedUICommand("", "ExportCharacterCommand", typeof(GlobalCommands));
+
 
         public static RoutedUICommand OpenCharacterFormCommand
         {
             get { return mcOpenCharacterFormCommand; }
+        }
+
+        public static RoutedUICommand ImportCharacterCommand
+        {
+            get { return mcImportCharacterCommand; }
+        }
+
+        public static RoutedUICommand ExportCharacterCommand
+        {
+            get { return mcExportCharacterCommand; }
         }
 
     }

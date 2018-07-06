@@ -242,10 +242,7 @@ namespace DialogEngine.ViewModels
         private string _tutorialStepFilePath()
         {
             int _indexForSplitting = CurrentTutorialStep.VideoFileName.IndexOf("Wiz");
-
             string  _videoFileName = CurrentTutorialStep.VideoFileName.Substring(_indexForSplitting + 3);
-
-            //string _tagName = CurrentTutorialStep.PhraseWeights.Count > 0 ? CurrentTutorialStep.PhraseWeights.Keys.ElementAt(0) : "";
 
             if (string.IsNullOrEmpty(_videoFileName))
             {
@@ -286,7 +283,6 @@ namespace DialogEngine.ViewModels
                         _clearListeners();
 
                         IsPlayingLineInContext = true;
-
                         List<List<string>> _dialogsList = CurrentTutorialStep.PlayUserRecordedAudioInContext;
                         mCancellationTokenSource = new CancellationTokenSource();
                         int index = 0;
@@ -360,7 +356,11 @@ namespace DialogEngine.ViewModels
         {
             try
             {
-                if (!mIsEditMode)
+                if (mIsEditMode)
+                {
+                    await DialogDataHelper.SerializeCharacterToFile(Character);
+                }
+                else
                 {
                     var result = await DialogHost.Show(new YesNoDialog("Cancel wizard", "Do you want to save changes?"), "WizardPageDialogHost");
 

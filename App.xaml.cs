@@ -33,7 +33,14 @@ namespace DialogEngine
         {
             var _openCharacterFormCommandBinding = new CommandBinding(GlobalCommands.OpenCharacterFormCommand, _openCharacterForm);
             CommandManager.RegisterClassCommandBinding(typeof(Window), _openCharacterFormCommandBinding);
+
+            var _importCharactgerCommandBinding = new CommandBinding(GlobalCommands.ImportCharacterCommand, _importCharacter);
+            CommandManager.RegisterClassCommandBinding(typeof(Window), _importCharactgerCommandBinding);
+
+            var _exportFormCommandBinding = new CommandBinding(GlobalCommands.ExportCharacterCommand, _exportCharacter);
+            CommandManager.RegisterClassCommandBinding(typeof(Window), _exportFormCommandBinding);
         }
+
 
         #endregion
 
@@ -56,14 +63,25 @@ namespace DialogEngine
 
         private async void _openCharacterForm(object sender, ExecutedRoutedEventArgs e)
         {
-            CharacterFormDialog dialog = e.Parameter == null ? new CharacterFormDialog() : new CharacterFormDialog(e.Parameter as Character);
+            CharacterFormDialog dialog = e.Parameter == null ? new CharacterFormDialog() 
+                                                             : new CharacterFormDialog(e.Parameter as Character);
 
-            var result = await DialogHost.Show(dialog);
-            
-            if(result != null)
-            {
-                DialogData.Instance.CharacterCollection.Add(result as Character);
-            }
+            await DialogHost.Show(dialog);            
+        }
+
+        private async void _exportCharacter(object sender, ExecutedRoutedEventArgs e)
+        {
+            ExportCharacterDialog dialog = e.Parameter == null ? new ExportCharacterDialog() 
+                                                               : new ExportCharacterDialog(e.Parameter as Character);
+
+            await DialogHost.Show(dialog);
+        }
+
+        private async void _importCharacter(object sender, ExecutedRoutedEventArgs e)
+        {
+            ImportCharacterDialog dialog = new ImportCharacterDialog();
+
+            await DialogHost.Show(dialog);
         }
 
         #endregion 

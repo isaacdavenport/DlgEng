@@ -1,8 +1,8 @@
-﻿using DialogEngine.Models.Dialog;
+﻿using DialogEngine.Helpers;
+using DialogEngine.Models.Dialog;
 using DialogEngine.Models.Shared;
 using MaterialDesignThemes.Wpf;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
@@ -19,7 +19,6 @@ namespace DialogEngine.Dialogs
 
         private Character mCharacter;
         private List<int> mNumbersList;
-        private ObservableCollection<Wizard> mWizardsList;
         private List<string> mGenderList;
         private bool mIsEditing;
         public event PropertyChangedEventHandler PropertyChanged;
@@ -56,24 +55,27 @@ namespace DialogEngine.Dialogs
 
         #region - event handlers -
 
-        private void _save_Click(object sender, RoutedEventArgs e)
+        private async void _save_Click(object sender, RoutedEventArgs e)
         {
             NumbersCbx.GetBindingExpression(ComboBox.SelectedValueProperty).UpdateSource();
             CharacterNameTb.GetBindingExpression(TextBox.TextProperty).UpdateSource();
             CharacterPrefixTb.GetBindingExpression(TextBox.TextProperty).UpdateSource();
 
-            if ( Validation.GetHasError(NumbersCbx)
-              || Validation.GetHasError(CharacterNameTb)
-              || Validation.GetHasError(CharacterPrefixTb))
+            if (  Validation.GetHasError(NumbersCbx)
+               || Validation.GetHasError(CharacterNameTb)
+               || Validation.GetHasError(CharacterPrefixTb))
                 return;
+
+            if (!mIsEditing)
+            {
+                DialogData.Instance.CharacterCollection.Add(Character);
+            }
+
+            await DialogDataHelper.SerializeCharacterToFile(Character);
 
             if (mIsEditing)
             {
-                DialogHost.CloseDialogCommand.Execute(null, sender as Button);
-            }
-            else
-            {
-                DialogHost.CloseDialogCommand.Execute(Character, sender as Button);
+                DialogHost.CloseDialogCommand.Execute(null,sender as Button);
             }
         }
 
@@ -94,7 +96,6 @@ namespace DialogEngine.Dialogs
             _genderList.Add("Female");
 
             NumbersList = new List<int>(Enumerable.Range(1, 100));
-            WizardsList = DialogData.Instance.WizardsCollection;
             GenderList = _genderList;
         }
 
@@ -114,18 +115,6 @@ namespace DialogEngine.Dialogs
         #endregion
 
         #region - properties -
-
-
-        public ObservableCollection<Wizard> WizardsList
-        {
-            get { return mWizardsList; }
-            set
-            {
-                mWizardsList = value;
-                OnPropertyChanged("WizardsList");
-            }
-        }
-
 
         public List<string> GenderList
         {

@@ -41,23 +41,31 @@
             <Menu  FontSize="16" Grid.Row="0"  Background="White" Margin="0,0,0,0"  >
 
                 <MenuItem Header="_File" >
-                    <MenuItem IsEnabled="False" Header="_Relaod data"  >
+
+                    <MenuItem Header="_Import character"                        
+                              Command="global:GlobalCommands.OpenCharacterFormCommand"
+                              IsEnabled="{Binding CurrentState , 
+                                                  Converter={StaticResource IsEnabledMainWindowControlConverter}, 
+                                                  ConverterParameter=WizardView}">
                         <MenuItem.Icon>
-                            <materialDesign:PackIcon Kind="Reload" />
+                            <materialDesign:PackIcon Kind="FileImport" />
                         </MenuItem.Icon>
                     </MenuItem>
+
+                    <MenuItem Header="_Export character"                        
+                              Command="global:GlobalCommands.OpenCharacterFormCommand"
+                              IsEnabled="{Binding CurrentState , 
+                                                  Converter={StaticResource IsEnabledMainWindowControlConverter}, 
+                                                  ConverterParameter=WizardView}">
+                        <MenuItem.Icon>
+                            <materialDesign:PackIcon Kind="FileExport" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+
                 </MenuItem>
 
                 <MenuItem Header="_View" >
-                    <!--<MenuItem Header="_Dialog"
-                              IsEnabled="{Binding CurrentState , 
-                                                  Converter={StaticResource IsEnabledMainWindowControlConverter}, 
-                                                  ConverterParameter=WizardView|DialogView}"
-                              Command="NavigationCommands.BrowseHome">
-                        <MenuItem.Icon>
-                            <materialDesign:PackIcon Kind="CommentMultipleOutline" />
-                        </MenuItem.Icon>
-                    </MenuItem>-->
+                    
                     <MenuItem Header="_Add new character"                        
                               Command="global:GlobalCommands.OpenCharacterFormCommand"
                               IsEnabled="{Binding CurrentState , 
@@ -119,15 +127,24 @@
 
             <ToolBarTray Grid.Row="1"  >
                 <ToolBar Style="{DynamicResource MaterialDesignToolBar}"   ClipToBounds="False">
-                    <!--<Button Command="NavigationCommands.BrowseHome"
-                            IsEnabled="{Binding CurrentState , 
-                                                Converter={StaticResource IsEnabledMainWindowControlConverter}, 
-                                                ConverterParameter=WizardView|DialogView}"
-                            ToolTip="Dialog">
-                        <materialDesign:PackIcon Kind="CommentMultipleOutline" />
-                    </Button>-->
+                    <Button   ToolTip="Import character"
+                              Command="global:GlobalCommands.ImportCharacterCommand"
+                              IsEnabled="{Binding CurrentState , 
+                                                  Converter={StaticResource IsEnabledMainWindowControlConverter}, 
+                                                  ConverterParameter=WizardView}">
+                        <materialDesign:PackIcon Kind="FileImport" />
+                    </Button>
 
-                    <Button  Command="global:GlobalCommands.OpenCharacterFormCommand"
+                    <Button   ToolTip="Export character"                    
+                              Command="global:GlobalCommands.ExportCharacterCommand"
+                              IsEnabled="{Binding CurrentState , 
+                                                  Converter={StaticResource IsEnabledMainWindowControlConverter}, 
+                                                  ConverterParameter=WizardView}">
+                        <materialDesign:PackIcon Kind="FileExport" />
+                    </Button>
+                        <Separator />
+
+                        <Button  Command="global:GlobalCommands.OpenCharacterFormCommand"
                              IsEnabled="{Binding CurrentState , 
                                                  Converter={StaticResource IsEnabledMainWindowControlConverter}, 
                                                  ConverterParameter=WizardView}"
