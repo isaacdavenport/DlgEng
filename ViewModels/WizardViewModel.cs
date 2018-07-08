@@ -214,20 +214,17 @@ namespace DialogEngine.ViewModels
 
         }
 
-
         private void _clearListeners()
         {
             mMediaPlayerControlViewModel.PropertyChanged -= _mediaPlayerControlViewModel_PropertyChanged;
             mVoiceRecorderControlViewModel.PropertyChanged -= _voiceRecorderControlViewModel_PropertyChanged;
         }
 
-
         private void _registerListeners()
         {
             mMediaPlayerControlViewModel.PropertyChanged += _mediaPlayerControlViewModel_PropertyChanged;
             mVoiceRecorderControlViewModel.PropertyChanged += _voiceRecorderControlViewModel_PropertyChanged;
         }
-
 
         private void _bindCommands()
         {
@@ -237,25 +234,6 @@ namespace DialogEngine.ViewModels
             PlayInContext = new RelayCommand(x => _playDialogLineInContext());
             Cancel = new RelayCommand(x => { StateMachine.Fire(Triggers.Cancel); });
         }
-
-
-        private string _tutorialStepFilePath()
-        {
-            int _indexForSplitting = CurrentTutorialStep.VideoFileName.IndexOf("Wiz");
-            string  _videoFileName = CurrentTutorialStep.VideoFileName.Substring(_indexForSplitting + 3);
-
-            if (string.IsNullOrEmpty(_videoFileName))
-            {
-                return "";
-            }
-            else
-            {
-                string _mp3FilePath = Character.CharacterPrefix + "_" + _videoFileName;
-
-                return  _mp3FilePath ;
-            }
-        }
-
 
         private async void _playDialogLineInContext()
         {
@@ -348,95 +326,9 @@ namespace DialogEngine.ViewModels
             CurrentVideoFilePath = _tutorialStepVideoFilePathCache;
         }
 
-        #endregion
-
-        #region - state machine functions -
-
-        private async void _cancel()
-        {
-            try
-            {
-                if (mIsEditMode)
-                {
-                    await DialogDataHelper.SerializeCharacterToFile(Character);
-                }
-                else
-                {
-                    var result = await DialogHost.Show(new YesNoDialog("Cancel wizard", "Do you want to save changes?"), "WizardPageDialogHost");
-
-                    if (result != null)
-                        DialogData.Instance.CharacterCollection.Add(Character);
-                }
-
-                StateMachine.Fire(Triggers.LeaveWizard);
-            }
-            catch (Exception ex)
-            {
-                mcLogger.Error("_cancel " + ex.Message);
-            }
-        }
-
-
-        private void _leaveVizard()
-        {
-            try
-            {
-                StateMachine.Fire(Triggers.Start);
-
-                _goBackToDialog();
-            }
-            catch (Exception ex)
-            {
-                mcLogger.Error("_leaveVizard" + ex.Message);
-            }
-        }
-
-
-        private void _goBackToDialog()
-        {
-            NavigationCommands.BrowseHome.Execute(null, Application.Current.MainWindow);
-            Reset();
-        }
-
-
-        private async void _view_Loaded()
-        {
-            // if we want to add new character
-            WizardFormDialog dialog;
-
-            if (mCharacter == null)
-            {
-                dialog = new WizardFormDialog();
-                mIsEditMode = false;
-            }
-            else
-            {
-                dialog = new WizardFormDialog(mCharacter);
-                mIsEditMode = true;
-            }
-
-            var result = await DialogHost.Show(dialog, "RootDialogHost");
-
-            if (result != null)
-            {
-                DialogStr = "";
-                mVoiceRecorderControlViewModel.ResetData();
-
-                mCharacter = (result as WizardParameter).Character;
-                CurrentWizard = DialogData.Instance.WizardsCollection[(result as WizardParameter).WizardTypeIndex];
-                CurrentTutorialStep = CurrentWizard.TutorialSteps[0];
-                CurrentVideoFilePath = Path.Combine(SessionHelper.WizardVideoDirectory, CurrentTutorialStep.VideoFileName + ".avi");
-                StateMachine.Fire(Triggers.ReadyForUserAction);
-            }
-            else
-            {
-                StateMachine.Fire(Triggers.LeaveWizard);
-            }
-        }
-
         private PhraseEntry _findPhraseInCharacterForTutorialStep(TutorialStep _tutorialStep)
         {
-            foreach(PhraseEntry phrase in Character.Phrases)
+            foreach (PhraseEntry phrase in Character.Phrases)
             {
                 if (!string.IsNullOrEmpty(phrase.FileName))
                 {
@@ -454,24 +346,48 @@ namespace DialogEngine.ViewModels
             return null;
         }
 
+        private string _tutorialStepFilePath()
+        {
+            int _indexForSplitting = CurrentTutorialStep.VideoFileName.IndexOf("Wiz");
+            string _videoFileName = CurrentTutorialStep.VideoFileName.Substring(_indexForSplitting + 3);
 
-        private void _skipStep()
+            if (string.IsNullOrEmpty(_videoFileName))
+            {
+                return "";
+            }
+            else
+            {
+                string _mp3FilePath = Character.CharacterPrefix + "_" + _videoFileName;
+
+                return _mp3FilePath;
+            }
+        }
+
+
+        private void _goBackToDialog()
+        {
+            NavigationCommands.BrowseHome.Execute(null, Application.Current.MainWindow);
+            Reset();
+        }
+
+
+        private void _setDataForTutorialStep(int _currentStepIndex)
         {
             try
             {
-                ++CurrentStepIndex;
-                CurrentTutorialStep = mCurrentWizard.TutorialSteps[mCurrentStepIndex];
+                CurrentTutorialStep = CurrentWizard.TutorialSteps[_currentStepIndex];
                 CurrentVideoFilePath = Path.Combine(SessionHelper.WizardVideoDirectory, CurrentTutorialStep.VideoFileName + ".avi");
-                VoiceRecorderControlViewModel.CurrentFilePath = _tutorialStepFilePath();
 
-                if (mIsEditMode)
+                if (CurrentTutorialStep.CollectUserInput)
                 {
+                    VoiceRecorderControlViewModel.CurrentFilePath = _tutorialStepFilePath();
+
                     PhraseEntry _currentPhrase = _findPhraseInCharacterForTutorialStep(CurrentTutorialStep);
 
-                    if(_currentPhrase != null)
+                    if (_currentPhrase != null)
                     {
                         DialogStr = _currentPhrase.DialogStr;
-                        VoiceRecorderControlViewModel.CurrentFilePath = Character.CharacterPrefix + "_" +_currentPhrase.FileName;
+                        VoiceRecorderControlViewModel.CurrentFilePath = Character.CharacterPrefix + "_" + _currentPhrase.FileName;
                         VoiceRecorderControlViewModel.IsLineRecorded = true;
                         mIsPhraseEditable = true;
                         mCurrentPhrase = _currentPhrase;
@@ -485,9 +401,81 @@ namespace DialogEngine.ViewModels
                 }
                 else
                 {
+                    VoiceRecorderControlViewModel.ResetData();
                     DialogStr = "";
-                    mVoiceRecorderControlViewModel.ResetData();
                 }
+
+            }
+            catch (Exception ex)
+            {
+                mcLogger.Error("_setDataForTutorialStep " + ex.Message);
+            }
+
+        }
+
+        #endregion
+
+        #region - state machine functions -
+
+        private async void _cancel()
+        {
+            try
+            {
+                StateMachine.Fire(Triggers.LeaveWizard);
+            }
+            catch (Exception ex)
+            {
+                mcLogger.Error("_cancel " + ex.Message);
+            }
+        }
+
+
+        private void _leaveVizard()
+        {
+            try
+            {
+                StateMachine.Fire(Triggers.Start);
+                _goBackToDialog();
+            }
+            catch (Exception ex)
+            {
+                mcLogger.Error("_leaveVizard" + ex.Message);
+            }
+        }
+
+
+        private async void _view_Loaded()
+        {
+            WizardFormDialog dialog = Character == null? new WizardFormDialog()
+                                                       : new WizardFormDialog(Character);
+
+            var result = await DialogHost.Show(dialog, "RootDialogHost");
+
+            if (result != null)
+            {
+                WizardParameter _wizardParameter = result as WizardParameter;
+
+                Character = _wizardParameter.Character;
+                CurrentWizard = DialogData.Instance.WizardsCollection[(result as WizardParameter).WizardTypeIndex];
+
+                _setDataForTutorialStep(CurrentStepIndex);
+
+                StateMachine.Fire(Triggers.ReadyForUserAction);
+            }
+            else
+            {
+                StateMachine.Fire(Triggers.LeaveWizard);
+            }
+        }
+
+
+        private void _skipStep()
+        {
+            try
+            {
+                ++CurrentStepIndex;
+
+                _setDataForTutorialStep(CurrentStepIndex);
 
                 StateMachine.Fire(Triggers.ReadyForUserAction);
             }
@@ -504,24 +492,11 @@ namespace DialogEngine.ViewModels
             {
                 if (mCurrentTutorialStep.CollectUserInput)
                 {
-                    if (string.IsNullOrEmpty(DialogStr) || !VoiceRecorderControlViewModel.IsLineRecorded)
+                    if (string.IsNullOrEmpty(DialogStr))
                     {
-                        string message ="";
-
-                        if (string.IsNullOrEmpty(DialogStr))
-                            message += "write text";
-
-                        if (!VoiceRecorderControlViewModel.IsLineRecorded)
-                        {
-                            if (string.IsNullOrEmpty(message))
-                                message += "record .mp3 file";
-                            else
-                                message += " and record .mp3 file";
-                        }
-
                         var result = await DialogHost
                             .Show(new YesNoDialog("Warning", 
-                                                  "You didn't "+ message +" for this dialog line. Do you want to save step without it?", "Yes", "No"), 
+                                                  "You didn't write text for this dialog line. Do you want to save step without it?", "Yes", "No"), 
                                                   "WizardPageDialogHost");
 
                         if(result == null)
@@ -531,7 +506,7 @@ namespace DialogEngine.ViewModels
                         }
                     }
 
-                    if(mIsEditMode && mIsPhraseEditable)
+                    if(mIsPhraseEditable)
                     {
                         mCurrentPhrase.DialogStr = DialogStr;
                     }
@@ -549,8 +524,10 @@ namespace DialogEngine.ViewModels
 
                         mCharacter.Phrases.Add(entry);
                     }
+
+                    await DialogDataHelper.SerializeCharacterToFile(Character);
                 }
-                //TODO  We have a new line, we should write the JSON file with the update to the character here
+
                 StateMachine.Fire(Triggers.SkipStep);
                 return;
             }
@@ -563,28 +540,9 @@ namespace DialogEngine.ViewModels
 
         private async void _finish()
         {
-            string _userMessage = "";
-
-            if (!mIsEditMode)
-            {            
-                if(mCharacter.Phrases != null && mCharacter.Phrases.Count > 0)
-                {
-                    _userMessage = "Character successfully created!";
-                    //TODO we don't want to create a character each time, we want to update existing
-                }
-                else // if user didn't record any phrase
-                {
-                    _userMessage = "We can't save this chacacter, because you did't record anything.";
-                }
-            }
-            else
-            {
-                _userMessage = "Character successfully updated!";
-            }
-
             var result = await DialogHost.
-                Show(new YesNoDialog("", 
-                                     _userMessage, 
+                Show(new YesNoDialog("Info",
+                                     "Character successfully updated!", 
                                      "Run another wizard", 
                                      "Close wizard"), "WizardPageDialogHost");
 

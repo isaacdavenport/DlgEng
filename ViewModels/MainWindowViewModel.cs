@@ -150,12 +150,7 @@ namespace DialogEngine.ViewModels
 
         private async void _createCharacter()
         {
-            var result = await DialogHost.Show(new CharacterFormDialog());
-
-            if(result != null)
-            {
-                DialogData.Instance.CharacterCollection.Add(result as Character);
-            }
+            await DialogHost.Show(new CharacterFormDialog());
         }
 
         private void _readTutorial()

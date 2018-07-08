@@ -8,7 +8,7 @@ namespace DialogEngine
         private static readonly RoutedUICommand mcOpenCharacterFormCommand = new RoutedUICommand("", "OpenCharacterFormCommand", typeof(GlobalCommands));
         private static readonly RoutedUICommand mcImportCharacterCommand = new RoutedUICommand("","ImportCharacterCommand",typeof(GlobalCommands));
         private static readonly RoutedUICommand mcExportCharacterCommand = new RoutedUICommand("", "ExportCharacterCommand", typeof(GlobalCommands));
-
+        private static readonly RoutedUICommand mcEditWithJSONEditorCommand = new RoutedUICommand("", "ExportWithJSONEditorCommand", typeof(GlobalCommands));
 
         public static RoutedUICommand OpenCharacterFormCommand
         {
@@ -23,6 +23,11 @@ namespace DialogEngine
         public static RoutedUICommand ExportCharacterCommand
         {
             get { return mcExportCharacterCommand; }
+        }
+
+        public static RoutedUICommand EditWithJSONEditorCommand
+        {
+            get { return mcEditWithJSONEditorCommand; }
         }
 
     }

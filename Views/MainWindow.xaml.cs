@@ -14,9 +14,7 @@ using System.Reflection;
 using DialogEngine.Core;
 using DialogEngine.Models.Dialog;
 using DialogEngine.Views;
-using DialogEngine.Helpers;
-using System.IO;
-using System.Threading.Tasks;
+
 
 namespace DialogEngine
 {
@@ -55,19 +53,6 @@ namespace DialogEngine
 
         #region - private methods -
 
-        private async void _mainWindow_closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            Task _serializeSettingsTask = ConfigHelper.Instance.SerializeSettingsToFile();
-            // TODO make this happen at end of wizard not when closing application
-            //Task _serializeDialogDataTask = DialogDataHelper.SerializeDataToFile(Path.Combine(SessionHelper.WizardDirectory, 
-            //    SessionHelper.JSONFileName));
-
-            await _serializeSettingsTask;
-            // await _serializeDialogDataTask;
-
-            Application.Current.Shutdown();
-        }
-
         private void _onBrowseBack(object sender, ExecutedRoutedEventArgs e)
         {
             mainFrame.GoBack();
@@ -93,7 +78,7 @@ namespace DialogEngine
 
                     if (page != null)
                     {
-                        ((page as WizardView).DataContext as WizardViewModel).Character = param as Character;
+                        (page.DataContext as WizardViewModel).Character = param as Character;
                         mainFrame.Navigate(page);
                     }
                     else

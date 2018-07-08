@@ -1,4 +1,5 @@
 ﻿
+using System.ComponentModel;
 using System.Windows.Controls;
 
 
@@ -7,8 +8,14 @@ namespace DialogEngine.Dialogs
     /// <summary>
     /// Interaction logic for YesNoDialog.xaml
     /// </summary>
-    public partial class YesNoDialog : UserControl
+    public partial class YesNoDialog : UserControl,INotifyPropertyChanged
     {
+        #region - fields -
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        #endregion
+
         #region - constructor -
 
         public YesNoDialog(string _dialogName,string _questionMessage)
@@ -28,6 +35,7 @@ namespace DialogEngine.Dialogs
             this.noBtn.Content = _noBtnContent;
             this.yesBtn.Content = _yesBtnContent;
         }
+
 
         #endregion
     }

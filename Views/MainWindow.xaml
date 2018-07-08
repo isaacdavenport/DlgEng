@@ -12,7 +12,6 @@
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:global="clr-namespace:DialogEngine"
              WindowStartupLocation="CenterScreen"
-             Closing="_mainWindow_closing"
              WindowState="Maximized"                
              mc:Ignorable="d"
              TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -43,7 +42,7 @@
                 <MenuItem Header="_File" >
 
                     <MenuItem Header="_Import character"                        
-                              Command="global:GlobalCommands.OpenCharacterFormCommand"
+                              Command="global:GlobalCommands.ImportCharacterCommand"
                               IsEnabled="{Binding CurrentState , 
                                                   Converter={StaticResource IsEnabledMainWindowControlConverter}, 
                                                   ConverterParameter=WizardView}">
@@ -53,7 +52,7 @@
                     </MenuItem>
 
                     <MenuItem Header="_Export character"                        
-                              Command="global:GlobalCommands.OpenCharacterFormCommand"
+                              Command="global:GlobalCommands.ExportCharacterCommand"
                               IsEnabled="{Binding CurrentState , 
                                                   Converter={StaticResource IsEnabledMainWindowControlConverter}, 
                                                   ConverterParameter=WizardView}">
@@ -89,7 +88,7 @@
                 </MenuItem>
 
                 <MenuItem Header="_Tools">
-                    <MenuItem Header="_Edit with JSON editor" Command="{Binding EditWithJSONEditor}">
+                    <MenuItem Header="_Edit with JSON editor" Command="global:GlobalCommands.EditWithJSONEditorCommand">
                         <MenuItem.Icon>
                             <materialDesign:PackIcon Kind="Json" />
                         </MenuItem.Icon>

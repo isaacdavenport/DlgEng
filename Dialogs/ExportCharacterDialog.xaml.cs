@@ -9,6 +9,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -20,8 +21,10 @@ namespace DialogEngine.Dialogs
     public partial class ExportCharacterDialog : UserControl, INotifyPropertyChanged
     {
         #region - fields -
+
         private static readonly ILog mcLogger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private Character mSelectedCharacter;
+        private Visibility mIsWorking = Visibility.Hidden;
         public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
@@ -55,17 +58,24 @@ namespace DialogEngine.Dialogs
             DialogHost.CloseDialogCommand.Execute(null, sender as Button);
         }
 
-        private void _export_Click(object sender, RoutedEventArgs e)
+        private async void _export_Click(object sender, RoutedEventArgs e)
         {
-            _generateZIPFile(SelectedCharacter);
+            IsWorking = Visibility.Visible;
 
-            // clear temp directory
-            DirectoryInfo _directoryInfo = new DirectoryInfo(SessionHelper.TempDirectory);
-
-            foreach (FileInfo file in _directoryInfo.GetFiles())
+            await Task.Run(() =>
             {
-                file.Delete();
-            }
+                _generateZIPFile(SelectedCharacter);
+
+                // clear temp directory
+                DirectoryInfo _directoryInfo = new DirectoryInfo(SessionHelper.TempDirectory);
+
+                foreach (FileInfo file in _directoryInfo.GetFiles())
+                {
+                    file.Delete();
+                }
+            });
+
+            IsWorking = Visibility.Hidden;
 
             DialogHost.CloseDialogCommand.Execute(null, sender as Button);
         }
@@ -107,7 +117,15 @@ namespace DialogEngine.Dialogs
                 _saveFileDialog.Filter = "Zip file(*.zip)|*.zip";
                 _saveFileDialog.FileName = Path.GetFileNameWithoutExtension(SelectedCharacter.FileName);
 
-                if(_saveFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                System.Windows.Forms.DialogResult result= System.Windows.Forms.DialogResult.Cancel;
+
+                // send to application dispatcher(main thread)
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    result = _saveFileDialog.ShowDialog();
+                });
+
+                if(result == System.Windows.Forms.DialogResult.OK)
                 {
                     ZipFile.CreateFromDirectory(SessionHelper.TempDirectory, _saveFileDialog.FileName);
                 }
@@ -146,8 +164,16 @@ namespace DialogEngine.Dialogs
             get { return DialogData.Instance.CharacterCollection; }
         }
 
+        public Visibility IsWorking
+        {
+            get { return mIsWorking; }
+            set
+            {
+                mIsWorking = value;
+                OnPropertyChanged("IsWorking");
+            }
+        }
+
         #endregion
-
-
     }
 }

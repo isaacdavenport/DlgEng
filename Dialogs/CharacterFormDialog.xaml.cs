@@ -73,10 +73,7 @@ namespace DialogEngine.Dialogs
 
             await DialogDataHelper.SerializeCharacterToFile(Character);
 
-            if (mIsEditing)
-            {
-                DialogHost.CloseDialogCommand.Execute(null,sender as Button);
-            }
+            DialogHost.CloseDialogCommand.Execute(null,sender as Button);
         }
 
         private void _close_Click(object sender, RoutedEventArgs e)

@@ -18,6 +18,7 @@
             <DataTemplate>
                 <TextBlock Text="{Binding}" HorizontalAlignment="Center" VerticalAlignment="Center" />
             </DataTemplate>
+            
         </GroupBox.HeaderTemplate>
 
             <Grid HorizontalAlignment="Stretch" Margin="20,20,20,20" VerticalAlignment="Stretch">

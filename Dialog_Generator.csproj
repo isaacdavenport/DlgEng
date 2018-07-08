@@ -154,9 +154,13 @@
     <Compile Include="Converters\IsEnabledSaveAndNextBtnConverter.cs" />
     <Compile Include="Converters\IsMediaPlayerPlayBtnEnabledConverter.cs" />
     <Compile Include="Converters\IsMediaPlayerStopBtnEnabledConverter.cs" />
+    <Compile Include="Converters\IsWorkingConverter.cs" />
     <Compile Include="Converters\ParseBooleanConverter.cs" />
     <Compile Include="Converters\PlayInContextBtnContentConverter.cs" />
     <Compile Include="Converters\PlayStopIconValueConverter.cs" />
+    <Compile Include="Dialogs\EditWithJSONEditorDialog.xaml.cs">
+      <DependentUpon>EditWithJSONEditorDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\ExportCharacterDialog.xaml.cs">
       <DependentUpon>ExportCharacterDialog.xaml</DependentUpon>
     </Compile>
@@ -382,6 +386,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Dialogs\EditWithJSONEditorDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Dialogs\ExportCharacterDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -459,6 +467,11 @@
     <None Include="ApplicationSettings.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <SplashScreen Include="Resources\Images\splashScreen.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </SplashScreen>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

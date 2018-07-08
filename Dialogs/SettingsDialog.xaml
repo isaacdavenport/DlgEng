@@ -50,8 +50,8 @@
                                VerticalAlignment="Center" />
 
                     <StackPanel Orientation="Horizontal" Grid.Column="2" HorizontalAlignment="Right">
-                        <Label Foreground="White" Content="Off" />
-                        <ToggleButton IsChecked="False" Background="WhiteSmoke" />
+                        <Label Foreground="White" Content="{Binding ElementName=legendToogleBtn, Path=IsChecked}" />
+                        <ToggleButton x:Name="legendToogleBtn" IsChecked="False" Background="WhiteSmoke" />
                     </StackPanel>
                 </Grid>
             </DataTemplate>

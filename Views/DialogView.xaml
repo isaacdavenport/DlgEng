@@ -318,14 +318,6 @@
                                                                              Style="{DynamicResource MaterialDesignToolForegroundPopupBox}"  
                                                                              Padding="2 0 2 0">
                                                         <StackPanel Margin="0,10,0,10">
-                                                            <Button IsEnabled="True"  Command="global:GlobalCommands.ExportCharacterCommand"
-                                                                                      CommandParameter="{Binding}" >
-                                                                <Button.Content>
-                                                                    <StackPanel Orientation="Horizontal" >
-                                                                        <TextBlock Margin="5,0,0,0" Text="Export" VerticalAlignment="Center" />
-                                                                    </StackPanel>
-                                                                </Button.Content>
-                                                            </Button>
                                                             <Button IsEnabled="True"  Command="global:GlobalCommands.OpenCharacterFormCommand"
                                                                                       CommandParameter="{Binding}" >
                                                                     <Button.Content>
@@ -334,6 +326,16 @@
                                                                     </StackPanel>
                                                                 </Button.Content>
                                                             </Button>
+
+                                                            <Button IsEnabled="True"  Command="global:GlobalCommands.EditWithJSONEditorCommand"
+                                                                                      CommandParameter="{Binding}" >
+                                                                <Button.Content>
+                                                                    <StackPanel Orientation="Horizontal" >
+                                                                        <TextBlock Margin="5,0,0,0" Text="Edit with JSON editor" VerticalAlignment="Center" />
+                                                                    </StackPanel>
+                                                                </Button.Content>
+                                                            </Button>
+
                                                             <Button IsEnabled="True"  Command="NavigationCommands.GoToPage"
                                                                                       CommandParameter="{Binding}" >
                                                                 <Button.Content>
@@ -342,16 +344,22 @@
                                                                     </StackPanel>
                                                                 </Button.Content>
                                                             </Button>
-                                                            <Button IsEnabled="{Binding DataContext.CurrentState, 
-                                                                                        RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:DialogView},
-                                                                                        Converter={StaticResource IsEnabledDialogViewControlConverter}, 
-                                                                                        ConverterParameter=StartSerialSelection|StartRadnomSelection}" 
+
+                                                            <Button IsEnabled="True"  Command="global:GlobalCommands.ExportCharacterCommand"
+                                                                                      CommandParameter="{Binding}" >
+                                                                <Button.Content>
+                                                                    <StackPanel Orientation="Horizontal" >
+                                                                        <TextBlock Margin="5,0,0,0" Text="Export" VerticalAlignment="Center" />
+                                                                    </StackPanel>
+                                                                </Button.Content>
+                                                            </Button>
+                                                            <Button IsEnabled="False" 
                                                                     Command="{Binding DataContext.RemoveCharacterCommand, 
                                                                                       RelativeSource={RelativeSource Mode=FindAncestor, 
                                                                                       AncestorType=local:DialogView}}" CommandParameter="{Binding}" >
                                                                 <Button.Content>
                                                                     <StackPanel Orientation="Horizontal" >
-                                                                        <TextBlock Margin="5,0,0,0" Text="Delete" VerticalAlignment="Center" />
+                                                                        <TextBlock Margin="5,0,0,0" Text="Delete" Foreground="Red" VerticalAlignment="Center" />
                                                                     </StackPanel>
                                                                 </Button.Content>
                                                             </Button>

@@ -39,6 +39,9 @@ namespace DialogEngine
 
             var _exportFormCommandBinding = new CommandBinding(GlobalCommands.ExportCharacterCommand, _exportCharacter);
             CommandManager.RegisterClassCommandBinding(typeof(Window), _exportFormCommandBinding);
+
+            var _editWithJSONEditorCommandBinding = new CommandBinding(GlobalCommands.EditWithJSONEditorCommand, _editWithJSONEditor);
+            CommandManager.RegisterClassCommandBinding(typeof(Window), _editWithJSONEditorCommandBinding);
         }
 
 
@@ -80,6 +83,15 @@ namespace DialogEngine
         private async void _importCharacter(object sender, ExecutedRoutedEventArgs e)
         {
             ImportCharacterDialog dialog = new ImportCharacterDialog();
+
+            await DialogHost.Show(dialog);
+        }
+
+
+        private async void _editWithJSONEditor(object sender, ExecutedRoutedEventArgs e)
+        {
+            EditWithJSONEditorDialog  dialog = e.Parameter == null ? new EditWithJSONEditorDialog()
+                                                : new EditWithJSONEditorDialog(e.Parameter as Character);
 
             await DialogHost.Show(dialog);
         }

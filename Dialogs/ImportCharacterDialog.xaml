@@ -7,6 +7,16 @@
              xmlns:local="clr-namespace:DialogEngine.Dialogs"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!-- you only need bring this resource in if you want to specify the circular style statically -->
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ProgressBar.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
     <Grid>
         <GroupBox x:Name="groupBox"   
               BorderThickness="0" 
@@ -30,16 +40,23 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
 
-                <Label Content=""
-                   Grid.Row="0"
-                   Grid.Column="0"
-                   HorizontalAlignment="Right"/>
+                <ProgressBar Style="{StaticResource MaterialDesignCircularProgressBar}"
+                             Grid.Row="0"
+                             Grid.ColumnSpan="2"
+                             HorizontalContentAlignment="Center"
+                             HorizontalAlignment="Center"
+                             Visibility="{Binding IsWorking}"
+                             VerticalContentAlignment="Center"
+                             VerticalAlignment="Center"
+                             Value="0"
+                             IsIndeterminate="True" />
 
                 <Button Content="Close"
                     Grid.Row="1"
                     Click="_close_Click"
                     x:Name="CloseBtn"
                     Grid.Column="0"
+                    IsEnabled="{Binding IsWorking, Converter={StaticResource IsWorkingConverter}}"
                     HorizontalAlignment="Right"
                     Style="{DynamicResource MaterialDesignRaisedButton}"
                     Margin="20,20,0,0" />
@@ -49,6 +66,7 @@
                      Grid.Row="1"
                      Grid.Column="1"
                      Click="_import_Click"
+                     IsEnabled="{Binding IsWorking, Converter={StaticResource IsWorkingConverter}}"
                      HorizontalAlignment="Left"
                      Style="{DynamicResource MaterialDesignRaisedButton}"
                      Margin="20,20,0,0">
