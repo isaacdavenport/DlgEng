@@ -146,7 +146,7 @@ namespace DialogEngine.Services
                 mSerialPort = new SerialPort();
                 mSerialPort.ErrorReceived += _serialPort_ErrorReceived;
                 mSerialPort.PortName = SessionHelper.ComPortName;
-                mSerialPort.BaudRate = 115200;
+                mSerialPort.BaudRate = 460800;
                 mSerialPort.Handshake = Handshake.None;
                 mSerialPort.ReadTimeout = 500;
                 mSerialPort.Open();
