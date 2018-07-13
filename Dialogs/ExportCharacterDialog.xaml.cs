@@ -9,6 +9,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -64,6 +65,8 @@ namespace DialogEngine.Dialogs
 
             await Task.Run(() =>
             {
+                Thread.CurrentThread.Name = "_export_Click _generateZIPFile";
+
                 _generateZIPFile(SelectedCharacter);
 
                 // clear temp directory

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
@@ -42,6 +43,7 @@ namespace DialogEngine.Helpers
         {
             await Task.Run(() =>
             {
+                Thread.CurrentThread.Name = "DeserializeSettingsFromFile";
                 try
                 {
                     StreamReader reader = new StreamReader(mSettingsFilePath);
@@ -58,6 +60,8 @@ namespace DialogEngine.Helpers
         {
             return Task.Run(() =>
             {
+                Thread.CurrentThread.Name = "SerializeSettingsToFile";
+
                 try
                 {
                     FileStream fs = new FileStream(mSettingsFilePath, FileMode.Create);

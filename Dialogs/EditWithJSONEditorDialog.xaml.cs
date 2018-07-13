@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -60,6 +61,8 @@ namespace DialogEngine.Dialogs
 
             await Task.Run(() =>
             {
+                Thread.CurrentThread.Name = "_editWithJSONEditor_Click";
+
                 Process.Start(Path.Combine(SessionHelper.TutorialDirectory, mcJsonEditorExeName),
                     Path.Combine(SessionHelper.WizardDirectory, SelectedCharacter.FileName));
             });

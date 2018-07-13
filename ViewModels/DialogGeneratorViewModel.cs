@@ -816,6 +816,7 @@ namespace DialogEngine.Controls.ViewModels
 
         private async  Task<Triggers> _prepareDialogParameters(CancellationToken token)
         {
+            Thread.CurrentThread.Name = "_prepareDialogParameters";
             try
             {
                 // used to stop  immediately function if new character are selected
@@ -863,6 +864,8 @@ namespace DialogEngine.Controls.ViewModels
 
         private  async Task<Triggers>  _startDialog(CancellationToken token)
         {
+          // TODO why didn't this work?   Thread.CurrentThread.Name = "_startDialog";
+
             try
             {
                 // used to stop  immediately function if new character are selected

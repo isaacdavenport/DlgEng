@@ -3,6 +3,7 @@
 
 using DialogEngine.Models.Shared;
 using DialogEngine.Services;
+using DialogEngine.ViewModels;
 
 namespace DialogEngine
 {
@@ -15,10 +16,10 @@ namespace DialogEngine
         #pragma warning restore 1591
         {
             DialogData.Instance.HeatMapUpdate = SerialSelectionService.HeatMap;
-            //DialogViewModel.Instance.Character1Prefix = DialogViewModel.Instance.CharacterCollection[SelectNextCharacters.NextCharacter1].CharacterPrefix;
-            //DialogViewModel.Instance.Character2Prefix = DialogViewModel.Instance.CharacterCollection[SelectNextCharacters.NextCharacter2].CharacterPrefix;
-            //DialogViewModel.Instance.RSSIsum = SelectNextCharacters.BigRssi;
-            //DialogViewModel.Instance.RSSIstable = SelectNextCharacters.RssiStable;
+// TODO fix namespace to bring back heatmap character info update            DialogViewModel.SelectedIndex1 = DialogViewModel.Instance.CharacterCollection[SelectNextCharacters.NextCharacter1].CharacterPrefix;
+        //    DialogViewModel.Instance.Character2Prefix = DialogViewModel.Instance.CharacterCollection[SelectNextCharacters.NextCharacter2].CharacterPrefix;
+          //  DialogViewModel.Instance.RSSIsum = SelectNextCharacters.BigRssi;
+           // DialogViewModel.Instance.RSSIstable = SelectNextCharacters.RssiStable;
         }
         #endregion
     }

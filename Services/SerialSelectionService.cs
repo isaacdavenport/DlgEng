@@ -546,10 +546,9 @@ namespace DialogEngine.Services
         {
             return Task.Run(async () =>
             {
+                Thread.CurrentThread.Name = "SerialSelectionService";
                 StateMachine.Fire(Triggers.Initialize);
                 mCancellationTokenSource = new CancellationTokenSource();
-
-                Thread.CurrentThread.Name = "SerialSelectionService";
 
                 do
                 {

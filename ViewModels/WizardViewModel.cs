@@ -256,6 +256,8 @@ namespace DialogEngine.ViewModels
             {
                 await Task.Run(async () =>
                 {
+                    Thread.CurrentThread.Name = "_playDialogLineInContext";
+
                     try
                     {
                         _clearListeners();

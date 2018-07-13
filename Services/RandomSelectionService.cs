@@ -108,7 +108,7 @@ namespace DialogEngine.Services
                 Thread.CurrentThread.Name = "OccasionallyChangeToRandNewCharacterAsyncThread";
 
                 // used for computers with no serial input radio for random, or forceCharacter mode
-                // does not include final character the silent schoolhouse, not useful in noSerial mode 
+                // TODO is this still true?  does not include final character the silent schoolhouse, not useful in noSerial mode 
 
                 try
                 {
@@ -172,8 +172,6 @@ namespace DialogEngine.Services
                         {
                             Application.Current.Dispatcher.BeginInvoke(()=>
                             {
-                                //EventAggregator.Instance.GetEvent<StopPlayingCurrentDialogLineEvent>().Publish();
-
                                 EventAggregator.Instance.GetEvent<SelectedCharactersPairChangedEvent>()
                                     .Publish(new SelectedCharactersPairEventArgs() { Character1Index = NextCharacter1, Character2Index = NextCharacter2 });
 
@@ -197,6 +195,8 @@ namespace DialogEngine.Services
         public void Stop()
         {
             mCancellationTokenSource.Cancel();
+            //TODO remove this hack
+            Application.Current.Shutdown();
         }
 
         #endregion

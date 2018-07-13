@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.IO;
 using System.IO.Compression;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -53,6 +54,8 @@ namespace DialogEngine.Dialogs
 
                     await Task.Run(() =>
                     {
+                        Thread.CurrentThread.Name = "_import_Click ZipFile";
+
                         ZipFile.ExtractToDirectory(_openFileDialog.FileName, SessionHelper.TempDirectory);
 
                         _processExtractedFiles();
