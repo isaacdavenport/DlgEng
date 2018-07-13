@@ -105,19 +105,6 @@ namespace DialogEngine.Helpers
             }
         }
 
-        public static  bool WaitIndefinatelyForMove
-        {
-            get
-            {
-                string result = ConfigHelper.Instance.GetValue("WaitIndefinatelyForMove");
-
-                if (result != null)
-                    return bool.Parse(result);
-                else
-                    return false;
-            }
-        }
-
         /// <summary>
         /// Serial or random selection of characters
         /// </summary>
