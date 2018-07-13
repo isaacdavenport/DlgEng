@@ -85,6 +85,14 @@ namespace DialogEngine.ViewModels
             _bindCommands();
 
             StateMachine.Fire(Triggers.Initialize);
+
+            Version version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+            DateTime buildDate = new DateTime(2000, 1, 1)
+                .AddDays(version.Build).AddSeconds(version.Revision * 2);
+            string _displayableVersion = $"Starting DialogEngine version {version} created {buildDate}";
+
+            DialogDataHelper.AddMessage(new InfoMessage(_displayableVersion));
+            LoggerHelper.Info(SessionHelper.DialogLogFileName, _displayableVersion);
         }
 
         #endregion

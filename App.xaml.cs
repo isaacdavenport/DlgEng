@@ -55,7 +55,7 @@ namespace DialogEngine
             MessageBox.Show("An unhandled exception just occurred: " + e.Exception.Message, "Exception", MessageBoxButton.OK, MessageBoxImage.Warning);
             e.Handled = true;
         }
-
+        
         private async void _application_Startup(object sender, StartupEventArgs e)
         {
             XmlConfigurator.Configure(new FileInfo("log4net.config"));

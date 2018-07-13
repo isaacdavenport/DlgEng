@@ -273,7 +273,7 @@ namespace DialogEngine.Helpers
         }
 
         public static  Task SerializeDataToFile(string path)
-        {   //TODO run this after wizard completes not on application close, only run for changed character
+        {   //TODO run this after wizard completes not on application close, only run for changed character 
             return Task.Run(() =>
             {
                 Thread.CurrentThread.Name = "SerializeDataToFile";
