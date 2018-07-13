@@ -235,6 +235,8 @@ namespace DialogEngine.Helpers
         {
             return Task.Run(() =>
             {
+                Thread.CurrentThread.Name = "SerializeCharacterToFile";
+
                 try
                 {
                     string _fileName = character.CharacterName.Replace(" ", string.Empty) + ".json";
@@ -275,6 +277,8 @@ namespace DialogEngine.Helpers
         {   //TODO run this after wizard completes not on application close, only run for changed character
             return Task.Run(() =>
             {
+                Thread.CurrentThread.Name = "SerializeDataToFile";
+
                 var settings = new JsonSerializerSettings
                 {
                     Error = (sender, args) =>
@@ -299,21 +303,11 @@ namespace DialogEngine.Helpers
                     }
                     catch (JsonSerializationException ex)
                     {
-                        mcLogger.Error("Error during serialization to file: " + file);
+                        mcLogger.Error("Error during serialize data to file: " + file);
                         mcLogger.Error(ex.Message);
                     }
                 }
             });
-        }
-
-        private static void Serializer_Error(object sender, Newtonsoft.Json.Serialization.ErrorEventArgs e)
-        {
-            mcLogger.Error(e.ErrorContext.Error.Message);
-        }
-
-        private static void  error(object sender, ErrorEventArgs args)
-        {
-
         }
 
         public static  void AddMessage(LogMessage message)

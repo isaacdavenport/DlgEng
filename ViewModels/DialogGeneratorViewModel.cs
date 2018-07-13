@@ -802,6 +802,7 @@ namespace DialogEngine.Controls.ViewModels
 
         private async Task<Triggers> _prepareDialogParameters(CancellationToken token)
         {
+            Thread.CurrentThread.Name = "_prepareDialogParameters";
             try
             {
                 token.ThrowIfCancellationRequested();
@@ -842,6 +843,8 @@ namespace DialogEngine.Controls.ViewModels
 
         private async Task<Triggers>  _startDialog(CancellationToken token)
         {
+          // TODO why didn't this work?   Thread.CurrentThread.Name = "_startDialog";
+
             try
             {
                 var _speakingCharacter = mCharacter1Num;
