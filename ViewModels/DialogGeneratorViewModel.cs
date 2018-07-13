@@ -816,7 +816,8 @@ namespace DialogEngine.Controls.ViewModels
 
         private async  Task<Triggers> _prepareDialogParameters(CancellationToken token)
         {
-            Thread.CurrentThread.Name = "_prepareDialogParameters";
+            // TODO why did this cause the characters to stop speaking and dialogs not to be selected?
+            //Thread.CurrentThread.Name = "_prepareDialogParameters";
             try
             {
                 // used to stop  immediately function if new character are selected
