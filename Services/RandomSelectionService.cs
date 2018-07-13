@@ -196,8 +196,6 @@ namespace DialogEngine.Services
         public void Stop()
         {
             mCancellationTokenSource.Cancel();
-            //TODO remove this hack
-            Application.Current.Shutdown();
         }
 
         #endregion

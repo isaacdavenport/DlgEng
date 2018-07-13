@@ -802,7 +802,6 @@ namespace DialogEngine.Controls.ViewModels
 
         private async Task<Triggers> _prepareDialogParameters(CancellationToken token)
         {
-            Thread.CurrentThread.Name = "_prepareDialogParameters";
             try
             {
                 token.ThrowIfCancellationRequested();
