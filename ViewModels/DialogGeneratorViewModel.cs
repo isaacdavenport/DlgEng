@@ -37,7 +37,6 @@ namespace DialogEngine.Controls.ViewModels
         private int mCharacter2Num = 1;
         private int mIndexOfCurrentDialogModel;
         private double mDialogModelPopularitySum;
-        private bool mLastPhraseImpliedMovement;
         private bool mSameCharactersAsLast;
         private bool mIsItemAdded;
         private bool mIsForcedDialogModel;
@@ -307,93 +306,6 @@ namespace DialogEngine.Controls.ViewModels
             });
 
             LoggerHelper.Info(SessionHelper.DialogLogFileName, mCharactersList[_speakingCharacter].CharacterName + ": " + _selectedPhrase.DialogStr);
-        }
-
-
-        private bool _determineIfMovementImplied(PhraseEntry _selectedPhrase)
-        {
-            double _insultWeight, _retrWeight, _threatWeight, _shutUpWeight;
-
-            _selectedPhrase.PhraseWeights.TryGetValue("Insult", out _insultWeight);
-
-            _selectedPhrase.PhraseWeights.TryGetValue("Retreat", out _retrWeight);
-
-            _selectedPhrase.PhraseWeights.TryGetValue("Threat", out _threatWeight);
-
-            _selectedPhrase.PhraseWeights.TryGetValue("ShutUp", out _shutUpWeight);
-
-            if (_insultWeight + _retrWeight + _threatWeight + _shutUpWeight > 0.1)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-
-        private bool _waitingForMovement()  // this method breaks that paradigm that we are always in a dialog model
-        {
-            // unless waiting to start a dialog model, that may be an issue eventually
-
-            if (mLastPhraseImpliedMovement && mSameCharactersAsLast && SessionHelper.UseSerialPort)
-            {
-                Thread.Sleep(mRandom.Next(0, 2000));
-                msMovementWaitCount++;
-
-                if (msMovementWaitCount == 3)
-                {
-                    var _ch1RetreatPhrase = _pickAWeightedPhrase(mCharacter1Num, "Retreat");
-
-                    if (_ch1RetreatPhrase == null)
-                    {
-                        AddItem(new WarningMessage("Retreat phrase  was not found in " + mCharactersList[mCharacter1Num].CharacterName + "."));
-                        return false;
-                    }
-
-                    AddItem(new InfoMessage("Wait3"));
-                    DialogLinesCollection.Add(new DialogItem() { Character = mCharactersList[mCharacter1Num], PhraseEntry = _ch1RetreatPhrase });
-
-                    _playAudio(SessionHelper.WizardAudioDirectory + mCharactersList[mCharacter1Num].CharacterPrefix +
-                              "_" + _ch1RetreatPhrase.FileName + ".mp3");
-
-                    return true;
-                }
-
-
-                if (msMovementWaitCount == 7)
-                {
-                    mLastPhraseImpliedMovement = false;
-                    var _ch2RetreatPhrase = _pickAWeightedPhrase(mCharacter2Num, "Retreat");
-
-                    if (_ch2RetreatPhrase == null)
-                    {
-                        AddItem(new WarningMessage("Retreat phrase  was not found in " + mCharactersList[mCharacter2Num].CharacterName + "."));
-                        return false;
-                    }
-
-                    AddItem(new InfoMessage("Wait5"));
-                    DialogLinesCollection.Add(new DialogItem() { Character = mCharactersList[mCharacter2Num], PhraseEntry = _ch2RetreatPhrase });
-
-                    _playAudio(SessionHelper.WizardAudioDirectory
-                               + mCharactersList[mCharacter2Num].CharacterPrefix
-                               + "_" + _ch2RetreatPhrase.FileName + ".mp3");
-
-                    return true;
-                }
-                if (msMovementWaitCount > 11)
-                {
-                    msMovementWaitCount = 0;
-                    mLastPhraseImpliedMovement = false; //reset the wait for movement flag after waiting a long time
-                }
-
-                return true;
-            }
-
-            //reset the wait for movement flag when we are no longer same characters as last time
-            mLastPhraseImpliedMovement = false;
-            msMovementWaitCount = 0;
-
-            return false;
         }
 
 
@@ -816,10 +728,6 @@ namespace DialogEngine.Controls.ViewModels
                                             : _pickAWeightedDialog(mCharacter1Num, mCharacter2Num);
 
                 token.ThrowIfCancellationRequested();
-
-                //    if (_waitingForMovement() || mSameCharactersAsLast && SessionHelper.WaitIndefinatelyForMove)
-                //        return Triggers.WaitForNewCharacters;
-
                 _addDialogModelToHistory(mIndexOfCurrentDialogModel, mCharacter1Num, mCharacter2Num);
 
                 if (SessionHelper.DebugFlag)
@@ -918,7 +826,6 @@ namespace DialogEngine.Controls.ViewModels
 
                     mRecentDialogs.Dequeue(); //move to use HistoricalDialogs
                     mRecentDialogs.Enqueue(mIndexOfCurrentDialogModel);
-                    mLastPhraseImpliedMovement = _determineIfMovementImplied(_selectedPhrase);
                 }
             }
             catch (OperationCanceledException){}

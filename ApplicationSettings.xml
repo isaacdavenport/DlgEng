@@ -9,8 +9,6 @@
   <Setting Key="AudioDialogsOn" Name="Audio enabled:" Value="true" >
   Is audio enabled during dialog. 
   </Setting>
-  <Setting Key="WaitIndefinatelyForMove" Name="Wait indefinately for move:" Value="false" >
-  </Setting>
   <Setting Key="TextDialogsOn" Name="Text dialog enabled:" Value="true" >
   Is dialog text visible during dialog.
   </Setting>
