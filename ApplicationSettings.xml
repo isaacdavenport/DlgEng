@@ -6,9 +6,6 @@
   <Setting Key="TagUsageCheck" Name="Check tag usage:" Value="false" >
   Check which tags will not be used in dialog.
   </Setting>
-  <Setting Key="AudioDialogsOn" Name="Audio enabled:" Value="true" >
-  Is audio enabled during dialog. 
-  </Setting>
   <Setting Key="TextDialogsOn" Name="Text dialog enabled:" Value="true" >
   Is dialog text visible during dialog.
   </Setting>

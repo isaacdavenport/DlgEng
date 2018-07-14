@@ -655,15 +655,11 @@ namespace DialogEngine.ViewModels
         }
 
 
-
         private async Task _checkForMissingPhrasesAsync()
         {
             await Task.Run(() =>
             {
                 Thread.CurrentThread.Name = "_checkForMissingPhrasesAsyncThread";
-
-                if (!SessionHelper.AudioDialogsOn)
-                    return;
 
                 foreach (var _character in CharacterCollection)
                 {
@@ -683,7 +679,7 @@ namespace DialogEngine.ViewModels
                     }
                 }
             });
-            //TODO check that all dialog models have unique names
+            //TODO check that all dialog models have unique names and that MPAA ratings like PG13 are all correct
         }
 
 

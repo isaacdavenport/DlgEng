@@ -284,8 +284,6 @@ namespace DialogEngine.Controls.ViewModels
 
                 if(CurrentState == States.Idle)
                 {
-                    //Debug.WriteLine("State :   " + CurrentState.ToString());
-                    //Debug.WriteLine("insideeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
                     mEventWaitHandle.Set();
                 }
             }
@@ -328,11 +326,6 @@ namespace DialogEngine.Controls.ViewModels
         {
             try
             {
-                if (!SessionHelper.AudioDialogsOn)
-                {
-                    Thread.Sleep(3200);
-                    return;
-                }
 
                 if (File.Exists(_pathAndFileName))
                 {
@@ -728,17 +721,16 @@ namespace DialogEngine.Controls.ViewModels
 
         private async  Task<Triggers> _prepareDialogParameters(CancellationToken token)
         {
-            // TODO why did this cause the characters to stop speaking and dialogs not to be selected?
-            //Thread.CurrentThread.Name = "_prepareDialogParameters";
             try
             {
                 // used to stop  immediately function if new character are selected
                 Func<Task> action = async () =>
                 {
+                    Thread.CurrentThread.Name = "WaitDialogGeneratorCancel";
                     mEventWaitHandle.WaitOne();
                     throw new DialogGeneratorMethodCanceledException(); // throw exception which will cancel method
                 };
-                Task task = Task.Run(action);
+                Task.Run(action);
                 token.Register(() => { mEventWaitHandle.Set(); }); // register callback if cancellation is request
                 // end
 
@@ -774,17 +766,17 @@ namespace DialogEngine.Controls.ViewModels
 
         private  async Task<Triggers>  _startDialog(CancellationToken token)
         {
-          // TODO why didn't this work?   Thread.CurrentThread.Name = "_startDialog";
 
             try
             {
                 // used to stop  immediately function if new character are selected
                 Func<Task> action = async() =>
                 {
+                    Thread.CurrentThread.Name = "_startDialog Wait Cancel";
                     mEventWaitHandle.WaitOne();
                     throw new DialogGeneratorMethodCanceledException(); // throw exception which will cancel method
                 };
-                Task task = Task.Run(action);
+                Task.Run(action);
                 token.Register(() => { mEventWaitHandle.Set(); }); // register callback if cancellation is request
                 // end
 
@@ -816,7 +808,8 @@ namespace DialogEngine.Controls.ViewModels
                         {
                             Dispatcher.Invoke(() =>
                             {
-                                DialogLinesCollection.Add(new DialogItem() { Character = mCharactersList[_speakingCharacter], PhraseEntry = _selectedPhrase });
+                                DialogLinesCollection.Add(new DialogItem() { Character = 
+                                    mCharactersList[_speakingCharacter], PhraseEntry = _selectedPhrase });
                             });
                         }
 
@@ -897,7 +890,6 @@ namespace DialogEngine.Controls.ViewModels
                         case States.Idle:
                             {
                                 Triggers _nextTrigger = _waitForNewCharacters();
-                                //Debug.WriteLine(_nextTrigger.ToString());
                                 if(StateMachine.CanFire(_nextTrigger))
                                     StateMachine.Fire(_nextTrigger);
                                 break;
@@ -905,8 +897,6 @@ namespace DialogEngine.Controls.ViewModels
                         case States.PreparingDialogParameters:
                             {
                                 Triggers _nextTrigger = await _prepareDialogParameters(mStateMachineTaskTokenSource.Token);
-                                //Debug.WriteLine(_nextTrigger.ToString());
-
                                 if (StateMachine.CanFire(_nextTrigger))
                                     StateMachine.Fire(_nextTrigger);
                                 break;
@@ -914,8 +904,6 @@ namespace DialogEngine.Controls.ViewModels
                         case States.DialogStarted:
                             {
                                 Triggers _nextTrigger = await _startDialog(mStateMachineTaskTokenSource.Token);
-                                //Debug.WriteLine(_nextTrigger.ToString());
-
                                 if (StateMachine.CanFire(_nextTrigger))
                                     StateMachine.Fire(_nextTrigger);
                                 break;
@@ -923,6 +911,7 @@ namespace DialogEngine.Controls.ViewModels
                     }
                 }
                 while (!mCancellationTokenSource.Token.IsCancellationRequested);
+
             });
         }
 
