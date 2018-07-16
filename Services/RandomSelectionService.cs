@@ -127,7 +127,7 @@ namespace DialogEngine.Services
                         if(_nextCharacterSwapTime.CompareTo(DateTime.Now) < 0)
                         //if (mDialogGeneratorViewModel. DialogEngine.ViewModels.mD CheckCharactersInRecentDialogs(3, DialogViewModel.SelectedIndex1, DialogViewModel.SelectedIndex1) )
                         {
-                                switch (DialogViewModel.SelectedCharactersOn)
+                                switch (DialogViewModel.NumberOfCharactersOn)
                             {
                                 case 0:
                                     {

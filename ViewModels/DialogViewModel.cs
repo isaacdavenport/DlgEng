@@ -57,7 +57,7 @@ namespace DialogEngine.ViewModels
         private ICharacterSelection mCurrentSelectionService;
 
         public DialogGeneratorViewModel mDialogGeneratorViewModel;
-        public static int SelectedCharactersOn;
+        public static int NumberOfCharactersOn;
         public static int SelectedIndex1;
         public static int SelectedIndex2;
 
@@ -247,14 +247,14 @@ namespace DialogEngine.ViewModels
         }
 
 
-        // refresh SelectedCharactersOn when character state is changed
+        // refresh NumberOfCharactersOn when character state is changed
         private void _onChangedCharacterState()
         {
             try
             {
                 int result = 0;
                 int index = 0;
-                SelectedCharactersOn = 0;
+                NumberOfCharactersOn = 0;
                 SelectedIndex1 = -1;
                 SelectedIndex2 = -1;
 
@@ -276,9 +276,9 @@ namespace DialogEngine.ViewModels
                     index++;
                 }
 
-                SelectedCharactersOn = result;
+                NumberOfCharactersOn = result;
 
-                OnPropertyChanged("SelectedCharactersOn");
+                OnPropertyChanged("NumberOfCharactersOn");
 
                 // when state of character changed, we want to cancel current dialog and reset MP3 player
                 EventAggregator.Instance.GetEvent<StopPlayingCurrentDialogLineEvent>().Publish();

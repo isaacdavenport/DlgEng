@@ -164,7 +164,7 @@ namespace DialogEngine.Models.Dialog
             get { return mState; }
             set
             {
-                if (DialogViewModel.SelectedCharactersOn == mcMaxAllowedCharactersOn)
+                if (DialogViewModel.NumberOfCharactersOn == mcMaxAllowedCharactersOn)
                 {
                     if (value != CharacterState.On)
                     {

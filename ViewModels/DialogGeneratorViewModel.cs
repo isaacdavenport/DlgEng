@@ -726,7 +726,7 @@ namespace DialogEngine.Controls.ViewModels
                 // used to stop  immediately function if new character are selected
                 Func<Task> action = async () =>
                 {
-                    Thread.CurrentThread.Name = "WaitDialogGeneratorCancel";
+                    Thread.CurrentThread.Name = "_prepareDialogParametersThread";
                     mEventWaitHandle.WaitOne(75000, true);
                     throw new DialogGeneratorMethodCanceledException(); // throw exception which will cancel method
                 };
@@ -763,7 +763,6 @@ namespace DialogEngine.Controls.ViewModels
         }
 
 
-
         private  async Task<Triggers>  _startDialog(CancellationToken token)
         {
 
@@ -772,7 +771,7 @@ namespace DialogEngine.Controls.ViewModels
                 // used to stop  immediately function if new character are selected
                 Func<Task> action = async() =>
                 {
-                    Thread.CurrentThread.Name = "_startDialog Wait Cancel";
+                    Thread.CurrentThread.Name = "_startDialogThread";
                     mEventWaitHandle.WaitOne(75000, true);
                     throw new DialogGeneratorMethodCanceledException(); // throw exception which will cancel method
                 };
@@ -824,7 +823,7 @@ namespace DialogEngine.Controls.ViewModels
                         Debug.WriteLine("after playAudio");
 
                         if (!_dialogTrackerAndSerialComsCharactersSame()
-                            && DialogViewModel.SelectedCharactersOn != 1)
+                            && DialogViewModel.NumberOfCharactersOn != 1)
                         {
                             mSameCharactersAsLast = false;
                             Debug.WriteLine("izlaz");
