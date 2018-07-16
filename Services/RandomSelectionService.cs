@@ -113,7 +113,8 @@ namespace DialogEngine.Services
                 try
                 {
                     bool _isNewCharacterSelected;
-                    DateTime _nextCharacterSwapTime = DateTime.Now.AddSeconds(12);
+                    //TODO change from time based character changes to number of completed dialog to change characters
+                    DateTime _nextCharacterSwapTime = DateTime.Now.AddSeconds(8);
                     
                     while (true)
                     {
@@ -124,8 +125,9 @@ namespace DialogEngine.Services
                         Thread.Sleep(1000);
 
                         if(_nextCharacterSwapTime.CompareTo(DateTime.Now) < 0)
+                        //if (mDialogGeneratorViewModel. DialogEngine.ViewModels.mD CheckCharactersInRecentDialogs(3, DialogViewModel.SelectedIndex1, DialogViewModel.SelectedIndex1) )
                         {
-                            switch (DialogViewModel.SelectedCharactersOn)
+                                switch (DialogViewModel.SelectedCharactersOn)
                             {
                                 case 0:
                                     {
@@ -135,7 +137,7 @@ namespace DialogEngine.Services
                                         NextCharacter1 = _nextCharacter1Index >= 0 ? _nextCharacter1Index : NextCharacter1; //lower bound inclusive, upper exclusive
                                         NextCharacter2 = _nextCharacter2Index >= 0 ? _nextCharacter2Index : NextCharacter2; //lower bound inclusive, upper exclusive
 
-                                        _nextCharacterSwapTime = DateTime.Now.AddSeconds(4 + msRandom.Next(0, 2));
+                                        _nextCharacterSwapTime = DateTime.Now.AddSeconds(16 + msRandom.Next(0, 12));
 
                                         _isNewCharacterSelected = true;
 

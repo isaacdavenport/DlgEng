@@ -43,20 +43,20 @@ namespace DialogEngine.ViewModels
         private static readonly ILog mcLogger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private static bool[] mRadiosState = new bool[6];
         private int mRSSIsum;
-        private string mCharacter1Prefix = "--";
+        private string  mCharacter1Prefix = "--";
         private string mCharacter2Prefix = "--";
         private bool mRSSIstable;
         private StateMachine mStateMachine;
         private States mCurrentState;
-        private DialogGeneratorViewModel mDialogGeneratorViewModel;
         private DialogView mView; 
-        private readonly Random mRandom = new Random();
+        // private readonly Random mRandom = new Random();   seems we don't need this isaac
         // start position of drag operation from characters listbox to radio textbox
         private Point mStartPosition;
         private RandomSelectionService mRandomSelectionService;
         private SerialSelectionService mSerialSelectionService;
         private ICharacterSelection mCurrentSelectionService;
 
+        public DialogGeneratorViewModel mDialogGeneratorViewModel;
         public static int SelectedCharactersOn;
         public static int SelectedIndex1;
         public static int SelectedIndex2;
@@ -270,7 +270,7 @@ namespace DialogEngine.ViewModels
                         field.SetValue(null, index);
                         result += 1;
 
-                        if (result == 2)
+                        if (result >= 2)
                             break;
                     }
                     index++;

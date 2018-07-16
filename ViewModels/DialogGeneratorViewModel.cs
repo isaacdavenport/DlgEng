@@ -727,7 +727,7 @@ namespace DialogEngine.Controls.ViewModels
                 Func<Task> action = async () =>
                 {
                     Thread.CurrentThread.Name = "WaitDialogGeneratorCancel";
-                    mEventWaitHandle.WaitOne();
+                    mEventWaitHandle.WaitOne(75000, true);
                     throw new DialogGeneratorMethodCanceledException(); // throw exception which will cancel method
                 };
                 Task.Run(action);
@@ -773,13 +773,12 @@ namespace DialogEngine.Controls.ViewModels
                 Func<Task> action = async() =>
                 {
                     Thread.CurrentThread.Name = "_startDialog Wait Cancel";
-                    mEventWaitHandle.WaitOne();
+                    mEventWaitHandle.WaitOne(75000, true);
                     throw new DialogGeneratorMethodCanceledException(); // throw exception which will cancel method
                 };
                 Task.Run(action);
                 token.Register(() => { mEventWaitHandle.Set(); }); // register callback if cancellation is request
-                // end
-
+                
                 var _speakingCharacter = mCharacter1Num;
                 var _selectedPhrase = mCharactersList[_speakingCharacter].Phrases[0]; //initialize to unused placeholder phrase
 
@@ -864,6 +863,15 @@ namespace DialogEngine.Controls.ViewModels
             return Triggers.WaitForNewCharacters;
         }
 
+
+        private void SwapCharactersOneAndTwo()
+        {
+            var _tempCh1 = mCharacter1Num;
+            mCharacter1Num = mCharacter2Num;
+            mCharacter2Num = _tempCh1;
+            // it doesn't appear we should update prior characters 1 and 2 here
+        }
+
         #endregion
 
         #endregion
@@ -927,13 +935,29 @@ namespace DialogEngine.Controls.ViewModels
         }
 
 
-        public void SwapCharactersOneAndTwo()
+        /// <summary>
+        /// Checks if character pair was engaged in recent dialogs
+        /// </summary>
+        /// <param name="_character1Num"></param>
+        /// <param name="_character2Num"></param>
+        public bool CheckCharactersInRecentDialogs(int _numDialogs, int _character1Num, int _character2Num)
         {
-            var _tempCh1 = mCharacter1Num;
-            mCharacter1Num = mCharacter2Num;
-            mCharacter2Num = _tempCh1;
-            // it doesn't appear we should update prior characters 1 and 2 here
+            if (mHistoricalDialogs.Count < _numDialogs)
+                return false;
+
+            for (int i = 0; i < _numDialogs; i++)
+            {
+                var _oldCh1 = mHistoricalDialogs[mHistoricalDialogs.Count - i].Character1;
+                var _oldCh2 = mHistoricalDialogs[mHistoricalDialogs.Count - i].Character2;
+                //if the old characters in this historical dialog don't match the incoming _ch1 and _ch2
+                if (!((_oldCh1 == _character1Num || _oldCh1 == _character2Num) && 
+                    (_oldCh2 == _character1Num || _oldCh2 == _character2Num)))
+                    return false;
+            }
+            return true;
         }
+
+
 
         /// <summary>
         /// Writes dialog info
