@@ -894,15 +894,14 @@ namespace DialogEngine.Controls.ViewModels
 
                     switch (DialogGenerationStateMachine.State)
                     {
-/*                        case States.Idle:
+                        case States.Idle:
                             {
                                 Triggers _nextTrigger = _waitForNewCharacters();
                                 if(DialogGenerationStateMachine.CanFire(_nextTrigger))
                                     DialogGenerationStateMachine.Fire(_nextTrigger);
                                 break;
                             }
-*/
-                        case States.Idle:
+
                         case States.PreparingDialogParameters:
                             {
                                 Triggers _nextTrigger = await _prepareDialogParameters(mStateMachineTaskTokenSource.Token);

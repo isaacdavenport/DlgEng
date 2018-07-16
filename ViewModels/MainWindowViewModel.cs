@@ -187,7 +187,7 @@ namespace DialogEngine.ViewModels
             set
             {
                 mVmStateMachine = value;
-                OnPropertyChanged("DialogGenerationStateMachine");
+                OnPropertyChanged("VmStateMachine");
             }
         }
 

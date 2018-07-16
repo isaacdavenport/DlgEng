@@ -690,7 +690,7 @@
                                 </StackPanel>
                             </TabItem.Header>
 
-                            <!-- IsEnabled="{Binding IsDialogStopped}" former setting isaac TODO -->
+                            <!-- IsEnabled="{Binding IsDialogStopped}" changed by isaac TODO -->
 
 
                             <Grid>
