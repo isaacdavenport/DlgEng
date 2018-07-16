@@ -876,8 +876,8 @@ namespace DialogEngine.Controls.VoiceRecorder
         /// <summary>
         /// Called after the <see cref="FFTComplexity"/> value has changed.
         /// </summary>
-        /// <param name="oldValue">The previous value of <see cref="FFTComplexity"/></param>
-        /// <param name="newValue">The new value of <see cref="FFTComplexity"/></param>
+        /// <param name="_oldValue">The previous value of <see cref="FFTComplexity"/></param>
+        /// <param name="_newValue">The new value of <see cref="FFTComplexity"/></param>
         protected virtual void _onFFTComplexityChanged(FFTDataSize _oldValue, FFTDataSize _newValue)
         {
             mChannelData = new float[((int)_newValue / 2)];
@@ -1174,7 +1174,7 @@ namespace DialogEngine.Controls.VoiceRecorder
         /// Register a sound player from which the spectrum analyzer
         /// can get the necessary playback data.
         /// </summary>
-        /// <param name="soundPlayer">A sound player that provides spectrum data through the ISpectrumPlayer interface methods.</param>
+        /// <param name="_soundPlayer">A sound player that provides spectrum data through the ISpectrumPlayer interface methods.</param>
         public void RegisterSoundPlayer(ISpectrumPlayer _soundPlayer)
         {
             this.mSoundPlayer = _soundPlayer;
