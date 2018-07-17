@@ -42,9 +42,9 @@ namespace DialogEngine.Models.Dialog
         }
 
         /// <summary>
-        /// Represents state of dialog .json file
-        /// States are [On, Off]
-        /// Default state is On
+        /// Represents _dvmState of dialog .json file
+        /// DialogStates are [On, Off]
+        /// Default _dvmState is On
         /// On - we want to load dialog models from dialog .json file
         /// Off - ignore dilogs from dialog .json file
         /// </summary>

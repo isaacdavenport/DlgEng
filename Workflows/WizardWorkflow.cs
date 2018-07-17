@@ -25,7 +25,7 @@ namespace DialogEngine.Workflows.WizardWorkflow
         LeaveWizard
     }
 
-    public enum Triggers
+    public enum WizardTriggers
     {
         Start,
         ShowFormDialog,
@@ -43,7 +43,7 @@ namespace DialogEngine.Workflows.WizardWorkflow
         LeaveWizard
     }
 
-    public class StateMachine : Stateless.StateMachine<States, Triggers>, INotifyPropertyChanged
+    public class StateMachine : Stateless.StateMachine<States, WizardTriggers>, INotifyPropertyChanged
     {
         #region - fields -
 

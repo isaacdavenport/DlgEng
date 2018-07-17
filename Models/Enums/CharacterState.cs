@@ -5,7 +5,7 @@
 namespace DialogEngine.Models.Enums
 {
     /// <summary>
-    /// Represents state of character
+    /// Represents _dvmState of character
     /// </summary>
     public enum CharacterState
     {

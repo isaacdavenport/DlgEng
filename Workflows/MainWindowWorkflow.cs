@@ -14,14 +14,14 @@ namespace DialogEngine.Workflows.MainWindowWorkflows
         WizardView
     }
 
-    public enum Triggers
+    public enum NavWindowTriggers
     {
         Start,
         NavigateToDialogView,
         NavigateToWizardView
     }
 
-    public class StateMachine : Stateless.StateMachine<States, Triggers>, INotifyPropertyChanged
+    public class StateMachine : Stateless.StateMachine<States, NavWindowTriggers>, INotifyPropertyChanged
     {
         #region - fields -
 

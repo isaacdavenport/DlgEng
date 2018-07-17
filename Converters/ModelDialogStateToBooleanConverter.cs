@@ -12,7 +12,7 @@ using System.Windows.Data;
 namespace DialogEngine.Converters
 {
     /// <summary>
-    /// Checks radio button depending on ModelDialog state
+    /// Checks radio button depending on ModelDialog _dvmState
     /// </summary>
     public class ModelDialogStateToBooleanConverter : IValueConverter
     {

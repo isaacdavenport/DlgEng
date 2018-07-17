@@ -97,13 +97,13 @@ namespace DialogEngine.ViewModels
                     {
                         if (mVoiceRecorderControlViewModel.IsPlaying)
                         {
-                            if (StateMachine.CanFire(Triggers.VoiceRecorderPlaying))
-                                StateMachine.Fire(Triggers.VoiceRecorderPlaying);
+                            if (StateMachine.CanFire(WizardTriggers.VoiceRecorderPlaying))
+                                StateMachine.Fire(WizardTriggers.VoiceRecorderPlaying);
                         }
                         else
                         {
-                            if (StateMachine.CanFire(Triggers.ReadyForUserAction))
-                                StateMachine.Fire(Triggers.ReadyForUserAction);
+                            if (StateMachine.CanFire(WizardTriggers.ReadyForUserAction))
+                                StateMachine.Fire(WizardTriggers.ReadyForUserAction);
                         }
 
                         break;
@@ -113,13 +113,13 @@ namespace DialogEngine.ViewModels
                     {
                         if (mVoiceRecorderControlViewModel.IsRecording)
                         {
-                            if(StateMachine.CanFire(Triggers.VoiceRecorderRecording))
-                                StateMachine.Fire(Triggers.VoiceRecorderRecording);
+                            if(StateMachine.CanFire(WizardTriggers.VoiceRecorderRecording))
+                                StateMachine.Fire(WizardTriggers.VoiceRecorderRecording);
                         }
                         else
                         {
-                            if(StateMachine.CanFire(Triggers.ReadyForUserAction))
-                                StateMachine.Fire(Triggers.ReadyForUserAction);
+                            if(StateMachine.CanFire(WizardTriggers.ReadyForUserAction))
+                                StateMachine.Fire(WizardTriggers.ReadyForUserAction);
                         }
 
                         break;
@@ -133,11 +133,11 @@ namespace DialogEngine.ViewModels
             {
                 if (mMediaPlayerControlViewModel.IsPlaying)
                 {
-                    StateMachine.Fire(Triggers.VideoPlayerPlaying);
+                    StateMachine.Fire(WizardTriggers.VideoPlayerPlaying);
                 }
                 else
                 {
-                    StateMachine.Fire(Triggers.ReadyForUserAction);
+                    StateMachine.Fire(WizardTriggers.ReadyForUserAction);
                 }
             }
         }
@@ -151,25 +151,25 @@ namespace DialogEngine.ViewModels
         private void _configureStateMachine()
         {
             StateMachine.Configure(States.Start)
-                .Permit(Triggers.ShowFormDialog, States.ShowFormDialog);
+                .Permit(WizardTriggers.ShowFormDialog, States.ShowFormDialog);
 
             StateMachine.Configure(States.ShowFormDialog)
                 .OnEntry(t => _view_Loaded())
-                .Permit(Triggers.ReadyForUserAction, States.ReadyForUserAction)
-                .Permit(Triggers.LeaveWizard, States.LeaveWizard);
+                .Permit(WizardTriggers.ReadyForUserAction, States.ReadyForUserAction)
+                .Permit(WizardTriggers.LeaveWizard, States.LeaveWizard);
 
             StateMachine.Configure(States.ReadyForUserAction)
-                .Permit(Triggers.SaveAndNext, States.SaveAndNext)
-                .Permit(Triggers.SkipStep, States.SkipStep)
-                .Permit(Triggers.Cancel, States.Cancel)
-                .Permit(Triggers.VoiceRecorderPlaying, States.VoiceRecorderPlaying)
-                .Permit(Triggers.VoiceRecorderRecording, States.VoiceRecorderRecording)
-                .Permit(Triggers.VoiceRecorderPlayingInContext, States.VoiceRecorderPlayingInContext)
-                .Permit(Triggers.VideoPlayerPlaying, States.VideoPlayerPlaying);
+                .Permit(WizardTriggers.SaveAndNext, States.SaveAndNext)
+                .Permit(WizardTriggers.SkipStep, States.SkipStep)
+                .Permit(WizardTriggers.Cancel, States.Cancel)
+                .Permit(WizardTriggers.VoiceRecorderPlaying, States.VoiceRecorderPlaying)
+                .Permit(WizardTriggers.VoiceRecorderRecording, States.VoiceRecorderRecording)
+                .Permit(WizardTriggers.VoiceRecorderPlayingInContext, States.VoiceRecorderPlayingInContext)
+                .Permit(WizardTriggers.VideoPlayerPlaying, States.VideoPlayerPlaying);
                 
             // State VoiceRecorderAction is added to be able to disable others controls if any of its substates is active
             StateMachine.Configure(States.VoiceRecorderAction)
-                .Permit(Triggers.ReadyForUserAction,States.ReadyForUserAction);
+                .Permit(WizardTriggers.ReadyForUserAction,States.ReadyForUserAction);
 
             StateMachine.Configure(States.VoiceRecorderRecording)
                 .SubstateOf(States.VoiceRecorderAction);
@@ -183,30 +183,30 @@ namespace DialogEngine.ViewModels
                 .SubstateOf(States.VoiceRecorderAction);
 
             StateMachine.Configure(States.VideoPlayerAction)
-                .Permit(Triggers.ReadyForUserAction, States.ReadyForUserAction);
+                .Permit(WizardTriggers.ReadyForUserAction, States.ReadyForUserAction);
 
             StateMachine.Configure(States.SaveAndNext)
                 .OnEntry(t => _saveAndNextStep())
-                .Permit(Triggers.ReadyForUserAction, States.ReadyForUserAction)
-                .Permit(Triggers.SkipStep,States.SkipStep)
-                .Permit(Triggers.Finish, States.Finish);
+                .Permit(WizardTriggers.ReadyForUserAction, States.ReadyForUserAction)
+                .Permit(WizardTriggers.SkipStep,States.SkipStep)
+                .Permit(WizardTriggers.Finish, States.Finish);
 
             StateMachine.Configure(States.Finish)
                 .OnEntry(t => _finish())
-                .Permit(Triggers.LeaveWizard, States.LeaveWizard)
-                .Permit(Triggers.ShowFormDialog, States.ShowFormDialog);
+                .Permit(WizardTriggers.LeaveWizard, States.LeaveWizard)
+                .Permit(WizardTriggers.ShowFormDialog, States.ShowFormDialog);
 
             StateMachine.Configure(States.SkipStep)
                 .OnEntry(t => _skipStep())
-                .Permit(Triggers.ReadyForUserAction,States.ReadyForUserAction);
+                .Permit(WizardTriggers.ReadyForUserAction,States.ReadyForUserAction);
 
             StateMachine.Configure(States.Cancel)
                 .OnEntry(t => _cancel())
-                .Permit(Triggers.LeaveWizard, States.LeaveWizard);
+                .Permit(WizardTriggers.LeaveWizard, States.LeaveWizard);
 
             StateMachine.Configure(States.LeaveWizard)
                 .OnEntry(t => _leaveVizard())
-                .Permit(Triggers.Start, States.Start);
+                .Permit(WizardTriggers.Start, States.Start);
 
             StateMachine.Configure(States.VideoPlayerPlaying)
                 .SubstateOf(States.VideoPlayerAction);
@@ -227,11 +227,11 @@ namespace DialogEngine.ViewModels
 
         private void _bindCommands()
         {
-            DialogHostLoaded = new RelayCommand(x => { StateMachine.Fire(Triggers.ShowFormDialog); });
-            SaveAndNext = new RelayCommand(x => { StateMachine.Fire(Triggers.SaveAndNext); });
-            SkipStep = new RelayCommand(x => { StateMachine.Fire(Triggers.SkipStep); });
+            DialogHostLoaded = new RelayCommand(x => { StateMachine.Fire(WizardTriggers.ShowFormDialog); });
+            SaveAndNext = new RelayCommand(x => { StateMachine.Fire(WizardTriggers.SaveAndNext); });
+            SkipStep = new RelayCommand(x => { StateMachine.Fire(WizardTriggers.SkipStep); });
             PlayInContext = new RelayCommand(x => _playDialogLineInContext());
-            Cancel = new RelayCommand(x => { StateMachine.Fire(Triggers.Cancel); });
+            Cancel = new RelayCommand(x => { StateMachine.Fire(WizardTriggers.Cancel); });
         }
 
         private async void _playDialogLineInContext()
@@ -416,13 +416,13 @@ namespace DialogEngine.ViewModels
 
         #endregion
 
-        #region - state machine functions -
+        #region - _dvmState machine functions -
 
         private async void _cancel()
         {
             try
             {
-                StateMachine.Fire(Triggers.LeaveWizard);
+                StateMachine.Fire(WizardTriggers.LeaveWizard);
             }
             catch (Exception ex)
             {
@@ -435,7 +435,7 @@ namespace DialogEngine.ViewModels
         {
             try
             {
-                StateMachine.Fire(Triggers.Start);
+                StateMachine.Fire(WizardTriggers.Start);
                 _goBackToDialog();
             }
             catch (Exception ex)
@@ -461,11 +461,11 @@ namespace DialogEngine.ViewModels
 
                 _setDataForTutorialStep(CurrentStepIndex);
 
-                StateMachine.Fire(Triggers.ReadyForUserAction);
+                StateMachine.Fire(WizardTriggers.ReadyForUserAction);
             }
             else
             {
-                StateMachine.Fire(Triggers.LeaveWizard);
+                StateMachine.Fire(WizardTriggers.LeaveWizard);
             }
         }
 
@@ -478,7 +478,7 @@ namespace DialogEngine.ViewModels
 
                 _setDataForTutorialStep(CurrentStepIndex);
 
-                StateMachine.Fire(Triggers.ReadyForUserAction);
+                StateMachine.Fire(WizardTriggers.ReadyForUserAction);
             }
             catch (Exception ex)
             {
@@ -502,7 +502,7 @@ namespace DialogEngine.ViewModels
 
                         if(result == null)
                         {
-                            StateMachine.Fire(Triggers.ReadyForUserAction);
+                            StateMachine.Fire(WizardTriggers.ReadyForUserAction);
                             return;
                         }
                     }
@@ -529,12 +529,12 @@ namespace DialogEngine.ViewModels
                     await DialogDataHelper.SerializeCharacterToFile(Character);
                 }
 
-                StateMachine.Fire(Triggers.SkipStep);
+                StateMachine.Fire(WizardTriggers.SkipStep);
                 return;
             }
             else
             {
-                StateMachine.Fire(Triggers.Finish);
+                StateMachine.Fire(WizardTriggers.Finish);
             }
         }
 
@@ -550,11 +550,11 @@ namespace DialogEngine.ViewModels
             if (result != null)
             {
                 Reset();
-                StateMachine.Fire(Triggers.ShowFormDialog);
+                StateMachine.Fire(WizardTriggers.ShowFormDialog);
             }
             else
             {
-                StateMachine.Fire(Triggers.LeaveWizard);
+                StateMachine.Fire(WizardTriggers.LeaveWizard);
             }
         }
 
@@ -588,7 +588,7 @@ namespace DialogEngine.ViewModels
             private set
             {
                 mCurrentState = value;
-                OnPropertyChanged("CurrentState");
+                OnPropertyChanged("CurrentDialogState");
             }
         }
 
@@ -661,11 +661,11 @@ namespace DialogEngine.ViewModels
 
                 if (mIsPlayingLineInContext)
                 {
-                    StateMachine.Fire(Triggers.VoiceRecorderPlayingInContext);
+                    StateMachine.Fire(WizardTriggers.VoiceRecorderPlayingInContext);
                 }
                 else
                 {
-                    StateMachine.Fire(Triggers.ReadyForUserAction);
+                    StateMachine.Fire(WizardTriggers.ReadyForUserAction);
                 }
             }
         }

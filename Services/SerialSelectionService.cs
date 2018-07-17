@@ -33,7 +33,7 @@ namespace DialogEngine.Services
         private int[] mNewRow = new int[NumRadios + 1];
         private bool mIsSerialMode;
         private SerialPort mSerialPort;
-        private States mCurrentState;
+        private SerialStates mCurrentSerialState;
         private StateMachine mSerialStateMachine;
         private readonly DispatcherTimer mcHeatMapUpdateTimer = new DispatcherTimer();
         private CancellationTokenSource mCancellationTokenSource;
@@ -58,7 +58,7 @@ namespace DialogEngine.Services
         {
             SerialStateMachine = new StateMachine
             (
-                action: () => { } // no action for start state
+                action: () => { } // no action for start _dvmState
             );
 
             _configureStateMachine();
@@ -74,7 +74,7 @@ namespace DialogEngine.Services
         private void _stateMachine_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName.Equals("State"))
-                mCurrentState = SerialStateMachine.State;
+                mCurrentSerialState = SerialStateMachine.State;
         }
 
 
@@ -94,49 +94,49 @@ namespace DialogEngine.Services
 
         private void _configureStateMachine()
         {
-            SerialStateMachine.Configure(States.Start)
-                .Permit(Triggers.Initialize, States.Init);
+            SerialStateMachine.Configure(SerialStates.Start)
+                .Permit(SerialTriggers.Initialize, SerialStates.Init);
 
-            SerialStateMachine.Configure(States.Init)
-                .Permit(Triggers.ReadMessage, States.ReadMessage)
-                .Permit(Triggers.SerialPortNameError, States.SerialPortNameError)
-                .Permit(Triggers.Finish, States.Finish);
+            SerialStateMachine.Configure(SerialStates.Init)
+                .Permit(SerialTriggers.ReadMessage, SerialStates.ReadMessage)
+                .Permit(SerialTriggers.SerialPortNameError, SerialStates.SerialPortNameError)
+                .Permit(SerialTriggers.Finish, SerialStates.Finish);
 
-            SerialStateMachine.Configure(States.Idle)
-                .Permit(Triggers.ReadMessage, States.ReadMessage)
-                .Permit(Triggers.Finish, States.Finish);
+            SerialStateMachine.Configure(SerialStates.Idle)
+                .Permit(SerialTriggers.ReadMessage, SerialStates.ReadMessage)
+                .Permit(SerialTriggers.Finish, SerialStates.Finish);
 
-            SerialStateMachine.Configure(States.SerialPortNameError)
-                .Permit(Triggers.Initialize, States.Init)
-                .Permit(Triggers.Start, States.Start);
+            SerialStateMachine.Configure(SerialStates.SerialPortNameError)
+                .Permit(SerialTriggers.Initialize, SerialStates.Init)
+                .Permit(SerialTriggers.Start, SerialStates.Start);
 
-            SerialStateMachine.Configure(States.USB_disconnectedError)
-                .Permit(Triggers.Initialize, States.Init)
-                .Permit(Triggers.Finish, States.Finish);
+            SerialStateMachine.Configure(SerialStates.USB_disconnectedError)
+                .Permit(SerialTriggers.Initialize, SerialStates.Init)
+                .Permit(SerialTriggers.Finish, SerialStates.Finish);
 
-            SerialStateMachine.Configure(States.ReadMessage)
-                .Permit(Triggers.FindClosestPair, States.FindClosestPair)
-                .Permit(Triggers.USB_disconnectedError, States.USB_disconnectedError)
-                .Permit(Triggers.Idle, States.Idle)
-                .Permit(Triggers.Finish, States.Finish);
+            SerialStateMachine.Configure(SerialStates.ReadMessage)
+                .Permit(SerialTriggers.FindClosestPair, SerialStates.FindClosestPair)
+                .Permit(SerialTriggers.USB_disconnectedError, SerialStates.USB_disconnectedError)
+                .Permit(SerialTriggers.Idle, SerialStates.Idle)
+                .Permit(SerialTriggers.Finish, SerialStates.Finish);
                 
-            SerialStateMachine.Configure(States.FindClosestPair)
-                .Permit(Triggers.ReadMessage, States.ReadMessage)
-                .Permit(Triggers.SelectNextCharacters, States.SelectNextCharacters)
-                .Permit(Triggers.Finish, States.Finish);
+            SerialStateMachine.Configure(SerialStates.FindClosestPair)
+                .Permit(SerialTriggers.ReadMessage, SerialStates.ReadMessage)
+                .Permit(SerialTriggers.SelectNextCharacters, SerialStates.SelectNextCharacters)
+                .Permit(SerialTriggers.Finish, SerialStates.Finish);
 
-            SerialStateMachine.Configure(States.SelectNextCharacters)
-                .Permit(Triggers.ReadMessage, States.ReadMessage)
-                .Permit(Triggers.Finish, States.Finish);
+            SerialStateMachine.Configure(SerialStates.SelectNextCharacters)
+                .Permit(SerialTriggers.ReadMessage, SerialStates.ReadMessage)
+                .Permit(SerialTriggers.Finish, SerialStates.Finish);
 
-            SerialStateMachine.Configure(States.Finish)
+            SerialStateMachine.Configure(SerialStates.Finish)
                 .OnEntry(t => _finishSelection())
-                .Permit(Triggers.Start,States.Start);
+                .Permit(SerialTriggers.Start,SerialStates.Start);
                 
         }
 
 
-        private Triggers _initSerial()
+        private SerialTriggers _initSerial()
         {
             try
             {
@@ -154,29 +154,29 @@ namespace DialogEngine.Services
 
                 mcHeatMapUpdateTimer.Start();
 
-                return Triggers.ReadMessage;
+                return SerialTriggers.ReadMessage;
             }
             catch(InvalidOperationException ex)  // Instance of SerialPort is already open and wi will redirect for reading messages
             {
                 mcLogger.Error("InvalidOperationException _initSerial  " + ex.Message);
-                return Triggers.ReadMessage;
+                return SerialTriggers.ReadMessage;
             }
             catch(ArgumentException ex) // invalid port name (name is not formed as COM + digit)
             {
                 mcLogger.Error("ArgumentException _initSerial  " + ex.Message);
-                return Triggers.SerialPortNameError;
+                return SerialTriggers.SerialPortNameError;
             }
             catch(IOException ex) // com port doesn't exists (usb is disconnected or not valid COM port name)
             {
                 mcLogger.Error("IOException _initSerial " + ex.Message);
-                return Triggers.SerialPortNameError;
+                return SerialTriggers.SerialPortNameError;
             }
         }
 
 
-        private Triggers _idle()
+        private SerialTriggers _idle()
         {
-            return Triggers.ReadMessage;
+            return SerialTriggers.ReadMessage;
         }
 
 
@@ -192,11 +192,11 @@ namespace DialogEngine.Services
                 mcLogger.Error("_finishSelection " + ex.Message);
             }
 
-            SerialStateMachine.Fire(Triggers.Start);
+            SerialStateMachine.Fire(SerialTriggers.Start);
         }
 
 
-        private async Task<Triggers> _usbDisconectedError()
+        private async Task<SerialTriggers> _usbDisconectedError()
         {
             object result = null;
 
@@ -209,17 +209,17 @@ namespace DialogEngine.Services
             });
 
             if (result != null)
-                return Triggers.Initialize;
+                return SerialTriggers.Initialize;
             else
             {
                 Stop();
 
-                return Triggers.Finish;
+                return SerialTriggers.Finish;
             }
         }
 
 
-        private async Task<Triggers> _serialPortError()
+        private async Task<SerialTriggers> _serialPortError()
         {
             bool result = false ;
             await Application.Current.Dispatcher.Invoke(async () =>
@@ -230,16 +230,16 @@ namespace DialogEngine.Services
 
             if (result)
             {
-                return Triggers.Initialize;
+                return SerialTriggers.Initialize;
             }
             else
             {
-                return Triggers.Start;
+                return SerialTriggers.Start;
             }
         }
 
 
-        private Triggers _readMessage()
+        private SerialTriggers _readMessage()
         {
             try
             {
@@ -250,40 +250,40 @@ namespace DialogEngine.Services
 
                 if (message == null)
                 {
-                    return Triggers.Idle;
+                    return SerialTriggers.Idle;
                 }
 
                 mRowNum = ParseMessage.Parse(message, ref mNewRow);
 
                 if (mRowNum < 0 || mRowNum >= NumRadios)
                 {
-                    return Triggers.Idle;
+                    return SerialTriggers.Idle;
                 }
                 else
                 {
                     ParseMessage.ProcessMessage(mRowNum, mNewRow);
-                    return Triggers.FindClosestPair;
+                    return SerialTriggers.FindClosestPair;
                 }
             }
             catch(COMPortSlosedException ex)
             {
                 mcLogger.Error("_readMessage COMPortSlosedException");
-                return Triggers.USB_disconnectedError;
+                return SerialTriggers.USB_disconnectedError;
             }
             catch (TimeoutException ex)
             {
                 mcLogger.Error("_readMessage TimeoutException " + ex.Message);
-                return Triggers.Idle;
+                return SerialTriggers.Idle;
             }
             catch (InvalidOperationException ex) // port is closed
             {
                 mcLogger.Error("_readMessage InvalidOperationException " + ex.Message);
-                return Triggers.Initialize;
+                return SerialTriggers.Initialize;
             }
             catch (Exception ex)
             {
                 mcLogger.Error("_readMessage " + ex.Message);
-                return Triggers.Idle;
+                return SerialTriggers.Idle;
             }
         }
 
@@ -395,7 +395,7 @@ namespace DialogEngine.Services
         }
 
 
-        private Triggers _findBiggestRssiPair()
+        private SerialTriggers _findBiggestRssiPair()
         {
             //  This method takes the RSSI values and combines them so that the RSSI for Ch2 looking at 
             //  Ch1 is added to the RSSI for Ch1 looking at Ch2
@@ -446,22 +446,22 @@ namespace DialogEngine.Services
 
                 if (_rssiStable)
                 {
-                    return Triggers.SelectNextCharacters;
+                    return SerialTriggers.SelectNextCharacters;
                 }
                 else
                 {
-                    return Triggers.ReadMessage;
+                    return SerialTriggers.ReadMessage;
                 }
             }
             catch (Exception ex)
             {
                 mcLogger.Error("_findBiggestRssiPair " + ex.Message);
-                return Triggers.ReadMessage;
+                return SerialTriggers.ReadMessage;
             }
         }
 
 
-        private Triggers _selectNextCharacters()
+        private SerialTriggers _selectNextCharacters()
         {
             try
             {
@@ -487,7 +487,7 @@ namespace DialogEngine.Services
                 mcLogger.Error("_selectNextCharacters " + ex.Message);
             }
 
-            return Triggers.ReadMessage;
+            return SerialTriggers.ReadMessage;
         }
 
 
@@ -547,66 +547,66 @@ namespace DialogEngine.Services
             return Task.Run(async () =>
             {
                 Thread.CurrentThread.Name = "SerialSelectionService";
-                SerialStateMachine.Fire(Triggers.Initialize);
+                SerialStateMachine.Fire(SerialTriggers.Initialize);
                 mCancellationTokenSource = new CancellationTokenSource();
 
                 do
                 {
                     switch (SerialStateMachine.State)
                     {
-                        case States.Init:
+                        case SerialStates.Init:
                             {
-                                Triggers _nextTrigger = _initSerial();
+                                SerialTriggers _nextSerialTrigger = _initSerial();
 
-                                SerialStateMachine.Fire(_nextTrigger);
+                                SerialStateMachine.Fire(_nextSerialTrigger);
                                 break;
                             }
-                        case States.SerialPortNameError:
+                        case SerialStates.SerialPortNameError:
                             {
-                                Triggers _nextTrigger = await _serialPortError();
+                                SerialTriggers _nextSerialTrigger = await _serialPortError();
 
-                                SerialStateMachine.Fire(_nextTrigger);
+                                SerialStateMachine.Fire(_nextSerialTrigger);
                                 break;
                             }
-                        case States.Idle:
+                        case SerialStates.Idle:
                             {
-                                Triggers _nextTrigger = _idle();
+                                SerialTriggers _nextSerialTrigger = _idle();
 
-                                SerialStateMachine.Fire(_nextTrigger);
+                                SerialStateMachine.Fire(_nextSerialTrigger);
                                 break;
                             }
-                        case States.ReadMessage:
+                        case SerialStates.ReadMessage:
                             {
-                                Triggers _nextTrigger = _readMessage();
+                                SerialTriggers _nextSerialTrigger = _readMessage();
 
-                                SerialStateMachine.Fire(_nextTrigger);
+                                SerialStateMachine.Fire(_nextSerialTrigger);
                                 break;
                             }
-                        case States.FindClosestPair:
+                        case SerialStates.FindClosestPair:
                             {
-                                Triggers _nextTrigger = _findBiggestRssiPair();
+                                SerialTriggers _nextSerialTrigger = _findBiggestRssiPair();
 
-                                SerialStateMachine.Fire(_nextTrigger);
+                                SerialStateMachine.Fire(_nextSerialTrigger);
                                 break;
                             }
-                        case States.SelectNextCharacters:
+                        case SerialStates.SelectNextCharacters:
                             {
-                                Triggers _nextTrigger = _selectNextCharacters();
+                                SerialTriggers _nextSerialTrigger = _selectNextCharacters();
 
-                                SerialStateMachine.Fire(_nextTrigger);
+                                SerialStateMachine.Fire(_nextSerialTrigger);
                                 break;
                             }
-                        case States.USB_disconnectedError:
+                        case SerialStates.USB_disconnectedError:
                             {
-                                Triggers _nextTrigger = await _usbDisconectedError();
+                                SerialTriggers _nextSerialTrigger = await _usbDisconectedError();
 
-                                SerialStateMachine.Fire(_nextTrigger);
+                                SerialStateMachine.Fire(_nextSerialTrigger);
                                 break;
                             }
                     }
                 } while (!mCancellationTokenSource.Token.IsCancellationRequested);
 
-                SerialStateMachine.Fire(Triggers.Finish);
+                SerialStateMachine.Fire(SerialTriggers.Finish);
             });
         }
 

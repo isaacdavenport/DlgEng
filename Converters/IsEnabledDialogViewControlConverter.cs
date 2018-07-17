@@ -12,10 +12,10 @@ namespace DialogEngine.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            States state = (States)value;
+            DvmStates _dvmState = (DvmStates)value;
             string[] states = parameter.ToString().Split('|');
 
-            return !states.Contains(state.ToString());
+            return !states.Contains(_dvmState.ToString());
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

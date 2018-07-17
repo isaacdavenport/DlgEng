@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace DialogEngine.Workflows.DialogPageWorkflow
 {
-    public enum States
+    public enum DvmStates
     {
         Start,
         Init,
@@ -17,7 +17,7 @@ namespace DialogEngine.Workflows.DialogPageWorkflow
         RandomSelectionStarted
     }
 
-    public enum Triggers
+    public enum CharacterSelectionTriggers
     {
         Start,
         Initialize,
@@ -27,7 +27,7 @@ namespace DialogEngine.Workflows.DialogPageWorkflow
         StartRadnomSelection
     }
 
-    public class StateMachine : Stateless.StateMachine<States, Triggers>, INotifyPropertyChanged
+    public class StateMachine : Stateless.StateMachine<DvmStates, CharacterSelectionTriggers>, INotifyPropertyChanged
     {
         #region - fields -
 
@@ -37,7 +37,7 @@ namespace DialogEngine.Workflows.DialogPageWorkflow
 
         #region - constructor -
 
-        public StateMachine(Action action) : base(States.Start)
+        public StateMachine(Action action) : base(DvmStates.Start)
         {
             OnTransitioned
             (

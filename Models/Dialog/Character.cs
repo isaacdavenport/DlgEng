@@ -151,9 +151,9 @@ namespace DialogEngine.Models.Dialog
         }
 
         /// <summary>
-        /// Represents state of character
-        /// Default state is Available
-        /// States are [Avaialble,On,Off]
+        /// Represents _dvmState of character
+        /// Default _dvmState is Available
+        /// DialogStates are [Avaialble,On,Off]
         /// Available - character can be random selected
         /// On - character is forced in selection
         /// Off - character can't be selected

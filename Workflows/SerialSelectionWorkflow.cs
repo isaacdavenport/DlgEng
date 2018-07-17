@@ -2,12 +2,11 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Windows.Input;
 
 namespace DialogEngine.Workflows.SerialSelectionWorkflow
 {
-    public enum States
+    public enum SerialStates
     {
        Start,
        Init,
@@ -20,7 +19,7 @@ namespace DialogEngine.Workflows.SerialSelectionWorkflow
        Finish
     }
 
-    public enum Triggers
+    public enum SerialTriggers
     {
         Start,
         Initialize,
@@ -33,7 +32,7 @@ namespace DialogEngine.Workflows.SerialSelectionWorkflow
         Finish
     }
 
-    public class StateMachine : Stateless.StateMachine<States, Triggers>, INotifyPropertyChanged
+    public class StateMachine : Stateless.StateMachine<SerialStates, SerialTriggers>, INotifyPropertyChanged
     {
         #region - fields -
 
@@ -43,7 +42,7 @@ namespace DialogEngine.Workflows.SerialSelectionWorkflow
 
         #region - constructor -
 
-        public StateMachine(Action action) : base(States.Start)
+        public StateMachine(Action action) : base(SerialStates.Start)
         {
             OnTransitioned
             (

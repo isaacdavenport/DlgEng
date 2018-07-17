@@ -47,7 +47,7 @@ namespace DialogEngine.ViewModels
         private string mCharacter2Prefix = "--";
         private bool mRSSIstable;
         private StateMachine mDvmStateMachine;
-        private States mCurrentState;
+        private DvmStates mCurrentDvmState;
         private DialogView mView; 
         // private readonly Random mRandom = new Random();   seems we don't need this isaac
         // start position of drag operation from characters listbox to radio textbox
@@ -84,7 +84,7 @@ namespace DialogEngine.ViewModels
             _subscribeForEvents();
             _bindCommands();
 
-            DvmStateMachine.Fire(Triggers.Initialize);
+            DvmStateMachine.Fire(CharacterSelectionTriggers.Initialize);
 
             Version version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
             DateTime buildDate = new DateTime(2000, 1, 1)
@@ -175,7 +175,7 @@ namespace DialogEngine.ViewModels
         {
             if (e.PropertyName.Equals("State"))
             {
-                CurrentState = DvmStateMachine.State;
+                CurrentDvmState = DvmStateMachine.State;
             }
         }
 
@@ -191,25 +191,25 @@ namespace DialogEngine.ViewModels
 
         private void _configureStateMachine()
         {
-            DvmStateMachine.Configure(States.Start)
-                .Permit(Triggers.Initialize,States.Init);
+            DvmStateMachine.Configure(DvmStates.Start)
+                .Permit(CharacterSelectionTriggers.Initialize,DvmStates.Init);
 
-            DvmStateMachine.Configure(States.Init)
+            DvmStateMachine.Configure(DvmStates.Init)
                 .OnEntry(t => _initDialogData())
-                .Permit(Triggers.Idle, States.Idle);
+                .Permit(CharacterSelectionTriggers.Idle, DvmStates.Idle);
 
-            DvmStateMachine.Configure(States.Idle)
-                .Permit(Triggers.StartRadnomSelection, States.RandomSelectionStarted)
-                .Permit(Triggers.StartSerialSelection, States.SerialSelectionStarted);
+            DvmStateMachine.Configure(DvmStates.Idle)
+                .Permit(CharacterSelectionTriggers.StartRadnomSelection, DvmStates.RandomSelectionStarted)
+                .Permit(CharacterSelectionTriggers.StartSerialSelection, DvmStates.SerialSelectionStarted);
 
-            DvmStateMachine.Configure(States.CharacterSelectionStarted)
-                .Permit(Triggers.Idle, States.Idle);
+            DvmStateMachine.Configure(DvmStates.CharacterSelectionStarted)
+                .Permit(CharacterSelectionTriggers.Idle, DvmStates.Idle);
 
-            DvmStateMachine.Configure(States.RandomSelectionStarted)
-                .SubstateOf(States.CharacterSelectionStarted);
+            DvmStateMachine.Configure(DvmStates.RandomSelectionStarted)
+                .SubstateOf(DvmStates.CharacterSelectionStarted);
 
-            DvmStateMachine.Configure(States.SerialSelectionStarted)
-                .SubstateOf(States.CharacterSelectionStarted);
+            DvmStateMachine.Configure(DvmStates.SerialSelectionStarted)
+                .SubstateOf(DvmStates.CharacterSelectionStarted);
         }
 
 
@@ -243,11 +243,11 @@ namespace DialogEngine.ViewModels
 
             _setCharacterToRadioBindings();
 
-            DvmStateMachine.Fire(Triggers.Idle);
+            DvmStateMachine.Fire(CharacterSelectionTriggers.Idle);
         }
 
 
-        // refresh NumberOfCharactersOn when character state is changed
+        // refresh NumberOfCharactersOn when character _dvmState is changed
         private void _onChangedCharacterState()
         {
             try
@@ -258,7 +258,7 @@ namespace DialogEngine.ViewModels
                 SelectedIndex1 = -1;
                 SelectedIndex2 = -1;
 
-                // iterate over characters and try to find characters in ON state
+                // iterate over characters and try to find characters in ON _dvmState
                 // then assign indexes to mSelectedIndex 
                 foreach (Character characterInfo in CharacterCollection)
                 {
@@ -280,17 +280,17 @@ namespace DialogEngine.ViewModels
 
                 OnPropertyChanged("NumberOfCharactersOn");
 
-                // when state of character changed, we want to cancel current dialog and reset MP3 player
+                // when _dvmState of character changed, we want to cancel current dialog and reset MP3 player
                 EventAggregator.Instance.GetEvent<StopPlayingCurrentDialogLineEvent>().Publish();
             }
             catch (Exception ex)
             {
-                mcLogger.Error("Character state changed. " + ex.Message);
+                mcLogger.Error("Character _dvmState changed. " + ex.Message);
             }
         }
 
 
-        // change indicator if state of dialog models changed
+        // change indicator if _dvmState of dialog models changed
         private void _onChangedModelDialogState()
         {
             //mIsModelsDialogChanged = true;
@@ -786,7 +786,7 @@ namespace DialogEngine.ViewModels
             mCurrentSelectionService.Stop();
             mDialogGeneratorViewModel.StopDialogGenerator();
 
-            DvmStateMachine.Fire(Triggers.Idle);
+            DvmStateMachine.Fire(CharacterSelectionTriggers.Idle);
         }
 
 
@@ -798,14 +798,14 @@ namespace DialogEngine.ViewModels
                 if (SessionHelper.UseSerialPort)
                 {
                     mCurrentSelectionService = mSerialSelectionService;
-                    DvmStateMachine.Fire(Triggers.StartSerialSelection);
+                    DvmStateMachine.Fire(CharacterSelectionTriggers.StartSerialSelection);
 
                     EventAggregator.Instance.GetEvent<CharacterSelectionStartedEvent>().Publish(Models.Enums.SelectionMode.Serial);
                 }
                 else
                 {
                     mCurrentSelectionService = mRandomSelectionService;
-                    DvmStateMachine.Fire(Triggers.StartRadnomSelection);
+                    DvmStateMachine.Fire(CharacterSelectionTriggers.StartRadnomSelection);
 
                     EventAggregator.Instance.GetEvent<CharacterSelectionStartedEvent>().Publish(Models.Enums.SelectionMode.Random);
                 }
@@ -824,8 +824,8 @@ namespace DialogEngine.ViewModels
             EventAggregator.Instance.GetEvent<CharacterSelectionStartedEvent>().Publish(Models.Enums.SelectionMode.NoSelection);
 
 
-            if (DvmStateMachine.CanFire(Triggers.Idle))
-                DvmStateMachine.Fire(Triggers.Idle);    
+            if (DvmStateMachine.CanFire(CharacterSelectionTriggers.Idle))
+                DvmStateMachine.Fire(CharacterSelectionTriggers.Idle);    
         }
 
 
@@ -845,13 +845,13 @@ namespace DialogEngine.ViewModels
         }
 
 
-        public States CurrentState
+        public DvmStates CurrentDvmState
         {
-            get { return mCurrentState; }
+            get { return mCurrentDvmState; }
             set
             {
-                mCurrentState = value;
-                OnPropertyChanged("CurrentState");
+                mCurrentDvmState = value;
+                OnPropertyChanged("CurrentDialogState");
             }
         }
 

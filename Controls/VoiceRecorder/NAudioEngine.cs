@@ -29,7 +29,7 @@ namespace DialogEngine.Controls.VoiceRecorder
         private bool mCanPause;
         private bool mCanStop;
 
-        // player's state
+        // player's _dvmState
         private bool mIsPlaying;
         private bool msIsRecording;
 

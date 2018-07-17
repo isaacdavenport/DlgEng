@@ -6,7 +6,7 @@ using System.Windows.Input;
 
 namespace DialogEngine.Workflows.DialogGeneratorWorkflow
 {
-    public enum States
+    public enum DialogStates
     {
         Start,
         Init,
@@ -17,7 +17,7 @@ namespace DialogEngine.Workflows.DialogGeneratorWorkflow
         DialogFinished
     }
 
-    public enum Triggers
+    public enum DialogTriggers
     {
         Start,
         Initialize,
@@ -28,7 +28,7 @@ namespace DialogEngine.Workflows.DialogGeneratorWorkflow
         FinishDialog
     }
 
-    public class StateMachine : Stateless.StateMachine<States, Triggers>, INotifyPropertyChanged
+    public class StateMachine : Stateless.StateMachine<DialogStates, DialogTriggers>, INotifyPropertyChanged
     {
         #region - fields -
 
@@ -38,7 +38,7 @@ namespace DialogEngine.Workflows.DialogGeneratorWorkflow
 
         #region - constructor -
 
-        public StateMachine(Action action) : base(States.Start)
+        public StateMachine(Action action) : base(DialogStates.Start)
         {
             OnTransitioned
             (

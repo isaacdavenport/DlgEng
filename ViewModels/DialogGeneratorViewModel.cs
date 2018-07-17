@@ -42,7 +42,7 @@ namespace DialogEngine.Controls.ViewModels
         private delegate void PrintMethod(LogMessage message);
         private PrintMethod AddItem = DialogDataHelper.AddMessage;
         private StateMachine mDialogGenerationStateMachine;
-        private States mCurrentState;
+        private DialogStates mCurrentDialogState;
         private Random mRandom = new Random();
         private EventWaitHandle mEventWaitHandle = new EventWaitHandle(false, EventResetMode.AutoReset);
         private CancellationTokenSource mCancellationTokenSource;
@@ -78,7 +78,7 @@ namespace DialogEngine.Controls.ViewModels
         {
             if (e.PropertyName.Equals("State"))
             {
-                CurrentState = DialogGenerationStateMachine.State;
+                CurrentDialogState = DialogGenerationStateMachine.State;
             }
         }
 
@@ -141,35 +141,35 @@ namespace DialogEngine.Controls.ViewModels
 
         private void _configureStateMachine()
         {
-            DialogGenerationStateMachine.Configure(States.Start)
-                .Permit(Triggers.Initialize,States.Init);
+            DialogGenerationStateMachine.Configure(DialogStates.Start)
+                .Permit(DialogTriggers.Initialize,DialogStates.Init);
 
-            DialogGenerationStateMachine.Configure(States.Init)
+            DialogGenerationStateMachine.Configure(DialogStates.Init)
                 .OnEntry(t => _initialize())
-                .Permit(Triggers.WaitForNewCharacters, States.Idle);
+                .Permit(DialogTriggers.WaitForNewCharacters, DialogStates.Idle);
 
-            DialogGenerationStateMachine.Configure(States.Idle)
-                .Permit(Triggers.PrepareDialogParameters, States.PreparingDialogParameters)
-                .Permit(Triggers.FinishDialog, States.DialogFinished);
+            DialogGenerationStateMachine.Configure(DialogStates.Idle)
+                .Permit(DialogTriggers.PrepareDialogParameters, DialogStates.PreparingDialogParameters)
+                .Permit(DialogTriggers.FinishDialog, DialogStates.DialogFinished);
 
-            DialogGenerationStateMachine.Configure(States.GenerateADialog)
-                .Permit(Triggers.WaitForNewCharacters, States.Idle)
-                .Permit(Triggers.FinishDialog,States.DialogFinished);
+            DialogGenerationStateMachine.Configure(DialogStates.GenerateADialog)
+                .Permit(DialogTriggers.WaitForNewCharacters, DialogStates.Idle)
+                .Permit(DialogTriggers.FinishDialog,DialogStates.DialogFinished);
 
-            DialogGenerationStateMachine.Configure(States.PreparingDialogParameters)
-                .SubstateOf(States.GenerateADialog)
-                .Permit(Triggers.WaitForNewCharacters,States.Idle)
-                .Permit(Triggers.StartDialog, States.DialogStarted)
-                .Permit(Triggers.FinishDialog, States.DialogFinished);
+            DialogGenerationStateMachine.Configure(DialogStates.PreparingDialogParameters)
+                .SubstateOf(DialogStates.GenerateADialog)
+                .Permit(DialogTriggers.WaitForNewCharacters,DialogStates.Idle)
+                .Permit(DialogTriggers.StartDialog, DialogStates.DialogStarted)
+                .Permit(DialogTriggers.FinishDialog, DialogStates.DialogFinished);
 
-            DialogGenerationStateMachine.Configure(States.DialogStarted)
-                .SubstateOf(States.GenerateADialog)
-                .Permit(Triggers.WaitForNewCharacters,States.Idle)
-                .Permit(Triggers.FinishDialog, States.DialogFinished);
+            DialogGenerationStateMachine.Configure(DialogStates.DialogStarted)
+                .SubstateOf(DialogStates.GenerateADialog)
+                .Permit(DialogTriggers.WaitForNewCharacters,DialogStates.Idle)
+                .Permit(DialogTriggers.FinishDialog, DialogStates.DialogFinished);
 
-            DialogGenerationStateMachine.Configure(States.DialogFinished)
+            DialogGenerationStateMachine.Configure(DialogStates.DialogFinished)
                 .OnEntry(t => _onDialogFinished())
-                .Permit(Triggers.WaitForNewCharacters, States.Idle);
+                .Permit(DialogTriggers.WaitForNewCharacters, DialogStates.Idle);
         }
 
 
@@ -269,10 +269,10 @@ namespace DialogEngine.Controls.ViewModels
                 mCharacter1Num = args.Character1Index;
                 mCharacter2Num = args.Character2Index;
 
-                if (CurrentState != States.Idle)
+                if (CurrentDialogState != DialogStates.Idle)
                 {
                     mStateMachineTaskTokenSource.Cancel();
-                    DialogGenerationStateMachine.Fire(Triggers.WaitForNewCharacters);
+                    DialogGenerationStateMachine.Fire(DialogTriggers.WaitForNewCharacters);
                 }
 
                 mEventWaitHandle.Set();
@@ -282,7 +282,7 @@ namespace DialogEngine.Controls.ViewModels
                 Debug.WriteLine("Selection run");
                 mRandomSelectionList.Enqueue(args);
 
-                if(CurrentState == States.Idle)
+                if(CurrentDialogState == DialogStates.Idle)
                 {
                     mEventWaitHandle.Set();
                 }
@@ -394,7 +394,7 @@ namespace DialogEngine.Controls.ViewModels
 
             mCharacter1Num = _tempChar1;
             mCharacter2Num = _tempChar2;
-            mPriorCharacter1Num = mCharacter1Num;
+            mPriorCharacter1Num = mCharacter1Num;  //TODO this is redundant to the History object, use history instead
             mPriorCharacter2Num = mCharacter2Num;
 
             return true;
@@ -690,14 +690,14 @@ namespace DialogEngine.Controls.ViewModels
 
         #endregion
 
-        #region - dialog generator state machine  functions -
+        #region - dialog generator _dvmState machine  functions -
 
         public void _dialogDataLoaded()
         {
-            DialogGenerationStateMachine.Fire(Triggers.Initialize);
+            DialogGenerationStateMachine.Fire(DialogTriggers.Initialize);
         }
 
-        private Triggers _waitForNewCharacters()
+        private DialogTriggers _waitForNewCharacters()
         {
             if (SessionHelper.UseSerialPort)
             {
@@ -707,7 +707,7 @@ namespace DialogEngine.Controls.ViewModels
             {
                 if(mRandomSelectionList.Count > 0)
                 {
-                    return Triggers.PrepareDialogParameters;
+                    return DialogTriggers.PrepareDialogParameters;
                 }
                 else
                 {
@@ -715,11 +715,11 @@ namespace DialogEngine.Controls.ViewModels
                 }
             }
 
-            return Triggers.PrepareDialogParameters;
+            return DialogTriggers.PrepareDialogParameters;
         }
 
 
-        private async  Task<Triggers> _prepareDialogParameters(CancellationToken token)
+        private async  Task<DialogTriggers> _prepareDialogParameters(CancellationToken token)
         {
             try
             {
@@ -735,7 +735,7 @@ namespace DialogEngine.Controls.ViewModels
                 // end
 
                 if (!_importClosestSerialComsCharacters())
-                    return Triggers.WaitForNewCharacters;
+                    return DialogTriggers.WaitForNewCharacters;
 
                 mIndexOfCurrentDialogModel = mIsForcedDialogModel ?
                                              mIndexOfCurrentDialogModel
@@ -748,7 +748,7 @@ namespace DialogEngine.Controls.ViewModels
 
                 HeatMapUpdate.PrintHeatMap();
 
-                return Triggers.StartDialog;
+                return DialogTriggers.StartDialog;
             }
             catch (DialogGeneratorMethodCanceledException)
             {
@@ -759,13 +759,12 @@ namespace DialogEngine.Controls.ViewModels
                 mcLogger.Error("_prepareDialogParameters " + ex.Message);
             }
 
-            return Triggers.WaitForNewCharacters;
+            return DialogTriggers.WaitForNewCharacters;
         }
 
 
-        private  async Task<Triggers>  _startDialog(CancellationToken token)
+        private  async Task<DialogTriggers>  _startDialog(CancellationToken token)
         {
-
             try
             {
                 // used to stop  immediately function if new character are selected
@@ -827,7 +826,7 @@ namespace DialogEngine.Controls.ViewModels
                         {
                             mSameCharactersAsLast = false;
                             Debug.WriteLine("izlaz");
-                            return Triggers.WaitForNewCharacters; // the characters have moved  TODO break into charactersSame() and use also with prior
+                            return DialogTriggers.WaitForNewCharacters; // the characters have moved  TODO break into charactersSame() and use also with prior
                         }
                         //Toggle character
                         if (_speakingCharacter == mCharacter1Num) //toggle which character is speaking next
@@ -859,7 +858,7 @@ namespace DialogEngine.Controls.ViewModels
 
             Debug.WriteLine("izlaz");
 
-            return Triggers.WaitForNewCharacters;
+            return DialogTriggers.WaitForNewCharacters;
         }
 
 
@@ -881,8 +880,8 @@ namespace DialogEngine.Controls.ViewModels
         {
             mCancellationTokenSource = new CancellationTokenSource();
 
-            if (CurrentState != States.Idle)
-                DialogGenerationStateMachine.Fire(Triggers.WaitForNewCharacters);
+            if (CurrentDialogState != DialogStates.Idle)
+                DialogGenerationStateMachine.Fire(DialogTriggers.WaitForNewCharacters);
 
             return Task.Run(async() => {
 
@@ -894,26 +893,26 @@ namespace DialogEngine.Controls.ViewModels
 
                     switch (DialogGenerationStateMachine.State)
                     {
-                        case States.Idle:
+                        case DialogStates.Idle:
                             {
-                                Triggers _nextTrigger = _waitForNewCharacters();
-                                if(DialogGenerationStateMachine.CanFire(_nextTrigger))
-                                    DialogGenerationStateMachine.Fire(_nextTrigger);
+                                DialogTriggers _nextDialogTrigger = _waitForNewCharacters();
+                                if(DialogGenerationStateMachine.CanFire(_nextDialogTrigger))
+                                    DialogGenerationStateMachine.Fire(_nextDialogTrigger);
                                 break;
                             }
 
-                        case States.PreparingDialogParameters:
+                        case DialogStates.PreparingDialogParameters:
                             {
-                                Triggers _nextTrigger = await _prepareDialogParameters(mStateMachineTaskTokenSource.Token);
-                                if (DialogGenerationStateMachine.CanFire(_nextTrigger))
-                                    DialogGenerationStateMachine.Fire(_nextTrigger);
+                                DialogTriggers _nextDialogTrigger = await _prepareDialogParameters(mStateMachineTaskTokenSource.Token);
+                                if (DialogGenerationStateMachine.CanFire(_nextDialogTrigger))
+                                    DialogGenerationStateMachine.Fire(_nextDialogTrigger);
                                 break;
                             }
-                        case States.DialogStarted:
+                        case DialogStates.DialogStarted:
                             {
-                                Triggers _nextTrigger = await _startDialog(mStateMachineTaskTokenSource.Token);
-                                if (DialogGenerationStateMachine.CanFire(_nextTrigger))
-                                    DialogGenerationStateMachine.Fire(_nextTrigger);
+                                DialogTriggers _nextDialogTrigger = await _startDialog(mStateMachineTaskTokenSource.Token);
+                                if (DialogGenerationStateMachine.CanFire(_nextDialogTrigger))
+                                    DialogGenerationStateMachine.Fire(_nextDialogTrigger);
                                 break;
                             }                 
                     }
@@ -928,8 +927,8 @@ namespace DialogEngine.Controls.ViewModels
         {
             mCancellationTokenSource.Cancel();
 
-            if (CurrentState != States.DialogFinished)
-                DialogGenerationStateMachine.Fire(Triggers.FinishDialog);
+            if (CurrentDialogState != DialogStates.DialogFinished)
+                DialogGenerationStateMachine.Fire(DialogTriggers.FinishDialog);
 
             DialogLinesCollection.Clear();
         }
@@ -994,13 +993,13 @@ namespace DialogEngine.Controls.ViewModels
         }
 
 
-        public States CurrentState
+        public DialogStates CurrentDialogState
         {
-            get { return mCurrentState; }
+            get { return mCurrentDialogState; }
             set
             {
-                mCurrentState = value;
-                OnPropertyChanged("CurrentState");
+                mCurrentDialogState = value;
+                OnPropertyChanged("CurrentDialogState");
             }
         }
 

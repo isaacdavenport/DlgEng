@@ -28,7 +28,7 @@ namespace DialogEngine
         private static readonly ILog mcLogger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private const string mHomeView = "/Views/DialogView.xaml";
         private string mCurrentView = "";
-        // used to cache pages in application to keep page state persistent
+        // used to cache pages in application to keep page _dvmState persistent
         private ObjectCache mMemoryCache = MemoryCache.Default;
 
         #endregion

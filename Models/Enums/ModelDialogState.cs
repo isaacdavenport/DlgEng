@@ -4,7 +4,7 @@
 namespace DialogEngine.Models.Enums
 {
     /// <summary>
-    /// Represetns state of Dialog model
+    /// Represetns _dvmState of Dialog model
     /// </summary>
     public enum ModelDialogState
     {

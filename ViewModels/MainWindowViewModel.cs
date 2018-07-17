@@ -26,7 +26,6 @@ namespace DialogEngine.ViewModels
         #region - fields -
 
         // Default application logger
-        private static readonly ILog mcLogger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private readonly string mcJsonEditorExeName = "JSONedit.exe";
         private readonly string mcJsonBkpFileName = "StarterCharacterWizard_Bkp.json";
         private string mSelectionModeName = "";
@@ -51,7 +50,7 @@ namespace DialogEngine.ViewModels
 
             EventAggregator.Instance.GetEvent<CharacterSelectionStartedEvent>().Subscribe(_selectionModeChanged);
 
-            VmStateMachine.Fire(Triggers.NavigateToDialogView);
+            VmStateMachine.Fire(NavWindowTriggers.NavigateToDialogView);
         }
 
         private void _selectionModeChanged(SelectionMode mode)
@@ -106,14 +105,14 @@ namespace DialogEngine.ViewModels
         private void _configureStateMachine()
         {
             VmStateMachine.Configure(States.Start)
-                .Permit(Triggers.NavigateToDialogView, States.DialogView)
-                .Permit(Triggers.NavigateToWizardView, States.WizardView);
+                .Permit(NavWindowTriggers.NavigateToDialogView, States.DialogView)
+                .Permit(NavWindowTriggers.NavigateToWizardView, States.WizardView);
 
             VmStateMachine.Configure(States.DialogView)
-                .Permit(Triggers.NavigateToWizardView, States.WizardView);
+                .Permit(NavWindowTriggers.NavigateToWizardView, States.WizardView);
 
             VmStateMachine.Configure(States.WizardView)
-                .Permit(Triggers.NavigateToDialogView, States.DialogView);
+                .Permit(NavWindowTriggers.NavigateToDialogView, States.DialogView);
         }
 
 
@@ -137,12 +136,12 @@ namespace DialogEngine.ViewModels
             {
                 case "WizardView":
                     {
-                        VmStateMachine.Fire(Triggers.NavigateToWizardView);
+                        VmStateMachine.Fire(NavWindowTriggers.NavigateToWizardView);
                         break;
                     }
                 case "DialogView":
                     {
-                        VmStateMachine.Fire(Triggers.NavigateToDialogView);
+                        VmStateMachine.Fire(NavWindowTriggers.NavigateToDialogView);
                         break;
                     }
             }
@@ -198,7 +197,7 @@ namespace DialogEngine.ViewModels
             set
             {
                 mCurrentState = value;
-                OnPropertyChanged("CurrentState");
+                OnPropertyChanged("CurrentDialogState");
             }
         }
 

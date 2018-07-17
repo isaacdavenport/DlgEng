@@ -193,7 +193,7 @@
                                                                            Grid.Column="1" />
 
 
-                                                            <Label Content="Character state:" 
+                                                            <Label Content="Character _dvmState:" 
                                                                            HorizontalAlignment="Right"
                                                                            Grid.Row="2"
                                                                            Foreground="White"

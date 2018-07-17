@@ -114,7 +114,7 @@ namespace DialogEngine.Services
                 {
                     bool _isNewCharacterSelected;
                     //TODO change from time based character changes to number of completed dialog to change characters
-                    DateTime _nextCharacterSwapTime = DateTime.Now.AddSeconds(2);
+                    DateTime _nextCharacterSwapTime = DateTime.Now.AddSeconds(4);
                     
                     while (true)
                     {
@@ -161,7 +161,7 @@ namespace DialogEngine.Services
                                         NextCharacter1 = DialogViewModel.SelectedIndex1;
                                         NextCharacter2 = DialogViewModel.SelectedIndex2;
 
-                                        _nextCharacterSwapTime = DateTime.Now.AddSeconds(4 + msRandom.Next(0, 2));
+                                        _nextCharacterSwapTime = DateTime.Now.AddSeconds(4 + msRandom.Next(0, 32));
 
                                         _isNewCharacterSelected = true;
 
