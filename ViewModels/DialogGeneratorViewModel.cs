@@ -822,7 +822,8 @@ namespace DialogEngine.Controls.ViewModels
                         Debug.WriteLine("after playAudio");
 
                         if (!_dialogTrackerAndSerialComsCharactersSame()
-                            && DialogViewModel.NumberOfCharactersOn != 1)
+                           /* && !(DialogViewModel.NumberOfCharactersOn == 2)*/)  //TODO change NumberOfCharactersOn != 1 to !() ==2 since 0 characters on 
+                                                                                // and all available (not off) has issue of not completing dialog models did not fix it
                         {
                             mSameCharactersAsLast = false;
                             Debug.WriteLine("izlaz");
