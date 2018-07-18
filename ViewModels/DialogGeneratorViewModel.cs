@@ -9,7 +9,6 @@ using DialogEngine.Models.Exceptions;
 using DialogEngine.Models.Logger;
 using DialogEngine.Models.Shared;
 using DialogEngine.Services;
-using DialogEngine.ViewModels;
 using DialogEngine.Workflows.DialogGeneratorWorkflow;
 using log4net;
 using System;
@@ -699,6 +698,7 @@ namespace DialogEngine.Controls.ViewModels
 
         private DialogTriggers _waitForNewCharacters()
         {
+            return DialogTriggers.PrepareDialogParameters;  // TODO aren't we never waiting for new characters after removing waitIndefiniteForMove?
             if (SessionHelper.UseSerialPort)
             {
                 mEventWaitHandle.WaitOne();
@@ -719,12 +719,12 @@ namespace DialogEngine.Controls.ViewModels
         }
 
 
-        private async  Task<DialogTriggers> _prepareDialogParameters(CancellationToken token)
+        private async  Task<DialogTriggers> _prepareDialogParameters()
         {
             try
             {
                 // used to stop  immediately function if new character are selected
-                Func<Task> action = async () =>
+             /*   Func<Task> action = async () =>
                 {
                     Thread.CurrentThread.Name = "_prepareDialogParametersThread";
                     mEventWaitHandle.WaitOne(75000, true);
@@ -733,9 +733,11 @@ namespace DialogEngine.Controls.ViewModels
                 Task.Run(action);
                 token.Register(() => { mEventWaitHandle.Set(); }); // register callback if cancellation is request
                 // end
-
+                
                 if (!_importClosestSerialComsCharacters())
                     return DialogTriggers.WaitForNewCharacters;
+            */
+                _importClosestSerialComsCharacters();
 
                 mIndexOfCurrentDialogModel = mIsForcedDialogModel ?
                                              mIndexOfCurrentDialogModel
@@ -759,7 +761,7 @@ namespace DialogEngine.Controls.ViewModels
                 mcLogger.Error("_prepareDialogParameters " + ex.Message);
             }
 
-            return DialogTriggers.WaitForNewCharacters;
+            return DialogTriggers.WaitForNewCharacters;  //TODO probably should return Idle if we maintain this state machine
         }
 
 
@@ -821,7 +823,7 @@ namespace DialogEngine.Controls.ViewModels
 
                         Debug.WriteLine("after playAudio");
 
-                        if (!_dialogTrackerAndSerialComsCharactersSame()
+                        if (SessionHelper.UseSerialPort && !_dialogTrackerAndSerialComsCharactersSame()
                            /* && !(DialogViewModel.NumberOfCharactersOn == 2)*/)  //TODO change NumberOfCharactersOn != 1 to !() ==2 since 0 characters on 
                                                                                 // and all available (not off) has issue of not completing dialog models did not fix it
                         {
@@ -887,7 +889,6 @@ namespace DialogEngine.Controls.ViewModels
             return Task.Run(async() => {
 
                 Thread.CurrentThread.Name = "DialogGeneratorThread";
-
                 do
                 {
                     mStateMachineTaskTokenSource = new CancellationTokenSource();
@@ -895,7 +896,7 @@ namespace DialogEngine.Controls.ViewModels
                     switch (DialogGenerationStateMachine.State)
                     {
                         case DialogStates.Idle:
-                            {
+                            {   // TODO essentially skipping this now 
                                 DialogTriggers _nextDialogTrigger = _waitForNewCharacters();
                                 if(DialogGenerationStateMachine.CanFire(_nextDialogTrigger))
                                     DialogGenerationStateMachine.Fire(_nextDialogTrigger);
@@ -904,9 +905,9 @@ namespace DialogEngine.Controls.ViewModels
 
                         case DialogStates.PreparingDialogParameters:
                             {
-                                DialogTriggers _nextDialogTrigger = await _prepareDialogParameters(mStateMachineTaskTokenSource.Token);
-                                if (DialogGenerationStateMachine.CanFire(_nextDialogTrigger))
-                                    DialogGenerationStateMachine.Fire(_nextDialogTrigger);
+                                _prepareDialogParameters();
+                                if (DialogGenerationStateMachine.CanFire(DialogTriggers.StartDialog))
+                                    DialogGenerationStateMachine.Fire(DialogTriggers.StartDialog);
                                 break;
                             }
                         case DialogStates.DialogStarted:

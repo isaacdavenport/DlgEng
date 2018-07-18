@@ -137,7 +137,7 @@ namespace DialogEngine.Services
                                         NextCharacter1 = _nextCharacter1Index >= 0 ? _nextCharacter1Index : NextCharacter1; //lower bound inclusive, upper exclusive
                                         NextCharacter2 = _nextCharacter2Index >= 0 ? _nextCharacter2Index : NextCharacter2; //lower bound inclusive, upper exclusive
 
-                                        _nextCharacterSwapTime = DateTime.Now.AddSeconds(4 + msRandom.Next(0, 2));
+                                        _nextCharacterSwapTime = DateTime.Now.AddSeconds(14 + msRandom.Next(0, 12));  //TODO roll back to 4
 
                                         _isNewCharacterSelected = true;
 
@@ -150,7 +150,7 @@ namespace DialogEngine.Services
 
                                         NextCharacter2 = _nextCharacter2Index >= 0 ? _nextCharacter2Index : NextCharacter2;
 
-                                        _nextCharacterSwapTime = DateTime.Now.AddSeconds(4 + msRandom.Next(0, 2));
+                                        _nextCharacterSwapTime = DateTime.Now.AddSeconds(14 + msRandom.Next(0, 12));
 
                                         _isNewCharacterSelected = true;
 
@@ -161,7 +161,7 @@ namespace DialogEngine.Services
                                         NextCharacter1 = DialogViewModel.SelectedIndex1;
                                         NextCharacter2 = DialogViewModel.SelectedIndex2;
 
-                                        _nextCharacterSwapTime = DateTime.Now.AddSeconds(4 + msRandom.Next(0, 32));
+                                        _nextCharacterSwapTime = DateTime.Now.AddSeconds(14 + msRandom.Next(0, 12));
 
                                         _isNewCharacterSelected = true;
 

@@ -31,7 +31,6 @@ namespace DialogEngine.Services
         private int mTempch2;
         private int[,] mStrongRssiCharacterPairBuf = new int[2, StrongRssiBufDepth];
         private int[] mNewRow = new int[NumRadios + 1];
-        private bool mIsSerialMode;
         private SerialPort mSerialPort;
         private SerialStates mCurrentSerialState;
         private StateMachine mSerialStateMachine;
@@ -74,7 +73,7 @@ namespace DialogEngine.Services
         private void _stateMachine_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName.Equals("State"))
-                mCurrentSerialState = SerialStateMachine.State;
+                mCurrentSerialState = SerialStateMachine.State;  //TODO is this actually used?
         }
 
 
