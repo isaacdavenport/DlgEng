@@ -371,7 +371,7 @@ namespace DialogEngine.Controls.ViewModels
         }
 
 
-        private bool _importClosestSerialComsCharacters()
+        private bool _getCurrentCharacters()
         {
             if (!SessionHelper.UseSerialPort)
             {
@@ -733,10 +733,10 @@ namespace DialogEngine.Controls.ViewModels
                 token.Register(() => { mEventWaitHandle.Set(); }); // register callback if cancellation is request
                 // end
                 
-                if (!_importClosestSerialComsCharacters())
+                if (!_getCurrentCharacters())
                     return DialogTriggers.WaitForNewCharacters;
             */
-                _importClosestSerialComsCharacters();
+                _getCurrentCharacters();
 
                 mIndexOfCurrentDialogModel = mIsForcedDialogModel ?
                                              mIndexOfCurrentDialogModel
