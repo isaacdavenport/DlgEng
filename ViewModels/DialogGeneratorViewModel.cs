@@ -322,10 +322,9 @@ namespace DialogEngine.Controls.ViewModels
 
 
         private void _playAudio(string _pathAndFileName)
-        {
+        {   //TODO will we need to pass a cancellation token in here to break off an MP3 mid-play due to radio motion?
             try
             {
-
                 if (File.Exists(_pathAndFileName))
                 {
                     var i = 0;

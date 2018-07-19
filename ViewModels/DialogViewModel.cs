@@ -810,7 +810,7 @@ namespace DialogEngine.ViewModels
                     EventAggregator.Instance.GetEvent<CharacterSelectionStartedEvent>().Publish(Models.Enums.SelectionMode.Random);
                 }
 
-                Task selectionServiceTask = mCurrentSelectionService.Start();
+                Task selectionServiceTask = mCurrentSelectionService.StartSelectionService();
                 Task dialogGeneratorTask = mDialogGeneratorViewModel.StartDialogGenerator();
 
                 await selectionServiceTask;

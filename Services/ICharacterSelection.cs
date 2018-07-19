@@ -6,7 +6,7 @@ namespace DialogEngine.Services
 {
     public interface ICharacterSelection
     {
-         Task Start();
+         Task StartSelectionService();
          void Stop();
     }
 }

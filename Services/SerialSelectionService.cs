@@ -541,7 +541,7 @@ namespace DialogEngine.Services
 
         #region - public functions -
 
-        public  Task Start()
+        public  Task StartSelectionService()
         {
             return Task.Run(async () =>
             {

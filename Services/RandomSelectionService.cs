@@ -99,7 +99,7 @@ namespace DialogEngine.Services
         }
 
 
-        public  Task Start()
+        public  Task StartSelectionService()
         {
             mCancellationTokenSource = new CancellationTokenSource();
 
