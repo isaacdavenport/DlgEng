@@ -57,7 +57,7 @@ namespace DialogEngine.Services
         {
             SerialStateMachine = new StateMachine
             (
-                action: () => { } // no action for start _dvmState
+                action: () => { } // no action for start of Serial State Machine
             );
 
             _configureStateMachine();
