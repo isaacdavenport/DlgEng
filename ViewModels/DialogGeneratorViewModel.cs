@@ -697,7 +697,7 @@ namespace DialogEngine.Controls.ViewModels
 
         private DialogTriggers _waitForNewCharacters()
         {
-            return DialogTriggers.PrepareDialogParameters;  // TODO aren't we never waiting for new characters after removing waitIndefiniteForMove?
+            return DialogTriggers.PrepareDialogParameters;  // TODO now we never wait for new characters after removing waitIndefiniteForMove?
             if (SessionHelper.UseSerialPort)
             {
                 mEventWaitHandle.WaitOne();
