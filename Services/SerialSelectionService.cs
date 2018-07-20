@@ -267,17 +267,17 @@ namespace DialogEngine.Services
             }
             catch(COMPortSlosedException ex)
             {
-                mcLogger.Error("_readMessage COMPortSlosedException");
+                mcLogger.Error("_readMessage ");
                 return Triggers.USB_disconnectedError;
             }
             catch (TimeoutException ex)
             {
-                mcLogger.Error("_readMessage TimeoutException " + ex.Message);
+                mcLogger.Error("_readMessage  " + ex.Message);
                 return Triggers.Idle;
             }
             catch (InvalidOperationException ex) // port is closed
             {
-                mcLogger.Error("_readMessage InvalidOperationException " + ex.Message);
+                mcLogger.Error("_readMessage  " + ex.Message);
                 return Triggers.Initialize;
             }
             catch (Exception ex)

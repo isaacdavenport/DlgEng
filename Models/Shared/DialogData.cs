@@ -19,7 +19,7 @@ namespace DialogEngine.Models.Shared
         private ObservableCollection<InfoMessage> mInfoMessagesCollection = new ObservableCollection<InfoMessage>();
         private ObservableCollection<WarningMessage> mWarningMessagesCollection = new ObservableCollection<WarningMessage>();
         private ObservableCollection<ErrorMessage> mErrorMessagesCollection = new ObservableCollection<ErrorMessage>();
-        private ObservableCollection<Dialog.Wizard> mWizardsCollection;
+        private ObservableCollection<Wizard> mWizardsCollection;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -116,7 +116,7 @@ namespace DialogEngine.Models.Shared
         }
 
 
-        public ObservableCollection<Dialog.Wizard> WizardsCollection
+        public ObservableCollection<Wizard> WizardsCollection
         {
             get { return mWizardsCollection ; }
             set

@@ -47,10 +47,10 @@ namespace DialogEngine.Dialogs
                 System.Windows.Forms.OpenFileDialog _openFileDialog = new System.Windows.Forms.OpenFileDialog();
                 _openFileDialog.Filter = "Zip file(*.zip)|*.zip";
 
+                IsWorking = Visibility.Visible;
+
                 if (_openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-                    IsWorking = Visibility.Visible;
-
                     await Task.Run(() =>
                     {
                         ZipFile.ExtractToDirectory(_openFileDialog.FileName, SessionHelper.TempDirectory);
@@ -91,10 +91,10 @@ namespace DialogEngine.Dialogs
         {
             try
             {
-                DirectoryInfo directoryInfo = new DirectoryInfo(SessionHelper.TempDirectory);
+                DirectoryInfo _directoryInfo = new DirectoryInfo(SessionHelper.TempDirectory);
 
                 // process .json files
-                FileInfo[] _jsonFiles = directoryInfo.GetFiles("*.json");
+                FileInfo[] _jsonFiles = _directoryInfo.GetFiles("*.json");
 
                 foreach(FileInfo _jsonFile in _jsonFiles)
                 {
@@ -104,7 +104,7 @@ namespace DialogEngine.Dialogs
 
                 // process .mp3 files
 
-                FileInfo[] _mp3Files = directoryInfo.GetFiles("*.mp3");
+                FileInfo[] _mp3Files = _directoryInfo.GetFiles("*.mp3");
 
                 foreach (FileInfo _mp3File in _mp3Files)
                 {

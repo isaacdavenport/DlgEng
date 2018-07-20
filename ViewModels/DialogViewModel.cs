@@ -89,10 +89,6 @@ namespace DialogEngine.ViewModels
 
         #endregion
 
-        public void SetData(string data)
-        {
-            Debug.WriteLine("received data : " + data);
-        }
 
         #region - Commands -
 
@@ -187,7 +183,7 @@ namespace DialogEngine.ViewModels
                 .Permit(Triggers.Initialize,States.Init);
 
             StateMachine.Configure(States.Init)
-                .OnEntry(t => _initDialogData())
+                .OnEntry(t =>_initDialogData())
                 .Permit(Triggers.Idle, States.Idle);
 
             StateMachine.Configure(States.Idle)
@@ -648,10 +644,11 @@ namespace DialogEngine.ViewModels
 
 
 
-        private async Task _checkForMissingPhrasesAsync()
+        private  Task _checkForMissingPhrasesAsync()
         {
-            await Task.Run(() =>
+            return Task.Run(() =>
             {
+                Debug.WriteLine("Check for missing start");
                 Thread.CurrentThread.Name = "_checkForMissingPhrasesAsyncThread";
 
                 if (!SessionHelper.AudioDialogsOn)
@@ -674,15 +671,19 @@ namespace DialogEngine.ViewModels
                         }
                     }
                 }
+
+                Debug.WriteLine("Check for missing end");
+
             });
             //TODO check that all dialog models have unique names
         }
 
 
-        private async Task _checkTagsUsedAsync()
+        private  Task _checkTagsUsedAsync()
         {
-            await Task.Run(() =>
+            return Task.Run(() =>
             {
+                Debug.WriteLine("_checkTagsUsedAsync start");
                 Thread.CurrentThread.Name = "_checkTagsUsedAsyncThread";
 
                 //test that all character tags are used by a dialog model.
@@ -748,6 +749,8 @@ namespace DialogEngine.ViewModels
                                 LoggerHelper.Info(SessionHelper.DialogLogFileName, " " + _dialogTag + " not used in " + dialog.Name);
                             }
                         }
+                Debug.WriteLine("_checkTagsUsedAsync end");
+
             });
         }
 

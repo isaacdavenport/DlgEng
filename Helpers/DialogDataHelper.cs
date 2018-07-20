@@ -92,6 +92,7 @@ namespace DialogEngine.Helpers
                 {
                     foreach (var _wizard in _jsonObjectsTypesList.Wizards)
                     {
+
                         _wizard.FileName = _fileName;
                         _wizard.JsonArrayIndex = j;
                         j++;
