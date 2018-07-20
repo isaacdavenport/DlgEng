@@ -144,9 +144,6 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\SpinnerControl.xaml.cs">
-      <DependentUpon>SpinnerControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Converters\CharacterGenderConverter.cs" />
     <Compile Include="Converters\IsEnabledCancelBtnConverter.cs" />
     <Compile Include="Converters\IsEnabledDialogViewControlConverter.cs" />
@@ -371,10 +368,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\MediaPlayerControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\SpinnerControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

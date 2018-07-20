@@ -95,7 +95,7 @@
                   materialDesign:HintAssist.HintOpacity=".26" />
 
             <!-- Character prefix section -->
-            <Label Content="Character prefix: " 
+            <Label Content="Character initials: " 
                    Margin="0,15,0,0" 
                    Grid.Row="2" 
                    Grid.Column="0" 

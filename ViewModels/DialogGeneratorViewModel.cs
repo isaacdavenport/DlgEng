@@ -132,7 +132,7 @@ namespace DialogEngine.Controls.ViewModels
             }
             else if (e.OldItems != null)
             {
-
+                //TODO
             }
         }
 
@@ -287,8 +287,6 @@ namespace DialogEngine.Controls.ViewModels
 
                 if(CurrentState == States.Idle)
                 {
-                    //Debug.WriteLine("State :   " + CurrentState.ToString());
-                    //Debug.WriteLine("insideeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
                     mEventWaitHandle.Set();
                 }
             }
@@ -916,13 +914,11 @@ namespace DialogEngine.Controls.ViewModels
                         Debug.WriteLine(_selectedPhrase.DialogStr);
                         _playAudio(_pathAndFileName); // vb: code stops here so commented out for debugging purpose
 
-                        Debug.WriteLine("after playAudio");
 
                         if (!_dialogTrackerAndSerialComsCharactersSame()
                             && DialogViewModel.SelectedCharactersOn != 1)
                         {
                             mSameCharactersAsLast = false;
-                            Debug.WriteLine("izlaz");
                             return Triggers.WaitForNewCharacters; // the characters have moved  TODO break into charactersSame() and use also with prior
                         }
                         //Toggle character

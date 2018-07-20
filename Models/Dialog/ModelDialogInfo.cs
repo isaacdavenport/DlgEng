@@ -66,6 +66,5 @@ namespace DialogEngine.Models.Dialog
         public int JsonArrayIndex { get; set; }
         
         #endregion
-
     }
 }

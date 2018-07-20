@@ -1,9 +1,10 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 
 namespace DialogEngine.Models.Dialog
 {
-    public class Wizard
+    public class Wizard:IEquatable<Wizard>
     {
         [JsonProperty("WizardName")]
         public string WizardName { get; set; }
@@ -20,5 +21,9 @@ namespace DialogEngine.Models.Dialog
         [JsonIgnore]
         public int JsonArrayIndex { get; set; }
 
+        public bool Equals(Wizard other)
+        {
+            return this.WizardName.Equals(other.WizardName);
+        }
     }
 }

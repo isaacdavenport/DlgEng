@@ -26,6 +26,7 @@ namespace DialogEngine.Models.Dialog
         public event PropertyChangedEventHandler PropertyChanged;
         private List<PhraseEntry> mPhrases;
         private PhraseEntry mPhraseTotals;
+
         #endregion
 
         #region - public functions -
@@ -61,8 +62,6 @@ namespace DialogEngine.Models.Dialog
         }
 
 
-        //[JsonProperty("PhraseTotals")]
-        //public PhraseEntry PhraseTotals = new PhraseEntry();
         [Required]
         [JsonProperty("CharacterAge")]
         public int CharacterAge
