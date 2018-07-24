@@ -46,7 +46,8 @@ namespace DialogEngine.Controls.ViewModels
         private StateMachine mStateMachine;
         private States mCurrentState;
         private Random mRandom = new Random();
-        private EventWaitHandle mEventWaitHandle = new EventWaitHandle(false, EventResetMode.AutoReset);
+        private SelectedCharactersPairEventArgs mRandomSelectionDataCached;
+        private static EventWaitHandle mEventWaitHandle = new EventWaitHandle(false, EventResetMode.AutoReset);
         private EventWaitHandle mStateMachineWaitHandle = new EventWaitHandle(false, EventResetMode.AutoReset);
         private CancellationTokenSource mCancellationTokenSource;
         private CancellationTokenSource mStateMachineTaskTokenSource;
@@ -56,7 +57,6 @@ namespace DialogEngine.Controls.ViewModels
         private List<HistoricalDialog> mHistoricalDialogs = new List<HistoricalDialog>();
         private List<HistoricalPhrase> mHistoricalPhrases = new List<HistoricalPhrase>();
         private Queue<int> mRecentDialogs = new Queue<int>();
-        private Queue<SelectedCharactersPairEventArgs> mRandomSelectionList = new Queue<SelectedCharactersPairEventArgs>();
 
         #endregion
 
@@ -99,36 +99,7 @@ namespace DialogEngine.Controls.ViewModels
             {
                 Character _newCharacter = e.NewItems[0] as Character;
 
-                _newCharacter.PhraseTotals = new PhraseEntry();  // init PhraseTotals
-                _newCharacter.PhraseTotals.DialogStr = "phrase weights";
-                _newCharacter.PhraseTotals.FileName = "silence";
-                _newCharacter.PhraseTotals.PhraseRating = "G";
-                _newCharacter.PhraseTotals.PhraseWeights = new Dictionary<string, double>();
-                _newCharacter.PhraseTotals.PhraseWeights.Add("Greeting", 0.0f);
-
-                _removePhrasesOverParentalRating(_newCharacter);
-
-                //Calculate Phrase Weight Totals here.
-                foreach (var _curPhrase in _newCharacter.Phrases)
-                {
-                    foreach (var tag in _curPhrase.PhraseWeights.Keys)
-                    {
-                        if (_newCharacter.PhraseTotals.PhraseWeights.Keys.Contains(tag))
-                        {
-                            _newCharacter.PhraseTotals.PhraseWeights[tag] += _curPhrase.PhraseWeights[tag];
-                        }
-                        else
-                        {
-                            _newCharacter.PhraseTotals.PhraseWeights.Add(tag, _curPhrase.PhraseWeights[tag]);
-                        }
-                    }
-                }
-
-                for (var i = 0; i < Character.RecentPhrasesQueueSize && i < _newCharacter.Phrases.Count; i++)
-                {
-                    // we always deque after enque so this sets que size
-                    _newCharacter.RecentPhrases.Enqueue(_newCharacter.Phrases[0]);
-                }
+                _initializeCharacter(_newCharacter);
             }
             else if (e.OldItems != null)
             {
@@ -171,7 +142,6 @@ namespace DialogEngine.Controls.ViewModels
                 .Permit(Triggers.FinishDialog, States.DialogFinished);
 
             StateMachine.Configure(States.DialogFinished)
-                .OnEntry(t => _onDialogFinished())
                 .Permit(Triggers.WaitForNewCharacters, States.Idle);
         }
 
@@ -194,39 +164,7 @@ namespace DialogEngine.Controls.ViewModels
 
             foreach(Character character in mCharactersList)
             {
-                if (string.IsNullOrEmpty(character.CharacterName)) // if character is not loaded correctly we will skip character
-                    continue;
-
-                character.PhraseTotals = new PhraseEntry();  // init PhraseTotals
-                character.PhraseTotals.DialogStr = "phrase weights";
-                character.PhraseTotals.FileName = "silence";
-                character.PhraseTotals.PhraseRating = "G";
-                character.PhraseTotals.PhraseWeights = new Dictionary<string, double>();
-                character.PhraseTotals.PhraseWeights.Add("Greeting", 0.0f);
-
-                _removePhrasesOverParentalRating(character);
-
-                //Calculate Phrase Weight Totals here.
-                foreach (var _curPhrase in character.Phrases)
-                {
-                    foreach (var tag in _curPhrase.PhraseWeights.Keys)
-                    {
-                        if (character.PhraseTotals.PhraseWeights.Keys.Contains(tag))
-                        {
-                            character.PhraseTotals.PhraseWeights[tag] += _curPhrase.PhraseWeights[tag];
-                        }
-                        else
-                        {
-                            character.PhraseTotals.PhraseWeights.Add(tag,_curPhrase.PhraseWeights[tag]);
-                        }
-                    }
-                }
-
-                for (var i = 0; i < Character.RecentPhrasesQueueSize && i < character.Phrases.Count; i++)
-                {
-                    // we always deque after enque so this sets que size
-                    character.RecentPhrases.Enqueue(character.Phrases[0]);
-                }
+                _initializeCharacter(character);
             }
 
             // Fill the queue with greeting dialogs
@@ -237,22 +175,68 @@ namespace DialogEngine.Controls.ViewModels
         }
 
 
+        private void _initializeCharacter(Character character)
+        {
+            if (string.IsNullOrEmpty(character.CharacterName)) // if character is not loaded correctly we will skip character
+                return;
+
+            character.PhraseTotals = new PhraseEntry();  // init PhraseTotals
+            character.PhraseTotals.DialogStr = "phrase weights";
+            character.PhraseTotals.FileName = "silence";
+            character.PhraseTotals.PhraseRating = "G";
+            character.PhraseTotals.PhraseWeights = new Dictionary<string, double>();
+            character.PhraseTotals.PhraseWeights.Add("Greeting", 0.0f);
+
+            _removePhrasesOverParentalRating(character);
+
+            //Calculate Phrase Weight Totals here.
+            foreach (var _curPhrase in character.Phrases)
+            {
+                foreach (var tag in _curPhrase.PhraseWeights.Keys)
+                {
+                    if (character.PhraseTotals.PhraseWeights.Keys.Contains(tag))
+                    {
+                        character.PhraseTotals.PhraseWeights[tag] += _curPhrase.PhraseWeights[tag];
+                    }
+                    else
+                    {
+                        character.PhraseTotals.PhraseWeights.Add(tag, _curPhrase.PhraseWeights[tag]);
+                    }
+                }
+            }
+
+            for (var i = 0; i < Character.RecentPhrasesQueueSize && i < character.Phrases.Count; i++)
+            {
+                // we always deque after enque so this sets que size
+                character.RecentPhrases.Enqueue(character.Phrases[0]);
+            }
+        }
+
+
+
         private void _subscribeForEvents()
         {
-            EventAggregator.Instance.GetEvent<DialogDataLoadedEvent>().Subscribe(_dialogDataLoaded);
-            EventAggregator.Instance.GetEvent<DialogModelChangedEvent>().Subscribe(_dialogModelChanged);
-            EventAggregator.Instance.GetEvent<SelectedCharactersPairChangedEvent>().Subscribe(_selectedCharactersPairChanged);
+            EventAggregator.Instance.GetEvent<DialogDataLoadedEvent>().Subscribe(_onDialogDataLoaded);
+            EventAggregator.Instance.GetEvent<DialogModelChangedEvent>().Subscribe(_onDialogModelChanged);
+            EventAggregator.Instance.GetEvent<SelectedCharactersPairChangedEvent>().Subscribe(_onSelectedCharactersPairChanged);
+            EventAggregator.Instance.GetEvent<ChangedCharactersStateEvent>().Subscribe(_onChangedCharacterState);
+
             StateMachine.PropertyChanged += _stateMachine_PropertyChanged;
             DialogLinesCollection.CollectionChanged += _dialogLinesCollection_CollectionChanged;
         }
 
-        private void _onDialogFinished()
+        private void _onChangedCharacterState()
         {
+            if(CurrentState != States.Idle)
+            {
+                mRandomSelectionDataCached = null;
+                mStateMachineTaskTokenSource.Cancel();
+            }                            
         }
 
-        private void _dialogModelChanged(SelectionChangedEventArgs args)
+        private void _onDialogModelChanged(SelectionChangedEventArgs args)
         {
-            if(args.IsSelected)
+          if(args.IsSelected)
             {
                 mIndexOfCurrentDialogModel = args.Index;
                 mIsForcedDialogModel = true;
@@ -265,7 +249,7 @@ namespace DialogEngine.Controls.ViewModels
         }
 
 
-        private void _selectedCharactersPairChanged(SelectedCharactersPairEventArgs args)
+        private void _onSelectedCharactersPairChanged(SelectedCharactersPairEventArgs args)
         {
             if (SessionHelper.UseSerialPort)
             {
@@ -282,8 +266,7 @@ namespace DialogEngine.Controls.ViewModels
             }
             else
             {
-                Debug.WriteLine("Selection run");
-                mRandomSelectionList.Enqueue(args);
+                mRandomSelectionDataCached = args;
 
                 if(CurrentState == States.Idle)
                 {
@@ -295,6 +278,8 @@ namespace DialogEngine.Controls.ViewModels
         #endregion
 
         #region - dialog generator  helper functions -
+
+
 
         private void _addDialogModelToHistory(int _dialogModelIndex, int _ch1, int _ch2)
         {
@@ -439,6 +424,8 @@ namespace DialogEngine.Controls.ViewModels
 
                     do
                     {
+                        Thread.Sleep(800);
+
                         Dispatcher.Invoke(() =>
                         {
                             _isPlaying = MP3Player.Instance.IsPlaying();
@@ -449,7 +436,7 @@ namespace DialogEngine.Controls.ViewModels
                     }
                     while (_isPlaying && i < 400);  // don't get stuck,, 40 seconds max phrase
 
-                    Debug.WriteLine("playing finished");
+                    Debug.WriteLine("MP3 finishedeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
 
                     Thread.Sleep(800); // wait around a second after the audio is done for between phrase pause
                 }
@@ -463,16 +450,15 @@ namespace DialogEngine.Controls.ViewModels
             {
                 mcLogger.Error(" _playAudio " + ex.Message);
             }
-
-            Debug.WriteLine("exit play mp3");
         }
 
 
-        private bool _importClosestSerialComsCharacters()
+        private bool _importClosestCharacters()
         {
-            if (!SessionHelper.UseSerialPort)
+            
+            if (!SessionHelper.UseSerialPort)  // check is selection in random mode
             {
-                SelectedCharactersPairEventArgs args = mRandomSelectionList.Dequeue();
+                SelectedCharactersPairEventArgs args = mRandomSelectionDataCached;
 
                 mCharacter1Num = args.Character1Index;
                 mCharacter2Num = args.Character2Index;
@@ -785,7 +771,7 @@ namespace DialogEngine.Controls.ViewModels
 
         #region - dialog generator state machine  functions -
 
-        public void _dialogDataLoaded()
+        public void _onDialogDataLoaded()
         {
             StateMachine.Fire(Triggers.Initialize);
         }
@@ -798,7 +784,7 @@ namespace DialogEngine.Controls.ViewModels
             }
             else
             {
-                if(mRandomSelectionList.Count > 0)
+                if(mRandomSelectionDataCached != null)
                 {
                     return Triggers.PrepareDialogParameters;
                 }
@@ -816,22 +802,18 @@ namespace DialogEngine.Controls.ViewModels
         {
             try
             {
-                // used to stop  immediately function if new character are selected
-                Func<Task> action = async () =>
-                {
-                    mEventWaitHandle.WaitOne();
-                    throw new DialogGeneratorMethodCanceledException(); // throw exception which will cancel method
-                };
-                Task task = Task.Run(action);
-                token.Register(() => { mEventWaitHandle.Set(); }); // register callback if cancellation is request
-                // end
+                token.ThrowIfCancellationRequested();
 
-                if (!_importClosestSerialComsCharacters())
+                if (!_importClosestCharacters())
                     return Triggers.WaitForNewCharacters;
+
+                token.ThrowIfCancellationRequested();
 
                 mIndexOfCurrentDialogModel = mIsForcedDialogModel ?
                                              mIndexOfCurrentDialogModel
                                             : _pickAWeightedDialog(mCharacter1Num, mCharacter2Num);
+
+                token.ThrowIfCancellationRequested();
 
                 if (_waitingForMovement() || mSameCharactersAsLast && SessionHelper.WaitIndefinatelyForMove)
                     return Triggers.WaitForNewCharacters;
@@ -845,10 +827,7 @@ namespace DialogEngine.Controls.ViewModels
 
                 return Triggers.StartDialog;
             }
-            catch (DialogGeneratorMethodCanceledException)
-            {
-                // operation cancelled
-            }
+            catch (OperationCanceledException ex) { }
             catch (Exception ex)
             {
                 mcLogger.Error("_prepareDialogParameters " + ex.Message);
@@ -863,21 +842,13 @@ namespace DialogEngine.Controls.ViewModels
         {
             try
             {
-                // used to stop  immediately function if new character are selected
-                Func<Task> action = async() =>
-                {
-                    mEventWaitHandle.WaitOne();
-                    throw new DialogGeneratorMethodCanceledException(); // throw exception which will cancel method
-                };
-                Task task = Task.Run(action);
-                token.Register(() => { mEventWaitHandle.Set(); }); // register callback if cancellation is request
-                // end
-
                 var _speakingCharacter = mCharacter1Num;
                 var _selectedPhrase = mCharactersList[_speakingCharacter].Phrases[0]; //initialize to unused placeholder phrase
 
                 foreach (var _currentPhraseType in mDialogModelsList[mIndexOfCurrentDialogModel].PhraseTypeSequence)
                 {
+                    token.ThrowIfCancellationRequested();
+
                     if (mCharactersList[_speakingCharacter].PhraseTotals.PhraseWeights.ContainsKey(_currentPhraseType))
                     {
                         AddItem(new InfoMessage(mCharactersList[_speakingCharacter].CharacterName + ": "));
@@ -887,6 +858,8 @@ namespace DialogEngine.Controls.ViewModels
                             AddItem(new WarningMessage("Missing PhraseType: " + _currentPhraseType));
                         }
 
+                        token.ThrowIfCancellationRequested();
+
                         _selectedPhrase = _pickAWeightedPhrase(_speakingCharacter, _currentPhraseType);
 
                         if (_selectedPhrase == null)
@@ -894,6 +867,8 @@ namespace DialogEngine.Controls.ViewModels
                             AddItem(new WarningMessage("Phrase type " + _currentPhraseType + " was not found."));
                             continue;
                         }
+
+                        token.ThrowIfCancellationRequested();
 
                         AddItem(new InfoMessage(_selectedPhrase.DialogStr));
 
@@ -905,18 +880,19 @@ namespace DialogEngine.Controls.ViewModels
                             });
                         }
 
+                        token.ThrowIfCancellationRequested();
+
                         _addPhraseToHistory(_selectedPhrase, _speakingCharacter);
 
                         var _pathAndFileName = SessionHelper.WizardAudioDirectory
                                               + mCharactersList[_speakingCharacter].CharacterPrefix
                                               + "_" + _selectedPhrase.FileName + ".mp3";
-
-                        Debug.WriteLine(_selectedPhrase.DialogStr);
+                        Debug.WriteLine(_selectedPhrase.DialogStr + " started");
                         _playAudio(_pathAndFileName); // vb: code stops here so commented out for debugging purpose
 
 
                         if (!_dialogTrackerAndSerialComsCharactersSame()
-                            && DialogViewModel.SelectedCharactersOn != 1)
+                            && DialogViewModel.SelectedCharactersOn == 0)
                         {
                             mSameCharactersAsLast = false;
                             return Triggers.WaitForNewCharacters; // the characters have moved  TODO break into charactersSame() and use also with prior
@@ -941,16 +917,11 @@ namespace DialogEngine.Controls.ViewModels
                     mLastPhraseImpliedMovement = _determineIfMovementImplied(_selectedPhrase);
                 }
             }
-            catch (DialogGeneratorMethodCanceledException)
-            {
-                // operation cancelled
-            }
+            catch (OperationCanceledException){}
             catch (Exception ex)
             {
                 mcLogger.Error("_startDialog " + ex.Message);
             }
-
-            Debug.WriteLine("izlaz");
 
             return Triggers.WaitForNewCharacters;
         }

@@ -113,7 +113,7 @@ namespace DialogEngine.Services
                 try
                 {
                     bool _isNewCharacterSelected;
-                    DateTime _nextCharacterSwapTime = DateTime.Now.AddSeconds(12);
+                    DateTime _nextCharacterSwapTime = DateTime.Now; 
                     
                     while (true)
                     {
@@ -172,13 +172,12 @@ namespace DialogEngine.Services
                         {
                             Application.Current.Dispatcher.BeginInvoke(()=>
                             {
-                                //EventAggregator.Instance.GetEvent<StopPlayingCurrentDialogLineEvent>().Publish();
-
                                 EventAggregator.Instance.GetEvent<SelectedCharactersPairChangedEvent>()
                                     .Publish(new SelectedCharactersPairEventArgs() { Character1Index = NextCharacter1, Character2Index = NextCharacter2 });
 
                             },DispatcherPriority.Send);
 
+                            //_nextCharacterSwapTime = DateTime.Now.AddSeconds(12);
                         }
                     }
                 }

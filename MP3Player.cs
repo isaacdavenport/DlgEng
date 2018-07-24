@@ -28,7 +28,8 @@ namespace DialogEngine
         private static MP3Player msInstance = null;
         // length of .mp3 file in seconds
         private double mDuration;
-        private bool mIsFileLoaded;
+        private bool mIsLoaded;
+        private bool mIsPlayingStopped;
         // started time of playing .mp3 file
         private TimeSpan mStartedTime;
         private Timer mTimer;
@@ -54,6 +55,7 @@ namespace DialogEngine
             Player.MediaOpened += _player_MediaOpened;
             Player.MediaFailed += _player_MediaFailed;
         }
+
 
         #endregion
 
@@ -82,6 +84,7 @@ namespace DialogEngine
                     {
                         mVolumeTimer.Change(Timeout.Infinite,Timeout.Infinite);
                         Player.Stop();
+                        mIsPlayingStopped = true;
                         return;
                     }
                     else
@@ -97,18 +100,19 @@ namespace DialogEngine
         }
 
 
-        private void Player_BufferingEnded(object sender, EventArgs e)
-        {
-            mDuration = Player.NaturalDuration.TimeSpan.TotalSeconds;
-        }
-
-
         private void _player_MediaOpened(object sender, EventArgs e)
         {
-            if(Player.NaturalDuration.HasTimeSpan)
-            mDuration = Player.NaturalDuration.TimeSpan.TotalSeconds;
+            if (Player.NaturalDuration.HasTimeSpan)
+            {
+                mDuration = Player.NaturalDuration.TimeSpan.TotalSeconds;
+            }
+            else
+            {
+                Debug.WriteLine("Automatic duration automatic");
+            }
 
-            mIsFileLoaded = true;
+            Debug.WriteLine("loaded + " + mDuration);
+            mIsLoaded = true;
         }
 
 
@@ -143,6 +147,7 @@ namespace DialogEngine
                 try
                 {
                     Player.Stop();
+                    mIsPlayingStopped = true;
                 }
                 catch (Exception ex)
                 {
@@ -167,7 +172,8 @@ namespace DialogEngine
         {
             try
             {
-                mIsFileLoaded = false;
+                mIsPlayingStopped = false;
+                mIsLoaded = false;
                 mTimer.Change(Timeout.Infinite, Timeout.Infinite);
                 mVolumeTimer.Change(Timeout.Infinite, Timeout.Infinite);
 
@@ -195,10 +201,16 @@ namespace DialogEngine
         {
             try
             {
-                if (!mIsFileLoaded)
+                Debug.WriteLine(Player.Position.TotalSeconds);
+                if (mIsLoaded)
+                {
+                    return Player.Position.TotalSeconds < mDuration
+                           && !mIsPlayingStopped;
+                }
+                else
+                {
                     return true;
-
-                return (Player.Position.TotalSeconds > 0 && Player.Position.TotalSeconds < Player.NaturalDuration.TimeSpan.TotalSeconds);
+                }
             }
             catch (Exception ex)
             {
