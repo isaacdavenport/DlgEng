@@ -116,7 +116,7 @@
                                           HeadersVisibility="Column"  
                                           CanUserAddRows="False"
                                           Padding="0,0,0,4"
-                                          materialDesign:DataGridAssist.CellPadding="4 2 2 2"                                                   
+                                          materialDesign:DataGridAssist.CellPadding="4 4 4 4"                                                   
                                           materialDesign:DataGridAssist.ColumnHeaderPadding="4 4 4 4"
                                           EnableRowVirtualization="False"
                                           Background="White"
@@ -128,13 +128,10 @@
                                           AutoGenerateColumns="False">
                                 <DataGrid.Columns>
 
-                                    <DataGridTemplateColumn IsReadOnly="True"
-                                                                    Header=""
-                                                                    Width="auto"
-                                                                    >
+                                    <DataGridTemplateColumn IsReadOnly="True" Header=""  Width="30">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <TextBlock VerticalAlignment="Center" Text="{Binding RelativeSource={RelativeSource FindAncestor,  
+                                                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding RelativeSource={RelativeSource FindAncestor,  
                                                                                                      AncestorType={x:Type DataGridRow}},
                                                                                                      Converter={StaticResource RowIndexConverter}}" />
                                             </DataTemplate>
@@ -153,7 +150,7 @@
                                         
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{Binding CharacterName}" >
+                                                <TextBlock Grid.Column="0" Margin="0 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding CharacterName}" >
                                                     <TextBlock.ToolTip>
                                                         <Grid >
                                                             <Grid.ColumnDefinitions>
@@ -234,6 +231,7 @@
                                                 <Setter Property="HorizontalContentAlignment" Value="Center" />
                                                 <Setter Property="SeparatorBrush" Value="Transparent" />
                                                 <Setter Property="BorderThickness" Value="0 0 0 0" />
+                                                <Setter Property="Margin" Value="-20 0 0 0" />
                                                 <Setter Property="Background" Value="White" />
                                             </Style>
                                         </DataGridTemplateColumn.HeaderStyle>
@@ -242,7 +240,8 @@
                                             <DataTemplate>
                                                 <RadioButton GroupName="{Binding Path=CharacterName}" 
                                                              VerticalAlignment="Center" 
-                                                             HorizontalAlignment="Center" 
+                                                             HorizontalAlignment="Center"
+                                                             Margin="-15 0 0 0"
                                                              IsChecked="{Binding State,
                                                                                  Mode=TwoWay, 
                                                                                  UpdateSourceTrigger=PropertyChanged, 
@@ -260,6 +259,7 @@
                                                 <Setter Property="HorizontalContentAlignment" Value="Center" />
                                                 <Setter Property="SeparatorBrush" Value="Transparent" />
                                                 <Setter Property="BorderThickness" Value="0 0 0 0" />
+                                                <Setter Property="Margin" Value="-10 0 0 0" />
                                                 <Setter Property="Background" Value="White" />
                                             </Style>
                                         </DataGridTemplateColumn.HeaderStyle>
@@ -267,7 +267,8 @@
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
                                                 <RadioButton GroupName="{Binding Path=CharacterName}" 
-                                                             VerticalAlignment="Center" 
+                                                             VerticalAlignment="Center"
+                                                             Margin="-10 0 0 0"
                                                              HorizontalAlignment="Center" 
                                                              IsChecked="{Binding State, 
                                                                                  Mode=TwoWay,
@@ -286,6 +287,7 @@
                                                 <Setter Property="HorizontalContentAlignment" Value="Center" />
                                                 <Setter Property="BorderThickness" Value="0 0 0 0" />
                                                 <Setter Property="SeparatorBrush" Value="Transparent" />
+                                                <Setter Property="Margin" Value="-5 0 0 0" />
                                                 <Setter Property="Background" Value="White" />
                                             </Style>
                                         </DataGridTemplateColumn.HeaderStyle>
@@ -295,6 +297,7 @@
                                                 <RadioButton GroupName="{Binding Path=CharacterName}" 
                                                              HorizontalAlignment="Center" 
                                                              VerticalAlignment="Center"
+                                                             Margin="-5 0 0 0"
                                                              IsChecked="{Binding State, 
                                                                                  Mode=TwoWay,
                                                                                  UpdateSourceTrigger=PropertyChanged, 

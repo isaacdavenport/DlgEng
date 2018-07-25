@@ -321,56 +321,6 @@ namespace DialogEngine.ViewModels
             }
         }
 
-
-        // choose collection where to add object depend on type of argument
-        private void _processAddMessage(LogMessage entry)
-        {
-            try
-            {
-                if (entry is InfoMessage)
-                {
-                    InfoMessagesCollection.Insert(0, (InfoMessage)entry);
-                    int _length = InfoMessagesCollection.Count;
-
-                    if (_length > 300)
-                    {
-                        InfoMessagesCollection.RemoveAt(_length - 1);
-                    }
-
-                    OnPropertyChanged("InfoMessagesCollection");
-                }
-                else if (entry is WarningMessage)
-                {
-                    WarningMessagesCollection.Insert(0, (WarningMessage)entry);
-                    int _length = WarningMessagesCollection.Count;
-
-                    if (_length > 300)
-                    {
-                        WarningMessagesCollection.RemoveAt(_length - 1);
-                    }
-
-                    OnPropertyChanged("WarningMessagesCollection");
-                }
-                else
-                {
-                    ErrorMessagesCollection.Insert(0, (ErrorMessage)entry);
-                    int _length = ErrorMessagesCollection.Count;
-
-                    if (_length > 300)
-                    {
-                        ErrorMessagesCollection.RemoveAt(_length - 1);
-                    }
-
-                    OnPropertyChanged("ErrorMessagesCollection");
-                }
-            }
-            catch (Exception e)
-            {
-                mcLogger.Error("process_addMessage " + e.Message);
-            }
-        }
-
-
         private void _bindCommands()
         {
             GenerateDialog = new Core.RelayCommand(_x => _startDialog());
@@ -664,7 +614,7 @@ namespace DialogEngine.ViewModels
                         {
                             var _debugMessage = "Missing " + _character.CharacterPrefix + "_" + _phrase.FileName + ".mp3 " + _phrase.DialogStr;
 
-                            _addMessage(new WarningMessage(_debugMessage));
+                            DialogDataHelper.AddMessage(new WarningMessage(_debugMessage));
 
                             LoggerHelper.Info(SessionHelper.DialogLogFileName, "missing " 
                                               + _character.CharacterPrefix + "_" + _phrase.FileName + ".mp3 " + _phrase.DialogStr);
@@ -687,7 +637,7 @@ namespace DialogEngine.ViewModels
                 Thread.CurrentThread.Name = "_checkTagsUsedAsyncThread";
 
                 //test that all character tags are used by a dialog model.
-                _addMessage(new InfoMessage("Check characters tags are used "));
+                DialogDataHelper.AddMessage(new InfoMessage("Check characters tags are used "));
 
                 var _usedFlag = false;
 
@@ -713,7 +663,7 @@ namespace DialogEngine.ViewModels
 
                             if (!_usedFlag)
                             {
-                                _addMessage(new InfoMessage(" " + _phraseTag + " is not used."));
+                                DialogDataHelper.AddMessage(new InfoMessage(" " + _phraseTag + " is not used."));
                                 LoggerHelper.Info(SessionHelper.DialogLogFileName, " " + _phraseTag + " is not used.");
                             }
                         }
@@ -745,7 +695,7 @@ namespace DialogEngine.ViewModels
 
                             if (!_usedFlag)
                             {
-                                _addMessage(new InfoMessage(" " + _dialogTag + " not used in " + dialog.Name));
+                                DialogDataHelper.AddMessage(new InfoMessage(" " + _dialogTag + " not used in " + dialog.Name));
                                 LoggerHelper.Info(SessionHelper.DialogLogFileName, " " + _dialogTag + " not used in " + dialog.Name);
                             }
                         }
@@ -754,27 +704,6 @@ namespace DialogEngine.ViewModels
             });
         }
 
-        private void _addMessage(LogMessage _entry)
-        {
-            try
-            {
-                if (Dispatcher.CheckAccess())
-                {
-                    _processAddMessage(_entry);
-                }
-                else
-                {
-                    Dispatcher.BeginInvoke((Action)(() =>
-                    {
-                        _processAddMessage(_entry);
-                    }));
-                }
-            }
-            catch (Exception ex)
-            {
-                mcLogger.Error("Error during adding an item. " + ex.Message);
-            }
-        }
 
         // stops dialog
         private void _stopDialog()

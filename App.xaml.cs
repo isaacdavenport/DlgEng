@@ -69,7 +69,7 @@ namespace DialogEngine
             CharacterFormDialog dialog = e.Parameter == null ? new CharacterFormDialog() 
                                                              : new CharacterFormDialog(e.Parameter as Character);
 
-            await DialogHost.Show(dialog);            
+            await DialogHost.Show(dialog, "RootDialogHost");            
         }
 
         private async void _exportCharacter(object sender, ExecutedRoutedEventArgs e)
@@ -77,14 +77,14 @@ namespace DialogEngine
             ExportCharacterDialog dialog = e.Parameter == null ? new ExportCharacterDialog() 
                                                                : new ExportCharacterDialog(e.Parameter as Character);
 
-            await DialogHost.Show(dialog);
+            await DialogHost.Show(dialog, "RootDialogHost");
         }
 
         private async void _importCharacter(object sender, ExecutedRoutedEventArgs e)
         {
             ImportCharacterDialog dialog = new ImportCharacterDialog();
 
-            await DialogHost.Show(dialog);
+            await DialogHost.Show(dialog, "RootDialogHost");
         }
 
 
@@ -93,7 +93,7 @@ namespace DialogEngine
             EditWithJSONEditorDialog  dialog = e.Parameter == null ? new EditWithJSONEditorDialog()
                                                 : new EditWithJSONEditorDialog(e.Parameter as Character);
 
-            await DialogHost.Show(dialog);
+            await DialogHost.Show(dialog, "RootDialogHost");
         }
 
         #endregion 
