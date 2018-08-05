@@ -778,6 +778,9 @@ namespace DialogEngine.Controls.ViewModels
 
         private Triggers _waitForNewCharacters()
         {
+            // we no longer want to wait for new characters return next state at once
+            return Triggers.PrepareDialogParameters;
+
             if (SessionHelper.UseSerialPort)
             {
                 mEventWaitHandle.WaitOne();
@@ -815,8 +818,8 @@ namespace DialogEngine.Controls.ViewModels
 
                 token.ThrowIfCancellationRequested();
 
-                if (_waitingForMovement() || mSameCharactersAsLast && SessionHelper.WaitIndefinatelyForMove)
-                    return Triggers.WaitForNewCharacters;
+            //    if (_waitingForMovement() || mSameCharactersAsLast && SessionHelper.WaitIndefinatelyForMove)
+            //        return Triggers.WaitForNewCharacters;
 
                 _addDialogModelToHistory(mIndexOfCurrentDialogModel, mCharacter1Num, mCharacter2Num);
 

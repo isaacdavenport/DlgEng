@@ -718,7 +718,7 @@ namespace DialogEngine.ViewModels
         }
 
 
-        // starts new dialog
+        // starts new series of dialogs
         private async  void _startDialog()
         {
             try
