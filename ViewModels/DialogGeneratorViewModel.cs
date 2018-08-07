@@ -893,8 +893,8 @@ namespace DialogEngine.Controls.ViewModels
                         _playAudio(_pathAndFileName); // vb: code stops here so commented out for debugging purpose
 
 
-                        if (!_dialogTrackerAndSerialComsCharactersSame()
-                            && DialogViewModel.SelectedCharactersOn == 0)
+                        if (!_dialogTrackerAndSerialComsCharactersSame() && SessionHelper.UseSerialPort)
+                            //&& DialogViewModel.SelectedCharactersOn == 0)
                         {
                             mSameCharactersAsLast = false;
                             return Triggers.WaitForNewCharacters; // the characters have moved  TODO break into charactersSame() and use also with prior
