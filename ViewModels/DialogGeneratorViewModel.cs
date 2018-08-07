@@ -778,13 +778,16 @@ namespace DialogEngine.Controls.ViewModels
 
         private Triggers _waitForNewCharacters()
         {
+            // we no longer want to wait for new characters return next state at once
+            return Triggers.PrepareDialogParameters;
+
             if (SessionHelper.UseSerialPort)
             {
                 mEventWaitHandle.WaitOne();
             }
             else
             {
-                if(mRandomSelectionDataCached != null)
+                if (mRandomSelectionDataCached != null)
                 {
                     return Triggers.PrepareDialogParameters;
                 }
@@ -797,8 +800,7 @@ namespace DialogEngine.Controls.ViewModels
             return Triggers.PrepareDialogParameters;
         }
 
-
-        private async  Task<Triggers> _prepareDialogParameters(CancellationToken token)
+        private async Task<Triggers> _prepareDialogParameters(CancellationToken token)
         {
             try
             {
@@ -815,8 +817,8 @@ namespace DialogEngine.Controls.ViewModels
 
                 token.ThrowIfCancellationRequested();
 
-                if (_waitingForMovement() || mSameCharactersAsLast && SessionHelper.WaitIndefinatelyForMove)
-                    return Triggers.WaitForNewCharacters;
+                //    if (_waitingForMovement() || mSameCharactersAsLast && SessionHelper.WaitIndefinatelyForMove)
+                //        return Triggers.WaitForNewCharacters;
 
                 _addDialogModelToHistory(mIndexOfCurrentDialogModel, mCharacter1Num, mCharacter2Num);
 
@@ -838,7 +840,7 @@ namespace DialogEngine.Controls.ViewModels
 
 
 
-        private  async Task<Triggers>  _startDialog(CancellationToken token)
+        private async Task<Triggers>  _startDialog(CancellationToken token)
         {
             try
             {
