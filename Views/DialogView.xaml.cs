@@ -4,8 +4,6 @@
 using DialogEngine.Core;
 using System.Windows.Controls;
 using DialogEngine.ViewModels;
-using System;
-using DialogEngine.Helpers;
 using MaterialDesignThemes.Wpf;
 using System.Windows.Input;
 using System.Windows;
