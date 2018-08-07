@@ -50,7 +50,7 @@ namespace DialogEngine.Controls.ViewModels
         private static EventWaitHandle mEventWaitHandle = new EventWaitHandle(false, EventResetMode.AutoReset);
         private EventWaitHandle mStateMachineWaitHandle = new EventWaitHandle(false, EventResetMode.AutoReset);
         private CancellationTokenSource mCancellationTokenSource;
-        private CancellationTokenSource mStateMachineTaskTokenSource;
+        private CancellationTokenSource mStateMachineTaskTokenSource = new CancellationTokenSource();
         private ObservableCollection<Character> mCharactersList;
         private ObservableCollection<ModelDialog> mDialogModelsList = new ObservableCollection<ModelDialog>();
         private ObservableCollection<object> mDialogLinesCollection = new ObservableCollection<object>();
