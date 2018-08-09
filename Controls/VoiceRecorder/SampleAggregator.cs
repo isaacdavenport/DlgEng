@@ -44,11 +44,12 @@ namespace DialogEngine.Controls.VoiceRecorder
         {
             mChannelDataPosition = 0;
         }
-             
+
         /// <summary>
         /// Add a sample value to the aggregator.
         /// </summary>
-        /// <param name="value">The value of the sample.</param>
+        /// <param name="leftValue">The value of the sample.</param>
+        /// <param name="rightValue">The value of the sample.</param>
         public void Add(float leftValue, float rightValue)
         {            
             // Make stored channel data stereo by averaging left and right values.

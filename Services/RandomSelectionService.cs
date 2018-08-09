@@ -125,7 +125,7 @@ namespace DialogEngine.Services
 
                         if(_nextCharacterSwapTime.CompareTo(DateTime.Now) < 0)
                         {
-                            switch (DialogViewModel.SelectedCharactersOn)
+                            switch (DialogViewModel.NumberOfCharactersSetToOn)
                             {
                                 case 0:
                                     {

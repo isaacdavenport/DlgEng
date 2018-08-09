@@ -30,7 +30,7 @@ namespace DialogEngine.ViewModels
         private readonly string mcJsonEditorExeName = "JSONedit.exe";
         private readonly string mcJsonBkpFileName = "StarterCharacterWizard_Bkp.json";
         private string mSelectionModeName = "";
-        private StateMachine mStateMachine;
+        private StateMachine mViewModelStateMachine;
         private States mCurrentState;
 
         #endregion
@@ -39,19 +39,19 @@ namespace DialogEngine.ViewModels
 
         public MainWindowViewModel()
         {
-            StateMachine = new StateMachine
+            ViewModelStateMachine = new StateMachine
             (
                 action: () => { }
             );
 
-            StateMachine.PropertyChanged += _stateMachine_PropertyChanged;
+            ViewModelStateMachine.PropertyChanged += _stateMachine_PropertyChanged;
 
             _configureStateMachine();
             _bindCommands();
 
             EventAggregator.Instance.GetEvent<CharacterSelectionStartedEvent>().Subscribe(_selectionModeChanged);
 
-            StateMachine.Fire(Triggers.NavigateToDialogView);
+            ViewModelStateMachine.Fire(Triggers.NavigateToDialogView);
         }
 
         private void _selectionModeChanged(SelectionMode mode)
@@ -95,7 +95,7 @@ namespace DialogEngine.ViewModels
         {
             if (e.PropertyName.Equals("State"))
             {
-                CurrentState = StateMachine.State;
+                CurrentState = ViewModelStateMachine.State;
             }
         }
 
@@ -105,14 +105,14 @@ namespace DialogEngine.ViewModels
 
         private void _configureStateMachine()
         {
-            StateMachine.Configure(States.Start)
+            ViewModelStateMachine.Configure(States.Start)
                 .Permit(Triggers.NavigateToDialogView, States.DialogView)
                 .Permit(Triggers.NavigateToWizardView, States.WizardView);
 
-            StateMachine.Configure(States.DialogView)
+            ViewModelStateMachine.Configure(States.DialogView)
                 .Permit(Triggers.NavigateToWizardView, States.WizardView);
 
-            StateMachine.Configure(States.WizardView)
+            ViewModelStateMachine.Configure(States.WizardView)
                 .Permit(Triggers.NavigateToDialogView, States.DialogView);
         }
 
@@ -137,12 +137,12 @@ namespace DialogEngine.ViewModels
             {
                 case "WizardView":
                     {
-                        StateMachine.Fire(Triggers.NavigateToWizardView);
+                        ViewModelStateMachine.Fire(Triggers.NavigateToWizardView);
                         break;
                     }
                 case "DialogView":
                     {
-                        StateMachine.Fire(Triggers.NavigateToDialogView);
+                        ViewModelStateMachine.Fire(Triggers.NavigateToDialogView);
                         break;
                     }
             }
@@ -181,13 +181,13 @@ namespace DialogEngine.ViewModels
 
         #region - properties -
 
-        public StateMachine StateMachine
+        public StateMachine ViewModelStateMachine
         {
-            get { return mStateMachine; }
+            get { return mViewModelStateMachine; }
             set
             {
-                mStateMachine = value;
-                OnPropertyChanged("StateMachine");
+                mViewModelStateMachine = value;
+                OnPropertyChanged("SerialStateMachine");
             }
         }
 

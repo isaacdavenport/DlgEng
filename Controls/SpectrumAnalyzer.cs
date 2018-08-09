@@ -876,8 +876,8 @@ namespace DialogEngine.Controls.VoiceRecorder
         /// <summary>
         /// Called after the <see cref="FFTComplexity"/> value has changed.
         /// </summary>
-        /// <param name="oldValue">The previous value of <see cref="FFTComplexity"/></param>
-        /// <param name="newValue">The new value of <see cref="FFTComplexity"/></param>
+        /// <param name="_oldValue">The previous value of <see cref="FFTComplexity"/></param>
+        /// <param name="_newValue">The new value of <see cref="FFTComplexity"/></param>
         protected virtual void _onFFTComplexityChanged(FFTDataSize _oldValue, FFTDataSize _newValue)
         {
             mChannelData = new float[((int)_newValue / 2)];

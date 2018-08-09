@@ -34,7 +34,7 @@ namespace DialogEngine.Services
         private bool mIsSerialMode;
         private SerialPort mSerialPort;
         private States mCurrentState;
-        private StateMachine mStateMachine;
+        private StateMachine mSerialStateMachine;
         private readonly DispatcherTimer mcHeatMapUpdateTimer = new DispatcherTimer();
         private CancellationTokenSource mCancellationTokenSource;
         private Random mRandom = new Random();
@@ -56,13 +56,13 @@ namespace DialogEngine.Services
 
         public SerialSelectionService()
         {
-            StateMachine = new StateMachine
+            SerialStateMachine = new StateMachine
             (
                 action: () => { } // no action for start state
             );
 
             _configureStateMachine();
-            StateMachine.PropertyChanged += _stateMachine_PropertyChanged;
+            SerialStateMachine.PropertyChanged += _stateMachine_PropertyChanged;
             mcHeatMapUpdateTimer.Interval = TimeSpan.FromSeconds(3);
             mcHeatMapUpdateTimer.Tick += _heatMapUpdateTimer_Tick;
         }
@@ -74,7 +74,7 @@ namespace DialogEngine.Services
         private void _stateMachine_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName.Equals("State"))
-                mCurrentState = StateMachine.State;
+                mCurrentState = SerialStateMachine.State;
         }
 
 
@@ -94,42 +94,42 @@ namespace DialogEngine.Services
 
         private void _configureStateMachine()
         {
-            StateMachine.Configure(States.Start)
+            SerialStateMachine.Configure(States.Start)
                 .Permit(Triggers.Initialize, States.Init);
 
-            StateMachine.Configure(States.Init)
+            SerialStateMachine.Configure(States.Init)
                 .Permit(Triggers.ReadMessage, States.ReadMessage)
                 .Permit(Triggers.SerialPortNameError, States.SerialPortNameError)
                 .Permit(Triggers.Finish, States.Finish);
 
-            StateMachine.Configure(States.Idle)
+            SerialStateMachine.Configure(States.Idle)
                 .Permit(Triggers.ReadMessage, States.ReadMessage)
                 .Permit(Triggers.Finish, States.Finish);
 
-            StateMachine.Configure(States.SerialPortNameError)
+            SerialStateMachine.Configure(States.SerialPortNameError)
                 .Permit(Triggers.Initialize, States.Init)
                 .Permit(Triggers.Start, States.Start);
 
-            StateMachine.Configure(States.USB_disconnectedError)
+            SerialStateMachine.Configure(States.USB_disconnectedError)
                 .Permit(Triggers.Initialize, States.Init)
                 .Permit(Triggers.Finish, States.Finish);
 
-            StateMachine.Configure(States.ReadMessage)
+            SerialStateMachine.Configure(States.ReadMessage)
                 .Permit(Triggers.FindClosestPair, States.FindClosestPair)
                 .Permit(Triggers.USB_disconnectedError, States.USB_disconnectedError)
                 .Permit(Triggers.Idle, States.Idle)
                 .Permit(Triggers.Finish, States.Finish);
                 
-            StateMachine.Configure(States.FindClosestPair)
+            SerialStateMachine.Configure(States.FindClosestPair)
                 .Permit(Triggers.ReadMessage, States.ReadMessage)
                 .Permit(Triggers.SelectNextCharacters, States.SelectNextCharacters)
                 .Permit(Triggers.Finish, States.Finish);
 
-            StateMachine.Configure(States.SelectNextCharacters)
+            SerialStateMachine.Configure(States.SelectNextCharacters)
                 .Permit(Triggers.ReadMessage, States.ReadMessage)
                 .Permit(Triggers.Finish, States.Finish);
 
-            StateMachine.Configure(States.Finish)
+            SerialStateMachine.Configure(States.Finish)
                 .OnEntry(t => _finishSelection())
                 .Permit(Triggers.Start,States.Start);
                 
@@ -192,7 +192,7 @@ namespace DialogEngine.Services
                 mcLogger.Error("_finishSelection " + ex.Message);
             }
 
-            StateMachine.Fire(Triggers.Start);
+            SerialStateMachine.Fire(Triggers.Start);
         }
 
 
@@ -547,66 +547,66 @@ namespace DialogEngine.Services
             return Task.Run(async () =>
             {
                 Thread.CurrentThread.Name = "SerialSelectionService";
-                StateMachine.Fire(Triggers.Initialize);
+                SerialStateMachine.Fire(Triggers.Initialize);
                 mCancellationTokenSource = new CancellationTokenSource();
 
                 do
                 {
-                    switch (StateMachine.State)
+                    switch (SerialStateMachine.State)
                     {
                         case States.Init:
                             {
                                 Triggers _nextTrigger = _initSerial();
 
-                                StateMachine.Fire(_nextTrigger);
+                                SerialStateMachine.Fire(_nextTrigger);
                                 break;
                             }
                         case States.SerialPortNameError:
                             {
                                 Triggers _nextTrigger = await _serialPortError();
 
-                                StateMachine.Fire(_nextTrigger);
+                                SerialStateMachine.Fire(_nextTrigger);
                                 break;
                             }
                         case States.Idle:
                             {
                                 Triggers _nextTrigger = _idle();
 
-                                StateMachine.Fire(_nextTrigger);
+                                SerialStateMachine.Fire(_nextTrigger);
                                 break;
                             }
                         case States.ReadMessage:
                             {
                                 Triggers _nextTrigger = _readMessage();
 
-                                StateMachine.Fire(_nextTrigger);
+                                SerialStateMachine.Fire(_nextTrigger);
                                 break;
                             }
                         case States.FindClosestPair:
                             {
                                 Triggers _nextTrigger = _findBiggestRssiPair();
 
-                                StateMachine.Fire(_nextTrigger);
+                                SerialStateMachine.Fire(_nextTrigger);
                                 break;
                             }
                         case States.SelectNextCharacters:
                             {
                                 Triggers _nextTrigger = _selectNextCharacters();
 
-                                StateMachine.Fire(_nextTrigger);
+                                SerialStateMachine.Fire(_nextTrigger);
                                 break;
                             }
                         case States.USB_disconnectedError:
                             {
                                 Triggers _nextTrigger = await _usbDisconectedError();
 
-                                StateMachine.Fire(_nextTrigger);
+                                SerialStateMachine.Fire(_nextTrigger);
                                 break;
                             }
                     }
                 } while (!mCancellationTokenSource.Token.IsCancellationRequested);
 
-                StateMachine.Fire(Triggers.Finish);
+                SerialStateMachine.Fire(Triggers.Finish);
             });
         }
 
@@ -620,12 +620,12 @@ namespace DialogEngine.Services
 
         #region - properties -
 
-        public StateMachine StateMachine
+        public StateMachine SerialStateMachine
         {
-            get { return mStateMachine; }
+            get { return mSerialStateMachine; }
             set
             {
-                mStateMachine = value;
+                mSerialStateMachine = value;
             }
         }
 

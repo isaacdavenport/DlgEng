@@ -46,7 +46,7 @@ namespace DialogEngine.ViewModels
         private string mCharacter1Prefix = "--";
         private string mCharacter2Prefix = "--";
         private bool mRSSIstable;
-        private StateMachine mStateMachine;
+        private StateMachine mDialogViewModelStateMachine;
         private States mCurrentState;
         private DialogGeneratorViewModel mDialogGeneratorViewModel;
         private DialogView mView; 
@@ -57,7 +57,7 @@ namespace DialogEngine.ViewModels
         private SerialSelectionService mSerialSelectionService;
         private ICharacterSelection mCurrentSelectionService;
 
-        public static int SelectedCharactersOn;
+        public static int NumberOfCharactersSetToOn;
         public static int SelectedIndex1;
         public static int SelectedIndex2;
 
@@ -71,7 +71,7 @@ namespace DialogEngine.ViewModels
         public DialogViewModel(DialogView view)
         {
             mView = view;
-            StateMachine = new StateMachine
+            DialogViewModelStateMachine = new StateMachine
                 (
                  action: () => { }
                 );
@@ -84,7 +84,7 @@ namespace DialogEngine.ViewModels
             _subscribeForEvents();
             _bindCommands();
 
-            StateMachine.Fire(Triggers.Initialize);
+            DialogViewModelStateMachine.Fire(Triggers.Initialize);
 
             Version version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
             DateTime buildDate = new DateTime(2000, 1, 1)
@@ -171,7 +171,7 @@ namespace DialogEngine.ViewModels
         {
             if (e.PropertyName.Equals("State"))
             {
-                CurrentState = StateMachine.State;
+                CurrentState = DialogViewModelStateMachine.State;
             }
         }
 
@@ -187,24 +187,24 @@ namespace DialogEngine.ViewModels
 
         private void _configureStateMachine()
         {
-            StateMachine.Configure(States.Start)
+            DialogViewModelStateMachine.Configure(States.Start)
                 .Permit(Triggers.Initialize,States.Init);
 
-            StateMachine.Configure(States.Init)
+            DialogViewModelStateMachine.Configure(States.Init)
                 .OnEntry(t =>_initDialogData())
                 .Permit(Triggers.Idle, States.Idle);
 
-            StateMachine.Configure(States.Idle)
+            DialogViewModelStateMachine.Configure(States.Idle)
                 .Permit(Triggers.StartRadnomSelection, States.RandomSelectionStarted)
                 .Permit(Triggers.StartSerialSelection, States.SerialSelectionStarted);
 
-            StateMachine.Configure(States.CharacterSelectionStarted)
+            DialogViewModelStateMachine.Configure(States.CharacterSelectionStarted)
                 .Permit(Triggers.Idle, States.Idle);
 
-            StateMachine.Configure(States.RandomSelectionStarted)
+            DialogViewModelStateMachine.Configure(States.RandomSelectionStarted)
                 .SubstateOf(States.CharacterSelectionStarted);
 
-            StateMachine.Configure(States.SerialSelectionStarted)
+            DialogViewModelStateMachine.Configure(States.SerialSelectionStarted)
                 .SubstateOf(States.CharacterSelectionStarted);
         }
 
@@ -214,7 +214,7 @@ namespace DialogEngine.ViewModels
             EventAggregator.Instance.GetEvent<ChangedCharactersStateEvent>().Subscribe(_onChangedCharacterState);
             EventAggregator.Instance.GetEvent<ChangedModelDialogStateEvent>().Subscribe(_onChangedModelDialogState);
             DialogData.Instance.PropertyChanged += _dialogData_PropertyChanged;
-            StateMachine.PropertyChanged += _stateMachine_PropertyChanged;
+            DialogViewModelStateMachine.PropertyChanged += _stateMachine_PropertyChanged;
             DialogData.Instance.CharacterCollection.CollectionChanged += CharacterCollection_CollectionChanged;
         }
 
@@ -239,18 +239,18 @@ namespace DialogEngine.ViewModels
 
             _setCharacterToRadioBindings();
 
-            StateMachine.Fire(Triggers.Idle);
+            DialogViewModelStateMachine.Fire(Triggers.Idle);
         }
 
 
-        // refresh SelectedCharactersOn when character state is changed
+        // refresh NumberOfCharactersSetToOn when character state is changed
         private void _onChangedCharacterState()
         {
             try
             {
                 int result = 0;
                 int index = 0;
-                SelectedCharactersOn = 0;
+                NumberOfCharactersSetToOn = 0;
                 SelectedIndex1 = -1;
                 SelectedIndex2 = -1;
 
@@ -266,15 +266,15 @@ namespace DialogEngine.ViewModels
                         field.SetValue(null, index);
                         result += 1;
 
-                        if (result == 2)
+                        if (result >= 2)
                             break;
                     }
                     index++;
                 }
 
-                SelectedCharactersOn = result;
+                NumberOfCharactersSetToOn = result;
 
-                OnPropertyChanged("SelectedCharactersOn");
+                OnPropertyChanged("NumberOfCharactersSetToOn");
 
                 // when state of character changed, we want to cancel current dialog and reset MP3 player
                 EventAggregator.Instance.GetEvent<StopPlayingCurrentDialogLineEvent>().Publish();
@@ -716,7 +716,7 @@ namespace DialogEngine.ViewModels
             mCurrentSelectionService.Stop();
             mDialogGeneratorViewModel.StopDialogGenerator();
 
-            StateMachine.Fire(Triggers.Idle);
+            DialogViewModelStateMachine.Fire(Triggers.Idle);
         }
 
 
@@ -728,14 +728,14 @@ namespace DialogEngine.ViewModels
                 if (SessionHelper.UseSerialPort)
                 {
                     mCurrentSelectionService = mSerialSelectionService;
-                    StateMachine.Fire(Triggers.StartSerialSelection);
+                    DialogViewModelStateMachine.Fire(Triggers.StartSerialSelection);
 
                     EventAggregator.Instance.GetEvent<CharacterSelectionStartedEvent>().Publish(Models.Enums.SelectionMode.Serial);
                 }
                 else
                 {
                     mCurrentSelectionService = mRandomSelectionService;
-                    StateMachine.Fire(Triggers.StartRadnomSelection);
+                    DialogViewModelStateMachine.Fire(Triggers.StartRadnomSelection);
 
                     EventAggregator.Instance.GetEvent<CharacterSelectionStartedEvent>().Publish(Models.Enums.SelectionMode.Random);
                 }
@@ -754,8 +754,8 @@ namespace DialogEngine.ViewModels
             EventAggregator.Instance.GetEvent<CharacterSelectionStartedEvent>().Publish(Models.Enums.SelectionMode.NoSelection);
 
 
-            if (StateMachine.CanFire(Triggers.Idle))
-                StateMachine.Fire(Triggers.Idle);    
+            if (DialogViewModelStateMachine.CanFire(Triggers.Idle))
+                DialogViewModelStateMachine.Fire(Triggers.Idle);    
         }
 
 
@@ -764,13 +764,13 @@ namespace DialogEngine.ViewModels
         #region - Properties -
 
 
-        public StateMachine StateMachine
+        public StateMachine DialogViewModelStateMachine
         {
-            get { return mStateMachine; }
+            get { return mDialogViewModelStateMachine; }
             set
             {
-                mStateMachine = value;
-                OnPropertyChanged("StateMachine");
+                mDialogViewModelStateMachine = value;
+                OnPropertyChanged("SerialStateMachine");
             }
         }
 
