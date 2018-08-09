@@ -79,19 +79,6 @@ namespace DialogEngine.Helpers
             }
         }
 
-        public static  bool AudioDialogsOn
-        {
-            get
-            {
-                string result = ConfigHelper.Instance.GetValue("AudioDialogsOn");
-
-                if (result != null)
-                    return bool.Parse(result);
-                else
-                    return true;
-            }
-        }
-
         public static  bool TextDialogsOn
         {
             get

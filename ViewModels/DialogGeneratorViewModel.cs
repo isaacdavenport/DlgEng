@@ -5,11 +5,9 @@ using DialogEngine.Events.DialogEvents;
 using DialogEngine.Events.EventArgs;
 using DialogEngine.Helpers;
 using DialogEngine.Models.Dialog;
-using DialogEngine.Models.Exceptions;
 using DialogEngine.Models.Logger;
 using DialogEngine.Models.Shared;
 using DialogEngine.Services;
-using DialogEngine.ViewModels;
 using DialogEngine.Workflows.DialogGeneratorWorkflow;
 using log4net;
 using System;
@@ -311,12 +309,6 @@ namespace DialogEngine.Controls.ViewModels
         {
             try
             {
-                if (!SessionHelper.AudioDialogsOn)
-                {
-                    Thread.Sleep(3200);
-                    return;
-                }
-
                 if (File.Exists(_pathAndFileName))
                 {
                     var i = 0;
@@ -749,8 +741,6 @@ namespace DialogEngine.Controls.ViewModels
 
         private async Task<Triggers>  _startDialog(CancellationToken token)
         {
-          // TODO why didn't this work?   Thread.CurrentThread.Name = "_startDialog";
-
             try
             {
                 var _speakingCharacter = mCharacter1Num;
@@ -787,7 +777,8 @@ namespace DialogEngine.Controls.ViewModels
                         {
                             Dispatcher.Invoke(() =>
                             {
-                                DialogLinesCollection.Add(new DialogItem() { Character = mCharactersList[_speakingCharacter], PhraseEntry = _selectedPhrase });
+                                DialogLinesCollection.Add(new DialogItem() { Character = 
+                                    mCharactersList[_speakingCharacter], PhraseEntry = _selectedPhrase });
                             });
                         }
 

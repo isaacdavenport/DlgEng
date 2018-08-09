@@ -601,16 +601,12 @@ namespace DialogEngine.ViewModels
         }
 
 
-
         private  Task _checkForMissingPhrasesAsync()
         {
             return Task.Run(() =>
             {
                 Debug.WriteLine("Check for missing start");
                 Thread.CurrentThread.Name = "_checkForMissingPhrasesAsyncThread";
-
-                if (!SessionHelper.AudioDialogsOn)
-                    return;
 
                 foreach (var _character in CharacterCollection)
                 {
@@ -629,11 +625,9 @@ namespace DialogEngine.ViewModels
                         }
                     }
                 }
-
                 Debug.WriteLine("Check for missing end");
-
             });
-            //TODO check that all dialog models have unique names
+            //TODO check that all dialog models have unique names and that MPAA ratings like PG13 are all correct
         }
 
 

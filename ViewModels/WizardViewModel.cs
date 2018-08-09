@@ -35,7 +35,6 @@ namespace DialogEngine.ViewModels
         private string mCurrentVideoFilePath;
         private string mDialogStr;
         private bool mIsPlayingLineInContext;
-        private bool mIsEditMode;
         private bool mIsPhraseEditable;
         private States mCurrentState;
         private PhraseEntry mCurrentPhrase;
