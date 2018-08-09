@@ -30,7 +30,6 @@ namespace DialogEngine.Controls.ViewModels
 
         private static readonly ILog mcLogger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private const int RecentDialogsQueSize = 6;
-        private static int msMovementWaitCount;
         private int mPriorCharacter1Num = 100;
         private int mPriorCharacter2Num = 100;
         private int mCharacter1Num = 0;
@@ -47,7 +46,6 @@ namespace DialogEngine.Controls.ViewModels
         private Random mRandom = new Random();
         private SelectedCharactersPairEventArgs mRandomSelectionDataCached;
         private static EventWaitHandle mEventWaitHandle = new EventWaitHandle(false, EventResetMode.AutoReset);
-        private EventWaitHandle mStateMachineWaitHandle = new EventWaitHandle(false, EventResetMode.AutoReset);
         private CancellationTokenSource mCancellationTokenSource;
         private CancellationTokenSource mStateMachineTaskTokenSource = new CancellationTokenSource();
         private ObservableCollection<Character> mCharactersList;
@@ -415,10 +413,8 @@ namespace DialogEngine.Controls.ViewModels
             while (!_dialogModelFits && _attempts < 4000)
             {
                 _attempts++;
-                // exclude greetings at 0 and 1 TODO use .Greeting instead of hard coded const
                 _dialogWeightIndex = mRandom.NextDouble();
-                _dialogWeightIndex *= mDialogModelPopularitySum - 0.4;
-                _dialogWeightIndex += 0.4; // TODO better way to avoid greetings than by weight 0.2 each
+                _dialogWeightIndex *= mDialogModelPopularitySum;
                 double _currentDialogWeightSum = 0;
 
                 foreach (var _dialog in mDialogModelsList)
@@ -433,15 +429,18 @@ namespace DialogEngine.Controls.ViewModels
                 }
 
                 var _dialogModelUsedRecently = _checkIfDialogModelUsedRecently(_dialogModel);
-
-                var _charactersHavePhrases = checkIfCharactersHavePhrasesForDialog(_dialogModel, mCharacter1Num, mCharacter2Num);
-
+                var _charactersHavePhrases = checkIfCharactersHavePhrasesForDialog(_dialogModel,
+                    mCharacter1Num, mCharacter2Num);
                 var _dialogPreRequirementsMet = _checkIfDialogPreRequirementMet(_dialogModel);
+                // don't want a greeting with same characters as last
+                var _greetingAppropriate = !(mDialogModelsList[_dialogModel].PhraseTypeSequence[0].Equals("Greeting")
+                                             && mSameCharactersAsLast);
 
-                var _greetingAppropriate = !(mDialogModelsList[_dialogModel].PhraseTypeSequence[0].Equals("Greeting") && mSameCharactersAsLast); // don't want a greeting with same characters as last
-
-                if (_dialogPreRequirementsMet && _charactersHavePhrases && _greetingAppropriate && !_dialogModelUsedRecently)
+                if (_dialogPreRequirementsMet && _charactersHavePhrases && _greetingAppropriate &&
+                    !_dialogModelUsedRecently)
+                {
                     _dialogModelFits = true;
+                }
             }
 
             return _dialogModel;
