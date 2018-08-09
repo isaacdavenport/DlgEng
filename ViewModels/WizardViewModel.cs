@@ -349,16 +349,23 @@ namespace DialogEngine.ViewModels
 
         private string _tutorialStepFilePath()
         {
-            int _indexForSplitting = CurrentTutorialStep.VideoFileName.IndexOf("Wiz");
-            string _videoFileName = CurrentTutorialStep.VideoFileName.Substring(_indexForSplitting + 3);
+            string _fileName = "";
 
-            if (string.IsNullOrEmpty(_videoFileName))
+            // we can't guarantee the order in the dictionary, so we just grab the first string for phrase type
+            // that makes the most useful prefix for the mp3 filename, but they may record multiple greetings or
+            // insults so we need to add a unique identifier to the end.  We use the date to do that.
+            foreach (var phrase in CurrentTutorialStep.PhraseWeights)
+            {
+                _fileName = phrase.Key + "_" + DateTime.Now.ToString("yyyy-dd-MM-HH-mm-ss");
+            }
+
+            if (string.IsNullOrEmpty(_fileName))
             {
                 return "";
             }
             else
             {
-                string _mp3FilePath = Character.CharacterPrefix + "_" + _videoFileName;
+                string _mp3FilePath = Character.CharacterPrefix + "_" + _fileName;
 
                 return _mp3FilePath;
             }
@@ -382,30 +389,15 @@ namespace DialogEngine.ViewModels
                 if (CurrentTutorialStep.CollectUserInput)
                 {
                     VoiceRecorderControlViewModel.CurrentFilePath = _tutorialStepFilePath();
-
-                    PhraseEntry _currentPhrase = _findPhraseInCharacterForTutorialStep(CurrentTutorialStep);
-
-                    if (_currentPhrase != null)
-                    {
-                        DialogStr = _currentPhrase.DialogStr;
-                        VoiceRecorderControlViewModel.CurrentFilePath = Character.CharacterPrefix + "_" + _currentPhrase.FileName;
-                        VoiceRecorderControlViewModel.IsLineRecorded = true;
-                        mIsPhraseEditable = true;
-                        mCurrentPhrase = _currentPhrase;
-                    }
-                    else
-                    {
-                        mIsPhraseEditable = false;
-                        DialogStr = "";
-                        mVoiceRecorderControlViewModel.ResetData();
-                    }
+                    mIsPhraseEditable = false;
+                    DialogStr = "";
+                    mVoiceRecorderControlViewModel.ResetData();
                 }
                 else
                 {
                     VoiceRecorderControlViewModel.ResetData();
                     DialogStr = "";
                 }
-
             }
             catch (Exception ex)
             {
