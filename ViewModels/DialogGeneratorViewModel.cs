@@ -401,8 +401,8 @@ namespace DialogEngine.Controls.ViewModels
                 if (_nextAdventureDialogIdx > 0 && _nextAdventureDialogIdx < mDialogModelsList.Count)
                     return _nextAdventureDialogIdx; // we have an adventure dialog for these characters go with it
             }
-
-            while (!_dialogModelFits && _attempts < 30000)
+            int _max_attempts = 30000;
+            while (!_dialogModelFits && _attempts < _max_attempts)
             {
                 _attempts++;
                 _dialogWeightIndex = mRandom.NextDouble();
