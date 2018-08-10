@@ -102,7 +102,7 @@ namespace DialogEngine.Dialogs
                 foreach(FileInfo _jsonFile in _jsonFiles)
                 {
                     DialogDataHelper.ProcessJSONFile(_jsonFile);
-                    File.Copy(_jsonFile.FullName, SessionHelper.WizardDirectory,true);
+                    File.Copy(_jsonFile.FullName, Path.Combine(SessionHelper.WizardDirectory, _jsonFile.Name),true);
                 }
 
                 // process .mp3 files
@@ -111,7 +111,7 @@ namespace DialogEngine.Dialogs
 
                 foreach (FileInfo _mp3File in _mp3Files)
                 {
-                    File.Copy(_mp3File.FullName, SessionHelper.WizardAudioDirectory,true);
+                    File.Copy(_mp3File.FullName, Path.Combine(SessionHelper.WizardAudioDirectory, _mp3File.Name),true);
                 }
             }
             catch (System.Exception ex)
