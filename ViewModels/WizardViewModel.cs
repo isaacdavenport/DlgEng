@@ -45,6 +45,7 @@ namespace DialogEngine.ViewModels
         private Wizard mCurrentWizard;
         private TutorialStep mCurrentTutorialStep;
         private CancellationTokenSource mCancellationTokenSource;
+        private string mUnPrefixedMp3FileName;
 
         #endregion
 
@@ -327,48 +328,23 @@ namespace DialogEngine.ViewModels
             CurrentVideoFilePath = _tutorialStepVideoFilePathCache;
         }
 
-        private PhraseEntry _findPhraseInCharacterForTutorialStep(TutorialStep _tutorialStep)
-        {
-            foreach (PhraseEntry phrase in Character.Phrases)
-            {
-                if (!string.IsNullOrEmpty(phrase.FileName))
-                {
-                    // file name is formed as BO_Greeting.mp3
-                    string _userRecordedFileName = phrase.FileName;
-                    // DPWizGiveCredit tag name is right side of 'Wiz'
-                    int _indexForSplitting = _tutorialStep.VideoFileName.IndexOf("Wiz");
-                    string _tagName = _tutorialStep.VideoFileName.Substring(_indexForSplitting + 3);
-
-                    if (_userRecordedFileName.Equals(_tagName))
-                        return phrase;
-                }
-            }
-
-            return null;
-        }
 
         private string _tutorialStepFilePath()
         {
-            string _fileName = "";
-
             // we can't guarantee the order in the dictionary, so we just grab the first string for phrase type
             // that makes the most useful prefix for the mp3 filename, but they may record multiple greetings or
             // insults so we need to add a unique identifier to the end.  We use the date to do that.
             foreach (var phrase in CurrentTutorialStep.PhraseWeights)
             {
-                _fileName = phrase.Key + "_" + DateTime.Now.ToString("yyyy-dd-MM-HH-mm-ss");
+                mUnPrefixedMp3FileName = phrase.Key + "_" + DateTime.Now.ToString("yyyy-dd-MM-HH-mm-ss");
+                break;  //just get the filename preamble from the first phraseType/phraseWeight like greeting or exclamation
             }
 
-            if (string.IsNullOrEmpty(_fileName))
+            if (string.IsNullOrEmpty(mUnPrefixedMp3FileName))
             {
                 return "";
             }
-            else
-            {
-                string _mp3FilePath = Character.CharacterPrefix + "_" + _fileName;
-
-                return _mp3FilePath;
-            }
+            return Character.CharacterPrefix + "_" + mUnPrefixedMp3FileName;
         }
 
 
@@ -488,9 +464,8 @@ namespace DialogEngine.ViewModels
                     if (string.IsNullOrEmpty(DialogStr))
                     {
                         var result = await DialogHost
-                            .Show(new YesNoDialog("Warning", 
-                                                  "You didn't write text for this dialog line. Do you want to save step without it?", "Yes", "No"), 
-                                                  "WizardPageDialogHost");
+                            .Show(new YesNoDialog("Warning", "You didn't write text for this dialog line. Do you want to" +
+                                                  " save step without it?", "Yes", "No"), "WizardPageDialogHost");
 
                         if(result == null)
                         {
@@ -505,19 +480,16 @@ namespace DialogEngine.ViewModels
                     }
                     else
                     {
-                        string[] mFileNameArray = mVoiceRecorderControlViewModel.CurrentFilePath.Split('_');
-
                         PhraseEntry entry = new PhraseEntry
                         {
                             PhraseRating = CurrentTutorialStep.PhraseRating,
                             DialogStr = DialogStr,
                             PhraseWeights = CurrentTutorialStep.PhraseWeights,
-                            FileName = mFileNameArray[1]
+                            FileName = mUnPrefixedMp3FileName // mFileNameArray[1]
                         };
 
                         mCharacter.Phrases.Add(entry);
                     }
-
                     await DialogDataHelper.SerializeCharacterToFile(Character);
                 }
 

@@ -402,7 +402,7 @@ namespace DialogEngine.Controls.ViewModels
                     return _nextAdventureDialogIdx; // we have an adventure dialog for these characters go with it
             }
 
-            while (!_dialogModelFits && _attempts < 4000)
+            while (!_dialogModelFits && _attempts < 30000)
             {
                 _attempts++;
                 _dialogWeightIndex = mRandom.NextDouble();
@@ -683,24 +683,6 @@ namespace DialogEngine.Controls.ViewModels
         {
             // TODO dead code we no longer want to wait for new characters return next state at once
             return Triggers.PrepareDialogParameters;
-
-            if (SessionHelper.UseSerialPort)
-            {
-                mEventWaitHandle.WaitOne();
-            }
-            else
-            {
-                if (mRandomSelectionDataCached != null)
-                {
-                    return Triggers.PrepareDialogParameters;
-                }
-                else
-                {
-                    mEventWaitHandle.WaitOne();
-                }
-            }
-
-            return Triggers.PrepareDialogParameters;
         }
 
         private async Task<Triggers> _prepareDialogParameters(CancellationToken token)
@@ -736,7 +718,6 @@ namespace DialogEngine.Controls.ViewModels
 
             return Triggers.WaitForNewCharacters;
         }
-
 
 
         private async Task<Triggers>  _startDialog(CancellationToken token)
