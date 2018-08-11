@@ -93,6 +93,7 @@ namespace DialogEngine.ViewModels
 
             DialogDataHelper.AddMessage(new InfoMessage(_displayableVersion));
             LoggerHelper.Info(SessionHelper.DialogLogFileName, _displayableVersion);
+            mcLogger.Info(_displayableVersion);
         }
 
         #endregion

@@ -361,7 +361,11 @@ namespace DialogEngine.Controls.ViewModels
             if (!SessionHelper.UseSerialPort)  // check is selection in random mode
             {
                 SelectedCharactersPairEventArgs args = mRandomSelectionDataCached;
-
+                if (args == null || args.Character1Index < 0 || args.Character1Index >= mCharactersList.Count
+                    || args.Character2Index < 0 || args.Character2Index >= mCharactersList.Count)
+                {
+                    return false;
+                }
                 mCharacter1Num = args.Character1Index;
                 mCharacter2Num = args.Character2Index;
             }
