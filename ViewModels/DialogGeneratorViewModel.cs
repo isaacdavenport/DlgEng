@@ -707,8 +707,7 @@ namespace DialogEngine.Controls.ViewModels
                 token.ThrowIfCancellationRequested();
                 _addDialogModelToHistory(mIndexOfCurrentDialogModel, mCharacter1Num, mCharacter2Num);
 
-                if (SessionHelper.DebugFlag)
-                    WriteDialogInfo(mCharacter1Num, mCharacter2Num);
+                WriteDialogInfo(mCharacter1Num, mCharacter2Num);
 
                 HeatMapUpdate.PrintHeatMap();
 

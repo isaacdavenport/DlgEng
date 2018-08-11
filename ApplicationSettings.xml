@@ -1,8 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Settings>
-  <Setting Key="DebugFlag" Name="Debug enabled:" Value="true" >
-  Write dialog information during dialog.
-  </Setting>
   <Setting Key="TagUsageCheck" Name="Check tag usage:" Value="false" >
   Check which tags will not be used in dialog.
   </Setting>

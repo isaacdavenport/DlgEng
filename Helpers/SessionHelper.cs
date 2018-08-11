@@ -52,20 +52,6 @@ namespace DialogEngine.Helpers
 
         }
 
-        public static bool DebugFlag
-        {
-            get
-            {
-                string result = ConfigHelper.Instance.GetValue("DebugFlag");
-
-                if (result != null)
-                    return bool.Parse(result);
-                else
-                    return false;
-            }
-
-        }
-
         public static bool TagUsageCheck
         {
             get
