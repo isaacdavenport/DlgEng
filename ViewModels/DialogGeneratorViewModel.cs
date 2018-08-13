@@ -154,7 +154,6 @@ namespace DialogEngine.Controls.ViewModels
                 foreach(ModelDialog _dialogModel in _modelDialogInfo.ArrayOfDialogModels)
                 {
                     mDialogModelsList.Add(_dialogModel);
-                    mcLogger.Info(_modelDialogInfo.ArrayOfDialogModels.IndexOf(_dialogModel) + " " +_dialogModel.Name);
                 }
             }
 
