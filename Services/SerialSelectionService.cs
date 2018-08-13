@@ -65,6 +65,7 @@ namespace DialogEngine.Services
             SerialStateMachine.PropertyChanged += _stateMachine_PropertyChanged;
             mcHeatMapUpdateTimer.Interval = TimeSpan.FromSeconds(3);
             mcHeatMapUpdateTimer.Tick += _heatMapUpdateTimer_Tick;
+            LoggerHelper.Info(SessionHelper.DecimalLogFileName, "Serial Selection Service Instantiation");
         }
 
         #endregion

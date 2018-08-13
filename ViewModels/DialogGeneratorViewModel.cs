@@ -154,12 +154,21 @@ namespace DialogEngine.Controls.ViewModels
                 foreach(ModelDialog _dialogModel in _modelDialogInfo.ArrayOfDialogModels)
                 {
                     mDialogModelsList.Add(_dialogModel);
+                    mcLogger.Info(_modelDialogInfo.ArrayOfDialogModels.IndexOf(_dialogModel) + " " +_dialogModel.Name);
                 }
             }
 
-            foreach(Character character in mCharactersList)
+            foreach (ModelDialog _dialogModel in mDialogModelsList)
+            {
+                mcLogger.Info(mDialogModelsList.IndexOf(_dialogModel) + " " + _dialogModel.Name);
+            }
+            
+            mcLogger.Info(" ");
+
+            foreach (Character character in mCharactersList)
             {
                 _initializeCharacter(character);
+                mcLogger.Info(mCharactersList.IndexOf(character) + " " + character.CharacterName);
             }
 
             // Fill the queue with greeting dialogs
@@ -246,6 +255,7 @@ namespace DialogEngine.Controls.ViewModels
 
         private void _onSelectedCharactersPairChanged(SelectedCharactersPairEventArgs args)
         {
+            mcLogger.Debug("_onSelectedCharactersPairChanged");
             if (SessionHelper.UseSerialPort)
             {
                 mCharacter1Num = args.Character1Index;
@@ -258,6 +268,7 @@ namespace DialogEngine.Controls.ViewModels
                 }
 
                 mEventWaitHandle.Set();
+
             }
             else
             {
@@ -355,14 +366,15 @@ namespace DialogEngine.Controls.ViewModels
         }
 
 
-        private bool _importClosestCharacters()
+        private bool _setNextCharacters()
         {
             
             if (!SessionHelper.UseSerialPort)  // check is selection in random mode
             {
                 SelectedCharactersPairEventArgs args = mRandomSelectionDataCached;
                 if (args == null || args.Character1Index < 0 || args.Character1Index >= mCharactersList.Count
-                    || args.Character2Index < 0 || args.Character2Index >= mCharactersList.Count)
+                    || args.Character2Index < 0 || args.Character2Index >= mCharactersList.Count || 
+                    args.Character1Index == args.Character2Index)
                 {
                     return false;
                 }
@@ -388,7 +400,7 @@ namespace DialogEngine.Controls.ViewModels
         }
 
 
-        private int _pickAWeightedDialog(int _character1Num, int _character2Num)
+        private int _pickAWeightedDialog()
         {
             //TODO check that all characters/phrasetypes required for adventure are included before starting adventure?
             var _dialogModel = 0;
@@ -400,11 +412,11 @@ namespace DialogEngine.Controls.ViewModels
             // most recent will be in the 0 index of list which will be hit first in foreach
             if (_mostRecentAdventureDialogIndexes.Count > 0)
             {
-                var _nextAdventureDialogIdx = _findNextAdventureDialogForCharacters(_character1Num, _character2Num, _mostRecentAdventureDialogIndexes);
-
+                var _nextAdventureDialogIdx = _findNextAdventureDialogForCharacters(_mostRecentAdventureDialogIndexes);
                 if (_nextAdventureDialogIdx > 0 && _nextAdventureDialogIdx < mDialogModelsList.Count)
                     return _nextAdventureDialogIdx; // we have an adventure dialog for these characters go with it
             }
+
             int _max_attempts = 30000;
             while (!_dialogModelFits && _attempts < _max_attempts)
             {
@@ -425,20 +437,32 @@ namespace DialogEngine.Controls.ViewModels
                 }
 
                 var _dialogModelUsedRecently = _checkIfDialogModelUsedRecently(_dialogModel);
-                var _charactersHavePhrases = checkIfCharactersHavePhrasesForDialog(_dialogModel,
+                var _charactersHavePhrases = _checkIfCharactersHavePhrasesForDialog(_dialogModel,
                     mCharacter1Num, mCharacter2Num);
                 var _dialogPreRequirementsMet = _checkIfDialogPreRequirementMet(_dialogModel);
                 // don't want a greeting with same characters as last
-                var _greetingAppropriate = !(mDialogModelsList[_dialogModel].PhraseTypeSequence[0].Equals("Greeting")
-                                             && mSameCharactersAsLast);
+                var _inappropriateGreeting = mDialogModelsList[_dialogModel].PhraseTypeSequence[0].Equals("Greeting")
+                                             && mSameCharactersAsLast;
 
-                if (_dialogPreRequirementsMet && _charactersHavePhrases && _greetingAppropriate &&
+                if (_dialogPreRequirementsMet && _charactersHavePhrases && !_inappropriateGreeting &&
                     !_dialogModelUsedRecently)
                 {
                     _dialogModelFits = true;
                 }
+                if (_attempts == 100)
+                {
+                    var attemptsWarningMsg = "Characters " + mCharactersList[mCharacter1Num].CharacterPrefix + 
+                        " and " + mCharactersList[mCharacter2Num].CharacterPrefix + 
+                        " took over 100 attempts to find a workable dialog model.";
+                    Debug.WriteLine(attemptsWarningMsg);
+                    DialogDataHelper.AddMessage(new WarningMessage(attemptsWarningMsg));
+                    mcLogger.Debug(attemptsWarningMsg);
+                }
+                if (_dialogPreRequirementsMet && _charactersHavePhrases && _attempts > 15000)
+                {
+                    _dialogModelFits = true;
+                }
             }
-
             return _dialogModel;
         }
 
@@ -549,7 +573,7 @@ namespace DialogEngine.Controls.ViewModels
         }
 
 
-        private int _findNextAdventureDialogForCharacters(int _character1Num, int _character2Num, List<int> _mostRecentAdventureDialogIndexes)
+        private int _findNextAdventureDialogForCharacters(List<int> _mostRecentAdventureDialogIndexes)
         {
             var _ch1First = new bool();
             var _ch2First = new bool();
@@ -571,9 +595,9 @@ namespace DialogEngine.Controls.ViewModels
                             {
                                 //if a the most recent adventure dialog in the adventure provides what we require we won't 
                                 //go backwards in adventures
-                                _ch1First = checkIfCharactersHavePhrasesForDialog(_possibleDialogIdx, _character1Num, _character2Num);
+                                _ch1First = _checkIfCharactersHavePhrasesForDialog(_possibleDialogIdx, mCharacter1Num, mCharacter2Num);
 
-                                _ch2First = checkIfCharactersHavePhrasesForDialog(_possibleDialogIdx, _character2Num, _character1Num);
+                                _ch2First = _checkIfCharactersHavePhrasesForDialog(_possibleDialogIdx, mCharacter2Num, mCharacter1Num);
 
                                 if (_ch1First || _ch2First)
                                 {
@@ -587,7 +611,6 @@ namespace DialogEngine.Controls.ViewModels
                         }
 
                     }
-
                 }
             }
 
@@ -634,7 +657,7 @@ namespace DialogEngine.Controls.ViewModels
         }
 
 
-        private bool checkIfCharactersHavePhrasesForDialog(int _dialogModel, int _character1Num, int _character2Num)
+        private bool _checkIfCharactersHavePhrasesForDialog(int _dialogModel, int _character1Num, int _character2Num)
         {
             var _currentCharacter = _character1Num;
 
@@ -695,19 +718,19 @@ namespace DialogEngine.Controls.ViewModels
             {
                 token.ThrowIfCancellationRequested();
 
-                if (!_importClosestCharacters())
+                if (!_setNextCharacters())
                     return Triggers.WaitForNewCharacters;
 
                 token.ThrowIfCancellationRequested();
 
                 mIndexOfCurrentDialogModel = mIsForcedDialogModel ?
                                              mIndexOfCurrentDialogModel
-                                            : _pickAWeightedDialog(mCharacter1Num, mCharacter2Num);
+                                            : _pickAWeightedDialog();
 
                 token.ThrowIfCancellationRequested();
                 _addDialogModelToHistory(mIndexOfCurrentDialogModel, mCharacter1Num, mCharacter2Num);
 
-                WriteDialogInfo(mCharacter1Num, mCharacter2Num);
+                WriteDialogInfo();
 
                 HeatMapUpdate.PrintHeatMap();
 
@@ -729,6 +752,8 @@ namespace DialogEngine.Controls.ViewModels
             {
                 var _speakingCharacter = mCharacter1Num;
                 var _selectedPhrase = mCharactersList[_speakingCharacter].Phrases[0]; //initialize to unused placeholder phrase
+                mcLogger.Debug("_startDialog " + mCharactersList[mCharacter1Num].CharacterPrefix + " and " + 
+                    mCharactersList[mCharacter2Num].CharacterPrefix + " " + mDialogModelsList[mIndexOfCurrentDialogModel].Name );
 
                 foreach (var _currentPhraseType in mDialogModelsList[mIndexOfCurrentDialogModel].PhraseTypeSequence)
                 {
@@ -837,7 +862,6 @@ namespace DialogEngine.Controls.ViewModels
                         case States.Idle:
                             {
                                 Triggers _nextTrigger = _waitForNewCharacters();
-                                //Debug.WriteLine(_nextTrigger.ToString());
                                 if(DialogGenerationStateMachine.CanFire(_nextTrigger))
                                     DialogGenerationStateMachine.Fire(_nextTrigger);
                                 break;
@@ -845,8 +869,6 @@ namespace DialogEngine.Controls.ViewModels
                         case States.PreparingDialogParameters:
                             {
                                 Triggers _nextTrigger = await _prepareDialogParameters(mStateMachineTaskTokenSource.Token);
-                                //Debug.WriteLine(_nextTrigger.ToString());
-
                                 if (DialogGenerationStateMachine.CanFire(_nextTrigger))
                                     DialogGenerationStateMachine.Fire(_nextTrigger);
                                 break;
@@ -854,8 +876,6 @@ namespace DialogEngine.Controls.ViewModels
                         case States.DialogStarted:
                             {
                                 Triggers _nextTrigger = await _startDialog(mStateMachineTaskTokenSource.Token);
-                                //Debug.WriteLine(_nextTrigger.ToString());
-
                                 if (DialogGenerationStateMachine.CanFire(_nextTrigger))
                                     DialogGenerationStateMachine.Fire(_nextTrigger);
                                 break;
@@ -889,20 +909,19 @@ namespace DialogEngine.Controls.ViewModels
         /// <summary>
         /// Writes dialog info
         /// </summary>
-        /// <param name="_character1Num"></param>
-        /// <param name="_character2Num"></param>
-        public void WriteDialogInfo(int _character1Num, int _character2Num)
+        public void WriteDialogInfo()
         {
             if (mDialogModelsList.Count > 0)
             {
                 var _dialogModelString = " --DiMod " + mIndexOfCurrentDialogModel + " "
                                          + mDialogModelsList[mIndexOfCurrentDialogModel].Name
-                                         + " NextChars: " + mCharactersList[_character1Num].CharacterPrefix + " "
-                                         + mCharactersList[_character2Num].CharacterPrefix + " " + DateTime.Now;
+                                         + " NextChars: " + mCharactersList[mCharacter1Num].CharacterPrefix + " "
+                                         + mCharactersList[mCharacter2Num].CharacterPrefix + " " + DateTime.Now;
 
 
                 AddItem(new InfoMessage(_dialogModelString));
                 LoggerHelper.Info(SessionHelper.DialogLogFileName, _dialogModelString);
+                mcLogger.Debug(_dialogModelString);
             }
         }
 

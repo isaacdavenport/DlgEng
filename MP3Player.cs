@@ -181,7 +181,7 @@ namespace DialogEngine
                 Player.Open(new Uri(_path));
                 Player.Play();
 
-                mcLogger.Debug("Current .mp3 file " + _path);
+                mcLogger.Debug(_path);
                 mStartedTime = DateTime.Now.TimeOfDay;
                 return 0;  //TODO add error handling    
             }

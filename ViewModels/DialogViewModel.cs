@@ -606,7 +606,8 @@ namespace DialogEngine.ViewModels
         {
             return Task.Run(() =>
             {
-                Debug.WriteLine("Check for missing start");
+                Debug.WriteLine("Check for missing phrases started");
+                DialogDataHelper.AddMessage(new InfoMessage("Check for missing phrases started"));
                 Thread.CurrentThread.Name = "_checkForMissingPhrasesAsyncThread";
 
                 foreach (var _character in CharacterCollection)
@@ -626,7 +627,8 @@ namespace DialogEngine.ViewModels
                         }
                     }
                 }
-                Debug.WriteLine("Check for missing end");
+                Debug.WriteLine("Check for missing phrases complete");
+                DialogDataHelper.AddMessage(new InfoMessage("Check for missing phrases complete"));
             });
             //TODO check that all dialog models have unique names and that MPAA ratings like PG13 are all correct
         }
@@ -640,7 +642,7 @@ namespace DialogEngine.ViewModels
                 Thread.CurrentThread.Name = "_checkTagsUsedAsyncThread";
 
                 //test that all character tags are used by a dialog model.
-                DialogDataHelper.AddMessage(new InfoMessage("Check characters tags are used "));
+                DialogDataHelper.AddMessage(new InfoMessage("Check characters tags are used by a dialog model"));
 
                 var _usedFlag = false;
 

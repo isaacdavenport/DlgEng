@@ -173,7 +173,8 @@ namespace DialogEngine.Services
                             Application.Current.Dispatcher.BeginInvoke(()=>
                             {
                                 EventAggregator.Instance.GetEvent<SelectedCharactersPairChangedEvent>()
-                                    .Publish(new SelectedCharactersPairEventArgs() { Character1Index = NextCharacter1, Character2Index = NextCharacter2 });
+                                    .Publish(new SelectedCharactersPairEventArgs() { Character1Index = NextCharacter1,
+                                        Character2Index = NextCharacter2 });
 
                             },DispatcherPriority.Send);
 
